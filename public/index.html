@@ -134,7 +134,8 @@
     .vertical-bar-track { position: relative; width: 5px; height: 58px; overflow: hidden; background: rgba(255,255,255,.11); border-radius: 2px 2px 1px 1px; }
     .vertical-bar-fill { position: absolute; right: 0; bottom: 0; left: 0; border-radius: 4px 4px 2px 2px; }
     .vertical-bar-model { max-width: 24px; overflow: hidden; color: var(--muted); font-size: 7px; line-height: 1; text-overflow: ellipsis; white-space: nowrap; }
-    .riichi-panels { min-width: 0; }
+    .riichi-panels { display: grid; min-width: 0; gap: 8px; margin-top: 8px; }
+    .riichi-panels:empty { display: none; }
     .riichi-panel { height: 100%; padding: 7px 8px 6px; border: 1px solid rgba(241,196,87,.32); border-radius: 9px; background: linear-gradient(145deg, rgba(77,56,22,.38), rgba(0,0,0,.16)); }
     .riichi-panel-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; color: #fff1bd; font-size: 10px; font-weight: 800; }
     .riichi-panel-heading strong { color: #fff; font-size: 11px; }
@@ -242,6 +243,7 @@
           <p class="answer-detail" id="answerDetail"></p>
         </div>
         <div class="answer-comparison" id="answerComparison"></div>
+        <div class="riichi-panels" id="riichiPanels"></div>
       </div>
       <div class="answer-actions">
         <button class="reset-button" id="resetButton" type="button">もう一度選ぶ</button>
@@ -275,7 +277,7 @@
   </main>
 
   <script>
-    const APP_VERSION = 16;
+    const APP_VERSION = 17;
     const SCENE = {
       actualDiscard: "ji4",
       handBeforeDraw: ["man7", "man8", "man9", "pin4", "pin6", "pin7", "pin8", "pin9", "sou7", "sou8", "sou8", "ji4", "ji4"],
