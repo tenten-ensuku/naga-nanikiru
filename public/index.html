@@ -64,10 +64,9 @@
     .tile-button.is-selected img { outline: 2px solid var(--gold); outline-offset: 2px; border-radius: 2px; }
     .tile-button.is-judge-recommendation img { outline: 2px solid #c28aff; outline-offset: 2px; border-radius: 2px; }
     .tile-button img { display: block; width: clamp(17px, 2.03vw, 26px); height: auto; border-radius: 2px; }
-    .finger-marker { position: absolute; top: calc(100% + 3px); left: 50%; z-index: 2; width: clamp(9px, 1.3vw, 15px); height: clamp(13px, 2vw, 20px); opacity: 0; pointer-events: none; transform: translateX(-50%); transition: opacity .1s ease; }
-    .finger-marker::before { content: ""; position: absolute; top: 0; left: 34%; width: 34%; height: 75%; background: linear-gradient(90deg, #eab69e, #ffe0ca 48%, #d58e7c); border: 1px solid rgba(91,43,35,.45); border-radius: 999px 999px 6px 6px; box-shadow: 0 2px 3px rgba(0,0,0,.35); }
-    .finger-marker::after { content: ""; position: absolute; right: 9%; bottom: 0; width: 76%; height: 48%; background: linear-gradient(145deg, #ffe0ca, #c98373); border: 1px solid rgba(91,43,35,.45); border-radius: 55% 45% 20% 20%; transform: rotate(-12deg); }
-    .tile-button:hover .finger-marker, .tile-button:focus-visible .finger-marker, .tile-button.is-selected .finger-marker { opacity: 1; }
+    .selection-marker { position: absolute; top: calc(100% + 5px); left: 50%; z-index: 2; width: 0; height: 0; opacity: 0; pointer-events: none; transform: translateX(-50%); transition: opacity .1s ease; }
+    .selection-marker::before { content: ""; display: block; width: 0; height: 0; border-right: clamp(7px, 1vw, 11px) solid transparent; border-bottom: clamp(11px, 1.55vw, 16px) solid #ef3d4f; border-left: clamp(7px, 1vw, 11px) solid transparent; filter: drop-shadow(0 2px 2px rgba(0,0,0,.4)); }
+    .tile-button:hover .selection-marker, .tile-button:focus-visible .selection-marker, .tile-button.is-selected .selection-marker { opacity: 1; }
     .probability-stack { position: absolute; bottom: calc(100% + 4px); left: 0; width: 100%; height: 22px; }
     .probability-mini-track { position: absolute; bottom: 0; left: calc((100% - 3px) * var(--bar-slot) / 2); width: 3px; height: 100%; overflow: hidden; background: rgba(0,0,0,.35); border-radius: 1px 1px 0 0; }
     .probability-mini-fill { position: absolute; right: 0; bottom: 0; left: 0; display: block; border-radius: 2px 2px 0 0; }
@@ -85,12 +84,14 @@
     .answer-title { margin: 0; font-size: 15px; }
     .answer-detail { margin: 0; color: var(--muted); font-size: 9px; line-height: 1.35; text-align: right; }
     .answer-detail strong { color: var(--ink); }
-    .answer-comparison { display: grid; grid-template-columns: repeat(4, minmax(54px, 1fr)); gap: 6px; margin-top: 7px; }
+    .answer-comparison { display: grid; grid-template-columns: repeat(5, minmax(48px, 1fr)); gap: 6px; margin-top: 7px; }
     .answer-choice { min-width: 0; padding: 5px 4px 4px; text-align: center; border: 1px solid rgba(255,255,255,.12); border-radius: 7px; background: rgba(0,0,0,.16); }
     .answer-choice.player-choice { border-color: rgba(241,196,87,.55); background: rgba(77,56,22,.25); }
+    .answer-choice.historical-choice { border-color: rgba(239,61,79,.62); background: rgba(97,22,31,.24); }
     .answer-choice.model-choice { border-color: rgba(194,138,255,.35); }
     .answer-choice-label { display: block; overflow: hidden; color: var(--muted); font-size: 8px; font-weight: 800; text-overflow: ellipsis; white-space: nowrap; }
     .answer-choice.player-choice .answer-choice-label { color: #fff1bd; }
+    .answer-choice.historical-choice .answer-choice-label { color: #ffb7bd; }
     .answer-choice-tile { display: block; min-height: 31px; margin: 3px auto 2px; }
     .answer-choice-tile img { width: clamp(23px, 2.8vw, 36px); height: auto; margin: 0 auto; border-radius: 2px; }
     .answer-choice-title { display: block; color: #f2ffff; font-size: 9px; font-weight: 800; line-height: 1.15; }
@@ -261,7 +262,7 @@
   </main>
 
   <script>
-  const APP_VERSION = 11;
+  const APP_VERSION = 12;
     const SCENE = {
       actualDiscard: "ji4",
       handBeforeDraw: ["man7", "man8", "man9", "pin4", "pin6", "pin7", "pin8", "pin9", "sou7", "sou8", "sou8", "ji4", "ji4"],
@@ -291,7 +292,7 @@
     const SCENE_IMAGES = { off: "naga-scene-off.jpg", open: "naga-scene-open.jpg" };
     const THREAD_URL = "https://discord.com/channels/1166706544856006656/1532011607209541833";
     const THREAD_MESSAGES = [
-      { id: "1532011607209541833", author: "てんてん", createdAt: "2026-07-29T13:07:10.558Z", content: "249", attachments: [{ src: "thread-images/249-question.png", alt: "問題249の投稿画像" }] },
+      { id: "1532011607209541833", author: "てんてん", createdAt: "2026-07-29T13:07:10.558Z", content: "249", showInComments: false, attachments: [{ src: "thread-images/249-question.png", alt: "問題249の投稿画像" }] },
     { id: "1532011707767980032", author: "てんてん", createdAt: "2026-07-29T13:07:34.533Z", content: "", showInComments: false, attachments: [{ src: "thread-images/249-naga-view.png", alt: "NAGA画面の投稿画像" }] },
     { id: "1532011713870696499", author: "てんてん", createdAt: "2026-07-29T13:07:35.988Z", content: "https://naga.dmv.nico/htmls/report_viewer.html?report_id=3649c457ea7a1b61abccdca5ffbc43764587421511f08b6f8ac49d80308a1114v2_2&tw=0&ts=1&tv=69", showInComments: false, attachments: [] },
       { id: "1532012487212536022", author: "てんてん", createdAt: "2026-07-29T13:10:40.367Z", content: "聴牌取らずは良いが、打8ｓ推奨。\n打北は面子手立直進行に於ける二大タブー（①単独暗刻の破壊②単独雀頭の破壊）に抵触。\n打8ｓとすれば、ヘッドレス2型連続形となるため、4ｐ6ｐ引きでも三色聴牌となるし、9ｐ引きも悪くない。", attachments: [] },
@@ -390,7 +391,7 @@
       const selected = state.selectedIndex === index;
       const judgeRecommended = SCENE.models[state.judgeModel].recommendation === tile;
       const judgeHint = judgeRecommended ? "（判定基準モデルの第1推奨）" : "";
-      return `<div class="tile-wrap${isDraw ? " draw-tile" : ""}"><button class="tile-button${selected ? " is-selected" : ""}${judgeRecommended ? " is-judge-recommendation" : ""}" type="button" data-tile-index="${index}" aria-label="${tileLabel(tile)}を選ぶ${judgeHint}">${probabilityStack(tile)}${tileImage(tile)}<span class="finger-marker" aria-hidden="true"></span></button></div>`;
+      return `<div class="tile-wrap${isDraw ? " draw-tile" : ""}"><button class="tile-button${selected ? " is-selected" : ""}${judgeRecommended ? " is-judge-recommendation" : ""}" type="button" data-tile-index="${index}" aria-label="${tileLabel(tile)}を選ぶ${judgeHint}">${probabilityStack(tile)}${tileImage(tile)}<span class="selection-marker" aria-hidden="true"></span></button></div>`;
     }
 
     function renderHand() {
@@ -413,17 +414,18 @@
       const correctRiichi = recommendedRiichi(state.judgeModel);
       const isCorrect = state.selected === correctTile && state.riichi === correctRiichi;
       document.getElementById("answerTitle").textContent = isCorrect ? `正解：${tileLabel(state.selected)}・${riichiLabel(state.riichi)}` : `推奨：${tileLabel(correctTile)}・${riichiLabel(correctRiichi)}`;
-      document.getElementById("answerDetail").innerHTML = `あなたの選択：<strong>${tileLabel(state.selected)}・${riichiLabel(state.riichi)}</strong> ／ 実戦打牌：<strong>${tileLabel(SCENE.actualDiscard)}</strong>`;
+      document.getElementById("answerDetail").innerHTML = `あなたの選択：<strong>${tileLabel(state.selected)}・${riichiLabel(state.riichi)}</strong> ／ 当時の選択打牌：<strong>${tileLabel(SCENE.actualDiscard)}</strong>`;
       const topModelIndices = priorityModelIndices(3);
       const hasReachJudgment = SCENE.reach.some(value => value > 0);
       const playerCard = `<div class="answer-choice player-choice"><span class="answer-choice-label">あなたの選択</span><span class="answer-choice-tile">${tileImage(state.selected)}</span><span class="answer-choice-title">${tileLabel(state.selected)}・${riichiLabel(state.riichi)}</span></div>`;
+      const historicalCard = `<div class="answer-choice historical-choice"><span class="answer-choice-label">当時の選択打牌</span><span class="answer-choice-tile">${tileImage(SCENE.actualDiscard)}</span><span class="answer-choice-title">${tileLabel(SCENE.actualDiscard)}</span></div>`;
       const modelCards = topModelIndices.map(index => {
         const model = SCENE.models[index];
         const value = (SCENE.reach[index] ?? 0) / 100;
         const reach = hasReachJudgment ? `<div class="answer-choice-reach" aria-label="${model.name}のリーチ推奨度"><span class="answer-choice-reach-label">リーチ ${value.toFixed(1)}%</span><span class="answer-choice-reach-track"><span class="answer-choice-reach-fill ${MODEL_COLORS[index]}" style="width:${value}%"></span></span></div>` : "";
         return `<div class="answer-choice model-choice"><span class="answer-choice-label">${model.name}・第1推奨</span><span class="answer-choice-tile">${tileImage(model.recommendation)}</span><span class="answer-choice-title">${tileLabel(model.recommendation)}</span>${reach}</div>`;
       }).join("");
-      document.getElementById("answerComparison").innerHTML = `${playerCard}${modelCards}`;
+      document.getElementById("answerComparison").innerHTML = `${playerCard}${historicalCard}${modelCards}`;
       answerStrip.hidden = false;
       commentsPanel.hidden = false;
       renderComments();
