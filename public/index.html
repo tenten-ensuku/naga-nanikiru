@@ -304,7 +304,7 @@
   </main>
 
   <script>
-    const APP_VERSION = 20;
+    const APP_VERSION = 21;
     const SCENE = {
       actualDiscard: "ji4",
       handBeforeDraw: ["man7", "man8", "man9", "pin4", "pin6", "pin7", "pin8", "pin9", "sou7", "sou8", "sou8", "ji4", "ji4"],
@@ -465,7 +465,7 @@
 
     function tileButton(tile, index, isDraw = false) {
       const selected = state.selectedIndex === index;
-      const judgeRecommended = SCENE.models[state.judgeModel].recommendation === tile;
+      const judgeRecommended = state.revealed && SCENE.models[state.judgeModel].recommendation === tile;
       const judgeHint = judgeRecommended ? "（判定基準モデルの第1推奨）" : "";
       return `<div class="tile-wrap${isDraw ? " draw-tile" : ""}"><button class="tile-button${selected ? " is-selected" : ""}${judgeRecommended ? " is-judge-recommendation" : ""}" type="button" data-tile-index="${index}" aria-label="${tileLabel(tile)}を選ぶ${judgeHint}">${probabilityStack(tile)}${tileImage(tile)}<span class="selection-marker" aria-hidden="true"></span></button></div>`;
     }
@@ -633,7 +633,7 @@
 
       function tileButtonV16(tile, index, isDraw = false) {
         const selected = state.selectedIndex === index;
-        const judgeRecommended = SCENE.models[state.judgeModel]?.recommendation === tile;
+        const judgeRecommended = state.revealed && SCENE.models[state.judgeModel]?.recommendation === tile;
         const judgeHint = judgeRecommended ? "（判定基準モデルの第1推奨）" : "";
         return `<div class="tile-wrap${isDraw ? " draw-tile" : ""}"><button class="tile-button${selected ? " is-selected" : ""}${judgeRecommended ? " is-judge-recommendation" : ""}" type="button" data-tile-index="${index}" aria-label="${tileLabel(tile)}を選ぶ${judgeHint}">${probabilityStackV16(tile)}${tileImage(tile)}<span class="selection-marker" aria-hidden="true"></span></button></div>`;
       }
