@@ -42,12 +42,14 @@
     .source-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding: 9px 11px; margin-bottom: 12px; background: rgba(7, 28, 43, .92); border: 1px solid var(--line); border-radius: 11px; }
     .source-url { min-width: 0; overflow: hidden; color: #c5e6ea; font-size: 11px; text-overflow: ellipsis; white-space: nowrap; }
     .source-url span { color: var(--muted); }
+    .source-link { display: inline-flex; align-items: center; padding: 3px 7px; margin: 0 3px; color: #e7f8ff; background: #164862; border: 1px solid rgba(113,183,255,.55); border-radius: 6px; font-size: 9px; font-weight: 800; text-decoration: none; vertical-align: 1px; }
+    .source-link:hover, .source-link:focus-visible { background: #246b8a; outline: 2px solid rgba(113,183,255,.28); outline-offset: 1px; }
     .model-control { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 11px; white-space: nowrap; }
     .model-control select { padding: 5px 8px; color: var(--ink); background: #071b28; border: 1px solid var(--line); border-radius: 7px; }
     .scene-toggle { padding: 6px 10px; color: var(--ink); background: #0c3246; border: 1px solid rgba(113,183,255,.45); border-radius: 7px; font-size: 11px; font-weight: 800; }
     .scene-toggle:hover { background: #144a63; }
     .scene-card { padding: 8px; background: rgba(7, 28, 43, .92); border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow); }
-    .scene-frame { position: relative; width: 100%; max-width: 860px; margin: 0 auto; overflow: hidden; background: #033b76; aspect-ratio: 584 / 543; }
+    .scene-frame { position: relative; width: 100%; max-width: 860px; margin: 0 auto; overflow: hidden; background: #033b76; aspect-ratio: 584 / 543; container-type: inline-size; }
     .scene-image { display: block; width: 100%; height: 100%; object-fit: fill; user-select: none; pointer-events: none; }
     .hand-mask { position: absolute; left: 11.5%; top: 79.3%; width: 67.8%; height: 20.7%; background: linear-gradient(145deg, #06254a 0%, #02244c 100%); pointer-events: none; }
     .hand-layer { position: absolute; left: 17.5%; top: 80.5%; width: 60%; height: 14.5%; display: flex; align-items: flex-end; justify-content: center; pointer-events: auto; }
@@ -63,9 +65,8 @@
     .tile-button:hover, .tile-button:focus-visible { outline: none; }
     .tile-button.is-selected img { outline: 2px solid var(--gold); outline-offset: 2px; border-radius: 2px; }
     .tile-button.is-judge-recommendation img { outline: 2px solid #c28aff; outline-offset: 2px; border-radius: 2px; }
-    .tile-button img { display: block; width: clamp(17px, 2.03vw, 26px); height: auto; border-radius: 2px; }
-    .selection-marker { position: absolute; top: calc(100% + 5px); left: 50%; z-index: 2; width: 0; height: 0; opacity: 0; pointer-events: none; transform: translateX(-50%); transition: opacity .1s ease; }
-    .selection-marker::before { content: ""; display: block; width: 0; height: 0; border-right: clamp(7px, 1vw, 11px) solid transparent; border-bottom: clamp(11px, 1.55vw, 16px) solid #ef3d4f; border-left: clamp(7px, 1vw, 11px) solid transparent; filter: drop-shadow(0 2px 2px rgba(0,0,0,.4)); }
+    .tile-button img { display: block; width: clamp(24px, 4.1cqw, 36px); height: auto; border-radius: 2px; }
+    .selection-marker { position: absolute; top: calc(100% + 5px); left: 50%; z-index: 2; width: clamp(14px, 1.55vw, 20px); height: clamp(12px, 1.35vw, 17px); opacity: 0; pointer-events: none; background: #ef3d4f; clip-path: polygon(50% 0, 100% 100%, 0 100%); filter: drop-shadow(0 2px 2px rgba(0,0,0,.4)); transform: translateX(-50%); transition: opacity .1s ease; }
     .tile-button:hover .selection-marker, .tile-button:focus-visible .selection-marker, .tile-button.is-selected .selection-marker { opacity: 1; }
     .probability-stack { position: absolute; bottom: calc(100% + 4px); left: 0; width: 100%; height: 22px; }
     .probability-mini-track { position: absolute; bottom: 0; left: calc((100% - 3px) * var(--bar-slot) / 2); width: 3px; height: 100%; overflow: hidden; background: rgba(0,0,0,.35); border-radius: 1px 1px 0 0; }
@@ -206,7 +207,7 @@
     </header>
 
     <div class="source-bar">
-      <div class="source-url"><span>元画面：</span> 問題249 · report_viewer.html · ts=1 · tv=69 · tw=0</div>
+      <div class="source-url"><span>元画面：</span> 問題249 <a class="source-link" id="nagaSourceLink" href="#" target="_blank" rel="noopener noreferrer">URLに移動</a> · report_viewer.html · ts=1 · tv=69 · tw=0</div>
       <label class="model-control">正誤判定基準 <select id="modelSelect" aria-label="正誤判定基準"></select></label>
       <button class="scene-toggle" id="surroundingsToggle" type="button" aria-expanded="false">周囲の手牌を開く</button>
     </div>
@@ -262,7 +263,7 @@
   </main>
 
   <script>
-  const APP_VERSION = 12;
+    const APP_VERSION = 13;
     const SCENE = {
       actualDiscard: "ji4",
       handBeforeDraw: ["man7", "man8", "man9", "pin4", "pin6", "pin7", "pin8", "pin9", "sou7", "sou8", "sou8", "ji4", "ji4"],
@@ -290,11 +291,12 @@
     const MODEL_PRIORITY = ["ニシキ", "カガシ", "ヒバカリ", "ガンマ", "オメガ"];
     const HAND_BAR_MODEL_NAMES = ["ニシキ", "ヒバカリ", "カガシ"];
     const SCENE_IMAGES = { off: "naga-scene-off.jpg", open: "naga-scene-open.jpg" };
+    const NAGA_URL = "https://naga.dmv.nico/htmls/report_viewer.html?report_id=3649c457ea7a1b61abccdca5ffbc43764587421511f08b6f8ac49d80308a1114v2_2&tw=0&ts=1&tv=69";
     const THREAD_URL = "https://discord.com/channels/1166706544856006656/1532011607209541833";
     const THREAD_MESSAGES = [
       { id: "1532011607209541833", author: "てんてん", createdAt: "2026-07-29T13:07:10.558Z", content: "249", showInComments: false, attachments: [{ src: "thread-images/249-question.png", alt: "問題249の投稿画像" }] },
     { id: "1532011707767980032", author: "てんてん", createdAt: "2026-07-29T13:07:34.533Z", content: "", showInComments: false, attachments: [{ src: "thread-images/249-naga-view.png", alt: "NAGA画面の投稿画像" }] },
-    { id: "1532011713870696499", author: "てんてん", createdAt: "2026-07-29T13:07:35.988Z", content: "https://naga.dmv.nico/htmls/report_viewer.html?report_id=3649c457ea7a1b61abccdca5ffbc43764587421511f08b6f8ac49d80308a1114v2_2&tw=0&ts=1&tv=69", showInComments: false, attachments: [] },
+    { id: "1532011713870696499", author: "てんてん", createdAt: "2026-07-29T13:07:35.988Z", content: NAGA_URL, showInComments: false, attachments: [] },
       { id: "1532012487212536022", author: "てんてん", createdAt: "2026-07-29T13:10:40.367Z", content: "聴牌取らずは良いが、打8ｓ推奨。\n打北は面子手立直進行に於ける二大タブー（①単独暗刻の破壊②単独雀頭の破壊）に抵触。\n打8ｓとすれば、ヘッドレス2型連続形となるため、4ｐ6ｐ引きでも三色聴牌となるし、9ｐ引きも悪くない。", attachments: [] },
       { id: "1532017637700272302", author: "くにたそ", createdAt: "2026-07-29T13:31:08.339Z", content: "恥ずかしながら、時間切れの北でした……笑\n7と8sで迷って結局時間切れましたが、テンパイ取らずの8s、僕はすごく大好きです！めちゃくちゃ言われて参考になりました！👍", attachments: [] }
     ];
@@ -488,6 +490,7 @@
     function init() {
       document.getElementById("versionLabel").textContent = `SCREENSHOT BASE v${APP_VERSION}`;
       document.getElementById("versionSmall").textContent = APP_VERSION;
+      document.getElementById("nagaSourceLink").href = NAGA_URL;
       document.getElementById("modelSelect").innerHTML = SCENE.models.map((model, index) => `<option value="${index}">${model.name}（正誤基準）</option>`).join("");
       document.getElementById("modelSelect").value = String(state.judgeModel);
       document.getElementById("modelSelect").addEventListener("change", event => { state.judgeModel = Number(event.target.value); renderHand(); renderAnswer(); });
