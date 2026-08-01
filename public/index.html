@@ -318,7 +318,7 @@
   </main>
 
   <script>
-    const APP_VERSION = 25;
+    const APP_VERSION = 26;
     const SCENE = {
       actualDiscard: "ji4",
       handBeforeDraw: ["man7", "man8", "man9", "pin4", "pin6", "pin7", "pin8", "pin9", "sou7", "sou8", "sou8", "ji4", "ji4"],
@@ -684,9 +684,9 @@
         "ji1", "ji2", "ji3", "ji4", "ji5", "ji6", "ji7"
       ];
       const TILE_ORDER_MAP_V20 = new Map(TILE_ORDER_V20.map((tile, index) => [tile, index]));
-      TILE_ORDER_MAP_V20.set("aka1", TILE_ORDER_MAP_V20.get("pin5"));
-      TILE_ORDER_MAP_V20.set("aka2", TILE_ORDER_MAP_V20.get("sou5"));
-      TILE_ORDER_MAP_V20.set("aka3", TILE_ORDER_MAP_V20.get("man5"));
+      TILE_ORDER_MAP_V20.set("aka1", TILE_ORDER_MAP_V20.get("man5"));
+      TILE_ORDER_MAP_V20.set("aka2", TILE_ORDER_MAP_V20.get("pin5"));
+      TILE_ORDER_MAP_V20.set("aka3", TILE_ORDER_MAP_V20.get("sou5"));
 
       function sortHandV20(tiles) {
         return [...tiles].sort((left, right) => {
