@@ -52,6 +52,15 @@
     .scene-frame { position: relative; width: 100%; max-width: 860px; margin: 0 auto; overflow: hidden; background: #033b76; aspect-ratio: 584 / 543; container-type: inline-size; }
     .scene-image { display: block; width: 100%; height: 100%; object-fit: fill; user-select: none; pointer-events: none; }
     .hand-mask { position: absolute; left: 11.5%; top: 79.3%; width: 67.8%; height: 20.7%; background: linear-gradient(145deg, #06254a 0%, #02244c 100%); pointer-events: none; }
+    .hand-score { position: absolute; top: 72.5%; left: 50%; z-index: 3; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; max-width: calc(100% - 24px); padding: 7px 16px 8px; color: #fff; background: rgba(4, 19, 31, .96); border: 2px solid rgba(255,255,255,.5); border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,.34); font-size: clamp(16px, 2.6cqw, 25px); font-weight: 900; line-height: 1; white-space: nowrap; transform: translateX(-50%); }
+    .hand-score[hidden] { display: none; }
+    .hand-score-mark { font-size: 1.18em; line-height: 1; }
+    .hand-score-main { display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+    .hand-score-match { color: #dffbfb; font-size: .72em; font-weight: 900; line-height: 1.1; }
+    .hand-score.score-first { border-color: #ffe18a; background: rgba(102, 73, 15, .96); }
+    .hand-score.score-safe { border-color: #9be8d8; background: rgba(10, 77, 71, .96); }
+    .hand-score.score-partial { border-color: #ffd278; background: rgba(91, 59, 13, .96); }
+    .hand-score.score-bad { border-color: #ff8790; background: rgba(111, 25, 35, .96); }
     .hand-layer { position: absolute; left: 17.5%; top: 80.5%; width: 60%; height: 14.5%; display: flex; align-items: flex-end; justify-content: center; pointer-events: auto; }
     .hand-controls { display: flex; align-items: flex-end; justify-content: center; gap: clamp(5px, .55vw, 9px); width: 100%; }
     .hand-row { display: flex; align-items: flex-end; justify-content: center; gap: 1px; }
@@ -216,6 +225,7 @@
       <div class="scene-frame">
         <img class="scene-image" id="sceneImage" src="naga-scene-off.jpg" alt="指定NAGA局面の伏牌スクリーンショット">
         <div class="hand-mask" aria-hidden="true"></div>
+        <div class="hand-score" id="handScoreBadge" aria-live="polite" hidden></div>
         <div class="hand-layer" id="handLayer" aria-label="選択できる自分の手牌"></div>
       </div>
     </section>
@@ -263,7 +273,7 @@
   </main>
 
   <script>
-    const APP_VERSION = 13;
+    const APP_VERSION = 15;
     const SCENE = {
       actualDiscard: "ji4",
       handBeforeDraw: ["man7", "man8", "man9", "pin4", "pin6", "pin7", "pin8", "pin9", "sou7", "sou8", "sou8", "ji4", "ji4"],
@@ -335,6 +345,39 @@
 
     function recommendedRiichi(modelIndex) {
       return SCENE.reach[modelIndex] >= 5000;
+    }
+
+    function choiceScore() {
+      const judgeIndex = state.judgeModel;
+      const judgeFirstRecommendation = SCENE.models[judgeIndex].recommendation === state.selected;
+      const judgeRiichi = recommendedRiichi(judgeIndex);
+      const matchingModelNames = priorityModelIndices()
+        .filter(index => SCENE.models[index].recommendation === state.selected)
+        .map(index => SCENE.models[index].name);
+      const modelMatch = matchingModelNames.length ? `◎ ${matchingModelNames.join("・")}と一致！！` : "";
+      if (judgeFirstRecommendation && state.riichi === judgeRiichi) {
+        return { className: "score-first", mark: "💮", label: "第一推奨と一致", modelMatch };
+      }
+      const probabilities = SCENE.models.map((model, index) => SCENE.probabilities[state.selected]?.[index] ?? 0);
+      const badCount = probabilities.filter(value => value <= 5).length;
+      if (badCount === 0) return { className: "score-safe", mark: "〇", label: "全モデル悪手（推奨率5％以下）回避", modelMatch };
+      if (badCount === SCENE.models.length) return { className: "score-bad", mark: "×", label: "全モデル悪手判定", modelMatch };
+      return { className: "score-partial", mark: "△", label: "特定モデルの悪手は回避", modelMatch };
+    }
+
+    function renderChoiceScore() {
+      const badge = document.getElementById("handScoreBadge");
+      if (!state.revealed || !state.selected) {
+        badge.hidden = true;
+        badge.textContent = "";
+        badge.className = "hand-score";
+        return;
+      }
+      const score = choiceScore();
+      badge.className = `hand-score ${score.className}`;
+      badge.innerHTML = `<div class="hand-score-main"><span class="hand-score-mark" aria-hidden="true">${score.mark}</span><span>${score.label}</span></div>${score.modelMatch ? `<div class="hand-score-match">${score.modelMatch}</div>` : ""}`;
+      badge.setAttribute("aria-label", `${score.label}${score.modelMatch ? `。${score.modelMatch}` : ""}`);
+      badge.hidden = false;
     }
 
     function riichiLabel(value) {
@@ -410,8 +453,10 @@
       if (!state.revealed) {
         answerStrip.hidden = true;
         commentsPanel.hidden = true;
+        renderChoiceScore();
         return;
       }
+      renderChoiceScore();
       const correctTile = SCENE.models[state.judgeModel].recommendation;
       const correctRiichi = recommendedRiichi(state.judgeModel);
       const isCorrect = state.selected === correctTile && state.riichi === correctRiichi;
