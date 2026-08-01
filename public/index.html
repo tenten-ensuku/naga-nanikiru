@@ -44,8 +44,9 @@
     .source-url span { color: var(--muted); }
     .source-link { display: inline-flex; align-items: center; padding: 3px 7px; margin: 0 3px; color: #e7f8ff; background: #164862; border: 1px solid rgba(113,183,255,.55); border-radius: 6px; font-size: 9px; font-weight: 800; text-decoration: none; vertical-align: 1px; }
     .source-link:hover, .source-link:focus-visible { background: #246b8a; outline: 2px solid rgba(113,183,255,.28); outline-offset: 1px; }
-    .model-control { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 11px; white-space: nowrap; }
-    .model-control select { padding: 5px 8px; color: var(--ink); background: #071b28; border: 1px solid var(--line); border-radius: 7px; }
+    .model-control, .question-control { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 11px; white-space: nowrap; }
+    .question-control { margin-left: auto; }
+    .model-control select, .question-control select { padding: 5px 8px; color: var(--ink); background: #071b28; border: 1px solid var(--line); border-radius: 7px; }
     .scene-toggle { padding: 6px 10px; color: var(--ink); background: #0c3246; border: 1px solid rgba(113,183,255,.45); border-radius: 7px; font-size: 11px; font-weight: 800; }
     .scene-toggle:hover { background: #144a63; }
     .scene-card { padding: 8px; background: rgba(7, 28, 43, .92); border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow); }
@@ -183,8 +184,8 @@
       .version { padding-top: 5px; }
       .source-bar { align-items: stretch; }
       .source-url { width: 100%; }
-      .model-control { justify-content: space-between; width: 100%; }
-      .model-control select { flex: 1; }
+      .model-control, .question-control { justify-content: space-between; width: 100%; margin-left: 0; }
+      .model-control select, .question-control select { flex: 1; }
       .scene-toggle { width: 100%; }
       .scene-card { padding: 3px; border-radius: 9px; }
       .answer-strip { grid-template-columns: 1fr; gap: 8px; padding: 9px; }
@@ -216,7 +217,8 @@
     </header>
 
     <div class="source-bar">
-      <div class="source-url"><span>元画面：</span> 問題249 <a class="source-link" id="nagaSourceLink" href="#" target="_blank" rel="noopener noreferrer">URLに移動</a> · report_viewer.html · ts=1 · tv=69 · tw=0</div>
+      <div class="source-url"><span>元画面：</span> <strong id="sceneProblemTitle">問題249</strong> <a class="source-link" id="nagaSourceLink" href="#" target="_blank" rel="noopener noreferrer">URLに移動</a> <span id="sceneMeta">· report_viewer.html · ts=1 · tv=69 · tw=0</span></div>
+      <label class="question-control">問題を選ぶ <select id="questionSelect" aria-label="問題を選ぶ"></select></label>
       <label class="model-control">正誤判定基準 <select id="modelSelect" aria-label="正誤判定基準"></select></label>
       <button class="scene-toggle" id="surroundingsToggle" type="button" aria-expanded="false">周囲の手牌を開く</button>
     </div>
@@ -273,7 +275,7 @@
   </main>
 
   <script>
-    const APP_VERSION = 15;
+    const APP_VERSION = 16;
     const SCENE = {
       actualDiscard: "ji4",
       handBeforeDraw: ["man7", "man8", "man9", "pin4", "pin6", "pin7", "pin8", "pin9", "sou7", "sou8", "sou8", "ji4", "ji4"],
@@ -558,6 +560,246 @@
     }
 
     init();
+  </script>
+  <script>
+    (() => {
+      const baseQuestionV16 = {
+        ...SCENE,
+        number: 249,
+        title: "問題249",
+        image: "naga-scene-off.jpg",
+        images: { off: "naga-scene-off.jpg", open: "naga-scene-open.jpg" },
+        nagaUrl: NAGA_URL,
+        threadUrl: THREAD_URL,
+        comments: THREAD_MESSAGES,
+        hasRiichiJudgment: true
+      };
+      let questionsV16 = [baseQuestionV16];
+      const modelColorByNameV16 = { オメガ: "model-omega", ガンマ: "model-gamma", ニシキ: "model-nishiki", ヒバカリ: "model-hihikari", カガシ: "model-kagashi" };
+      const sceneFrameV16 = document.querySelector(".scene-frame");
+      const sceneImageV16 = document.getElementById("sceneImage");
+      const sourceTitleV16 = document.getElementById("sceneProblemTitle");
+      const sourceMetaV16 = document.getElementById("sceneMeta");
+
+      function modelColorV16(index) {
+        return modelColorByNameV16[SCENE.models[index]?.name] || MODEL_COLORS[index] || "model-nishiki";
+      }
+
+      function priorityIndicesV16(limit = 3) {
+        return MODEL_PRIORITY.map(name => SCENE.models.findIndex(model => model.name === name)).filter(index => index >= 0).slice(0, limit);
+      }
+
+      function handBarIndicesV16() {
+        return priorityIndicesV16(3);
+      }
+
+      function hasReachV16() {
+        return Boolean(SCENE.hasRiichiJudgment) && SCENE.reach.some(value => value > 0);
+      }
+
+      function recommendedRiichiV16(index) {
+        return hasReachV16() && (SCENE.reach[index] || 0) >= 5000;
+      }
+
+      function tileButtonV16(tile, index, isDraw = false) {
+        const selected = state.selectedIndex === index;
+        const judgeRecommended = SCENE.models[state.judgeModel]?.recommendation === tile;
+        const judgeHint = judgeRecommended ? "（判定基準モデルの第1推奨）" : "";
+        return `<div class="tile-wrap${isDraw ? " draw-tile" : ""}"><button class="tile-button${selected ? " is-selected" : ""}${judgeRecommended ? " is-judge-recommendation" : ""}" type="button" data-tile-index="${index}" aria-label="${tileLabel(tile)}を選ぶ${judgeHint}">${probabilityStackV16(tile)}${tileImage(tile)}<span class="selection-marker" aria-hidden="true"></span></button></div>`;
+      }
+
+      function probabilityStackV16(tile) {
+        if (!state.revealed || !SCENE.probabilities?.[tile]) return "";
+        const bars = handBarIndicesV16().map((index, slot) => {
+          const value = SCENE.probabilities[tile]?.[index] ?? 0;
+          if (value <= 0) return "";
+          return `<span class="probability-mini-track" style="--bar-slot:${slot}" title="${SCENE.models[index].name} ${value.toFixed(2)}%"><span class="probability-mini-fill ${modelColorV16(index)}" style="height:${Math.min(100, value)}%"></span></span>`;
+        }).join("");
+        return bars ? `<div class="probability-stack" aria-label="${tileLabel(tile)}のモデル別推奨度">${bars}</div>` : "";
+      }
+
+      function renderHandV16() {
+        const closed = (SCENE.handBeforeDraw || []).map((tile, index) => tileButtonV16(tile, index)).join("");
+        const draw = SCENE.draw ? tileButtonV16(SCENE.draw, SCENE.handBeforeDraw.length, true) : "";
+        const riichiButton = hasReachV16() ? `<button class="riichi-button" id="riichiButton" type="button" aria-pressed="${state.riichi}" title="リーチを宣言する">${state.riichi ? "リーチ済" : "リーチ"}</button>` : "";
+        document.getElementById("handLayer").innerHTML = `<div class="hand-controls"><div class="hand-row"><div class="closed-hand">${closed}</div>${draw ? `<span class="draw-divider" aria-hidden="true"></span>${draw}` : ""}</div>${riichiButton}</div>`;
+        document.querySelectorAll("[data-tile-index]").forEach(button => button.addEventListener("click", () => selectTileV16(Number(button.dataset.tileIndex))));
+        const riichi = document.getElementById("riichiButton");
+        if (riichi) riichi.addEventListener("click", toggleRiichiV16);
+      }
+
+      function choiceScoreV16() {
+        const judge = SCENE.models[state.judgeModel];
+        const modelNames = SCENE.models.filter(model => model.recommendation === state.selected).map(model => model.name);
+        const modelMatch = modelNames.length ? `◎ ${modelNames.join("・")}と一致！！` : "";
+        const first = judge?.recommendation === state.selected && (!hasReachV16() || state.riichi === recommendedRiichiV16(state.judgeModel));
+        if (first) return { className: "score-first", mark: "💮", label: "第一推奨と一致", modelMatch };
+        const probabilities = SCENE.models.map((model, index) => SCENE.probabilities?.[state.selected]?.[index] ?? 0);
+        const badCount = probabilities.filter(value => value <= 5).length;
+        if (badCount === 0) return { className: "score-safe", mark: "〇", label: "全モデル悪手（推奨率5％以下）回避", modelMatch };
+        if (badCount === SCENE.models.length) return { className: "score-bad", mark: "×", label: "全モデル悪手判定", modelMatch };
+        return { className: "score-partial", mark: "△", label: "特定モデルの悪手は回避", modelMatch };
+      }
+
+      function renderChoiceScoreV16() {
+        const badge = document.getElementById("handScoreBadge");
+        if (!state.revealed || !state.selected) {
+          badge.hidden = true;
+          badge.textContent = "";
+          badge.className = "hand-score";
+          return;
+        }
+        const score = choiceScoreV16();
+        badge.className = `hand-score ${score.className}`;
+        badge.innerHTML = `<div class="hand-score-main"><span class="hand-score-mark" aria-hidden="true">${score.mark}</span><span>${score.label}</span></div>${score.modelMatch ? `<div class="hand-score-match">${score.modelMatch}</div>` : ""}`;
+        badge.setAttribute("aria-label", `${score.label}${score.modelMatch ? `。${score.modelMatch}` : ""}`);
+        badge.hidden = false;
+      }
+
+      function renderRiichiPanelsV16() {
+        const groups = new Map();
+        SCENE.models.forEach((model, index) => {
+          if (!SCENE.reach[index]) return;
+          if (!groups.has(model.recommendation)) groups.set(model.recommendation, []);
+          groups.get(model.recommendation).push(index);
+        });
+        return [...groups.entries()].map(([tile, indices]) => `<section class="riichi-panel" aria-label="${tileLabel(tile)}を切る場合のリーチ推奨度"><div class="riichi-panel-heading"><span>リーチ推奨度</span><strong>${tileLabel(tile)}を切る場合</strong></div><p class="riichi-panel-note">第1推奨打牌がリーチ候補のモデルのみ表示</p><div class="riichi-bar-list">${indices.map(index => { const value = SCENE.reach[index] / 100; return `<div class="riichi-bar-item"><span class="riichi-bar-value">${value.toFixed(1)}%</span><span class="riichi-bar-track"><span class="riichi-bar-fill ${modelColorV16(index)}" style="height:${value}%"></span></span><span class="riichi-bar-model" title="${SCENE.models[index].name}">${SCENE.models[index].name}</span></div>`; }).join("")}</div></section>`).join("");
+      }
+
+      function renderAnswerV16() {
+        const answerStrip = document.getElementById("answerStrip");
+        const commentsPanel = document.getElementById("commentsPanel");
+        if (!state.revealed) {
+          answerStrip.hidden = true;
+          commentsPanel.hidden = true;
+          renderChoiceScoreV16();
+          return;
+        }
+        renderChoiceScoreV16();
+        const judge = SCENE.models[state.judgeModel];
+        const correctTile = judge?.recommendation;
+        const correctRiichi = recommendedRiichiV16(state.judgeModel);
+        const isCorrect = state.selected === correctTile && (!hasReachV16() || state.riichi === correctRiichi);
+        document.getElementById("answerTitle").textContent = isCorrect ? `正解：${tileLabel(state.selected)}${hasReachV16() ? `・${riichiLabel(state.riichi)}` : ""}` : `推奨：${tileLabel(correctTile)}${hasReachV16() ? `・${riichiLabel(correctRiichi)}` : ""}`;
+        document.getElementById("answerDetail").innerHTML = `あなたの選択：<strong>${tileLabel(state.selected)}${hasReachV16() ? `・${riichiLabel(state.riichi)}` : ""}</strong> ／ 当時の選択打牌：<strong>${tileLabel(SCENE.actualDiscard)}</strong>`;
+        const topModelIndices = priorityIndicesV16(3);
+        const playerCard = `<div class="answer-choice player-choice"><span class="answer-choice-label">あなたの選択</span><span class="answer-choice-tile">${tileImage(state.selected)}</span><span class="answer-choice-title">${tileLabel(state.selected)}${hasReachV16() ? `・${riichiLabel(state.riichi)}` : ""}</span></div>`;
+        const historicalCard = `<div class="answer-choice historical-choice"><span class="answer-choice-label">当時の選択打牌</span><span class="answer-choice-tile">${tileImage(SCENE.actualDiscard)}</span><span class="answer-choice-title">${tileLabel(SCENE.actualDiscard)}</span></div>`;
+        const modelCards = topModelIndices.map(index => {
+          const model = SCENE.models[index];
+          const value = (SCENE.reach[index] || 0) / 100;
+          const reach = hasReachV16() ? `<div class="answer-choice-reach" aria-label="${model.name}のリーチ推奨度"><span class="answer-choice-reach-label">リーチ ${value.toFixed(1)}%</span><span class="answer-choice-reach-track"><span class="answer-choice-reach-fill ${modelColorV16(index)}" style="width:${value}%"></span></span></div>` : "";
+          return `<div class="answer-choice model-choice"><span class="answer-choice-label">${model.name}・第1推奨</span><span class="answer-choice-tile">${tileImage(model.recommendation)}</span><span class="answer-choice-title">${tileLabel(model.recommendation)}</span>${reach}</div>`;
+        }).join("");
+        document.getElementById("answerComparison").innerHTML = `${playerCard}${historicalCard}${modelCards}`;
+        const riichiPanels = document.getElementById("riichiPanels");
+        riichiPanels.innerHTML = hasReachV16() ? renderRiichiPanelsV16() : "";
+        answerStrip.hidden = false;
+        commentsPanel.hidden = false;
+        renderComments();
+      }
+
+      function selectTileV16(index) {
+        const tiles = [...SCENE.handBeforeDraw, SCENE.draw].filter(Boolean);
+        state.selectedIndex = index;
+        state.selected = tiles[index];
+        state.revealed = true;
+        renderHandV16();
+        renderAnswerV16();
+      }
+
+      function toggleRiichiV16() {
+        if (!hasReachV16()) return;
+        state.riichi = !state.riichi;
+        renderHandV16();
+        if (state.revealed) renderAnswerV16();
+      }
+
+      function resetV16() {
+        state.selected = null;
+        state.selectedIndex = null;
+        state.revealed = false;
+        state.riichi = false;
+        state.commentsExpanded = false;
+        document.querySelector(".page").classList.remove("comments-expanded");
+        document.getElementById("commentsPanel").classList.remove("is-expanded");
+        document.getElementById("commentsPanel").hidden = true;
+        document.getElementById("commentsExpandButton").setAttribute("aria-expanded", "false");
+        document.getElementById("commentsExpandButton").textContent = "コメント欄を拡大";
+        renderHandV16();
+        renderAnswerV16();
+      }
+
+      function sceneMetaV16(url) {
+        try {
+          const parsed = new URL(url);
+          return `· report_viewer.html · ts=${parsed.searchParams.get("ts") || 0} · tv=${parsed.searchParams.get("tv") || 0} · tw=${parsed.searchParams.get("tw") || 0}`;
+        } catch {
+          return "";
+        }
+      }
+
+      function applyQuestionV16(question) {
+        for (const key of Object.keys(SCENE)) delete SCENE[key];
+        Object.assign(SCENE, question, { images: question.images || { off: question.image, open: question.image } });
+        state.selected = null;
+        state.selectedIndex = null;
+        state.revealed = false;
+        state.riichi = false;
+        state.surroundingsOpen = false;
+        state.commentsExpanded = false;
+        state.comments = (SCENE.comments || []).map(message => ({ ...message, attachments: [...(message.attachments || [])] }));
+        state.judgeModel = Math.max(0, SCENE.models.findIndex(model => model.name === "ニシキ"));
+        document.getElementById("modelSelect").innerHTML = SCENE.models.map((model, index) => `<option value="${index}">${model.name}（正誤基準）</option>`).join("");
+        document.getElementById("modelSelect").value = String(state.judgeModel);
+        sourceTitleV16.textContent = `問題${SCENE.number}`;
+        sourceMetaV16.textContent = sceneMetaV16(SCENE.nagaUrl);
+        document.getElementById("nagaSourceLink").href = SCENE.nagaUrl;
+        document.getElementById("threadLink").href = SCENE.threadUrl;
+        SCENE_IMAGES.off = SCENE.images.off;
+        SCENE_IMAGES.open = SCENE.images.open;
+        sceneImageV16.src = SCENE.images.off;
+        sceneImageV16.alt = `問題${SCENE.number}の伏牌スクリーンショット`;
+        sceneImageV16.onload = () => { if (sceneImageV16.naturalWidth && sceneImageV16.naturalHeight) sceneFrameV16.style.aspectRatio = `${sceneImageV16.naturalWidth} / ${sceneImageV16.naturalHeight}`; };
+        if (sceneImageV16.complete) sceneImageV16.onload();
+        document.getElementById("surroundingsToggle").setAttribute("aria-expanded", "false");
+        document.getElementById("surroundingsToggle").textContent = "周囲の手牌を開く";
+        renderHandV16();
+        renderAnswerV16();
+        renderComments();
+      }
+
+      function renderQuestionOptionsV16() {
+        const select = document.getElementById("questionSelect");
+        select.innerHTML = questionsV16.map((question, index) => `<option value="${index}">${question.title || `問題${question.number}`}</option>`).join("");
+        select.value = "0";
+      }
+
+      async function initImportedQuestionsV16() {
+        try {
+          const response = await fetch("question-data/selected-questions.json", { cache: "no-store" });
+          if (!response.ok) throw new Error(`question data ${response.status}`);
+          const imported = await response.json();
+          questionsV16 = questionsV16.concat(imported.map(question => ({ ...question, images: { off: question.image, open: question.image }, hasRiichiJudgment: Boolean(question.hasRiichiJudgment) })));
+        } catch (error) {
+          console.warn("追加問題の読み込みに失敗しました", error);
+        }
+        renderQuestionOptionsV16();
+        applyQuestionV16(questionsV16[0]);
+        document.getElementById("questionSelect").addEventListener("change", event => applyQuestionV16(questionsV16[Number(event.target.value)]));
+      }
+
+      renderHand = renderHandV16;
+      renderAnswer = renderAnswerV16;
+      renderChoiceScore = renderChoiceScoreV16;
+      choiceScore = choiceScoreV16;
+      probabilityStack = probabilityStackV16;
+      tileButton = tileButtonV16;
+      selectTile = selectTileV16;
+      toggleRiichi = toggleRiichiV16;
+      reset = resetV16;
+      initImportedQuestionsV16();
+    })();
   </script>
 </body>
 </html>

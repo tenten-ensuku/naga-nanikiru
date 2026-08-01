@@ -1,0 +1,640 @@
+[
+  {
+    "id": "001",
+    "number": 1,
+    "title": "問題1",
+    "nagaUrl": "https://naga.dmv.nico/htmls/bfc05b88a5d393042145feb0bcdfb028d96606e36a47772e2f98255f7838cb04v2_2.html?tw=2&ts=0&tv=5",
+    "threadUrl": "https://discord.com/channels/1166706544856006656/1434560706694353028",
+    "image": "question-images/q001.webp",
+    "handBeforeDraw": [
+      "man8",
+      "pin8",
+      "pin6",
+      "ji1",
+      "ji2",
+      "sou1",
+      "man9",
+      "man4",
+      "pin1",
+      "sou9",
+      "pin1",
+      "ji5",
+      "sou6"
+    ],
+    "draw": "ji4",
+    "actualDiscard": "ji2",
+    "doraMarker": "ji3",
+    "models": [
+      {
+        "name": "ニシキ",
+        "recommendation": "sou6",
+        "label": "sou6"
+      },
+      {
+        "name": "ヒバカリ",
+        "recommendation": "sou6",
+        "label": "sou6"
+      },
+      {
+        "name": "カガシ",
+        "recommendation": "sou6",
+        "label": "sou6"
+      }
+    ],
+    "probabilities": {
+      "man8": [
+        0.23,
+        7.55,
+        4.49
+      ],
+      "pin8": [
+        0.02,
+        1.43,
+        0.36
+      ],
+      "pin6": [
+        0.48,
+        1.19,
+        1.34
+      ],
+      "ji1": [
+        0.12,
+        0.38,
+        0.08
+      ],
+      "ji2": [
+        7.03,
+        0.76,
+        17
+      ],
+      "sou1": [
+        0.37,
+        1,
+        0.56
+      ],
+      "man9": [
+        0.01,
+        0.02,
+        0
+      ],
+      "man4": [
+        9.96,
+        21.67,
+        14.23
+      ],
+      "pin1": [
+        0,
+        0,
+        0
+      ],
+      "sou9": [
+        26.51,
+        11.55,
+        26.34
+      ],
+      "ji5": [
+        0,
+        0,
+        0
+      ],
+      "sou6": [
+        55.01,
+        54.2,
+        35.27
+      ],
+      "ji4": [
+        0.22,
+        0.19,
+        0.28
+      ]
+    },
+    "reach": [
+      0,
+      0,
+      0
+    ],
+    "comments": [
+      {
+        "id": "1434561934203682846",
+        "author": {
+          "id": "407938696864858113",
+          "username": "tenten0411.",
+          "displayName": "てんてん"
+        },
+        "createdAt": "2025-11-02T15:16:57.986Z",
+        "content": "**00物件**であることに気付けたかどうか。\n\n00物件とは0面子0両面の事。（配牌時出現率は||8||％）\n→面子手立直はかなり厳しい。",
+        "attachments": []
+      },
+      {
+        "id": "1434562371845619772",
+        "author": {
+          "id": "407938696864858113",
+          "username": "tenten0411.",
+          "displayName": "てんてん"
+        },
+        "createdAt": "2025-11-02T15:18:42.328Z",
+        "content": "本問では、国士（オリがメイン）、チャンタ、ホンイツだけ残して打6ｓとする。",
+        "attachments": []
+      },
+      {
+        "id": "1434562685089091667",
+        "author": {
+          "id": "407938696864858113",
+          "username": "tenten0411.",
+          "displayName": "てんてん"
+        },
+        "createdAt": "2025-11-02T15:19:57.011Z",
+        "content": "ＡＩ＝手なり　のイメージがあると思うが、00物件では手なり進行は避けて方針を定めたい。",
+        "attachments": []
+      }
+    ],
+    "hasRiichiJudgment": false,
+    "melds": []
+  },
+  {
+    "id": "002",
+    "number": 2,
+    "title": "問題2",
+    "nagaUrl": "https://naga.dmv.nico/htmls/bfc05b88a5d393042145feb0bcdfb028d96606e36a47772e2f98255f7838cb04v2_2.html?tw=2&ts=2&tv=37",
+    "threadUrl": "https://discord.com/channels/1166706544856006656/1434562825380167731",
+    "image": "question-images/q002.webp",
+    "handBeforeDraw": [
+      "pin8",
+      "sou9",
+      "pin8",
+      "pin5",
+      "man3",
+      "sou8",
+      "man1",
+      "pin7",
+      "sou3",
+      "sou3"
+    ],
+    "draw": "sou2",
+    "actualDiscard": "sou9",
+    "doraMarker": "sou1",
+    "models": [
+      {
+        "name": "ニシキ",
+        "recommendation": "pin5",
+        "label": "pin5"
+      },
+      {
+        "name": "ヒバカリ",
+        "recommendation": "sou3",
+        "label": "sou3"
+      },
+      {
+        "name": "カガシ",
+        "recommendation": "sou3",
+        "label": "sou3"
+      }
+    ],
+    "probabilities": {
+      "pin8": [
+        0,
+        0,
+        0.03
+      ],
+      "sou9": [
+        2.5,
+        2.08,
+        4.17
+      ],
+      "pin5": [
+        42.3,
+        17.01,
+        7.23
+      ],
+      "man3": [
+        0,
+        0,
+        0
+      ],
+      "sou8": [
+        14.15,
+        18.51,
+        16.21
+      ],
+      "man1": [
+        0.14,
+        0.02,
+        0.04
+      ],
+      "pin7": [
+        0,
+        0,
+        0
+      ],
+      "sou3": [
+        40.88,
+        62.34,
+        72.09
+      ],
+      "sou2": [
+        0,
+        0.01,
+        0.2
+      ]
+    },
+    "reach": [
+      0,
+      0,
+      0
+    ],
+    "comments": [
+      {
+        "id": "1434563283913805888",
+        "author": {
+          "id": "407938696864858113",
+          "username": "tenten0411.",
+          "displayName": "てんてん"
+        },
+        "createdAt": "2025-11-02T15:22:19.782Z",
+        "content": "打5ｐ（ドラ受け強両面固定の打3ｓもＯＫ）\n\n5788ｐからの5ｐ切りは受け入れロス無し。",
+        "attachments": []
+      }
+    ],
+    "hasRiichiJudgment": false,
+    "melds": [
+      {
+        "type": "pon",
+        "pai": "ji6",
+        "consumed": [
+          "ji6",
+          "ji6"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "003",
+    "number": 3,
+    "title": "問題3",
+    "nagaUrl": "https://naga.dmv.nico/htmls/bfc05b88a5d393042145feb0bcdfb028d96606e36a47772e2f98255f7838cb04v2_2.html?tw=2&ts=9&tv=3",
+    "threadUrl": "https://discord.com/channels/1166706544856006656/1434563668426883192",
+    "image": "question-images/q003.webp",
+    "handBeforeDraw": [
+      "ji4",
+      "pin4",
+      "sou4",
+      "pin9",
+      "man7",
+      "man5",
+      "sou7",
+      "pin3",
+      "man3",
+      "pin8",
+      "man7",
+      "man6",
+      "sou6"
+    ],
+    "draw": "man9",
+    "actualDiscard": "man9",
+    "doraMarker": "sou5",
+    "models": [
+      {
+        "name": "ニシキ",
+        "recommendation": "ji4",
+        "label": "ji4"
+      },
+      {
+        "name": "ヒバカリ",
+        "recommendation": "ji4",
+        "label": "ji4"
+      },
+      {
+        "name": "カガシ",
+        "recommendation": "ji4",
+        "label": "ji4"
+      }
+    ],
+    "probabilities": {
+      "ji4": [
+        99.85,
+        98.63,
+        99.92
+      ],
+      "pin4": [
+        0,
+        0,
+        0
+      ],
+      "sou4": [
+        0,
+        0,
+        0
+      ],
+      "pin9": [
+        0.05,
+        1.28,
+        0.01
+      ],
+      "man7": [
+        0,
+        0,
+        0
+      ],
+      "man5": [
+        0,
+        0,
+        0
+      ],
+      "sou7": [
+        0,
+        0,
+        0
+      ],
+      "pin3": [
+        0,
+        0,
+        0
+      ],
+      "man3": [
+        0,
+        0,
+        0
+      ],
+      "pin8": [
+        0,
+        0,
+        0
+      ],
+      "man6": [
+        0,
+        0,
+        0
+      ],
+      "sou6": [
+        0,
+        0,
+        0
+      ],
+      "man9": [
+        0.07,
+        0.05,
+        0.04
+      ]
+    },
+    "reach": [
+      0,
+      0,
+      0
+    ],
+    "comments": [
+      {
+        "id": "1434564037839949936",
+        "author": {
+          "id": "407938696864858113",
+          "username": "tenten0411.",
+          "displayName": "てんてん"
+        },
+        "createdAt": "2025-11-02T15:25:19.532Z",
+        "content": "打北。\n打9ｍはミスタップでしょうか。",
+        "attachments": []
+      }
+    ],
+    "hasRiichiJudgment": false,
+    "melds": []
+  },
+  {
+    "id": "004",
+    "number": 4,
+    "title": "問題4",
+    "nagaUrl": "https://naga.dmv.nico/htmls/bfc05b88a5d393042145feb0bcdfb028d96606e36a47772e2f98255f7838cb04v2_2.html?tw=2&ts=10&tv=57",
+    "threadUrl": "https://discord.com/channels/1166706544856006656/1434564176885321789",
+    "image": "question-images/q004.webp",
+    "handBeforeDraw": [
+      "man5",
+      "sou5",
+      "sou1",
+      "man8",
+      "man6",
+      "pin3",
+      "pin3",
+      "sou2",
+      "pin4",
+      "sou5",
+      "man8",
+      "man5",
+      "man7"
+    ],
+    "draw": "man8",
+    "actualDiscard": "pin3",
+    "doraMarker": "pin7",
+    "models": [
+      {
+        "name": "ニシキ",
+        "recommendation": "sou1",
+        "label": "sou1"
+      },
+      {
+        "name": "ヒバカリ",
+        "recommendation": "sou1",
+        "label": "sou1"
+      },
+      {
+        "name": "カガシ",
+        "recommendation": "pin3",
+        "label": "pin3"
+      }
+    ],
+    "probabilities": {
+      "man5": [
+        17.76,
+        13.79,
+        4
+      ],
+      "sou5": [
+        0,
+        0,
+        0
+      ],
+      "sou1": [
+        68.93,
+        39.65,
+        38.79
+      ],
+      "man8": [
+        0.02,
+        0.01,
+        0.01
+      ],
+      "man6": [
+        0,
+        0,
+        0
+      ],
+      "pin3": [
+        11.56,
+        36.23,
+        53.95
+      ],
+      "sou2": [
+        1.71,
+        10.3,
+        3.22
+      ],
+      "pin4": [
+        0,
+        0,
+        0
+      ],
+      "man7": [
+        0,
+        0,
+        0
+      ]
+    },
+    "reach": [
+      0,
+      0,
+      0
+    ],
+    "comments": [
+      {
+        "id": "1434565566592454666",
+        "author": {
+          "id": "407938696864858113",
+          "username": "tenten0411.",
+          "displayName": "てんてん"
+        },
+        "createdAt": "2025-11-02T15:31:24.015Z",
+        "content": "打1ｓ推奨。\n\n**タンヤオ大正義。**\n\n打5ｍでめいいっぱいにしなかった所は素晴らしい。（リーノミ愚形の受け入れは無くして良い、ですもんね✨ ）タンヤオでない面子が完成している場合には打3ｐで100点。\n\n今回はタンヤオ大正義に則って打1ｓをお勧めします。（積極的にチャレンジしてみましょう）",
+        "attachments": []
+      }
+    ],
+    "hasRiichiJudgment": false,
+    "melds": []
+  },
+  {
+    "id": "005",
+    "number": 5,
+    "title": "問題5",
+    "nagaUrl": "https://naga.dmv.nico/htmls/bfc05b88a5d393042145feb0bcdfb028d96606e36a47772e2f98255f7838cb04v2_2.html?tw=2&ts=9&tv=35",
+    "threadUrl": "https://discord.com/channels/1166706544856006656/1434566186695397456",
+    "image": "question-images/q005.png",
+    "handBeforeDraw": [
+      "sou4",
+      "pin9",
+      "man7",
+      "man5",
+      "sou7",
+      "pin3",
+      "man3",
+      "pin8",
+      "man7",
+      "man6",
+      "sou6",
+      "pin4",
+      "sou2"
+    ],
+    "draw": "sou8",
+    "actualDiscard": "pin8",
+    "doraMarker": "sou5",
+    "models": [
+      {
+        "name": "ニシキ",
+        "recommendation": "pin9",
+        "label": "pin9"
+      },
+      {
+        "name": "ヒバカリ",
+        "recommendation": "pin9",
+        "label": "pin9"
+      },
+      {
+        "name": "カガシ",
+        "recommendation": "pin9",
+        "label": "pin9"
+      }
+    ],
+    "probabilities": {
+      "sou4": [
+        0,
+        0,
+        0
+      ],
+      "pin9": [
+        50.21,
+        80.28,
+        50.29
+      ],
+      "man7": [
+        0.01,
+        0.12,
+        0
+      ],
+      "man5": [
+        0,
+        0,
+        0
+      ],
+      "sou7": [
+        0,
+        0,
+        0
+      ],
+      "pin3": [
+        0,
+        0,
+        0
+      ],
+      "man3": [
+        48.99,
+        10.42,
+        48.69
+      ],
+      "pin8": [
+        0.74,
+        9.14,
+        0.98
+      ],
+      "man6": [
+        0,
+        0,
+        0
+      ],
+      "sou6": [
+        0,
+        0,
+        0
+      ],
+      "pin4": [
+        0,
+        0,
+        0
+      ],
+      "sou2": [
+        0.01,
+        0,
+        0
+      ],
+      "sou8": [
+        0,
+        0,
+        0
+      ]
+    },
+    "reach": [
+      0,
+      0,
+      0
+    ],
+    "comments": [
+      {
+        "id": "1434567245765410928",
+        "author": {
+          "id": "407938696864858113",
+          "username": "tenten0411.",
+          "displayName": "てんてん"
+        },
+        "createdAt": "2025-11-02T15:38:04.361Z",
+        "content": "ペンチャンターツ89ｐの切り順。\n\n8ｐから切るか9ｐから切るかは、6ｐ、7ｐ、8ｐを引いた際の事を考えて比較。（序盤、自己都合では）\n\n今回で言うと**ブロック不足**の為、8ｐ残しての6ｐ引き、7ｐ引き、8ｐ引きは全て嬉しいので９ｐ切り。",
+        "attachments": []
+      }
+    ],
+    "hasRiichiJudgment": false,
+    "melds": []
+  }
+]
