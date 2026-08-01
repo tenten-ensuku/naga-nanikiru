@@ -102,15 +102,14 @@
     .model-hihikari { background: var(--hihikari); }
     .model-kagashi { background: var(--kagashi); }
 
-    .answer-strip { order: 4; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 12px; padding: 10px 12px; margin-top: 10px; background: linear-gradient(145deg, rgba(12, 42, 58, .98), rgba(6, 25, 39, .98)); border: 1px solid var(--line); border-radius: 12px; }
+    .answer-strip { order: 4; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 12px; padding: 12px 14px; margin-top: 10px; background: linear-gradient(145deg, rgba(12, 42, 58, .98), rgba(6, 25, 39, .98)); border: 1px solid var(--line); border-radius: 12px; }
     .answer-strip[hidden] { display: none; }
     .answer-summary { min-width: 0; }
     .answer-heading-row { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
-    .answer-label { margin: 0 0 3px; color: var(--gold); font-size: 9px; font-weight: 800; letter-spacing: .12em; }
-    .answer-title { margin: 0; font-size: 15px; }
-    .answer-detail { margin: 0; color: var(--muted); font-size: 9px; line-height: 1.35; text-align: right; }
+    .answer-label, .answer-detail { display: none; }
+    .answer-title { margin: 0; color: #fff7d6; font-size: clamp(21px, 2.6vw, 30px); line-height: 1.1; }
     .answer-detail strong { color: var(--ink); }
-    .answer-comparison { display: grid; grid-template-columns: repeat(5, minmax(48px, 1fr)); gap: 6px; margin-top: 7px; }
+    .answer-comparison { display: grid; grid-template-columns: repeat(5, minmax(48px, 1fr)); gap: 6px; margin-top: 6px; }
     .answer-choice { min-width: 0; padding: 5px 4px 4px; text-align: center; border: 1px solid rgba(255,255,255,.12); border-radius: 7px; background: rgba(0,0,0,.16); }
     .answer-choice.player-choice { border-color: rgba(241,196,87,.55); background: rgba(77,56,22,.25); }
     .answer-choice.historical-choice { border-color: rgba(239,61,79,.62); background: rgba(97,22,31,.24); }
@@ -118,9 +117,9 @@
     .answer-choice-label { display: block; overflow: hidden; color: var(--muted); font-size: 8px; font-weight: 800; text-overflow: ellipsis; white-space: nowrap; }
     .answer-choice.player-choice .answer-choice-label { color: #fff1bd; }
     .answer-choice.historical-choice .answer-choice-label { color: #ffb7bd; }
-    .answer-choice-tile { display: block; min-height: 31px; margin: 3px auto 2px; }
+    .answer-choice-tile { display: block; min-height: 0; margin: 2px auto 0; }
     .answer-choice-tile img { width: clamp(23px, 2.8vw, 36px); height: auto; margin: 0 auto; border-radius: 2px; }
-    .answer-choice-title { display: block; color: #f2ffff; font-size: 9px; font-weight: 800; line-height: 1.15; }
+    .answer-choice-title { display: none; }
     .answer-choice-reach { margin-top: 4px; padding-top: 3px; border-top: 1px solid rgba(241,196,87,.2); }
     .answer-choice-reach-label { display: block; color: #fff1bd; font-size: 7px; font-weight: 800; line-height: 1; }
     .answer-choice-reach-track { display: block; width: 100%; height: 3px; margin-top: 3px; overflow: hidden; background: rgba(255,255,255,.12); border-radius: 2px; }
@@ -166,34 +165,37 @@
     .reset-button:hover { background: #ffda77; }
     .next-button { color: #eaffff; background: #216f89; border-color: rgba(163,230,239,.7); }
     .next-button:hover { background: #2e8da4; }
-    .comments-panel { order: 5; display: grid; gap: 6px; padding: 8px 10px; margin-top: 8px; background: linear-gradient(145deg, rgba(12,42,58,.98), rgba(6,25,39,.98)); border: 1px solid var(--line); border-radius: 10px; }
+    .comments-panel { order: 5; display: grid; gap: 8px; padding: 10px 12px; margin-top: 8px; background: linear-gradient(145deg, rgba(12,42,58,.98), rgba(6,25,39,.98)); border: 1px solid var(--line); border-radius: 10px; }
     .comments-panel[hidden] { display: none; }
     .comments-heading { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
-    .comments-heading h2 { margin: 0; font-size: 13px; }
+    .comments-heading h2 { display: none; }
     .comments-heading a { color: #9bdcff; font-size: 8px; }
     .comments-heading-actions { display: flex; align-items: center; gap: 7px; }
-    .comments-expand-button { padding: 4px 7px; color: #e7f8ff; background: #164862; border: 1px solid rgba(113,183,255,.55); border-radius: 6px; font-size: 8px; font-weight: 800; }
+    .comments-expand-button, .comment-add-button { padding: 5px 8px; color: #e7f8ff; background: #164862; border: 1px solid rgba(113,183,255,.55); border-radius: 6px; font-size: 9px; font-weight: 800; }
+    .comment-add-button { color: #12211e; background: #bde7e0; border-color: #d6fff5; }
+    .comment-add-button:hover { background: #d6fff5; }
     .comments-expand-button:hover { background: #246b8a; }
-    .comments-meta { margin: 2px 0 0; color: var(--muted); font-size: 8px; }
-    .comments-scroll { display: grid; gap: 5px; max-height: 180px; overflow-y: auto; padding: 1px 4px 1px 0; overscroll-behavior: contain; scrollbar-color: rgba(113,183,255,.65) rgba(255,255,255,.08); }
+    .comments-meta, .comment-sync-note { display: none; }
+    .comments-scroll { display: grid; gap: 7px; max-height: min(52vh, 720px); overflow-y: auto; padding: 1px 4px 1px 0; overscroll-behavior: contain; scrollbar-color: rgba(113,183,255,.65) rgba(255,255,255,.08); }
     .comments-panel.is-expanded { order: 3; margin-top: 8px; padding: 10px 12px; }
     .comments-panel.is-expanded .comments-scroll { max-height: min(68vh, 680px); }
     .comments-panel.is-expanded .comment-attachment { max-height: 260px; }
-    .comment-card { padding: 6px 8px; border: 1px solid rgba(255,255,255,.1); border-radius: 7px; background: rgba(0,0,0,.16); }
+    .comment-card { padding: 8px 10px; border: 1px solid rgba(255,255,255,.1); border-radius: 7px; background: rgba(0,0,0,.16); }
     .comment-card-header { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
-    .comment-author { color: #eafefe; font-size: 10px; font-weight: 800; }
-    .comment-time { color: var(--muted); font-size: 8px; white-space: nowrap; }
-    .comment-body { margin: 3px 0 0; color: #e6f4f7; font-size: 10px; line-height: 1.45; overflow-wrap: anywhere; }
+    .comment-author { color: #eafefe; font-size: 11px; font-weight: 800; }
+    .comment-time { color: var(--muted); font-size: 9px; white-space: nowrap; }
+    .comment-body { margin: 4px 0 0; color: #e6f4f7; font-size: clamp(13px, 1.25vw, 16px); line-height: 1.6; overflow-wrap: anywhere; }
     .comment-body a { color: #9bdcff; }
     .comment-attachment { display: block; max-width: min(100%, 560px); max-height: 150px; margin-top: 5px; border: 1px solid rgba(255,255,255,.12); border-radius: 5px; object-fit: contain; background: #031521; }
-    .comment-form { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 5px; align-items: end; }
-    .comment-form label { grid-column: 1 / -1; color: #eafefe; font-size: 8px; font-weight: 800; }
-    .comment-form textarea { min-height: 44px; resize: vertical; padding: 6px 7px; color: var(--ink); background: #061c2c; border: 1px solid rgba(255,255,255,.18); border-radius: 6px; font: inherit; font-size: 10px; line-height: 1.35; }
+    .comment-form { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px; align-items: end; padding: 9px; border: 1px solid rgba(113,183,255,.28); border-radius: 8px; background: rgba(0,0,0,.14); }
+    .comment-form[hidden] { display: none; }
+    .comment-form label { grid-column: 1 / -1; color: #eafefe; font-size: 11px; font-weight: 800; }
+    .comment-form textarea { min-height: 58px; resize: vertical; padding: 7px 8px; color: var(--ink); background: #061c2c; border: 1px solid rgba(255,255,255,.18); border-radius: 6px; font: inherit; font-size: 13px; line-height: 1.45; }
     .comment-form textarea:focus { border-color: rgba(113,183,255,.8); outline: 2px solid rgba(113,183,255,.18); }
     .comment-submit { min-width: 88px; padding: 7px 8px; color: #12211e; background: #bde7e0; border: 1px solid #d6fff5; border-radius: 6px; font-size: 9px; font-weight: 800; }
     .comment-submit:hover { background: #d6fff5; }
     .comment-sync-note { margin: 0; color: var(--muted); font-size: 8px; line-height: 1.35; }
-    .below-note { order: 6; display: flex; justify-content: space-between; gap: 12px; margin-top: 9px; color: var(--muted); font-size: 10px; }
+    .below-note { display: none; }
     .below-note strong { color: #c9eff0; }
 
     @media (max-width: 800px) {
@@ -219,7 +221,7 @@
       .comments-heading-actions { gap: 4px; }
       .comment-form { grid-template-columns: 1fr; }
       .comment-submit { width: 100%; }
-      .below-note { display: block; line-height: 1.6; }
+      .below-note { display: none; }
     }
   </style>
 </head>
@@ -284,12 +286,13 @@
           <p class="comments-meta" id="commentsMeta"></p>
         </div>
         <div class="comments-heading-actions">
+          <button class="comment-add-button" id="commentAddButton" type="button" aria-expanded="false">コメント追加</button>
           <a id="threadLink" href="https://discord.com/channels/1166706544856006656/1532011607209541833" target="_blank" rel="noreferrer">Discordで開く</a>
           <button class="comments-expand-button" id="commentsExpandButton" type="button" aria-expanded="false">コメント欄を拡大</button>
         </div>
       </div>
       <div class="comments-scroll" id="commentsScroll" tabindex="0" aria-label="スレッド内のコメント一覧"></div>
-      <form class="comment-form" id="commentForm">
+      <form class="comment-form" id="commentForm" hidden>
         <label for="commentInput">コメントを追加（この画面内のみ）</label>
         <textarea id="commentInput" maxlength="2000" placeholder="コメントを書き込む"></textarea>
         <button class="comment-submit" type="submit">コメントを追加</button>
@@ -304,7 +307,7 @@
   </main>
 
   <script>
-    const APP_VERSION = 21;
+    const APP_VERSION = 22;
     const SCENE = {
       actualDiscard: "ji4",
       handBeforeDraw: ["man7", "man8", "man9", "pin4", "pin6", "pin7", "pin8", "pin9", "sou7", "sou8", "sou8", "ji4", "ji4"],
@@ -341,7 +344,7 @@
       { id: "1532012487212536022", author: "てんてん", createdAt: "2026-07-29T13:10:40.367Z", content: "聴牌取らずは良いが、打8ｓ推奨。\n打北は面子手立直進行に於ける二大タブー（①単独暗刻の破壊②単独雀頭の破壊）に抵触。\n打8ｓとすれば、ヘッドレス2型連続形となるため、4ｐ6ｐ引きでも三色聴牌となるし、9ｐ引きも悪くない。", attachments: [] },
       { id: "1532017637700272302", author: "くにたそ", createdAt: "2026-07-29T13:31:08.339Z", content: "恥ずかしながら、時間切れの北でした……笑\n7と8sで迷って結局時間切れましたが、テンパイ取らずの8s、僕はすごく大好きです！めちゃくちゃ言われて参考になりました！👍", attachments: [] }
     ];
-    const state = { selected: null, selectedIndex: null, revealed: false, judgeModel: 2, riichi: false, surroundingsOpen: false, commentsExpanded: false, comments: THREAD_MESSAGES.map(message => ({ ...message, attachments: [...message.attachments] })) };
+    const state = { selected: null, selectedIndex: null, revealed: false, judgeModel: 2, riichi: false, surroundingsOpen: false, commentsExpanded: false, commentComposerOpen: false, comments: THREAD_MESSAGES.map(message => ({ ...message, attachments: [...message.attachments] })) };
 
     function tileLabel(tile) {
       if (TILE_NAMES[tile]) return TILE_NAMES[tile];
@@ -538,6 +541,16 @@
       }
     }
 
+    function toggleCommentComposer() {
+      state.commentComposerOpen = !state.commentComposerOpen;
+      const form = document.getElementById("commentForm");
+      const button = document.getElementById("commentAddButton");
+      form.hidden = !state.commentComposerOpen;
+      button.setAttribute("aria-expanded", String(state.commentComposerOpen));
+      button.textContent = state.commentComposerOpen ? "コメント入力を閉じる" : "コメント追加";
+      if (state.commentComposerOpen) document.getElementById("commentInput").focus();
+    }
+
     function submitComment(event) {
       event.preventDefault();
       const input = document.getElementById("commentInput");
@@ -554,6 +567,10 @@
       state.revealed = false;
       state.riichi = false;
       state.commentsExpanded = false;
+      state.commentComposerOpen = false;
+      document.getElementById("commentForm").hidden = true;
+      document.getElementById("commentAddButton").setAttribute("aria-expanded", "false");
+      document.getElementById("commentAddButton").textContent = "コメント追加";
       document.querySelector(".page").classList.remove("comments-expanded");
       document.getElementById("commentsPanel").classList.remove("is-expanded");
       document.getElementById("commentsPanel").hidden = true;
@@ -571,6 +588,7 @@
       document.getElementById("modelSelect").value = String(state.judgeModel);
       document.getElementById("modelSelect").addEventListener("change", event => { state.judgeModel = Number(event.target.value); renderHand(); renderAnswer(); });
       document.getElementById("commentsExpandButton").addEventListener("click", toggleCommentsExpanded);
+      document.getElementById("commentAddButton").addEventListener("click", toggleCommentComposer);
       document.getElementById("commentForm").addEventListener("submit", submitComment);
       document.getElementById("threadLink").href = THREAD_URL;
       renderComments();
@@ -771,6 +789,10 @@
         state.revealed = false;
         state.riichi = false;
         state.commentsExpanded = false;
+        state.commentComposerOpen = false;
+        document.getElementById("commentForm").hidden = true;
+        document.getElementById("commentAddButton").setAttribute("aria-expanded", "false");
+        document.getElementById("commentAddButton").textContent = "コメント追加";
         document.querySelector(".page").classList.remove("comments-expanded");
         document.getElementById("commentsPanel").classList.remove("is-expanded");
         document.getElementById("commentsPanel").hidden = true;
@@ -799,6 +821,10 @@
         state.riichi = false;
         state.surroundingsOpen = false;
         state.commentsExpanded = false;
+        state.commentComposerOpen = false;
+        document.getElementById("commentForm").hidden = true;
+        document.getElementById("commentAddButton").setAttribute("aria-expanded", "false");
+        document.getElementById("commentAddButton").textContent = "コメント追加";
         state.comments = (SCENE.comments || []).map(message => ({ ...message, attachments: [...(message.attachments || [])] }));
         state.judgeModel = Math.max(0, SCENE.models.findIndex(model => model.name === "ニシキ"));
         document.getElementById("modelSelect").innerHTML = SCENE.models.map((model, index) => `<option value="${index}">${model.name}（正誤基準）</option>`).join("");
