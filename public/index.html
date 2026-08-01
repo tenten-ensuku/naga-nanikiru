@@ -34,6 +34,19 @@
     button, select { font: inherit; }
     button { cursor: pointer; }
     .page { display: flex; flex-direction: column; width: min(1380px, calc(100% - 24px)); margin: 0 auto; padding: 18px 0 36px; }
+    .page.menu-active > .header, .page.menu-active > .source-bar, .page.menu-active > .scene-card, .page.menu-active > .answer-strip, .page.menu-active > .comments-panel, .page.menu-active > .below-note { display: none; }
+    .menu-panel { display: grid; gap: 16px; min-height: min(720px, calc(100vh - 54px)); align-content: center; padding: clamp(24px, 5vw, 58px); background: linear-gradient(145deg, rgba(12, 49, 68, .98), rgba(5, 23, 37, .98)); border: 1px solid var(--line); border-radius: 18px; box-shadow: var(--shadow); }
+    .menu-panel[hidden] { display: none; }
+    .menu-heading { max-width: 720px; }
+    .menu-heading .eyebrow { margin-bottom: 8px; }
+    .menu-heading h2 { margin: 0; font-size: clamp(26px, 4vw, 44px); letter-spacing: -.05em; }
+    .menu-heading p:not(.eyebrow) { margin: 8px 0 0; color: var(--muted); font-size: 13px; line-height: 1.6; }
+    .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; }
+    .menu-card { display: grid; gap: 6px; min-height: 112px; padding: 14px; color: var(--ink); text-align: left; background: rgba(0,0,0,.19); border: 1px solid rgba(255,255,255,.13); border-radius: 12px; transition: transform .15s ease, border-color .15s ease, background .15s ease; }
+    .menu-card:hover, .menu-card:focus-visible { background: rgba(22, 80, 103, .82); border-color: rgba(113,183,255,.75); outline: none; transform: translateY(-2px); }
+    .menu-card-title { font-size: 18px; font-weight: 900; }
+    .menu-card-meta { color: var(--muted); font-size: 10px; line-height: 1.4; }
+    .menu-card-models { color: #dffbfb; font-size: 10px; font-weight: 800; }
     .header { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; margin-bottom: 12px; }
     .eyebrow { margin: 0 0 4px; color: var(--gold); font-size: 10px; font-weight: 800; letter-spacing: .18em; }
     h1 { margin: 0; font-size: clamp(23px, 3vw, 35px); line-height: 1.05; letter-spacing: -.05em; }
@@ -49,6 +62,8 @@
     .model-control select, .question-control select { padding: 5px 8px; color: var(--ink); background: #071b28; border: 1px solid var(--line); border-radius: 7px; }
     .scene-toggle { padding: 6px 10px; color: var(--ink); background: #0c3246; border: 1px solid rgba(113,183,255,.45); border-radius: 7px; font-size: 11px; font-weight: 800; }
     .scene-toggle:hover { background: #144a63; }
+    .menu-button { padding: 6px 10px; color: #e7f8ff; background: #164862; border: 1px solid rgba(113,183,255,.55); border-radius: 7px; font-size: 11px; font-weight: 800; }
+    .menu-button:hover, .menu-button:focus-visible { background: #246b8a; outline: 2px solid rgba(113,183,255,.28); outline-offset: 1px; }
     .scene-card { padding: 8px; background: rgba(7, 28, 43, .92); border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow); }
     .scene-frame { position: relative; width: 100%; max-width: 860px; margin: 0 auto; overflow: hidden; background: #033b76; aspect-ratio: 584 / 543; container-type: inline-size; }
     .scene-image { display: block; width: 100%; height: 100%; object-fit: fill; user-select: none; pointer-events: none; }
@@ -147,8 +162,10 @@
     .riichi-bar-fill { position: absolute; right: 0; bottom: 0; left: 0; border-radius: 2px 2px 1px 1px; }
     .riichi-bar-model { max-width: 30px; overflow: hidden; color: var(--muted); font-size: 7px; line-height: 1; text-overflow: ellipsis; white-space: nowrap; }
     .answer-actions { display: flex; flex-direction: column; gap: 7px; }
-    .reset-button { min-width: 118px; padding: 9px 11px; color: #12211e; background: var(--gold); border: 1px solid #ffdb7d; border-radius: 8px; font-size: 11px; font-weight: 800; }
+    .reset-button, .next-button { min-width: 118px; padding: 9px 11px; color: #12211e; background: var(--gold); border: 1px solid #ffdb7d; border-radius: 8px; font-size: 11px; font-weight: 800; }
     .reset-button:hover { background: #ffda77; }
+    .next-button { color: #eaffff; background: #216f89; border-color: rgba(163,230,239,.7); }
+    .next-button:hover { background: #2e8da4; }
     .comments-panel { order: 5; display: grid; gap: 6px; padding: 8px 10px; margin-top: 8px; background: linear-gradient(145deg, rgba(12,42,58,.98), rgba(6,25,39,.98)); border: 1px solid var(--line); border-radius: 10px; }
     .comments-panel[hidden] { display: none; }
     .comments-heading { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
@@ -187,7 +204,7 @@
       .source-url { width: 100%; }
       .model-control, .question-control { justify-content: space-between; width: 100%; margin-left: 0; }
       .model-control select, .question-control select { flex: 1; }
-      .scene-toggle { width: 100%; }
+      .scene-toggle, .menu-button { width: 100%; }
       .scene-card { padding: 3px; border-radius: 9px; }
       .answer-strip { grid-template-columns: 1fr; gap: 8px; padding: 9px; }
       .analysis-panels { grid-template-columns: 1fr; }
@@ -196,8 +213,8 @@
       .vertical-bar-track { width: 16px; }
       .answer-heading-row { display: block; }
       .answer-detail { margin-top: 3px; text-align: left; }
-      .answer-actions { flex-direction: row; }
-      .reset-button { flex: 1; min-width: 0; }
+      .answer-actions { flex-direction: row; flex-wrap: wrap; }
+      .reset-button, .next-button { flex: 1; min-width: 0; }
       .answer-choice-tile img { width: 30px; }
       .comments-heading-actions { gap: 4px; }
       .comment-form { grid-template-columns: 1fr; }
@@ -208,6 +225,14 @@
 </head>
 <body>
   <main class="page">
+    <section class="menu-panel" id="menuPanel" aria-labelledby="menuTitle">
+      <div class="menu-heading">
+        <p class="eyebrow">NAGA SCREENSHOT-BASED DRILL</p>
+        <h2 id="menuTitle">問題メニュー</h2>
+        <p>解きたい局面を選んでください。解答後は「次の問題へ」で続けて挑戦できます。</p>
+      </div>
+      <div class="menu-grid" id="menuGrid"></div>
+    </section>
     <header class="header">
       <div>
         <p class="eyebrow">NAGA SCREENSHOT-BASED DRILL</p>
@@ -222,6 +247,7 @@
       <label class="question-control">問題を選ぶ <select id="questionSelect" aria-label="問題を選ぶ"></select></label>
       <label class="model-control">正誤判定基準 <select id="modelSelect" aria-label="正誤判定基準"></select></label>
       <button class="scene-toggle" id="surroundingsToggle" type="button" aria-expanded="false">周囲の手牌を開く</button>
+      <button class="menu-button" id="menuButton" type="button">問題一覧へ</button>
     </div>
 
     <section class="scene-card" aria-label="NAGA局面スクリーンショット">
@@ -247,6 +273,7 @@
       </div>
       <div class="answer-actions">
         <button class="reset-button" id="resetButton" type="button">もう一度選ぶ</button>
+        <button class="next-button" id="nextQuestionButton" type="button" hidden>次の問題へ</button>
       </div>
     </section>
 
@@ -277,7 +304,7 @@
   </main>
 
   <script>
-    const APP_VERSION = 18;
+    const APP_VERSION = 19;
     const SCENE = {
       actualDiscard: "ji4",
       handBeforeDraw: ["man7", "man8", "man9", "pin4", "pin6", "pin7", "pin8", "pin9", "sou7", "sou8", "sou8", "ji4", "ji4"],
@@ -577,6 +604,7 @@
         hasRiichiJudgment: true
       };
       let questionsV16 = [baseQuestionV16];
+      let currentQuestionIndexV16 = 0;
       const modelColorByNameV16 = { オメガ: "model-omega", ガンマ: "model-gamma", ニシキ: "model-nishiki", ヒバカリ: "model-hihikari", カガシ: "model-kagashi" };
       const sceneFrameV16 = document.querySelector(".scene-frame");
       const sceneImageV16 = document.getElementById("sceneImage");
@@ -671,9 +699,11 @@
       function renderAnswerV16() {
         const answerStrip = document.getElementById("answerStrip");
         const commentsPanel = document.getElementById("commentsPanel");
+        const nextButton = document.getElementById("nextQuestionButton");
         if (!state.revealed) {
           answerStrip.hidden = true;
           commentsPanel.hidden = true;
+          nextButton.hidden = true;
           renderChoiceScoreV16();
           return;
         }
@@ -698,6 +728,8 @@
         riichiPanels.innerHTML = hasReachV16() ? renderRiichiPanelsV16() : "";
         answerStrip.hidden = false;
         commentsPanel.hidden = false;
+        nextButton.hidden = false;
+        nextButton.textContent = currentQuestionIndexV16 < questionsV16.length - 1 ? "次の問題へ" : "問題一覧へ";
         renderComments();
       }
 
@@ -741,7 +773,8 @@
         }
       }
 
-      function applyQuestionV16(question) {
+      function applyQuestionV16(question, index = questionsV16.indexOf(question)) {
+        currentQuestionIndexV16 = index >= 0 ? index : 0;
         for (const key of Object.keys(SCENE)) delete SCENE[key];
         Object.assign(SCENE, question, { images: question.images || { off: question.image, open: question.image } });
         state.selected = null;
@@ -771,6 +804,26 @@
         renderComments();
       }
 
+      function showMenuV16() {
+        document.querySelector(".page").classList.add("menu-active");
+        document.getElementById("menuPanel").hidden = false;
+      }
+
+      function openQuestionV16(index) {
+        const question = questionsV16[index];
+        if (!question) return;
+        document.getElementById("questionSelect").value = String(index);
+        document.getElementById("menuPanel").hidden = true;
+        document.querySelector(".page").classList.remove("menu-active");
+        applyQuestionV16(question, index);
+      }
+
+      function renderMenuCardsV16() {
+        const grid = document.getElementById("menuGrid");
+        grid.innerHTML = questionsV16.map((question, index) => `<button class="menu-card" type="button" data-question-index="${index}"><span class="menu-card-title">${question.title || `問題${question.number}`}</span><span class="menu-card-meta">${index === 0 ? "既存の練習問題" : "くにたそチェックから追加"}</span><span class="menu-card-models">${question.models.length}モデル・NAGA URLあり</span></button>`).join("");
+        grid.querySelectorAll("[data-question-index]").forEach(button => button.addEventListener("click", () => openQuestionV16(Number(button.dataset.questionIndex))));
+      }
+
       function renderQuestionOptionsV16() {
         const select = document.getElementById("questionSelect");
         select.innerHTML = questionsV16.map((question, index) => `<option value="${index}">${question.title || `問題${question.number}`}</option>`).join("");
@@ -787,8 +840,15 @@
           console.warn("追加問題の読み込みに失敗しました", error);
         }
         renderQuestionOptionsV16();
-        applyQuestionV16(questionsV16[0]);
-        document.getElementById("questionSelect").addEventListener("change", event => applyQuestionV16(questionsV16[Number(event.target.value)]));
+        renderMenuCardsV16();
+        applyQuestionV16(questionsV16[0], 0);
+        showMenuV16();
+        document.getElementById("questionSelect").addEventListener("change", event => openQuestionV16(Number(event.target.value)));
+        document.getElementById("menuButton").addEventListener("click", showMenuV16);
+        document.getElementById("nextQuestionButton").addEventListener("click", () => {
+          if (currentQuestionIndexV16 < questionsV16.length - 1) openQuestionV16(currentQuestionIndexV16 + 1);
+          else showMenuV16();
+        });
       }
 
       renderHand = renderHandV16;
