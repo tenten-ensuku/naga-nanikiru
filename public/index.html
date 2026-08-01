@@ -304,7 +304,7 @@
   </main>
 
   <script>
-    const APP_VERSION = 19;
+    const APP_VERSION = 20;
     const SCENE = {
       actualDiscard: "ji4",
       handBeforeDraw: ["man7", "man8", "man9", "pin4", "pin6", "pin7", "pin8", "pin9", "sou7", "sou8", "sou8", "ji4", "ji4"],
@@ -648,8 +648,24 @@
         return bars ? `<div class="probability-stack" aria-label="${tileLabel(tile)}のモデル別推奨度">${bars}</div>` : "";
       }
 
+      const TILE_ORDER_V20 = [
+        ...Array.from({ length: 9 }, (_, index) => `man${index + 1}`),
+        ...Array.from({ length: 9 }, (_, index) => `pin${index + 1}`),
+        ...Array.from({ length: 9 }, (_, index) => `sou${index + 1}`),
+        "ji1", "ji2", "ji3", "ji4", "ji5", "ji6", "ji7"
+      ];
+      const TILE_ORDER_MAP_V20 = new Map(TILE_ORDER_V20.map((tile, index) => [tile, index]));
+
+      function sortHandV20(tiles) {
+        return [...tiles].sort((left, right) => {
+          const leftOrder = TILE_ORDER_MAP_V20.get(left) ?? 99;
+          const rightOrder = TILE_ORDER_MAP_V20.get(right) ?? 99;
+          return leftOrder - rightOrder;
+        });
+      }
+
       function renderHandV16() {
-        const closed = (SCENE.handBeforeDraw || []).map((tile, index) => tileButtonV16(tile, index)).join("");
+        const closed = sortHandV20(SCENE.handBeforeDraw || []).map((tile, index) => tileButtonV16(tile, index)).join("");
         const draw = SCENE.draw ? tileButtonV16(SCENE.draw, SCENE.handBeforeDraw.length, true) : "";
         const riichiButton = hasReachV16() ? `<button class="riichi-button" id="riichiButton" type="button" aria-pressed="${state.riichi}" title="リーチを宣言する">${state.riichi ? "リーチ済" : "リーチ"}</button>` : "";
         document.getElementById("handLayer").innerHTML = `<div class="hand-controls"><div class="hand-row"><div class="closed-hand">${closed}</div>${draw ? `<span class="draw-divider" aria-hidden="true"></span>${draw}` : ""}</div>${riichiButton}</div>`;
@@ -734,7 +750,7 @@
       }
 
       function selectTileV16(index) {
-        const tiles = [...SCENE.handBeforeDraw, SCENE.draw].filter(Boolean);
+        const tiles = [...sortHandV20(SCENE.handBeforeDraw || []), SCENE.draw].filter(Boolean);
         state.selectedIndex = index;
         state.selected = tiles[index];
         state.revealed = true;
