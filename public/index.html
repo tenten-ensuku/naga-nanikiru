@@ -1,0 +1,513 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NAGA局面ドリル｜スクリーンショットベース</title>
+  <style>
+    :root {
+      --ink: #f6fbff;
+      --muted: #a9c2cc;
+      --panel: #071c2b;
+      --panel-2: #0c2a3a;
+      --line: rgba(255,255,255,.14);
+      --gold: #f1c457;
+      --omega: #55d59b;
+      --gamma: #71b7ff;
+      --nishiki: #f1c457;
+      --hihikari: #ac91ff;
+      --kagashi: #ff7d8a;
+      --shadow: 0 22px 70px rgba(0,0,0,.35);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-width: 320px;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 50% 0%, rgba(19, 86, 118, .35), transparent 42rem),
+        #06131e;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans JP", sans-serif;
+    }
+
+    button, select { font: inherit; }
+    button { cursor: pointer; }
+    .page { display: flex; flex-direction: column; width: min(1380px, calc(100% - 24px)); margin: 0 auto; padding: 18px 0 36px; }
+    .header { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; margin-bottom: 12px; }
+    .eyebrow { margin: 0 0 4px; color: var(--gold); font-size: 10px; font-weight: 800; letter-spacing: .18em; }
+    h1 { margin: 0; font-size: clamp(23px, 3vw, 35px); line-height: 1.05; letter-spacing: -.05em; }
+    .header-note { margin: 5px 0 0; color: var(--muted); font-size: 12px; }
+    .version { color: var(--muted); font-size: 11px; letter-spacing: .08em; white-space: nowrap; }
+    .source-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding: 9px 11px; margin-bottom: 12px; background: rgba(7, 28, 43, .92); border: 1px solid var(--line); border-radius: 11px; }
+    .source-url { min-width: 0; overflow: hidden; color: #c5e6ea; font-size: 11px; text-overflow: ellipsis; white-space: nowrap; }
+    .source-url span { color: var(--muted); }
+    .model-control { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 11px; white-space: nowrap; }
+    .model-control select { padding: 5px 8px; color: var(--ink); background: #071b28; border: 1px solid var(--line); border-radius: 7px; }
+    .scene-toggle { padding: 6px 10px; color: var(--ink); background: #0c3246; border: 1px solid rgba(113,183,255,.45); border-radius: 7px; font-size: 11px; font-weight: 800; }
+    .scene-toggle:hover { background: #144a63; }
+    .scene-card { padding: 8px; background: rgba(7, 28, 43, .92); border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow); }
+    .scene-frame { position: relative; width: 100%; max-width: 860px; margin: 0 auto; overflow: hidden; background: #033b76; aspect-ratio: 584 / 543; }
+    .scene-image { display: block; width: 100%; height: 100%; object-fit: fill; user-select: none; pointer-events: none; }
+    .hand-mask { position: absolute; left: 11.5%; top: 79.3%; width: 67.8%; height: 20.7%; background: linear-gradient(145deg, #06254a 0%, #02244c 100%); pointer-events: none; }
+    .hand-layer { position: absolute; left: 17.5%; top: 80.5%; width: 60%; height: 14.5%; display: flex; align-items: flex-end; justify-content: center; pointer-events: auto; }
+    .hand-controls { display: flex; align-items: flex-end; justify-content: center; gap: clamp(5px, .55vw, 9px); width: 100%; }
+    .hand-row { display: flex; align-items: flex-end; justify-content: center; gap: 1px; }
+    .closed-hand { display: flex; align-items: flex-end; gap: 1px; }
+    .draw-divider { width: 1px; height: 75%; margin: 0 3px 0 4px; background: rgba(244, 198, 87, .75); }
+    .riichi-button { width: clamp(35px, 3.7vw, 47px); min-height: clamp(29px, 4.6vw, 45px); padding: 4px 3px; color: #fff6d4; background: linear-gradient(145deg, #7f262b, #4f151c); border: 1px solid rgba(255, 221, 127, .8); border-radius: 5px; box-shadow: 0 3px 8px rgba(0,0,0,.24); font-size: clamp(9px, 1.05vw, 13px); font-weight: 900; line-height: 1.1; }
+    .riichi-button:hover, .riichi-button:focus-visible { background: linear-gradient(145deg, #a63b3f, #681d24); outline: 2px solid rgba(255, 221, 127, .65); outline-offset: 2px; }
+    .riichi-button[aria-pressed="true"] { color: #24120e; background: linear-gradient(145deg, #ffe493, #e9a93f); }
+    .tile-wrap { position: relative; display: flex; align-items: flex-end; justify-content: center; }
+    .tile-button { position: relative; display: block; padding: 0; border: 0; background: transparent; outline: none; }
+    .tile-button:hover, .tile-button:focus-visible { outline: none; }
+    .tile-button.is-selected img { outline: 2px solid var(--gold); outline-offset: 2px; border-radius: 2px; }
+    .tile-button.is-judge-recommendation img { outline: 2px solid #c28aff; outline-offset: 2px; border-radius: 2px; }
+    .tile-button img { display: block; width: clamp(17px, 2.03vw, 26px); height: auto; border-radius: 2px; }
+    .finger-marker { position: absolute; top: calc(100% + 3px); left: 50%; z-index: 2; width: clamp(9px, 1.3vw, 15px); height: clamp(13px, 2vw, 20px); opacity: 0; pointer-events: none; transform: translateX(-50%); transition: opacity .1s ease; }
+    .finger-marker::before { content: ""; position: absolute; top: 0; left: 34%; width: 34%; height: 75%; background: linear-gradient(90deg, #eab69e, #ffe0ca 48%, #d58e7c); border: 1px solid rgba(91,43,35,.45); border-radius: 999px 999px 6px 6px; box-shadow: 0 2px 3px rgba(0,0,0,.35); }
+    .finger-marker::after { content: ""; position: absolute; right: 9%; bottom: 0; width: 76%; height: 48%; background: linear-gradient(145deg, #ffe0ca, #c98373); border: 1px solid rgba(91,43,35,.45); border-radius: 55% 45% 20% 20%; transform: rotate(-12deg); }
+    .tile-button:hover .finger-marker, .tile-button:focus-visible .finger-marker, .tile-button.is-selected .finger-marker { opacity: 1; }
+    .probability-stack { position: absolute; bottom: calc(100% + 4px); left: 0; width: 100%; height: 22px; }
+    .probability-mini-track { position: absolute; bottom: 0; left: calc((100% - 3px) * var(--bar-slot) / 2); width: 3px; height: 100%; overflow: hidden; background: rgba(0,0,0,.35); border-radius: 1px 1px 0 0; }
+    .probability-mini-fill { position: absolute; right: 0; bottom: 0; left: 0; display: block; border-radius: 2px 2px 0 0; }
+    .model-omega { background: var(--omega); }
+    .model-gamma { background: var(--gamma); }
+    .model-nishiki { background: var(--nishiki); }
+    .model-hihikari { background: var(--hihikari); }
+    .model-kagashi { background: var(--kagashi); }
+
+    .answer-strip { order: 4; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 12px; padding: 10px 12px; margin-top: 10px; background: linear-gradient(145deg, rgba(12, 42, 58, .98), rgba(6, 25, 39, .98)); border: 1px solid var(--line); border-radius: 12px; }
+    .answer-strip[hidden] { display: none; }
+    .answer-summary { min-width: 0; }
+    .answer-heading-row { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+    .answer-label { margin: 0 0 3px; color: var(--gold); font-size: 9px; font-weight: 800; letter-spacing: .12em; }
+    .answer-title { margin: 0; font-size: 15px; }
+    .answer-detail { margin: 0; color: var(--muted); font-size: 9px; line-height: 1.35; text-align: right; }
+    .answer-detail strong { color: var(--ink); }
+    .answer-comparison { display: grid; grid-template-columns: repeat(4, minmax(54px, 1fr)); gap: 6px; margin-top: 7px; }
+    .answer-choice { min-width: 0; padding: 5px 4px 4px; text-align: center; border: 1px solid rgba(255,255,255,.12); border-radius: 7px; background: rgba(0,0,0,.16); }
+    .answer-choice.player-choice { border-color: rgba(241,196,87,.55); background: rgba(77,56,22,.25); }
+    .answer-choice.model-choice { border-color: rgba(194,138,255,.35); }
+    .answer-choice-label { display: block; overflow: hidden; color: var(--muted); font-size: 8px; font-weight: 800; text-overflow: ellipsis; white-space: nowrap; }
+    .answer-choice.player-choice .answer-choice-label { color: #fff1bd; }
+    .answer-choice-tile { display: block; min-height: 31px; margin: 3px auto 2px; }
+    .answer-choice-tile img { width: clamp(23px, 2.8vw, 36px); height: auto; margin: 0 auto; border-radius: 2px; }
+    .answer-choice-title { display: block; color: #f2ffff; font-size: 9px; font-weight: 800; line-height: 1.15; }
+    .answer-choice-reach { margin-top: 4px; padding-top: 3px; border-top: 1px solid rgba(241,196,87,.2); }
+    .answer-choice-reach-label { display: block; color: #fff1bd; font-size: 7px; font-weight: 800; line-height: 1; }
+    .answer-choice-reach-track { display: block; width: 100%; height: 3px; margin-top: 3px; overflow: hidden; background: rgba(255,255,255,.12); border-radius: 2px; }
+    .answer-choice-reach-fill { display: block; height: 100%; min-width: 0; border-radius: 2px; }
+    .reach-summary { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; margin-top: 4px; padding-top: 4px; border-top: 1px solid rgba(241,196,87,.2); }
+    .reach-summary[hidden] { display: none; }
+    .reach-summary-item { min-width: 0; text-align: center; }
+    .reach-summary-model { display: block; overflow: hidden; color: var(--muted); font-size: 7px; text-overflow: ellipsis; white-space: nowrap; }
+    .reach-summary-value { display: block; color: #fff1bd; font-size: 8px; font-weight: 800; line-height: 1; }
+    .reach-summary-track { display: block; width: 100%; height: 3px; margin-top: 3px; overflow: hidden; background: rgba(255,255,255,.12); border-radius: 2px; }
+    .reach-summary-fill { display: block; height: 100%; min-width: 0; background: var(--gold); border-radius: 2px; }
+    .model-bars { display: none; }
+    .model-legend { display: flex; flex-wrap: wrap; gap: 5px 10px; color: var(--muted); font-size: 9px; }
+    .model-legend-item { display: inline-flex; align-items: center; gap: 4px; }
+    .model-legend-dot { width: 7px; height: 7px; border-radius: 50%; }
+    .analysis-panels { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(190px, .75fr); gap: 8px; align-items: stretch; }
+    .analysis-panel { min-width: 0; padding: 7px 8px 6px; border: 1px solid rgba(255,255,255,.1); border-radius: 9px; background: rgba(0,0,0,.12); }
+    .analysis-panel-title { margin: 0 0 5px; color: #eafefe; font-size: 10px; font-weight: 800; letter-spacing: .04em; }
+    .vertical-recommendations { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .recommend-candidate { padding: 7px 8px 6px; border: 1px solid rgba(255,255,255,.1); border-radius: 9px; background: rgba(0,0,0,.16); }
+    .recommend-candidate-title { display: flex; justify-content: space-between; align-items: baseline; gap: 5px; color: #eafefe; font-size: 12px; font-weight: 800; }
+    .recommend-candidate-title small { color: var(--muted); font-size: 8px; font-weight: 600; }
+    .vertical-bar-list { display: flex; align-items: flex-end; justify-content: space-around; gap: 4px; height: 78px; margin-top: 5px; }
+    .vertical-bar-item { min-width: 19px; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 3px; }
+    .vertical-bar-value { min-height: 10px; color: #dffbfb; font-size: 8px; line-height: 1; }
+    .vertical-bar-track { position: relative; width: 5px; height: 58px; overflow: hidden; background: rgba(255,255,255,.11); border-radius: 2px 2px 1px 1px; }
+    .vertical-bar-fill { position: absolute; right: 0; bottom: 0; left: 0; border-radius: 4px 4px 2px 2px; }
+    .vertical-bar-model { max-width: 24px; overflow: hidden; color: var(--muted); font-size: 7px; line-height: 1; text-overflow: ellipsis; white-space: nowrap; }
+    .riichi-panels { min-width: 0; }
+    .riichi-panel { height: 100%; padding: 7px 8px 6px; border: 1px solid rgba(241,196,87,.32); border-radius: 9px; background: linear-gradient(145deg, rgba(77,56,22,.38), rgba(0,0,0,.16)); }
+    .riichi-panel-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; color: #fff1bd; font-size: 10px; font-weight: 800; }
+    .riichi-panel-heading strong { color: #fff; font-size: 11px; }
+    .riichi-panel-note { margin: 4px 0 0; color: var(--muted); font-size: 8px; line-height: 1.35; }
+    .riichi-bar-list { display: flex; align-items: flex-end; justify-content: space-around; gap: 5px; height: 78px; margin-top: 5px; }
+    .riichi-bar-item { min-width: 23px; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 3px; }
+    .riichi-bar-value { min-height: 10px; color: #fff7d6; font-size: 8px; line-height: 1; }
+    .riichi-bar-track { position: relative; width: 6px; height: 58px; overflow: hidden; background: rgba(255,255,255,.11); border-radius: 2px 2px 1px 1px; }
+    .riichi-bar-fill { position: absolute; right: 0; bottom: 0; left: 0; border-radius: 2px 2px 1px 1px; }
+    .riichi-bar-model { max-width: 30px; overflow: hidden; color: var(--muted); font-size: 7px; line-height: 1; text-overflow: ellipsis; white-space: nowrap; }
+    .answer-actions { display: flex; flex-direction: column; gap: 7px; }
+    .reset-button { min-width: 118px; padding: 9px 11px; color: #12211e; background: var(--gold); border: 1px solid #ffdb7d; border-radius: 8px; font-size: 11px; font-weight: 800; }
+    .reset-button:hover { background: #ffda77; }
+    .comments-panel { order: 5; display: grid; gap: 6px; padding: 8px 10px; margin-top: 8px; background: linear-gradient(145deg, rgba(12,42,58,.98), rgba(6,25,39,.98)); border: 1px solid var(--line); border-radius: 10px; }
+    .comments-panel[hidden] { display: none; }
+    .comments-heading { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    .comments-heading h2 { margin: 0; font-size: 13px; }
+    .comments-heading a { color: #9bdcff; font-size: 8px; }
+    .comments-heading-actions { display: flex; align-items: center; gap: 7px; }
+    .comments-expand-button { padding: 4px 7px; color: #e7f8ff; background: #164862; border: 1px solid rgba(113,183,255,.55); border-radius: 6px; font-size: 8px; font-weight: 800; }
+    .comments-expand-button:hover { background: #246b8a; }
+    .comments-meta { margin: 2px 0 0; color: var(--muted); font-size: 8px; }
+    .comments-scroll { display: grid; gap: 5px; max-height: 180px; overflow-y: auto; padding: 1px 4px 1px 0; overscroll-behavior: contain; scrollbar-color: rgba(113,183,255,.65) rgba(255,255,255,.08); }
+    .comments-panel.is-expanded { order: 3; margin-top: 8px; padding: 10px 12px; }
+    .comments-panel.is-expanded .comments-scroll { max-height: min(68vh, 680px); }
+    .comments-panel.is-expanded .comment-attachment { max-height: 260px; }
+    .comment-card { padding: 6px 8px; border: 1px solid rgba(255,255,255,.1); border-radius: 7px; background: rgba(0,0,0,.16); }
+    .comment-card-header { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+    .comment-author { color: #eafefe; font-size: 10px; font-weight: 800; }
+    .comment-time { color: var(--muted); font-size: 8px; white-space: nowrap; }
+    .comment-body { margin: 3px 0 0; color: #e6f4f7; font-size: 10px; line-height: 1.45; overflow-wrap: anywhere; }
+    .comment-body a { color: #9bdcff; }
+    .comment-attachment { display: block; max-width: min(100%, 560px); max-height: 150px; margin-top: 5px; border: 1px solid rgba(255,255,255,.12); border-radius: 5px; object-fit: contain; background: #031521; }
+    .comment-form { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 5px; align-items: end; }
+    .comment-form label { grid-column: 1 / -1; color: #eafefe; font-size: 8px; font-weight: 800; }
+    .comment-form textarea { min-height: 44px; resize: vertical; padding: 6px 7px; color: var(--ink); background: #061c2c; border: 1px solid rgba(255,255,255,.18); border-radius: 6px; font: inherit; font-size: 10px; line-height: 1.35; }
+    .comment-form textarea:focus { border-color: rgba(113,183,255,.8); outline: 2px solid rgba(113,183,255,.18); }
+    .comment-submit { min-width: 88px; padding: 7px 8px; color: #12211e; background: #bde7e0; border: 1px solid #d6fff5; border-radius: 6px; font-size: 9px; font-weight: 800; }
+    .comment-submit:hover { background: #d6fff5; }
+    .comment-sync-note { margin: 0; color: var(--muted); font-size: 8px; line-height: 1.35; }
+    .below-note { order: 6; display: flex; justify-content: space-between; gap: 12px; margin-top: 9px; color: var(--muted); font-size: 10px; }
+    .below-note strong { color: #c9eff0; }
+
+    @media (max-width: 800px) {
+      .page { width: calc(100% - 12px); padding-top: 10px; }
+      .header { align-items: flex-start; }
+      .version { padding-top: 5px; }
+      .source-bar { align-items: stretch; }
+      .source-url { width: 100%; }
+      .model-control { justify-content: space-between; width: 100%; }
+      .model-control select { flex: 1; }
+      .scene-toggle { width: 100%; }
+      .scene-card { padding: 3px; border-radius: 9px; }
+      .answer-strip { grid-template-columns: 1fr; gap: 8px; padding: 9px; }
+      .analysis-panels { grid-template-columns: 1fr; }
+      .vertical-recommendations { gap: 7px; }
+      .vertical-bar-item { min-width: 23px; }
+      .vertical-bar-track { width: 16px; }
+      .answer-heading-row { display: block; }
+      .answer-detail { margin-top: 3px; text-align: left; }
+      .answer-actions { flex-direction: row; }
+      .reset-button { flex: 1; min-width: 0; }
+      .answer-choice-tile img { width: 30px; }
+      .comments-heading-actions { gap: 4px; }
+      .comment-form { grid-template-columns: 1fr; }
+      .comment-submit { width: 100%; }
+      .below-note { display: block; line-height: 1.6; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="header">
+      <div>
+        <p class="eyebrow">NAGA SCREENSHOT-BASED DRILL</p>
+        <h1>局面から何切る</h1>
+        <p class="header-note">NAGAの画面をそのまま背景にして、自分の手牌だけを操作できる試作</p>
+      </div>
+      <div class="version" id="versionLabel"></div>
+    </header>
+
+    <div class="source-bar">
+      <div class="source-url"><span>元画面：</span> 問題249 · report_viewer.html · ts=1 · tv=69 · tw=0</div>
+      <label class="model-control">正誤判定基準 <select id="modelSelect" aria-label="正誤判定基準"></select></label>
+      <button class="scene-toggle" id="surroundingsToggle" type="button" aria-expanded="false">周囲の手牌を開く</button>
+    </div>
+
+    <section class="scene-card" aria-label="NAGA局面スクリーンショット">
+      <div class="scene-frame">
+        <img class="scene-image" id="sceneImage" src="naga-scene-off.jpg" alt="指定NAGA局面の伏牌スクリーンショット">
+        <div class="hand-mask" aria-hidden="true"></div>
+        <div class="hand-layer" id="handLayer" aria-label="選択できる自分の手牌"></div>
+      </div>
+    </section>
+
+    <section class="answer-strip" id="answerStrip" aria-live="polite" hidden>
+      <div class="answer-summary">
+        <div class="answer-heading-row">
+          <div>
+            <p class="answer-label">ANSWER</p>
+            <h2 class="answer-title" id="answerTitle"></h2>
+          </div>
+          <p class="answer-detail" id="answerDetail"></p>
+        </div>
+        <div class="answer-comparison" id="answerComparison"></div>
+      </div>
+      <div class="answer-actions">
+        <button class="reset-button" id="resetButton" type="button">もう一度選ぶ</button>
+      </div>
+    </section>
+
+    <section class="comments-panel" id="commentsPanel" aria-labelledby="commentsTitle" hidden>
+      <div class="comments-heading">
+        <div>
+          <h2 id="commentsTitle">スレッド内のコメント</h2>
+          <p class="comments-meta" id="commentsMeta"></p>
+        </div>
+        <div class="comments-heading-actions">
+          <a id="threadLink" href="https://discord.com/channels/1166706544856006656/1532011607209541833" target="_blank" rel="noreferrer">Discordで開く</a>
+          <button class="comments-expand-button" id="commentsExpandButton" type="button" aria-expanded="false">コメント欄を拡大</button>
+        </div>
+      </div>
+      <div class="comments-scroll" id="commentsScroll" tabindex="0" aria-label="スレッド内のコメント一覧"></div>
+      <form class="comment-form" id="commentForm">
+        <label for="commentInput">コメントを追加（この画面内のみ）</label>
+        <textarea id="commentInput" maxlength="2000" placeholder="コメントを書き込む"></textarea>
+        <button class="comment-submit" type="submit">コメントを追加</button>
+      </form>
+      <p class="comment-sync-note">追加したコメントはこの画面内にのみ表示されます。Discordのスレッドには投稿されません。</p>
+    </section>
+
+    <div class="below-note">
+      <span>周囲の手牌はNAGA原本の伏牌表示が初期状態です。「周囲の手牌を開く」で開示版に切り替えられます。操作できるのは自分の手牌だけです。</span>
+      <span>PROTOTYPE <strong>v<span id="versionSmall"></span></strong></span>
+    </div>
+  </main>
+
+  <script>
+  const APP_VERSION = 11;
+    const SCENE = {
+      actualDiscard: "ji4",
+      handBeforeDraw: ["man7", "man8", "man9", "pin4", "pin6", "pin7", "pin8", "pin9", "sou7", "sou8", "sou8", "ji4", "ji4"],
+      draw: "ji4",
+      reach: [7782, 2044, 8093, 0, 0],
+      models: [
+        { name: "オメガ", recommendation: "sou7", label: "7索" },
+        { name: "ガンマ", recommendation: "sou7", label: "7索" },
+        { name: "ニシキ", recommendation: "sou7", label: "7索" },
+        { name: "ヒバカリ", recommendation: "sou8", label: "8索" },
+        { name: "カガシ", recommendation: "sou8", label: "8索" }
+      ],
+      probabilities: {
+        pin4: [0.75, 5.24, 0.76, 1.35, 28.50],
+        pin6: [0.01, 0.06, 0, 0, 0.02],
+        pin9: [0.02, 0.28, 0.02, 0.01, 0.04],
+        sou7: [89.73, 51.43, 93.37, 10.33, 14.55],
+        sou8: [9.36, 42.63, 5.75, 88.21, 56.77],
+        ji4: [0.11, 0.33, 0.06, 0.07, 0.09]
+      }
+    };
+    const TILE_NAMES = { ji1: "東", ji2: "南", ji3: "西", ji4: "北", ji5: "白", ji6: "發", ji7: "中" };
+    const SUIT_NAMES = { man: "萬", pin: "筒", sou: "索" };
+    const MODEL_COLORS = ["model-omega", "model-gamma", "model-nishiki", "model-hihikari", "model-kagashi"];
+    const MODEL_PRIORITY = ["ニシキ", "カガシ", "ヒバカリ", "ガンマ", "オメガ"];
+    const HAND_BAR_MODEL_NAMES = ["ニシキ", "ヒバカリ", "カガシ"];
+    const SCENE_IMAGES = { off: "naga-scene-off.jpg", open: "naga-scene-open.jpg" };
+    const THREAD_URL = "https://discord.com/channels/1166706544856006656/1532011607209541833";
+    const THREAD_MESSAGES = [
+      { id: "1532011607209541833", author: "てんてん", createdAt: "2026-07-29T13:07:10.558Z", content: "249", attachments: [{ src: "thread-images/249-question.png", alt: "問題249の投稿画像" }] },
+    { id: "1532011707767980032", author: "てんてん", createdAt: "2026-07-29T13:07:34.533Z", content: "", showInComments: false, attachments: [{ src: "thread-images/249-naga-view.png", alt: "NAGA画面の投稿画像" }] },
+    { id: "1532011713870696499", author: "てんてん", createdAt: "2026-07-29T13:07:35.988Z", content: "https://naga.dmv.nico/htmls/report_viewer.html?report_id=3649c457ea7a1b61abccdca5ffbc43764587421511f08b6f8ac49d80308a1114v2_2&tw=0&ts=1&tv=69", showInComments: false, attachments: [] },
+      { id: "1532012487212536022", author: "てんてん", createdAt: "2026-07-29T13:10:40.367Z", content: "聴牌取らずは良いが、打8ｓ推奨。\n打北は面子手立直進行に於ける二大タブー（①単独暗刻の破壊②単独雀頭の破壊）に抵触。\n打8ｓとすれば、ヘッドレス2型連続形となるため、4ｐ6ｐ引きでも三色聴牌となるし、9ｐ引きも悪くない。", attachments: [] },
+      { id: "1532017637700272302", author: "くにたそ", createdAt: "2026-07-29T13:31:08.339Z", content: "恥ずかしながら、時間切れの北でした……笑\n7と8sで迷って結局時間切れましたが、テンパイ取らずの8s、僕はすごく大好きです！めちゃくちゃ言われて参考になりました！👍", attachments: [] }
+    ];
+    const state = { selected: null, selectedIndex: null, revealed: false, judgeModel: 2, riichi: false, surroundingsOpen: false, commentsExpanded: false, comments: THREAD_MESSAGES.map(message => ({ ...message, attachments: [...message.attachments] })) };
+
+    function tileLabel(tile) {
+      if (TILE_NAMES[tile]) return TILE_NAMES[tile];
+      const match = /^(man|pin|sou)([1-9])$/.exec(tile);
+      return match ? `${match[2]}${SUIT_NAMES[match[1]]}` : tile;
+    }
+
+    function tileImage(tile) {
+      return `<img src="tiles/${tile}-66-90-l.png" alt="${tileLabel(tile)}" loading="eager">`;
+    }
+
+    function priorityModelIndices(limit = MODEL_PRIORITY.length) {
+      return MODEL_PRIORITY
+        .map(modelName => SCENE.models.findIndex(model => model.name === modelName))
+        .filter(index => index >= 0)
+        .slice(0, limit);
+    }
+
+    function recommendedModelIndices(tile) {
+      return priorityModelIndices(3).filter(index => SCENE.models[index].recommendation === tile);
+    }
+
+    function analysisModelIndices() {
+      return priorityModelIndices();
+    }
+
+    function handBarModelIndices() {
+      return HAND_BAR_MODEL_NAMES
+        .map(modelName => SCENE.models.findIndex(model => model.name === modelName))
+        .filter(index => index >= 0);
+    }
+
+    function recommendedRiichi(modelIndex) {
+      return SCENE.reach[modelIndex] >= 5000;
+    }
+
+    function riichiLabel(value) {
+      return value ? "リーチ" : "ダマ";
+    }
+
+    function reachGroups() {
+      const groups = new Map();
+      SCENE.models.forEach((model, index) => {
+        if ((SCENE.reach[index] ?? 0) <= 0) return;
+        if (!groups.has(model.recommendation)) groups.set(model.recommendation, []);
+        groups.get(model.recommendation).push(index);
+      });
+      return [...groups.entries()].map(([tile, indices]) => ({
+        tile,
+        indices: indices.sort((a, b) => MODEL_PRIORITY.indexOf(SCENE.models[a].name) - MODEL_PRIORITY.indexOf(SCENE.models[b].name))
+      }));
+    }
+
+    function renderRiichiPanels() {
+      return reachGroups().map(({ tile, indices }) => `<section class="riichi-panel" aria-label="${tileLabel(tile)}を切る場合のリーチ推奨度"><div class="riichi-panel-heading"><span>リーチ推奨度</span><strong>${tileLabel(tile)}を切る場合</strong></div><p class="riichi-panel-note">第1推奨打牌がリーチ候補のモデルのみ表示</p><div class="riichi-bar-list">${indices.map(index => { const value = SCENE.reach[index] / 100; return `<div class="riichi-bar-item"><span class="riichi-bar-value">${value.toFixed(1)}%</span><span class="riichi-bar-track"><span class="riichi-bar-fill ${MODEL_COLORS[index]}" style="height:${value}%"></span></span><span class="riichi-bar-model" title="${SCENE.models[index].name}">${SCENE.models[index].name}</span></div>`; }).join("")}</div></section>`).join("");
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? "").replace(/[&<>"']/g, character => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[character]));
+    }
+
+    function formatCommentContent(content) {
+      return escapeHtml(content).replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" rel="noreferrer">$1</a>').replace(/\n/g, "<br>");
+    }
+
+    function formatCommentTime(value) {
+      return new Intl.DateTimeFormat("ja-JP", { dateStyle: "short", timeStyle: "short" }).format(new Date(value));
+    }
+
+    function renderComments({ scrollToBottom = false } = {}) {
+      const list = document.getElementById("commentsScroll");
+    const messages = state.comments.filter(message => message.showInComments !== false && (message.content || message.attachments?.length));
+      list.innerHTML = messages.map(message => `<article class="comment-card"><div class="comment-card-header"><span class="comment-author">${escapeHtml(message.author)}</span><time class="comment-time" datetime="${escapeHtml(message.createdAt)}">${formatCommentTime(message.createdAt)}</time></div>${message.content ? `<div class="comment-body">${formatCommentContent(message.content)}</div>` : ""}${(message.attachments || []).map(attachment => `<img class="comment-attachment" src="${escapeHtml(attachment.src)}" alt="${escapeHtml(attachment.alt)}" loading="lazy">`).join("")}</article>`).join("");
+      document.getElementById("commentsMeta").textContent = `${messages.length}件の投稿（画像を含む）`;
+      if (scrollToBottom) list.scrollTop = list.scrollHeight;
+    }
+
+    function probabilityStack(tile) {
+      if (!state.revealed || !SCENE.probabilities[tile]) return "";
+      const modelIndices = handBarModelIndices();
+      const bars = modelIndices.map((index, slot) => {
+        const value = SCENE.probabilities[tile][index] ?? 0;
+        if (value <= 0) return "";
+        return `<span class="probability-mini-track" style="--bar-slot:${slot}" title="${SCENE.models[index].name} ${value.toFixed(2)}%"><span class="probability-mini-fill ${MODEL_COLORS[index]}" style="height:${value}%"></span></span>`;
+      }).join("");
+      return bars ? `<div class="probability-stack" aria-label="${tileLabel(tile)}のモデル別推奨度">${bars}</div>` : "";
+    }
+
+    function tileButton(tile, index, isDraw = false) {
+      const selected = state.selectedIndex === index;
+      const judgeRecommended = SCENE.models[state.judgeModel].recommendation === tile;
+      const judgeHint = judgeRecommended ? "（判定基準モデルの第1推奨）" : "";
+      return `<div class="tile-wrap${isDraw ? " draw-tile" : ""}"><button class="tile-button${selected ? " is-selected" : ""}${judgeRecommended ? " is-judge-recommendation" : ""}" type="button" data-tile-index="${index}" aria-label="${tileLabel(tile)}を選ぶ${judgeHint}">${probabilityStack(tile)}${tileImage(tile)}<span class="finger-marker" aria-hidden="true"></span></button></div>`;
+    }
+
+    function renderHand() {
+      const closed = SCENE.handBeforeDraw.map((tile, index) => tileButton(tile, index)).join("");
+      const draw = tileButton(SCENE.draw, SCENE.handBeforeDraw.length, true);
+      document.getElementById("handLayer").innerHTML = `<div class="hand-controls"><div class="hand-row"><div class="closed-hand">${closed}</div><span class="draw-divider" aria-hidden="true"></span>${draw}</div><button class="riichi-button" id="riichiButton" type="button" aria-pressed="${state.riichi}" title="リーチを宣言する">${state.riichi ? "リーチ済" : "リーチ"}</button></div>`;
+      document.querySelectorAll("[data-tile-index]").forEach(button => button.addEventListener("click", () => selectTile(Number(button.dataset.tileIndex))));
+      document.getElementById("riichiButton").addEventListener("click", toggleRiichi);
+    }
+
+    function renderAnswer() {
+      const answerStrip = document.getElementById("answerStrip");
+      const commentsPanel = document.getElementById("commentsPanel");
+      if (!state.revealed) {
+        answerStrip.hidden = true;
+        commentsPanel.hidden = true;
+        return;
+      }
+      const correctTile = SCENE.models[state.judgeModel].recommendation;
+      const correctRiichi = recommendedRiichi(state.judgeModel);
+      const isCorrect = state.selected === correctTile && state.riichi === correctRiichi;
+      document.getElementById("answerTitle").textContent = isCorrect ? `正解：${tileLabel(state.selected)}・${riichiLabel(state.riichi)}` : `推奨：${tileLabel(correctTile)}・${riichiLabel(correctRiichi)}`;
+      document.getElementById("answerDetail").innerHTML = `あなたの選択：<strong>${tileLabel(state.selected)}・${riichiLabel(state.riichi)}</strong> ／ 実戦打牌：<strong>${tileLabel(SCENE.actualDiscard)}</strong>`;
+      const topModelIndices = priorityModelIndices(3);
+      const hasReachJudgment = SCENE.reach.some(value => value > 0);
+      const playerCard = `<div class="answer-choice player-choice"><span class="answer-choice-label">あなたの選択</span><span class="answer-choice-tile">${tileImage(state.selected)}</span><span class="answer-choice-title">${tileLabel(state.selected)}・${riichiLabel(state.riichi)}</span></div>`;
+      const modelCards = topModelIndices.map(index => {
+        const model = SCENE.models[index];
+        const value = (SCENE.reach[index] ?? 0) / 100;
+        const reach = hasReachJudgment ? `<div class="answer-choice-reach" aria-label="${model.name}のリーチ推奨度"><span class="answer-choice-reach-label">リーチ ${value.toFixed(1)}%</span><span class="answer-choice-reach-track"><span class="answer-choice-reach-fill ${MODEL_COLORS[index]}" style="width:${value}%"></span></span></div>` : "";
+        return `<div class="answer-choice model-choice"><span class="answer-choice-label">${model.name}・第1推奨</span><span class="answer-choice-tile">${tileImage(model.recommendation)}</span><span class="answer-choice-title">${tileLabel(model.recommendation)}</span>${reach}</div>`;
+      }).join("");
+      document.getElementById("answerComparison").innerHTML = `${playerCard}${modelCards}`;
+      answerStrip.hidden = false;
+      commentsPanel.hidden = false;
+      renderComments();
+    }
+
+    function toggleRiichi() {
+      state.riichi = !state.riichi;
+      renderHand();
+      if (state.revealed) renderAnswer();
+    }
+
+    function selectTile(index) {
+      const tileList = [...SCENE.handBeforeDraw, SCENE.draw];
+      state.selectedIndex = index;
+      state.selected = tileList[index];
+      state.revealed = true;
+      renderHand();
+      renderAnswer();
+    }
+
+    function toggleCommentsExpanded() {
+      state.commentsExpanded = !state.commentsExpanded;
+      const page = document.querySelector(".page");
+      const panel = document.getElementById("commentsPanel");
+      const button = document.getElementById("commentsExpandButton");
+      page.classList.toggle("comments-expanded", state.commentsExpanded);
+      panel.classList.toggle("is-expanded", state.commentsExpanded);
+      button.setAttribute("aria-expanded", String(state.commentsExpanded));
+      button.textContent = state.commentsExpanded ? "コメント欄を縮小" : "コメント欄を拡大";
+      if (state.commentsExpanded) {
+        panel.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+
+    function submitComment(event) {
+      event.preventDefault();
+      const input = document.getElementById("commentInput");
+      const content = input.value.trim();
+      if (!content) return;
+      state.comments.push({ id: `local-${Date.now()}`, author: "このブラウザ", createdAt: new Date().toISOString(), content, attachments: [] });
+      input.value = "";
+      renderComments({ scrollToBottom: true });
+    }
+
+    function reset() {
+      state.selected = null;
+      state.selectedIndex = null;
+      state.revealed = false;
+      state.riichi = false;
+      state.commentsExpanded = false;
+      document.querySelector(".page").classList.remove("comments-expanded");
+      document.getElementById("commentsPanel").classList.remove("is-expanded");
+      document.getElementById("commentsPanel").hidden = true;
+      document.getElementById("commentsExpandButton").setAttribute("aria-expanded", "false");
+      document.getElementById("commentsExpandButton").textContent = "コメント欄を拡大";
+      renderHand();
+      renderAnswer();
+    }
+
+    function init() {
+      document.getElementById("versionLabel").textContent = `SCREENSHOT BASE v${APP_VERSION}`;
+      document.getElementById("versionSmall").textContent = APP_VERSION;
+      document.getElementById("modelSelect").innerHTML = SCENE.models.map((model, index) => `<option value="${index}">${model.name}（正誤基準）</option>`).join("");
+      document.getElementById("modelSelect").value = String(state.judgeModel);
+      document.getElementById("modelSelect").addEventListener("change", event => { state.judgeModel = Number(event.target.value); renderHand(); renderAnswer(); });
+      document.getElementById("commentsExpandButton").addEventListener("click", toggleCommentsExpanded);
+      document.getElementById("commentForm").addEventListener("submit", submitComment);
+      document.getElementById("threadLink").href = THREAD_URL;
+      renderComments();
+      document.getElementById("resetButton").addEventListener("click", reset);
+      document.getElementById("surroundingsToggle").addEventListener("click", () => {
+        state.surroundingsOpen = !state.surroundingsOpen;
+        const button = document.getElementById("surroundingsToggle");
+        const sceneImage = document.getElementById("sceneImage");
+        sceneImage.src = state.surroundingsOpen ? SCENE_IMAGES.open : SCENE_IMAGES.off;
+        sceneImage.alt = state.surroundingsOpen ? "指定NAGA局面の開示スクリーンショット" : "指定NAGA局面の伏牌スクリーンショット";
+        button.setAttribute("aria-expanded", String(state.surroundingsOpen));
+        button.textContent = state.surroundingsOpen ? "周囲の手牌を隠す" : "周囲の手牌を開く";
+      });
+      renderHand();
+      renderAnswer();
+    }
+
+    init();
+  </script>
+</body>
+</html>
