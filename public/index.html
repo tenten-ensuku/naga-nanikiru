@@ -397,7 +397,7 @@
   </main>
 
   <script>
-    const APP_VERSION = 42;
+    const APP_VERSION = 43;
     const SCENE = {
       actualDiscard: "ji4",
       handBeforeDraw: ["man7", "man8", "man9", "pin4", "pin6", "pin7", "pin8", "pin9", "sou7", "sou8", "sou8", "ji4", "ji4"],
@@ -533,6 +533,29 @@
       return String(value ?? "").replace(/[&<>"']/g, character => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[character]));
     }
 
+    function commentTileNumber(rawNumber) {
+      return /[１-９]/.test(rawNumber) ? "１２３４５６７８９".indexOf(rawNumber) + 1 : Number(rawNumber);
+    }
+
+    function commentTileSuit(rawSuit) {
+      return { m: "man", p: "pin", s: "sou", ｍ: "man", ｐ: "pin", ｓ: "sou" }[rawSuit];
+    }
+
+    function commentTileSequenceImages(rawNumbers, rawSuit) {
+      const suit = commentTileSuit(rawSuit);
+      return [...rawNumbers].map(rawNumber => commentTileImage(`${suit}${commentTileNumber(rawNumber)}`)).join("");
+    }
+
+    function formatCommentTileNotation(value) {
+      let formatted = value.replace(/([1-9１-９])\s*([～〜~])\s*([1-9１-９]+)([mpsｍｐｓ])/g, (match, rawStart, separator, rawEnd, rawSuit) => {
+        return `${commentTileSequenceImages(rawStart, rawSuit)}${separator}${commentTileSequenceImages(rawEnd, rawSuit)}`;
+      });
+      formatted = formatted.replace(/([1-9１-９]+)([mpsｍｐｓ])/g, (match, rawNumbers, rawSuit) => {
+        return commentTileSequenceImages(rawNumbers, rawSuit);
+      });
+      return formatted;
+    }
+
     function formatCommentFragment(value, links) {
       let formatted = value.replace(/(https?:\/\/[^\s<]+)/g, url => {
         const token = `@@COMMENT_LINK_${links.length}@@`;
@@ -540,11 +563,7 @@
         return token;
       });
       formatted = formatted.replace(/\*\*([\s\S]*?)\*\*/g, "<strong>$1</strong>");
-      formatted = formatted.replace(/(?<![A-Za-z0-9])([1-9１-９])([mpsｍｐｓ])(?=$|[^A-Za-z0-9])/g, (match, rawNumber, rawSuit) => {
-        const number = /[１-９]/.test(rawNumber) ? "１２３４５６７８９".indexOf(rawNumber) + 1 : Number(rawNumber);
-        const suit = { m: "man", p: "pin", s: "sou", ｍ: "man", ｐ: "pin", ｓ: "sou" }[rawSuit];
-        return commentTileImage(`${suit}${number}`);
-      });
+      formatted = formatCommentTileNotation(formatted);
       return formatted;
     }
 
