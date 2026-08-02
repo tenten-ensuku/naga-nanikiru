@@ -89,13 +89,13 @@
     .scene-frame { position: relative; width: 100%; max-width: 860px; margin: 0 auto; overflow: hidden; background: #033b76; aspect-ratio: 584 / 543; container-type: inline-size; }
     .scene-image { display: block; width: 100%; height: 100%; object-fit: fill; user-select: none; pointer-events: none; }
     .hand-mask { position: absolute; left: 11.5%; top: 79.3%; width: 67.8%; height: 20.7%; background: linear-gradient(145deg, #06254a 0%, #02244c 100%); pointer-events: none; }
-    /* 副露ありは元画像の左下マスクと同じ範囲に重ね、二重の段差を作らない。 */
+    /* 副露ありは元画像から検出した左下マスクの範囲へ重ねる。 */
     .scene-frame.has-self-melds .hand-mask {
-      left: 12.1%;
-      top: 78%;
-      width: 41.3%;
-      height: 20.3%;
-      background: linear-gradient(180deg, #022045 0%, #021d41 100%);
+      left: var(--hand-mask-left, 12.1%);
+      top: var(--hand-mask-top, 78%);
+      width: var(--hand-mask-width, 41.3%);
+      height: var(--hand-mask-height, 20.3%);
+      background: linear-gradient(180deg, var(--hand-mask-top-color, #022045) 0%, var(--hand-mask-bottom-color, #021d41) 100%);
     }
     .hand-score { position: absolute; top: 72.5%; left: 50%; z-index: 3; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; max-width: calc(100% - 24px); padding: 7px 16px 8px; color: #fff; background: rgba(4, 19, 31, .96); border: 2px solid rgba(255,255,255,.5); border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,.34); font-size: clamp(16px, 2.6cqw, 25px); font-weight: 900; line-height: 1; white-space: nowrap; transform: translateX(-50%); }
     .hand-score[hidden] { display: none; }
@@ -384,7 +384,7 @@
   </main>
 
   <script>
-    const APP_VERSION = 37;
+    const APP_VERSION = 38;
     const SCENE = {
       actualDiscard: "ji4",
       handBeforeDraw: ["man7", "man8", "man9", "pin4", "pin6", "pin7", "pin8", "pin9", "sou7", "sou8", "sou8", "ji4", "ji4"],
@@ -1161,6 +1161,115 @@
         }
       }
 
+      function handMaskFallbackV17(question) {
+        const meldCount = Array.isArray(question?.melds) ? question.melds.length : 0;
+        const closedCount = Array.isArray(question?.handBeforeDraw) ? question.handBeforeDraw.length : 0;
+        const hasDraw = Boolean(question?.draw);
+        const compactPanel = meldCount > 1 && closedCount + (hasDraw ? 1 : 0) <= 8;
+        return {
+          left: compactPanel ? 12.1 : 11.5,
+          top: 78,
+          width: compactPanel ? 41.4 : (hasDraw ? 54.5 : 62.5),
+          height: 20.5,
+          topColor: "#022045",
+          bottomColor: "#021d41"
+        };
+      }
+
+      function rgbHexV17(rgb) {
+        return `#${Array.from(rgb).slice(0, 3).map(value => Math.max(0, Math.min(255, value)).toString(16).padStart(2, "0")).join("")}`;
+      }
+
+      function detectHandMaskV17(image, fallback) {
+        try {
+          const width = image.naturalWidth;
+          const height = image.naturalHeight;
+          if (!width || !height) return fallback;
+          const canvas = document.createElement("canvas");
+          canvas.width = width;
+          canvas.height = height;
+          const context = canvas.getContext("2d", { willReadFrequently: true });
+          if (!context) return fallback;
+          context.drawImage(image, 0, 0, width, height);
+          const pixels = context.getImageData(0, 0, width, height).data;
+          const pixel = (x, y) => {
+            const safeX = Math.max(0, Math.min(width - 1, x));
+            const safeY = Math.max(0, Math.min(height - 1, y));
+            const offset = (safeY * width + safeX) * 4;
+            return pixels.slice(offset, offset + 3);
+          };
+          const luminance = rgb => (rgb[0] * .299) + (rgb[1] * .587) + (rgb[2] * .114);
+          const sampleXs = [.015, .03, .045, .06, .075, .09].map(ratio => Math.floor(width * ratio));
+          const backgroundLuminance = y => {
+            const values = sampleXs.map(x => luminance(pixel(x, y))).sort((left, right) => left - right);
+            return values[Math.min(2, values.length - 1)];
+          };
+          const isMaskPixel = (x, y) => backgroundLuminance(y) - luminance(pixel(x, y)) >= 12;
+          const candidates = [];
+          const minimumRun = Math.max(20, width * .25);
+          for (let y = Math.floor(height * .68); y < Math.floor(height * .995); y += 1) {
+            let runStart = -1;
+            for (let x = 0; x < width; x += 1) {
+              const isDark = isMaskPixel(x, y);
+              if (isDark && runStart < 0) runStart = x;
+              if ((!isDark || x === width - 1) && runStart >= 0) {
+                const runEnd = isDark && x === width - 1 ? x : x - 1;
+                const runWidth = runEnd - runStart + 1;
+                if (runWidth >= minimumRun) {
+                  const scanX = Math.min(width - 1, runStart + 4);
+                  let top = -1;
+                  let bottom = -1;
+                  for (let scanY = Math.floor(height * .6); scanY < height; scanY += 1) {
+                    if (isMaskPixel(scanX, scanY) && top < 0) top = scanY;
+                    if (!isMaskPixel(scanX, scanY) && top >= 0) {
+                      if (scanY - 1 >= y) {
+                        bottom = scanY - 1;
+                        break;
+                      }
+                      top = -1;
+                    }
+                  }
+                  const panelHeight = bottom >= top && top >= 0 ? bottom - top + 1 : 0;
+                  const normalizedTop = top / height;
+                  const normalizedHeight = panelHeight / height;
+                  const plausible = normalizedTop >= .75 && normalizedTop <= .86 && normalizedHeight >= .15 && normalizedHeight <= .25;
+                  if (plausible) candidates.push({ left: runStart, top, width: runWidth, height: panelHeight, row: y, score: runWidth * panelHeight });
+                }
+                runStart = -1;
+              }
+            }
+          }
+          candidates.sort((left, right) => right.score - left.score);
+          const best = candidates[0];
+          if (!best) return fallback;
+          const topSample = pixel(best.left + 4, best.top + Math.max(2, Math.floor(best.height * .08)));
+          const bottomSample = pixel(best.left + 4, best.top + Math.floor(best.height * .92));
+          return {
+            left: best.left / width * 100,
+            top: best.top / height * 100,
+            width: best.width / width * 100,
+            height: best.height / height * 100,
+            topColor: rgbHexV17(topSample),
+            bottomColor: rgbHexV17(bottomSample)
+          };
+        } catch {
+          return fallback;
+        }
+      }
+
+      function clearHandMaskV17() {
+        ["--hand-mask-left", "--hand-mask-top", "--hand-mask-width", "--hand-mask-height", "--hand-mask-top-color", "--hand-mask-bottom-color"].forEach(property => sceneFrameV16.style.removeProperty(property));
+      }
+
+      function setHandMaskV17(mask) {
+        sceneFrameV16.style.setProperty("--hand-mask-left", `${mask.left}%`);
+        sceneFrameV16.style.setProperty("--hand-mask-top", `${mask.top}%`);
+        sceneFrameV16.style.setProperty("--hand-mask-width", `${mask.width}%`);
+        sceneFrameV16.style.setProperty("--hand-mask-height", `${mask.height}%`);
+        sceneFrameV16.style.setProperty("--hand-mask-top-color", mask.topColor);
+        sceneFrameV16.style.setProperty("--hand-mask-bottom-color", mask.bottomColor);
+      }
+
       function applyQuestionV16(question, index = questionsV16.indexOf(question)) {
         currentQuestionIndexV16 = index >= 0 ? index : 0;
         for (const key of Object.keys(SCENE)) delete SCENE[key];
@@ -1180,7 +1289,10 @@
         document.getElementById("commentAddButton").textContent = "コメント追加";
         state.comments = (SCENE.comments || []).map(message => ({ ...message, attachments: [...(message.attachments || [])] }));
         state.judgeModel = Math.max(0, SCENE.models.findIndex(model => model.name === "ニシキ"));
-        sceneFrameV16.classList.toggle("has-self-melds", (SCENE.melds || []).length > 0);
+        const hasSelfMeldsV17 = (SCENE.melds || []).length > 0;
+        sceneFrameV16.classList.toggle("has-self-melds", hasSelfMeldsV17);
+        clearHandMaskV17();
+        if (hasSelfMeldsV17) setHandMaskV17(handMaskFallbackV17(question));
         document.getElementById("modelSelect").innerHTML = SCENE.models.map((model, index) => `<option value="${index}">${model.name}（正誤基準）</option>`).join("");
         document.getElementById("modelSelect").value = String(state.judgeModel);
         sourceTitleV16.textContent = `問題${SCENE.number}`;
@@ -1191,7 +1303,10 @@
         SCENE_IMAGES.open = SCENE.images.open;
         sceneImageV16.src = SCENE.images.off;
         sceneImageV16.alt = `問題${SCENE.number}の伏牌スクリーンショット`;
-        sceneImageV16.onload = () => { if (sceneImageV16.naturalWidth && sceneImageV16.naturalHeight) sceneFrameV16.style.aspectRatio = `${sceneImageV16.naturalWidth} / ${sceneImageV16.naturalHeight}`; };
+        sceneImageV16.onload = () => {
+          if (sceneImageV16.naturalWidth && sceneImageV16.naturalHeight) sceneFrameV16.style.aspectRatio = `${sceneImageV16.naturalWidth} / ${sceneImageV16.naturalHeight}`;
+          if (hasSelfMeldsV17) setHandMaskV17(detectHandMaskV17(sceneImageV16, handMaskFallbackV17(question)));
+        };
         if (sceneImageV16.complete) sceneImageV16.onload();
         document.getElementById("surroundingsToggle").setAttribute("aria-expanded", "false");
         document.getElementById("surroundingsToggle").textContent = "周囲の手牌を開く";
