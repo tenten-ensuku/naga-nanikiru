@@ -35,18 +35,36 @@
     button { cursor: pointer; }
     .page { display: flex; flex-direction: column; width: min(1380px, calc(100% - 24px)); margin: 0 auto; padding: 18px 0 36px; }
     .page.menu-active > .header, .page.menu-active > .source-bar, .page.menu-active > .scene-card, .page.menu-active > .answer-strip, .page.menu-active > .comments-panel, .page.menu-active > .below-note { display: none; }
-    .menu-panel { display: grid; gap: 16px; min-height: min(720px, calc(100vh - 54px)); align-content: center; padding: clamp(24px, 5vw, 58px); background: linear-gradient(145deg, rgba(12, 49, 68, .98), rgba(5, 23, 37, .98)); border: 1px solid var(--line); border-radius: 18px; box-shadow: var(--shadow); }
+    .menu-panel { display: grid; gap: 16px; min-height: min(720px, calc(100vh - 54px)); align-content: start; padding: clamp(24px, 5vw, 58px); background: linear-gradient(145deg, rgba(12, 49, 68, .98), rgba(5, 23, 37, .98)); border: 1px solid var(--line); border-radius: 18px; box-shadow: var(--shadow); }
     .menu-panel[hidden] { display: none; }
     .menu-heading { max-width: 720px; }
     .menu-heading .eyebrow { margin-bottom: 8px; }
     .menu-heading h2 { margin: 0; font-size: clamp(26px, 4vw, 44px); letter-spacing: -.05em; }
     .menu-heading p:not(.eyebrow) { margin: 8px 0 0; color: var(--muted); font-size: 13px; line-height: 1.6; }
+    .menu-summary { display: flex; flex-wrap: wrap; gap: 6px 10px; margin-top: 12px; color: var(--muted); font-size: 11px; }
+    .menu-summary strong { color: #fff7d6; }
+    .menu-nav { display: flex; flex-wrap: wrap; gap: 7px; padding: 7px; border: 1px solid rgba(255,255,255,.1); border-radius: 11px; background: rgba(0,0,0,.14); }
+    .menu-nav-button { display: inline-flex; align-items: center; gap: 6px; padding: 8px 10px; color: #cfe9ed; background: transparent; border: 1px solid transparent; border-radius: 8px; font-size: 11px; font-weight: 800; }
+    .menu-nav-button:hover, .menu-nav-button:focus-visible { color: #fff; background: rgba(22,80,103,.7); outline: none; }
+    .menu-nav-button.is-active { color: #12211e; background: var(--gold); border-color: #ffdb7d; }
+    .menu-nav-button.is-active:hover, .menu-nav-button.is-active:focus-visible { background: #ffda77; }
+    .menu-nav-badge { min-width: 18px; padding: 2px 4px; color: #dffbfb; background: rgba(255,255,255,.14); border-radius: 999px; font-size: 9px; line-height: 1; text-align: center; }
+    .menu-nav-button.is-active .menu-nav-badge { color: #12211e; background: rgba(255,255,255,.5); }
+    .menu-view-note { margin: -4px 0 -5px; color: var(--muted); font-size: 11px; line-height: 1.5; }
     .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; }
-    .menu-card { display: grid; gap: 6px; min-height: 112px; padding: 14px; color: var(--ink); text-align: left; background: rgba(0,0,0,.19); border: 1px solid rgba(255,255,255,.13); border-radius: 12px; transition: transform .15s ease, border-color .15s ease, background .15s ease; }
-    .menu-card:hover, .menu-card:focus-visible { background: rgba(22, 80, 103, .82); border-color: rgba(113,183,255,.75); outline: none; transform: translateY(-2px); }
+    .menu-card { display: grid; gap: 8px; min-height: 132px; padding: 12px; color: var(--ink); text-align: left; background: rgba(0,0,0,.19); border: 1px solid rgba(255,255,255,.13); border-radius: 12px; transition: transform .15s ease, border-color .15s ease, background .15s ease; }
+    .menu-card:hover, .menu-card:focus-within { background: rgba(22, 80, 103, .82); border-color: rgba(113,183,255,.75); transform: translateY(-2px); }
+    .menu-card-open { display: grid; gap: 6px; width: 100%; min-width: 0; padding: 0; color: var(--ink); text-align: left; background: transparent; border: 0; }
+    .menu-card-open:focus-visible { outline: 2px solid rgba(113,183,255,.85); outline-offset: 4px; border-radius: 5px; }
     .menu-card-title { font-size: 18px; font-weight: 900; }
     .menu-card-meta { color: var(--muted); font-size: 10px; line-height: 1.4; }
     .menu-card-models { color: #dffbfb; font-size: 10px; font-weight: 800; }
+    .menu-card-actions { display: flex; flex-wrap: wrap; gap: 5px; margin-top: auto; }
+    .menu-card-action { padding: 5px 7px; color: #d8f2f5; background: rgba(0,0,0,.2); border: 1px solid rgba(255,255,255,.14); border-radius: 6px; font-size: 9px; font-weight: 800; }
+    .menu-card-action:hover, .menu-card-action:focus-visible { color: #fff; background: #164862; border-color: rgba(113,183,255,.7); outline: none; }
+    .menu-card-action.is-active { color: #12211e; background: #f1c457; border-color: #ffdb7d; }
+    .menu-empty, .menu-placeholder { padding: 22px 16px; color: var(--muted); text-align: center; background: rgba(0,0,0,.16); border: 1px dashed rgba(255,255,255,.18); border-radius: 11px; font-size: 12px; line-height: 1.7; }
+    .menu-placeholder strong { display: block; margin-bottom: 5px; color: #fff7d6; font-size: 16px; }
     .header { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; margin-bottom: 12px; }
     .eyebrow { margin: 0 0 4px; color: var(--gold); font-size: 10px; font-weight: 800; letter-spacing: .18em; }
     h1 { margin: 0; font-size: clamp(23px, 3vw, 35px); line-height: 1.05; letter-spacing: -.05em; }
@@ -243,8 +261,18 @@
         <p class="eyebrow">NAGA SCREENSHOT-BASED DRILL</p>
         <h2 id="menuTitle">問題メニュー</h2>
         <p>解きたい局面を選んでください。解答後は「次の問題へ」で続けて挑戦できます。</p>
+        <div class="menu-summary" id="menuSummary" aria-live="polite"></div>
       </div>
+      <nav class="menu-nav" aria-label="問題集メニュー">
+        <button class="menu-nav-button is-active" type="button" data-menu-view="my">MY問題集 <span class="menu-nav-badge" data-menu-count="my">0</span></button>
+        <button class="menu-nav-button" type="button" data-menu-view="favorites">お気に入り <span class="menu-nav-badge" data-menu-count="favorites">0</span></button>
+        <button class="menu-nav-button" type="button" data-menu-view="trash">ゴミ箱 <span class="menu-nav-badge" data-menu-count="trash">0</span></button>
+        <button class="menu-nav-button" type="button" data-menu-view="generator">問題生成</button>
+        <button class="menu-nav-button" type="button" data-menu-view="analysis">自己分析</button>
+      </nav>
+      <p class="menu-view-note" id="menuViewNote"></p>
       <div class="menu-grid" id="menuGrid"></div>
+      <div class="menu-empty" id="menuEmpty" hidden></div>
     </section>
     <header class="header">
       <div>
@@ -318,7 +346,7 @@
   </main>
 
   <script>
-    const APP_VERSION = 26;
+    const APP_VERSION = 27;
     const SCENE = {
       actualDiscard: "ji4",
       handBeforeDraw: ["man7", "man8", "man9", "pin4", "pin6", "pin7", "pin8", "pin9", "sou7", "sou8", "sou8", "ji4", "ji4"],
@@ -355,7 +383,7 @@
       { id: "1532012487212536022", author: "てんてん", createdAt: "2026-07-29T13:10:40.367Z", content: "聴牌取らずは良いが、打8ｓ推奨。\n打北は面子手立直進行に於ける二大タブー（①単独暗刻の破壊②単独雀頭の破壊）に抵触。\n打8ｓとすれば、ヘッドレス2型連続形となるため、4ｐ6ｐ引きでも三色聴牌となるし、9ｐ引きも悪くない。", attachments: [] },
       { id: "1532017637700272302", author: "くにたそ", createdAt: "2026-07-29T13:31:08.339Z", content: "恥ずかしながら、時間切れの北でした……笑\n7と8sで迷って結局時間切れましたが、テンパイ取らずの8s、僕はすごく大好きです！めちゃくちゃ言われて参考になりました！👍", attachments: [] }
     ];
-    const state = { selected: null, selectedIndex: null, callDecision: null, revealed: false, judgeModel: 2, riichi: false, surroundingsOpen: false, commentsExpanded: false, commentComposerOpen: false, comments: THREAD_MESSAGES.map(message => ({ ...message, attachments: [...message.attachments] })) };
+    const state = { selected: null, selectedIndex: null, callDecision: null, revealed: false, answerRecorded: false, judgeModel: 2, riichi: false, surroundingsOpen: false, commentsExpanded: false, commentComposerOpen: false, comments: THREAD_MESSAGES.map(message => ({ ...message, attachments: [...message.attachments] })) };
 
     function tileLabel(tile) {
       if (TILE_NAMES[tile]) return TILE_NAMES[tile];
@@ -634,11 +662,90 @@
       };
       let questionsV16 = [baseQuestionV16];
       let currentQuestionIndexV16 = 0;
+      let menuViewV16 = "my";
       const modelColorByNameV16 = { オメガ: "model-omega", ガンマ: "model-gamma", ニシキ: "model-nishiki", ヒバカリ: "model-hihikari", カガシ: "model-kagashi" };
+      const USER_STATE_KEY_V16 = "naga-nanikiru-user-state-v1";
+      const MENU_VIEW_COPY_V16 = {
+        my: { title: "MY問題集", note: "出題できる問題を新しい順に表示しています。お気に入り登録やゴミ箱への移動は、この端末内だけに保存されます。" },
+        favorites: { title: "お気に入り", note: "あとで繰り返したい問題をまとめています。ゴミ箱に移した問題はここから一時的に外れます。" },
+        trash: { title: "ゴミ箱", note: "しばらく見たくない問題です。復元するか、この端末では完全に非表示にできます。" },
+        generator: { title: "問題生成", note: "局面URLやNAGAの対局URLから問題を追加する機能を、次の段階で接続します。" },
+        analysis: { title: "自己分析", note: "回答履歴をもとに、正答率・苦手傾向・平均回答時間を表示する場所です。" }
+      };
+      let userStateV16 = loadUserStateV16();
       const sceneFrameV16 = document.querySelector(".scene-frame");
       const sceneImageV16 = document.getElementById("sceneImage");
       const sourceTitleV16 = document.getElementById("sceneProblemTitle");
       const sourceMetaV16 = document.getElementById("sceneMeta");
+
+      function loadUserStateV16() {
+        const fallback = { favorites: [], trashed: [], hidden: [], answerHistory: [] };
+        try {
+          const saved = JSON.parse(window.localStorage.getItem(USER_STATE_KEY_V16) || "null");
+          if (!saved || typeof saved !== "object") return fallback;
+          return {
+            favorites: Array.isArray(saved.favorites) ? saved.favorites.filter(Boolean) : [],
+            trashed: Array.isArray(saved.trashed) ? saved.trashed.filter(Boolean) : [],
+            hidden: Array.isArray(saved.hidden) ? saved.hidden.filter(Boolean) : [],
+            answerHistory: Array.isArray(saved.answerHistory) ? saved.answerHistory.slice(0, 500) : []
+          };
+        } catch {
+          return fallback;
+        }
+      }
+
+      function saveUserStateV16() {
+        try {
+          window.localStorage.setItem(USER_STATE_KEY_V16, JSON.stringify(userStateV16));
+        } catch {
+          // Private browsing or storage-disabled environments can still use the drill.
+        }
+      }
+
+      function questionKeyV16(question) {
+        return String(question?.id || `number-${question?.number ?? "unknown"}`);
+      }
+
+      function isHiddenV16(question) {
+        return userStateV16.hidden.includes(questionKeyV16(question));
+      }
+
+      function isTrashedV16(question) {
+        return userStateV16.trashed.includes(questionKeyV16(question)) && !isHiddenV16(question);
+      }
+
+      function isFavoriteV16(question) {
+        return userStateV16.favorites.includes(questionKeyV16(question)) && !isHiddenV16(question);
+      }
+
+      function isPlayableV16(question) {
+        return !isHiddenV16(question) && !isTrashedV16(question);
+      }
+
+      function updateUserStateV16(mutator) {
+        mutator(userStateV16);
+        saveUserStateV16();
+        renderQuestionOptionsV16();
+        renderMenuCardsV16();
+      }
+
+      function recordAnswerV16() {
+        if (state.answerRecorded) return;
+        const question = questionsV16[currentQuestionIndexV16];
+        if (!question) return;
+        userStateV16.answerHistory.unshift({
+          questionKey: questionKeyV16(question),
+          number: question.number,
+          answeredAt: new Date().toISOString(),
+          decisionType: SCENE.decisionType || "discard",
+          selected: state.selected,
+          callDecision: state.callDecision,
+          riichi: state.riichi
+        });
+        userStateV16.answerHistory = userStateV16.answerHistory.slice(0, 500);
+        state.answerRecorded = true;
+        saveUserStateV16();
+      }
 
       function modelColorV16(index) {
         return modelColorByNameV16[SCENE.models[index]?.name] || MODEL_COLORS[index] || "model-nishiki";
@@ -831,6 +938,7 @@
         if (SCENE.decisionType !== "call") return;
         state.callDecision = decision;
         state.revealed = true;
+        recordAnswerV16();
         renderHandV16();
         renderAnswerV16();
       }
@@ -841,6 +949,7 @@
         state.selectedIndex = index;
         state.selected = tiles[index];
         state.revealed = true;
+        recordAnswerV16();
         renderHandV16();
         renderAnswerV16();
       }
@@ -857,6 +966,7 @@
         state.selectedIndex = null;
         state.callDecision = null;
         state.revealed = false;
+        state.answerRecorded = false;
         state.riichi = false;
         state.commentsExpanded = false;
         state.commentComposerOpen = false;
@@ -889,6 +999,7 @@
         state.selectedIndex = null;
         state.callDecision = null;
         state.revealed = false;
+        state.answerRecorded = false;
         state.riichi = false;
         state.surroundingsOpen = false;
         state.commentsExpanded = false;
@@ -917,9 +1028,11 @@
         renderComments();
       }
 
-      function showMenuV16() {
+      function showMenuV16(view = menuViewV16) {
+        menuViewV16 = MENU_VIEW_COPY_V16[view] ? view : "my";
         document.querySelector(".page").classList.add("menu-active");
         document.getElementById("menuPanel").hidden = false;
+        renderMenuCardsV16();
       }
 
       function openQuestionV16(index) {
@@ -931,16 +1044,100 @@
         applyQuestionV16(question, index);
       }
 
+      function renderMenuNavigationV16() {
+        const counts = {
+          my: questionsV16.filter(question => isPlayableV16(question)).length,
+          favorites: questionsV16.filter(question => isFavoriteV16(question) && isPlayableV16(question)).length,
+          trash: questionsV16.filter(question => isTrashedV16(question)).length
+        };
+        document.querySelectorAll("[data-menu-view]").forEach(button => {
+          const active = button.dataset.menuView === menuViewV16;
+          button.classList.toggle("is-active", active);
+          button.setAttribute("aria-pressed", String(active));
+        });
+        document.querySelectorAll("[data-menu-count]").forEach(badge => {
+          badge.textContent = String(counts[badge.dataset.menuCount] ?? 0);
+        });
+        const summary = document.getElementById("menuSummary");
+        summary.innerHTML = `<span>全${questionsV16.length}問</span><span>出題中 <strong>${counts.my}</strong></span><span>お気に入り <strong>${counts.favorites}</strong></span><span>回答履歴 <strong>${userStateV16.answerHistory.length}</strong></span>`;
+        const copy = MENU_VIEW_COPY_V16[menuViewV16];
+        document.getElementById("menuTitle").textContent = copy.title;
+        document.getElementById("menuViewNote").textContent = copy.note;
+      }
+
       function renderMenuCardsV16() {
         const grid = document.getElementById("menuGrid");
-        grid.innerHTML = questionsV16.map((question, index) => `<button class="menu-card" type="button" data-question-index="${index}"><span class="menu-card-title">${question.title || `問題${question.number}`}</span><span class="menu-card-meta">${index === 0 ? "既存の練習問題" : "くにたそチェックから追加"}</span><span class="menu-card-models">${question.models.length}モデル・NAGA URLあり</span></button>`).join("");
-        grid.querySelectorAll("[data-question-index]").forEach(button => button.addEventListener("click", () => openQuestionV16(Number(button.dataset.questionIndex))));
+        const empty = document.getElementById("menuEmpty");
+        renderMenuNavigationV16();
+        if (menuViewV16 === "generator") {
+          grid.innerHTML = `<div class="menu-placeholder"><strong>問題生成は次の段階で追加</strong>局面URLを貼り付けて1問追加、NAGAの対局URLから悪手をまとめて追加できる入口をここへ接続します。</div>`;
+          grid.style.display = "block";
+          empty.hidden = true;
+          return;
+        }
+        if (menuViewV16 === "analysis") {
+          const historyCount = userStateV16.answerHistory.length;
+          grid.innerHTML = `<div class="menu-placeholder"><strong>回答履歴 ${historyCount}問</strong>${historyCount ? "ここまでの回答は端末内に保存されています。正答率・苦手モデル・平均回答時間は次の段階で集計します。" : "問題を解くと、この端末に回答履歴が蓄積されます。正答率・苦手モデル・平均回答時間は次の段階で表示します。"}</div>`;
+          grid.style.display = "block";
+          empty.hidden = true;
+          return;
+        }
+        grid.style.display = "grid";
+        const entries = questionsV16.map((question, index) => ({ question, index })).filter(({ question }) => {
+          if (menuViewV16 === "trash") return isTrashedV16(question);
+          if (menuViewV16 === "favorites") return isFavoriteV16(question) && isPlayableV16(question);
+          return isPlayableV16(question);
+        });
+        empty.hidden = entries.length > 0;
+        empty.textContent = menuViewV16 === "trash" ? "ゴミ箱は空です。" : menuViewV16 === "favorites" ? "お気に入り登録した問題はまだありません。" : "出題できる問題がありません。";
+        grid.innerHTML = entries.map(({ question, index }) => {
+          const favorite = isFavoriteV16(question);
+          const trashed = isTrashedV16(question);
+          const title = escapeHtml(question.title || `問題${question.number}`);
+          const source = index === 0 ? "既存の練習問題" : "くにたそチェックから追加";
+          const modelCount = Array.isArray(question.models) ? question.models.length : 0;
+          return `<article class="menu-card"><button class="menu-card-open" type="button" data-question-index="${index}"><span class="menu-card-title">${title}</span><span class="menu-card-meta">${source}</span><span class="menu-card-models">${modelCount}モデル・NAGA URLあり</span></button><div class="menu-card-actions"><button class="menu-card-action${favorite ? " is-active" : ""}" type="button" data-menu-action="favorite" data-question-index="${index}" aria-pressed="${favorite}">${favorite ? "★ お気に入り済" : "☆ お気に入り"}</button>${trashed ? `<button class="menu-card-action" type="button" data-menu-action="restore" data-question-index="${index}">復元</button><button class="menu-card-action" type="button" data-menu-action="hide" data-question-index="${index}">完全に非表示</button>` : `<button class="menu-card-action" type="button" data-menu-action="trash" data-question-index="${index}">ゴミ箱へ</button>`}</div></article>`;
+        }).join("");
+      }
+
+      function handleMenuGridClickV16(event) {
+        const actionButton = event.target.closest("[data-menu-action]");
+        if (actionButton) {
+          const question = questionsV16[Number(actionButton.dataset.questionIndex)];
+          if (!question) return;
+          const action = actionButton.dataset.menuAction;
+          if (action === "favorite") updateUserStateV16(userState => {
+            const key = questionKeyV16(question);
+            userState.favorites = userState.favorites.includes(key) ? userState.favorites.filter(value => value !== key) : [...userState.favorites, key];
+          });
+          if (action === "trash") updateUserStateV16(userState => {
+            const key = questionKeyV16(question);
+            if (!userState.trashed.includes(key)) userState.trashed.push(key);
+          });
+          if (action === "restore") updateUserStateV16(userState => {
+            const key = questionKeyV16(question);
+            userState.trashed = userState.trashed.filter(value => value !== key);
+          });
+          if (action === "hide") {
+            const key = questionKeyV16(question);
+            if (window.confirm(`問題${question.number}をこの端末で完全に非表示にしますか？`)) updateUserStateV16(userState => {
+              userState.hidden = [...new Set([...userState.hidden, key])];
+              userState.trashed = userState.trashed.filter(value => value !== key);
+              userState.favorites = userState.favorites.filter(value => value !== key);
+            });
+          }
+          return;
+        }
+        const openButton = event.target.closest("[data-question-index]");
+        if (openButton) openQuestionV16(Number(openButton.dataset.questionIndex));
       }
 
       function renderQuestionOptionsV16() {
         const select = document.getElementById("questionSelect");
-        select.innerHTML = questionsV16.map((question, index) => `<option value="${index}">${question.title || `問題${question.number}`}</option>`).join("");
-        select.value = "0";
+        const entries = questionsV16.map((question, index) => ({ question, index })).filter(({ question }) => isPlayableV16(question));
+        select.innerHTML = entries.map(({ question, index }) => `<option value="${index}">${escapeHtml(question.title || `問題${question.number}`)}</option>`).join("");
+        select.value = entries.some(({ index }) => index === currentQuestionIndexV16) ? String(currentQuestionIndexV16) : (entries[0] ? String(entries[0].index) : "");
+        select.disabled = entries.length === 0;
       }
 
       async function initImportedQuestionsV16() {
@@ -957,10 +1154,13 @@
         applyQuestionV16(questionsV16[0], 0);
         showMenuV16();
         document.getElementById("questionSelect").addEventListener("change", event => openQuestionV16(Number(event.target.value)));
-        document.getElementById("menuButton").addEventListener("click", showMenuV16);
+        document.getElementById("menuGrid").addEventListener("click", handleMenuGridClickV16);
+        document.querySelectorAll("[data-menu-view]").forEach(button => button.addEventListener("click", () => showMenuV16(button.dataset.menuView)));
+        document.getElementById("menuButton").addEventListener("click", () => showMenuV16("my"));
         document.getElementById("nextQuestionButton").addEventListener("click", () => {
-          if (currentQuestionIndexV16 < questionsV16.length - 1) openQuestionV16(currentQuestionIndexV16 + 1);
-          else showMenuV16();
+          const nextIndex = questionsV16.findIndex((question, index) => index > currentQuestionIndexV16 && isPlayableV16(question));
+          if (nextIndex >= 0) openQuestionV16(nextIndex);
+          else showMenuV16("my");
         });
       }
 
