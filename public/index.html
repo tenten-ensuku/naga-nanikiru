@@ -199,10 +199,10 @@
     .next-button:hover { background: #2e8da4; }
     .comments-panel { order: 5; display: grid; gap: 8px; padding: 10px 12px; margin-top: 8px; background: linear-gradient(145deg, rgba(12,42,58,.98), rgba(6,25,39,.98)); border: 1px solid var(--line); border-radius: 10px; }
     .comments-panel[hidden] { display: none; }
-    .comments-heading { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    .comments-heading { display: flex; align-items: center; gap: 8px; }
     .comments-heading h2 { display: none; }
-    .comments-heading a { color: #9bdcff; font-size: 8px; }
-    .comments-heading-actions { display: flex; align-items: center; gap: 7px; }
+    .comments-footer { display: flex; align-items: center; justify-content: flex-end; flex-wrap: wrap; gap: 7px; padding-top: 6px; border-top: 1px solid rgba(255,255,255,.1); }
+    .comments-footer a { color: #9bdcff; font-size: 9px; }
     .comments-expand-button, .comment-add-button { padding: 5px 8px; color: #e7f8ff; background: #164862; border: 1px solid rgba(113,183,255,.55); border-radius: 6px; font-size: 9px; font-weight: 800; }
     .comment-add-button { color: #12211e; background: #bde7e0; border-color: #d6fff5; }
     .comment-add-button:hover { background: #d6fff5; }
@@ -212,14 +212,22 @@
     .comments-panel.is-expanded { order: 3; margin-top: 8px; padding: 10px 12px; }
     .comments-panel.is-expanded .comments-scroll { max-height: min(68vh, 680px); }
     .comments-panel.is-expanded .comment-attachment { max-height: 260px; }
-    .comment-card { padding: 8px 10px; border: 1px solid rgba(255,255,255,.1); border-radius: 7px; background: rgba(0,0,0,.16); }
-    .comment-card-header { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
-    .comment-author { color: #eafefe; font-size: 11px; font-weight: 800; }
+    .comment-card { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 9px; align-items: start; padding: 8px 10px; border: 1px solid rgba(255,255,255,.1); border-radius: 7px; background: rgba(0,0,0,.16); }
+    .comment-author-badge { display: inline-flex; align-items: center; justify-content: center; width: 44px; min-height: 44px; padding: 4px; color: #eafefe; background: linear-gradient(145deg, #21536b, #102c3e); border: 1px solid rgba(155,232,216,.55); border-radius: 50%; font-size: 9px; font-weight: 800; line-height: 1.15; text-align: center; overflow-wrap: anywhere; }
+    .comment-card-main { min-width: 0; }
+    .comment-card-meta { display: flex; justify-content: flex-end; gap: 10px; min-height: 14px; }
     .comment-time { color: var(--muted); font-size: 9px; white-space: nowrap; }
-    .comment-body { margin: 4px 0 0; color: #e6f4f7; font-size: clamp(13px, 1.25vw, 16px); line-height: 1.6; overflow-wrap: anywhere; }
+    .comment-body { margin: 0; color: #e6f4f7; font-size: clamp(13px, 1.25vw, 16px); line-height: 1.6; overflow-wrap: anywhere; }
     .comment-body strong { color: #fff; font-weight: 900; }
     .comment-body a { color: #9bdcff; }
     .comment-inline-tile { display: inline-block; width: 1.18em; height: 1.6em; margin: -.34em .05em -.25em; vertical-align: middle; object-fit: contain; }
+    .comment-spoiler { display: inline; margin: 0; padding: 0 .28em; color: transparent; background: #294652; border: 0; border-radius: 3px; font: inherit; line-height: inherit; vertical-align: baseline; cursor: pointer; }
+    .comment-spoiler:hover, .comment-spoiler:focus-visible { background: #3a6575; outline: 2px solid rgba(155,232,216,.45); outline-offset: 1px; }
+    .comment-spoiler-cover { color: #d5edf0; font-size: .78em; letter-spacing: .04em; }
+    .comment-spoiler-content { display: none; }
+    .comment-spoiler.is-revealed { color: inherit; background: rgba(155,232,216,.12); }
+    .comment-spoiler.is-revealed .comment-spoiler-cover { display: none; }
+    .comment-spoiler.is-revealed .comment-spoiler-content { display: inline; }
     .comment-attachment-button { display: block; max-width: min(100%, 560px); margin-top: 5px; padding: 0; overflow: hidden; border: 1px solid rgba(255,255,255,.12); border-radius: 5px; background: #031521; cursor: zoom-in; }
     .comment-attachment-button:hover, .comment-attachment-button:focus-visible { border-color: rgba(155,232,216,.9); outline: 2px solid rgba(155,232,216,.25); outline-offset: 2px; }
     .comment-attachment { display: block; width: 100%; max-height: 150px; object-fit: contain; }
@@ -260,7 +268,7 @@
       .answer-actions { flex-direction: row; flex-wrap: wrap; }
       .reset-button, .next-button { flex: 1; min-width: 0; }
       .answer-choice-tile img { width: 30px; }
-      .comments-heading-actions { gap: 4px; }
+      .comments-footer { gap: 4px; }
       .comment-form { grid-template-columns: 1fr; }
       .comment-submit { width: 100%; }
       .below-note { display: none; }
@@ -337,11 +345,6 @@
           <h2 id="commentsTitle">スレッド内のコメント</h2>
           <p class="comments-meta" id="commentsMeta"></p>
         </div>
-        <div class="comments-heading-actions">
-          <button class="comment-add-button" id="commentAddButton" type="button" aria-expanded="false">コメント追加</button>
-          <a id="threadLink" href="https://discord.com/channels/1166706544856006656/1532011607209541833" target="_blank" rel="noreferrer">Discordで開く</a>
-          <button class="comments-expand-button" id="commentsExpandButton" type="button" aria-expanded="false">コメント欄を拡大</button>
-        </div>
       </div>
       <div class="comments-scroll" id="commentsScroll" tabindex="0" aria-label="スレッド内のコメント一覧"></div>
       <form class="comment-form" id="commentForm" hidden>
@@ -350,6 +353,11 @@
         <button class="comment-submit" type="submit">コメントを追加</button>
       </form>
       <p class="comment-sync-note">追加したコメントはこの画面内にのみ表示されます。Discordのスレッドには投稿されません。</p>
+      <div class="comments-footer">
+        <button class="comment-add-button" id="commentAddButton" type="button" aria-expanded="false">コメント追加</button>
+        <a id="threadLink" href="https://discord.com/channels/1166706544856006656/1532011607209541833" target="_blank" rel="noreferrer">Discordで開く</a>
+        <button class="comments-expand-button" id="commentsExpandButton" type="button" aria-expanded="false">コメント欄を拡大</button>
+      </div>
     </section>
 
     <div class="comment-image-viewer" id="commentImageViewer" role="dialog" aria-modal="true" aria-label="添付画像の拡大表示" hidden>
@@ -365,7 +373,7 @@
   </main>
 
   <script>
-    const APP_VERSION = 33;
+    const APP_VERSION = 34;
     const SCENE = {
       actualDiscard: "ji4",
       handBeforeDraw: ["man7", "man8", "man9", "pin4", "pin6", "pin7", "pin8", "pin9", "sou7", "sou8", "sou8", "ji4", "ji4"],
@@ -501,9 +509,8 @@
       return String(value ?? "").replace(/[&<>"']/g, character => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[character]));
     }
 
-    function formatCommentContent(content) {
-      const links = [];
-      let formatted = escapeHtml(content).replace(/(https?:\/\/[^\s<]+)/g, url => {
+    function formatCommentFragment(value, links) {
+      let formatted = value.replace(/(https?:\/\/[^\s<]+)/g, url => {
         const token = `@@COMMENT_LINK_${links.length}@@`;
         links.push(`<a href="${url}" target="_blank" rel="noreferrer">${url}</a>`);
         return token;
@@ -514,7 +521,23 @@
         const suit = { m: "man", p: "pin", s: "sou", ｍ: "man", ｐ: "pin", ｓ: "sou" }[rawSuit];
         return commentTileImage(`${suit}${number}`);
       });
+      return formatted;
+    }
+
+    function formatCommentContent(content) {
+      const links = [];
+      const spoilers = [];
+      let formatted = escapeHtml(content).replace(/\|\|([\s\S]*?)\|\|/g, (_, inner) => {
+        const token = `@@COMMENT_SPOILER_${spoilers.length}@@`;
+        spoilers.push(inner);
+        return token;
+      });
+      formatted = formatCommentFragment(formatted, links);
       formatted = formatted.replace(/\n/g, "<br>");
+      formatted = formatted.replace(/@@COMMENT_SPOILER_(\d+)@@/g, (token, index) => {
+        const inner = formatCommentFragment(spoilers[Number(index)] || "", links).replace(/\n/g, "<br>");
+        return `<button class="comment-spoiler" type="button" aria-expanded="false" aria-label="伏せ字を表示"><span class="comment-spoiler-cover">伏せ字</span><span class="comment-spoiler-content" aria-hidden="true">${inner}</span></button>`;
+      });
       return formatted.replace(/@@COMMENT_LINK_(\d+)@@/g, (token, index) => links[Number(index)] || token);
     }
 
@@ -524,8 +547,11 @@
 
     function renderComments({ scrollToBottom = false } = {}) {
       const list = document.getElementById("commentsScroll");
-    const messages = state.comments.filter(message => message.showInComments !== false && (message.content || message.attachments?.length));
-      list.innerHTML = messages.map(message => `<article class="comment-card"><div class="comment-card-header"><span class="comment-author">${escapeHtml(message.author)}</span><time class="comment-time" datetime="${escapeHtml(message.createdAt)}">${formatCommentTime(message.createdAt)}</time></div>${message.content ? `<div class="comment-body">${formatCommentContent(message.content)}</div>` : ""}${(message.attachments || []).map(attachment => `<button class="comment-attachment-button" type="button" data-comment-image-src="${escapeHtml(attachment.src)}" data-comment-image-alt="${escapeHtml(attachment.alt)}" aria-label="${escapeHtml(attachment.alt)}を拡大"><img class="comment-attachment" src="${escapeHtml(attachment.src)}" alt="${escapeHtml(attachment.alt)}" loading="lazy"></button>`).join("")}</article>`).join("");
+      const messages = state.comments.filter(message => message.showInComments !== false && (message.content || message.attachments?.length));
+      list.innerHTML = messages.map(message => {
+        const author = String(message.author || "不明");
+        return `<article class="comment-card"><span class="comment-author-badge" title="${escapeHtml(author)}">${escapeHtml(author)}</span><div class="comment-card-main"><div class="comment-card-meta"><time class="comment-time" datetime="${escapeHtml(message.createdAt)}">${formatCommentTime(message.createdAt)}</time></div>${message.content ? `<div class="comment-body">${formatCommentContent(message.content)}</div>` : ""}${(message.attachments || []).map(attachment => `<button class="comment-attachment-button" type="button" data-comment-image-src="${escapeHtml(attachment.src)}" data-comment-image-alt="${escapeHtml(attachment.alt)}" aria-label="${escapeHtml(attachment.alt)}を拡大"><img class="comment-attachment" src="${escapeHtml(attachment.src)}" alt="${escapeHtml(attachment.alt)}" loading="lazy"></button>`).join("")}</div></article>`;
+      }).join("");
       document.getElementById("commentsMeta").textContent = `${messages.length}件の投稿（画像を含む）`;
       if (scrollToBottom) list.scrollTop = list.scrollHeight;
     }
@@ -551,6 +577,14 @@
 
     function initCommentImageViewer() {
       document.getElementById("commentsScroll").addEventListener("click", event => {
+        const spoiler = event.target.closest(".comment-spoiler");
+        if (spoiler) {
+          const revealed = spoiler.classList.toggle("is-revealed");
+          spoiler.setAttribute("aria-expanded", String(revealed));
+          spoiler.setAttribute("aria-label", revealed ? "伏せ字を隠す" : "伏せ字を表示");
+          spoiler.querySelector(".comment-spoiler-content")?.setAttribute("aria-hidden", String(!revealed));
+          return;
+        }
         const trigger = event.target.closest("[data-comment-image-src]");
         if (trigger) openCommentImage(trigger.dataset.commentImageSrc, trigger.dataset.commentImageAlt || "添付画像");
       });
