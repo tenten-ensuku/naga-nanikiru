@@ -106,6 +106,12 @@
     .hand-score.score-safe { border-color: #9be8d8; background: rgba(10, 77, 71, .96); }
     .hand-score.score-partial { border-color: #ffd278; background: rgba(91, 59, 13, .96); }
     .hand-score.score-bad { border-color: #ff8790; background: rgba(111, 25, 35, .96); }
+    .answer-confirmation { position: relative; z-index: 4; display: flex; align-items: center; justify-content: center; gap: 12px; width: min(100%, 560px); box-sizing: border-box; margin: 8px auto 0; padding: 8px 10px; color: #eafefe; background: rgba(4, 27, 42, .96); border: 1px solid rgba(113,183,255,.62); border-radius: 10px; box-shadow: 0 5px 16px rgba(0,0,0,.3); }
+    .answer-confirmation[hidden] { display: none; }
+    .answer-confirmation-choice { min-width: 0; flex: 1; font-size: 11px; font-weight: 800; line-height: 1.35; text-align: left; }
+    .answer-confirmation-choice strong { color: #fff1bd; font-size: 13px; }
+    .answer-confirm-button { flex: 0 0 auto; min-width: 132px; padding: 9px 13px; color: #18241c; background: linear-gradient(145deg, #ffe18a, #eeb64d); border: 1px solid #ffdc79; border-radius: 8px; font-size: 11px; font-weight: 900; box-shadow: 0 3px 8px rgba(0,0,0,.22); }
+    .answer-confirm-button:hover, .answer-confirm-button:focus-visible { background: #ffe8a8; outline: 2px solid rgba(255,225,138,.4); outline-offset: 2px; }
     .hand-layer { position: absolute; left: var(--hand-layer-left, 13%); top: calc(var(--hand-mask-top, 79.3%) + 1.8%); width: var(--hand-layer-width, 64.8%); height: calc(var(--hand-mask-height, 20.7%) - 3.8%); box-sizing: border-box; display: flex; align-items: flex-end; justify-content: center; pointer-events: auto; }
     .scene-frame.has-self-melds .hand-layer { left: var(--hand-layer-left, 13.6%); width: var(--hand-layer-width, 38.3%); justify-content: flex-start; }
     .hand-controls { display: flex; align-items: flex-end; justify-content: center; gap: clamp(5px, .55vw, 9px); width: 100%; }
@@ -280,6 +286,8 @@
       .answer-actions { flex-direction: row; flex-wrap: wrap; }
       .reset-button, .next-button { flex: 1; min-width: 0; }
       .answer-choice-tile img { width: 30px; }
+      .answer-confirmation { position: sticky; bottom: max(8px, env(safe-area-inset-bottom)); width: calc(100% - 8px); gap: 8px; padding: 7px 8px; }
+      .answer-confirm-button { min-width: 120px; padding: 9px 10px; }
       .comments-footer { gap: 4px; }
       .comment-form { grid-template-columns: 1fr; }
       .comment-submit { width: 100%; }
@@ -331,6 +339,10 @@
         <div class="hand-layer" id="handLayer" aria-label="選択できる自分の手牌"></div>
       </div>
       <div class="hand-score" id="handScoreBadge" aria-live="polite" hidden></div>
+      <div class="answer-confirmation" id="answerConfirmation" aria-live="polite" hidden>
+        <div class="answer-confirmation-choice" id="answerConfirmationChoice"></div>
+        <button class="answer-confirm-button" id="confirmAnswerButton" type="button">この回答で確定</button>
+      </div>
     </section>
 
     <section class="answer-strip" id="answerStrip" aria-live="polite" hidden>
@@ -385,7 +397,7 @@
   </main>
 
   <script>
-    const APP_VERSION = 40;
+    const APP_VERSION = 41;
     const SCENE = {
       actualDiscard: "ji4",
       handBeforeDraw: ["man7", "man8", "man9", "pin4", "pin6", "pin7", "pin8", "pin9", "sou7", "sou8", "sou8", "ji4", "ji4"],
@@ -422,7 +434,7 @@
       { id: "1532012487212536022", author: "てんてん", createdAt: "2026-07-29T13:10:40.367Z", content: "聴牌取らずは良いが、打8ｓ推奨。\n打北は面子手立直進行に於ける二大タブー（①単独暗刻の破壊②単独雀頭の破壊）に抵触。\n打8ｓとすれば、ヘッドレス2型連続形となるため、4ｐ6ｐ引きでも三色聴牌となるし、9ｐ引きも悪くない。", attachments: [] },
       { id: "1532017637700272302", author: "くにたそ", createdAt: "2026-07-29T13:31:08.339Z", content: "恥ずかしながら、時間切れの北でした……笑\n7と8sで迷って結局時間切れましたが、テンパイ取らずの8s、僕はすごく大好きです！めちゃくちゃ言われて参考になりました！👍", attachments: [] }
     ];
-    const state = { selected: null, selectedIndex: null, callDecision: null, revealed: false, answerRecorded: false, answerAttemptId: null, judgeModel: 2, riichi: false, surroundingsOpen: false, commentsExpanded: false, commentComposerOpen: false, comments: THREAD_MESSAGES.map(message => ({ ...message, attachments: [...message.attachments] })) };
+    const state = { selected: null, selectedIndex: null, callDecision: null, revealed: false, answerRecorded: false, answerAttemptId: null, questionStartedAt: Date.now(), judgeModel: 2, riichi: false, surroundingsOpen: false, commentsExpanded: false, commentComposerOpen: false, comments: THREAD_MESSAGES.map(message => ({ ...message, attachments: [...message.attachments] })) };
 
     function tileLabel(tile) {
       if (TILE_NAMES[tile]) return TILE_NAMES[tile];
@@ -747,7 +759,7 @@
       initCommentImageViewer();
       document.getElementById("threadLink").href = THREAD_URL;
       renderComments();
-      document.getElementById("resetButton").addEventListener("click", reset);
+      document.getElementById("resetButton").addEventListener("click", () => reset());
       document.getElementById("surroundingsToggle").addEventListener("click", () => {
         state.surroundingsOpen = !state.surroundingsOpen;
         const button = document.getElementById("surroundingsToggle");
@@ -849,11 +861,15 @@
         const question = questionsV16[currentQuestionIndexV16];
         if (!question) return;
         const score = choiceScoreV16();
-        const now = new Date().toISOString();
+        const confirmedAt = Date.now();
+        const now = new Date(confirmedAt).toISOString();
+        const startedAt = Number.isFinite(state.questionStartedAt) ? state.questionStartedAt : confirmedAt;
         const answer = {
           questionKey: questionKeyV16(question),
           number: question.number,
+          startedAt: new Date(startedAt).toISOString(),
           answeredAt: now,
+          responseTimeMs: Math.max(0, confirmedAt - startedAt),
           decisionType: SCENE.decisionType || "discard",
           selected: state.selected,
           callDecision: state.callDecision,
@@ -1035,6 +1051,22 @@
         badge.hidden = false;
       }
 
+      function renderAnswerConfirmationV41() {
+        const panel = document.getElementById("answerConfirmation");
+        const choice = document.getElementById("answerConfirmationChoice");
+        const hasChoice = SCENE.decisionType === "call" ? typeof state.callDecision === "boolean" : Boolean(state.selected);
+        if (state.revealed || !hasChoice) {
+          panel.hidden = true;
+          choice.textContent = "";
+          return;
+        }
+        const choiceLabel = SCENE.decisionType === "call"
+          ? (state.callDecision ? "鳴く" : "鳴かない")
+          : `${tileLabel(state.selected)}${hasReachV16() ? `・${riichiLabel(state.riichi)}` : ""}`;
+        choice.innerHTML = `選択中<br><strong>${choiceLabel}</strong>`;
+        panel.hidden = false;
+      }
+
       function renderRiichiPanelsV16() {
         const groups = new Map();
         SCENE.models.forEach((model, index) => {
@@ -1049,6 +1081,7 @@
         const answerStrip = document.getElementById("answerStrip");
         const commentsPanel = document.getElementById("commentsPanel");
         const nextButton = document.getElementById("nextQuestionButton");
+        renderAnswerConfirmationV41();
         if (!state.revealed) {
           answerStrip.hidden = true;
           commentsPanel.hidden = true;
@@ -1083,10 +1116,11 @@
         }
         const isCorrect = state.selected === correctTile && (!hasReachV16() || state.riichi === correctRiichi);
         document.getElementById("answerTitle").textContent = isCorrect ? `正解：${tileLabel(state.selected)}${hasReachV16() ? `・${riichiLabel(state.riichi)}` : ""}` : `推奨：${tileLabel(correctTile)}${hasReachV16() ? `・${riichiLabel(correctRiichi)}` : ""}`;
-        document.getElementById("answerDetail").innerHTML = `あなたの選択：<strong>${tileLabel(state.selected)}${hasReachV16() ? `・${riichiLabel(state.riichi)}` : ""}</strong> ／ 当時の選択打牌：<strong>${tileLabel(SCENE.actualDiscard)}</strong>`;
+        const historicalDetail = SCENE.actualDiscard ? ` ／ 当時の選択打牌：<strong>${tileLabel(SCENE.actualDiscard)}</strong>` : "";
+        document.getElementById("answerDetail").innerHTML = `あなたの選択：<strong>${tileLabel(state.selected)}${hasReachV16() ? `・${riichiLabel(state.riichi)}` : ""}</strong>${historicalDetail}`;
         const topModelIndices = priorityIndicesV16(3);
         const playerCard = `<div class="answer-choice player-choice"><span class="answer-choice-label">あなたの選択</span><span class="answer-choice-tile">${tileImage(state.selected)}</span><span class="answer-choice-title">${tileLabel(state.selected)}${hasReachV16() ? `・${riichiLabel(state.riichi)}` : ""}</span></div>`;
-        const historicalCard = `<div class="answer-choice historical-choice"><span class="answer-choice-label">当時の選択打牌</span><span class="answer-choice-tile">${tileImage(SCENE.actualDiscard)}</span><span class="answer-choice-title">${tileLabel(SCENE.actualDiscard)}</span></div>`;
+        const historicalCard = SCENE.actualDiscard ? `<div class="answer-choice historical-choice"><span class="answer-choice-label">当時の選択打牌</span><span class="answer-choice-tile">${tileImage(SCENE.actualDiscard)}</span><span class="answer-choice-title">${tileLabel(SCENE.actualDiscard)}</span></div>` : "";
         const modelCards = topModelIndices.map(index => {
           const model = SCENE.models[index];
           const value = (SCENE.reach[index] || 0) / 100;
@@ -1106,8 +1140,6 @@
       function selectCallV16(decision) {
         if (SCENE.decisionType !== "call") return;
         state.callDecision = decision;
-        state.revealed = true;
-        recordAnswerV16();
         renderHandV16();
         renderAnswerV16();
       }
@@ -1117,8 +1149,6 @@
         const tiles = [...sortHandV20(SCENE.handBeforeDraw || []), SCENE.draw].filter(Boolean);
         state.selectedIndex = index;
         state.selected = tiles[index];
-        state.revealed = true;
-        recordAnswerV16();
         renderHandV16();
         renderAnswerV16();
       }
@@ -1126,9 +1156,18 @@
       function toggleRiichiV16() {
         if (!hasReachV16()) return;
         state.riichi = !state.riichi;
-        if (state.revealed) recordAnswerV16();
         renderHandV16();
-        if (state.revealed) renderAnswerV16();
+        renderAnswerV16();
+      }
+
+      function confirmAnswerV41() {
+        if (state.revealed) return;
+        const hasChoice = SCENE.decisionType === "call" ? typeof state.callDecision === "boolean" : Boolean(state.selected);
+        if (!hasChoice) return;
+        state.revealed = true;
+        recordAnswerV16();
+        renderHandV16();
+        renderAnswerV16();
       }
 
       function resetV16() {
@@ -1138,6 +1177,7 @@
         state.revealed = false;
         state.answerRecorded = false;
         state.answerAttemptId = null;
+        state.questionStartedAt = Date.now();
         state.riichi = false;
         state.commentsExpanded = false;
         state.commentComposerOpen = false;
@@ -1318,6 +1358,7 @@
         state.revealed = false;
         state.answerRecorded = false;
         state.answerAttemptId = null;
+        state.questionStartedAt = Date.now();
         state.riichi = false;
         state.surroundingsOpen = false;
         state.commentsExpanded = false;
@@ -1494,6 +1535,7 @@
           if (nextIndex >= 0) openQuestionV16(nextIndex);
           else showMenuV16("my");
         });
+        document.getElementById("confirmAnswerButton").addEventListener("click", confirmAnswerV41);
       }
 
       renderHand = renderHandV16;
