@@ -2398,9 +2398,10 @@
     "hasRiichiJudgment": false,
     "melds": [
       {
-        "type": "pon",
+        "type": "kakan",
         "pai": "ji5",
         "consumed": [
+          "ji5",
           "ji5",
           "ji5"
         ]
@@ -2411,15 +2412,6 @@
         "consumed": [
           "man2",
           "man2"
-        ]
-      },
-      {
-        "type": "kakan",
-        "pai": "ji5",
-        "consumed": [
-          "ji5",
-          "ji5",
-          "ji5"
         ]
       }
     ]

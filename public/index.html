@@ -346,7 +346,7 @@
   </main>
 
   <script>
-    const APP_VERSION = 27;
+    const APP_VERSION = 28;
     const SCENE = {
       actualDiscard: "ji4",
       handBeforeDraw: ["man7", "man8", "man9", "pin4", "pin6", "pin7", "pin8", "pin9", "sou7", "sou8", "sou8", "ji4", "ji4"],
@@ -806,13 +806,8 @@
       function renderHandV16() {
         const closed = sortHandV20(SCENE.handBeforeDraw || []).map((tile, index) => tileButtonV16(tile, index)).join("");
         const draw = SCENE.draw ? tileButtonV16(SCENE.draw, SCENE.handBeforeDraw.length, true) : "";
-        const melds = (SCENE.melds || []).map((meld, meldIndex) => {
-          const tiles = meld.type === "ankan" ? (meld.consumed || []) : [meld.pai, ...(meld.consumed || [])].filter(Boolean);
-          return `<span class="meld-group" aria-label="副露${meldIndex + 1}">${tiles.map(tile => `<span class="meld-tile">${tileImage(tile)}</span>`).join("")}</span>`;
-        }).join("");
-        const meldBlock = melds ? `<div class="melds-hand">${melds}</div>` : "";
         const riichiButton = hasReachV16() ? `<button class="riichi-button" id="riichiButton" type="button" aria-pressed="${state.riichi}" title="リーチを宣言する">${state.riichi ? "リーチ済" : "リーチ"}</button>` : "";
-        document.getElementById("handLayer").innerHTML = `<div class="hand-controls"><div class="hand-row">${meldBlock}<div class="closed-hand">${closed}</div>${draw ? `<span class="draw-divider" aria-hidden="true"></span>${draw}` : ""}</div>${riichiButton}</div>`;
+        document.getElementById("handLayer").innerHTML = `<div class="hand-controls"><div class="hand-row"><div class="closed-hand">${closed}</div>${draw ? `<span class="draw-divider" aria-hidden="true"></span>${draw}` : ""}</div>${riichiButton}</div>`;
         if (SCENE.decisionType === "call") {
           document.getElementById("handLayer").insertAdjacentHTML("beforeend", `<div class="call-controls" role="group" aria-label="副露判断"><span class="call-prompt">鳴く？</span><button class="call-choice-button call-yes${state.callDecision === true ? " is-selected" : ""}" type="button" data-call-decision="true">鳴く</button><button class="call-choice-button call-no${state.callDecision === false ? " is-selected" : ""}" type="button" data-call-decision="false">鳴かない</button></div>`);
         }
