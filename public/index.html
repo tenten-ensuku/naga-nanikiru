@@ -385,7 +385,7 @@
   </main>
 
   <script>
-    const APP_VERSION = 39;
+    const APP_VERSION = 40;
     const SCENE = {
       actualDiscard: "ji4",
       handBeforeDraw: ["man7", "man8", "man9", "pin4", "pin6", "pin7", "pin8", "pin9", "sou7", "sou8", "sou8", "ji4", "ji4"],
@@ -1297,7 +1297,7 @@
         const riichiWidth = question?.hasRiichiJudgment && Array.isArray(question?.reach) && question.reach.some(value => value > 0) ? Math.min(47, Math.max(35, frameWidth * .037)) + 8 : 0;
         const gapWidth = Math.max(0, tileCount - 1);
         const availableWidth = Math.max(0, maskWidthPx - insetPx * 2 - dividerWidth - riichiWidth - gapWidth);
-        const baseTileWidth = Math.min(36, frameWidth * .041);
+        const baseTileWidth = Math.min(36, Math.max(24, frameWidth * .041));
         const tileWidth = tileCount ? Math.max(12, Math.min(baseTileWidth, availableWidth / tileCount)) : baseTileWidth;
         sceneFrameV16.style.setProperty("--hand-layer-left", `${mask.left + insetPx / frameWidth * 100}%`);
         sceneFrameV16.style.setProperty("--hand-layer-width", `${Math.max(0, (maskWidthPx - insetPx * 2) / frameWidth * 100)}%`);
