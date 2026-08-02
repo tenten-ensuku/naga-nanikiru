@@ -97,7 +97,7 @@
       height: var(--hand-mask-height, 20.3%);
       background: linear-gradient(180deg, var(--hand-mask-top-color, #022045) 0%, var(--hand-mask-bottom-color, #021d41) 100%);
     }
-    .hand-score { position: absolute; top: 72.5%; left: 50%; z-index: 3; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; max-width: calc(100% - 24px); padding: 7px 16px 8px; color: #fff; background: rgba(4, 19, 31, .96); border: 2px solid rgba(255,255,255,.5); border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,.34); font-size: clamp(16px, 2.6cqw, 25px); font-weight: 900; line-height: 1; white-space: nowrap; transform: translateX(-50%); }
+    .hand-score { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; width: fit-content; max-width: 100%; box-sizing: border-box; margin: 8px auto 0; padding: 7px 16px 8px; color: #fff; background: rgba(4, 19, 31, .96); border: 2px solid rgba(255,255,255,.5); border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,.34); font-size: clamp(14px, 2.6vw, 25px); font-weight: 900; line-height: 1.1; white-space: normal; text-align: center; }
     .hand-score[hidden] { display: none; }
     .hand-score-mark { font-size: 1.18em; line-height: 1; }
     .hand-score-main { display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
@@ -106,13 +106,13 @@
     .hand-score.score-safe { border-color: #9be8d8; background: rgba(10, 77, 71, .96); }
     .hand-score.score-partial { border-color: #ffd278; background: rgba(91, 59, 13, .96); }
     .hand-score.score-bad { border-color: #ff8790; background: rgba(111, 25, 35, .96); }
-    .hand-layer { position: absolute; left: 8%; top: 80.5%; width: 84%; height: 14.5%; display: flex; align-items: flex-end; justify-content: center; pointer-events: auto; }
-    .scene-frame.has-self-melds .hand-layer { left: 17%; width: 42%; justify-content: flex-start; }
+    .hand-layer { position: absolute; left: var(--hand-layer-left, 13%); top: calc(var(--hand-mask-top, 79.3%) + 1.8%); width: var(--hand-layer-width, 64.8%); height: calc(var(--hand-mask-height, 20.7%) - 3.8%); box-sizing: border-box; display: flex; align-items: flex-end; justify-content: center; pointer-events: auto; }
+    .scene-frame.has-self-melds .hand-layer { left: var(--hand-layer-left, 13.6%); width: var(--hand-layer-width, 38.3%); justify-content: flex-start; }
     .hand-controls { display: flex; align-items: flex-end; justify-content: center; gap: clamp(5px, .55vw, 9px); width: 100%; }
     .scene-frame.has-self-melds .hand-controls,
     .scene-frame.has-self-melds .hand-row { justify-content: flex-start; }
-    .hand-row { display: flex; align-items: flex-end; justify-content: center; gap: 1px; }
-    .closed-hand { display: flex; align-items: flex-end; gap: 1px; }
+    .hand-row { display: flex; align-items: flex-end; justify-content: center; gap: 1px; min-width: 0; }
+    .closed-hand { display: flex; align-items: flex-end; gap: 1px; min-width: 0; }
     .melds-hand { display: flex; align-items: flex-end; gap: clamp(3px, .45vw, 7px); margin-right: clamp(4px, .6vw, 10px); }
     .meld-group { display: flex; align-items: flex-end; gap: 1px; padding: 0 2px 2px; border-bottom: 2px solid rgba(241,196,87,.72); }
     .meld-tile img { display: block; width: clamp(24px, 4.1cqw, 36px); height: auto; border-radius: 2px; }
@@ -133,6 +133,7 @@
     .tile-button.is-selected img { outline: 2px solid var(--gold); outline-offset: 2px; border-radius: 2px; }
     .tile-button.is-judge-recommendation img { outline: 2px solid #c28aff; outline-offset: 2px; border-radius: 2px; }
     .tile-button img { display: block; width: clamp(24px, 4.1cqw, 36px); height: auto; border-radius: 2px; }
+    .hand-layer .tile-button img { width: var(--hand-tile-width, clamp(24px, 4.1cqw, 36px)); }
     .selection-marker { position: absolute; top: calc(100% + 5px); left: 50%; z-index: 2; width: clamp(14px, 1.55vw, 20px); height: clamp(12px, 1.35vw, 17px); opacity: 0; pointer-events: none; background: #ef3d4f; clip-path: polygon(50% 0, 100% 100%, 0 100%); filter: drop-shadow(0 2px 2px rgba(0,0,0,.4)); transform: translateX(-50%); transition: opacity .1s ease; }
     .tile-button:hover .selection-marker, .tile-button:focus-visible .selection-marker, .tile-button.is-selected .selection-marker { opacity: 1; }
     .probability-stack { position: absolute; bottom: calc(100% + 4px); left: 0; width: 100%; height: 22px; }
@@ -327,9 +328,9 @@
       <div class="scene-frame">
         <img class="scene-image" id="sceneImage" src="naga-scene-off.jpg" alt="指定NAGA局面の伏牌スクリーンショット">
         <div class="hand-mask" aria-hidden="true"></div>
-        <div class="hand-score" id="handScoreBadge" aria-live="polite" hidden></div>
         <div class="hand-layer" id="handLayer" aria-label="選択できる自分の手牌"></div>
       </div>
+      <div class="hand-score" id="handScoreBadge" aria-live="polite" hidden></div>
     </section>
 
     <section class="answer-strip" id="answerStrip" aria-live="polite" hidden>
@@ -384,7 +385,7 @@
   </main>
 
   <script>
-    const APP_VERSION = 38;
+    const APP_VERSION = 39;
     const SCENE = {
       actualDiscard: "ji4",
       handBeforeDraw: ["man7", "man8", "man9", "pin4", "pin6", "pin7", "pin8", "pin9", "sou7", "sou8", "sou8", "ji4", "ji4"],
@@ -1165,6 +1166,9 @@
         const meldCount = Array.isArray(question?.melds) ? question.melds.length : 0;
         const closedCount = Array.isArray(question?.handBeforeDraw) ? question.handBeforeDraw.length : 0;
         const hasDraw = Boolean(question?.draw);
+        if (meldCount === 0) {
+          return { left: 11.5, top: 79.3, width: 67.8, height: 20.7, topColor: "#06254a", bottomColor: "#02244c" };
+        }
         const compactPanel = meldCount > 1 && closedCount + (hasDraw ? 1 : 0) <= 8;
         return {
           left: compactPanel ? 12.1 : 11.5,
@@ -1270,6 +1274,40 @@
         sceneFrameV16.style.setProperty("--hand-mask-bottom-color", mask.bottomColor);
       }
 
+      let activeHandQuestionV18 = null;
+      let activeHandMaskV18 = null;
+
+      function clearHandLayoutV18() {
+        activeHandQuestionV18 = null;
+        activeHandMaskV18 = null;
+        ["--hand-layer-left", "--hand-layer-width", "--hand-tile-width"].forEach(property => sceneFrameV16.style.removeProperty(property));
+      }
+
+      function setHandLayoutV18(question, mask) {
+        activeHandQuestionV18 = question;
+        activeHandMaskV18 = mask;
+        const frameWidth = sceneFrameV16.clientWidth || sceneImageV16.clientWidth;
+        if (!frameWidth) return;
+        const closedCount = Array.isArray(question?.handBeforeDraw) ? question.handBeforeDraw.length : 0;
+        const hasDraw = Boolean(question?.draw);
+        const tileCount = closedCount + (hasDraw ? 1 : 0);
+        const maskWidthPx = frameWidth * mask.width / 100;
+        const insetPx = Math.max(7, Math.min(15, frameWidth * .018));
+        const dividerWidth = hasDraw ? 10 : 0;
+        const riichiWidth = question?.hasRiichiJudgment && Array.isArray(question?.reach) && question.reach.some(value => value > 0) ? Math.min(47, Math.max(35, frameWidth * .037)) + 8 : 0;
+        const gapWidth = Math.max(0, tileCount - 1);
+        const availableWidth = Math.max(0, maskWidthPx - insetPx * 2 - dividerWidth - riichiWidth - gapWidth);
+        const baseTileWidth = Math.min(36, frameWidth * .041);
+        const tileWidth = tileCount ? Math.max(12, Math.min(baseTileWidth, availableWidth / tileCount)) : baseTileWidth;
+        sceneFrameV16.style.setProperty("--hand-layer-left", `${mask.left + insetPx / frameWidth * 100}%`);
+        sceneFrameV16.style.setProperty("--hand-layer-width", `${Math.max(0, (maskWidthPx - insetPx * 2) / frameWidth * 100)}%`);
+        sceneFrameV16.style.setProperty("--hand-tile-width", `${tileWidth}px`);
+      }
+
+      window.addEventListener("resize", () => {
+        if (activeHandQuestionV18 && activeHandMaskV18) setHandLayoutV18(activeHandQuestionV18, activeHandMaskV18);
+      });
+
       function applyQuestionV16(question, index = questionsV16.indexOf(question)) {
         currentQuestionIndexV16 = index >= 0 ? index : 0;
         for (const key of Object.keys(SCENE)) delete SCENE[key];
@@ -1290,9 +1328,12 @@
         state.comments = (SCENE.comments || []).map(message => ({ ...message, attachments: [...(message.attachments || [])] }));
         state.judgeModel = Math.max(0, SCENE.models.findIndex(model => model.name === "ニシキ"));
         const hasSelfMeldsV17 = (SCENE.melds || []).length > 0;
+        const handMaskV18 = handMaskFallbackV17(question);
         sceneFrameV16.classList.toggle("has-self-melds", hasSelfMeldsV17);
         clearHandMaskV17();
-        if (hasSelfMeldsV17) setHandMaskV17(handMaskFallbackV17(question));
+        clearHandLayoutV18();
+        if (hasSelfMeldsV17) setHandMaskV17(handMaskV18);
+        setHandLayoutV18(question, handMaskV18);
         document.getElementById("modelSelect").innerHTML = SCENE.models.map((model, index) => `<option value="${index}">${model.name}（正誤基準）</option>`).join("");
         document.getElementById("modelSelect").value = String(state.judgeModel);
         sourceTitleV16.textContent = `問題${SCENE.number}`;
@@ -1305,7 +1346,9 @@
         sceneImageV16.alt = `問題${SCENE.number}の伏牌スクリーンショット`;
         sceneImageV16.onload = () => {
           if (sceneImageV16.naturalWidth && sceneImageV16.naturalHeight) sceneFrameV16.style.aspectRatio = `${sceneImageV16.naturalWidth} / ${sceneImageV16.naturalHeight}`;
-          if (hasSelfMeldsV17) setHandMaskV17(detectHandMaskV17(sceneImageV16, handMaskFallbackV17(question)));
+          const detectedMaskV18 = hasSelfMeldsV17 ? detectHandMaskV17(sceneImageV16, handMaskV18) : handMaskV18;
+          if (hasSelfMeldsV17) setHandMaskV17(detectedMaskV18);
+          setHandLayoutV18(question, detectedMaskV18);
         };
         if (sceneImageV16.complete) sceneImageV16.onload();
         document.getElementById("surroundingsToggle").setAttribute("aria-expanded", "false");
