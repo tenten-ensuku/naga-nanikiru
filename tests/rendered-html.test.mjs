@@ -25,18 +25,19 @@ test("server-renders the NAGA drill shell", async () => {
   assert.match(html, /title="NAGA局面ドリル｜スクリーンショットベース"/);
 });
 
-test("wires v44 learning UX, generator, metadata, and social image", async () => {
+test("wires v45 learning UX, generator, metadata, and social image", async () => {
   const [index, page, layout] = await Promise.all([
     readFile(new URL("../public/index.html", import.meta.url), "utf8"),
     readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
     access(new URL("../public/og-v44.png", import.meta.url)),
   ]);
-  assert.match(index, /const APP_VERSION = 44/);
+  assert.match(index, /const APP_VERSION = 45/);
   assert.match(index, /drill-ux-v44\.js/);
   assert.match(index, /naga-generator-v44\.js/);
   assert.match(index, /今日の10問/);
   assert.match(index, /NAGA URLから問題生成/);
+  assert.match(index, /property="og:image" content="https:\/\/naga-nanikiru-prototype\.kobotenmitsu\.chatgpt\.site\/og-v44\.png"/);
   assert.match(page, /src="\/index\.html"/);
   assert.match(layout, /generateMetadata/);
   assert.match(layout, /og-v44\.png/);
