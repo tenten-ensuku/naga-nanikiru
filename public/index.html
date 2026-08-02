@@ -348,7 +348,7 @@
   </main>
 
   <script>
-    const APP_VERSION = 29;
+    const APP_VERSION = 30;
     const SCENE = {
       actualDiscard: "ji4",
       handBeforeDraw: ["man7", "man8", "man9", "pin4", "pin6", "pin7", "pin8", "pin9", "sou7", "sou8", "sou8", "ji4", "ji4"],
@@ -766,6 +766,47 @@
           .slice(0, 5);
       }
 
+      function scoreForQuestionV16(question, entry) {
+        const models = Array.isArray(question.models) ? question.models : [];
+        const judgeIndex = Math.max(0, models.findIndex(model => model.name === "ニシキ"));
+        const modelNames = models.filter(model => model.recommendation === entry.selected).map(model => model.name);
+        const modelMatch = modelNames.length ? `◎ ${modelNames.join("・")}と一致！！` : "";
+        if (question.decisionType === "call") {
+          if (typeof entry.callDecision !== "boolean") return null;
+          const recommended = Boolean(question.callRecommended?.[judgeIndex]);
+          if (entry.callDecision === recommended) return { mark: "💮", label: "第一推奨と一致", modelMatch };
+          const probabilities = models.map((model, index) => (entry.callDecision ? question.callProbabilities?.call?.[index] : question.callProbabilities?.pass?.[index]) ?? 0);
+          const badCount = probabilities.filter(value => value <= 5).length;
+          if (badCount === 0) return { mark: "〇", label: "全モデル悪手（推奨率5％以下）回避", modelMatch };
+          if (badCount === models.length) return { mark: "×", label: "全モデル悪手判定", modelMatch };
+          return { mark: "△", label: "特定モデルの悪手は回避", modelMatch };
+        }
+        if (!entry.selected) return null;
+        const hasReach = Boolean(question.hasRiichiJudgment) && (question.reach || []).some(value => value > 0);
+        const judgeRecommendation = models[judgeIndex]?.recommendation;
+        const judgeRiichi = hasReach && (question.reach?.[judgeIndex] || 0) >= 5000;
+        if (entry.selected === judgeRecommendation && (!hasReach || Boolean(entry.riichi) === judgeRiichi)) return { mark: "💮", label: "第一推奨と一致", modelMatch };
+        const probabilities = models.map((model, index) => question.probabilities?.[entry.selected]?.[index] ?? 0);
+        const badCount = probabilities.filter(value => value <= 5).length;
+        if (badCount === 0) return { mark: "〇", label: "全モデル悪手（推奨率5％以下）回避", modelMatch };
+        if (badCount === models.length) return { mark: "×", label: "全モデル悪手判定", modelMatch };
+        return { mark: "△", label: "特定モデルの悪手は回避", modelMatch };
+      }
+
+      function migrateAnswerHistoryScoresV16() {
+        let changed = false;
+        for (const entry of userStateV16.answerHistory) {
+          if (entry.scoreMark) continue;
+          const question = questionsV16.find(candidate => questionKeyV16(candidate) === entry.questionKey);
+          const score = question ? scoreForQuestionV16(question, entry) : null;
+          if (!score) continue;
+          entry.scoreMark = score.mark;
+          entry.scoreLabel = score.label;
+          changed = true;
+        }
+        if (changed) saveUserStateV16();
+      }
+
       function modelColorV16(index) {
         return modelColorByNameV16[SCENE.models[index]?.name] || MODEL_COLORS[index] || "model-nishiki";
       }
@@ -1167,6 +1208,7 @@
         } catch (error) {
           console.warn("追加問題の読み込みに失敗しました", error);
         }
+        migrateAnswerHistoryScoresV16();
         renderQuestionOptionsV16();
         renderMenuCardsV16();
         applyQuestionV16(questionsV16[0], 0);
