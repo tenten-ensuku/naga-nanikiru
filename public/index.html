@@ -89,6 +89,7 @@
     .scene-frame { position: relative; width: 100%; max-width: 860px; margin: 0 auto; overflow: hidden; background: #033b76; aspect-ratio: 584 / 543; container-type: inline-size; }
     .scene-image { display: block; width: 100%; height: 100%; object-fit: fill; user-select: none; pointer-events: none; }
     .hand-mask { position: absolute; left: 11.5%; top: 79.3%; width: 67.8%; height: 20.7%; background: linear-gradient(145deg, #06254a 0%, #02244c 100%); pointer-events: none; }
+    .scene-frame.has-self-melds .hand-mask { width: 56.5%; }
     .hand-score { position: absolute; top: 72.5%; left: 50%; z-index: 3; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; max-width: calc(100% - 24px); padding: 7px 16px 8px; color: #fff; background: rgba(4, 19, 31, .96); border: 2px solid rgba(255,255,255,.5); border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,.34); font-size: clamp(16px, 2.6cqw, 25px); font-weight: 900; line-height: 1; white-space: nowrap; transform: translateX(-50%); }
     .hand-score[hidden] { display: none; }
     .hand-score-mark { font-size: 1.18em; line-height: 1; }
@@ -373,7 +374,7 @@
   </main>
 
   <script>
-    const APP_VERSION = 34;
+    const APP_VERSION = 35;
     const SCENE = {
       actualDiscard: "ji4",
       handBeforeDraw: ["man7", "man8", "man9", "pin4", "pin6", "pin7", "pin8", "pin9", "sou7", "sou8", "sou8", "ji4", "ji4"],
@@ -1169,6 +1170,7 @@
         document.getElementById("commentAddButton").textContent = "コメント追加";
         state.comments = (SCENE.comments || []).map(message => ({ ...message, attachments: [...(message.attachments || [])] }));
         state.judgeModel = Math.max(0, SCENE.models.findIndex(model => model.name === "ニシキ"));
+        sceneFrameV16.classList.toggle("has-self-melds", (SCENE.melds || []).length > 0);
         document.getElementById("modelSelect").innerHTML = SCENE.models.map((model, index) => `<option value="${index}">${model.name}（正誤基準）</option>`).join("");
         document.getElementById("modelSelect").value = String(state.judgeModel);
         sourceTitleV16.textContent = `問題${SCENE.number}`;
