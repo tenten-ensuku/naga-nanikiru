@@ -34,8 +34,23 @@ test("requires explicit confirmation before revealing or recording an answer", a
 
 test("records answer timing and exposes the synchronized drill version", async () => {
   const html = await source();
-  assert.match(html, /const APP_VERSION = 41;/);
+  assert.match(html, /const APP_VERSION = 42;/);
   assert.match(html, /responseTimeMs:\s*Math\.max\(0, confirmedAt - startedAt\)/);
   assert.match(html, /startedAt:\s*new Date\(startedAt\)\.toISOString\(\)/);
   assert.match(html, /const historicalCard = SCENE\.actualDiscard \?/);
+});
+
+test("derives riichi controls from NAGA reach data", async () => {
+  const html = await source();
+  const body = functionBody(html, "hasReachV16", "recommendedRiichiV16");
+  assert.match(body, /Array\.isArray\(SCENE\.reach\)/);
+  assert.match(body, /reach\.some\(value => Number\(value\) > 0\)/);
+  assert.doesNotMatch(body, /hasRiichiJudgment/);
+
+  const questions = JSON.parse(await readFile(new URL("../public/question-data/selected-questions.json", import.meta.url), "utf8"));
+  const riichiNumbers = questions
+    .filter(question => question.decisionType === "discard" && question.reach.some(value => Number(value) > 0))
+    .map(question => question.number);
+  assert.deepEqual(riichiNumbers, [41, 47, 138, 141, 151, 156, 165, 179, 198]);
+  assert.ok(questions.filter(question => question.hasRiichiJudgment).every(question => riichiNumbers.includes(question.number)));
 });

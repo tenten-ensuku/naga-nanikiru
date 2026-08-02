@@ -79,6 +79,8 @@ for (const [index, question] of questions.entries()) {
     if (!Array.isArray(values) || values.length !== modelCount) error(label, `${tile}の推奨度数がモデル数と一致しません`);
   }
   if (Array.isArray(question?.reach) && question.reach.length !== modelCount) error(label, "reachの要素数がモデル数と一致しません");
+  const derivedRiichiJudgment = question?.decisionType === "discard" && Array.isArray(question?.reach) && question.reach.some(value => Number(value) > 0);
+  if (Boolean(question?.hasRiichiJudgment) !== derivedRiichiJudgment) error(label, "hasRiichiJudgmentがreachデータと一致しません");
 
   if (question?.decisionType === "call") {
     if (!validTile(question?.callTile)) error(label, `副露対象牌 ${question?.callTile} が不正です`);

@@ -5629,9 +5629,9 @@
       ]
     },
     "reach": [
-      0,
-      0,
-      0
+      7217,
+      4644,
+      4780
     ],
     "decisionType": "discard",
     "callTile": null,
@@ -5647,7 +5647,7 @@
         "attachments": []
       }
     ],
-    "hasRiichiJudgment": false,
+    "hasRiichiJudgment": true,
     "melds": []
   },
   {
@@ -6440,9 +6440,9 @@
       ]
     },
     "reach": [
-      0,
-      0,
-      0
+      9767,
+      9600,
+      9291
     ],
     "decisionType": "discard",
     "callTile": null,
@@ -6458,7 +6458,7 @@
         "attachments": []
       }
     ],
-    "hasRiichiJudgment": false,
+    "hasRiichiJudgment": true,
     "melds": []
   },
   {
@@ -9255,7 +9255,7 @@
     "id": "067",
     "number": 79,
     "title": "問題79",
-    "nagaUrl": "https://naga.dmv.nico/htmls/0d9ec9b4c444a9336f4cb41e01ab2bbd2327a9377bb79fc0bffdfea1469b2dcbv2_2.html?tw=2&ts=10&tv=79",
+    "nagaUrl": "https://naga.dmv.nico/htmls/0d9ec9b4c444a9336f4cb41e01ab2bbd2327a9377bb79fc0bffdfea1469b2dcbv2_2.html?tw=2&ts=1&tv=57",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1445789945041125529",
     "image": "question-images/q067.webp",
     "images": {
@@ -9263,69 +9263,100 @@
       "open": "question-images/q067.webp"
     },
     "handBeforeDraw": [
-      "sou9",
-      "man8",
-      "sou4",
-      "sou8",
-      "man8",
+      "man5",
+      "sou1",
+      "pin4",
+      "pin6",
+      "sou3",
+      "man7",
+      "sou5",
+      "pin8",
+      "sou6",
       "sou7",
-      "sou3"
+      "sou3",
+      "pin8",
+      "man6"
     ],
-    "draw": "sou2",
-    "actualDiscard": null,
-    "doraMarker": "sou9",
+    "draw": "man4",
+    "actualDiscard": "sou1",
+    "doraMarker": "ji2",
     "models": [
       {
         "name": "ニシキ",
-        "recommendation": "man8",
-        "label": "man8"
+        "recommendation": "sou1",
+        "label": "sou1"
       },
       {
         "name": "ヒバカリ",
-        "recommendation": "man8",
-        "label": "man8"
+        "recommendation": "sou1",
+        "label": "sou1"
       },
       {
         "name": "カガシ",
-        "recommendation": "man8",
-        "label": "man8"
+        "recommendation": "sou1",
+        "label": "sou1"
       }
     ],
     "probabilities": {
-      "sou9": [
-        0.26,
-        0.18,
-        0.28
+      "man5": [
+        0,
+        0,
+        0
       ],
-      "man8": [
-        73.61,
-        54.48,
-        64.58
+      "sou1": [
+        97.26,
+        98.48,
+        97.29
       ],
-      "sou4": [
+      "pin4": [
+        0.03,
         0.02,
-        0.01,
-        0.05
+        0.01
       ],
-      "sou8": [
+      "pin6": [
         0,
         0,
-        0.02
+        0
+      ],
+      "sou3": [
+        0.01,
+        0.03,
+        0
+      ],
+      "man7": [
+        1.54,
+        0.82,
+        2.13
+      ],
+      "sou5": [
+        0,
+        0,
+        0
+      ],
+      "pin8": [
+        0.11,
+        0.19,
+        0.01
+      ],
+      "sou6": [
+        0,
+        0,
+        0
       ],
       "sou7": [
         0,
         0,
         0
       ],
-      "sou3": [
+      "man6": [
         0,
         0,
         0
       ],
-      "sou2": [
-        26.08,
-        45.31,
-        35.03
+      "man4": [
+        1.01,
+        0.43,
+        0.52
       ]
     },
     "reach": [
@@ -9355,24 +9386,7 @@
       }
     ],
     "hasRiichiJudgment": false,
-    "melds": [
-      {
-        "type": "pon",
-        "pai": "ji2",
-        "consumed": [
-          "ji2",
-          "ji2"
-        ]
-      },
-      {
-        "type": "chi",
-        "pai": "pin2",
-        "consumed": [
-          "pin1",
-          "pin3"
-        ]
-      }
-    ]
+    "melds": []
   },
   {
     "id": "068",
@@ -17037,9 +17051,9 @@
       ]
     },
     "reach": [
-      0,
-      0,
-      0
+      8791,
+      2023,
+      5127
     ],
     "decisionType": "discard",
     "callTile": null,
@@ -17102,7 +17116,7 @@
         "attachments": []
       }
     ],
-    "hasRiichiJudgment": false,
+    "hasRiichiJudgment": true,
     "melds": []
   },
   {
@@ -17459,9 +17473,9 @@
       ]
     },
     "reach": [
-      0,
-      0,
-      0
+      9816,
+      9906,
+      6848
     ],
     "decisionType": "discard",
     "callTile": null,
@@ -17477,7 +17491,7 @@
         "attachments": []
       }
     ],
-    "hasRiichiJudgment": false,
+    "hasRiichiJudgment": true,
     "melds": []
   },
   {
@@ -18788,9 +18802,9 @@
       ]
     },
     "reach": [
-      0,
-      0,
-      0
+      2173,
+      751,
+      594
     ],
     "decisionType": "discard",
     "callTile": null,
@@ -18813,7 +18827,7 @@
         "attachments": []
       }
     ],
-    "hasRiichiJudgment": false,
+    "hasRiichiJudgment": true,
     "melds": []
   },
   {
@@ -19481,9 +19495,9 @@
       ]
     },
     "reach": [
-      0,
-      0,
-      0
+      9889,
+      9527,
+      9929
     ],
     "decisionType": "discard",
     "callTile": null,
@@ -19506,7 +19520,7 @@
         "attachments": []
       }
     ],
-    "hasRiichiJudgment": false,
+    "hasRiichiJudgment": true,
     "melds": []
   },
   {
@@ -20857,9 +20871,9 @@
       ]
     },
     "reach": [
-      0,
-      0,
-      0
+      9381,
+      3945,
+      9481
     ],
     "decisionType": "discard",
     "callTile": null,
@@ -20889,7 +20903,7 @@
         "attachments": []
       }
     ],
-    "hasRiichiJudgment": false,
+    "hasRiichiJudgment": true,
     "melds": []
   },
   {
@@ -22649,9 +22663,9 @@
       ]
     },
     "reach": [
-      0,
-      0,
-      0
+      41,
+      13,
+      9
     ],
     "decisionType": "discard",
     "callTile": null,
@@ -22679,7 +22693,7 @@
         ]
       }
     ],
-    "hasRiichiJudgment": false,
+    "hasRiichiJudgment": true,
     "melds": []
   },
   {
@@ -25164,9 +25178,9 @@
       ]
     },
     "reach": [
-      0,
-      0,
-      0
+      409,
+      563,
+      2803
     ],
     "decisionType": "discard",
     "callTile": null,
@@ -25189,7 +25203,7 @@
         "attachments": []
       }
     ],
-    "hasRiichiJudgment": false,
+    "hasRiichiJudgment": true,
     "melds": [
       {
         "type": "ankan",
