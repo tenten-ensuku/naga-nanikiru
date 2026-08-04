@@ -41,3 +41,8 @@ next-env.d.ts
 /.wrangler/
 /outputs/
 /work/
+
+# local deployment bundles and generated staging output
+/.site-stage*/
+/naga-nanikiru-site*.tar.gz
+/tsconfig.tsbuildinfo

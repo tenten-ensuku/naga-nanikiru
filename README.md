@@ -1,100 +1,93 @@
-# vinext-starter
+# NAGA局面ドリル
 
-A clean full-stack starter running on
-[vinext](https://github.com/cloudflare/vinext), with optional Cloudflare D1 and
-Drizzle support.
+NAGAの解析結果から何切る問題を作り、URLで共有できる麻雀学習アプリです。
 
-## Prerequisites
+## 利用者ごとのデータ
 
-- Node.js `>=22.13.0`
+- 問題集は `public` または推測困難な `unlisted` URLで共有できます。
+- URLを知る人はログインなしでも閲覧・回答できます。
+- 未ログイン時の回答履歴は、その端末の `localStorage` のみに保存されます。
+- Discordログイン後の回答履歴はSupabaseへ同期され、自分だけが参照できます。
+- 講師は、同じワークスペース／クラスで許可された生徒の集計だけを参照できます。
+- 生徒同士の回答履歴は参照できません。
+- 共有問題集へのコメント投稿はDiscordログイン必須です。閲覧可否は問題集の公開範囲に従います。
 
-## Quick Start
+## 共有問題集の権限
 
-```bash
+- Discordログイン済みの利用者は、投稿を許可した共有問題集へ問題を追加できます。
+- 問題の作成者は自分の問題を編集し、共有ゴミ箱へ移動できます。操作前には「全利用者に影響する」確認を表示します。
+- 他人の問題は直接編集・削除できず、削除提案を送信します。
+- 問題集の所有者は問題管理と削除提案の承認・却下を行えます。
+- 復元不能な完全削除は、Supabase Authの `app_metadata.is_admin = true` が設定された全体管理者だけが実行できます。利用者がブラウザからこの値を書き換えることはできません。
+- 問題の作成者・最終更新者と変更履歴を保存します。
+- 全体統計は最初の回答だけを集計し、回答後かつ5人以上集まった問題に限って匿名表示します。個人名や個別回答は公開しません。
+
+## 問題生成
+
+- 局面URL: `tw`・`ts`・`tv`で指定された1局面を問題化します。
+- 半荘URL: 対象プレイヤーを選び、候補を一括抽出します。
+- 標準条件: いずれかのNAGAモデルで、実際の選択率が5%以下の判断。
+- カスタム条件: 閾値、打牌／副露／リーチ、いずれか／全モデル、最大抽出数を変更できます。
+
+## ローカル起動
+
+Node.js 22以上を使用します。
+
+```powershell
 npm install
-npm run dev
-npm run build
+npm start
 ```
 
-This starter does not use `wrangler.jsonc`.
+Supabase未設定でも既存のローカル機能は動作します。Supabase連携を試す場合は、ブラウザ公開用のURLとpublishable keyだけを `public/runtime-config.js` に設定します。secret keyやservice-role keyは絶対に置かないでください。
 
-## Included Shape
+## Supabaseセットアップ
 
-- edit site code under `app/`
-- `.openai/hosting.json` declares optional Sites D1 and R2 bindings
-- `vite.config.ts` simulates declared bindings for local development
-- `db/schema.ts` starts intentionally empty
-- `examples/d1/` contains an optional D1 example surface
-- `drizzle.config.ts` supports local migration generation when needed
+1. 専用Supabaseプロジェクトを作成します。
+2. Discord Developer PortalでOAuth2のredirect URLを確認します。
+3. Supabase Dashboardの Authentication > Providers > Discord を有効にします。
+4. Supabase CLIでプロジェクトへリンクします。
+5. DBマイグレーションとEdge Functionを配備します。
 
-## Workspace Auth Headers
-
-Signed-in visitors receive both `oai-authenticated-user-id` and `oai-authenticated-user-email`. Private Sites require every visitor to sign in; public Sites may also have anonymous visitors, for whom neither header is present.
-
-The user ID is stable for the same user on the same Site and different across Sites. Email and name are intended for display or contact purposes.
-
-SIWC-authenticated workspace sites may also receive
-`oai-authenticated-user-full-name` when the user's SIWC profile has a non-empty
-`name` claim. The full-name value is percent-encoded UTF-8 and is accompanied by
-`oai-authenticated-user-full-name-encoding: percent-encoded-utf-8`.
-
-Treat the full name as optional and fall back to email when it is absent:
-
-```tsx
-import { headers } from "next/headers";
-
-export default async function Home() {
-  const requestHeaders = await headers();
-  const userId = requestHeaders.get("oai-authenticated-user-id");
-  const email = requestHeaders.get("oai-authenticated-user-email");
-  const encodedFullName = requestHeaders.get("oai-authenticated-user-full-name");
-  const fullName =
-    encodedFullName &&
-    requestHeaders.get("oai-authenticated-user-full-name-encoding") ===
-      "percent-encoded-utf-8"
-      ? decodeURIComponent(encodedFullName)
-      : null;
-
-  const displayName = fullName ?? email;
-  // ...
-}
+```powershell
+npx supabase login
+npx supabase link --project-ref <project-ref>
+npx supabase db push
+npx supabase functions deploy naga-report
 ```
 
-## Optional Dispatch-Owned ChatGPT Sign-In
+DB定義は `supabase/migrations/20260803165942_learning_platform_core.sql`、NAGA取得用の認証必須プロキシは `supabase/functions/naga-report/` にあります。
 
-Import the ready-to-use helpers from `app/chatgpt-auth.ts` when the site needs
-optional or required ChatGPT sign-in:
+全体管理者はDiscordログイン後、SupabaseのAuth管理機能から対象ユーザーの `app_metadata` に `{ "is_admin": true }` を設定します。反映後は一度ログアウトし、再ログインして新しい認証情報を取得します。
 
-- Use `getChatGPTUser()` for optional signed-in UI.
-- Use `requireChatGPTUser(returnTo)` for server-rendered pages that should send
-  anonymous visitors through Sign in with ChatGPT.
-- Use `chatGPTSignInPath(returnTo)` and `chatGPTSignOutPath(returnTo)` for
-  browser links or actions.
-- Pass a same-origin relative `returnTo` path for the destination after sign-in
-  or sign-out. The helper validates and safely encodes it.
-- Mark protected pages with `export const dynamic = "force-dynamic"` because
-  they depend on per-request identity headers.
+アップロード画像用の `question-assets` バケットは非公開です。ブラウザへsecret keyを渡さず、将来の画像共有は期限付き署名URLで行います。
 
-Dispatch owns `/signin-with-chatgpt`, `/signout-with-chatgpt`, `/callback`, the
-OAuth cookies, and identity header injection. Do not implement app routes for
-those reserved paths. Routes that do not import and call the helper remain
-anonymous-compatible.
+## 既存228問の移行
 
-SIWC establishes identity only; it does not prove workspace membership. Use the
-Sites hosting platform's access policy controls for workspace-wide restrictions,
-or enforce explicit server-side membership or allowlist checks.
+初回ログインで作成された管理者ユーザーIDを指定し、サーバー専用secret keyをローカル環境変数に入れて実行します。secret keyはブラウザ、GitHub Variables、コミットへ含めません。
 
-Use SIWC for account pages, user-specific dashboards, saved records, and write
-actions tied to the current ChatGPT user. Leave public content anonymous.
+```powershell
+$env:SUPABASE_URL = "https://<project-ref>.supabase.co"
+$env:SUPABASE_SECRET_KEY = "sb_secret_..."
+$env:NAGA_OWNER_USER_ID = "<管理者user id>"
+npm run import:questions
+```
 
-## Useful Commands
+完了時に `/?collection=<share_slug>` が表示されます。このURLを知る生徒は閲覧・回答でき、Discordログイン後はコメントも投稿できます。
 
-- `npm run dev`: start local development
-- `npm run build`: verify the vinext build output
-- `npm test`: build the starter and verify its rendered loading skeleton
-- `npm run db:generate`: generate Drizzle migrations after schema changes
+## GitHub Pages
 
-## Learn More
+`.github/workflows/pages.yml` が `public/` を配備します。GitHubリポジトリの Settings > Secrets and variables > Actions > Variables に次を登録してください。
 
-- [vinext Documentation](https://github.com/cloudflare/vinext)
-- [Drizzle D1 Guide](https://orm.drizzle.team/docs/get-started/d1-new)
+- `SUPABASE_URL`
+- `SUPABASE_PUBLISHABLE_KEY`
+
+その後、Settings > Pages > Source を `GitHub Actions` にします。ワークフローは公開時に `public/runtime-config.js` を生成し、secret keyが混入しないよう検査します。
+
+## 検証
+
+```powershell
+npm run test:drill
+npm test
+npm run lint
+npm audit --omit=dev
+```

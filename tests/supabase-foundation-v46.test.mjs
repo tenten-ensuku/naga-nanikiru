@@ -1,0 +1,93 @@
+import assert from "node:assert/strict";
+import fs from "node:fs/promises";
+import test from "node:test";
+
+const migrationPath = new URL("../supabase/migrations/20260803165942_learning_platform_core.sql", import.meta.url);
+
+test("enables RLS and scopes private learning history", async () => {
+  const sql = await fs.readFile(migrationPath, "utf8");
+  for (const table of ["profiles", "workspaces", "workspace_members", "classes", "class_members", "collections", "questions", "answer_attempts", "user_question_state", "comments", "question_deletion_requests", "question_audit_events", "generation_jobs", "generation_candidates"]) {
+    assert.match(sql, new RegExp(`alter table public\\.${table} enable row level security`, "i"));
+  }
+  assert.match(sql, /user_id = \(select auth\.uid\(\)\) or private\.can_view_student\(user_id\)/i);
+  assert.match(sql, /create policy question_state_select[\s\S]*user_id = \(select auth\.uid\(\)\)/i);
+  assert.doesNotMatch(sql, /raw_user_meta_data[\s\S]{0,200}(policy|using|with check)/i);
+  assert.doesNotMatch(sql, /create table private\.app_admins/i);
+  assert.match(sql, /auth\.jwt\(\)[\s\S]*app_metadata[\s\S]*is_admin/i);
+});
+
+test("keeps unlisted collections behind token-scoped RPCs", async () => {
+  const sql = await fs.readFile(migrationPath, "utf8");
+  assert.match(sql, /visibility text[\s\S]*'unlisted'/i);
+  assert.match(sql, /create or replace function public\.get_shared_collection\(p_share_slug text\)/i);
+  assert.match(sql, /create or replace function public\.get_shared_questions\(p_share_slug text\)/i);
+  assert.match(sql, /create or replace function public\.post_shared_comment/i);
+  assert.match(sql, /authentication required/i);
+  const directCollectionPolicy = sql.match(/create policy collections_select[\s\S]*?;/i)?.[0] ?? "";
+  assert.doesNotMatch(directCollectionPolicy, /unlisted/i);
+  assert.match(sql, /values \('question-assets', 'question-assets', false,/i);
+});
+
+test("separates personal authorship, community contributions, moderation, and permanent deletion", async () => {
+  const sql = await fs.readFile(migrationPath, "utf8");
+  assert.match(sql, /allow_contributions boolean not null default true/i);
+  assert.match(sql, /create or replace function private\.can_edit_question/i);
+  assert.match(sql, /q\.created_by = \(select auth\.uid\(\)\)[\s\S]*private\.can_manage_collection/i);
+  const manageFunction = sql.match(/create or replace function private\.can_manage_collection[\s\S]*?\$\$;/i)?.[0] ?? "";
+  assert.match(manageFunction, /c\.owner_id = \(select auth\.uid\(\)\)/i);
+  assert.match(manageFunction, /private\.is_app_admin\(\)/i);
+  assert.doesNotMatch(manageFunction, /is_workspace_admin/i);
+  assert.match(sql, /create policy questions_insert[\s\S]*private\.can_contribute_collection/i);
+  assert.match(sql, /create policy questions_update[\s\S]*private\.can_edit_question/i);
+  assert.match(sql, /create policy questions_delete[\s\S]*private\.is_app_admin/i);
+  assert.match(sql, /create or replace function public\.request_question_deletion/i);
+  assert.match(sql, /create or replace function public\.permanently_delete_question/i);
+  assert.match(sql, /p_confirmation <> '完全削除'/i);
+  assert.match(sql, /create trigger log_question_change/i);
+  assert.match(sql, /revoke all on function public\.create_shared_question[\s\S]*from public, anon, authenticated, service_role/i);
+});
+
+test("publishes anonymous first-answer stats only after five responses and after the viewer answers", async () => {
+  const sql = await fs.readFile(migrationPath, "utf8");
+  const statsFunction = sql.match(/create or replace function public\.get_question_poll_stats[\s\S]*?\$\$;/i)?.[0] ?? "";
+  assert.match(statsFunction, /distinct on \(a\.user_id\)/i);
+  assert.match(statsFunction, /t\.n >= 5/i);
+  assert.match(statsFunction, /mine\.user_id = \(select auth\.uid\(\)\)/i);
+  assert.doesNotMatch(statsFunction, /display_name|discord_user_id|avatar_url/i);
+});
+
+test("pins Supabase dependencies and protects the NAGA proxy", async () => {
+  const [packageJson, denoJson, edgeFunction, runtimeConfig, clientSource] = await Promise.all([
+    fs.readFile(new URL("../package.json", import.meta.url), "utf8"),
+    fs.readFile(new URL("../supabase/functions/naga-report/deno.json", import.meta.url), "utf8"),
+    fs.readFile(new URL("../supabase/functions/naga-report/index.ts", import.meta.url), "utf8"),
+    fs.readFile(new URL("../public/runtime-config.js", import.meta.url), "utf8"),
+    fs.readFile(new URL("../client/supabase-sync.ts", import.meta.url), "utf8"),
+  ]);
+  assert.match(packageJson, /"@supabase\/supabase-js": "2\.110\.8"/);
+  assert.match(packageJson, /"supabase": "2\.110\.0"/);
+  assert.match(denoJson, /@supabase\/supabase-js@2\.110\.8/);
+  assert.match(edgeFunction, /createClient\(supabaseUrl, supabaseAnonKey/);
+  assert.match(edgeFunction, /supabase\.auth\.getUser\(\)/);
+  assert.match(edgeFunction, /https:\/\/naga\.dmv\.nico\/reports\/\$\{reportId\}\.json/);
+  assert.match(runtimeConfig, /Never put a Supabase secret\/service-role key here/);
+  assert.doesNotMatch(runtimeConfig, /sb_secret_|service_role\s*:/i);
+  assert.match(clientSource, /provider: "discord"/);
+  assert.match(clientSource, /importLocalHistory/);
+  assert.match(clientSource, /createSharedQuestion/);
+  assert.match(clientSource, /requestQuestionDeletion/);
+  assert.match(clientSource, /loadQuestionPollStats/);
+});
+
+test("generates browser runtime config without accepting server secrets", async () => {
+  const [writer, workflow] = await Promise.all([
+    fs.readFile(new URL("../scripts/write-runtime-config.mjs", import.meta.url), "utf8"),
+    fs.readFile(new URL("../.github/workflows/pages.yml", import.meta.url), "utf8"),
+  ]);
+  assert.match(writer, /SUPABASE_PUBLISHABLE_KEY/);
+  assert.match(writer, /sb_secret_/);
+  assert.match(writer, /Only the browser-safe Supabase publishable key is allowed/);
+  assert.doesNotMatch(workflow, /SUPABASE_SECRET_KEY|service_role/i);
+  assert.match(workflow, /npm run runtime:config/);
+  assert.match(workflow, /path: public/);
+});

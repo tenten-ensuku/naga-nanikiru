@@ -284,6 +284,46 @@ test("extracts bad discards and calls at exactly 5 percent, filters actors and r
   assert.deepEqual(Array.from(seatTwoBad.map(item => item.id)), ["bad-report|2|0|2|discard"]);
 });
 
+test("supports custom extraction decision, model, threshold, and max-count filters", async () => {
+  const api = await loadApi();
+  const firstRows = [Array(34).fill(0), Array(34).fill(0)];
+  firstRows[0][4] = 400;
+  firstRows[1][4] = 600;
+  const secondRows = [Array(34).fill(0), Array(34).fill(0)];
+  secondRows[0][4] = 300;
+  secondRows[1][4] = 400;
+  const report = {
+    reportId: "custom-report",
+    naga_types: { "0": "M0", "1": "M1" },
+    pred: [[
+      startKyoku(),
+      discardPrediction(0, "5m", ["4m", "4m"], firstRows),
+      discardPrediction(0, "5m", ["4m", "4m"], secondRows, { reach: [7000, 0] })
+    ]]
+  };
+
+  const anyModel = api.extractBadMoves(report, 0, { modelMode: "any" });
+  assert.deepEqual(Array.from(anyModel.map(item => item.id)), [
+    "custom-report|0|0|1|discard",
+    "custom-report|0|0|2|discard"
+  ]);
+  assert.deepEqual(Array.from(anyModel[0].badMoveModels), ["M0"]);
+  assert.deepEqual(Array.from(api.extractBadMoves(report, 0, { modelMode: "all" }).map(item => item.id)), [
+    "custom-report|0|0|2|discard"
+  ]);
+  assert.deepEqual(Array.from(api.extractBadMoves(report, 0, { decisionType: "reach" }).map(item => item.id)), [
+    "custom-report|0|0|2|discard"
+  ]);
+  assert.deepEqual(Array.from(api.extractBadMoves(report, 0, { decisionType: "discard" }).map(item => item.id)), [
+    "custom-report|0|0|1|discard"
+  ]);
+  assert.equal(api.extractBadMoves(report, 0, { maxCandidates: 1 }).length, 1);
+  assert.equal(api.extractBadMoves(report, 0, { thresholdPercent: 4 }).length, 2);
+  assert.throws(() => api.normalizeExtractionOptions({ thresholdPercent: 0 }), /between 0.1 and 50/);
+  assert.throws(() => api.normalizeExtractionOptions({ thresholdPercent: 51 }), /between 0.1 and 50/);
+  assert.throws(() => api.normalizeExtractionOptions({ maxCandidates: 0 }), /between 1 and 500/);
+});
+
 test("keeps fallback and source scenes keyed by their explicit tv", async () => {
   const api = await loadApi();
   const rows = [Array(34).fill(0)];

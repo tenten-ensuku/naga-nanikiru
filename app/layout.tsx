@@ -7,7 +7,7 @@ const description = "NAGAの局面を解き、復習予定・苦手分析・URL�
 
 export async function generateMetadata(): Promise<Metadata> {
   const requestHeaders = await headers();
-  const host = requestHeaders.get("x-forwarded-host") ?? requestHeaders.get("host") ?? "naga-nanikiru-prototype.kobotenmitsu.chatgpt.site";
+  const host = requestHeaders.get("x-forwarded-host") ?? requestHeaders.get("host") ?? "tenten-ensuku.github.io";
   const protocol = requestHeaders.get("x-forwarded-proto") ?? (host.includes("localhost") ? "http" : "https");
   const image = `${protocol}://${host}/og-v44.png`;
   return {

@@ -9,12 +9,12 @@
   <meta property="og:type" content="website">
   <meta property="og:title" content="NAGA局面ドリル｜何切る復習問題集">
   <meta property="og:description" content="NAGAの局面を解き、復習し、弱点を育て直す実戦問題集。">
-  <meta property="og:url" content="https://naga-nanikiru-prototype.kobotenmitsu.chatgpt.site/">
-  <meta property="og:image" content="https://naga-nanikiru-prototype.kobotenmitsu.chatgpt.site/og-v44.png">
+  <meta property="og:url" content="https://tenten-ensuku.github.io/naga-nanikiru/">
+  <meta property="og:image" content="https://tenten-ensuku.github.io/naga-nanikiru/og-v44.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="NAGA局面ドリル｜何切る復習問題集">
   <meta name="twitter:description" content="今日の10問、復習管理、自己分析、NAGA URLからの問題生成。">
-  <meta name="twitter:image" content="https://naga-nanikiru-prototype.kobotenmitsu.chatgpt.site/og-v44.png">
+  <meta name="twitter:image" content="https://tenten-ensuku.github.io/naga-nanikiru/og-v44.png">
   <style>
     :root {
       --ink: #f6fbff;
@@ -55,8 +55,19 @@
     .menu-heading p:not(.eyebrow) { margin: 8px 0 0; color: var(--muted); font-size: 13px; line-height: 1.6; }
     .menu-summary { display: flex; flex-wrap: wrap; gap: 6px 10px; margin-top: 12px; color: var(--muted); font-size: 11px; }
     .menu-summary strong { color: #fff7d6; }
+    .account-strip { display: flex; align-items: center; flex-wrap: wrap; gap: 7px; padding: 8px 9px; color: var(--muted); background: rgba(0,0,0,.14); border: 1px solid rgba(255,255,255,.1); border-radius: 10px; font-size: 10px; }
+    .account-status { flex: 1 1 220px; min-width: 0; }
+    .account-strip button { padding: 6px 8px; color: #eafefe; background: #164862; border: 1px solid rgba(113,183,255,.45); border-radius: 7px; font-size: 9px; font-weight: 850; }
+    .account-strip button.primary { color: #17231d; background: #f1c457; border-color: #ffdb7d; }
+    .account-strip button[hidden] { display: none; }
+    .student-dashboard { display: grid; gap: 10px; }
+    .student-row { display: grid; grid-template-columns: minmax(120px, 1fr) repeat(4, minmax(72px, auto)); gap: 7px; align-items: center; padding: 10px; background: rgba(12,50,70,.58); border: 1px solid rgba(255,255,255,.11); border-radius: 9px; }
+    .student-row strong { color: #fff7d6; }
+    .student-metric { color: var(--muted); font-size: 9px; }
+    .student-metric b { display: block; margin-top: 2px; color: #eafefe; font-size: 13px; }
     .menu-nav { display: flex; flex-wrap: wrap; gap: 7px; padding: 7px; border: 1px solid rgba(255,255,255,.1); border-radius: 11px; background: rgba(0,0,0,.14); }
     .menu-nav-button { display: inline-flex; align-items: center; gap: 6px; padding: 8px 10px; color: #cfe9ed; background: transparent; border: 1px solid transparent; border-radius: 8px; font-size: 11px; font-weight: 800; }
+    .menu-nav-button[hidden] { display: none; }
     .menu-nav-button:hover, .menu-nav-button:focus-visible { color: #fff; background: rgba(22,80,103,.7); outline: none; }
     .menu-nav-button.is-active { color: #12211e; background: var(--gold); border-color: #ffdb7d; }
     .menu-nav-button.is-active:hover, .menu-nav-button.is-active:focus-visible { background: #ffda77; }
@@ -95,6 +106,7 @@
     .menu-card-meta { display: flex; flex-wrap: wrap; gap: 4px; color: var(--muted); font-size: 8px; }
     .menu-card-tag { padding: 2px 5px; background: rgba(255,255,255,.07); border-radius: 999px; }
     .menu-card-tag.is-due { color: #171e18; background: #bde7e0; }
+    .menu-card-provenance { display: block; color: #b6d6dc; font-size: 8px; line-height: 1.35; }
     .session-strip { display: grid; grid-template-columns: auto minmax(90px, 1fr) auto; align-items: center; gap: 8px; max-width: 860px; width: 100%; box-sizing: border-box; margin: -4px auto 10px; padding: 7px 10px; color: #dffbfb; background: rgba(7,28,43,.94); border: 1px solid rgba(155,232,216,.28); border-radius: 9px; font-size: 10px; font-weight: 800; }
     .session-strip[hidden] { display: none; }
     .session-progress-track { height: 5px; overflow: hidden; background: rgba(255,255,255,.12); border-radius: 999px; }
@@ -118,6 +130,14 @@
     .generator-form .generator-url-field { min-width: 0; }
     .generator-status { min-height: 18px; color: #cfe9ed; font-size: 10px; }
     .generator-status.is-error { color: #ffb7bd; }
+    .generator-mode-field { display: flex; flex-wrap: wrap; gap: 6px 12px; min-width: 0; margin: 0; padding: 8px; color: #dffbfb; border: 1px solid rgba(255,255,255,.14); border-radius: 8px; }
+    .generator-mode-field legend { padding: 0 4px; color: var(--muted); font-size: 9px; font-weight: 800; }
+    .generator-mode-field label { display: inline-flex; grid-template-columns: none; align-items: center; gap: 4px; color: #dffbfb; font-size: 10px; font-weight: 800; }
+    .generator-mode-field input { width: auto; }
+    .generator-custom-settings { grid-column: 1 / -1; min-width: 0; padding: 8px 10px; color: #dffbfb; background: rgba(0,0,0,.12); border: 1px solid rgba(255,255,255,.12); border-radius: 8px; }
+    .generator-custom-settings summary { cursor: pointer; color: #fff7d6; font-size: 10px; font-weight: 900; }
+    .generator-settings-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 7px; margin-top: 8px; }
+    .generator-settings-note { margin-top: 7px !important; font-size: 9px !important; }
     .generator-results { display: grid; gap: 8px; }
     .generator-candidate { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 10px; background: rgba(12,50,70,.55); border: 1px solid rgba(255,255,255,.11); border-radius: 9px; }
     .generator-candidate.is-duplicate { opacity: .62; }
@@ -133,6 +153,16 @@
     .question-manage-inner { display: grid; gap: 11px; padding: 18px; }
     .question-manage-inner h3 { margin: 0; color: #fff7d6; }
     .question-manage-inner p { margin: 0; color: var(--muted); font-size: 11px; line-height: 1.55; }
+    .question-manage-scope { padding: 8px 9px; color: #dffbfb !important; background: rgba(22,80,103,.5); border: 1px solid rgba(113,183,255,.3); border-radius: 8px; }
+    .question-manage-notice { min-height: 18px; color: #fff7d6 !important; font-size: 10px !important; }
+    .question-manage-edit-form { display: grid; gap: 8px; padding: 10px; background: rgba(0,0,0,.16); border: 1px solid rgba(255,255,255,.12); border-radius: 9px; }
+    .question-manage-edit-form[hidden] { display: none; }
+    .question-manage-edit-form label { display: grid; gap: 4px; color: #dffbfb; font-size: 9px; font-weight: 800; }
+    .question-manage-edit-form input { width: 100%; min-width: 0; padding: 7px 8px; color: var(--ink); background: #061c2c; border: 1px solid rgba(255,255,255,.18); border-radius: 7px; font: inherit; font-size: 10px; }
+    .question-manage-edit-form input:focus { border-color: rgba(113,183,255,.8); outline: 2px solid rgba(113,183,255,.16); }
+    .question-manage-edit-actions { display: flex; flex-wrap: wrap; gap: 6px; }
+    .question-manage-edit-actions button { padding: 6px 8px; color: #10211e; background: #bde7e0; border: 1px solid #d6fff5; border-radius: 7px; font-size: 9px; font-weight: 900; }
+    .question-manage-edit-actions button.secondary { color: #e7f8ff; background: #164862; border-color: rgba(113,183,255,.55); }
     .question-manage-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
     .question-manage-actions button { min-height: 39px; padding: 7px; color: #eafefe; background: #164862; border: 1px solid rgba(113,183,255,.45); border-radius: 7px; font-size: 10px; font-weight: 800; }
     .question-manage-actions button.danger { color: #fff; background: #6a222b; border-color: rgba(255,135,144,.7); }
@@ -353,6 +383,9 @@
       .dashboard-grid, .analysis-grid { grid-template-columns: 1fr 1fr; }
       .analysis-breakdowns { grid-template-columns: 1fr; }
       .generator-form { grid-template-columns: 1fr; }
+      .generator-settings-grid { grid-template-columns: 1fr 1fr; }
+      .student-row { grid-template-columns: 1fr 1fr; }
+      .student-row > strong { grid-column: 1 / -1; }
       .generator-candidate { grid-template-columns: 1fr; }
       .candidate-controls { min-width: 0; }
       .candidate-controls input { max-width: none; }
@@ -385,6 +418,12 @@
         <p>解きたい局面を選んでください。解答後は「次の問題へ」で続けて挑戦できます。</p>
         <div class="menu-summary" id="menuSummary" aria-live="polite"></div>
       </div>
+      <div class="account-strip" id="accountStrip">
+        <span class="account-status" id="accountStatus">回答履歴はこの端末だけに保存されています。</span>
+        <button class="primary" id="discordAuthButton" type="button">Discordでログイン</button>
+        <button id="importHistoryButton" type="button" hidden>この端末の履歴を取り込む</button>
+        <button id="copyShareUrlButton" type="button" hidden>共有URLをコピー</button>
+      </div>
       <section class="quick-start" id="quickStart" aria-label="すぐに始める">
         <button class="quick-start-card primary" type="button" data-session-mode="today">
           <span class="quick-start-kicker">DAILY DRILL</span>
@@ -413,6 +452,7 @@
         <button class="menu-nav-button" type="button" data-menu-view="trash">ゴミ箱 <span class="menu-nav-badge" data-menu-count="trash">0</span></button>
         <button class="menu-nav-button" type="button" data-menu-view="generator">問題生成</button>
         <button class="menu-nav-button" type="button" data-menu-view="analysis">自己分析</button>
+        <button class="menu-nav-button" id="studentHistoryNav" type="button" data-menu-view="students" hidden>生徒履歴</button>
       </nav>
       <p class="menu-view-note" id="menuViewNote"></p>
       <div class="menu-filters" id="menuFilters">
@@ -504,7 +544,7 @@
         <textarea id="commentInput" maxlength="2000" placeholder="コメントを書き込む"></textarea>
         <button class="comment-submit" type="submit">コメントを追加</button>
       </form>
-      <p class="comment-sync-note">追加したコメントはこの画面内にのみ表示されます。Discordのスレッドには投稿されません。</p>
+      <p class="comment-sync-note">追加したコメントはこのアプリ内に保存されます。Discordのスレッドには投稿されません。</p>
       <div class="comments-footer">
         <button class="comment-add-button" id="commentAddButton" type="button" aria-expanded="false">コメント追加</button>
         <a id="threadLink" href="https://discord.com/channels/1166706544856006656/1532011607209541833" target="_blank" rel="noreferrer">Discordで開く</a>
@@ -527,23 +567,38 @@
   <dialog class="question-manage-dialog" id="questionManageDialog">
     <div class="question-manage-inner">
       <h3 id="questionManageTitle">問題を整理</h3>
-      <p>しばらく休む問題は期限後に自動でMY問題集へ戻ります。完全削除はこの端末でのみ適用されます。</p>
+      <p class="question-manage-scope" id="questionManageScope"></p>
+      <p id="questionManageDescription">しばらく休む問題は期限後に自動でMY問題集へ戻ります。</p>
+      <p class="question-manage-notice" id="questionManageNotice" aria-live="polite"></p>
+      <form class="question-manage-edit-form" id="questionManageEditForm" hidden>
+        <label>問題タイトル<input id="questionEditTitle" type="text" maxlength="120" autocomplete="off"></label>
+        <label>NAGA局面URL<input id="questionEditNagaUrl" type="url" inputmode="url" autocomplete="url"></label>
+        <label>元スレッドURL<input id="questionEditThreadUrl" type="url" inputmode="url" autocomplete="url"></label>
+        <div class="question-manage-edit-actions">
+          <button type="button" data-manage-action="save-edit">保存</button>
+          <button class="secondary" type="button" data-manage-action="cancel-edit">キャンセル</button>
+        </div>
+      </form>
       <div class="question-manage-actions">
+        <button type="button" id="questionManageEditButton" data-manage-action="edit">編集</button>
         <button type="button" data-manage-action="snooze-week">1週間休む</button>
         <button type="button" data-manage-action="snooze-month">1か月休む</button>
         <button type="button" data-manage-action="snooze-forever">無期限で休む</button>
-        <button type="button" data-manage-action="trash">ゴミ箱へ</button>
-        <button class="danger" type="button" data-manage-action="delete">完全削除</button>
+        <button type="button" id="questionManageTrashButton" data-manage-action="trash">ゴミ箱へ</button>
+        <button type="button" id="questionManageProposeDeleteButton" data-manage-action="propose-delete" hidden>削除を提案</button>
+        <button class="danger" id="questionManageDeleteButton" type="button" data-manage-action="delete">完全削除</button>
         <button type="button" data-manage-action="restore">すべて解除</button>
         <button class="close" type="button" data-manage-action="close">閉じる</button>
       </div>
     </div>
   </dialog>
 
+  <script src="runtime-config.js"></script>
+  <script src="supabase-sync-v47.js"></script>
   <script src="drill-ux-v44.js"></script>
   <script src="naga-generator-v44.js"></script>
   <script>
-    const APP_VERSION = 45;
+    const APP_VERSION = 48;
     const SCENE = {
       actualDiscard: "ji4",
       handBeforeDraw: ["man7", "man8", "man9", "pin4", "pin6", "pin7", "pin8", "pin9", "sou7", "sou8", "sou8", "ji4", "ji4"],
@@ -965,14 +1020,18 @@
       let generatorCandidatesV44 = [];
       let generatorReportV44 = null;
       let generatorSpecV44 = null;
+      let generatorModeV46 = "scene";
+      let supabaseSessionV46 = null;
+      let sharedCollectionV46 = null;
       const modelColorByNameV16 = { オメガ: "model-omega", ガンマ: "model-gamma", ニシキ: "model-nishiki", ヒバカリ: "model-hihikari", カガシ: "model-kagashi" };
       const USER_STATE_KEY_V16 = "naga-nanikiru-user-state-v1";
       const MENU_VIEW_COPY_V16 = {
         my: { title: "MY問題集", note: "出題できる問題を新しい順に表示しています。お気に入り登録やゴミ箱への移動は、この端末内だけに保存されます。" },
         favorites: { title: "お気に入り", note: "あとで繰り返したい問題をまとめています。ゴミ箱に移した問題はここから一時的に外れます。" },
         trash: { title: "ゴミ箱", note: "しばらく見たくない問題です。復元するか、この端末では完全に非表示にできます。" },
-        generator: { title: "問題生成", note: "局面URLは1問、対局URLは指定プレイヤーの悪手を抽出します。追加した問題はこの端末のMY問題集に保存されます。" },
+        generator: { title: "問題生成", note: "局面URLは1問、半荘URLは指定プレイヤーの悪手候補を抽出します。追加した問題はこの端末のMY問題集に保存されます。" },
         analysis: { title: "自己分析", note: "回答履歴から正答率・回答時間・復習期限・判断種別ごとの傾向を集計します。" },
+        students: { title: "生徒の回答履歴", note: "所属設定された生徒だけを表示します。生徒本人としてログインする必要はありません。" },
         session: { title: "セッション結果", note: "今回の結果を確認し、苦手問題だけを続けて復習できます。" }
       };
       let userStateV16 = loadUserStateV16();
@@ -982,11 +1041,13 @@
       const sourceMetaV16 = document.getElementById("sceneMeta");
 
       function loadUserStateV16() {
-        const fallback = window.DrillUxV44?.migrateState?.(null) || { schemaVersion: 2, favorites: [], trashed: [], hidden: [], answerHistory: [], snoozed: {}, reviewSchedule: {}, studyDates: [], sessions: {}, activeSessionId: null, lastSessionResult: null, customQuestions: [], pendingGenerated: [], settings: {}, localComments: {} };
+        const fallback = window.DrillUxV44?.migrateState?.(null) || { schemaVersion: 2, favorites: [], trashed: [], hidden: [], answerHistory: [], snoozed: {}, reviewSchedule: {}, studyDates: [], sessions: {}, activeSessionId: null, lastSessionResult: null, customQuestions: [], pendingGenerated: [], settings: {}, localComments: {}, questionOverrides: {}, deletionProposals: {} };
         try {
           const saved = JSON.parse(window.localStorage.getItem(USER_STATE_KEY_V16) || "null");
           const migrated = window.DrillUxV44?.migrateState?.(saved) || saved || fallback;
           migrated.localComments = migrated.localComments && typeof migrated.localComments === "object" ? migrated.localComments : {};
+          migrated.questionOverrides = migrated.questionOverrides && typeof migrated.questionOverrides === "object" ? migrated.questionOverrides : {};
+          migrated.deletionProposals = migrated.deletionProposals && typeof migrated.deletionProposals === "object" ? migrated.deletionProposals : {};
           return migrated;
         } catch {
           return fallback;
@@ -1005,6 +1066,160 @@
 
       function questionKeyV16(question) {
         return String(question?.id || `number-${question?.number ?? "unknown"}`);
+      }
+
+      function currentUserDisplayNameV47() {
+        const user = supabaseSessionV46?.user;
+        return String(user?.user_metadata?.full_name || user?.user_metadata?.name || user?.user_metadata?.preferred_username || "このブラウザ").trim();
+      }
+
+      function questionMetadataValueV47(question, keys) {
+        for (const key of keys) {
+          const value = question?.[key] ?? question?.metadata?.[key] ?? question?.payload?.[key];
+          if (value !== null && value !== undefined && String(value).trim()) return String(value).trim();
+        }
+        return "";
+      }
+
+      function questionCreatorNameV47(question) {
+        return questionMetadataValueV47(question, ["createdByName", "creatorName", "created_by_name", "creator_name", "authorName", "author_name"]);
+      }
+
+      function questionUpdaterNameV47(question) {
+        return questionMetadataValueV47(question, ["updatedByName", "lastUpdatedByName", "updated_by_name", "last_updated_by_name"]);
+      }
+
+      function isSharedQuestionV47(question) {
+        const visibility = String(question?.visibility || question?.scope || "").toLowerCase();
+        return Boolean(
+          (sharedCollectionV46 && (question?.serverQuestionId || question?.sharedCollectionSlug === sharedCollectionV46.share_slug))
+          || question?.isShared === true
+          || question?.shared === true
+          || ["public", "unlisted", "shared"].includes(visibility)
+        );
+      }
+
+      function isLocallyOwnedQuestionV47(question) {
+        const key = questionKeyV16(question);
+        return Boolean(question?.localGenerated || (userStateV16.customQuestions || []).some(item => questionKeyV16(item) === key));
+      }
+
+      function isQuestionOwnerV47(question) {
+        if (isLocallyOwnedQuestionV47(question)) return true;
+        const userId = String(supabaseSessionV46?.user?.id || "");
+        if (!userId) return false;
+        const ownerIds = [
+          question?.createdById, question?.creatorId, question?.created_by, question?.created_by_id,
+          question?.ownerId, question?.owner_id, question?.authorId, question?.author_id
+        ].map(value => String(value || "")).filter(Boolean);
+        return ownerIds.includes(userId);
+      }
+
+      function isQuestionAdminV47() {
+        const user = supabaseSessionV46?.user;
+        if (user?.app_metadata?.is_admin === true) return true;
+        const roles = [user?.app_metadata?.role, user?.app_metadata?.user_role]
+          .map(value => String(value || "").toLowerCase());
+        return roles.some(role => ["admin", "administrator"].includes(role));
+      }
+
+      function isCollectionManagerV47() {
+        const userId = String(supabaseSessionV46?.user?.id || "");
+        return isQuestionAdminV47() || Boolean(userId && sharedCollectionV46 && String(sharedCollectionV46.owner_id || "") === userId);
+      }
+
+      function canEditQuestionV47(question) {
+        return !isSharedQuestionV47(question) || isQuestionOwnerV47(question) || isCollectionManagerV47();
+      }
+
+      function canTrashQuestionV47(question) {
+        return !isSharedQuestionV47(question) || isQuestionOwnerV47(question) || isCollectionManagerV47();
+      }
+
+      function canDeleteQuestionV47(question) {
+        return !isSharedQuestionV47(question) || isQuestionAdminV47();
+      }
+
+      function questionProvenanceV47(question) {
+        const creator = questionCreatorNameV47(question);
+        const updater = questionUpdaterNameV47(question);
+        if (!creator && !updater) return "";
+        const parts = [];
+        if (creator) parts.push(`作成：${escapeHtml(creator)}`);
+        if (updater) parts.push(`更新：${escapeHtml(updater)}`);
+        return `<span class="menu-card-provenance">${parts.join("　")}</span>`;
+      }
+
+      function questionScopeTextV47(question) {
+        if (!isSharedQuestionV47(question)) return "MY問題集（この端末の自分の問題）";
+        const title = sharedCollectionV46?.title || question?.collectionTitle || "共有問題集";
+        if (isQuestionAdminV47()) return `共有問題集「${title}」・全体管理者操作（利用者全体に影響）`;
+        if (isCollectionManagerV47()) return `共有問題集「${title}」・問題集管理者操作（利用者全体に影響）`;
+        if (isQuestionOwnerV47(question)) return `共有問題集「${title}」・作成者操作（利用者全体に影響）`;
+        return `共有問題集「${title}」・閲覧者（直接編集・削除は不可）`;
+      }
+
+      async function invokeSharedMutationV47(action, payload) {
+        const api = window.NagaSupabase;
+        const shareSlug = sharedCollectionV46?.share_slug;
+        if (!api || !shareSlug) throw new Error("共有問題集の保存APIが未接続です。");
+        if (action === "add" && typeof api.createSharedQuestion === "function") {
+          const question = payload.question;
+          const id = await api.createSharedQuestion({
+            shareSlug,
+            title: question.title,
+            payload: question,
+            sourceKind: question.sourceKind || "naga_scene",
+            sourceReportId: question.reportId || null,
+            sourceUrl: question.nagaUrl || null,
+            sceneTw: question.tw ?? null,
+            sceneTs: question.ts ?? null,
+            sceneTv: question.tv ?? null,
+            decisionType: question.decisionType || "discard"
+          });
+          return { id };
+        }
+        if (action === "edit" && typeof api.updateSharedQuestion === "function") {
+          const question = payload.question;
+          const updates = payload.updates;
+          await api.updateSharedQuestion(question.serverQuestionId, updates.title, { ...question, ...updates });
+          return;
+        }
+        if (action === "trash" && typeof api.trashSharedQuestion === "function") {
+          return api.trashSharedQuestion(payload.questionId);
+        }
+        if (action === "delete" && typeof api.permanentlyDeleteQuestion === "function") {
+          return api.permanentlyDeleteQuestion(payload.questionId, "完全削除");
+        }
+        throw new Error("この共有操作の保存APIが未接続です。");
+      }
+
+      function confirmSharedImpactV47(action, question) {
+        const title = question?.title || `問題${question?.number ?? ""}`;
+        const messages = {
+          add: `「${title}」を共有問題集へ追加します。共有URLを利用している全員に表示されます。追加しますか？`,
+          edit: `「${title}」を編集すると、共有問題集を利用している全員に反映されます。変更を保存しますか？`,
+          trash: `「${title}」を共有問題集のゴミ箱へ移動します。共有問題集を利用している全員から非表示になります。回答履歴・コメントは保持されます。続行しますか？`,
+          delete: `「${title}」を完全削除すると、問題・コメント・集計データが元に戻せません。管理者として実行しますか？`
+        };
+        return window.confirm(messages[action] || "共有問題集全体に影響する操作を実行しますか？");
+      }
+
+      function applyQuestionOverridesV47() {
+        const overrides = userStateV16.questionOverrides || {};
+        questionsV16 = questionsV16.map(question => ({ ...question, ...(overrides[questionKeyV16(question)] || {}) }));
+      }
+
+      function recordDeletionProposalV47(question) {
+        const key = questionKeyV16(question);
+        userStateV16.deletionProposals ||= {};
+        userStateV16.deletionProposals[key] = {
+          questionKey: key,
+          questionTitle: question.title || `問題${question.number ?? ""}`,
+          proposedAt: new Date().toISOString(),
+          proposedBy: currentUserDisplayNameV47()
+        };
+        saveUserStateV16();
       }
 
       function isHiddenV16(question) {
@@ -1032,9 +1247,29 @@
         renderMenuCardsV16();
       }
 
-      window.persistLocalCommentV44 = message => {
+      window.persistLocalCommentV44 = async message => {
         const question = questionsV16[currentQuestionIndexV16];
         if (!question) return;
+        if (sharedCollectionV46 && question.serverQuestionId) {
+          const session = await window.NagaSupabase?.currentSession?.();
+          if (!session) {
+            state.comments = state.comments.filter(comment => comment.id !== message.id);
+            renderComments();
+            window.alert("共有問題集へのコメント投稿にはDiscordログインが必要です。");
+            return;
+          }
+          try {
+            const id = await window.NagaSupabase.postSharedComment(sharedCollectionV46.share_slug, message.content, question.serverQuestionId);
+            message.id = String(id);
+            message.author = session.user.user_metadata?.full_name || session.user.user_metadata?.name || "Discordユーザー";
+            renderComments({ scrollToBottom: true });
+          } catch (error) {
+            state.comments = state.comments.filter(comment => comment.id !== message.id);
+            renderComments();
+            window.alert(error?.message || "コメントを送信できませんでした。");
+          }
+          return;
+        }
         const key = questionKeyV16(question);
         userStateV16.localComments ||= {};
         userStateV16.localComments[key] = [...(userStateV16.localComments[key] || []), message].slice(-100);
@@ -1080,6 +1315,8 @@
         const startedAt = Number.isFinite(state.questionStartedAt) ? state.questionStartedAt : confirmedAt;
         const answer = {
           questionKey: questionKeyV16(question),
+          serverQuestionId: question.serverQuestionId || null,
+          shareSlug: sharedCollectionV46?.share_slug || null,
           number: question.number,
           startedAt: new Date(startedAt).toISOString(),
           answeredAt: now,
@@ -1112,6 +1349,19 @@
         }
         userStateV16.answerHistory = userStateV16.answerHistory.slice(0, 500);
         saveUserStateV16();
+        if (sharedCollectionV46 && question.serverQuestionId && window.NagaSupabase?.configured) {
+          window.NagaSupabase.currentSession().then(session => {
+            if (!session) return;
+            return window.NagaSupabase.recordSharedAttempt({
+              shareSlug: sharedCollectionV46.share_slug,
+              questionId: question.serverQuestionId,
+              answer: { selected: answer.selected, callDecision: answer.callDecision, riichi: answer.riichi, judgeModel: answer.judgeModel },
+              grade: answer.scoreMark,
+              elapsedMs: answer.responseTimeMs,
+              answeredAt: answer.answeredAt
+            });
+          }).catch(error => console.warn("回答履歴の同期に失敗しました", error));
+        }
       }
 
       function recentScoresV16(question) {
@@ -1240,7 +1490,7 @@
       function choiceScoreV16() {
         if (SCENE.decisionType === "call") {
           const modelNames = SCENE.models.filter((model, index) => callRecommendedV16(index) === state.callDecision).map(model => model.name);
-          const modelMatch = modelNames.length ? `笳・${modelNames.join("繝ｻ")}縺ｨ荳閾ｴ・・ｼ～` : "";
+          const modelMatch = modelNames.length ? `◎ ${modelNames.join("・")}と一致！！` : "";
           const first = state.callDecision === callRecommendedV16(state.judgeModel);
           if (first) return { className: "score-first", mark: "💮", label: "第一推奨と一致", modelMatch };
           const probabilities = SCENE.models.map((model, index) => (state.callDecision ? SCENE.callProbabilities?.call?.[index] : SCENE.callProbabilities?.pass?.[index]) ?? 0);
@@ -1717,6 +1967,7 @@
         renderHandV16();
         renderAnswerV16();
         renderComments();
+        hydrateSharedCommentsV46(question);
         const favoriteButton = document.getElementById("currentFavoriteButton");
         favoriteButton.classList.toggle("is-active", isFavoriteV16(question));
         favoriteButton.textContent = isFavoriteV16(question) ? "★ お気に入り済" : "☆ お気に入り";
@@ -1768,7 +2019,7 @@
         resumeButton.hidden = !resume;
         if (resume) document.getElementById("resumeSessionNote").textContent = `${Number(resume.cursor || 0) + 1} / ${resume.questionKeys.length} から再開`;
         document.getElementById("todayDrillNote").textContent = analytics.dueCount ? `復習期限 ${analytics.dueCount}問を優先` : "苦手問題と未回答をバランスよく出題";
-        document.getElementById("quickStart").hidden = ["generator", "analysis", "session"].includes(menuViewV16);
+        document.getElementById("quickStart").hidden = ["generator", "analysis", "students", "session"].includes(menuViewV16);
         document.getElementById("menuFilters").hidden = !["my", "favorites", "trash"].includes(menuViewV16);
       }
 
@@ -1821,8 +2072,19 @@
         return `<section class="session-result"><h3>${sessionModeLabelV44(result.mode)} 完了</h3><div class="dashboard-grid"><div class="stat-card"><span class="stat-label">回答</span><span class="stat-value">${rows.length}</span></div><div class="stat-card"><span class="stat-label">💮・〇</span><span class="stat-value">${(counts["💮"] || 0) + (counts["〇"] || 0)}</span></div><div class="stat-card"><span class="stat-label">△・×</span><span class="stat-value">${weak}</span></div><div class="stat-card"><span class="stat-label">平均時間</span><span class="stat-value">${average}<small>秒</small></span></div></div><p>💮 ${counts["💮"] || 0}　〇 ${counts["〇"] || 0}　△ ${counts["△"] || 0}　× ${counts["×"] || 0}</p><div class="session-result-actions">${weak ? `<button class="drill-action" type="button" data-result-action="retry-weak">間違えた${weak}問をもう一度</button>` : ""}<button class="drill-action secondary" type="button" data-result-action="today">新しい10問</button><button class="drill-action secondary" type="button" data-result-action="menu">MY問題集へ</button></div></section>`;
       }
 
+      function generatorSeatOptionsV46() {
+        const names = generatorReportV44?.player_info?.name;
+        if (Array.isArray(names) && names.length) {
+          return names.slice(0, 4).map((name, index) => `<option value="${index}">${escapeHtml(String(name || `プレイヤー${index + 1}`))}</option>`).join("");
+        }
+        return `<option value="auto">URLのtwを使用</option><option value="0">プレイヤー1</option><option value="1">プレイヤー2</option><option value="2">プレイヤー3</option><option value="3">プレイヤー4</option>`;
+      }
+
       function renderGeneratorViewV44() {
-        return `<section class="generator-panel"><h3>NAGA URLから問題生成</h3><p>局面URLでは指定局面を1問生成します。対局URLでは対象プレイヤーが選んだ推奨率5％以下の局面をまとめて抽出します。</p><form class="generator-form" id="generatorForm"><label class="generator-url-field">NAGA URL<input id="generatorUrl" type="url" required placeholder="https://naga.dmv.nico/htmls/..."></label><label>対象プレイヤー<select id="generatorSeat"><option value="auto">URLのtwを使用</option><option value="0">プレイヤー1</option><option value="1">プレイヤー2</option><option value="2">プレイヤー3</option><option value="3">プレイヤー4</option></select></label><button class="generator-button" type="submit">解析する</button></form><div class="generator-status" id="generatorStatus" aria-live="polite"></div><div class="generator-results" id="generatorResults">${renderGeneratorCandidatesV44()}</div><p>外部NAGA画面はブラウザから自動撮影できないため、追加時にその局面のスクリーンショットを1枚指定してください。画像は圧縮してこの端末内だけに保存します。</p></section>`;
+        const sceneMode = generatorModeV46 === "scene";
+        const destination = sharedCollectionV46 ? `共有問題集「${escapeHtml(sharedCollectionV46.title || "共有問題集")}」` : "MY問題集";
+        const destinationNote = sharedCollectionV46 ? "共有URLを利用している全員に影響するため、追加時に確認が表示されます。Discordログインと共有保存APIが必要です。" : "追加した問題はこの端末のMY問題集に保存されます。";
+        return `<section class="generator-panel"><h3>NAGA URLから問題生成</h3><p>入力種類を選んでください。局面URLは1問、半荘URLは対象プレイヤーの候補をまとめて抽出します。</p><form class="generator-form generator-form-v46" id="generatorForm"><fieldset class="generator-mode-field"><legend>入力種類</legend><label><input type="radio" name="generatorMode" value="scene"${sceneMode ? " checked" : ""}> 局面URL（1問）</label><label><input type="radio" name="generatorMode" value="match"${sceneMode ? "" : " checked"}> 半荘URL（候補を一括抽出）</label></fieldset><label class="generator-url-field">NAGA URL<input id="generatorUrl" type="url" required inputmode="url" placeholder="https://naga.dmv.nico/htmls/..."></label><label id="generatorSeatLabel">対象プレイヤー<select id="generatorSeat">${generatorSeatOptionsV46()}</select></label><button class="generator-button" type="submit">${sceneMode ? "1問を解析" : "候補を抽出"}</button><details class="generator-custom-settings" id="generatorCustomSettings"${sceneMode ? " hidden" : ""}><summary>抽出条件をカスタム設定</summary><div class="generator-settings-grid"><label>悪手閾値（%）<input id="generatorThreshold" type="number" min="0.1" max="50" step="0.1" value="5"></label><label>対象判断<select id="generatorDecisionType"><option value="all">すべて</option><option value="discard">打牌</option><option value="call">副露</option><option value="reach">リーチ</option></select></label><label>モデル条件<select id="generatorModelMode"><option value="any">いずれかのモデルで悪手</option><option value="all">全モデルで悪手</option></select></label><label>最大抽出数<input id="generatorMaxCandidates" type="number" min="1" max="500" step="1" value="100"></label></div><p class="generator-settings-note">悪手は選択した打牌・副露の実際の選択率が閾値以下の候補です。リーチはリーチ判断を含む局面だけを対象にします。</p></details></form><div class="generator-status" id="generatorStatus" aria-live="polite"></div><div class="generator-results" id="generatorResults">${renderGeneratorCandidatesV44()}</div><p>${destination}へ追加します。${destinationNote}追加する候補ごとに、問題画面として使うスクリーンショットを指定してください。画像は圧縮して保存し、既存の重複防止も適用します。</p></section>`;
       }
 
       function renderGeneratorCandidatesV44() {
@@ -1831,8 +2093,25 @@
           const duplicate = questionsV16.some(question => question.id === candidate.id);
           const modelMarkup = (candidate.models || []).slice(0, 3).map(model => `<span class="candidate-model">${model.recommendation && candidate.decisionType !== "call" ? tileImage(model.recommendation) : ""}${escapeHtml(model.name)} ${candidate.decisionType === "call" ? escapeHtml(model.label || (candidate.callRecommended?.[(candidate.models || []).indexOf(model)] ? "鳴く" : "鳴かない")) : tileLabel(model.recommendation)}</span>`).join("");
           const choice = candidate.decisionType === "call" ? `副露判断・${candidate.actualCall ? "鳴いた" : "鳴かなかった"}` : `${tileLabel(candidate.actualDiscard)}を選択`;
-          return `<article class="generator-candidate${duplicate ? " is-duplicate" : ""}"><div><div class="candidate-title">${escapeHtml(candidate.playerName || `プレイヤー${Number(candidate.playerSeat ?? candidate.tw ?? 0) + 1}`)}・${choice}</div><div class="candidate-meta">${escapeHtml(candidate.title || `局${Number(candidate.ts || 0) + 1}・操作${candidate.tv}`)} ／ ${questionTypeV44(candidate)}${candidate.isBadMove ? " ／ 悪手候補" : ""}</div><div class="candidate-models">${modelMarkup}</div></div><div class="candidate-controls"><input type="file" accept="image/png,image/jpeg,image/webp" data-candidate-image="${index}" aria-label="この局面のスクリーンショット"><button class="generator-button${duplicate ? " secondary" : ""}" type="button" data-generator-add="${index}" ${duplicate ? "disabled" : ""}>${duplicate ? "追加済み" : "MY問題集へ追加"}</button></div></article>`;
+          const badModels = candidate.badMoveModels?.length ? ` ／ ${candidate.badMoveModels.map(escapeHtml).join("・")}が${Number(candidate.badMoveThresholdPercent || 5)}%以下` : "";
+          const addLabel = sharedCollectionV46 ? "共有問題集へ追加" : "MY問題集へ追加";
+          return `<article class="generator-candidate${duplicate ? " is-duplicate" : ""}"><div><div class="candidate-title">${escapeHtml(candidate.playerName || `プレイヤー${Number(candidate.playerSeat ?? candidate.tw ?? 0) + 1}`)}・${choice}</div><div class="candidate-meta">${escapeHtml(candidate.title || `局${Number(candidate.ts || 0) + 1}・操作${candidate.tv}`)} ／ ${questionTypeV44(candidate)}${candidate.isBadMove ? ` ／ 悪手候補${badModels}` : ""}</div><div class="candidate-models">${modelMarkup}</div></div><div class="candidate-controls"><input type="file" accept="image/png,image/jpeg,image/webp" data-candidate-image="${index}" aria-label="この局面のスクリーンショット"><button class="generator-button${duplicate ? " secondary" : ""}" type="button" data-generator-add="${index}" ${duplicate ? "disabled" : ""}>${duplicate ? "追加済み" : addLabel}</button></div></article>`;
         }).join("");
+      }
+
+      async function renderStudentDashboardV46() {
+        const grid = document.getElementById("menuGrid");
+        if (!window.NagaSupabase?.configured || !supabaseSessionV46) {
+          grid.innerHTML = `<div class="menu-placeholder"><strong>Discordログインが必要です</strong>教師として所属設定された生徒の履歴だけを確認できます。</div>`;
+          return;
+        }
+        try {
+          const rows = await window.NagaSupabase.loadStudentSummaries();
+          const students = rows.filter(row => row.user_id !== supabaseSessionV46.user.id);
+          grid.innerHTML = students.length ? `<section class="student-dashboard">${students.map(row => `<article class="student-row"><strong>${escapeHtml(row.display_name || "生徒")}</strong><span class="student-metric">回答数<b>${Number(row.attempt_count || 0)}</b></span><span class="student-metric">安全回答<b>${Number(row.safe_count || 0)}</b></span><span class="student-metric">要復習<b>${Number(row.weak_count || 0)}</b></span><span class="student-metric">平均時間<b>${row.average_seconds ?? "-"}秒</b></span></article>`).join("")}</section>` : `<div class="menu-placeholder"><strong>表示できる回答履歴はまだありません</strong>所属済みの生徒が回答すると、ここに集計されます。</div>`;
+        } catch (error) {
+          grid.innerHTML = `<div class="menu-placeholder"><strong>履歴を読み込めませんでした</strong>${escapeHtml(error?.message || "権限設定を確認してください。")}</div>`;
+        }
       }
 
       function renderMenuCardsV16() {
@@ -1850,6 +2129,13 @@
           grid.innerHTML = renderAnalysisViewV44();
           grid.style.display = "block";
           empty.hidden = true;
+          return;
+        }
+        if (menuViewV16 === "students") {
+          grid.innerHTML = `<div class="menu-placeholder"><strong>読み込み中</strong>生徒の回答履歴を確認しています。</div>`;
+          grid.style.display = "block";
+          empty.hidden = true;
+          renderStudentDashboardV46();
           return;
         }
         if (menuViewV16 === "session") {
@@ -1876,8 +2162,8 @@
           const historyLabel = scores.length ? `直近${scores.length}回の採点履歴` : "採点履歴はまだありません";
           const history = scores.length ? scores.map(entry => `<span class="menu-card-history-mark" title="${escapeHtml(entry.scoreLabel || "採点結果")}">${escapeHtml(entry.scoreMark)}</span>`).join("") : "未回答";
           const reviewTag = reviewTagV44(question);
-          const tags = `<span class="menu-card-tag">${questionTypeV44(question)}</span>${hasModelDisagreementV44(question) ? `<span class="menu-card-tag">モデル意見割れ</span>` : ""}${reviewTag ? `<span class="menu-card-tag${reviewTag === "復習期限" ? " is-due" : ""}">${reviewTag}</span>` : ""}`;
-          return `<article class="menu-card"><button class="menu-card-open" type="button" data-question-index="${index}"><span class="menu-card-heading"><span class="menu-card-title">${title}</span><span class="menu-card-history${scores.length ? "" : " is-empty"}" aria-label="${historyLabel}">${history}</span></span><span class="menu-card-meta">${tags}</span></button><div class="menu-card-actions"><button class="menu-card-action${favorite ? " is-active" : ""}" type="button" data-menu-action="favorite" data-question-index="${index}" aria-pressed="${favorite}">${favorite ? "★ お気に入り済" : "☆ お気に入り"}</button>${trashed ? `<button class="menu-card-action" type="button" data-menu-action="restore" data-question-index="${index}">復元</button>` : ""}<button class="menu-card-action" type="button" data-menu-action="manage" data-question-index="${index}">整理</button></div></article>`;
+          const tags = `<span class="menu-card-tag">${questionTypeV44(question)}</span>${isSharedQuestionV47(question) ? `<span class="menu-card-tag">共有</span>` : ""}${hasModelDisagreementV44(question) ? `<span class="menu-card-tag">モデル意見割れ</span>` : ""}${reviewTag ? `<span class="menu-card-tag${reviewTag === "復習期限" ? " is-due" : ""}">${reviewTag}</span>` : ""}`;
+          return `<article class="menu-card"><button class="menu-card-open" type="button" data-question-index="${index}"><span class="menu-card-heading"><span class="menu-card-title">${title}</span><span class="menu-card-history${scores.length ? "" : " is-empty"}" aria-label="${historyLabel}">${history}</span></span><span class="menu-card-meta">${tags}</span>${questionProvenanceV47(question)}</button><div class="menu-card-actions"><button class="menu-card-action${favorite ? " is-active" : ""}" type="button" data-menu-action="favorite" data-question-index="${index}" aria-pressed="${favorite}">${favorite ? "★ お気に入り済" : "☆ お気に入り"}</button>${trashed ? `<button class="menu-card-action" type="button" data-menu-action="restore" data-question-index="${index}">復元</button>` : ""}<button class="menu-card-action" type="button" data-menu-action="manage" data-question-index="${index}">整理</button></div></article>`;
         }).join("");
       }
 
@@ -1885,20 +2171,128 @@
         const question = questionsV16[index];
         if (!question) return;
         managedQuestionIndexV44 = index;
+        const shared = isSharedQuestionV47(question);
+        const editButton = document.getElementById("questionManageEditButton");
+        const trashButton = document.getElementById("questionManageTrashButton");
+        const deleteButton = document.getElementById("questionManageDeleteButton");
+        const proposeButton = document.getElementById("questionManageProposeDeleteButton");
+        const editForm = document.getElementById("questionManageEditForm");
         document.getElementById("questionManageTitle").textContent = `${question.title || `問題${question.number}`}を整理`;
+        document.getElementById("questionManageScope").textContent = questionScopeTextV47(question);
+        document.getElementById("questionManageDescription").textContent = shared
+          ? "共有問題集の編集・ゴミ箱移動は、利用者全体への影響を確認してから実行します。"
+          : "個人MY問題集の作成・編集・削除は通常操作としてこの端末に反映されます。";
+        document.getElementById("questionManageNotice").textContent = questionProvenanceV47(question).replace(/<[^>]+>/g, "").replace(/&amp;/g, "&") || "";
+        editForm.hidden = true;
+        document.getElementById("questionEditTitle").value = question.title || `問題${question.number}`;
+        document.getElementById("questionEditNagaUrl").value = question.nagaUrl || "";
+        document.getElementById("questionEditThreadUrl").value = question.threadUrl || "";
+        editButton.hidden = !canEditQuestionV47(question);
+        trashButton.hidden = !canTrashQuestionV47(question);
+        deleteButton.hidden = !canDeleteQuestionV47(question);
+        proposeButton.hidden = !shared || isQuestionOwnerV47(question) || isCollectionManagerV47();
+        document.querySelectorAll('#questionManageDialog [data-manage-action^="snooze"], #questionManageDialog [data-manage-action="restore"]').forEach(button => {
+          button.hidden = shared && !isCollectionManagerV47();
+        });
         document.getElementById("questionManageDialog").showModal();
       }
 
-      function manageQuestionV44(action) {
+      function updateQuestionLocallyV47(question, updates) {
+        Object.assign(question, updates);
+        const key = questionKeyV16(question);
+        const custom = (userStateV16.customQuestions || []).find(item => questionKeyV16(item) === key);
+        if (custom) Object.assign(custom, updates);
+        userStateV16.questionOverrides ||= {};
+        userStateV16.questionOverrides[key] = {
+          ...(userStateV16.questionOverrides[key] || {}),
+          ...updates
+        };
+      }
+
+      async function saveQuestionEditV47() {
+        const question = questionsV16[managedQuestionIndexV44];
+        if (!question || !canEditQuestionV47(question)) {
+          window.alert("この問題を編集する権限がありません。");
+          return false;
+        }
+        const title = document.getElementById("questionEditTitle").value.trim();
+        const nagaUrl = document.getElementById("questionEditNagaUrl").value.trim();
+        const threadUrl = document.getElementById("questionEditThreadUrl").value.trim();
+        if (!title) {
+          window.alert("問題タイトルを入力してください。");
+          return false;
+        }
+        const now = new Date().toISOString();
+        const updates = { title, nagaUrl, threadUrl, updatedAt: now, updatedById: supabaseSessionV46?.user?.id || null, updatedByName: currentUserDisplayNameV47() };
+        if (isSharedQuestionV47(question)) {
+          if (!confirmSharedImpactV47("edit", question)) return false;
+          try {
+            await invokeSharedMutationV47("edit", { question, updates });
+          } catch (error) {
+            window.alert(error.message || "共有問題集を更新できませんでした。");
+            return false;
+          }
+        }
+        updateQuestionLocallyV47(question, updates);
+        saveUserStateV16();
+        renderQuestionOptionsV16();
+        renderMenuCardsV16();
+        if (questionIndexByKeyV44(questionKeyV16(question)) === currentQuestionIndexV16) {
+          sourceTitleV16.textContent = `問題${question.number}`;
+          sourceMetaV16.textContent = sceneMetaV16(question.nagaUrl);
+          document.getElementById("nagaSourceLink").href = question.nagaUrl || "#";
+          document.getElementById("threadLink").href = question.threadUrl || "#";
+        }
+        document.getElementById("questionManageEditForm").hidden = true;
+        document.getElementById("questionManageDialog").close();
+        return true;
+      }
+
+      async function manageQuestionV44(action) {
         const dialog = document.getElementById("questionManageDialog");
         if (action === "close") {
-          dialog.close();
+          if (dialog.open) dialog.close();
+          return;
+        }
+        if (action === "edit") {
+          document.getElementById("questionManageEditForm").hidden = false;
+          document.getElementById("questionEditTitle").focus();
+          return;
+        }
+        if (action === "cancel-edit") {
+          document.getElementById("questionManageEditForm").hidden = true;
+          return;
+        }
+        if (action === "save-edit") {
+          await saveQuestionEditV47();
           return;
         }
         const question = questionsV16[managedQuestionIndexV44];
         if (!question) return dialog.close();
         const key = questionKeyV16(question);
+        const shared = isSharedQuestionV47(question);
         let deleted = false;
+        if (action === "propose-delete") {
+          if (!shared || isQuestionOwnerV47(question) || isCollectionManagerV47()) return;
+          if (!window.confirm(`「${question.title || `問題${question.number}`}」の削除を管理者へ提案します。問題自体は削除されません。`)) return;
+          try {
+            if (typeof window.NagaSupabase?.requestQuestionDeletion === "function") {
+              await window.NagaSupabase.requestQuestionDeletion(question.serverQuestionId, `${question.title || `問題${question.number}`}の削除提案`);
+              window.alert("削除提案を送信しました。");
+            } else {
+              recordDeletionProposalV47(question);
+              window.alert("削除提案をこの端末に記録しました。共有管理者への送信APIは未接続です。");
+            }
+          } catch (error) {
+            window.alert(error.message || "削除提案を送信できませんでした。");
+          }
+          if (dialog.open) dialog.close();
+          return;
+        }
+        if (shared && ["snooze-week", "snooze-month", "snooze-forever", "restore"].includes(action) && !isCollectionManagerV47()) {
+          window.alert("共有問題集の整理は、作成者または管理者の操作だけが許可されています。");
+          return;
+        }
         userStateV16.snoozed ||= {};
         if (action === "snooze-week" || action === "snooze-month") {
           const until = new Date();
@@ -1911,6 +2305,19 @@
           userStateV16.trashed = userStateV16.trashed.filter(value => value !== key);
         }
         if (action === "trash") {
+          if (shared) {
+            if (!canTrashQuestionV47(question)) {
+              window.alert("他の利用者が作成した共有問題は直接ゴミ箱へ移動できません。削除を提案してください。");
+              return;
+            }
+            if (!confirmSharedImpactV47("trash", question)) return;
+            try {
+              await invokeSharedMutationV47("trash", { questionId: question.serverQuestionId });
+            } catch (error) {
+              window.alert(error.message || "共有問題集をゴミ箱へ移動できませんでした。");
+              return;
+            }
+          }
           delete userStateV16.snoozed[key];
           if (!userStateV16.trashed.includes(key)) userStateV16.trashed.push(key);
         }
@@ -1919,7 +2326,19 @@
           userStateV16.trashed = userStateV16.trashed.filter(value => value !== key);
         }
         if (action === "delete") {
-          if (!window.confirm(`${question.title || `問題${question.number}`}をこの端末の問題集から完全に削除しますか？`)) return;
+          if (!canDeleteQuestionV47(question)) {
+            window.alert("共有問題集の完全削除は管理者だけが実行できます。必要なら削除を提案してください。");
+            return;
+          }
+          if (shared) {
+            if (!confirmSharedImpactV47("delete", question)) return;
+            try {
+              await invokeSharedMutationV47("delete", { questionId: question.serverQuestionId });
+            } catch (error) {
+              window.alert(error.message || "共有問題集から完全削除できませんでした。");
+              return;
+            }
+          }
           const customIndex = (userStateV16.customQuestions || []).findIndex(item => questionKeyV16(item) === key);
           if (customIndex >= 0) {
             userStateV16.customQuestions.splice(customIndex, 1);
@@ -1935,7 +2354,7 @@
         saveUserStateV16();
         renderQuestionOptionsV16();
         renderMenuCardsV16();
-        dialog.close();
+        if (dialog.open) dialog.close();
         if (deleted) showMenuV16("my");
       }
 
@@ -1968,27 +2387,101 @@
         status.classList.toggle("is-error", error);
       }
 
+      function syncGeneratorModeV46() {
+        const selected = document.querySelector('input[name="generatorMode"]:checked');
+        generatorModeV46 = selected?.value === "match" ? "match" : "scene";
+        const sceneMode = generatorModeV46 === "scene";
+        const settings = document.getElementById("generatorCustomSettings");
+        const submit = document.querySelector("#generatorForm button[type=submit]");
+        const seatLabel = document.getElementById("generatorSeatLabel");
+        if (settings) settings.hidden = sceneMode;
+        if (submit) submit.textContent = sceneMode ? "1問を解析" : "候補を抽出";
+        if (seatLabel) seatLabel.firstChild.textContent = sceneMode ? "対象プレイヤー" : "対象プレイヤー（解析後は名前で選択）";
+      }
+
+      function generatorExtractionOptionsV46() {
+        return {
+          thresholdPercent: Number(document.getElementById("generatorThreshold")?.value || 5),
+          decisionType: document.getElementById("generatorDecisionType")?.value || "all",
+          modelMode: document.getElementById("generatorModelMode")?.value || "any",
+          maxCandidates: Number(document.getElementById("generatorMaxCandidates")?.value || 100)
+        };
+      }
+
+      function setGeneratorPlayersV46(report, preferredSeat) {
+        const select = document.getElementById("generatorSeat");
+        const names = report?.player_info?.name;
+        if (!select || !Array.isArray(names) || !names.length) return null;
+        select.innerHTML = `<option value="">選択してください</option>${names.slice(0, 4).map((name, index) => `<option value="${index}">${escapeHtml(String(name || `プレイヤー${index + 1}`))}</option>`).join("")}`;
+        const selected = Number.isInteger(preferredSeat) && preferredSeat >= 0 && preferredSeat < names.length ? String(preferredSeat) : "";
+        select.value = selected;
+        return select.value === "" ? null : Number(select.value);
+      }
+
       async function analyzeGeneratorUrlV44(event) {
         event.preventDefault();
         const input = document.getElementById("generatorUrl").value.trim();
         const seatChoice = document.getElementById("generatorSeat").value;
+        const mode = generatorModeV46;
         setGeneratorStatusV44("NAGAレポートを解析しています…");
         try {
           const spec = window.NagaGeneratorV44.parseNagaUrl(input);
-          const seat = seatChoice === "auto" ? spec.tw : Number(seatChoice);
-          if (!Number.isInteger(seat) || seat < 0 || seat > 3) throw new Error("対象プレイヤーを選択してください。URLにtwがない場合は手動指定が必要です。");
-          const response = await fetch(`/api/naga-report?report_id=${encodeURIComponent(spec.reportId)}`);
-          const report = await response.json();
-          if (!response.ok) throw new Error(report.error || "NAGAレポートを取得できませんでした。");
+          const hasSceneCoordinates = Number.isInteger(spec.ts) && Number.isInteger(spec.tv);
+          if (mode === "scene" && !hasSceneCoordinates) {
+            throw new Error("局面URLではURLにtsとtvの両方が必要です。半荘全体を抽出する場合は入力種類を「半荘URL」に変更してください。");
+          }
+
+          const preferredSeat = seatChoice === "auto" ? spec.tw : seatChoice === "" ? null : Number(seatChoice);
+          if (mode === "scene" && (!Number.isInteger(preferredSeat) || preferredSeat < 0 || preferredSeat > 3)) {
+            throw new Error("対象プレイヤーを選択してください。局面URLにtwがない場合は手動指定が必要です。");
+          }
+
+          let report;
+          if (window.NagaSupabase?.configured) {
+            const session = await window.NagaSupabase.currentSession();
+            if (!session) throw new Error("問題生成にはDiscordログインが必要です。");
+            const extractionRequest = mode === "match" ? generatorExtractionOptionsV46() : null;
+            const result = await window.NagaSupabase.fetchNagaReport({
+              reportId: spec.reportId,
+              sourceKind: mode === "scene" ? "naga_scene" : "naga_match",
+              sourceUrl: input,
+              targetPlayerSeat: preferredSeat,
+              targetPlayerName: document.getElementById("generatorSeat")?.selectedOptions?.[0]?.textContent || null,
+              extractionPreset: mode === "match" && document.getElementById("generatorCustomSettings")?.open ? "custom" : "bad_moves",
+              extractionConfig: extractionRequest ? {
+                thresholdPercent: extractionRequest.thresholdPercent,
+                decisionTypes: extractionRequest.decisionType === "all" ? ["discard", "call", "riichi"] : [extractionRequest.decisionType === "reach" ? "riichi" : extractionRequest.decisionType],
+                modelRule: extractionRequest.modelMode,
+                maxCandidates: extractionRequest.maxCandidates
+              } : undefined
+            });
+            report = result.report;
+          } else {
+            const response = await fetch(`/api/naga-report?report_id=${encodeURIComponent(spec.reportId)}`);
+            report = await response.json();
+            if (!response.ok) throw new Error(report.error || "NAGAレポートを取得できませんでした。");
+          }
           generatorReportV44 = report;
-          generatorSpecV44 = { ...spec, tw: seat };
-          if (Number.isInteger(spec.ts) && Number.isInteger(spec.tv)) {
+
+          if (mode === "scene") {
+            generatorSpecV44 = { ...spec, tw: preferredSeat };
             const candidate = window.NagaGeneratorV44.sceneCandidate(report, generatorSpecV44);
             generatorCandidatesV44 = candidate ? [candidate] : [];
           } else {
-            generatorCandidatesV44 = window.NagaGeneratorV44.extractBadMoves(report, seat, { thresholdPercent: 5, reportId: spec.reportId });
+            const seat = setGeneratorPlayersV46(report, preferredSeat);
+            if (!Number.isInteger(seat) || seat < 0 || seat > 3) {
+              generatorCandidatesV44 = [];
+              setGeneratorStatusV44("解析しました。player_info.nameから対象プレイヤーを選び、もう一度「候補を抽出」を押してください。");
+              document.getElementById("generatorResults").innerHTML = "";
+              return;
+            }
+            const extraction = generatorExtractionOptionsV46();
+            generatorSpecV44 = { ...spec, tw: seat, ts: null, tv: null };
+            generatorCandidatesV44 = window.NagaGeneratorV44.extractBadMoves(report, seat, { ...extraction, reportId: spec.reportId });
           }
-          setGeneratorStatusV44(generatorCandidatesV44.length ? `${generatorCandidatesV44.length}件の候補を抽出しました。` : "条件に一致する局面はありませんでした。");
+
+          const ignoredSceneNote = mode === "match" && (Number.isInteger(spec.ts) || Number.isInteger(spec.tv)) ? " URLのts/tvは半荘モードのため無視しました。" : "";
+          setGeneratorStatusV44(generatorCandidatesV44.length ? `${generatorCandidatesV44.length}件の候補を抽出しました。${ignoredSceneNote}` : `条件に一致する局面はありませんでした。${ignoredSceneNote}`);
           document.getElementById("generatorResults").innerHTML = renderGeneratorCandidatesV44();
           bindGeneratorCandidateInputsV44();
         } catch (error) {
@@ -2014,7 +2507,7 @@
         document.querySelectorAll("[data-generator-add]").forEach(button => button.addEventListener("click", () => addGeneratedQuestionV44(Number(button.dataset.generatorAdd))));
       }
 
-      function addGeneratedQuestionV44(index) {
+      async function addGeneratedQuestionV44(index) {
         const candidate = generatorCandidatesV44[index];
         if (!candidate) return;
         if (!candidate._imageData) {
@@ -2025,18 +2518,48 @@
           setGeneratorStatusV44("この局面はすでに追加されています。", true);
           return;
         }
+        if (sharedCollectionV46) {
+          if (!supabaseSessionV46) {
+            setGeneratorStatusV44("共有問題集へ追加するにはDiscordログインが必要です。", true);
+            return;
+          }
+          const preview = { ...candidate, title: candidate.title || "生成した問題" };
+          if (!confirmSharedImpactV47("add", preview)) return;
+        }
         const nextNumber = Math.max(...questionsV16.map(question => Number(question.number) || 0)) + 1;
+        const now = new Date().toISOString();
+        const creatorId = supabaseSessionV46?.user?.id || null;
+        const creatorName = currentUserDisplayNameV47();
         const question = {
           ...candidate,
           number: nextNumber,
           title: `追加問題${nextNumber}`,
           image: candidate._imageData,
           images: { off: candidate._imageData, open: candidate._imageData },
-          comments: [{ id: `generated-${Date.now()}`, author: "問題生成", createdAt: new Date().toISOString(), content: "NAGA URLからこの端末に追加した問題です。", attachments: [] }],
+          comments: [{ id: `generated-${Date.now()}`, author: "問題生成", createdAt: now, content: "NAGA URLから追加した問題です。", attachments: [] }],
           threadUrl: candidate.threadUrl || "#",
           localGenerated: true,
-          needsScreenshot: false
+          needsScreenshot: false,
+          createdById: creatorId,
+          createdByName: creatorName,
+          updatedById: creatorId,
+          updatedByName: creatorName,
+          createdAt: now,
+          updatedAt: now,
+          sharedCollectionSlug: sharedCollectionV46?.share_slug || null,
+          visibility: sharedCollectionV46 ? "unlisted" : "private"
         };
+        if (sharedCollectionV46) {
+          try {
+            const remote = await invokeSharedMutationV47("add", { question });
+            question.serverQuestionId = remote?.id || remote?.question_id || null;
+            question.localGenerated = false;
+            question.isShared = true;
+          } catch (error) {
+            setGeneratorStatusV44(error.message || "共有問題集へ追加できませんでした。", true);
+            return;
+          }
+        }
         delete question._imageData;
         userStateV16.customQuestions ||= [];
         userStateV16.customQuestions.push(question);
@@ -2048,13 +2571,15 @@
           return;
         }
         renderQuestionOptionsV16();
-        setGeneratorStatusV44(`${question.title}としてMY問題集へ追加しました。`);
+        setGeneratorStatusV44(`${question.title}を${sharedCollectionV46 ? "共有問題集" : "MY問題集"}へ追加しました。`);
         document.getElementById("generatorResults").innerHTML = renderGeneratorCandidatesV44();
         bindGeneratorCandidateInputsV44();
       }
 
       function bindGeneratorV44() {
         document.getElementById("generatorForm")?.addEventListener("submit", analyzeGeneratorUrlV44);
+        document.querySelectorAll('input[name="generatorMode"]').forEach(input => input.addEventListener("change", syncGeneratorModeV46));
+        syncGeneratorModeV46();
         bindGeneratorCandidateInputsV44();
       }
 
@@ -2112,24 +2637,147 @@
         select.disabled = entries.length === 0;
       }
 
-      async function initImportedQuestionsV16() {
+      async function refreshAccountV46(session = null) {
+        supabaseSessionV46 = session;
+        const status = document.getElementById("accountStatus");
+        const authButton = document.getElementById("discordAuthButton");
+        const importButton = document.getElementById("importHistoryButton");
+        const shareButton = document.getElementById("copyShareUrlButton");
+        const studentNav = document.getElementById("studentHistoryNav");
+        if (!window.NagaSupabase?.configured) {
+          status.textContent = "回答履歴はこの端末だけに保存されています。Supabase接続後に同期できます。";
+          authButton.textContent = "ログイン準備中";
+          authButton.disabled = true;
+          importButton.hidden = true;
+          shareButton.hidden = !sharedCollectionV46;
+          studentNav.hidden = true;
+          return;
+        }
+        authButton.disabled = false;
+        if (!session) {
+          status.textContent = "未ログイン：回答履歴はこの端末だけに保存されます。";
+          authButton.textContent = "Discordでログイン";
+          importButton.hidden = true;
+          shareButton.hidden = !sharedCollectionV46;
+          studentNav.hidden = true;
+          return;
+        }
+        const displayName = session.user.user_metadata?.full_name || session.user.user_metadata?.name || "Discordユーザー";
+        status.textContent = `${displayName}としてログイン中。履歴は他の利用者と混ざりません。`;
+        authButton.textContent = "ログアウト";
+        importButton.hidden = false;
+        shareButton.hidden = !sharedCollectionV46;
         try {
-          const response = await fetch("question-data/selected-questions.json", { cache: "no-store" });
-          if (!response.ok) throw new Error(`question data ${response.status}`);
-          const imported = await response.json();
-          questionsV16 = questionsV16.concat(imported.map(question => ({
+          const memberships = await window.NagaSupabase.loadMemberships();
+          studentNav.hidden = !memberships.some(member => ["owner", "teacher"].includes(member.role));
+        } catch {
+          studentNav.hidden = true;
+        }
+      }
+
+      async function initializeAccountV46() {
+        document.getElementById("discordAuthButton").addEventListener("click", async () => {
+          try {
+            if (supabaseSessionV46) await window.NagaSupabase.signOut();
+            else await window.NagaSupabase.signInWithDiscord();
+          } catch (error) {
+            window.alert(error?.message || "ログイン処理に失敗しました。");
+          }
+        });
+        document.getElementById("importHistoryButton").addEventListener("click", async event => {
+          if (!window.confirm("この端末にある回答履歴を、現在ログイン中の自分の履歴へ取り込みますか？")) return;
+          const button = event.currentTarget;
+          button.disabled = true;
+          button.textContent = "取り込み中…";
+          try {
+            const result = await window.NagaSupabase.importLocalHistory(userStateV16);
+            button.textContent = `${result.imported}件取り込み済み`;
+            document.getElementById("accountStatus").textContent = `この端末から${result.imported}件を取り込みました。未登録問題など${result.skipped}件は端末内に残しています。`;
+          } catch (error) {
+            button.textContent = "この端末の履歴を取り込む";
+            window.alert(error?.message || "回答履歴を取り込めませんでした。");
+          } finally {
+            button.disabled = false;
+          }
+        });
+        document.getElementById("copyShareUrlButton").addEventListener("click", async () => {
+          if (!sharedCollectionV46) return;
+          const url = new URL(window.location.href);
+          url.search = "";
+          url.searchParams.set("collection", sharedCollectionV46.share_slug);
+          await navigator.clipboard.writeText(url.toString());
+          document.getElementById("copyShareUrlButton").textContent = "コピーしました";
+        });
+        window.addEventListener("naga:authchange", event => refreshAccountV46(event.detail?.session || null));
+        await refreshAccountV46(await window.NagaSupabase?.currentSession?.() || null);
+      }
+
+      async function loadSharedCollectionV46() {
+        const shareSlug = new URL(window.location.href).searchParams.get("collection")?.trim();
+        if (!shareSlug) return false;
+        if (!window.NagaSupabase?.configured) throw new Error("共有問題集を開くためのSupabase接続が未設定です。");
+        const result = await window.NagaSupabase.loadSharedCollection(shareSlug);
+        sharedCollectionV46 = { ...result.collection, share_slug: shareSlug };
+        questionsV16 = (result.questions || []).map((row, index) => ({
+          ...(row.payload || {}),
+          id: row.id,
+          serverQuestionId: row.id,
+          legacyKey: row.legacy_key,
+          number: row.payload?.number ?? index + 1,
+          title: row.title || row.payload?.title || `問題${index + 1}`,
+          images: row.payload?.images || { off: row.payload?.image, open: row.payload?.image },
+          hasRiichiJudgment: row.payload?.decisionType !== "call" && Array.isArray(row.payload?.reach) && row.payload.reach.some(value => Number(value) > 0),
+          sharedCollectionSlug: shareSlug,
+          visibility: "unlisted",
+          createdById: row.created_by || row.creator_id || row.payload?.createdById || row.payload?.created_by || null,
+          createdByName: row.created_by_name || row.creator_name || row.payload?.createdByName || row.payload?.creatorName || null,
+          updatedById: row.updated_by || row.last_updated_by || row.payload?.updatedById || row.payload?.updated_by || null,
+          updatedByName: row.updated_by_name || row.last_updated_by_name || row.payload?.updatedByName || row.payload?.lastUpdatedByName || null
+        }));
+        document.title = `${sharedCollectionV46.title}｜NAGA局面ドリル`;
+        return true;
+      }
+
+      async function hydrateSharedCommentsV46(question) {
+        if (!sharedCollectionV46 || !question?.serverQuestionId) return;
+        try {
+          const serverComments = await window.NagaSupabase.loadSharedComments(sharedCollectionV46.share_slug, question.serverQuestionId);
+          if (question !== questionsV16[currentQuestionIndexV16]) return;
+          const converted = serverComments.map(comment => ({ id: comment.id, author: comment.author_name, createdAt: comment.created_at, content: comment.body, attachments: [] }));
+          const base = (SCENE.comments || []).map(message => ({ ...message, attachments: [...(message.attachments || [])] }));
+          state.comments = [...base, ...converted];
+          renderComments();
+        } catch (error) {
+          console.warn("共有コメントを読み込めませんでした", error);
+        }
+      }
+
+      async function initImportedQuestionsV16() {
+        let loadedSharedCollection = false;
+        try {
+          loadedSharedCollection = await loadSharedCollectionV46();
+          if (!loadedSharedCollection) {
+            const response = await fetch("question-data/selected-questions.json", { cache: "no-store" });
+            if (!response.ok) throw new Error(`question data ${response.status}`);
+            const imported = await response.json();
+            questionsV16 = questionsV16.concat(imported.map(question => ({
+              ...question,
+              images: question.images || { off: question.image, open: question.image },
+              hasRiichiJudgment: question.decisionType !== "call" && Array.isArray(question.reach) && question.reach.some(value => Number(value) > 0)
+            })));
+          }
+        } catch (error) {
+          console.warn("問題の読み込みに失敗しました", error);
+          document.getElementById("accountStatus").textContent = error?.message || "問題集を読み込めませんでした。";
+        }
+        if (!loadedSharedCollection) {
+          questionsV16 = questionsV16.concat((userStateV16.customQuestions || []).filter(question => question?.id && question?.image).map(question => ({
             ...question,
             images: question.images || { off: question.image, open: question.image },
             hasRiichiJudgment: question.decisionType !== "call" && Array.isArray(question.reach) && question.reach.some(value => Number(value) > 0)
           })));
-        } catch (error) {
-          console.warn("追加問題の読み込みに失敗しました", error);
         }
-        questionsV16 = questionsV16.concat((userStateV16.customQuestions || []).filter(question => question?.id && question?.image).map(question => ({
-          ...question,
-          images: question.images || { off: question.image, open: question.image },
-          hasRiichiJudgment: question.decisionType !== "call" && Array.isArray(question.reach) && question.reach.some(value => Number(value) > 0)
-        })));
+        applyQuestionOverridesV47();
         migrateAnswerHistoryScoresV16();
         renderQuestionOptionsV16();
         renderMenuCardsV16();
@@ -2176,6 +2824,7 @@
           }
         });
         document.getElementById("confirmAnswerButton").addEventListener("click", confirmAnswerV41);
+        await initializeAccountV46();
       }
 
       renderHand = renderHandV16;

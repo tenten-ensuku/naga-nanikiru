@@ -733,12 +733,68 @@
     return discardCandidate(report, normalized, entries, sourceAction, sourceMessage, sourceTv);
   }
 
+  var EXTRACTION_DECISIONS = {
+    all: true,
+    discard: true,
+    call: true,
+    reach: true
+  };
+
+  var EXTRACTION_MODEL_MODES = {
+    any: true,
+    all: true
+  };
+
+  function normalizeExtractionOptions(options) {
+    var settings = options || {};
+    var reportId = settings.reportId == null ? null : requireReportId(settings.reportId);
+    var threshold = settings.thresholdPercent == null ? 5 : Number(settings.thresholdPercent);
+    if (!Number.isFinite(threshold) || threshold < 0.1 || threshold > 50) {
+      throw new RangeError("thresholdPercent must be between 0.1 and 50");
+    }
+
+    var decisionType = settings.decisionType == null ? "all" : String(settings.decisionType);
+    if (!EXTRACTION_DECISIONS[decisionType]) {
+      throw new TypeError("decisionType must be all, discard, call, or reach");
+    }
+
+    var modelMode = settings.modelMode == null ? "any" : String(settings.modelMode);
+    if (!EXTRACTION_MODEL_MODES[modelMode]) {
+      throw new TypeError("modelMode must be any or all");
+    }
+
+    var maxCandidates = settings.maxCandidates == null ? 100 : Number(settings.maxCandidates);
+    if (!Number.isSafeInteger(maxCandidates) || maxCandidates < 1 || maxCandidates > 500) {
+      throw new RangeError("maxCandidates must be an integer between 1 and 500");
+    }
+
+    return {
+      reportId: reportId,
+      thresholdPercent: threshold,
+      decisionType: decisionType,
+      modelMode: modelMode,
+      maxCandidates: maxCandidates
+    };
+  }
+
+  function candidateMatchesDecision(candidate, decisionType) {
+    if (decisionType === "all") return true;
+    if (decisionType === "call") return candidate.decisionType === "call";
+    if (candidate.decisionType !== "discard") return false;
+    if (decisionType === "reach") return Boolean(candidate.hasRiichiJudgment);
+    return !candidate.hasRiichiJudgment;
+  }
+
+  function candidateProbabilityValues(candidate) {
+    return candidate.decisionType === "call"
+      ? candidate.actualCallProbability
+      : candidate.actualDiscardProbability;
+  }
+
   function extractBadMoves(report, seat, options) {
     var targetSeat = validSeat(seat);
     if (targetSeat == null) throw new RangeError("seat must be 0..3");
-    var settings = options || {};
-    var threshold = settings.thresholdPercent == null ? 5 : Number(settings.thresholdPercent);
-    if (!Number.isFinite(threshold)) throw new TypeError("thresholdPercent must be finite");
+    var settings = normalizeExtractionOptions(options);
     if (!report || !Array.isArray(report.pred)) return [];
 
     var reportId = settings.reportId || report.reportId || report.report_id || report.id || report.haihu_id;
@@ -747,9 +803,10 @@
     var results = [];
     var seen = {};
 
-    report.pred.forEach(function (entries, ts) {
-      if (!Array.isArray(entries)) return;
-      entries.forEach(function (_action, tv) {
+    for (var ts = 0; ts < report.pred.length; ts += 1) {
+      var entries = report.pred[ts];
+      if (!Array.isArray(entries)) continue;
+      for (var tv = 0; tv < entries.length; tv += 1) {
         var candidate = sceneCandidate(report, {
           reportId: reportId,
           tw: targetSeat,
@@ -757,23 +814,34 @@
           tv: tv,
           canonicalSceneUrl: sceneUrl(reportId, targetSeat, ts, tv)
         });
-        if (!candidate || seen[candidate.id]) return;
-        var probabilities = candidate.decisionType === "discard"
-          ? candidate.actualDiscardProbability
-          : candidate.actualCallProbability;
-        var bad = Array.isArray(probabilities) && probabilities.some(function (value) {
-          return Number.isFinite(Number(value)) && Number(value) <= threshold;
-        });
-        if (!bad) return;
+        if (!candidate || seen[candidate.id]) continue;
+        if (!candidateMatchesDecision(candidate, settings.decisionType)) continue;
+        var probabilities = candidateProbabilityValues(candidate);
+        var badModelIndices = Array.isArray(probabilities)
+          ? probabilities.reduce(function (indices, value, modelIndex) {
+            if (Number.isFinite(Number(value)) && Number(value) <= settings.thresholdPercent) indices.push(modelIndex);
+            return indices;
+          }, [])
+          : [];
+        var bad = badModelIndices.length > 0
+          && (settings.modelMode === "any" || badModelIndices.length === probabilities.length);
+        if (!bad) continue;
         if (candidate.decisionType === "discard"
           && (candidate.reached || candidate.actualDiscardNaga === "?")) {
-          return;
+          continue;
         }
         candidate.isBadMove = true;
+        candidate.badMoveThresholdPercent = settings.thresholdPercent;
+        candidate.badMoveModelMode = settings.modelMode;
+        candidate.badMoveModels = badModelIndices.map(function (modelIndex) {
+          return candidate.models[modelIndex] && candidate.models[modelIndex].name;
+        }).filter(Boolean);
         seen[candidate.id] = true;
         results.push(candidate);
-      });
-    });
+        if (results.length >= settings.maxCandidates) break;
+      }
+      if (results.length >= settings.maxCandidates) break;
+    }
     return results;
   }
 
@@ -789,6 +857,7 @@
     getModelNames: modelNames,
     replayKyoku: replayKyoku,
     sceneCandidate: sceneCandidate,
+    normalizeExtractionOptions: normalizeExtractionOptions,
     extractBadMoves: extractBadMoves
   };
 
