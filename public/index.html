@@ -3,7 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" href="data:,">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=57">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=57">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=57">
   <title>NAGA局面ドリル｜何切る復習問題集</title>
   <meta name="description" content="NAGAの局面を解き、復習予定・苦手分析・URLからの問題生成まで行える麻雀学習アプリ。">
   <meta name="theme-color" content="#06131e">
@@ -599,7 +601,10 @@
   <script src="drill-ux-v44.js"></script>
   <script src="naga-generator-v44.js"></script>
   <script>
-    const APP_VERSION = 50;
+    const APP_ID = "naga-nanikiru";
+    const APP_BASE_PATH = "/naga-nanikiru/";
+    const APP_VERSION = 57;
+    const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
       actualDiscard: "ji4",
@@ -1026,7 +1031,8 @@
       let supabaseSessionV46 = null;
       let sharedCollectionV46 = null;
       const modelColorByNameV16 = { オメガ: "model-omega", ガンマ: "model-gamma", ニシキ: "model-nishiki", ヒバカリ: "model-hihikari", カガシ: "model-kagashi" };
-      const USER_STATE_KEY_V16 = "naga-nanikiru-user-state-v1";
+      const USER_STATE_KEY_V16 = storageKey("user-state-v1");
+      const LEGACY_USER_STATE_KEY_V16 = "naga-nanikiru-user-state-v1";
       const MENU_VIEW_COPY_V16 = {
         my: { title: "MY問題集", note: "出題できる問題を新しい順に表示しています。お気に入り登録やゴミ箱への移動は、この端末内だけに保存されます。" },
         favorites: { title: "お気に入り", note: "あとで繰り返したい問題をまとめています。ゴミ箱に移した問題はここから一時的に外れます。" },
@@ -1045,6 +1051,10 @@
       function loadUserStateV16() {
         const fallback = window.DrillUxV44?.migrateState?.(null) || { schemaVersion: 2, favorites: [], trashed: [], hidden: [], answerHistory: [], snoozed: {}, reviewSchedule: {}, studyDates: [], sessions: {}, activeSessionId: null, lastSessionResult: null, customQuestions: [], pendingGenerated: [], settings: {}, localComments: {}, questionOverrides: {}, deletionProposals: {} };
         try {
+          if (window.localStorage.getItem(USER_STATE_KEY_V16) === null) {
+            const legacyValue = window.localStorage.getItem(LEGACY_USER_STATE_KEY_V16);
+            if (legacyValue !== null) window.localStorage.setItem(USER_STATE_KEY_V16, legacyValue);
+          }
           const saved = JSON.parse(window.localStorage.getItem(USER_STATE_KEY_V16) || "null");
           const migrated = window.DrillUxV44?.migrateState?.(saved) || saved || fallback;
           migrated.localComments = migrated.localComments && typeof migrated.localComments === "object" ? migrated.localComments : {};

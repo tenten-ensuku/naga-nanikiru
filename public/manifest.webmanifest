@@ -1,0 +1,32 @@
+{
+  "id": "/naga-nanikiru/",
+  "name": "NAGA局面ドリル｜何切る復習問題集",
+  "short_name": "NAGA何切る",
+  "description": "NAGAの局面を解き、復習予定・苦手分析・URLからの問題生成まで行える麻雀学習アプリ。",
+  "start_url": "/naga-nanikiru/",
+  "scope": "/naga-nanikiru/",
+  "display": "standalone",
+  "background_color": "#06131e",
+  "theme_color": "#06131e",
+  "lang": "ja",
+  "icons": [
+    {
+      "src": "/naga-nanikiru/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/naga-nanikiru/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/naga-nanikiru/icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
