@@ -8,9 +8,9 @@ async function source() {
   return readFile(indexUrl, "utf8");
 }
 
-test("exposes v48 ownership-aware problem management controls", async () => {
+test("exposes v49 ownership-aware problem management controls", async () => {
   const html = await source();
-  assert.match(html, /const APP_VERSION = 48;/);
+  assert.match(html, /const APP_VERSION = 49;/);
   assert.match(html, /id="questionManageEditForm"/);
   assert.match(html, /id="questionManageProposeDeleteButton"[^>]*data-manage-action="propose-delete"/);
   assert.match(html, /id="questionManageDeleteButton"[^>]*data-manage-action="delete"/);

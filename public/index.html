@@ -598,7 +598,8 @@
   <script src="drill-ux-v44.js"></script>
   <script src="naga-generator-v44.js"></script>
   <script>
-    const APP_VERSION = 48;
+    const APP_VERSION = 49;
+    const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
       actualDiscard: "ji4",
       handBeforeDraw: ["man7", "man8", "man9", "pin4", "pin6", "pin7", "pin8", "pin9", "sou7", "sou8", "sou8", "ji4", "ji4"],
@@ -2713,7 +2714,7 @@
       }
 
       async function loadSharedCollectionV46() {
-        const shareSlug = new URL(window.location.href).searchParams.get("collection")?.trim();
+        const shareSlug = new URL(window.location.href).searchParams.get("collection")?.trim() || DEFAULT_COLLECTION_SLUG;
         if (!shareSlug) return false;
         if (!window.NagaSupabase?.configured) throw new Error("共有問題集を開くためのSupabase接続が未設定です。");
         const result = await window.NagaSupabase.loadSharedCollection(shareSlug);
