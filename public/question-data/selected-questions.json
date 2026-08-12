@@ -6,10 +6,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/bfc05b88a5d393042145feb0bcdfb028d96606e36a47772e2f98255f7838cb04v2_2.html?tw=2&ts=0&tv=5",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1434560706694353028",
     "image": "question-images/q001.webp",
-    "images": {
-      "off": "question-images/q001.webp",
-      "open": "question-images/q001.webp"
-    },
     "handBeforeDraw": [
       "man8",
       "pin8",
@@ -179,10 +175,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/bfc05b88a5d393042145feb0bcdfb028d96606e36a47772e2f98255f7838cb04v2_2.html?tw=2&ts=2&tv=37",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1434562825380167731",
     "image": "question-images/q002.webp",
-    "images": {
-      "off": "question-images/q002.webp",
-      "open": "question-images/q002.webp"
-    },
     "handBeforeDraw": [
       "pin8",
       "sou9",
@@ -312,10 +304,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/bfc05b88a5d393042145feb0bcdfb028d96606e36a47772e2f98255f7838cb04v2_2.html?tw=2&ts=9&tv=3",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1434563668426883192",
     "image": "question-images/q003.webp",
-    "images": {
-      "off": "question-images/q003.webp",
-      "open": "question-images/q003.webp"
-    },
     "handBeforeDraw": [
       "ji4",
       "pin4",
@@ -447,10 +435,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/bfc05b88a5d393042145feb0bcdfb028d96606e36a47772e2f98255f7838cb04v2_2.html?tw=2&ts=10&tv=57",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1434564176885321789",
     "image": "question-images/q004.webp",
-    "images": {
-      "off": "question-images/q004.webp",
-      "open": "question-images/q004.webp"
-    },
     "handBeforeDraw": [
       "man5",
       "sou5",
@@ -598,10 +582,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/bfc05b88a5d393042145feb0bcdfb028d96606e36a47772e2f98255f7838cb04v2_2.html?tw=2&ts=9&tv=35",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1434566186695397456",
     "image": "question-images/q005.webp",
-    "images": {
-      "off": "question-images/q005.webp",
-      "open": "question-images/q005.webp"
-    },
     "handBeforeDraw": [
       "sou4",
       "pin9",
@@ -733,10 +713,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/6dba91467f130fe803bd8817c7a080b575ac346e5a63d70edb07658efb393bf5v2_2.html?tw=2&ts=1&tv=47",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1434567594379055124",
     "image": "question-images/q006.webp",
-    "images": {
-      "off": "question-images/q006.webp",
-      "open": "question-images/q006.webp"
-    },
     "handBeforeDraw": [
       "pin3",
       "pin3",
@@ -901,10 +877,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/6dba91467f130fe803bd8817c7a080b575ac346e5a63d70edb07658efb393bf5v2_2.html?tw=2&ts=1&tv=55",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1434569391827321023",
     "image": "question-images/q007.webp",
-    "images": {
-      "off": "question-images/q007.webp",
-      "open": "question-images/q007.webp"
-    },
     "handBeforeDraw": [
       "pin3",
       "pin3",
@@ -1040,10 +1012,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/6dba91467f130fe803bd8817c7a080b575ac346e5a63d70edb07658efb393bf5v2_2.html?tw=2&ts=5&tv=73",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1434572817516466186",
     "image": "question-images/q008.webp",
-    "images": {
-      "off": "question-images/q008.webp",
-      "open": "question-images/q008.webp"
-    },
     "handBeforeDraw": [
       "sou7",
       "sou9",
@@ -1232,10 +1200,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/6dba91467f130fe803bd8817c7a080b575ac346e5a63d70edb07658efb393bf5v2_2.html?tw=2&ts=7&tv=45",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1434574957375127725",
     "image": "question-images/q009.webp",
-    "images": {
-      "off": "question-images/q009.webp",
-      "open": "question-images/q009.webp"
-    },
     "handBeforeDraw": [
       "man5",
       "sou7",
@@ -1393,10 +1357,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/0b6f9f2b83edf7dc9e588912a036cbb601a90d58d27c3d06f013454cf23ee137v2_2.html?tw=0&ts=2&tv=5",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1434852566075965460",
     "image": "question-images/q010.webp",
-    "images": {
-      "off": "question-images/q010.webp",
-      "open": "question-images/q010.webp"
-    },
     "handBeforeDraw": [
       "pin9",
       "pin5",
@@ -1632,10 +1592,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/655e5f7b834ce7741e1384958f5b0d0be69647acb21b75fc2b813a73c9e95c6ev2_2.html?tw=2&ts=0&tv=5",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1434910626668482591",
     "image": "question-images/q011.webp",
-    "images": {
-      "off": "question-images/q011.webp",
-      "open": "question-images/q011.webp"
-    },
     "handBeforeDraw": [
       "man4",
       "ji7",
@@ -1788,10 +1744,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/655e5f7b834ce7741e1384958f5b0d0be69647acb21b75fc2b813a73c9e95c6ev2_2.html?tw=2&ts=5&tv=55",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1434912174769180805",
     "image": "question-images/q012.webp",
-    "images": {
-      "off": "question-images/q012.webp",
-      "open": "question-images/q012.webp"
-    },
     "handBeforeDraw": [
       "pin1",
       "man2",
@@ -1920,10 +1872,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/8abbff57d33a4bdb5aec3ea74ca9fc161f16275a7d22d58d9a94559b84e63d25v2_2.html?tw=3&ts=6&tv=77",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1435843875930509406",
     "image": "question-images/q013.webp",
-    "images": {
-      "off": "question-images/q013.webp",
-      "open": "question-images/q013.webp"
-    },
     "handBeforeDraw": [
       "sou7",
       "sou9",
@@ -2021,10 +1969,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/8abbff57d33a4bdb5aec3ea74ca9fc161f16275a7d22d58d9a94559b84e63d25v2_2.html?tw=3&ts=7&tv=7",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1435847438798950430",
     "image": "question-images/q014.webp",
-    "images": {
-      "off": "question-images/q014.webp",
-      "open": "question-images/q014.webp"
-    },
     "handBeforeDraw": [
       "sou4",
       "sou2",
@@ -2170,10 +2114,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/8abbff57d33a4bdb5aec3ea74ca9fc161f16275a7d22d58d9a94559b84e63d25v2_2.html?tw=3&ts=9&tv=88",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1435849684726841344",
     "image": "question-images/q015.webp",
-    "images": {
-      "off": "question-images/q015.webp",
-      "open": "question-images/q015.webp"
-    },
     "handBeforeDraw": [
       "pin2",
       "man5",
@@ -2315,10 +2255,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/de30bba3d256606cb400b9320d1c647ecf871641f010aedd0419d9437dc0296fv2_2.html?tw=1&ts=0&tv=19",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1435863394996453467",
     "image": "question-images/q016.webp",
-    "images": {
-      "off": "question-images/q016.webp",
-      "open": "question-images/q016.webp"
-    },
     "handBeforeDraw": [
       "ji6",
       "pin1",
@@ -2464,10 +2400,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/de30bba3d256606cb400b9320d1c647ecf871641f010aedd0419d9437dc0296fv2_2.html?tw=1&ts=4&tv=19",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1435865070860238930",
     "image": "question-images/q017.webp",
-    "images": {
-      "off": "question-images/q017.webp",
-      "open": "question-images/q017.webp"
-    },
     "handBeforeDraw": [
       "pin6",
       "man6",
@@ -2599,10 +2531,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/de30bba3d256606cb400b9320d1c647ecf871641f010aedd0419d9437dc0296fv2_2.html?tw=1&ts=5&tv=33",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1435865965249298492",
     "image": "question-images/q018.webp",
-    "images": {
-      "off": "question-images/q018.webp",
-      "open": "question-images/q018.webp"
-    },
     "handBeforeDraw": [
       "sou6",
       "man8",
@@ -2774,10 +2702,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/de30bba3d256606cb400b9320d1c647ecf871641f010aedd0419d9437dc0296fv2_2.html?tw=1&ts=6&tv=17",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1435868526471806986",
     "image": "question-images/q019.webp",
-    "images": {
-      "off": "question-images/q019.webp",
-      "open": "question-images/q019.webp"
-    },
     "handBeforeDraw": [
       "man3",
       "aka3",
@@ -2889,10 +2813,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/47ec3459e1b6940550ae4fb9c0831a05f1de2da1c35be10ad11582a92a76f2b1v2_2.html?tw=1&ts=0&tv=19",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1436952364765675581",
     "image": "question-images/q020.webp",
-    "images": {
-      "off": "question-images/q020.webp",
-      "open": "question-images/q020.webp"
-    },
     "handBeforeDraw": [
       "ji5",
       "sou6",
@@ -3048,10 +2968,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/47ec3459e1b6940550ae4fb9c0831a05f1de2da1c35be10ad11582a92a76f2b1v2_2.html?tw=1&ts=4&tv=1",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1436953946970390600",
     "image": "question-images/q021.webp",
-    "images": {
-      "off": "question-images/q021.webp",
-      "open": "question-images/q021.webp"
-    },
     "handBeforeDraw": [
       "pin9",
       "sou3",
@@ -3211,10 +3127,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/ae2103dab8f82d048771395a3e5cdd2b0bc730b53628bff4a821afb54c41f030v2_2.html?tw=1&ts=0&tv=27",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1436956613750816910",
     "image": "question-images/q022.webp",
-    "images": {
-      "off": "question-images/q022.webp",
-      "open": "question-images/q022.webp"
-    },
     "handBeforeDraw": [
       "man1",
       "pin7",
@@ -3343,10 +3255,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/ae2103dab8f82d048771395a3e5cdd2b0bc730b53628bff4a821afb54c41f030v2_2.html?tw=1&ts=1&tv=29",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1436957893944676444",
     "image": "question-images/q023.webp",
-    "images": {
-      "off": "question-images/q023.webp",
-      "open": "question-images/q023.webp"
-    },
     "handBeforeDraw": [
       "sou7",
       "sou7",
@@ -3472,10 +3380,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/2cf845f1a7862ae7564534cf2ec9297d308b819e604c3bb915d38ef156b234d3v2_2.html?tw=2&ts=9&tv=3",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1436963561136979968",
     "image": "question-images/q024.webp",
-    "images": {
-      "off": "question-images/q024.webp",
-      "open": "question-images/q024.webp"
-    },
     "handBeforeDraw": [
       "pin3",
       "pin4",
@@ -3604,10 +3508,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/2cf845f1a7862ae7564534cf2ec9297d308b819e604c3bb915d38ef156b234d3v2_2.html?tw=2&ts=9&tv=55",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1436963944022675479",
     "image": "question-images/q025.webp",
-    "images": {
-      "off": "question-images/q025.webp",
-      "open": "question-images/q025.webp"
-    },
     "handBeforeDraw": [
       "pin3",
       "pin4",
@@ -3734,10 +3634,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/4f9d30154d1bcdd9ee869cede9b85d6b7550bd474f68986ac727e00f19579a8av2_2.html?tw=3&ts=2&tv=13",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1436965683023056906",
     "image": "question-images/q026.webp",
-    "images": {
-      "off": "question-images/q026.webp",
-      "open": "question-images/q026.webp"
-    },
     "handBeforeDraw": [
       "man7",
       "man9",
@@ -3886,10 +3782,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/4f9d30154d1bcdd9ee869cede9b85d6b7550bd474f68986ac727e00f19579a8av2_2.html?tw=3&ts=4&tv=59",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1436967423726321715",
     "image": "question-images/q027.webp",
-    "images": {
-      "off": "question-images/q027.webp",
-      "open": "question-images/q027.webp"
-    },
     "handBeforeDraw": [
       "pin8",
       "pin8",
@@ -4011,10 +3903,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/fe3c701822481e46b16563cc6ff23b8e3fc9aba7ab6031571fdbbbb2f0bb2320v2_2.html?tw=0&ts=3&tv=3",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1437437286869373028",
     "image": "question-images/q028.webp",
-    "images": {
-      "off": "question-images/q028.webp",
-      "open": "question-images/q028.webp"
-    },
     "handBeforeDraw": [
       "ji2",
       "man4",
@@ -4167,10 +4055,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/fe3c701822481e46b16563cc6ff23b8e3fc9aba7ab6031571fdbbbb2f0bb2320v2_2.html?tw=0&ts=5&tv=49",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1437439494189088838",
     "image": "question-images/q029.webp",
-    "images": {
-      "off": "question-images/q029.webp",
-      "open": "question-images/q029.webp"
-    },
     "handBeforeDraw": [
       "man9",
       "sou7",
@@ -4289,10 +4173,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/fe3c701822481e46b16563cc6ff23b8e3fc9aba7ab6031571fdbbbb2f0bb2320v2_2.html?tw=0&ts=6&tv=31",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1437441432364384377",
     "image": "question-images/q030.webp",
-    "images": {
-      "off": "question-images/q030.webp",
-      "open": "question-images/q030.webp"
-    },
     "handBeforeDraw": [
       "pin5",
       "ji1",
@@ -4419,10 +4299,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/fe3c701822481e46b16563cc6ff23b8e3fc9aba7ab6031571fdbbbb2f0bb2320v2_2.html?tw=0&ts=7&tv=37",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1437442499810562158",
     "image": "question-images/q031.webp",
-    "images": {
-      "off": "question-images/q031.webp",
-      "open": "question-images/q031.webp"
-    },
     "handBeforeDraw": [
       "man8",
       "sou2",
@@ -4561,10 +4437,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/c5774cb15c1946cb7873409c8c7683696bfa2c420d8a3278c6194228da96c2cav2_2.html?tw=0&ts=1&tv=25",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1437445497827758151",
     "image": "question-images/q032.webp",
-    "images": {
-      "off": "question-images/q032.webp",
-      "open": "question-images/q032.webp"
-    },
     "handBeforeDraw": [
       "man4",
       "man4",
@@ -4710,10 +4582,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/c5774cb15c1946cb7873409c8c7683696bfa2c420d8a3278c6194228da96c2cav2_2.html?tw=0&ts=2&tv=47",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1437447399613403249",
     "image": "question-images/q033.webp",
-    "images": {
-      "off": "question-images/q033.webp",
-      "open": "question-images/q033.webp"
-    },
     "handBeforeDraw": [
       "pin5",
       "sou8",
@@ -4864,10 +4732,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/01c5694da1d9013b9b74c1ed4bff54db9609678bbfffa97b4fa179163bd24c8ev2_2.html?tw=2&ts=0&tv=21",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1438786329935745135",
     "image": "question-images/q034.webp",
-    "images": {
-      "off": "question-images/q034.webp",
-      "open": "question-images/q034.webp"
-    },
     "handBeforeDraw": [
       "sou3",
       "pin5",
@@ -4991,10 +4855,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/01c5694da1d9013b9b74c1ed4bff54db9609678bbfffa97b4fa179163bd24c8ev2_2.html?tw=2&ts=2&tv=1",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1438787864581115954",
     "image": "question-images/q035.webp",
-    "images": {
-      "off": "question-images/q035.webp",
-      "open": "question-images/q035.webp"
-    },
     "handBeforeDraw": [
       "man4",
       "man2",
@@ -5147,10 +5007,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/01c5694da1d9013b9b74c1ed4bff54db9609678bbfffa97b4fa179163bd24c8ev2_2.html?tw=2&ts=6&tv=21",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1438797219091185786",
     "image": "question-images/q036.webp",
-    "images": {
-      "off": "question-images/q036.webp",
-      "open": "question-images/q036.webp"
-    },
     "handBeforeDraw": [
       "man1",
       "pin5",
@@ -5296,10 +5152,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/7a148cb7b069bc1c99ecfbdb167b5cbf10a9d164b7e19d2274b181e2338e7168v2_2.html?tw=1&ts=0&tv=19",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1438800102792888343",
     "image": "question-images/q037.webp",
-    "images": {
-      "off": "question-images/q037.webp",
-      "open": "question-images/q037.webp"
-    },
     "handBeforeDraw": [
       "pin5",
       "ji6",
@@ -5431,10 +5283,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/7a148cb7b069bc1c99ecfbdb167b5cbf10a9d164b7e19d2274b181e2338e7168v2_2.html?tw=1&ts=7&tv=27",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1438802015730798602",
     "image": "question-images/q038.webp",
-    "images": {
-      "off": "question-images/q038.webp",
-      "open": "question-images/q038.webp"
-    },
     "handBeforeDraw": [
       "sou5",
       "pin1",
@@ -5547,10 +5395,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/4dda79a8506840ce2a8dea7b0d47286ad428168fbdcaaab306ab3755d00a0b82v2_2.html?tw=3&ts=2&tv=72",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1438804244609110076",
     "image": "question-images/q039.webp",
-    "images": {
-      "off": "question-images/q039.webp",
-      "open": "question-images/q039.webp"
-    },
     "handBeforeDraw": [
       "man3",
       "man5",
@@ -5657,10 +5501,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/4dda79a8506840ce2a8dea7b0d47286ad428168fbdcaaab306ab3755d00a0b82v2_2.html?tw=3&ts=4&tv=71",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1438807204332568597",
     "image": "question-images/q040.webp",
-    "images": {
-      "off": "question-images/q040.webp",
-      "open": "question-images/q040.webp"
-    },
     "handBeforeDraw": [
       "sou6",
       "sou8",
@@ -5823,10 +5663,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/4dda79a8506840ce2a8dea7b0d47286ad428168fbdcaaab306ab3755d00a0b82v2_2.html?tw=3&ts=5&tv=5",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1438808930217361428",
     "image": "question-images/q041.webp",
-    "images": {
-      "off": "question-images/q041.webp",
-      "open": "question-images/q041.webp"
-    },
     "handBeforeDraw": [
       "sou3",
       "man6",
@@ -5953,10 +5789,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/03c884f2397076a241cb9b93f79f54cb49e7376ff9c65a948fd6e95148600879v2_2.html?tw=1&ts=4&tv=13",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1438821309151973436",
     "image": "question-images/q042.webp",
-    "images": {
-      "off": "question-images/q042.webp",
-      "open": "question-images/q042.webp"
-    },
     "handBeforeDraw": [
       "man4",
       "pin7",
@@ -6093,10 +5925,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/03c884f2397076a241cb9b93f79f54cb49e7376ff9c65a948fd6e95148600879v2_2.html?tw=1&ts=9&tv=45",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1438823665150988350",
     "image": "question-images/q043.webp",
-    "images": {
-      "off": "question-images/q043.webp",
-      "open": "question-images/q043.webp"
-    },
     "handBeforeDraw": [
       "sou2",
       "man5",
@@ -6223,10 +6051,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/03c884f2397076a241cb9b93f79f54cb49e7376ff9c65a948fd6e95148600879v2_2.html?tw=1&ts=10&tv=61",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1438824308087717899",
     "image": "question-images/q044.webp",
-    "images": {
-      "off": "question-images/q044.webp",
-      "open": "question-images/q044.webp"
-    },
     "handBeforeDraw": [
       "man5",
       "man6",
@@ -6338,10 +6162,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/b88af157a1d54d4b932d6e2430de6d10272acbed3d1658632f8036d667bcbeb7v2_2.html?tw=1&ts=8&tv=99",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1439940856500060274",
     "image": "question-images/q045.webp",
-    "images": {
-      "off": "question-images/q045.webp",
-      "open": "question-images/q045.webp"
-    },
     "handBeforeDraw": [
       "pin7",
       "man5",
@@ -6468,10 +6288,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/b88af157a1d54d4b932d6e2430de6d10272acbed3d1658632f8036d667bcbeb7v2_2.html?tw=1&ts=9&tv=96",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1439942470736674907",
     "image": "question-images/q046.webp",
-    "images": {
-      "off": "question-images/q046.webp",
-      "open": "question-images/q046.webp"
-    },
     "handBeforeDraw": [
       "pin1",
       "sou4",
@@ -6598,10 +6414,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/cbb991790897a4226f5939d433b2bd8952a153e820161c87c9bec2021eb277a3v2_2.html?tw=3&ts=3&tv=25",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1439944361902080080",
     "image": "question-images/q047.webp",
-    "images": {
-      "off": "question-images/q047.webp",
-      "open": "question-images/q047.webp"
-    },
     "handBeforeDraw": [
       "sou3",
       "aka1",
@@ -6768,10 +6580,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/cbb991790897a4226f5939d433b2bd8952a153e820161c87c9bec2021eb277a3v2_2.html?tw=3&ts=4&tv=29",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1439947651549499414",
     "image": "question-images/q048.webp",
-    "images": {
-      "off": "question-images/q048.webp",
-      "open": "question-images/q048.webp"
-    },
     "handBeforeDraw": [
       "pin4",
       "sou8",
@@ -6889,10 +6697,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/601b253b753cc6c17866b76050c839605908399a76b64d56ecc88ce6ac2dbd55v2_2.html?tw=1&ts=3&tv=25",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1439950062255083642",
     "image": "question-images/q049.webp",
-    "images": {
-      "off": "question-images/q049.webp",
-      "open": "question-images/q049.webp"
-    },
     "handBeforeDraw": [
       "pin5",
       "pin3",
@@ -7033,10 +6837,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/88010bae4a5800f4e57255e308666be478d9eb34b0b946df843db8aa50e86545v2_2.html?tw=1&ts=1&tv=27",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1439956172928188438",
     "image": "question-images/q050.webp",
-    "images": {
-      "off": "question-images/q050.webp",
-      "open": "question-images/q050.webp"
-    },
     "handBeforeDraw": [
       "man8",
       "sou2",
@@ -7172,10 +6972,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/88010bae4a5800f4e57255e308666be478d9eb34b0b946df843db8aa50e86545v2_2.html?tw=1&ts=1&tv=35",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1439957501943480471",
     "image": "question-images/q051.webp",
-    "images": {
-      "off": "question-images/q051.webp",
-      "open": "question-images/q051.webp"
-    },
     "handBeforeDraw": [
       "man8",
       "sou2",
@@ -7299,10 +7095,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/88010bae4a5800f4e57255e308666be478d9eb34b0b946df843db8aa50e86545v2_2.html?tw=1&ts=6&tv=35",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1439959703559077928",
     "image": "question-images/q052.webp",
-    "images": {
-      "off": "question-images/q052.webp",
-      "open": "question-images/q052.webp"
-    },
     "handBeforeDraw": [
       "pin7",
       "sou3",
@@ -7429,10 +7221,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/386e533c9b01ac514eebd4b1c609b46bf8c577d1c3f778faf46126b9834bcf91v2_2.html?tw=0&ts=0&tv=1",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1441670802540990514",
     "image": "question-images/q053.webp",
-    "images": {
-      "off": "question-images/q053.webp",
-      "open": "question-images/q053.webp"
-    },
     "handBeforeDraw": [
       "sou6",
       "sou1",
@@ -7559,10 +7347,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/386e533c9b01ac514eebd4b1c609b46bf8c577d1c3f778faf46126b9834bcf91v2_2.html?tw=0&ts=1&tv=7",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1441671449839665283",
     "image": "question-images/q054.webp",
-    "images": {
-      "off": "question-images/q054.webp",
-      "open": "question-images/q054.webp"
-    },
     "handBeforeDraw": [
       "man3",
       "sou1",
@@ -7701,10 +7485,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/386e533c9b01ac514eebd4b1c609b46bf8c577d1c3f778faf46126b9834bcf91v2_2.html?tw=0&ts=3&tv=13",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1441675223672950806",
     "image": "question-images/q055.webp",
-    "images": {
-      "off": "question-images/q055.webp",
-      "open": "question-images/q055.webp"
-    },
     "handBeforeDraw": [
       "pin8",
       "sou9",
@@ -7843,10 +7623,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/386e533c9b01ac514eebd4b1c609b46bf8c577d1c3f778faf46126b9834bcf91v2_2.html?tw=0&ts=5&tv=47",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1441676402565976084",
     "image": "question-images/q056.webp",
-    "images": {
-      "off": "question-images/q056.webp",
-      "open": "question-images/q056.webp"
-    },
     "handBeforeDraw": [
       "pin5",
       "pin7",
@@ -7968,10 +7744,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/ea67e608e81c156e1b1f46dcd86d60019d542fa3a898aeb7c0a9e3625c9dea36v2_2.html?tw=1&ts=5&tv=33",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1443847686624383087",
     "image": "question-images/q057.webp",
-    "images": {
-      "off": "question-images/q057.webp",
-      "open": "question-images/q057.webp"
-    },
     "handBeforeDraw": [
       "pin2",
       "sou8",
@@ -8117,10 +7889,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/c3f9ca3108839902ede3c085aa462a2ab03940f0e8593ce75efed35bca9fc909v2_2.html?tw=0&ts=1&tv=43",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1444223687598538823",
     "image": "question-images/q058.webp",
-    "images": {
-      "off": "question-images/q058.webp",
-      "open": "question-images/q058.webp"
-    },
     "handBeforeDraw": [
       "sou2",
       "sou5",
@@ -8225,10 +7993,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/c3f9ca3108839902ede3c085aa462a2ab03940f0e8593ce75efed35bca9fc909v2_2.html?tw=0&ts=3&tv=98",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1444225173564821600",
     "image": "question-images/q059.webp",
-    "images": {
-      "off": "question-images/q059.webp",
-      "open": "question-images/q059.webp"
-    },
     "handBeforeDraw": [
       "pin7",
       "sou7",
@@ -8337,10 +8101,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/c3f9ca3108839902ede3c085aa462a2ab03940f0e8593ce75efed35bca9fc909v2_2.html?tw=0&ts=4&tv=50",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1444228015675539649",
     "image": "question-images/q060.webp",
-    "images": {
-      "off": "question-images/q060.webp",
-      "open": "question-images/q060.webp"
-    },
     "handBeforeDraw": [
       "ji5",
       "pin7",
@@ -8429,10 +8189,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/c3f9ca3108839902ede3c085aa462a2ab03940f0e8593ce75efed35bca9fc909v2_2.html?tw=0&ts=5&tv=51",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1444228904276594728",
     "image": "question-images/q061.webp",
-    "images": {
-      "off": "question-images/q061.webp",
-      "open": "question-images/q061.webp"
-    },
     "handBeforeDraw": [
       "pin1",
       "ji1",
@@ -8548,10 +8304,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/c3f9ca3108839902ede3c085aa462a2ab03940f0e8593ce75efed35bca9fc909v2_2.html?tw=0&ts=10&tv=27",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1444240617650520156",
     "image": "question-images/q062.webp",
-    "images": {
-      "off": "question-images/q062.webp",
-      "open": "question-images/q062.webp"
-    },
     "handBeforeDraw": [
       "pin4",
       "man7",
@@ -8654,10 +8406,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/f90741b2ca1f09315cb1581b7838d20305015bc10b1930f92d7cf5fe6576364fv2_2.html?tw=0&ts=4&tv=53",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1444243010069074041",
     "image": "question-images/q063.webp",
-    "images": {
-      "off": "question-images/q063.webp",
-      "open": "question-images/q063.webp"
-    },
     "handBeforeDraw": [
       "man6",
       "man5",
@@ -8789,10 +8537,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/b4bc6606f9d0f7c600adc9f1a5172c052c2ef17f827cc94bb67a4e5e42cf0d08v2_2.html?tw=0&ts=0&tv=62",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1444246071915315210",
     "image": "question-images/q064.webp",
-    "images": {
-      "off": "question-images/q064.webp",
-      "open": "question-images/q064.webp"
-    },
     "handBeforeDraw": [
       "man7",
       "pin1",
@@ -8922,10 +8666,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/b4bc6606f9d0f7c600adc9f1a5172c052c2ef17f827cc94bb67a4e5e42cf0d08v2_2.html?tw=0&ts=0&tv=95",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1444248078671675392",
     "image": "question-images/q065.webp",
-    "images": {
-      "off": "question-images/q065.webp",
-      "open": "question-images/q065.webp"
-    },
     "handBeforeDraw": [
       "man7",
       "pin1",
@@ -9099,10 +8839,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/b4bc6606f9d0f7c600adc9f1a5172c052c2ef17f827cc94bb67a4e5e42cf0d08v2_2.html?tw=0&ts=2&tv=45",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1444258063715405919",
     "image": "question-images/q066.webp",
-    "images": {
-      "off": "question-images/q066.webp",
-      "open": "question-images/q066.webp"
-    },
     "handBeforeDraw": [
       "pin6",
       "sou7",
@@ -9258,10 +8994,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/0d9ec9b4c444a9336f4cb41e01ab2bbd2327a9377bb79fc0bffdfea1469b2dcbv2_2.html?tw=2&ts=1&tv=57",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1445789945041125529",
     "image": "question-images/q067.webp",
-    "images": {
-      "off": "question-images/q067.webp",
-      "open": "question-images/q067.webp"
-    },
     "handBeforeDraw": [
       "man5",
       "sou1",
@@ -9395,10 +9127,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/35e8e551b112ba3257425ff02a7d0892bfe66255fb581b4e0fbc7c808f988b77v2_2.html?tw=3&ts=1&tv=37",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1447236801700827186",
     "image": "question-images/q068.webp",
-    "images": {
-      "off": "question-images/q068.webp",
-      "open": "question-images/q068.webp"
-    },
     "handBeforeDraw": [
       "sou6",
       "sou4",
@@ -9534,10 +9262,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/35e8e551b112ba3257425ff02a7d0892bfe66255fb581b4e0fbc7c808f988b77v2_2.html?tw=3&ts=5&tv=44",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1447238660750704790",
     "image": "question-images/q069.webp",
-    "images": {
-      "off": "question-images/q069.webp",
-      "open": "question-images/q069.webp"
-    },
     "handBeforeDraw": [
       "man8",
       "sou2",
@@ -9665,10 +9389,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/4af1333ba09e592de9b7d5ce214f30b0b10491911d8a6e7361ecc3c67b6c1c7ev2_2.html?tw=2&ts=1&tv=11",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1447248603725955174",
     "image": "question-images/q070.webp",
-    "images": {
-      "off": "question-images/q070.webp",
-      "open": "question-images/q070.webp"
-    },
     "handBeforeDraw": [
       "pin1",
       "pin3",
@@ -9832,10 +9552,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/4af1333ba09e592de9b7d5ce214f30b0b10491911d8a6e7361ecc3c67b6c1c7ev2_2.html?tw=2&ts=5&tv=45",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1447259275540959405",
     "image": "question-images/q071.webp",
-    "images": {
-      "off": "question-images/q071.webp",
-      "open": "question-images/q071.webp"
-    },
     "handBeforeDraw": [
       "man9",
       "man1",
@@ -9962,10 +9678,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/f578c5a746073fc15e17a24e6dc8b31393a37d9a1835898699231f50d5d6fea5v2_2.html?tw=2&ts=2&tv=19",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1447264693528821820",
     "image": "question-images/q072.webp",
-    "images": {
-      "off": "question-images/q072.webp",
-      "open": "question-images/q072.webp"
-    },
     "handBeforeDraw": [
       "man7",
       "sou5",
@@ -10127,10 +9839,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/f578c5a746073fc15e17a24e6dc8b31393a37d9a1835898699231f50d5d6fea5v2_2.html?tw=2&ts=4&tv=17",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1447268310717563093",
     "image": "question-images/q073.webp",
-    "images": {
-      "off": "question-images/q073.webp",
-      "open": "question-images/q073.webp"
-    },
     "handBeforeDraw": [
       "pin3",
       "pin8",
@@ -10266,10 +9974,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/f578c5a746073fc15e17a24e6dc8b31393a37d9a1835898699231f50d5d6fea5v2_2.html?tw=2&ts=8&tv=1",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1447272557278527680",
     "image": "question-images/q074.webp",
-    "images": {
-      "off": "question-images/q074.webp",
-      "open": "question-images/q074.webp"
-    },
     "handBeforeDraw": [
       "sou2",
       "pin4",
@@ -10413,10 +10117,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/dff1182753a9e136e92d82c5a2be23c3182c96cd316d053a81917d8685853c79v2_2.html?tw=0&ts=3&tv=19",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1447276395452698743",
     "image": "question-images/q075.webp",
-    "images": {
-      "off": "question-images/q075.webp",
-      "open": "question-images/q075.webp"
-    },
     "handBeforeDraw": [
       "pin4",
       "pin3",
@@ -10550,10 +10250,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/dff1182753a9e136e92d82c5a2be23c3182c96cd316d053a81917d8685853c79v2_2.html?tw=0&ts=5&tv=7",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1447278227470024784",
     "image": "question-images/q076.webp",
-    "images": {
-      "off": "question-images/q076.webp",
-      "open": "question-images/q076.webp"
-    },
     "handBeforeDraw": [
       "sou9",
       "ji4",
@@ -10680,10 +10376,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/05af566dbe581567530f9851274f1efe346c95449a59cbc7175c4033a1eaeeb6v2_2.html?tw=3&ts=0&tv=89",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1447280828831895764",
     "image": "question-images/q077.webp",
-    "images": {
-      "off": "question-images/q077.webp",
-      "open": "question-images/q077.webp"
-    },
     "handBeforeDraw": [
       "man4",
       "man4",
@@ -10807,10 +10499,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/f10e31a7833ed0fbe2df057f4d09ae3f02fc2d8a5127173af6503a73f226ec5cv2_2.html?tw=1&ts=5&tv=25",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1447509686613180416",
     "image": "question-images/q078.webp",
-    "images": {
-      "off": "question-images/q078.webp",
-      "open": "question-images/q078.webp"
-    },
     "handBeforeDraw": [
       "sou6",
       "pin7",
@@ -10948,10 +10636,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/b9a78236348f039efef4bb37f1113c4e4e66bc3e2be08b40db7a29feec8621eev2_2.html?tw=0&ts=2&tv=37",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1447513211480834089",
     "image": "question-images/q079.webp",
-    "images": {
-      "off": "question-images/q079.webp",
-      "open": "question-images/q079.webp"
-    },
     "handBeforeDraw": [
       "ji5",
       "man7",
@@ -11107,10 +10791,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/b9a78236348f039efef4bb37f1113c4e4e66bc3e2be08b40db7a29feec8621eev2_2.html?tw=0&ts=7&tv=49",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1447520837757304853",
     "image": "question-images/q080.webp",
-    "images": {
-      "off": "question-images/q080.webp",
-      "open": "question-images/q080.webp"
-    },
     "handBeforeDraw": [
       "pin2",
       "sou8",
@@ -11227,10 +10907,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/b9a78236348f039efef4bb37f1113c4e4e66bc3e2be08b40db7a29feec8621eev2_2.html?tw=0&ts=8&tv=39",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1447521721094504572",
     "image": "question-images/q081.webp",
-    "images": {
-      "off": "question-images/q081.webp",
-      "open": "question-images/q081.webp"
-    },
     "handBeforeDraw": [
       "pin9",
       "man7",
@@ -11364,10 +11040,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/b9a78236348f039efef4bb37f1113c4e4e66bc3e2be08b40db7a29feec8621eev2_2.html?tw=0&ts=14&tv=11",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1447524536340840598",
     "image": "question-images/q082.webp",
-    "images": {
-      "off": "question-images/q082.webp",
-      "open": "question-images/q082.webp"
-    },
     "handBeforeDraw": [
       "man1",
       "ji1",
@@ -11493,10 +11165,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/b9a78236348f039efef4bb37f1113c4e4e66bc3e2be08b40db7a29feec8621eev2_2.html?tw=0&ts=14&tv=19",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1447525268901335160",
     "image": "question-images/q083.webp",
-    "images": {
-      "off": "question-images/q083.webp",
-      "open": "question-images/q083.webp"
-    },
     "handBeforeDraw": [
       "man1",
       "ji1",
@@ -11621,10 +11289,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/223e7ef839b79554e288f20ea7b93a98edd0cc02fccc1b3213a2ffb85c06eba8v2_2.html?tw=2&ts=0&tv=43",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1449606724372922492",
     "image": "question-images/q084.webp",
-    "images": {
-      "off": "question-images/q084.webp",
-      "open": "question-images/q084.webp"
-    },
     "handBeforeDraw": [
       "man4",
       "pin3",
@@ -11786,10 +11450,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/223e7ef839b79554e288f20ea7b93a98edd0cc02fccc1b3213a2ffb85c06eba8v2_2.html?tw=2&ts=3&tv=41",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1449611879000572040",
     "image": "question-images/q085.webp",
-    "images": {
-      "off": "question-images/q085.webp",
-      "open": "question-images/q085.webp"
-    },
     "handBeforeDraw": [
       "man2",
       "pin1",
@@ -11945,10 +11605,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/5a5979c0d155003a6b2a5f24b305a3f3ed0428934485b3c725f8dd925031fc90v2_2.html?tw=0&ts=3&tv=37",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1449616460195303538",
     "image": "question-images/q086.webp",
-    "images": {
-      "off": "question-images/q086.webp",
-      "open": "question-images/q086.webp"
-    },
     "handBeforeDraw": [
       "man7",
       "man8",
@@ -12118,10 +11774,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/058c4bb3c3875e463d1e58afdd9c309626ba028b638948cba6aa323e4ac40085v2_2.html?tw=2&ts=1&tv=67",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1449621824798462076",
     "image": "question-images/q087.webp",
-    "images": {
-      "off": "question-images/q087.webp",
-      "open": "question-images/q087.webp"
-    },
     "handBeforeDraw": [
       "pin6",
       "sou2",
@@ -12269,10 +11921,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/058c4bb3c3875e463d1e58afdd9c309626ba028b638948cba6aa323e4ac40085v2_2.html?tw=2&ts=3&tv=9",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1449622968232574997",
     "image": "question-images/q088.webp",
-    "images": {
-      "off": "question-images/q088.webp",
-      "open": "question-images/q088.webp"
-    },
     "handBeforeDraw": [
       "ji6",
       "ji5",
@@ -12449,10 +12097,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/3bbe26e30475afc046d8881dedec2273607292e4fd934ca69dfebce4079b8f67v2_2.html?tw=0&ts=0&tv=31",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1449631918923448320",
     "image": "question-images/q089.webp",
-    "images": {
-      "off": "question-images/q089.webp",
-      "open": "question-images/q089.webp"
-    },
     "handBeforeDraw": [
       "pin7",
       "pin1",
@@ -12608,10 +12252,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/cf49fa9d5f0ebc7afeabc729f6748ae051671dba4f209eb11af69dfe876b12e3v2_2.html?tw=0&ts=0&tv=83",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1449635813674455050",
     "image": "question-images/q090.webp",
-    "images": {
-      "off": "question-images/q090.webp",
-      "open": "question-images/q090.webp"
-    },
     "handBeforeDraw": [
       "sou6",
       "man2",
@@ -12760,10 +12400,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/cf49fa9d5f0ebc7afeabc729f6748ae051671dba4f209eb11af69dfe876b12e3v2_2.html?tw=0&ts=1&tv=15",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1449638380693618749",
     "image": "question-images/q091.webp",
-    "images": {
-      "off": "question-images/q091.webp",
-      "open": "question-images/q091.webp"
-    },
     "handBeforeDraw": [
       "man1",
       "ji5",
@@ -12950,10 +12586,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/ec9fd6335b0198aeb20ca448b1d4730e32f6fb4b659dfd1c5f6dcedcb51b47a2v2_2.html?tw=3&ts=0&tv=15",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1449642438405914696",
     "image": "question-images/q092.webp",
-    "images": {
-      "off": "question-images/q092.webp",
-      "open": "question-images/q092.webp"
-    },
     "handBeforeDraw": [
       "pin8",
       "sou1",
@@ -13154,10 +12786,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/ec9fd6335b0198aeb20ca448b1d4730e32f6fb4b659dfd1c5f6dcedcb51b47a2v2_2.html?tw=3&ts=1&tv=85",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1449646861089771662",
     "image": "question-images/q093.webp",
-    "images": {
-      "off": "question-images/q093.webp",
-      "open": "question-images/q093.webp"
-    },
     "handBeforeDraw": [
       "sou8",
       "sou6",
@@ -13317,10 +12945,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/71898eb44473600b6c85fe942cbd92d528765b976cf8cdcb9ef1d54c4aa294cdv2_2.html?tw=1&ts=0&tv=25",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1449656165381443624",
     "image": "question-images/q094.webp",
-    "images": {
-      "off": "question-images/q094.webp",
-      "open": "question-images/q094.webp"
-    },
     "handBeforeDraw": [
       "man4",
       "pin5",
@@ -13485,10 +13109,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/71898eb44473600b6c85fe942cbd92d528765b976cf8cdcb9ef1d54c4aa294cdv2_2.html?tw=1&ts=1&tv=49",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1449658942606282843",
     "image": "question-images/q095.webp",
-    "images": {
-      "off": "question-images/q095.webp",
-      "open": "question-images/q095.webp"
-    },
     "handBeforeDraw": [
       "sou8",
       "sou8",
@@ -13600,10 +13220,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/71898eb44473600b6c85fe942cbd92d528765b976cf8cdcb9ef1d54c4aa294cdv2_2.html?tw=1&ts=2&tv=53",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1449659815553929268",
     "image": "question-images/q096.webp",
-    "images": {
-      "off": "question-images/q096.webp",
-      "open": "question-images/q096.webp"
-    },
     "handBeforeDraw": [
       "pin2",
       "man7",
@@ -13725,10 +13341,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/71898eb44473600b6c85fe942cbd92d528765b976cf8cdcb9ef1d54c4aa294cdv2_2.html?tw=1&ts=6&tv=17",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1449662875579977830",
     "image": "question-images/q097.webp",
-    "images": {
-      "off": "question-images/q097.webp",
-      "open": "question-images/q097.webp"
-    },
     "handBeforeDraw": [
       "man7",
       "pin4",
@@ -13888,10 +13500,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/71898eb44473600b6c85fe942cbd92d528765b976cf8cdcb9ef1d54c4aa294cdv2_2.html?tw=1&ts=11&tv=17",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1449665856610238607",
     "image": "question-images/q098.webp",
-    "images": {
-      "off": "question-images/q098.webp",
-      "open": "question-images/q098.webp"
-    },
     "handBeforeDraw": [
       "man2",
       "pin9",
@@ -14013,10 +13621,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/e89d6df6b33497a05f420eb8c8f5e6869812092735450233cb9e138550f59270v2_2.html?tw=1&ts=11&tv=7",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1449668236697141268",
     "image": "question-images/q099.webp",
-    "images": {
-      "off": "question-images/q099.webp",
-      "open": "question-images/q099.webp"
-    },
     "handBeforeDraw": [
       "man8",
       "ji1",
@@ -14143,10 +13747,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/aadbaef6a536c06db57210fd1b0c8225bc31a0c8c03d02cb933cc52b172978c5v2_2.html?tw=3&ts=4&tv=35",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1450395678458249339",
     "image": "question-images/q100.webp",
-    "images": {
-      "off": "question-images/q100.webp",
-      "open": "question-images/q100.webp"
-    },
     "handBeforeDraw": [
       "pin7",
       "man7",
@@ -14302,10 +13902,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/f0fc48ed67db5813b7e6879eff3a127da285a6e526560c221ad8bba092537734v2_2.html?tw=0&ts=0&tv=20",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1450399078881034361",
     "image": "question-images/q101.webp",
-    "images": {
-      "off": "question-images/q101.webp",
-      "open": "question-images/q101.webp"
-    },
     "handBeforeDraw": [
       "sou1",
       "ji6",
@@ -14427,10 +14023,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/f0fc48ed67db5813b7e6879eff3a127da285a6e526560c221ad8bba092537734v2_2.html?tw=0&ts=2&tv=36",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1450402052483317833",
     "image": "question-images/q102.webp",
-    "images": {
-      "off": "question-images/q102.webp",
-      "open": "question-images/q102.webp"
-    },
     "handBeforeDraw": [
       "pin3",
       "sou4",
@@ -14552,10 +14144,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/f0fc48ed67db5813b7e6879eff3a127da285a6e526560c221ad8bba092537734v2_2.html?tw=0&ts=3&tv=21",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1450405316146626581",
     "image": "question-images/q103.webp",
-    "images": {
-      "off": "question-images/q103.webp",
-      "open": "question-images/q103.webp"
-    },
     "handBeforeDraw": [
       "man3",
       "pin6",
@@ -14725,10 +14313,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/f0fc48ed67db5813b7e6879eff3a127da285a6e526560c221ad8bba092537734v2_2.html?tw=0&ts=3&tv=45",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1450406567416565774",
     "image": "question-images/q104.webp",
-    "images": {
-      "off": "question-images/q104.webp",
-      "open": "question-images/q104.webp"
-    },
     "handBeforeDraw": [
       "man3",
       "pin6",
@@ -14898,10 +14482,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/f0fc48ed67db5813b7e6879eff3a127da285a6e526560c221ad8bba092537734v2_2.html?tw=0&ts=5&tv=39",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1450408930227523586",
     "image": "question-images/q105.webp",
-    "images": {
-      "off": "question-images/q105.webp",
-      "open": "question-images/q105.webp"
-    },
     "handBeforeDraw": [
       "man6",
       "sou7",
@@ -15064,10 +14644,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/f0fc48ed67db5813b7e6879eff3a127da285a6e526560c221ad8bba092537734v2_2.html?tw=0&ts=6&tv=103",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1450410426213863524",
     "image": "question-images/q106.webp",
-    "images": {
-      "off": "question-images/q106.webp",
-      "open": "question-images/q106.webp"
-    },
     "handBeforeDraw": [
       "sou7",
       "man4",
@@ -15216,10 +14792,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/f0fc48ed67db5813b7e6879eff3a127da285a6e526560c221ad8bba092537734v2_2.html?tw=0&ts=8&tv=24",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1450412321154273391",
     "image": "question-images/q107.webp",
-    "images": {
-      "off": "question-images/q107.webp",
-      "open": "question-images/q107.webp"
-    },
     "handBeforeDraw": [
       "ji4",
       "ji6",
@@ -15341,10 +14913,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/b87f5221080c7fe8c298f4f937347932ed1d72cfdb76f9577295845b3211e577v2_2.html?tw=2&ts=1&tv=27",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1451434114497380443",
     "image": "question-images/q108.webp",
-    "images": {
-      "off": "question-images/q108.webp",
-      "open": "question-images/q108.webp"
-    },
     "handBeforeDraw": [
       "man8",
       "man4",
@@ -15507,10 +15075,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/b87f5221080c7fe8c298f4f937347932ed1d72cfdb76f9577295845b3211e577v2_2.html?tw=2&ts=1&tv=53",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1451435642889310309",
     "image": "question-images/q109.webp",
-    "images": {
-      "off": "question-images/q109.webp",
-      "open": "question-images/q109.webp"
-    },
     "handBeforeDraw": [
       "man8",
       "man4",
@@ -15699,10 +15263,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/da13ef90c83bafc6a45ba1338b6b1a881e3a120487aa9d020ef029b6ed981d4fv2_2.html?tw=3&ts=5&tv=73",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1452510251709366272",
     "image": "question-images/q110.webp",
-    "images": {
-      "off": "question-images/q110.webp",
-      "open": "question-images/q110.webp"
-    },
     "handBeforeDraw": [
       "man4",
       "sou6",
@@ -15819,10 +15379,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/da13ef90c83bafc6a45ba1338b6b1a881e3a120487aa9d020ef029b6ed981d4fv2_2.html?tw=3&ts=4&tv=33",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1452511968215830691",
     "image": "question-images/q111.webp",
-    "images": {
-      "off": "question-images/q111.webp",
-      "open": "question-images/q111.webp"
-    },
     "handBeforeDraw": [
       "pin6",
       "sou1",
@@ -15965,10 +15521,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/ac3f09266f0c7cf6e329c1f4368ffbe7efd33675a94745d7a8375dd422dbd7aav2_2.html?tw=1&ts=6&tv=57",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1452517731252437056",
     "image": "question-images/q112.webp",
-    "images": {
-      "off": "question-images/q112.webp",
-      "open": "question-images/q112.webp"
-    },
     "handBeforeDraw": [
       "pin3",
       "pin1",
@@ -16102,10 +15654,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/f3703ea633d00714d160cc0ab1e3abff00912adf9321ae1ce3924a1e8fa2af2dv2_2.html?tw=1&ts=2&tv=47",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1452526217378140192",
     "image": "question-images/q113.webp",
-    "images": {
-      "off": "question-images/q113.webp",
-      "open": "question-images/q113.webp"
-    },
     "handBeforeDraw": [
       "sou6",
       "man6",
@@ -16284,10 +15832,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/00f27672881bb567dcbed9e199ce104f729aca1c80eb49e233bcf7bea06dc4f3v2_2.html?tw=2&ts=2&tv=43",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1453779747514482891",
     "image": "question-images/q114.webp",
-    "images": {
-      "off": "question-images/q114.webp",
-      "open": "question-images/q114.webp"
-    },
     "handBeforeDraw": [
       "pin5",
       "man3",
@@ -16416,10 +15960,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/00f27672881bb567dcbed9e199ce104f729aca1c80eb49e233bcf7bea06dc4f3v2_2.html?tw=2&ts=7&tv=31",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1453781461080735917",
     "image": "question-images/q115.webp",
-    "images": {
-      "off": "question-images/q115.webp",
-      "open": "question-images/q115.webp"
-    },
     "handBeforeDraw": [
       "man9",
       "pin9",
@@ -16543,10 +16083,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/e627acf2c853bf413eca3d3367169ea232a0c831189ec8a2431023c1dde95eebv2_2.html?tw=3&ts=4&tv=1",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1453788752617935103",
     "image": "question-images/q116.webp",
-    "images": {
-      "off": "question-images/q116.webp",
-      "open": "question-images/q116.webp"
-    },
     "handBeforeDraw": [
       "pin9",
       "sou1",
@@ -16694,10 +16230,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/da95a8fe53669023a21fcd003600f0daab5990b06717618f38ef56e6fa10c234v2_2.html?tw=3&ts=0&tv=39",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1453792986394530044",
     "image": "question-images/q117.webp",
-    "images": {
-      "off": "question-images/q117.webp",
-      "open": "question-images/q117.webp"
-    },
     "handBeforeDraw": [
       "pin4",
       "sou4",
@@ -16824,10 +16356,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/da95a8fe53669023a21fcd003600f0daab5990b06717618f38ef56e6fa10c234v2_2.html?tw=3&ts=1&tv=29",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1453794164482244731",
     "image": "question-images/q118.webp",
-    "images": {
-      "off": "question-images/q118.webp",
-      "open": "question-images/q118.webp"
-    },
     "handBeforeDraw": [
       "man6",
       "man4",
@@ -16944,10 +16472,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/da95a8fe53669023a21fcd003600f0daab5990b06717618f38ef56e6fa10c234v2_2.html?tw=3&ts=2&tv=59",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1453795412900319233",
     "image": "question-images/q119.webp",
-    "images": {
-      "off": "question-images/q119.webp",
-      "open": "question-images/q119.webp"
-    },
     "handBeforeDraw": [
       "pin3",
       "sou4",
@@ -17126,10 +16650,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/b1a4ae8caf25e27a5a44abf4106de2d60b7e210e742eebb2698ad35db01d8741v2_2.html?tw=2&ts=1&tv=29",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1454438361530892463",
     "image": "question-images/q120.webp",
-    "images": {
-      "off": "question-images/q120.webp",
-      "open": "question-images/q120.webp"
-    },
     "handBeforeDraw": [
       "sou5",
       "man5",
@@ -17251,10 +16771,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/b1a4ae8caf25e27a5a44abf4106de2d60b7e210e742eebb2698ad35db01d8741v2_2.html?tw=2&ts=3&tv=75",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1454439077398057102",
     "image": "question-images/q121.webp",
-    "images": {
-      "off": "question-images/q121.webp",
-      "open": "question-images/q121.webp"
-    },
     "handBeforeDraw": [
       "man2",
       "sou9",
@@ -17376,10 +16892,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/b1a4ae8caf25e27a5a44abf4106de2d60b7e210e742eebb2698ad35db01d8741v2_2.html?tw=2&ts=4&tv=119",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1454439582279012414",
     "image": "question-images/q122.webp",
-    "images": {
-      "off": "question-images/q122.webp",
-      "open": "question-images/q122.webp"
-    },
     "handBeforeDraw": [
       "sou7",
       "pin7",
@@ -17501,10 +17013,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/b1a4ae8caf25e27a5a44abf4106de2d60b7e210e742eebb2698ad35db01d8741v2_2.html?tw=2&ts=5&tv=25",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1454441433950978172",
     "image": "question-images/q123.webp",
-    "images": {
-      "off": "question-images/q123.webp",
-      "open": "question-images/q123.webp"
-    },
     "handBeforeDraw": [
       "man9",
       "man6",
@@ -17623,10 +17131,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/b1a4ae8caf25e27a5a44abf4106de2d60b7e210e742eebb2698ad35db01d8741v2_2.html?tw=2&ts=6&tv=57",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1454443008610271407",
     "image": "question-images/q124.webp",
-    "images": {
-      "off": "question-images/q124.webp",
-      "open": "question-images/q124.webp"
-    },
     "handBeforeDraw": [
       "sou3",
       "pin2",
@@ -17744,10 +17248,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/b1a4ae8caf25e27a5a44abf4106de2d60b7e210e742eebb2698ad35db01d8741v2_2.html?tw=2&ts=10&tv=43",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1454443736460431410",
     "image": "question-images/q125.webp",
-    "images": {
-      "off": "question-images/q125.webp",
-      "open": "question-images/q125.webp"
-    },
     "handBeforeDraw": [
       "man8",
       "pin6",
@@ -17874,10 +17374,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/a210371ffe89edecac7c82cceea0e510a4d4eb0e9b3c58c409be1d21216ca0b5v2_2.html?tw=3&ts=3&tv=26",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1454454681328947351",
     "image": "question-images/q126.webp",
-    "images": {
-      "off": "question-images/q126.webp",
-      "open": "question-images/q126.webp"
-    },
     "handBeforeDraw": [
       "pin5",
       "pin6",
@@ -18008,10 +17504,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/a210371ffe89edecac7c82cceea0e510a4d4eb0e9b3c58c409be1d21216ca0b5v2_2.html?tw=3&ts=8&tv=53",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1454458333531607255",
     "image": "question-images/q127.webp",
-    "images": {
-      "off": "question-images/q127.webp",
-      "open": "question-images/q127.webp"
-    },
     "handBeforeDraw": [
       "sou3",
       "pin6",
@@ -18119,10 +17611,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/e7e054aa061931781973f66524081798442c2da91397022663c150a1ab890734v2_2.html?tw=1&ts=3&tv=13",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1454461440617611437",
     "image": "question-images/q128.webp",
-    "images": {
-      "off": "question-images/q128.webp",
-      "open": "question-images/q128.webp"
-    },
     "handBeforeDraw": [
       "sou1",
       "pin3",
@@ -18268,10 +17756,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/f791fbb391377310d16b846deba719164fa2437d46a6c07bc5b1ee9d525d6859v2_2.html?tw=3&ts=0&tv=47",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1455786069541785784",
     "image": "question-images/q129.webp",
-    "images": {
-      "off": "question-images/q129.webp",
-      "open": "question-images/q129.webp"
-    },
     "handBeforeDraw": [
       "pin4",
       "sou2",
@@ -18405,10 +17889,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/1f5a837aba63639c9803370117c344ec2518a1e88f71482d9d91750ce7d70daav2_2.html?tw=0&ts=4&tv=39",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1455800072380874844",
     "image": "question-images/q130.webp",
-    "images": {
-      "off": "question-images/q130.webp",
-      "open": "question-images/q130.webp"
-    },
     "handBeforeDraw": [
       "sou2",
       "sou8",
@@ -18547,10 +18027,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/31345316cddcae26c76d18a8de0435f53a4198dc317fdad2a1a7f06fdeb1cc02v2_2.html?tw=1&ts=0&tv=27",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1455803123372392552",
     "image": "question-images/q131.webp",
-    "images": {
-      "off": "question-images/q131.webp",
-      "open": "question-images/q131.webp"
-    },
     "handBeforeDraw": [
       "man1",
       "man4",
@@ -18705,10 +18181,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/31345316cddcae26c76d18a8de0435f53a4198dc317fdad2a1a7f06fdeb1cc02v2_2.html?tw=1&ts=4&tv=77",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1455806048026890291",
     "image": "question-images/q132.webp",
-    "images": {
-      "off": "question-images/q132.webp",
-      "open": "question-images/q132.webp"
-    },
     "handBeforeDraw": [
       "sou4",
       "sou7",
@@ -18837,10 +18309,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/31345316cddcae26c76d18a8de0435f53a4198dc317fdad2a1a7f06fdeb1cc02v2_2.html?tw=1&ts=8&tv=1",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1455808553670672446",
     "image": "question-images/q133.webp",
-    "images": {
-      "off": "question-images/q133.webp",
-      "open": "question-images/q133.webp"
-    },
     "handBeforeDraw": [
       "ji1",
       "ji6",
@@ -18974,10 +18442,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/31345316cddcae26c76d18a8de0435f53a4198dc317fdad2a1a7f06fdeb1cc02v2_2.html?tw=1&ts=12&tv=28",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1455817909556351016",
     "image": "question-images/q134.webp",
-    "images": {
-      "off": "question-images/q134.webp",
-      "open": "question-images/q134.webp"
-    },
     "handBeforeDraw": [
       "sou4",
       "aka3",
@@ -19117,10 +18581,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/0bc246c6e7980162d299dfdd2a8e7a140bc78c4eed0669f9fa6d89d9b2e637f2v2_2.html?tw=3&ts=5&tv=41",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1456287389847916575",
     "image": "question-images/q135.webp",
-    "images": {
-      "off": "question-images/q135.webp",
-      "open": "question-images/q135.webp"
-    },
     "handBeforeDraw": [
       "aka2",
       "man9",
@@ -19256,10 +18716,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/3de609944fe38b203f1b48e9e12cb429d0f213e606cc2f44d635d399a9902da3v2_2.html?tw=3&ts=3&tv=9",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1456500991712170015",
     "image": "question-images/q136.webp",
-    "images": {
-      "off": "question-images/q136.webp",
-      "open": "question-images/q136.webp"
-    },
     "handBeforeDraw": [
       "sou9",
       "man2",
@@ -19393,10 +18849,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/9c325e4265eb697a355e67b0ee58a48ce005f57638204f8f6f4e09e1594100b9v2_2.html?tw=2&ts=4&tv=101",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1456518496560218342",
     "image": "question-images/q137.webp",
-    "images": {
-      "off": "question-images/q137.webp",
-      "open": "question-images/q137.webp"
-    },
     "handBeforeDraw": [
       "sou7",
       "sou9",
@@ -19530,10 +18982,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/9c325e4265eb697a355e67b0ee58a48ce005f57638204f8f6f4e09e1594100b9v2_2.html?tw=2&ts=5&tv=11",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1456522777053102102",
     "image": "question-images/q138.webp",
-    "images": {
-      "off": "question-images/q138.webp",
-      "open": "question-images/q138.webp"
-    },
     "handBeforeDraw": [
       "man2",
       "man9",
@@ -19667,10 +19115,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/acd736f52c73f007190f3e9f8391be6ca1693750a555b6a66bb18b2e174ca8ccv2_2.html?tw=0&ts=4&tv=44",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1456526367784042728",
     "image": "question-images/q139.webp",
-    "images": {
-      "off": "question-images/q139.webp",
-      "open": "question-images/q139.webp"
-    },
     "handBeforeDraw": [
       "man2",
       "sou6",
@@ -19792,10 +19236,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/76370e59c762b7117939c27d784e6507df7e607b960511606af7b0f9a0af8dc1v2_2.html?tw=1&ts=0&tv=51",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1456542972496842794",
     "image": "question-images/q140.webp",
-    "images": {
-      "off": "question-images/q140.webp",
-      "open": "question-images/q140.webp"
-    },
     "handBeforeDraw": [
       "man6",
       "man3",
@@ -19951,10 +19391,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/76370e59c762b7117939c27d784e6507df7e607b960511606af7b0f9a0af8dc1v2_2.html?tw=1&ts=0&tv=107",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1456544545096339520",
     "image": "question-images/q141.webp",
-    "images": {
-      "off": "question-images/q141.webp",
-      "open": "question-images/q141.webp"
-    },
     "handBeforeDraw": [
       "man6",
       "man3",
@@ -20117,10 +19553,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/76370e59c762b7117939c27d784e6507df7e607b960511606af7b0f9a0af8dc1v2_2.html?tw=1&ts=3&tv=81",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1456548173886656677",
     "image": "question-images/q142.webp",
-    "images": {
-      "off": "question-images/q142.webp",
-      "open": "question-images/q142.webp"
-    },
     "handBeforeDraw": [
       "man8",
       "man1",
@@ -20276,10 +19708,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/76370e59c762b7117939c27d784e6507df7e607b960511606af7b0f9a0af8dc1v2_2.html?tw=1&ts=5&tv=53",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1456552236455956491",
     "image": "question-images/q143.webp",
-    "images": {
-      "off": "question-images/q143.webp",
-      "open": "question-images/q143.webp"
-    },
     "handBeforeDraw": [
       "sou7",
       "aka2",
@@ -20475,10 +19903,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/64891a13167f4c0867fffe12693c62cd0417e7d97420506936d330a05d1835f1v2_2.html?tw=2&ts=8&tv=53",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1456666125151768677",
     "image": "question-images/q144.webp",
-    "images": {
-      "off": "question-images/q144.webp",
-      "open": "question-images/q144.webp"
-    },
     "handBeforeDraw": [
       "man6",
       "man3",
@@ -20635,10 +20059,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/d47cb975a1d533fcb6dd9348778cdcf869de5ff91be195e1b588303658b08751v2_2.html?tw=0&ts=2&tv=75",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1457721495345172512",
     "image": "question-images/q145.webp",
-    "images": {
-      "off": "question-images/q145.webp",
-      "open": "question-images/q145.webp"
-    },
     "handBeforeDraw": [
       "pin3",
       "sou6",
@@ -20774,10 +20194,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/d47cb975a1d533fcb6dd9348778cdcf869de5ff91be195e1b588303658b08751v2_2.html?tw=0&ts=3&tv=73",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1457723043794260119",
     "image": "question-images/q146.webp",
-    "images": {
-      "off": "question-images/q146.webp",
-      "open": "question-images/q146.webp"
-    },
     "handBeforeDraw": [
       "sou2",
       "sou5",
@@ -20913,10 +20329,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/d47cb975a1d533fcb6dd9348778cdcf869de5ff91be195e1b588303658b08751v2_2.html?tw=0&ts=5&tv=41",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1457727306398171187",
     "image": "question-images/q147.webp",
-    "images": {
-      "off": "question-images/q147.webp",
-      "open": "question-images/q147.webp"
-    },
     "handBeforeDraw": [
       "pin3",
       "man6",
@@ -21039,10 +20451,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/d47cb975a1d533fcb6dd9348778cdcf869de5ff91be195e1b588303658b08751v2_2.html?tw=0&ts=6&tv=41",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1457728475895955580",
     "image": "question-images/q148.webp",
-    "images": {
-      "off": "question-images/q148.webp",
-      "open": "question-images/q148.webp"
-    },
     "handBeforeDraw": [
       "man4",
       "sou5",
@@ -21180,10 +20588,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/d47cb975a1d533fcb6dd9348778cdcf869de5ff91be195e1b588303658b08751v2_2.html?tw=0&ts=7&tv=29",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1457729211019296788",
     "image": "question-images/q149.webp",
-    "images": {
-      "off": "question-images/q149.webp",
-      "open": "question-images/q149.webp"
-    },
     "handBeforeDraw": [
       "pin2",
       "sou2",
@@ -21307,10 +20711,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/d47cb975a1d533fcb6dd9348778cdcf869de5ff91be195e1b588303658b08751v2_2.html?tw=0&ts=9&tv=29",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1457729744329248861",
     "image": "question-images/q150.webp",
-    "images": {
-      "off": "question-images/q150.webp",
-      "open": "question-images/q150.webp"
-    },
     "handBeforeDraw": [
       "man6",
       "sou2",
@@ -21456,10 +20856,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/79ed8de275263b51e9845e8dfc6616cb8ee8ba927c028c64257da21dba33a8bbv2_2.html?tw=2&ts=0&tv=53",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1458108068662349834",
     "image": "question-images/q151.webp",
-    "images": {
-      "off": "question-images/q151.webp",
-      "open": "question-images/q151.webp"
-    },
     "handBeforeDraw": [
       "man4",
       "pin8",
@@ -21607,10 +21003,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/79ed8de275263b51e9845e8dfc6616cb8ee8ba927c028c64257da21dba33a8bbv2_2.html?tw=2&ts=0&tv=101",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1458109447217086648",
     "image": "question-images/q152.webp",
-    "images": {
-      "off": "question-images/q152.webp",
-      "open": "question-images/q152.webp"
-    },
     "handBeforeDraw": [
       "pin8",
       "sou4",
@@ -21732,10 +21124,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/8f0e06455aeea7f475e78e5441fb2ecc837f9881e5eddc1f6c7c42b6c3406446v2_2.html?tw=2&ts=0&tv=19",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1458110443766808732",
     "image": "question-images/q153.webp",
-    "images": {
-      "off": "question-images/q153.webp",
-      "open": "question-images/q153.webp"
-    },
     "handBeforeDraw": [
       "man3",
       "pin4",
@@ -21881,10 +21269,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/79ed8de275263b51e9845e8dfc6616cb8ee8ba927c028c64257da21dba33a8bbv2_2.html?tw=2&ts=4&tv=97",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1458111933260496999",
     "image": "question-images/q154.webp",
-    "images": {
-      "off": "question-images/q154.webp",
-      "open": "question-images/q154.webp"
-    },
     "handBeforeDraw": [
       "pin2",
       "pin5",
@@ -22016,10 +21400,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/79ed8de275263b51e9845e8dfc6616cb8ee8ba927c028c64257da21dba33a8bbv2_2.html?tw=2&ts=7&tv=31",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1458113004829933621",
     "image": "question-images/q155.webp",
-    "images": {
-      "off": "question-images/q155.webp",
-      "open": "question-images/q155.webp"
-    },
     "handBeforeDraw": [
       "man7",
       "aka1",
@@ -22148,10 +21528,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/79ed8de275263b51e9845e8dfc6616cb8ee8ba927c028c64257da21dba33a8bbv2_2.html?tw=2&ts=8&tv=13",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1458115532221059238",
     "image": "question-images/q156.webp",
-    "images": {
-      "off": "question-images/q156.webp",
-      "open": "question-images/q156.webp"
-    },
     "handBeforeDraw": [
       "sou9",
       "pin6",
@@ -22289,10 +21665,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/09a3bc316ed02fa2d7d2ffe17980eac32014448edb22df034c7274975bfdd413v2_2.html?tw=3&ts=2&tv=35",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1458448534478131358",
     "image": "question-images/q157.webp",
-    "images": {
-      "off": "question-images/q157.webp",
-      "open": "question-images/q157.webp"
-    },
     "handBeforeDraw": [
       "sou6",
       "pin5",
@@ -22439,10 +21811,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/e5ecf316e72d000c43ceea0cde62a00f0bf8edc5d830dfdb815ebb76137c122ev2_2.html?tw=3&ts=5&tv=19",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1460579478429503540",
     "image": "question-images/q158.webp",
-    "images": {
-      "off": "question-images/q158.webp",
-      "open": "question-images/q158.webp"
-    },
     "handBeforeDraw": [
       "sou7",
       "pin5",
@@ -22571,10 +21939,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/74ed82189ec03e788f1f36d4b366a889ad3daf4c95f4ac758b587914ac5e2b27v2_2.html?tw=2&ts=5&tv=79",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1460581412599107594",
     "image": "question-images/q159.webp",
-    "images": {
-      "off": "question-images/q159.webp",
-      "open": "question-images/q159.webp"
-    },
     "handBeforeDraw": [
       "pin2",
       "pin4",
@@ -22703,10 +22067,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/2835a6021b4aa57670ab13dfe6b77d8a11443469552d9d0c3cb0eac4e1981928v2_2.html?tw=3&ts=1&tv=69",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1460582900239040564",
     "image": "question-images/q160.webp",
-    "images": {
-      "off": "question-images/q160.webp",
-      "open": "question-images/q160.webp"
-    },
     "handBeforeDraw": [
       "sou7",
       "sou9",
@@ -22840,10 +22200,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/74ed82189ec03e788f1f36d4b366a889ad3daf4c95f4ac758b587914ac5e2b27v2_2.html?tw=2&ts=1&tv=21",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1460583659072389313",
     "image": "question-images/q161.webp",
-    "images": {
-      "off": "question-images/q161.webp",
-      "open": "question-images/q161.webp"
-    },
     "handBeforeDraw": [
       "ji1",
       "man1",
@@ -22974,10 +22330,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/58e15930b0c26947964a9d732c5c944e2a8b3b99068adf1a3fcd65913f07d7ddv2_2.html?tw=3&ts=1&tv=5",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1460585341542203392",
     "image": "question-images/q162.webp",
-    "images": {
-      "off": "question-images/q162.webp",
-      "open": "question-images/q162.webp"
-    },
     "handBeforeDraw": [
       "ji5",
       "pin1",
@@ -23118,10 +22470,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/58e15930b0c26947964a9d732c5c944e2a8b3b99068adf1a3fcd65913f07d7ddv2_2.html?tw=3&ts=5&tv=98",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1460587195000946790",
     "image": "question-images/q163.webp",
-    "images": {
-      "off": "question-images/q163.webp",
-      "open": "question-images/q163.webp"
-    },
     "handBeforeDraw": [
       "sou3",
       "sou4",
@@ -23237,10 +22585,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/b688e873caece86338225156ea04ad7113c1dd1301fc6ddb93d81ae36843f8efv2_2.html?tw=3&ts=0&tv=35",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1462343604595851285",
     "image": "question-images/q164.webp",
-    "images": {
-      "off": "question-images/q164.webp",
-      "open": "question-images/q164.webp"
-    },
     "handBeforeDraw": [
       "man6",
       "pin9",
@@ -23374,10 +22718,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/b688e873caece86338225156ea04ad7113c1dd1301fc6ddb93d81ae36843f8efv2_2.html?tw=3&ts=3&tv=11",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1462344940951703552",
     "image": "question-images/q165.webp",
-    "images": {
-      "off": "question-images/q165.webp",
-      "open": "question-images/q165.webp"
-    },
     "handBeforeDraw": [
       "ji7",
       "man7",
@@ -23515,10 +22855,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/b688e873caece86338225156ea04ad7113c1dd1301fc6ddb93d81ae36843f8efv2_2.html?tw=3&ts=11&tv=53",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1462347227371536385",
     "image": "question-images/q166.webp",
-    "images": {
-      "off": "question-images/q166.webp",
-      "open": "question-images/q166.webp"
-    },
     "handBeforeDraw": [
       "man4",
       "man8",
@@ -23664,10 +23000,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/f3ef7722fcb8b201519169482e51b37edd503d6f602e9ed4dab9ece9c26d8023v2_2.html?tw=0&ts=1&tv=33",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1462348240006414419",
     "image": "question-images/q167.webp",
-    "images": {
-      "off": "question-images/q167.webp",
-      "open": "question-images/q167.webp"
-    },
     "handBeforeDraw": [
       "man5",
       "man1",
@@ -23832,10 +23164,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/bbb296d468d258478365ea3266182a75e55e43f3fedcad5cf5b216b61ce102a8v2_2.html?tw=2&ts=0&tv=45",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1462352622634795093",
     "image": "question-images/q168.webp",
-    "images": {
-      "off": "question-images/q168.webp",
-      "open": "question-images/q168.webp"
-    },
     "handBeforeDraw": [
       "pin7",
       "man5",
@@ -23964,10 +23292,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/bbb296d468d258478365ea3266182a75e55e43f3fedcad5cf5b216b61ce102a8v2_2.html?tw=2&ts=3&tv=105",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1462353958499520671",
     "image": "question-images/q169.webp",
-    "images": {
-      "off": "question-images/q169.webp",
-      "open": "question-images/q169.webp"
-    },
     "handBeforeDraw": [
       "pin4",
       "sou8",
@@ -24091,10 +23415,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/bbb296d468d258478365ea3266182a75e55e43f3fedcad5cf5b216b61ce102a8v2_2.html?tw=2&ts=7&tv=64",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1462355574879682737",
     "image": "question-images/q170.webp",
-    "images": {
-      "off": "question-images/q170.webp",
-      "open": "question-images/q170.webp"
-    },
     "handBeforeDraw": [
       "pin8",
       "sou7",
@@ -24201,10 +23521,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/cdbc721fbf6f91115d0b428f9c642c23764bf89cd7556a216b9beafad877706fv2_2.html?tw=1&ts=0&tv=50",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1462710812576714843",
     "image": "question-images/q171.webp",
-    "images": {
-      "off": "question-images/q171.webp",
-      "open": "question-images/q171.webp"
-    },
     "handBeforeDraw": [
       "ji2",
       "ji2",
@@ -24313,10 +23629,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/cdbc721fbf6f91115d0b428f9c642c23764bf89cd7556a216b9beafad877706fv2_2.html?tw=1&ts=0&tv=51",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1462712719982465064",
     "image": "question-images/q172.webp",
-    "images": {
-      "off": "question-images/q172.webp",
-      "open": "question-images/q172.webp"
-    },
     "handBeforeDraw": [
       "ji2",
       "ji2",
@@ -24445,10 +23757,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/cdbc721fbf6f91115d0b428f9c642c23764bf89cd7556a216b9beafad877706fv2_2.html?tw=1&ts=1&tv=46",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1462714222361182302",
     "image": "question-images/q173.webp",
-    "images": {
-      "off": "question-images/q173.webp",
-      "open": "question-images/q173.webp"
-    },
     "handBeforeDraw": [
       "man1",
       "ji2",
@@ -24576,10 +23884,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/cdbc721fbf6f91115d0b428f9c642c23764bf89cd7556a216b9beafad877706fv2_2.html?tw=1&ts=5&tv=30",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1462715858630479893",
     "image": "question-images/q174.webp",
-    "images": {
-      "off": "question-images/q174.webp",
-      "open": "question-images/q174.webp"
-    },
     "handBeforeDraw": [
       "pin7",
       "sou2",
@@ -24709,10 +24013,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/74a6e980020c8a625582fd3a43b30ecfc1aab4e88af2ef85731fdceb392113a1v2_2.html?tw=0&ts=5&tv=39",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1462718184015659183",
     "image": "question-images/q175.webp",
-    "images": {
-      "off": "question-images/q175.webp",
-      "open": "question-images/q175.webp"
-    },
     "handBeforeDraw": [
       "pin6",
       "man7",
@@ -24844,10 +24144,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/74a6e980020c8a625582fd3a43b30ecfc1aab4e88af2ef85731fdceb392113a1v2_2.html?tw=0&ts=10&tv=11",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1462719361918959688",
     "image": "question-images/q176.webp",
-    "images": {
-      "off": "question-images/q176.webp",
-      "open": "question-images/q176.webp"
-    },
     "handBeforeDraw": [
       "man2",
       "man3",
@@ -24969,10 +24265,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/dd33d7acb3cbf8677bc2b459a75f9cf07e7d1d3c4536c2b4656bda2f607cd1aev2_2.html?tw=1&ts=3&tv=47",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1462720402219335805",
     "image": "question-images/q177.webp",
-    "images": {
-      "off": "question-images/q177.webp",
-      "open": "question-images/q177.webp"
-    },
     "handBeforeDraw": [
       "sou8",
       "sou3",
@@ -25094,10 +24386,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/dd33d7acb3cbf8677bc2b459a75f9cf07e7d1d3c4536c2b4656bda2f607cd1aev2_2.html?tw=1&ts=6&tv=112",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1462721870406357084",
     "image": "question-images/q178.webp",
-    "images": {
-      "off": "question-images/q178.webp",
-      "open": "question-images/q178.webp"
-    },
     "handBeforeDraw": [
       "sou6",
       "man3",
@@ -25224,10 +24512,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/956235e69851b6c2a8d95b4825b7c9a5a245cc8aa3f8500f7c22bae0e5cd944bv2_2.html?tw=1&ts=3&tv=1",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1464950794188095702",
     "image": "question-images/q179.webp",
-    "images": {
-      "off": "question-images/q179.webp",
-      "open": "question-images/q179.webp"
-    },
     "handBeforeDraw": [
       "ji7",
       "sou8",
@@ -25375,10 +24659,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/956235e69851b6c2a8d95b4825b7c9a5a245cc8aa3f8500f7c22bae0e5cd944bv2_2.html?tw=1&ts=7&tv=25",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1464955307733291090",
     "image": "question-images/q180.webp",
-    "images": {
-      "off": "question-images/q180.webp",
-      "open": "question-images/q180.webp"
-    },
     "handBeforeDraw": [
       "pin7",
       "sou2",
@@ -25530,10 +24810,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/66378356d7e951665a9132c6600d129cea8564c44fbb0544f32e8a2360ee5747v2_2.html?tw=3&ts=1&tv=130",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1464958429566341256",
     "image": "question-images/q181.webp",
-    "images": {
-      "off": "question-images/q181.webp",
-      "open": "question-images/q181.webp"
-    },
     "handBeforeDraw": [
       "man9",
       "man2",
@@ -25649,10 +24925,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/66378356d7e951665a9132c6600d129cea8564c44fbb0544f32e8a2360ee5747v2_2.html?tw=3&ts=2&tv=35",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1464960814694928543",
     "image": "question-images/q182.webp",
-    "images": {
-      "off": "question-images/q182.webp",
-      "open": "question-images/q182.webp"
-    },
     "handBeforeDraw": [
       "pin3",
       "sou5",
@@ -25786,10 +25058,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/66378356d7e951665a9132c6600d129cea8564c44fbb0544f32e8a2360ee5747v2_2.html?tw=3&ts=2&tv=61",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1464961518578958508",
     "image": "question-images/q183.webp",
-    "images": {
-      "off": "question-images/q183.webp",
-      "open": "question-images/q183.webp"
-    },
     "handBeforeDraw": [
       "pin3",
       "sou5",
@@ -25913,10 +25181,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/66378356d7e951665a9132c6600d129cea8564c44fbb0544f32e8a2360ee5747v2_2.html?tw=3&ts=3&tv=9",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1464962124185862144",
     "image": "question-images/q184.webp",
-    "images": {
-      "off": "question-images/q184.webp",
-      "open": "question-images/q184.webp"
-    },
     "handBeforeDraw": [
       "sou3",
       "man6",
@@ -26045,10 +25309,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/66378356d7e951665a9132c6600d129cea8564c44fbb0544f32e8a2360ee5747v2_2.html?tw=3&ts=4&tv=21",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1464962893937246208",
     "image": "question-images/q185.webp",
-    "images": {
-      "off": "question-images/q185.webp",
-      "open": "question-images/q185.webp"
-    },
     "handBeforeDraw": [
       "pin4",
       "pin6",
@@ -26169,10 +25429,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/66378356d7e951665a9132c6600d129cea8564c44fbb0544f32e8a2360ee5747v2_2.html?tw=3&ts=7&tv=13",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1464964873858453730",
     "image": "question-images/q186.webp",
-    "images": {
-      "off": "question-images/q186.webp",
-      "open": "question-images/q186.webp"
-    },
     "handBeforeDraw": [
       "man5",
       "man1",
@@ -26323,10 +25579,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/66378356d7e951665a9132c6600d129cea8564c44fbb0544f32e8a2360ee5747v2_2.html?tw=3&ts=7&tv=29",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1464968553739321519",
     "image": "question-images/q187.webp",
-    "images": {
-      "off": "question-images/q187.webp",
-      "open": "question-images/q187.webp"
-    },
     "handBeforeDraw": [
       "man1",
       "man2",
@@ -26465,10 +25717,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/6fb379546fae0ee3348a525251218baaf7b27eda3ec3df1c3554adad6707904fv2_2.html?tw=2&ts=6&tv=91",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1470296587111632936",
     "image": "question-images/q188.webp",
-    "images": {
-      "off": "question-images/q188.webp",
-      "open": "question-images/q188.webp"
-    },
     "handBeforeDraw": [
       "pin5",
       "sou5",
@@ -26597,10 +25845,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/6fb379546fae0ee3348a525251218baaf7b27eda3ec3df1c3554adad6707904fv2_2.html?tw=2&ts=7&tv=3",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1470299625750790234",
     "image": "question-images/q189.webp",
-    "images": {
-      "off": "question-images/q189.webp",
-      "open": "question-images/q189.webp"
-    },
     "handBeforeDraw": [
       "man9",
       "man8",
@@ -26722,10 +25966,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/6fb379546fae0ee3348a525251218baaf7b27eda3ec3df1c3554adad6707904fv2_2.html?tw=2&ts=4&tv=17",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1470300368775807081",
     "image": "question-images/q190.webp",
-    "images": {
-      "off": "question-images/q190.webp",
-      "open": "question-images/q190.webp"
-    },
     "handBeforeDraw": [
       "sou6",
       "pin3",
@@ -26852,10 +26092,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/6fb379546fae0ee3348a525251218baaf7b27eda3ec3df1c3554adad6707904fv2_2.html?tw=2&ts=8&tv=9",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1470301294857289870",
     "image": "question-images/q191.webp",
-    "images": {
-      "off": "question-images/q191.webp",
-      "open": "question-images/q191.webp"
-    },
     "handBeforeDraw": [
       "pin9",
       "pin7",
@@ -26977,10 +26213,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/ea8b9f40dc16c37f7b7f15a0b5e521e8c79288506f2470337508d4ef9543cc89v2_2.html?tw=0&ts=0&tv=37",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1470303131677233204",
     "image": "question-images/q192.webp",
-    "images": {
-      "off": "question-images/q192.webp",
-      "open": "question-images/q192.webp"
-    },
     "handBeforeDraw": [
       "man1",
       "pin9",
@@ -27152,10 +26384,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/ea8b9f40dc16c37f7b7f15a0b5e521e8c79288506f2470337508d4ef9543cc89v2_2.html?tw=0&ts=3&tv=10",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1470306239815880725",
     "image": "question-images/q193.webp",
-    "images": {
-      "off": "question-images/q193.webp",
-      "open": "question-images/q193.webp"
-    },
     "handBeforeDraw": [
       "pin6",
       "man3",
@@ -27274,10 +26502,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/ea8b9f40dc16c37f7b7f15a0b5e521e8c79288506f2470337508d4ef9543cc89v2_2.html?tw=0&ts=8&tv=25",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1470307972918935729",
     "image": "question-images/q194.webp",
-    "images": {
-      "off": "question-images/q194.webp",
-      "open": "question-images/q194.webp"
-    },
     "handBeforeDraw": [
       "sou5",
       "pin6",
@@ -27419,10 +26643,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/5629da70dfd36a3686fdb67f8a8b579d5471258c80b721c53ba8593aaf24a73dv2_2.html?tw=3&ts=9&tv=53",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1470311658416246856",
     "image": "question-images/q195.webp",
-    "images": {
-      "off": "question-images/q195.webp",
-      "open": "question-images/q195.webp"
-    },
     "handBeforeDraw": [
       "man2",
       "aka2",
@@ -27539,10 +26759,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/5629da70dfd36a3686fdb67f8a8b579d5471258c80b721c53ba8593aaf24a73dv2_2.html?tw=3&ts=12&tv=57",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1470312928744833064",
     "image": "question-images/q196.webp",
-    "images": {
-      "off": "question-images/q196.webp",
-      "open": "question-images/q196.webp"
-    },
     "handBeforeDraw": [
       "sou1",
       "man2",
@@ -27690,10 +26906,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/f1735b88ed50f6609c7343ea3390e0e593ad9e72cda96fa08bed807de41f53fbv2_2.html?tw=1&ts=0&tv=35",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1472275768854843604",
     "image": "question-images/q197.webp",
-    "images": {
-      "off": "question-images/q197.webp",
-      "open": "question-images/q197.webp"
-    },
     "handBeforeDraw": [
       "sou4",
       "pin9",
@@ -27822,10 +27034,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/f1735b88ed50f6609c7343ea3390e0e593ad9e72cda96fa08bed807de41f53fbv2_2.html?tw=1&ts=2&tv=13",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1472276778792911032",
     "image": "question-images/q198.webp",
-    "images": {
-      "off": "question-images/q198.webp",
-      "open": "question-images/q198.webp"
-    },
     "handBeforeDraw": [
       "man7",
       "pin8",
@@ -27964,10 +27172,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/f1735b88ed50f6609c7343ea3390e0e593ad9e72cda96fa08bed807de41f53fbv2_2.html?tw=1&ts=7&tv=11",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1472278409110618203",
     "image": "question-images/q199.webp",
-    "images": {
-      "off": "question-images/q199.webp",
-      "open": "question-images/q199.webp"
-    },
     "handBeforeDraw": [
       "sou3",
       "sou3",
@@ -28139,10 +27343,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/f1735b88ed50f6609c7343ea3390e0e593ad9e72cda96fa08bed807de41f53fbv2_2.html?tw=1&ts=8&tv=41",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1472280335042744503",
     "image": "question-images/q200.webp",
-    "images": {
-      "off": "question-images/q200.webp",
-      "open": "question-images/q200.webp"
-    },
     "handBeforeDraw": [
       "pin8",
       "man4",
@@ -28281,10 +27481,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/bd3586caa9afb1915136ac40b11740819b1c6c1ac5e4bf71f511edf65d780173v2_2.html?tw=2&ts=2&tv=46",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1476143438364672020",
     "image": "question-images/q201.webp",
-    "images": {
-      "off": "question-images/q201.webp",
-      "open": "question-images/q201.webp"
-    },
     "handBeforeDraw": [
       "pin9",
       "sou2",
@@ -28398,10 +27594,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/bd3586caa9afb1915136ac40b11740819b1c6c1ac5e4bf71f511edf65d780173v2_2.html?tw=2&ts=5&tv=5",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1476144581467963464",
     "image": "question-images/q202.webp",
-    "images": {
-      "off": "question-images/q202.webp",
-      "open": "question-images/q202.webp"
-    },
     "handBeforeDraw": [
       "pin2",
       "sou4",
@@ -28580,10 +27772,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/bd3586caa9afb1915136ac40b11740819b1c6c1ac5e4bf71f511edf65d780173v2_2.html?tw=2&ts=6&tv=53",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1476148569613271041",
     "image": "question-images/q203.webp",
-    "images": {
-      "off": "question-images/q203.webp",
-      "open": "question-images/q203.webp"
-    },
     "handBeforeDraw": [
       "sou7",
       "sou8",
@@ -28731,10 +27919,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/430545b69c7d95e65429ca31f5157cccf1e3b53c37e90d37abc54e5d3da3b60fv2_2.html?tw=0&ts=0&tv=27",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1480193857533776043",
     "image": "question-images/q204.webp",
-    "images": {
-      "off": "question-images/q204.webp",
-      "open": "question-images/q204.webp"
-    },
     "handBeforeDraw": [
       "man4",
       "pin6",
@@ -28875,10 +28059,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/430545b69c7d95e65429ca31f5157cccf1e3b53c37e90d37abc54e5d3da3b60fv2_2.html?tw=0&ts=6&tv=3",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1480194777642172507",
     "image": "question-images/q205.webp",
-    "images": {
-      "off": "question-images/q205.webp",
-      "open": "question-images/q205.webp"
-    },
     "handBeforeDraw": [
       "ji1",
       "pin1",
@@ -29048,10 +28228,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/430545b69c7d95e65429ca31f5157cccf1e3b53c37e90d37abc54e5d3da3b60fv2_2.html?tw=0&ts=11&tv=5",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1480195889191452916",
     "image": "question-images/q206.webp",
-    "images": {
-      "off": "question-images/q206.webp",
-      "open": "question-images/q206.webp"
-    },
     "handBeforeDraw": [
       "ji1",
       "sou5",
@@ -29204,10 +28380,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/6b5122fa327356011ac07dbfe12b9e15577108fac5a0a10498e563a279297465v2_2.html?tw=2&ts=3&tv=49",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1480197683451920537",
     "image": "question-images/q207.webp",
-    "images": {
-      "off": "question-images/q207.webp",
-      "open": "question-images/q207.webp"
-    },
     "handBeforeDraw": [
       "sou1",
       "ji2",
@@ -29343,10 +28515,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/6b5122fa327356011ac07dbfe12b9e15577108fac5a0a10498e563a279297465v2_2.html?tw=2&ts=4&tv=35",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1480198504788787221",
     "image": "question-images/q208.webp",
-    "images": {
-      "off": "question-images/q208.webp",
-      "open": "question-images/q208.webp"
-    },
     "handBeforeDraw": [
       "sou9",
       "pin6",
@@ -29480,10 +28648,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/6b5122fa327356011ac07dbfe12b9e15577108fac5a0a10498e563a279297465v2_2.html?tw=2&ts=7&tv=114",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1480199234815791167",
     "image": "question-images/q209.webp",
-    "images": {
-      "off": "question-images/q209.webp",
-      "open": "question-images/q209.webp"
-    },
     "handBeforeDraw": [
       "man3",
       "sou8",
@@ -29610,10 +28774,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/2ee55b836d7e264865d760312ef172b923c2fb3e06c75e5e496d9a1241e25ed1v2_2.html?tw=0&ts=5&tv=11",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1482645004165058572",
     "image": "question-images/q210.webp",
-    "images": {
-      "off": "question-images/q210.webp",
-      "open": "question-images/q210.webp"
-    },
     "handBeforeDraw": [
       "man8",
       "sou2",
@@ -29768,10 +28928,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/2ee55b836d7e264865d760312ef172b923c2fb3e06c75e5e496d9a1241e25ed1v2_2.html?tw=0&ts=6&tv=1",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1482646048785563738",
     "image": "question-images/q211.webp",
-    "images": {
-      "off": "question-images/q211.webp",
-      "open": "question-images/q211.webp"
-    },
     "handBeforeDraw": [
       "pin6",
       "sou6",
@@ -29912,10 +29068,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/2ee55b836d7e264865d760312ef172b923c2fb3e06c75e5e496d9a1241e25ed1v2_2.html?tw=0&ts=10&tv=11",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1482648138765570290",
     "image": "question-images/q212.webp",
-    "images": {
-      "off": "question-images/q212.webp",
-      "open": "question-images/q212.webp"
-    },
     "handBeforeDraw": [
       "pin6",
       "sou8",
@@ -30049,10 +29201,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/2ee55b836d7e264865d760312ef172b923c2fb3e06c75e5e496d9a1241e25ed1v2_2.html?tw=0&ts=10&tv=76",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1482649099214913557",
     "image": "question-images/q213.webp",
-    "images": {
-      "off": "question-images/q213.webp",
-      "open": "question-images/q213.webp"
-    },
     "handBeforeDraw": [
       "pin2",
       "pin8",
@@ -30158,10 +29306,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/ae4065a34176e821d08adabd66850298f0357986bfd231b337318100aac5bd59v2_2.html?tw=0&ts=0&tv=68",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1486382752638042215",
     "image": "question-images/q214.webp",
-    "images": {
-      "off": "question-images/q214.webp",
-      "open": "question-images/q214.webp"
-    },
     "handBeforeDraw": [
       "aka2",
       "pin5",
@@ -30268,10 +29412,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/3844a1a1fa9960e33dcb4759c57ef6999edcaf3c7755886e66d8e7c3094bd8bfv2_2.html?tw=1&ts=0&tv=33",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1487362443125456906",
     "image": "question-images/q215.webp",
-    "images": {
-      "off": "question-images/q215.webp",
-      "open": "question-images/q215.webp"
-    },
     "handBeforeDraw": [
       "man1",
       "sou5",
@@ -30400,10 +29540,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/3844a1a1fa9960e33dcb4759c57ef6999edcaf3c7755886e66d8e7c3094bd8bfv2_2.html?tw=1&ts=3&tv=21",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1487364078832849027",
     "image": "question-images/q216.webp",
-    "images": {
-      "off": "question-images/q216.webp",
-      "open": "question-images/q216.webp"
-    },
     "handBeforeDraw": [
       "pin7",
       "man2",
@@ -30555,10 +29691,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/3844a1a1fa9960e33dcb4759c57ef6999edcaf3c7755886e66d8e7c3094bd8bfv2_2.html?tw=1&ts=5&tv=33",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1487366272256704604",
     "image": "question-images/q217.webp",
-    "images": {
-      "off": "question-images/q217.webp",
-      "open": "question-images/q217.webp"
-    },
     "handBeforeDraw": [
       "man6",
       "man7",
@@ -30687,10 +29819,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/953ca90b93f14909d150cabe5a0afecfc687a0a3f149caef505e6342df904b11v2_2.html?tw=1&ts=1&tv=33",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1487728545680855160",
     "image": "question-images/q218.webp",
-    "images": {
-      "off": "question-images/q218.webp",
-      "open": "question-images/q218.webp"
-    },
     "handBeforeDraw": [
       "man9",
       "sou4",
@@ -30819,10 +29947,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/9e9f42234d041924897f20ed5ac120e943a530b296058de4742797bffea736b7v2_2.html?tw=3&ts=2&tv=35",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1487731603609485312",
     "image": "question-images/q219.webp",
-    "images": {
-      "off": "question-images/q219.webp",
-      "open": "question-images/q219.webp"
-    },
     "handBeforeDraw": [
       "pin4",
       "sou5",
@@ -30992,10 +30116,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/report_viewer.html?report_id=240768d3ed2dc421ee8c55564938b04eeca57b16c2944dc7a5e0c95e7fb106c4v2_2&tw=2&ts=0&tv=88",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1512409216910889170",
     "image": "question-images/q220.webp",
-    "images": {
-      "off": "question-images/q220.webp",
-      "open": "question-images/q220.webp"
-    },
     "handBeforeDraw": [
       "sou8",
       "sou8",
@@ -31112,10 +30232,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/report_viewer.html?report_id=240768d3ed2dc421ee8c55564938b04eeca57b16c2944dc7a5e0c95e7fb106c4v2_2&tw=2&ts=1&tv=21",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1512412635176501459",
     "image": "question-images/q221.webp",
-    "images": {
-      "off": "question-images/q221.webp",
-      "open": "question-images/q221.webp"
-    },
     "handBeforeDraw": [
       "sou6",
       "pin4",
@@ -31254,10 +30370,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/report_viewer.html?report_id=e6ec183148a9ba9b77702653a8a1e5471447c2ad8c968141861c9d22e3772115v2_2&tw=1&ts=3&tv=49",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1513421915170275329",
     "image": "question-images/q222.webp",
-    "images": {
-      "off": "question-images/q222.webp",
-      "open": "question-images/q222.webp"
-    },
     "handBeforeDraw": [
       "man3",
       "man4",
@@ -31400,10 +30512,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/report_viewer.html?report_id=e6ec183148a9ba9b77702653a8a1e5471447c2ad8c968141861c9d22e3772115v2_2&tw=1&ts=5&tv=53",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1513423154276728862",
     "image": "question-images/q223.webp",
-    "images": {
-      "off": "question-images/q223.webp",
-      "open": "question-images/q223.webp"
-    },
     "handBeforeDraw": [
       "man8",
       "man7",
@@ -31539,10 +30647,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/report_viewer.html?report_id=e6ec183148a9ba9b77702653a8a1e5471447c2ad8c968141861c9d22e3772115v2_2&tw=1&ts=9&tv=77",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1513468368634773624",
     "image": "question-images/q224.webp",
-    "images": {
-      "off": "question-images/q224.webp",
-      "open": "question-images/q224.webp"
-    },
     "handBeforeDraw": [
       "man2",
       "man8",
@@ -31676,10 +30780,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/report_viewer.html?report_id=33b02628a7a4baed5b16049d06ea832bb8e00cc47c0b907b1ec0231773bea16av2_2&tw=3&ts=1&tv=37",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1518611929491439809",
     "image": "question-images/q225.webp",
-    "images": {
-      "off": "question-images/q225.webp",
-      "open": "question-images/q225.webp"
-    },
     "handBeforeDraw": [
       "pin3",
       "pin5",
@@ -31822,10 +30922,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/report_viewer.html?report_id=8928f34ace55497c4320179e9513a75619bccdb111fa81bc722fced60342324bv2_2&tw=1&ts=7&tv=103",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1518620018164891648",
     "image": "question-images/q226.webp",
-    "images": {
-      "off": "question-images/q226.webp",
-      "open": "question-images/q226.webp"
-    },
     "handBeforeDraw": [
       "sou9",
       "sou6",
@@ -31954,10 +31050,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/report_viewer.html?report_id=67519fedd9da71e4daa574e1967715aab7f8b8da75850042764a1a3644e55151v2_2&tw=3&ts=3&tv=19",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1522267756001493055",
     "image": "question-images/q227.webp",
-    "images": {
-      "off": "question-images/q227.webp",
-      "open": "question-images/q227.webp"
-    },
     "handBeforeDraw": [
       "aka2",
       "sou8",
@@ -32088,10 +31180,6 @@
     "nagaUrl": "https://naga.dmv.nico/htmls/report_viewer.html?report_id=24d744822db64155884cc74cf0d3d76a0ce4ddf6398435ce41d5071807859679v2_2&tw=0&ts=1&tv=49",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1522881702941298808",
     "image": "question-images/q228.webp",
-    "images": {
-      "off": "question-images/q228.webp",
-      "open": "question-images/q228.webp"
-    },
     "handBeforeDraw": [
       "sou7",
       "man4",

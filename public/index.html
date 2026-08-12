@@ -26,11 +26,11 @@
       --panel-2: #0c2a3a;
       --line: rgba(255,255,255,.14);
       --gold: #f1c457;
-      --omega: #55d59b;
-      --gamma: #71b7ff;
-      --nishiki: #f1c457;
-      --hihikari: #ac91ff;
-      --kagashi: #ff7d8a;
+      --omega: #f39a3f;
+      --gamma: #55d59b;
+      --nishiki: #9b78ff;
+      --hihikari: #f1c457;
+      --kagashi: #4aa8ff;
       --shadow: 0 22px 70px rgba(0,0,0,.35);
     }
 
@@ -142,15 +142,21 @@
     .generator-settings-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 7px; margin-top: 8px; }
     .generator-settings-note { margin-top: 7px !important; font-size: 9px !important; }
     .generator-results { display: grid; gap: 8px; }
-    .generator-candidate { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 10px; background: rgba(12,50,70,.55); border: 1px solid rgba(255,255,255,.11); border-radius: 9px; }
+    .generator-candidate { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; align-items: start; padding: 10px; background: rgba(12,50,70,.55); border: 1px solid rgba(255,255,255,.11); border-radius: 9px; }
     .generator-candidate.is-duplicate { opacity: .62; }
     .candidate-title { font-size: 13px; font-weight: 900; }
     .candidate-meta { margin-top: 3px; color: var(--muted); font-size: 9px; line-height: 1.45; }
     .candidate-models { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
     .candidate-model { display: inline-flex; align-items: center; gap: 3px; padding: 3px 5px; background: rgba(0,0,0,.2); border-radius: 5px; font-size: 8px; }
     .candidate-model img { width: 19px; height: auto; }
-    .candidate-controls { display: grid; gap: 5px; min-width: 150px; }
+    .candidate-controls { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 7px; min-width: 0; align-items: center; }
     .candidate-controls input { max-width: 190px; color: var(--muted); font-size: 8px; }
+    .candidate-preview { grid-column: 1 / -1; width: min(850px, 100%); aspect-ratio: 14 / 13; overflow: hidden; background: #075b91; border: 1px solid rgba(113,183,255,.38); border-radius: 7px; }
+    .candidate-preview img { display: block; width: 100%; height: 100%; object-fit: contain; }
+    .candidate-capture-state { grid-column: 1 / -1; }
+    .candidate-capture-state { color: #bfe9ef; font-size: 9px; line-height: 1.4; }
+    .candidate-capture-state.is-error { color: #ffb7bd; }
+    .candidate-file-label { display: grid; gap: 3px; color: var(--muted); font-size: 8px; }
     .question-manage-dialog { width: min(92vw, 440px); padding: 0; color: var(--ink); background: #071c2b; border: 1px solid rgba(113,183,255,.45); border-radius: 13px; box-shadow: var(--shadow); }
     .question-manage-dialog::backdrop { background: rgba(2,10,17,.78); }
     .question-manage-inner { display: grid; gap: 11px; padding: 18px; }
@@ -183,8 +189,6 @@
     .model-control, .question-control { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 11px; white-space: nowrap; }
     .question-control { margin-left: auto; }
     .model-control select, .question-control select { padding: 5px 8px; color: var(--ink); background: #071b28; border: 1px solid var(--line); border-radius: 7px; }
-    .scene-toggle { padding: 6px 10px; color: var(--ink); background: #0c3246; border: 1px solid rgba(113,183,255,.45); border-radius: 7px; font-size: 11px; font-weight: 800; }
-    .scene-toggle:hover { background: #144a63; }
     .menu-button { padding: 6px 10px; color: #e7f8ff; background: #164862; border: 1px solid rgba(113,183,255,.55); border-radius: 7px; font-size: 11px; font-weight: 800; }
     .menu-button:hover, .menu-button:focus-visible { background: #246b8a; outline: 2px solid rgba(113,183,255,.28); outline-offset: 1px; }
     .scene-card { padding: 8px; background: rgba(7, 28, 43, .92); border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow); }
@@ -244,9 +248,10 @@
     .hand-layer .tile-button img { width: var(--hand-tile-width, clamp(24px, 4.1cqw, 36px)); }
     .selection-marker { position: absolute; top: calc(100% + 5px); left: 50%; z-index: 2; width: clamp(14px, 1.55vw, 20px); height: clamp(12px, 1.35vw, 17px); opacity: 0; pointer-events: none; background: #ef3d4f; clip-path: polygon(50% 0, 100% 100%, 0 100%); filter: drop-shadow(0 2px 2px rgba(0,0,0,.4)); transform: translateX(-50%); transition: opacity .1s ease; }
     .tile-button:hover .selection-marker, .tile-button:focus-visible .selection-marker, .tile-button.is-selected .selection-marker { opacity: 1; }
-    .probability-stack { position: absolute; bottom: calc(100% + 4px); left: 0; width: 100%; height: 22px; }
-    .probability-mini-track { position: absolute; bottom: 0; left: calc((100% - 3px) * var(--bar-slot) / 2); width: 3px; height: 100%; overflow: hidden; background: rgba(0,0,0,.35); border-radius: 1px 1px 0 0; }
-    .probability-mini-fill { position: absolute; right: 0; bottom: 0; left: 0; display: block; border-radius: 2px 2px 0 0; }
+    .probability-stack { position: absolute; bottom: calc(100% + 4px); left: 2px; display: flex; align-items: stretch; gap: 0; width: calc(100% - 4px); height: 22px; overflow: hidden; background: transparent; }
+    .probability-mini-track { position: relative; flex: 1 1 0; min-width: 0; height: 100%; overflow: hidden; }
+    .probability-mini-fill { position: absolute; bottom: 0; left: 50%; display: block; width: 3px; max-width: 100%; height: 0; transform: translateX(-50%); background: #68735b; border-radius: 1px 1px 0 0; }
+    .probability-mini-fill.is-judge-model { width: 7px; background: var(--nishiki); }
     .model-omega { background: var(--omega); }
     .model-gamma { background: var(--gamma); }
     .model-nishiki { background: var(--nishiki); }
@@ -379,7 +384,7 @@
       .source-url { width: 100%; }
       .model-control, .question-control { justify-content: space-between; width: 100%; margin-left: 0; }
       .model-control select, .question-control select { flex: 1; }
-      .scene-toggle, .menu-button { width: 100%; }
+      .menu-button { width: 100%; }
       .quick-start { grid-template-columns: 1fr 1fr; }
       .quick-start-card.primary { grid-column: 1 / -1; }
       .menu-filters { grid-template-columns: 1fr; }
@@ -390,7 +395,7 @@
       .student-row { grid-template-columns: 1fr 1fr; }
       .student-row > strong { grid-column: 1 / -1; }
       .generator-candidate { grid-template-columns: 1fr; }
-      .candidate-controls { min-width: 0; }
+      .candidate-controls { grid-template-columns: 1fr; min-width: 0; }
       .candidate-controls input { max-width: none; }
       .scene-card { padding: 3px; border-radius: 9px; }
       .answer-strip { grid-template-columns: 1fr; gap: 8px; padding: 9px; }
@@ -491,7 +496,6 @@
       <div class="source-url"><span>元画面：</span> <strong id="sceneProblemTitle">問題249</strong> <a class="source-link" id="nagaSourceLink" href="#" target="_blank" rel="noopener noreferrer">URLに移動</a> <span id="sceneMeta">· report_viewer.html · ts=1 · tv=69 · tw=0</span></div>
       <label class="question-control">問題を選ぶ <select id="questionSelect" aria-label="問題を選ぶ"></select></label>
       <label class="model-control">正誤判定基準 <select id="modelSelect" aria-label="正誤判定基準"></select></label>
-      <button class="scene-toggle" id="surroundingsToggle" type="button" aria-expanded="false">周囲の手牌を開く</button>
       <button class="menu-button" id="menuButton" type="button">問題一覧へ</button>
     </div>
 
@@ -562,7 +566,7 @@
     </div>
 
     <div class="below-note">
-      <span>周囲の手牌はNAGA原本の伏牌表示が初期状態です。「周囲の手牌を開く」で開示版に切り替えられます。操作できるのは自分の手牌だけです。</span>
+      <span>周囲の手牌はNAGA原本の伏牌表示で固定しています。操作できるのは自分の手牌だけです。</span>
       <span>PROTOTYPE <strong>v<span id="versionSmall"></span></strong></span>
     </div>
   </main>
@@ -632,7 +636,6 @@
     const MODEL_COLORS = ["model-omega", "model-gamma", "model-nishiki", "model-hihikari", "model-kagashi"];
     const MODEL_PRIORITY = ["ニシキ", "カガシ", "ヒバカリ", "ガンマ", "オメガ"];
     const HAND_BAR_MODEL_NAMES = ["ニシキ", "ヒバカリ", "カガシ"];
-    const SCENE_IMAGES = { off: "naga-scene-off.jpg", open: "naga-scene-open.jpg" };
     const NAGA_URL = "https://naga.dmv.nico/htmls/report_viewer.html?report_id=3649c457ea7a1b61abccdca5ffbc43764587421511f08b6f8ac49d80308a1114v2_2&tw=0&ts=1&tv=69";
     const THREAD_URL = "https://discord.com/channels/1166706544856006656/1532011607209541833";
     const THREAD_MESSAGES = [
@@ -642,7 +645,7 @@
       { id: "1532012487212536022", author: "てんてん", createdAt: "2026-07-29T13:10:40.367Z", content: "聴牌取らずは良いが、打8ｓ推奨。\n打北は面子手立直進行に於ける二大タブー（①単独暗刻の破壊②単独雀頭の破壊）に抵触。\n打8ｓとすれば、ヘッドレス2型連続形となるため、4ｐ6ｐ引きでも三色聴牌となるし、9ｐ引きも悪くない。", attachments: [] },
       { id: "1532017637700272302", author: "くにたそ", createdAt: "2026-07-29T13:31:08.339Z", content: "恥ずかしながら、時間切れの北でした……笑\n7と8sで迷って結局時間切れましたが、テンパイ取らずの8s、僕はすごく大好きです！めちゃくちゃ言われて参考になりました！👍", attachments: [] }
     ];
-    const state = { selected: null, selectedIndex: null, callDecision: null, revealed: false, answerRecorded: false, answerAttemptId: null, questionStartedAt: Date.now(), judgeModel: 2, riichi: false, surroundingsOpen: false, commentsExpanded: false, commentComposerOpen: false, comments: THREAD_MESSAGES.map(message => ({ ...message, attachments: [...message.attachments] })) };
+    const state = { selected: null, selectedIndex: null, callDecision: null, revealed: false, answerRecorded: false, answerAttemptId: null, questionStartedAt: Date.now(), judgeModel: 2, riichi: false, commentsExpanded: false, commentComposerOpen: false, comments: THREAD_MESSAGES.map(message => ({ ...message, attachments: [...message.attachments] })) };
 
     function tileLabel(tile) {
       if (TILE_NAMES[tile]) return TILE_NAMES[tile];
@@ -850,13 +853,11 @@
 
     function probabilityStack(tile) {
       if (!state.revealed || !SCENE.probabilities[tile]) return "";
-      const modelIndices = handBarModelIndices();
-      const bars = modelIndices.map((index, slot) => {
-        const value = SCENE.probabilities[tile][index] ?? 0;
-        if (value <= 0) return "";
-        return `<span class="probability-mini-track" style="--bar-slot:${slot}" title="${SCENE.models[index].name} ${value.toFixed(2)}%"><span class="probability-mini-fill ${MODEL_COLORS[index]}" style="height:${value}%"></span></span>`;
-      }).join("");
-      return bars ? `<div class="probability-stack" aria-label="${tileLabel(tile)}のモデル別推奨度">${bars}</div>` : "";
+      const entries = handBarModelIndices()
+        .map(index => ({ index, value: SCENE.probabilities[tile][index] ?? 0 }))
+        .filter(entry => entry.value > 0);
+      const bars = entries.map(({ index, value }) => { const judgeClass = index === state.judgeModel ? ` ${MODEL_COLORS[index]} is-judge-model` : " is-reference-model"; return `<span class="probability-mini-track" title="${SCENE.models[index].name} ${value.toFixed(2)}%"><span class="probability-mini-fill${judgeClass}" style="height:${Math.min(100, value)}%"></span></span>`; }).join("");
+      return bars ? `<div class="probability-stack" data-bar-count="${entries.length}" aria-label="${tileLabel(tile)}のモデル別推奨度">${bars}</div>` : "";
     }
 
     function tileButton(tile, index, isDraw = false) {
@@ -989,15 +990,6 @@
       document.getElementById("threadLink").href = THREAD_URL;
       renderComments();
       document.getElementById("resetButton").addEventListener("click", () => reset());
-      document.getElementById("surroundingsToggle").addEventListener("click", () => {
-        state.surroundingsOpen = !state.surroundingsOpen;
-        const button = document.getElementById("surroundingsToggle");
-        const sceneImage = document.getElementById("sceneImage");
-        sceneImage.src = state.surroundingsOpen ? SCENE_IMAGES.open : SCENE_IMAGES.off;
-        sceneImage.alt = state.surroundingsOpen ? "指定NAGA局面の開示スクリーンショット" : "指定NAGA局面の伏牌スクリーンショット";
-        button.setAttribute("aria-expanded", String(state.surroundingsOpen));
-        button.textContent = state.surroundingsOpen ? "周囲の手牌を隠す" : "周囲の手牌を開く";
-      });
       renderHand();
       renderAnswer();
     }
@@ -1011,7 +1003,6 @@
         number: 249,
         title: "問題249",
         image: "naga-scene-off.jpg",
-        images: { off: "naga-scene-off.jpg", open: "naga-scene-open.jpg" },
         nagaUrl: NAGA_URL,
         threadUrl: THREAD_URL,
         comments: THREAD_MESSAGES,
@@ -1028,6 +1019,7 @@
       let generatorReportV44 = null;
       let generatorSpecV44 = null;
       let generatorModeV46 = "scene";
+      let generatorJobIdV51 = null;
       let supabaseSessionV46 = null;
       let sharedCollectionV46 = null;
       const modelColorByNameV16 = { オメガ: "model-omega", ガンマ: "model-gamma", ニシキ: "model-nishiki", ヒバカリ: "model-hihikari", カガシ: "model-kagashi" };
@@ -1037,7 +1029,7 @@
         my: { title: "MY問題集", note: "出題できる問題を新しい順に表示しています。お気に入り登録やゴミ箱への移動は、この端末内だけに保存されます。" },
         favorites: { title: "お気に入り", note: "あとで繰り返したい問題をまとめています。ゴミ箱に移した問題はここから一時的に外れます。" },
         trash: { title: "ゴミ箱", note: "しばらく見たくない問題です。復元するか、この端末では完全に非表示にできます。" },
-        generator: { title: "問題生成", note: "局面URLは1問、半荘URLは指定プレイヤーの悪手候補を抽出します。追加した問題はこの端末のMY問題集に保存されます。" },
+        generator: { title: "問題生成", note: "局面URLは盤面画像まで自動生成します。半荘URLは指定プレイヤーの悪手候補を抽出します。" },
         analysis: { title: "自己分析", note: "回答履歴から正答率・回答時間・復習期限・判断種別ごとの傾向を集計します。" },
         students: { title: "生徒の回答履歴", note: "所属設定された生徒だけを表示します。生徒本人としてログインする必要はありません。" },
         session: { title: "セッション結果", note: "今回の結果を確認し、苦手問題だけを続けて復習できます。" }
@@ -1454,12 +1446,11 @@
 
       function probabilityStackV16(tile) {
         if (!state.revealed || !SCENE.probabilities?.[tile]) return "";
-        const bars = handBarIndicesV16().map((index, slot) => {
-          const value = SCENE.probabilities[tile]?.[index] ?? 0;
-          if (value <= 0) return "";
-          return `<span class="probability-mini-track" style="--bar-slot:${slot}" title="${SCENE.models[index].name} ${value.toFixed(2)}%"><span class="probability-mini-fill ${modelColorV16(index)}" style="height:${Math.min(100, value)}%"></span></span>`;
-        }).join("");
-        return bars ? `<div class="probability-stack" aria-label="${tileLabel(tile)}のモデル別推奨度">${bars}</div>` : "";
+        const entries = handBarIndicesV16()
+          .map(index => ({ index, value: SCENE.probabilities[tile]?.[index] ?? 0 }))
+          .filter(entry => entry.value > 0);
+        const bars = entries.map(({ index, value }) => { const judgeClass = index === state.judgeModel ? ` ${modelColorV16(index)} is-judge-model` : " is-reference-model"; return `<span class="probability-mini-track" title="${SCENE.models[index].name} ${value.toFixed(2)}%"><span class="probability-mini-fill${judgeClass}" style="height:${Math.min(100, value)}%"></span></span>`; }).join("");
+        return bars ? `<div class="probability-stack" data-bar-count="${entries.length}" aria-label="${tileLabel(tile)}のモデル別推奨度">${bars}</div>` : "";
       }
 
       const TILE_ORDER_V20 = [
@@ -1932,7 +1923,7 @@
       function applyQuestionV16(question, index = questionsV16.indexOf(question)) {
         currentQuestionIndexV16 = index >= 0 ? index : 0;
         for (const key of Object.keys(SCENE)) delete SCENE[key];
-        Object.assign(SCENE, question, { images: question.images || { off: question.image, open: question.image } });
+        Object.assign(SCENE, question);
         state.selected = null;
         state.selectedIndex = null;
         state.callDecision = null;
@@ -1941,7 +1932,6 @@
         state.answerAttemptId = null;
         state.questionStartedAt = Date.now();
         state.riichi = false;
-        state.surroundingsOpen = false;
         state.commentsExpanded = false;
         state.commentComposerOpen = false;
         document.getElementById("commentForm").hidden = true;
@@ -1963,9 +1953,7 @@
         sourceMetaV16.textContent = sceneMetaV16(SCENE.nagaUrl);
         document.getElementById("nagaSourceLink").href = SCENE.nagaUrl;
         document.getElementById("threadLink").href = SCENE.threadUrl;
-        SCENE_IMAGES.off = SCENE.images.off;
-        SCENE_IMAGES.open = SCENE.images.open;
-        sceneImageV16.src = SCENE.images.off;
+        sceneImageV16.src = SCENE.image || SCENE.images?.off;
         sceneImageV16.alt = `問題${SCENE.number}の伏牌スクリーンショット`;
         sceneImageV16.onload = () => {
           if (sceneImageV16.naturalWidth && sceneImageV16.naturalHeight) sceneFrameV16.style.aspectRatio = `${sceneImageV16.naturalWidth} / ${sceneImageV16.naturalHeight}`;
@@ -1974,8 +1962,6 @@
           setHandLayoutV18(question, detectedMaskV18);
         };
         if (sceneImageV16.complete) sceneImageV16.onload();
-        document.getElementById("surroundingsToggle").setAttribute("aria-expanded", "false");
-        document.getElementById("surroundingsToggle").textContent = "周囲の手牌を開く";
         renderHandV16();
         renderAnswerV16();
         renderComments();
@@ -2096,7 +2082,7 @@
         const sceneMode = generatorModeV46 === "scene";
         const destination = sharedCollectionV46 ? `共有問題集「${escapeHtml(sharedCollectionV46.title || "共有問題集")}」` : "MY問題集";
         const destinationNote = sharedCollectionV46 ? "共有URLを利用している全員に影響するため、追加時に確認が表示されます。Discordログインと共有保存APIが必要です。" : "追加した問題はこの端末のMY問題集に保存されます。";
-        return `<section class="generator-panel"><h3>NAGA URLから問題生成</h3><p>入力種類を選んでください。局面URLは1問、半荘URLは対象プレイヤーの候補をまとめて抽出します。</p><form class="generator-form generator-form-v46" id="generatorForm"><fieldset class="generator-mode-field"><legend>入力種類</legend><label><input type="radio" name="generatorMode" value="scene"${sceneMode ? " checked" : ""}> 局面URL（1問）</label><label><input type="radio" name="generatorMode" value="match"${sceneMode ? "" : " checked"}> 半荘URL（候補を一括抽出）</label></fieldset><label class="generator-url-field">NAGA URL<input id="generatorUrl" type="url" required inputmode="url" placeholder="https://naga.dmv.nico/htmls/..."></label><label id="generatorSeatLabel">対象プレイヤー<select id="generatorSeat">${generatorSeatOptionsV46()}</select></label><button class="generator-button" type="submit">${sceneMode ? "1問を解析" : "候補を抽出"}</button><details class="generator-custom-settings" id="generatorCustomSettings"${sceneMode ? " hidden" : ""}><summary>抽出条件をカスタム設定</summary><div class="generator-settings-grid"><label>悪手閾値（%）<input id="generatorThreshold" type="number" min="0.1" max="50" step="0.1" value="5"></label><label>対象判断<select id="generatorDecisionType"><option value="all">すべて</option><option value="discard">打牌</option><option value="call">副露</option><option value="reach">リーチ</option></select></label><label>モデル条件<select id="generatorModelMode"><option value="any">いずれかのモデルで悪手</option><option value="all">全モデルで悪手</option></select></label><label>最大抽出数<input id="generatorMaxCandidates" type="number" min="1" max="500" step="1" value="100"></label></div><p class="generator-settings-note">悪手は選択した打牌・副露の実際の選択率が閾値以下の候補です。リーチはリーチ判断を含む局面だけを対象にします。</p></details></form><div class="generator-status" id="generatorStatus" aria-live="polite"></div><div class="generator-results" id="generatorResults">${renderGeneratorCandidatesV44()}</div><p>${destination}へ追加します。${destinationNote}追加する候補ごとに、問題画面として使うスクリーンショットを指定してください。画像は圧縮して保存し、既存の重複防止も適用します。</p></section>`;
+        return `<section class="generator-panel"><h3>NAGA URLから問題生成</h3><p>入力種類を選んでください。局面URLは解析後に盤面画像まで自動取得し、完成候補を表示します。</p><form class="generator-form generator-form-v46" id="generatorForm"><fieldset class="generator-mode-field"><legend>入力種類</legend><label><input type="radio" name="generatorMode" value="scene"${sceneMode ? " checked" : ""}> 局面URL（1問）</label><label><input type="radio" name="generatorMode" value="match"${sceneMode ? "" : " checked"}> 半荘URL（候補を一括抽出）</label></fieldset><label class="generator-url-field">NAGA URL<input id="generatorUrl" type="url" required inputmode="url" placeholder="https://naga.dmv.nico/htmls/..."></label><label id="generatorSeatLabel">対象プレイヤー<select id="generatorSeat">${generatorSeatOptionsV46()}</select></label><button class="generator-button" type="submit">${sceneMode ? "1問を生成" : "候補を抽出"}</button><details class="generator-custom-settings" id="generatorCustomSettings"${sceneMode ? " hidden" : ""}><summary>抽出条件をカスタム設定</summary><div class="generator-settings-grid"><label>悪手閾値（%）<input id="generatorThreshold" type="number" min="0.1" max="50" step="0.1" value="5"></label><label>対象判断<select id="generatorDecisionType"><option value="all">すべて</option><option value="discard">打牌</option><option value="call">副露</option><option value="reach">リーチ</option></select></label><label>モデル条件<select id="generatorModelMode"><option value="any">いずれかのモデルで悪手</option><option value="all">全モデルで悪手</option></select></label><label>最大抽出数<input id="generatorMaxCandidates" type="number" min="1" max="500" step="1" value="100"></label></div><p class="generator-settings-note">悪手は選択した打牌・副露の実際の選択率が閾値以下の候補です。リーチはリーチ判断を含む局面だけを対象にします。</p></details></form><div class="generator-status" id="generatorStatus" aria-live="polite"></div><div class="generator-results" id="generatorResults">${renderGeneratorCandidatesV44()}</div><p>${destination}へ追加します。${destinationNote}自動取得に失敗した場合だけ、手動でスクリーンショットを指定できます。</p></section>`;
       }
 
       function renderGeneratorCandidatesV44() {
@@ -2107,7 +2093,11 @@
           const choice = candidate.decisionType === "call" ? `副露判断・${candidate.actualCall ? "鳴いた" : "鳴かなかった"}` : `${tileLabel(candidate.actualDiscard)}を選択`;
           const badModels = candidate.badMoveModels?.length ? ` ／ ${candidate.badMoveModels.map(escapeHtml).join("・")}が${Number(candidate.badMoveThresholdPercent || 5)}%以下` : "";
           const addLabel = sharedCollectionV46 ? "共有問題集へ追加" : "MY問題集へ追加";
-          return `<article class="generator-candidate${duplicate ? " is-duplicate" : ""}"><div><div class="candidate-title">${escapeHtml(candidate.playerName || `プレイヤー${Number(candidate.playerSeat ?? candidate.tw ?? 0) + 1}`)}・${choice}</div><div class="candidate-meta">${escapeHtml(candidate.title || `局${Number(candidate.ts || 0) + 1}・操作${candidate.tv}`)} ／ ${questionTypeV44(candidate)}${candidate.isBadMove ? ` ／ 悪手候補${badModels}` : ""}</div><div class="candidate-models">${modelMarkup}</div></div><div class="candidate-controls"><input type="file" accept="image/png,image/jpeg,image/webp" data-candidate-image="${index}" aria-label="この局面のスクリーンショット"><button class="generator-button${duplicate ? " secondary" : ""}" type="button" data-generator-add="${index}" ${duplicate ? "disabled" : ""}>${duplicate ? "追加済み" : addLabel}</button></div></article>`;
+          const preview = candidate._imageData ? `<div class="candidate-preview"><img src="${candidate._imageData}" alt="自動取得したNAGA局面"></div>` : "";
+          const captureState = candidate._captureState === "loading" ? "盤面画像を自動取得しています…" : candidate._imageData ? "盤面画像を自動取得済み" : candidate._captureError || "盤面画像はまだありません";
+          const captureErrorClass = candidate._captureError && !candidate._imageData ? " is-error" : "";
+          const captureLabel = candidate._imageData ? "盤面画像を再取得" : "盤面画像を自動取得";
+          return `<article class="generator-candidate${duplicate ? " is-duplicate" : ""}"><div><div class="candidate-title">${escapeHtml(candidate.playerName || `プレイヤー${Number(candidate.playerSeat ?? candidate.tw ?? 0) + 1}`)}・${choice}</div><div class="candidate-meta">${escapeHtml(candidate.title || `局${Number(candidate.ts || 0) + 1}・操作${candidate.tv}`)} ／ ${questionTypeV44(candidate)}${candidate.isBadMove ? ` ／ 悪手候補${badModels}` : ""}</div><div class="candidate-models">${modelMarkup}</div></div><div class="candidate-controls">${preview}<span class="candidate-capture-state${captureErrorClass}">${escapeHtml(captureState)}</span><button class="generator-button secondary" type="button" data-generator-capture="${index}"${candidate._captureState === "loading" ? " disabled" : ""}>${captureLabel}</button><label class="candidate-file-label">手動画像を使用<input type="file" accept="image/png,image/jpeg,image/webp" data-candidate-image="${index}" aria-label="この局面のスクリーンショット"></label><button class="generator-button${duplicate ? " secondary" : ""}" type="button" data-generator-add="${index}" ${duplicate ? "disabled" : ""}>${duplicate ? "追加済み" : addLabel}</button></div></article>`;
         }).join("");
       }
 
@@ -2392,6 +2382,45 @@
         });
       }
 
+      async function captureGeneratorCandidateV51(index) {
+        const candidate = generatorCandidatesV44[index];
+        if (!candidate) return false;
+        if (!window.NagaSupabase?.configured || !generatorJobIdV51 || typeof window.NagaSupabase.captureNagaScene !== "function") {
+          candidate._captureState = "error";
+          candidate._captureError = "自動撮影は未設定です。手動画像を使用してください。";
+          document.getElementById("generatorResults").innerHTML = renderGeneratorCandidatesV44();
+          bindGeneratorCandidateInputsV44();
+          return false;
+        }
+        candidate._captureState = "loading";
+        candidate._captureError = "";
+        document.getElementById("generatorResults").innerHTML = renderGeneratorCandidatesV44();
+        bindGeneratorCandidateInputsV44();
+        setGeneratorStatusV44("NAGA本家の盤面画像を自動取得しています…");
+        try {
+          const blob = await window.NagaSupabase.captureNagaScene({
+            jobId: generatorJobIdV51,
+            reportId: candidate.sourceReportId,
+            tw: candidate.tw,
+            ts: candidate.ts,
+            tv: candidate.tv
+          });
+          candidate._imageData = await compressImageFileV44(new File([blob], "naga-scene.webp", { type: blob.type || "image/webp" }));
+          candidate._captureState = "ready";
+          candidate._captureError = "";
+          setGeneratorStatusV44("問題候補が完成しました。内容を確認して問題集へ追加してください。");
+          return true;
+        } catch (error) {
+          candidate._captureState = "error";
+          candidate._captureError = error?.message || "自動取得に失敗しました。";
+          setGeneratorStatusV44(`${candidate._captureError} 手動画像に切り替えられます。`, true);
+          return false;
+        } finally {
+          document.getElementById("generatorResults").innerHTML = renderGeneratorCandidatesV44();
+          bindGeneratorCandidateInputsV44();
+        }
+      }
+
       function setGeneratorStatusV44(message, error = false) {
         const status = document.getElementById("generatorStatus");
         if (!status) return;
@@ -2407,7 +2436,7 @@
         const submit = document.querySelector("#generatorForm button[type=submit]");
         const seatLabel = document.getElementById("generatorSeatLabel");
         if (settings) settings.hidden = sceneMode;
-        if (submit) submit.textContent = sceneMode ? "1問を解析" : "候補を抽出";
+        if (submit) submit.textContent = sceneMode ? "1問を生成" : "候補を抽出";
         if (seatLabel) seatLabel.firstChild.textContent = sceneMode ? "対象プレイヤー" : "対象プレイヤー（解析後は名前で選択）";
       }
 
@@ -2435,6 +2464,7 @@
         const input = document.getElementById("generatorUrl").value.trim();
         const seatChoice = document.getElementById("generatorSeat").value;
         const mode = generatorModeV46;
+        generatorJobIdV51 = null;
         setGeneratorStatusV44("NAGAレポートを解析しています…");
         try {
           const spec = window.NagaGeneratorV44.parseNagaUrl(input);
@@ -2468,6 +2498,7 @@
               } : undefined
             });
             report = result.report;
+            generatorJobIdV51 = result.jobId || null;
           } else {
             const response = await fetch(`/api/naga-report?report_id=${encodeURIComponent(spec.reportId)}`);
             report = await response.json();
@@ -2496,8 +2527,12 @@
           setGeneratorStatusV44(generatorCandidatesV44.length ? `${generatorCandidatesV44.length}件の候補を抽出しました。${ignoredSceneNote}` : `条件に一致する局面はありませんでした。${ignoredSceneNote}`);
           document.getElementById("generatorResults").innerHTML = renderGeneratorCandidatesV44();
           bindGeneratorCandidateInputsV44();
+          if (mode === "scene" && generatorCandidatesV44.length === 1) {
+            await captureGeneratorCandidateV51(0);
+          }
         } catch (error) {
           generatorCandidatesV44 = [];
+          generatorJobIdV51 = null;
           setGeneratorStatusV44(error.message || "解析に失敗しました。", true);
           const results = document.getElementById("generatorResults");
           if (results) results.innerHTML = "";
@@ -2511,11 +2546,16 @@
           if (!file || !generatorCandidatesV44[index]) return;
           try {
             generatorCandidatesV44[index]._imageData = await compressImageFileV44(file);
+            generatorCandidatesV44[index]._captureState = "manual";
+            generatorCandidatesV44[index]._captureError = "";
             setGeneratorStatusV44("スクリーンショットを準備しました。「MY問題集へ追加」を押してください。");
+            document.getElementById("generatorResults").innerHTML = renderGeneratorCandidatesV44();
+            bindGeneratorCandidateInputsV44();
           } catch (error) {
             setGeneratorStatusV44(error.message, true);
           }
         }));
+        document.querySelectorAll("[data-generator-capture]").forEach(button => button.addEventListener("click", () => captureGeneratorCandidateV51(Number(button.dataset.generatorCapture))));
         document.querySelectorAll("[data-generator-add]").forEach(button => button.addEventListener("click", () => addGeneratedQuestionV44(Number(button.dataset.generatorAdd))));
       }
 
@@ -2547,7 +2587,6 @@
           number: nextNumber,
           title: `追加問題${nextNumber}`,
           image: candidate._imageData,
-          images: { off: candidate._imageData, open: candidate._imageData },
           comments: [{ id: `generated-${Date.now()}`, author: "問題生成", createdAt: now, content: "NAGA URLから追加した問題です。", attachments: [] }],
           threadUrl: candidate.threadUrl || "#",
           localGenerated: true,
@@ -2730,22 +2769,26 @@
         if (!window.NagaSupabase?.configured) throw new Error("共有問題集を開くためのSupabase接続が未設定です。");
         const result = await window.NagaSupabase.loadSharedCollection(shareSlug);
         sharedCollectionV46 = { ...result.collection, share_slug: shareSlug };
-        questionsV16 = (result.questions || []).map((row, index) => ({
-          ...(row.payload || {}),
-          id: row.id,
-          serverQuestionId: row.id,
-          legacyKey: row.legacy_key,
-          number: row.payload?.number ?? index + 1,
-          title: row.title || row.payload?.title || `問題${index + 1}`,
-          images: row.payload?.images || { off: row.payload?.image, open: row.payload?.image },
-          hasRiichiJudgment: row.payload?.decisionType !== "call" && Array.isArray(row.payload?.reach) && row.payload.reach.some(value => Number(value) > 0),
-          sharedCollectionSlug: shareSlug,
-          visibility: "unlisted",
-          createdById: row.created_by || row.creator_id || row.payload?.createdById || row.payload?.created_by || null,
-          createdByName: row.created_by_name || row.creator_name || row.payload?.createdByName || row.payload?.creatorName || null,
-          updatedById: row.updated_by || row.last_updated_by || row.payload?.updatedById || row.payload?.updated_by || null,
-          updatedByName: row.updated_by_name || row.last_updated_by_name || row.payload?.updatedByName || row.payload?.lastUpdatedByName || null
-        }));
+        questionsV16 = (result.questions || []).map((row, index) => {
+          const payload = { ...(row.payload || {}) };
+          payload.image ||= payload.images?.off;
+          delete payload.images;
+          return {
+            ...payload,
+            id: row.id,
+            serverQuestionId: row.id,
+            legacyKey: row.legacy_key,
+            number: payload.number ?? index + 1,
+            title: row.title || payload.title || `問題${index + 1}`,
+            hasRiichiJudgment: payload.decisionType !== "call" && Array.isArray(payload.reach) && payload.reach.some(value => Number(value) > 0),
+            sharedCollectionSlug: shareSlug,
+            visibility: "unlisted",
+            createdById: row.created_by || row.creator_id || payload.createdById || payload.created_by || null,
+            createdByName: row.created_by_name || row.creator_name || payload.createdByName || payload.creatorName || null,
+            updatedById: row.updated_by || row.last_updated_by || payload.updatedById || payload.updated_by || null,
+            updatedByName: row.updated_by_name || row.last_updated_by_name || payload.updatedByName || payload.lastUpdatedByName || null
+          };
+        });
         document.title = `${sharedCollectionV46.title}｜NAGA局面ドリル`;
         return true;
       }

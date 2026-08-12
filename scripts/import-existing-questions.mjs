@@ -43,7 +43,6 @@ async function loadQuestions() {
     number: 249,
     title: "問題249",
     image: "naga-scene-off.jpg",
-    images: { off: "naga-scene-off.jpg", open: "naga-scene-open.jpg" },
     nagaUrl,
     threadUrl,
     comments,

@@ -55,6 +55,18 @@ npx supabase db push
 npx supabase functions deploy naga-report
 ```
 
+### NAGA局面の自動撮影
+
+局面URLから盤面画像を自動取得するには、Supabase Edge Function `naga-capture` とBrowserlessを使用します。Browserlessのトークンは公開クライアントへ置かず、SupabaseのFunction Secretとして設定してください。
+
+```powershell
+npx supabase secrets set BROWSERLESS_API_TOKEN=<browserless-token>
+npx supabase secrets set BROWSERLESS_ENDPOINT=https://production-sfo.browserless.io
+npx supabase functions deploy naga-capture
+```
+
+自動撮影に失敗した場合は、問題生成画面から従来どおり手動画像へ切り替えられます。
+
 DB定義は `supabase/migrations/20260803165942_learning_platform_core.sql`、NAGA取得用の認証必須プロキシは `supabase/functions/naga-report/` にあります。
 
 全体管理者はDiscordログイン後、SupabaseのAuth管理機能から対象ユーザーの `app_metadata` に `{ "is_admin": true }` を設定します。反映後は一度ログアウトし、再ログインして新しい認証情報を取得します。

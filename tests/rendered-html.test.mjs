@@ -25,14 +25,14 @@ test("server-renders the NAGA drill shell", async () => {
   assert.match(html, /title="NAGA局面ドリル｜スクリーンショットベース"/);
 });
 
-test("wires v50 learning UX, generator, Supabase bridge, metadata, and social image", async () => {
+test("wires v56 learning UX, generator, Supabase bridge, metadata, and social image", async () => {
   const [index, page, layout] = await Promise.all([
     readFile(new URL("../public/index.html", import.meta.url), "utf8"),
     readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
     access(new URL("../public/og-v44.png", import.meta.url)),
   ]);
-  assert.match(index, /const APP_VERSION = 50/);
+  assert.match(index, /const APP_VERSION = 56/);
   assert.match(index, /supabase-sync-v47\.js/);
   assert.match(index, /drill-ux-v44\.js/);
   assert.match(index, /naga-generator-v44\.js/);

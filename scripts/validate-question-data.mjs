@@ -65,14 +65,10 @@ for (const [index, question] of questions.entries()) {
     if (question?.decisionType === "discard" && !validTile(model?.recommendation)) error(label, `models[${modelIndex}] の推奨牌 ${model?.recommendation} が不正です`);
   });
 
-  const imagePaths = [question?.image, question?.images?.off, question?.images?.open].filter(Boolean);
+  const imagePaths = [question?.image].filter(Boolean);
   for (const imagePath of new Set(imagePaths)) {
     if (!(await fileExists(imagePath))) error(label, `画像 ${imagePath} が存在しません`);
   }
-  if (question?.images?.off && question?.images?.open && question.images.off === question.images.open) {
-    warn(label, "周囲手牌OFF/ONが同じ画像です");
-  }
-
   const modelCount = Array.isArray(question?.models) ? question.models.length : 0;
   for (const [tile, values] of Object.entries(question?.probabilities || {})) {
     if (!validTile(tile)) error(label, `probabilitiesの牌コード ${tile} が不正です`);

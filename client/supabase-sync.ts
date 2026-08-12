@@ -241,6 +241,41 @@ async function fetchNagaReport(input: Record<string, unknown>) {
   return data as { jobId: string; report: unknown };
 }
 
+async function captureNagaScene(input: {
+  jobId: string;
+  reportId: string;
+  tw: number;
+  ts: number;
+  tv: number;
+}) {
+  const session = await currentSession();
+  if (!session) throw new Error("Discordログインが必要です。");
+  const response = await fetch(`${config.supabaseUrl}/functions/v1/naga-capture`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${session.access_token}`,
+      apikey: config.supabasePublishableKey!,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(input),
+  });
+  if (!response.ok) {
+    let message = "NAGA局面画像を自動取得できませんでした。";
+    try {
+      const body = await response.json() as { error?: unknown };
+      if (typeof body.error === "string" && body.error.trim()) message = body.error;
+    } catch {
+      // Keep the stable fallback message when the provider returned a non-JSON error.
+    }
+    throw new Error(message);
+  }
+  const contentType = response.headers.get("content-type")?.split(";", 1)[0] || "";
+  if (!contentType.startsWith("image/")) throw new Error("自動取得した局面画像の形式が正しくありません。");
+  const image = await response.blob();
+  if (!image.size) throw new Error("自動取得した局面画像が空です。");
+  return image;
+}
+
 async function importLocalHistory(state: LocalState) {
   const supabase = requireClient();
   const session = await currentSession();
@@ -379,6 +414,7 @@ function buildApi() {
     permanentlyDeleteQuestion,
     loadQuestionPollStats,
     fetchNagaReport,
+    captureNagaScene,
     importLocalHistory,
     loadStudentSummaries,
     loadMemberships,
