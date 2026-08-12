@@ -602,13 +602,13 @@
   </dialog>
 
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v47.js"></script>
+  <script src="supabase-sync-v48.js"></script>
   <script src="drill-ux-v44.js"></script>
   <script src="naga-generator-v44.js"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 58;
+    const APP_VERSION = 59;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -1023,6 +1023,7 @@
       let generatorModeV46 = "scene";
       let generatorJobIdV51 = null;
       let supabaseSessionV46 = null;
+      let authPendingV46 = false;
       let sharedCollectionV46 = null;
       const modelColorByNameV16 = { オメガ: "model-omega", ガンマ: "model-gamma", ニシキ: "model-nishiki", ヒバカリ: "model-hihikari", カガシ: "model-kagashi" };
       const USER_STATE_KEY_V16 = storageKey("user-state-v1");
@@ -2706,7 +2707,7 @@
           studentNav.hidden = true;
           return;
         }
-        authButton.disabled = false;
+        authButton.disabled = authPendingV46;
         if (!session) {
           status.textContent = "未ログイン：回答履歴はこの端末だけに保存されます。";
           authButton.textContent = "Discordでログイン";
@@ -2729,12 +2730,20 @@
       }
 
       async function initializeAccountV46() {
-        document.getElementById("discordAuthButton").addEventListener("click", async () => {
+        const authButton = document.getElementById("discordAuthButton");
+        authButton.addEventListener("click", async () => {
+          if (authPendingV46) return;
+          authPendingV46 = true;
+          authButton.disabled = true;
+          authButton.textContent = supabaseSessionV46 ? "ログアウト中…" : "ログイン中…";
           try {
             if (supabaseSessionV46) await window.NagaSupabase.signOut();
             else await window.NagaSupabase.signInWithDiscord();
           } catch (error) {
             window.alert(error?.message || "ログイン処理に失敗しました。");
+          } finally {
+            authPendingV46 = false;
+            await refreshAccountV46(supabaseSessionV46);
           }
         });
         document.getElementById("importHistoryButton").addEventListener("click", async event => {
@@ -2762,7 +2771,18 @@
           document.getElementById("copyShareUrlButton").textContent = "コピーしました";
         });
         window.addEventListener("naga:authchange", event => refreshAccountV46(event.detail?.session || null));
-        await refreshAccountV46(await window.NagaSupabase?.currentSession?.() || null);
+        window.addEventListener("naga:autherror", event => {
+          if (!supabaseSessionV46) {
+            document.getElementById("accountStatus").textContent = event.detail?.message || "認証状態を確認できませんでした。もう一度ログインしてください。";
+          }
+        });
+        let initialSession = null;
+        try {
+          initialSession = await window.NagaSupabase?.currentSession?.() || null;
+        } catch {
+          document.getElementById("accountStatus").textContent = "認証状態を確認できませんでした。もう一度ログインしてください。";
+        }
+        await refreshAccountV46(initialSession);
       }
 
       async function loadSharedCollectionV46() {

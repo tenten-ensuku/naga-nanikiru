@@ -45,6 +45,9 @@ const client: SupabaseClient | null = configured
     })
   : null;
 
+const AUTH_CALLBACK_QUERY_KEYS = ["error", "error_code", "error_description", "error_reason", "code", "state"];
+const AUTH_CALLBACK_HASH_PATTERN = /(?:^|&)(?:access_token|refresh_token|code|error|error_code|state)=/;
+
 function requireClient() {
   if (!client) throw new Error("Supabaseが未設定です。runtime-config.jsを設定してください。");
   return client;
@@ -79,13 +82,33 @@ function dispatchSession(session: Session | null) {
   window.dispatchEvent(new CustomEvent("naga:authchange", { detail: { session, configured } }));
 }
 
+function clearAuthCallbackUrl() {
+  const currentUrl = new URL(window.location.href);
+  const hasAuthError = AUTH_CALLBACK_QUERY_KEYS.some((key) => currentUrl.searchParams.has(key));
+  const hasAuthFragment = AUTH_CALLBACK_HASH_PATTERN.test(currentUrl.hash.slice(1));
+  if (!hasAuthError && !hasAuthFragment) return false;
+
+  for (const key of AUTH_CALLBACK_QUERY_KEYS) currentUrl.searchParams.delete(key);
+  currentUrl.hash = "";
+  window.history.replaceState(window.history.state, "", `${currentUrl.pathname}${currentUrl.search}` || "/");
+  return hasAuthError;
+}
+
+function buildOAuthRedirectUrl() {
+  const redirectTo = new URL(window.location.href);
+  if (redirectTo.pathname.endsWith("/index.html")) {
+    redirectTo.pathname = redirectTo.pathname.slice(0, -"index.html".length) || "/";
+  }
+  for (const key of AUTH_CALLBACK_QUERY_KEYS) redirectTo.searchParams.delete(key);
+  redirectTo.hash = "";
+  return redirectTo.toString();
+}
+
 async function signInWithDiscord() {
   const supabase = requireClient();
-  const redirectTo = new URL(window.location.href);
-  redirectTo.hash = "";
   const { error } = await supabase.auth.signInWithOAuth({
     provider: "discord",
-    options: { redirectTo: redirectTo.toString() },
+    options: { redirectTo: buildOAuthRedirectUrl() },
   });
   if (error) throw error;
 }
@@ -425,8 +448,25 @@ function buildApi() {
 
 window.NagaSupabase = buildApi();
 if (client) {
-  client.auth.onAuthStateChange((_event, session) => dispatchSession(session));
-  currentSession().then(dispatchSession).catch(() => dispatchSession(null));
+  client.auth.onAuthStateChange((_event, session) => {
+    const hadAuthError = clearAuthCallbackUrl();
+    dispatchSession(session);
+    if (hadAuthError && !session) {
+      window.dispatchEvent(new CustomEvent("naga:autherror", {
+        detail: { message: "認証状態を確認できませんでした。もう一度ログインしてください。" },
+      }));
+    }
+  });
+  currentSession().then((session) => {
+    clearAuthCallbackUrl();
+    dispatchSession(session);
+  }).catch(() => {
+    clearAuthCallbackUrl();
+    dispatchSession(null);
+    window.dispatchEvent(new CustomEvent("naga:autherror", {
+      detail: { message: "認証状態を確認できませんでした。もう一度ログインしてください。" },
+    }));
+  });
 } else {
   queueMicrotask(() => dispatchSession(null));
 }

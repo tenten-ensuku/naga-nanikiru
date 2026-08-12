@@ -8,7 +8,7 @@ await build({
       entry: "client/supabase-sync.ts",
       formats: ["iife"],
       name: "NagaSupabaseBundle",
-      fileName: () => "supabase-sync-v47.js",
+      fileName: () => "supabase-sync-v48.js",
     },
     outDir: "public",
     minify: "esbuild",

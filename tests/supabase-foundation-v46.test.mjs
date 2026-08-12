@@ -73,6 +73,10 @@ test("pins Supabase dependencies and protects the NAGA proxy", async () => {
   assert.match(runtimeConfig, /Never put a Supabase secret\/service-role key here/);
   assert.doesNotMatch(runtimeConfig, /sb_secret_|service_role\s*:/i);
   assert.match(clientSource, /provider: "discord"/);
+  assert.match(clientSource, /function clearAuthCallbackUrl\(\)/);
+  assert.match(clientSource, /function buildOAuthRedirectUrl\(\)/);
+  assert.match(clientSource, /redirectTo: buildOAuthRedirectUrl\(\)/);
+  assert.match(clientSource, /naga:autherror/);
   assert.match(clientSource, /importLocalHistory/);
   assert.match(clientSource, /createSharedQuestion/);
   assert.match(clientSource, /requestQuestionDeletion/);
