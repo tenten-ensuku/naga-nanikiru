@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=57">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=57">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=57">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=58">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=58">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=58">
   <title>NAGA局面ドリル｜何切る復習問題集</title>
   <meta name="description" content="NAGAの局面を解き、復習予定・苦手分析・URLからの問題生成まで行える麻雀学習アプリ。">
   <meta name="theme-color" content="#06131e">
@@ -76,6 +76,7 @@
     .menu-nav-button.is-active:hover, .menu-nav-button.is-active:focus-visible { background: #ffda77; }
     .menu-nav-badge { min-width: 18px; padding: 2px 4px; color: #dffbfb; background: rgba(255,255,255,.14); border-radius: 999px; font-size: 9px; line-height: 1; text-align: center; }
     .menu-nav-button.is-active .menu-nav-badge { color: #12211e; background: rgba(255,255,255,.5); }
+    .menu-nav-version { margin-left: auto; color: currentColor; font-size: 9px; font-weight: 950; letter-spacing: .04em; opacity: .86; }
     .menu-view-note { margin: -4px 0 -5px; color: var(--muted); font-size: 11px; line-height: 1.5; }
     .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; }
     .menu-card { display: grid; gap: 7px; min-height: 92px; padding: 10px 11px; color: var(--ink); text-align: left; background: rgba(0,0,0,.19); border: 1px solid rgba(255,255,255,.13); border-radius: 12px; transition: transform .15s ease, border-color .15s ease, background .15s ease; }
@@ -455,7 +456,7 @@
         </button>
       </section>
       <nav class="menu-nav" aria-label="問題集メニュー">
-        <button class="menu-nav-button is-active" type="button" data-menu-view="my">MY問題集 <span class="menu-nav-badge" data-menu-count="my">0</span></button>
+        <button class="menu-nav-button is-active" type="button" data-menu-view="my">My問題集 <span class="menu-nav-version">V<span id="menuVersion"></span></span> <span class="menu-nav-badge" data-menu-count="my">0</span></button>
         <button class="menu-nav-button" type="button" data-menu-view="favorites">お気に入り <span class="menu-nav-badge" data-menu-count="favorites">0</span></button>
         <button class="menu-nav-button" type="button" data-menu-view="trash">ゴミ箱 <span class="menu-nav-badge" data-menu-count="trash">0</span></button>
         <button class="menu-nav-button" type="button" data-menu-view="generator">問題生成</button>
@@ -607,7 +608,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 57;
+    const APP_VERSION = 58;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -979,6 +980,7 @@
     function init() {
       document.getElementById("versionLabel").textContent = `SCREENSHOT BASE v${APP_VERSION}`;
       document.getElementById("versionSmall").textContent = APP_VERSION;
+      document.getElementById("menuVersion").textContent = APP_VERSION;
       document.getElementById("nagaSourceLink").href = NAGA_URL;
       document.getElementById("modelSelect").innerHTML = SCENE.models.map((model, index) => `<option value="${index}">${model.name}（正誤基準）</option>`).join("");
       document.getElementById("modelSelect").value = String(state.judgeModel);

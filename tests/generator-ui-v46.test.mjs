@@ -4,9 +4,11 @@ import test from "node:test";
 
 const indexUrl = new URL("../public/index.html", import.meta.url);
 
-test("renders the v56 scene and half-game generator controls", async () => {
+test("renders the v58 scene and half-game generator controls", async () => {
   const html = await readFile(indexUrl, "utf8");
-  assert.match(html, /const APP_VERSION = 56/);
+  assert.match(html, /const APP_VERSION = 58/);
+  assert.match(html, /My問題集 <span class="menu-nav-version">V<span id="menuVersion"><\/span><\/span>/);
+  assert.match(html, /getElementById\("menuVersion"\)\.textContent = APP_VERSION/);
   assert.match(html, /width: min\(850px, 100%\)/);
   assert.match(html, /aspect-ratio: 14 \/ 13/);
   assert.match(html, /name="generatorMode"/);

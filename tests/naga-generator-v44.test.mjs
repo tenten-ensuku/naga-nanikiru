@@ -324,7 +324,7 @@ test("supports custom extraction decision, model, threshold, and max-count filte
   assert.throws(() => api.normalizeExtractionOptions({ maxCandidates: 0 }), /between 1 and 500/);
 });
 
-test("keeps fallback and source scenes keyed by their explicit tv", async () => {
+test("canonicalizes post-discard fallback URLs to the prediction-bearing pre-discard tv", async () => {
   const api = await loadApi();
   const rows = [Array(34).fill(0)];
   rows[0][0] = 500;
@@ -339,10 +339,12 @@ test("keeps fallback and source scenes keyed by their explicit tv", async () => 
   };
   const bad = api.extractBadMoves(report, 0);
   assert.deepEqual(Array.from(bad.map(item => item.id)), [
-    "dedupe|0|0|1|discard",
-    "dedupe|0|0|2|discard"
+    "dedupe|0|0|1|discard"
   ]);
   const one = api.sceneCandidate(report, { reportId: "dedupe", tw: 0, ts: 0, tv: 1 });
-  const two = api.sceneCandidate(report, { reportId: "dedupe", tw: 0, ts: 0, tv: 1 });
+  const two = api.sceneCandidate(report, { reportId: "dedupe", tw: 0, ts: 0, tv: 2 });
   assert.equal(one.id, two.id);
+  assert.equal(two.tv, 1);
+  assert.equal(two.sourceTv, 1);
+  assert.equal(new URL(two.nagaUrl).searchParams.get("tv"), "1");
 });

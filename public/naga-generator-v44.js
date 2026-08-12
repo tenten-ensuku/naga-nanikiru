@@ -572,6 +572,8 @@
 
   function discardCandidate(report, spec, entries, action, message, sourceTv) {
     var seat = spec.tw;
+    var candidateTv = asInteger(sourceTv);
+    if (candidateTv == null || candidateTv < 0) candidateTv = spec.tv;
     var rawDiscard = message.real_dahai;
     if (rawDiscard == null || rawDiscard === "?" || tileToAppCode(rawDiscard) == null) {
       return null;
@@ -591,7 +593,11 @@
     var observed = snapshot.handBeforeDraw.concat([message.pai, rawDiscard]).concat(predictions);
     var probabilities = probabilityMatrix(predictionRows, predictions, observed, count);
     var models = recommendationModels(report, predictions, predictionRows, actualIndex, count);
-    var candidate = commonCandidate(spec.reportId, seat, spec.ts, spec.tv, "discard", report, snapshot);
+    // A dahai entry can be only the post-discard companion of the preceding
+    // prediction-bearing tsumo entry. Keep every outward-facing coordinate
+    // on the prediction-bearing, pre-discard event so capture and replay use
+    // the same hand state as the candidate calculation.
+    var candidate = commonCandidate(spec.reportId, seat, spec.ts, candidateTv, "discard", report, snapshot);
     candidate.handBeforeDraw = snapshot.handBeforeDraw.slice();
     candidate.draw = message.type === "tsumo" ? tileToAppCode(message.pai) : null;
     candidate.actualDiscard = tileToAppCode(rawDiscard);
@@ -610,7 +616,7 @@
         ? message.reach.slice()
         : [];
     candidate.hasRiichiJudgment = candidate.reach.some(function (value) { return Number(value) > 0; });
-    candidate.sourceTv = sourceTv;
+    candidate.sourceTv = candidateTv;
     candidate.predictionType = sourceType;
     candidate.reached = Boolean(message.reached === true || action.reached === true || snapshot.reached);
     return candidate;
