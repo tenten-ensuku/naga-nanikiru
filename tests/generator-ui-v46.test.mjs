@@ -4,9 +4,21 @@ import test from "node:test";
 
 const indexUrl = new URL("../public/index.html", import.meta.url);
 
-test("renders the v64 scene and half-game generator controls", async () => {
+test("renders the v67 scene and half-game generator controls", async () => {
   const html = await readFile(indexUrl, "utf8");
-  assert.match(html, /const APP_VERSION = 64/);
+  assert.match(html, /const APP_VERSION = 67/);
+  assert.match(html, /data-menu-view="settings"/);
+  assert.match(html, /id="displayNameForm"/);
+  assert.match(html, /displayNameLengthV67/);
+  assert.match(html, /id="announcementButton"/);
+  assert.match(html, /id="commentNotificationsButton"/);
+  assert.match(html, /function startCommentNotificationPollingV65/);
+  assert.match(html, /function refreshSharedQuestionNotificationsV66/);
+  assert.match(html, /QUESTION_NOTICE_STORAGE_KEY_V66/);
+  assert.match(html, /function renderCommunityNotificationListV66/);
+  assert.match(html, /data-community-notification-kind="question"/);
+  assert.match(html, /data-menu-question-notification/);
+  assert.match(html, /data-menu-range-notification/);
   assert.doesNotMatch(html, /data-menu-view="session"/);
   assert.match(html, /grid-template-columns: repeat\(5, minmax\(0, 1fr\)\)/);
   assert.doesNotMatch(html, /id="menuViewNote"/);
@@ -22,7 +34,7 @@ test("renders the v64 scene and half-game generator controls", async () => {
   assert.match(html, /id="menuRangeTabs"/);
   assert.match(html, /function menuRangeOptionsV60\(\)/);
   assert.match(html, /sourceQuestions\.filter\(menuRangeMatchesV60\)/);
-  assert.match(html, /<span>My問題集<\/span><span class="menu-brand-version">V<span id="menuVersion"><\/span><\/span>/);
+  assert.match(html, /class="menu-brand-title">My問題集<\/span><span class="menu-brand-actions">/);
   assert.match(html, /getElementById\("menuVersion"\)\.textContent = APP_VERSION/);
   assert.match(html, /width: min\(850px, 100%\)/);
   assert.match(html, /aspect-ratio: 14 \/ 13/);

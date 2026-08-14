@@ -77,12 +77,22 @@
     .menu-nav-badge { min-width: 22px; padding: 3px 5px; color: #dffbfb; background: rgba(255,255,255,.14); border-radius: 999px; font-size: 11px; line-height: 1; text-align: center; }
     .menu-nav-button.is-active .menu-nav-badge { color: #12211e; background: rgba(255,255,255,.5); }
     .menu-nav-version { margin-left: auto; color: currentColor; font-size: 9px; font-weight: 950; letter-spacing: .04em; opacity: .86; }
+    .menu-brand-title { min-width: 0; flex: 1 1 auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .menu-brand-actions { display: inline-flex; flex: 0 0 auto; align-items: center; gap: 2px; margin-left: auto; }
+    .menu-brand-version { margin-left: 0; color: var(--muted); font-family: Inter, sans-serif; font-size: 10px; font-weight: 800; }
+    .menu-notice-button { position: relative; display: inline-flex; align-items: center; justify-content: center; width: 32px; min-height: 32px; padding: 3px; color: #dffbfb; background: rgba(12, 62, 82, .72); border: 1px solid rgba(155, 232, 216, .28); border-radius: 7px; font-size: 15px; line-height: 1; }
+    .menu-notice-button:hover, .menu-notice-button:focus-visible { color: #fff; background: #164862; border-color: rgba(155, 232, 216, .8); outline: 2px solid rgba(155, 232, 216, .18); outline-offset: 2px; }
+    .notification-badge { display: inline-flex; align-items: center; justify-content: center; min-width: 18px; height: 18px; padding: 0 5px; color: #fff; background: #ef4055; border: 2px solid #071c2b; border-radius: 999px; box-shadow: 0 2px 7px rgba(0, 0, 0, .35); font-size: 10px; font-weight: 950; line-height: 1; }
+    .menu-notice-button .notification-badge { position: absolute; top: -7px; right: -7px; }
+    .notification-badge[hidden] { display: none; }
     .menu-range-tabs { display: flex; align-items: center; gap: 6px; overflow-x: auto; padding: 6px; border: 1px solid rgba(255,255,255,.1); border-radius: 10px; background: rgba(0,0,0,.12); scrollbar-width: thin; }
     .menu-range-tabs[hidden] { display: none; }
     .menu-range-label { flex: 0 0 auto; padding: 0 5px; color: var(--muted); font-size: 12px; font-weight: 800; white-space: nowrap; }
     .menu-range-tab { flex: 0 0 auto; min-height: 40px; padding: 7px 11px; color: #cfe9ed; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.12); border-radius: 7px; font-size: 12px; font-weight: 800; white-space: nowrap; }
     .menu-range-tab:hover, .menu-range-tab:focus-visible { color: #fff; background: #164862; border-color: rgba(113,183,255,.7); outline: none; }
     .menu-range-tab.is-active { color: #12211e; background: var(--gold); border-color: #ffdb7d; }
+    .menu-range-tab .notification-badge { margin-left: 4px; vertical-align: middle; }
+    .menu-range-tab.is-active .notification-badge { color: #fff; background: #d52f48; border-color: #f1c457; }
     .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
     .menu-card { display: grid; gap: 10px; min-height: 124px; padding: 15px 16px; color: var(--ink); text-align: left; background: rgba(0,0,0,.19); border: 1px solid rgba(255,255,255,.13); border-radius: 12px; transition: transform .15s ease, border-color .15s ease, background .15s ease; }
     .menu-card:hover, .menu-card:focus-within { background: rgba(22, 80, 103, .82); border-color: rgba(113,183,255,.75); transform: translateY(-2px); }
@@ -90,6 +100,7 @@
     .menu-card-open:focus-visible { outline: 2px solid rgba(113,183,255,.85); outline-offset: 4px; border-radius: 5px; }
     .menu-card-heading { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
     .menu-card-title { font-size: 20px; font-weight: 900; }
+    .menu-card-notification { flex: 0 0 auto; }
     .menu-card-history { display: inline-flex; align-items: center; gap: 4px; min-height: 24px; padding: 3px 6px; color: #dffbfb; background: rgba(0,0,0,.2); border: 1px solid rgba(255,255,255,.12); border-radius: 6px; font-size: 15px; line-height: 1; letter-spacing: .02em; white-space: nowrap; }
     .menu-card-history.is-empty { color: var(--muted); font-size: 11px; letter-spacing: 0; }
     .menu-card-history-mark { display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; }
@@ -116,6 +127,34 @@
     .menu-card-tag { padding: 2px 5px; background: rgba(255,255,255,.07); border-radius: 999px; }
     .menu-card-tag.is-due { color: #171e18; background: #bde7e0; }
     .menu-card-provenance { display: block; color: #b6d6dc; font-size: 11px; line-height: 1.4; }
+    .comment-notification-dialog, .announcement-dialog { width: min(94vw, 620px); max-height: min(84vh, 760px); padding: 0; color: var(--ink); background: #071c2b; border: 1px solid rgba(113, 183, 255, .48); border-radius: 13px; box-shadow: var(--shadow); }
+    .comment-notification-dialog::backdrop, .announcement-dialog::backdrop { background: rgba(2, 10, 17, .78); }
+    .notice-dialog-inner { display: grid; gap: 12px; max-height: inherit; padding: 18px; }
+    .notice-dialog-heading { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .notice-dialog-heading h3 { margin: 0; color: #fff7d6; font-size: 20px; }
+    .notice-dialog-close { min-width: 42px; min-height: 38px; padding: 6px 9px; color: #e7f8ff; background: #164862; border: 1px solid rgba(113, 183, 255, .55); border-radius: 6px; font-size: 11px; font-weight: 800; }
+    .notice-dialog-close:hover, .notice-dialog-close:focus-visible { background: #246b8a; outline: 2px solid rgba(113, 183, 255, .25); outline-offset: 2px; }
+    .notice-dialog-note { margin: 0; color: var(--muted); font-size: 11px; line-height: 1.55; }
+    .notice-list { display: grid; gap: 7px; max-height: min(58vh, 540px); overflow-y: auto; padding-right: 3px; scrollbar-color: rgba(113, 183, 255, .65) rgba(255, 255, 255, .08); }
+    .notice-list[hidden] { display: none; }
+    .notice-empty { padding: 22px 14px; color: var(--muted); background: rgba(0, 0, 0, .16); border: 1px dashed rgba(255, 255, 255, .18); border-radius: 8px; font-size: 12px; text-align: center; }
+    .notice-item { display: grid; gap: 5px; width: 100%; padding: 10px 11px; color: var(--ink); text-align: left; background: rgba(12, 50, 70, .7); border: 1px solid rgba(255, 255, 255, .13); border-radius: 8px; }
+    button.notice-item { cursor: pointer; }
+    .notice-item:hover, .notice-item:focus-visible { background: #164862; border-color: rgba(155, 232, 216, .7); outline: none; }
+    .notice-item-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; color: var(--muted); font-size: 10px; }
+    .notice-item-question { color: #fff7d6; font-size: 13px; font-weight: 900; }
+    .notice-item-author { color: #bde7e0; font-weight: 800; }
+    .notice-item-author.comment-author-color-0 { color: #63c9c0; }
+    .notice-item-author.comment-author-color-1 { color: #b496ee; }
+    .notice-item-author.comment-author-color-2 { color: #73a9ed; }
+    .notice-item-author.comment-author-color-3 { color: #e5ad67; }
+    .notice-item-author.comment-author-color-4 { color: #eb91b0; }
+    .notice-item-author.comment-author-color-5 { color: #aecb73; }
+    .notice-item-author.comment-author-color-6 { color: #8fc5d4; }
+    .notice-item-body { color: #e6f4f7; font-size: 13px; line-height: 1.55; overflow-wrap: anywhere; white-space: pre-wrap; }
+    .notice-dialog-actions { display: flex; justify-content: flex-end; gap: 7px; padding-top: 7px; border-top: 1px solid rgba(255, 255, 255, .1); }
+    .notice-dialog-action { min-height: 38px; padding: 7px 10px; color: #10211e; background: #bde7e0; border: 1px solid #d6fff5; border-radius: 6px; font-size: 10px; font-weight: 900; }
+    .notice-dialog-action.secondary { color: #e7f8ff; background: #164862; border-color: rgba(113, 183, 255, .55); }
     .session-strip { display: grid; grid-template-columns: auto minmax(90px, 1fr) auto; align-items: center; gap: 8px; max-width: 860px; width: 100%; box-sizing: border-box; margin: -4px auto 10px; padding: 7px 10px; color: #dffbfb; background: rgba(7,28,43,.94); border: 1px solid rgba(155,232,216,.28); border-radius: 9px; font-size: 10px; font-weight: 800; }
     .session-strip[hidden] { display: none; }
     .session-progress-track { height: 5px; overflow: hidden; background: rgba(255,255,255,.12); border-radius: 999px; }
@@ -125,9 +164,20 @@
     .stat-card { min-width: 0; padding: 12px; background: rgba(0,0,0,.18); border: 1px solid rgba(255,255,255,.11); border-radius: 10px; }
     .stat-label { display: block; color: var(--muted); font-size: 9px; }
     .stat-value { display: block; margin-top: 4px; color: #fff7d6; font-size: clamp(21px, 3vw, 32px); font-weight: 950; line-height: 1; }
-    .analysis-section, .generator-panel, .session-result { display: grid; gap: 12px; width: 100%; box-sizing: border-box; padding: clamp(14px, 2.5vw, 24px); color: var(--ink); text-align: left; background: rgba(0,0,0,.16); border: 1px solid rgba(255,255,255,.12); border-radius: 13px; }
+    .analysis-section, .generator-panel, .session-result, .settings-section { display: grid; gap: 12px; width: 100%; box-sizing: border-box; padding: clamp(14px, 2.5vw, 24px); color: var(--ink); text-align: left; background: rgba(0,0,0,.16); border: 1px solid rgba(255,255,255,.12); border-radius: 13px; }
     .analysis-section h3, .generator-panel h3, .session-result h3 { margin: 0; color: #fff7d6; font-size: clamp(19px, 2.4vw, 28px); }
+    .settings-section h3 { margin: 0; color: #fff7d6; font-size: clamp(19px, 2.4vw, 28px); }
     .analysis-section p, .generator-panel p, .session-result p { margin: 0; color: var(--muted); font-size: 11px; line-height: 1.6; }
+    .settings-section p { margin: 0; color: var(--muted); font-size: 11px; line-height: 1.6; }
+    .settings-form { display: grid; gap: 8px; max-width: 460px; }
+    .settings-form label { display: grid; gap: 5px; color: #dffbfb; font-size: 11px; font-weight: 800; }
+    .settings-form input { width: 100%; box-sizing: border-box; padding: 10px 11px; color: var(--ink); background: #061c2c; border: 1px solid rgba(255,255,255,.18); border-radius: 7px; font: inherit; font-size: 15px; }
+    .settings-form input:focus { border-color: rgba(113,183,255,.8); outline: 2px solid rgba(113,183,255,.16); }
+    .settings-form input[aria-invalid="true"] { border-color: #ef4055; }
+    .settings-form-note { margin: 0; color: var(--muted); font-size: 10px !important; }
+    .settings-form-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+    .settings-form-status { min-height: 18px; color: #bde7e0; font-size: 11px; font-weight: 800; }
+    .settings-form-status.is-error { color: #ff9ba8; }
     .analysis-breakdowns { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
     .analysis-breakdown { padding: 10px; background: rgba(12,50,70,.58); border-radius: 9px; }
     .analysis-breakdown strong { display: block; margin-bottom: 3px; font-size: 13px; }
@@ -347,8 +397,24 @@
     .comments-panel.is-expanded .comments-scroll { max-height: min(68vh, 680px); }
     .comments-panel.is-expanded .comment-attachment { max-height: 260px; }
     .comment-card { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 9px; align-items: start; padding: 8px 10px; border: 1px solid rgba(255,255,255,.1); border-radius: 7px; background: rgba(0,0,0,.16); }
+    .comment-group { border-left-width: 3px; }
+    .comment-group.comment-author-color-0 { border-left-color: #63c9c0; }
+    .comment-group.comment-author-color-1 { border-left-color: #b496ee; }
+    .comment-group.comment-author-color-2 { border-left-color: #73a9ed; }
+    .comment-group.comment-author-color-3 { border-left-color: #e5ad67; }
+    .comment-group.comment-author-color-4 { border-left-color: #eb91b0; }
+    .comment-group.comment-author-color-5 { border-left-color: #aecb73; }
+    .comment-group.comment-author-color-6 { border-left-color: #8fc5d4; }
     .comment-author-badge { display: inline-flex; align-items: center; justify-content: center; width: 44px; min-height: 44px; padding: 4px; color: #eafefe; background: linear-gradient(145deg, #21536b, #102c3e); border: 1px solid rgba(155,232,216,.55); border-radius: 50%; font-size: 9px; font-weight: 800; line-height: 1.15; text-align: center; overflow-wrap: anywhere; }
+    .comment-author-badge.comment-author-color-0 { background: linear-gradient(145deg, #1d6a6b, #10333d); border-color: #63c9c0; }
+    .comment-author-badge.comment-author-color-1 { background: linear-gradient(145deg, #5b4382, #2b2141); border-color: #b496ee; }
+    .comment-author-badge.comment-author-color-2 { background: linear-gradient(145deg, #2e5d92, #172d4b); border-color: #73a9ed; }
+    .comment-author-badge.comment-author-color-3 { background: linear-gradient(145deg, #865c31, #422e1c); border-color: #e5ad67; }
+    .comment-author-badge.comment-author-color-4 { background: linear-gradient(145deg, #814866, #412737); border-color: #eb91b0; }
+    .comment-author-badge.comment-author-color-5 { background: linear-gradient(145deg, #5b7139, #2e3c22); border-color: #aecb73; }
+    .comment-author-badge.comment-author-color-6 { background: linear-gradient(145deg, #356d7b, #1c3d46); border-color: #8fc5d4; }
     .comment-card-main { min-width: 0; }
+    .comment-entry + .comment-entry { margin-top: 9px; padding-top: 9px; border-top: 1px solid rgba(255, 255, 255, .1); }
     .comment-card-meta { display: flex; justify-content: flex-end; gap: 10px; min-height: 14px; }
     .comment-time { color: var(--muted); font-size: 9px; white-space: nowrap; }
     .comment-body { margin: 0; color: #e6f4f7; font-size: clamp(13px, 1.25vw, 16px); line-height: 1.6; overflow-wrap: anywhere; }
@@ -486,7 +552,10 @@
       .menu-sidebar .account-status { grid-column: 1 / -1; }
       .menu-sidebar .account-strip button { width: auto; min-width: 130px; }
       .menu-content { padding: 18px 14px 24px; }
+      .menu-content, .menu-heading { min-width: 0; max-width: 100%; }
       .menu-content .menu-heading h2 { font-size: clamp(28px, 9vw, 38px); }
+      .menu-summary { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; width: 100%; }
+      .menu-summary-stat { min-width: 0; }
       .menu-summary-stat { padding: 0 9px; }
       .menu-summary-stat strong { font-size: 22px; }
       .menu-summary-stat small { font-size: 10px; }
@@ -594,13 +663,22 @@
     .menu-brand {
       color: #f8f5e8;
       font-family: "Yu Gothic UI", "Noto Sans JP", "Yu Gothic", Meiryo, sans-serif;
-      font-size: 19px;
+      font-size: 14px;
       font-weight: 800;
       letter-spacing: -.02em;
     }
     .menu-brand-tile {
+      width: 24px;
+      height: 29px;
+      font-size: 18px;
       box-shadow: 0 2px 5px rgba(0, 0, 0, .28);
     }
+    .menu-notice-button {
+      width: 24px;
+      min-height: 26px;
+      font-size: 12px;
+    }
+    .menu-brand-version { font-size: 8px; }
     .menu-sidebar .menu-nav-button {
       min-height: 44px;
       color: #c8dadd;
@@ -686,6 +764,8 @@
       font-size: 14px;
     }
     .menu-range-tabs {
+      min-width: 0;
+      max-width: 100%;
       gap: 2px;
       padding: 0;
       background: transparent;
@@ -1006,19 +1086,26 @@
         height: 16px;
       }
     }
+    @media (max-width: 800px) {
+      .menu-content > * { min-width: 0; max-width: 100%; }
+      .menu-content .menu-filters { grid-template-columns: minmax(0, 1fr); }
+      .menu-content .menu-filters input,
+      .menu-content .menu-filters select { min-width: 0; width: 100%; }
+    }
   </style>
 </head>
 <body>
   <main class="page">
     <section class="menu-panel" id="menuPanel" aria-labelledby="menuTitle">
       <aside class="menu-sidebar" aria-label="問題集ナビゲーション">
-        <div class="menu-brand"><span class="menu-brand-tile" aria-hidden="true">中</span><span>My問題集</span><span class="menu-brand-version">V<span id="menuVersion"></span></span></div>
+        <div class="menu-brand"><span class="menu-brand-tile" aria-hidden="true">中</span><span class="menu-brand-title">My問題集</span><span class="menu-brand-actions"><button class="menu-notice-button" id="announcementButton" type="button" aria-label="アナウンスを開く" title="アナウンス">📢<span class="notification-badge" id="announcementBadge" hidden></span></button><button class="menu-notice-button" id="commentNotificationsButton" type="button" aria-label="コメント・追加通知を開く" title="コメント・追加通知">💬<span class="notification-badge" id="commentNotificationBadge" hidden></span></button><span class="menu-brand-version">V<span id="menuVersion"></span></span></span></div>
         <nav class="menu-nav" aria-label="問題集メニュー">
           <button class="menu-nav-button is-active" type="button" data-menu-view="my"><span class="menu-nav-icon" aria-hidden="true">▤</span><span>問題一覧</span><span class="menu-nav-badge" data-menu-count="my">0</span></button>
           <button class="menu-nav-button" type="button" data-menu-view="analysis"><span class="menu-nav-icon" aria-hidden="true">▥</span><span>成績・履歴</span></button>
           <button class="menu-nav-button" type="button" data-menu-view="favorites"><span class="menu-nav-icon" aria-hidden="true">☆</span><span>お気に入り</span><span class="menu-nav-badge" data-menu-count="favorites">0</span></button>
           <button class="menu-nav-button" type="button" data-menu-view="trash"><span class="menu-nav-icon" aria-hidden="true">↶</span><span>ゴミ箱</span><span class="menu-nav-badge" data-menu-count="trash">0</span></button>
           <button class="menu-nav-button" type="button" data-menu-view="generator"><span class="menu-nav-icon" aria-hidden="true">＋</span><span>問題生成</span></button>
+          <button class="menu-nav-button" type="button" data-menu-view="settings"><span class="menu-nav-icon" aria-hidden="true">⚙</span><span>設定</span></button>
           <button class="menu-nav-button" id="studentHistoryNav" type="button" data-menu-view="students" hidden><span class="menu-nav-icon" aria-hidden="true">◎</span><span>生徒履歴</span></button>
         </nav>
         <div class="menu-sidebar-progress" id="menuSidebarProgress" aria-live="polite"></div>
@@ -1201,6 +1288,23 @@
     </div>
   </dialog>
 
+  <dialog class="announcement-dialog" id="announcementDialog" aria-labelledby="announcementDialogTitle">
+    <div class="notice-dialog-inner">
+      <div class="notice-dialog-heading"><h3 id="announcementDialogTitle">アナウンス</h3><button class="notice-dialog-close" id="announcementDialogClose" type="button">閉じる</button></div>
+      <p class="notice-dialog-note">アプリの修正内容や新しい機能をお知らせします。</p>
+      <div class="notice-list" id="announcementList"></div>
+    </div>
+  </dialog>
+
+  <dialog class="comment-notification-dialog" id="commentNotificationDialog" aria-labelledby="commentNotificationDialogTitle">
+    <div class="notice-dialog-inner">
+      <div class="notice-dialog-heading"><h3 id="commentNotificationDialogTitle">コメント・追加通知</h3><button class="notice-dialog-close" id="commentNotificationDialogClose" type="button">閉じる</button></div>
+      <p class="notice-dialog-note" id="commentNotificationNote">新しいコメントと、他の利用者が追加した問題を確認できます。</p>
+      <div class="notice-list" id="commentNotificationList"></div>
+      <div class="notice-dialog-actions"><button class="notice-dialog-action" id="markAllCommentsReadButton" type="button">すべて既読</button><button class="notice-dialog-action secondary" id="commentNotificationDialogDone" type="button">閉じる</button></div>
+    </div>
+  </dialog>
+
   <script src="runtime-config.js"></script>
   <script src="supabase-sync-v48.js"></script>
   <script src="drill-ux-v44.js"></script>
@@ -1208,7 +1312,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 64;
+    const APP_VERSION = 67;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -1400,14 +1504,35 @@
       return new Intl.DateTimeFormat("ja-JP", { dateStyle: "short", timeStyle: "short" }).format(new Date(value));
     }
 
+    function commentAuthorColorV65(author) {
+      let hash = 0;
+      for (const character of String(author || "不明")) hash = ((hash << 5) - hash + character.codePointAt(0)) | 0;
+      return `comment-author-color-${Math.abs(hash) % 7}`;
+    }
+
+    function mergeCommentGroupsV65(messages) {
+      return messages.reduce((groups, message) => {
+        const author = String(message.author || "不明").trim() || "不明";
+        const last = groups[groups.length - 1];
+        if (last && last.author === author) last.messages.push(message);
+        else groups.push({ author, messages: [message] });
+        return groups;
+      }, []);
+    }
+
+    function renderCommentEntryV65(message) {
+      return `<div class="comment-entry"><div class="comment-card-meta"><time class="comment-time" datetime="${escapeHtml(message.createdAt)}">${formatCommentTime(message.createdAt)}</time></div>${message.content ? `<div class="comment-body">${formatCommentContent(message.content)}</div>` : ""}${(message.attachments || []).map(attachment => `<button class="comment-attachment-button" type="button" data-comment-image-src="${escapeHtml(attachment.src)}" data-comment-image-alt="${escapeHtml(attachment.alt)}" aria-label="${escapeHtml(attachment.alt)}を拡大"><img class="comment-attachment" src="${escapeHtml(attachment.src)}" alt="${escapeHtml(attachment.alt)}" loading="lazy"></button>`).join("")}</div>`;
+    }
+
     function renderComments({ scrollToBottom = false } = {}) {
       const list = document.getElementById("commentsScroll");
       const messages = state.comments.filter(message => message.showInComments !== false && (message.content || message.attachments?.length));
-      list.innerHTML = messages.map(message => {
-        const author = String(message.author || "不明");
-        return `<article class="comment-card"><span class="comment-author-badge" title="${escapeHtml(author)}">${escapeHtml(author)}</span><div class="comment-card-main"><div class="comment-card-meta"><time class="comment-time" datetime="${escapeHtml(message.createdAt)}">${formatCommentTime(message.createdAt)}</time></div>${message.content ? `<div class="comment-body">${formatCommentContent(message.content)}</div>` : ""}${(message.attachments || []).map(attachment => `<button class="comment-attachment-button" type="button" data-comment-image-src="${escapeHtml(attachment.src)}" data-comment-image-alt="${escapeHtml(attachment.alt)}" aria-label="${escapeHtml(attachment.alt)}を拡大"><img class="comment-attachment" src="${escapeHtml(attachment.src)}" alt="${escapeHtml(attachment.alt)}" loading="lazy"></button>`).join("")}</div></article>`;
+      const groups = mergeCommentGroupsV65(messages);
+      list.innerHTML = groups.map(group => {
+        const authorClass = commentAuthorColorV65(group.author);
+        return `<article class="comment-card comment-group ${authorClass}"><span class="comment-author-badge ${authorClass}" title="${escapeHtml(group.author)}">${escapeHtml(group.author)}</span><div class="comment-card-main">${group.messages.map(renderCommentEntryV65).join("")}</div></article>`;
       }).join("");
-      document.getElementById("commentsMeta").textContent = `${messages.length}件の投稿（画像を含む）`;
+      document.getElementById("commentsMeta").textContent = `${messages.length}件の投稿・${groups.length}人の発言（連続投稿は統合表示）`;
       if (scrollToBottom) list.scrollTop = list.scrollHeight;
     }
 
@@ -1551,7 +1676,7 @@
       const input = document.getElementById("commentInput");
       const content = input.value.trim();
       if (!content) return;
-      const message = { id: `local-${Date.now()}`, author: "このブラウザ", createdAt: new Date().toISOString(), content, attachments: [] };
+      const message = { id: `local-${Date.now()}`, author: typeof currentUserDisplayNameV47 === "function" ? currentUserDisplayNameV47() : "このブラウザ", createdAt: new Date().toISOString(), content, attachments: [] };
       state.comments.push(message);
       window.persistLocalCommentV44?.(message);
       input.value = "";
@@ -1634,6 +1759,7 @@
         favorites: { title: "お気に入り" },
         trash: { title: "ゴミ箱" },
         generator: { title: "問題生成" },
+        settings: { title: "設定" },
         analysis: { title: "自己分析" },
         students: { title: "生徒の回答履歴" },
         session: { title: "セッション結果" }
@@ -1676,9 +1802,454 @@
         return String(question?.id || `number-${question?.number ?? "unknown"}`);
       }
 
+      const COMMENT_NOTICE_STORAGE_KEY_V65 = storageKey("comment-notices-v1");
+      const QUESTION_NOTICE_STORAGE_KEY_V66 = storageKey("question-notices-v1");
+      const ANNOUNCEMENT_SEEN_STORAGE_KEY_V65 = storageKey("announcement-seen-v1");
+      const APP_ANNOUNCEMENTS_V66 = [
+        { version: 66, date: "2026-08-14", title: "コメント・問題追加通知を追加しました", body: "新しいコメントに加えて、他の利用者が共有問題集へ追加した問題も通知一覧で確認できるようになりました。" },
+        { version: APP_VERSION, date: "2026-08-14", title: "作成者表示名の設定を追加しました", body: "設定から1〜5文字の表示名を登録できます。コメントや問題作成時の作成者名に使用されます。" }
+      ];
+      let commentNoticeStoreV65 = loadCommentNoticeStoreV65();
+      let sharedCommentRowsV65 = [];
+      let commentPollTimerV65 = null;
+      let commentRefreshBusyV65 = false;
+      let commentVisibilityHandlerBoundV65 = false;
+      let questionNoticeStoreV66 = loadQuestionNoticeStoreV66();
+      let sharedQuestionRowsV66 = [];
+      let questionPollTimerV66 = null;
+      let questionRefreshBusyV66 = false;
+
+      function loadCommentNoticeStoreV65() {
+        try {
+          const parsed = JSON.parse(window.localStorage.getItem(COMMENT_NOTICE_STORAGE_KEY_V65) || "{}");
+          return parsed && typeof parsed === "object" ? parsed : {};
+        } catch {
+          return {};
+        }
+      }
+
+      function saveCommentNoticeStoreV65() {
+        try {
+          window.localStorage.setItem(COMMENT_NOTICE_STORAGE_KEY_V65, JSON.stringify(commentNoticeStoreV65));
+        } catch {
+          // Private browsing or storage-disabled environments can still view comments.
+        }
+      }
+
+      function loadQuestionNoticeStoreV66() {
+        try {
+          const parsed = JSON.parse(window.localStorage.getItem(QUESTION_NOTICE_STORAGE_KEY_V66) || "{}");
+          return parsed && typeof parsed === "object" ? parsed : {};
+        } catch {
+          return {};
+        }
+      }
+
+      function saveQuestionNoticeStoreV66() {
+        try {
+          window.localStorage.setItem(QUESTION_NOTICE_STORAGE_KEY_V66, JSON.stringify(questionNoticeStoreV66));
+        } catch {
+          // Private browsing or storage-disabled environments can still view the shared collection.
+        }
+      }
+
+      function questionNoticeBucketV66() {
+        const key = sharedCollectionV46?.share_slug || "local";
+        const current = questionNoticeStoreV66[key] && typeof questionNoticeStoreV66[key] === "object" ? questionNoticeStoreV66[key] : {};
+        current.knownIds = Array.isArray(current.knownIds) ? current.knownIds.map(String) : [];
+        current.unreadIds = Array.isArray(current.unreadIds) ? current.unreadIds.map(String) : [];
+        current.initialized = Boolean(current.initialized);
+        questionNoticeStoreV66[key] = current;
+        return current;
+      }
+
+      function normalizeSharedQuestionV66(row, index = 0, shareSlug = sharedCollectionV46?.share_slug || "") {
+        const sourcePayload = row?.question && typeof row.question === "object" ? row.question : (row?.payload && typeof row.payload === "object" ? row.payload : {});
+        const payload = { ...sourcePayload };
+        payload.image ||= payload.images?.off;
+        delete payload.images;
+        const id = String(row?.id || row?.question_id || payload.serverQuestionId || "");
+        if (!id) return null;
+        const number = payload.number ?? row?.number ?? index + 1;
+        const title = String(row?.title || payload.title || `問題${number}`);
+        const createdById = row?.created_by || row?.creator_id || payload.createdById || payload.created_by || null;
+        const createdByName = row?.created_by_name || row?.creator_name || payload.createdByName || payload.creatorName || "利用者";
+        const question = {
+          ...payload,
+          id,
+          serverQuestionId: id,
+          legacyKey: row?.legacy_key || payload.legacyKey,
+          number,
+          title,
+          hasRiichiJudgment: payload.decisionType !== "call" && Array.isArray(payload.reach) && payload.reach.some(value => Number(value) > 0),
+          sharedCollectionSlug: shareSlug,
+          visibility: "unlisted",
+          createdById,
+          createdByName,
+          updatedById: row?.updated_by || row?.last_updated_by || payload.updatedById || payload.updated_by || null,
+          updatedByName: row?.updated_by_name || row?.last_updated_by_name || payload.updatedByName || payload.lastUpdatedByName || null
+        };
+        return {
+          id,
+          number,
+          title,
+          author: String(createdByName || "利用者"),
+          createdById: createdById ? String(createdById) : "",
+          createdAt: row?.created_at || row?.createdAt || new Date().toISOString(),
+          question
+        };
+      }
+
+      function isQuestionAddedByOtherV66(row) {
+        const currentUserId = String(supabaseSessionV46?.user?.id || "");
+        return !currentUserId || !row.createdById || row.createdById !== currentUserId;
+      }
+
+      function adoptSharedQuestionRowsV66(rows) {
+        const normalized = (Array.isArray(rows) ? rows : []).map((row, index) => row?.question ? row : normalizeSharedQuestionV66(row, index)).filter(Boolean);
+        const bucket = questionNoticeBucketV66();
+        const currentIds = new Set(normalized.map(row => row.id));
+        const known = new Set(bucket.knownIds);
+        if (!bucket.initialized) {
+          bucket.initialized = true;
+          bucket.knownIds = [...currentIds];
+          bucket.unreadIds = [];
+        } else {
+          for (const row of normalized) {
+            if (!known.has(row.id) && isQuestionAddedByOtherV66(row)) bucket.unreadIds.push(row.id);
+            known.add(row.id);
+          }
+          bucket.knownIds = [...known];
+          bucket.unreadIds = [...new Set(bucket.unreadIds)].filter(id => currentIds.has(id));
+        }
+        sharedQuestionRowsV66 = normalized;
+        saveQuestionNoticeStoreV66();
+        renderNotificationBadgesV65();
+        return normalized;
+      }
+
+      function mergeSharedQuestionsV66(rows) {
+        const existingIds = new Set(questionsV16.map(question => String(question?.serverQuestionId || "")).filter(Boolean));
+        const additions = rows.filter(row => !existingIds.has(row.id)).map(row => row.question).filter(Boolean);
+        if (!additions.length) return;
+        questionsV16 = questionsV16.concat(additions);
+        renderQuestionOptionsV16();
+        if (document.querySelector(".page")?.classList.contains("menu-active")) renderMenuCardsV16();
+      }
+
+      function unreadQuestionIdsV66() {
+        return new Set(questionNoticeBucketV66().unreadIds);
+      }
+
+      function questionNotificationCountV66() {
+        const unread = unreadQuestionIdsV66();
+        return sharedQuestionRowsV66.filter(row => unread.has(row.id)).length;
+      }
+
+      function markQuestionAddedReadV66(questionId) {
+        if (!questionId) return;
+        const bucket = questionNoticeBucketV66();
+        bucket.unreadIds = bucket.unreadIds.filter(id => id !== String(questionId));
+        saveQuestionNoticeStoreV66();
+        renderNotificationBadgesV65();
+      }
+
+      function commentNoticeBucketV65() {
+        const key = sharedCollectionV46?.share_slug || "local";
+        const current = commentNoticeStoreV65[key] && typeof commentNoticeStoreV65[key] === "object" ? commentNoticeStoreV65[key] : {};
+        current.knownIds = Array.isArray(current.knownIds) ? current.knownIds.map(String) : [];
+        current.unreadIds = Array.isArray(current.unreadIds) ? current.unreadIds.map(String) : [];
+        current.initialized = Boolean(current.initialized);
+        commentNoticeStoreV65[key] = current;
+        return current;
+      }
+
+      function normalizeSharedCommentV65(row) {
+        const id = String(row?.id || "");
+        if (!id) return null;
+        return {
+          id,
+          questionId: String(row?.question_id || row?.questionId || ""),
+          author: String(row?.author_name || row?.authorName || "不明"),
+          content: String(row?.body || row?.content || ""),
+          createdAt: row?.created_at || row?.createdAt || new Date().toISOString()
+        };
+      }
+
+      function unreadCommentIdsV65() {
+        return new Set(commentNoticeBucketV65().unreadIds);
+      }
+
+      function commentNotificationCountForQuestionV65(question) {
+        const questionId = String(question?.serverQuestionId || "");
+        if (!questionId) return 0;
+        const unread = unreadCommentIdsV65();
+        return sharedCommentRowsV65.filter(row => row.questionId === questionId && unread.has(row.id)).length;
+      }
+
+      function commentNotificationCountForRangeV65(rangeKey) {
+        const questions = rangeKey === "all" ? questionsV16 : questionsV16.filter(question => menuRangeMatchesForNotificationV65(question, rangeKey));
+        return questions.reduce((total, question) => total + commentNotificationCountForQuestionV65(question), 0);
+      }
+
+      function menuRangeMatchesForNotificationV65(question, rangeKey) {
+        const [start, end] = String(rangeKey).split("-").map(Number);
+        const number = menuQuestionNumberV60(question);
+        return Number.isInteger(number) && number >= start && number <= end;
+      }
+
+      function notificationBadgeMarkupV65(count, label, attributes = "") {
+        const visibleCount = count > 99 ? "99+" : String(count);
+        return `<span class="notification-badge"${attributes ? ` ${attributes}` : ""} aria-label="${escapeHtml(label)}"${count ? "" : " hidden"}>${visibleCount}</span>`;
+      }
+
+      function renderNotificationBadgesV65() {
+        const unreadCommentCount = commentNotificationCountForRangeV65("all");
+        const unreadQuestionCount = questionNotificationCountV66();
+        const unreadCount = unreadCommentCount + unreadQuestionCount;
+        const commentButton = document.getElementById("commentNotificationsButton");
+        const commentBadge = document.getElementById("commentNotificationBadge");
+        if (commentBadge) {
+          commentBadge.hidden = unreadCount === 0;
+          commentBadge.textContent = unreadCount > 99 ? "99+" : String(unreadCount);
+        }
+        if (commentButton) {
+          commentButton.setAttribute("aria-label", unreadCount ? `コメント・追加通知。未読${unreadCount}件` : "コメント・追加通知。新着なし");
+          commentButton.title = unreadCount ? `コメント・追加通知（未読${unreadCount}件）` : "コメント・追加通知（新着なし）";
+        }
+        const announcementBadge = document.getElementById("announcementBadge");
+        const announcementUnread = Number(window.localStorage.getItem(ANNOUNCEMENT_SEEN_STORAGE_KEY_V65) || 0) < Math.max(...APP_ANNOUNCEMENTS_V66.map(item => item.version));
+        if (announcementBadge) {
+          announcementBadge.hidden = !announcementUnread;
+          announcementBadge.textContent = "1";
+        }
+        document.querySelectorAll("[data-menu-question-notification]").forEach(badge => {
+          const count = commentNotificationCountForQuestionV65(questionsV16.find(question => questionKeyV16(question) === badge.dataset.menuQuestionNotification));
+          badge.hidden = count === 0;
+          badge.textContent = count > 99 ? "99+" : String(count);
+        });
+        document.querySelectorAll("[data-menu-range-notification]").forEach(badge => {
+          const count = commentNotificationCountForRangeV65(badge.dataset.menuRangeNotification || "all");
+          badge.hidden = count === 0;
+          badge.textContent = count > 99 ? "99+" : String(count);
+        });
+      }
+
+      function adoptSharedCommentRowsV65(rows) {
+        const normalized = rows.map(normalizeSharedCommentV65).filter(Boolean);
+        const bucket = commentNoticeBucketV65();
+        const currentIds = new Set(normalized.map(row => row.id));
+        const known = new Set(bucket.knownIds);
+        if (!bucket.initialized) {
+          bucket.initialized = true;
+          bucket.knownIds = [...currentIds];
+          bucket.unreadIds = [];
+        } else {
+          for (const id of currentIds) {
+            if (!known.has(id)) bucket.unreadIds.push(id);
+            known.add(id);
+          }
+          bucket.knownIds = [...known];
+          bucket.unreadIds = [...new Set(bucket.unreadIds)].filter(id => currentIds.has(id));
+        }
+        sharedCommentRowsV65 = normalized;
+        saveCommentNoticeStoreV65();
+        renderNotificationBadgesV65();
+        if (document.querySelector(".page")?.classList.contains("menu-active")) renderMenuCardsV16();
+      }
+
+      function markSharedCommentKnownV65(commentId) {
+        if (!commentId) return;
+        const bucket = commentNoticeBucketV65();
+        bucket.initialized = true;
+        bucket.knownIds = [...new Set([...bucket.knownIds, String(commentId)])];
+        bucket.unreadIds = bucket.unreadIds.filter(id => id !== String(commentId));
+        saveCommentNoticeStoreV65();
+        renderNotificationBadgesV65();
+      }
+
+      function markQuestionCommentsReadV65(questionId) {
+        if (!questionId) return;
+        const bucket = commentNoticeBucketV65();
+        bucket.unreadIds = bucket.unreadIds.filter(id => !sharedCommentRowsV65.some(row => row.id === id && row.questionId === String(questionId)));
+        saveCommentNoticeStoreV65();
+        renderNotificationBadgesV65();
+      }
+
+      function renderAnnouncementListV65() {
+        const list = document.getElementById("announcementList");
+        if (!list) return;
+        list.innerHTML = APP_ANNOUNCEMENTS_V66.map(item => `<article class="notice-item"><div class="notice-item-top"><strong class="notice-item-question">V${item.version}　${escapeHtml(item.title)}</strong><time>${escapeHtml(item.date)}</time></div><div class="notice-item-body">${escapeHtml(item.body)}</div></article>`).join("");
+      }
+
+      function openAnnouncementDialogV65() {
+        renderAnnouncementListV65();
+        const latestVersion = Math.max(...APP_ANNOUNCEMENTS_V66.map(item => item.version));
+        try { window.localStorage.setItem(ANNOUNCEMENT_SEEN_STORAGE_KEY_V65, String(latestVersion)); } catch { /* storage disabled */ }
+        renderNotificationBadgesV65();
+        document.getElementById("announcementDialog")?.showModal();
+      }
+
+      function renderCommunityNotificationListV66() {
+        const list = document.getElementById("commentNotificationList");
+        if (!list) return;
+        const unreadComments = unreadCommentIdsV65();
+        const unreadQuestions = unreadQuestionIdsV66();
+        const rows = [
+          ...sharedCommentRowsV65.filter(row => unreadComments.has(row.id)).map(row => ({ ...row, kind: "comment" })),
+          ...sharedQuestionRowsV66.filter(row => unreadQuestions.has(row.id)).map(row => ({ ...row, kind: "question" }))
+        ].sort((left, right) => new Date(right.createdAt) - new Date(left.createdAt));
+        if (!rows.length) {
+          list.innerHTML = `<div class="notice-empty">新しいコメント・追加問題はありません。</div>`;
+          return;
+        }
+        list.innerHTML = rows.map(row => {
+          if (row.kind === "question") {
+            const index = questionsV16.findIndex(question => String(question.serverQuestionId || "") === row.id);
+            const questionLabel = row.title || (row.number ? `問題${row.number}` : "新しい問題");
+            const body = `${row.author || "利用者"}さんが問題を追加しました。`;
+            return index >= 0
+              ? `<button class="notice-item" type="button" data-community-notification-kind="question" data-community-notification-question="${index}" data-community-notification-id="${escapeHtml(row.id)}"><span class="notice-item-top"><strong class="notice-item-question">${escapeHtml(questionLabel)}</strong><span>${escapeHtml(formatCommentTime(row.createdAt))}</span></span><span class="notice-item-body">${escapeHtml(body)}</span></button>`
+              : `<article class="notice-item"><span class="notice-item-top"><strong class="notice-item-question">${escapeHtml(questionLabel)}</strong><span>${escapeHtml(formatCommentTime(row.createdAt))}</span></span><span class="notice-item-body">${escapeHtml(body)}</span></article>`;
+          }
+          const index = questionsV16.findIndex(question => String(question.serverQuestionId || "") === row.questionId);
+          const question = index >= 0 ? questionsV16[index] : null;
+          const questionLabel = question?.title || (question?.number ? `問題${question.number}` : "問題不明");
+          const content = row.content || "（本文なし）";
+          const authorClass = commentAuthorColorV65(row.author);
+          return index >= 0
+            ? `<button class="notice-item" type="button" data-community-notification-kind="comment" data-community-notification-question="${index}" data-comment-notification-question="${index}" data-comment-notification-id="${escapeHtml(row.id)}"><span class="notice-item-top"><strong class="notice-item-question">${escapeHtml(questionLabel)}</strong><span><span class="notice-item-author ${authorClass}">${escapeHtml(row.author)}</span>　${escapeHtml(formatCommentTime(row.createdAt))}</span></span><span class="notice-item-body">${escapeHtml(content)}</span></button>`
+            : `<article class="notice-item"><span class="notice-item-top"><strong class="notice-item-question">${escapeHtml(questionLabel)}</strong><span><span class="notice-item-author ${authorClass}">${escapeHtml(row.author)}</span>　${escapeHtml(formatCommentTime(row.createdAt))}</span></span><span class="notice-item-body">${escapeHtml(content)}</span></article>`;
+        }).join("");
+      }
+
+      function renderCommentNotificationListV65() {
+        renderCommunityNotificationListV66();
+      }
+
+      function openCommentNotificationDialogV65() {
+        renderCommunityNotificationListV66();
+        document.getElementById("commentNotificationDialog")?.showModal();
+      }
+
+      function markAllCommentsReadV65() {
+        const bucket = commentNoticeBucketV65();
+        bucket.unreadIds = [];
+        saveCommentNoticeStoreV65();
+        const questionBucket = questionNoticeBucketV66();
+        questionBucket.unreadIds = [];
+        saveQuestionNoticeStoreV66();
+        renderNotificationBadgesV65();
+        renderCommunityNotificationListV66();
+      }
+
+      async function refreshSharedCommentNotificationsV65() {
+        if (!sharedCollectionV46 || !window.NagaSupabase?.configured || commentRefreshBusyV65) return;
+        commentRefreshBusyV65 = true;
+        try {
+          const rows = await window.NagaSupabase.loadSharedComments(sharedCollectionV46.share_slug, null);
+          adoptSharedCommentRowsV65(rows);
+        } catch (error) {
+          console.warn("共有コメント通知を更新できませんでした", error);
+        } finally {
+          commentRefreshBusyV65 = false;
+        }
+      }
+
+      async function refreshSharedQuestionNotificationsV66() {
+        if (!sharedCollectionV46 || !window.NagaSupabase?.configured || questionRefreshBusyV66) return;
+        questionRefreshBusyV66 = true;
+        try {
+          const result = await window.NagaSupabase.loadSharedCollection(sharedCollectionV46.share_slug);
+          const normalized = adoptSharedQuestionRowsV66(result.questions || []);
+          mergeSharedQuestionsV66(normalized);
+        } catch (error) {
+          console.warn("共有問題の追加通知を更新できませんでした", error);
+        } finally {
+          questionRefreshBusyV66 = false;
+        }
+      }
+
+      async function startCommentNotificationPollingV65() {
+        if (!sharedCollectionV46 || !window.NagaSupabase?.configured) return;
+        if (commentPollTimerV65) window.clearInterval(commentPollTimerV65);
+        if (questionPollTimerV66) window.clearInterval(questionPollTimerV66);
+        await refreshSharedCommentNotificationsV65();
+        commentPollTimerV65 = window.setInterval(() => { void refreshSharedCommentNotificationsV65(); }, 30000);
+        questionPollTimerV66 = window.setInterval(() => { void refreshSharedQuestionNotificationsV66(); }, 60000);
+        if (!commentVisibilityHandlerBoundV65) {
+          document.addEventListener("visibilitychange", () => {
+            if (document.visibilityState === "visible") {
+              void refreshSharedCommentNotificationsV65();
+              void refreshSharedQuestionNotificationsV66();
+            }
+          });
+          commentVisibilityHandlerBoundV65 = true;
+        }
+      }
+
       function currentUserDisplayNameV47() {
         const user = supabaseSessionV46?.user;
+        const configuredName = String(userStateV16?.settings?.displayName || "").trim();
+        if (configuredName) return configuredName;
         return String(user?.user_metadata?.full_name || user?.user_metadata?.name || user?.user_metadata?.preferred_username || "このブラウザ").trim();
+      }
+
+      function displayNameLengthV67(value) {
+        return Array.from(String(value || "").trim()).length;
+      }
+
+      function renderSettingsViewV67() {
+        const configuredName = String(userStateV16.settings?.displayName || "").trim();
+        const fallbackName = currentUserDisplayNameV47();
+        const syncNote = supabaseSessionV46
+          ? "ログイン中：保存すると共有コメントと問題作成にも反映されます。"
+          : "未ログイン：この端末に保存されます。共有コメント・問題作成へ反映するにはDiscordログイン後に再保存してください。";
+        return `<section class="settings-section"><h3>表示名の設定</h3><p>コメントや問題作成時に表示する名前を登録できます。読みやすさを保つため、1〜5文字で入力してください。</p><form class="settings-form" id="displayNameForm"><label for="displayNameInput">作成者表示名<input id="displayNameInput" type="text" maxlength="5" minlength="1" value="${escapeHtml(configuredName)}" placeholder="${escapeHtml(fallbackName)}" autocomplete="nickname" required></label><p class="settings-form-note">${escapeHtml(syncNote)}</p><div class="settings-form-actions"><button class="primary" type="submit">表示名を保存</button><span class="settings-form-status" id="displayNameStatus" aria-live="polite"></span></div></form></section>`;
+      }
+
+      function bindSettingsViewV67() {
+        const form = document.getElementById("displayNameForm");
+        if (!form) return;
+        form.addEventListener("submit", async event => {
+          event.preventDefault();
+          const input = document.getElementById("displayNameInput");
+          const status = document.getElementById("displayNameStatus");
+          const value = String(input.value || "").trim();
+          const length = displayNameLengthV67(value);
+          input.setAttribute("aria-invalid", String(!value || length > 5));
+          status.classList.remove("is-error");
+          if (!value || length > 5) {
+            status.classList.add("is-error");
+            status.textContent = "表示名は1〜5文字で入力してください。";
+            input.focus();
+            return;
+          }
+          userStateV16.settings ||= {};
+          userStateV16.settings.displayName = value;
+          saveUserStateV16();
+          const button = form.querySelector("button[type=submit]");
+          button.disabled = true;
+          button.textContent = "保存中…";
+          try {
+            if (supabaseSessionV46 && typeof window.NagaSupabase?.updateProfileDisplayName === "function") {
+              await window.NagaSupabase.updateProfileDisplayName(value);
+              status.textContent = `「${value}」を共有プロフィールにも保存しました。`;
+            } else if (supabaseSessionV46) {
+              status.classList.add("is-error");
+              status.textContent = "共有プロフィールAPIが未接続です。再読み込みして試してください。";
+            } else {
+              status.textContent = `「${value}」をこの端末に保存しました。`;
+            }
+          } catch (error) {
+            status.classList.add("is-error");
+            status.textContent = error?.message || "共有プロフィールへの保存に失敗しました。端末には保存されています。";
+          } finally {
+            button.disabled = false;
+            button.textContent = "表示名を保存";
+            refreshAccountV46(supabaseSessionV46);
+          }
+        });
       }
 
       function questionMetadataValueV47(question, keys) {
@@ -1869,7 +2440,8 @@
           try {
             const id = await window.NagaSupabase.postSharedComment(sharedCollectionV46.share_slug, message.content, question.serverQuestionId);
             message.id = String(id);
-            message.author = session.user.user_metadata?.full_name || session.user.user_metadata?.name || "Discordユーザー";
+            message.author = currentUserDisplayNameV47();
+            markSharedCommentKnownV65(message.id);
             renderComments({ scrollToBottom: true });
           } catch (error) {
             state.comments = state.comments.filter(comment => comment.id !== message.id);
@@ -2634,13 +3206,14 @@
         resumeButton.hidden = !resume;
         if (resume) document.getElementById("resumeSessionNote").textContent = `${Number(resume.cursor || 0) + 1} / ${resume.questionKeys.length} から再開`;
         document.getElementById("todayDrillNote").textContent = analytics.dueCount ? `復習期限 ${analytics.dueCount}問を優先` : "苦手問題と未回答をバランスよく出題";
-        document.getElementById("quickStart").hidden = ["generator", "analysis", "students", "session"].includes(menuViewV16);
+        document.getElementById("quickStart").hidden = ["generator", "analysis", "students", "session", "settings"].includes(menuViewV16);
         document.getElementById("menuFilters").hidden = !["my", "favorites", "trash"].includes(menuViewV16);
         const listView = ["my", "favorites", "trash"].includes(menuViewV16);
         document.getElementById("menuRangeActions").hidden = menuViewV16 !== "my";
         document.getElementById("menuListHeader").hidden = !listView;
         document.getElementById("menuListHeader").setAttribute("aria-hidden", String(!listView));
         renderMenuRangeTabsV60();
+        renderNotificationBadgesV65();
       }
 
       function menuQuestionNumberV60(question) {
@@ -2674,7 +3247,7 @@
         }
         const options = menuRangeOptionsV60();
         if (!options.some(option => option.key === menuRangeV60)) menuRangeV60 = "all";
-        tabs.innerHTML = `<span class="menu-range-label">問題番号</span>${options.map(option => `<button class="menu-range-tab${option.key === menuRangeV60 ? " is-active" : ""}" type="button" role="tab" aria-selected="${option.key === menuRangeV60}" data-menu-range="${option.key}">${option.label}</button>`).join("")}`;
+        tabs.innerHTML = `<span class="menu-range-label">問題番号</span>${options.map(option => { const count = commentNotificationCountForRangeV65(option.key); return `<button class="menu-range-tab${option.key === menuRangeV60 ? " is-active" : ""}" type="button" role="tab" aria-selected="${option.key === menuRangeV60}" aria-label="${option.label}・新着コメント${count}件" data-menu-range="${option.key}">${option.label}${notificationBadgeMarkupV65(count, `${option.label}の新着コメント${count}件`, `data-menu-range-notification="${escapeHtml(option.key)}"`)}</button>`; }).join("")}`;
         tabs.querySelectorAll("[data-menu-range]").forEach(button => button.addEventListener("click", () => {
           menuRangeV60 = button.dataset.menuRange || "all";
           renderMenuCardsV16();
@@ -2819,6 +3392,13 @@
           empty.hidden = true;
           return;
         }
+        if (menuViewV16 === "settings") {
+          grid.innerHTML = renderSettingsViewV67();
+          grid.style.display = "block";
+          empty.hidden = true;
+          bindSettingsViewV67();
+          return;
+        }
         if (menuViewV16 === "students") {
           grid.innerHTML = `<div class="menu-placeholder"><strong>読み込み中</strong>生徒の回答履歴を確認しています。</div>`;
           grid.style.display = "block";
@@ -2853,10 +3433,12 @@
           const status = menuRowStatusV63(question);
           const statusMarkup = `<span class="menu-row-status ${status.className}">${status.label}</span><button class="menu-card-row-manage" type="button" data-menu-action="manage" data-question-index="${index}">整理</button>`;
           const favoriteLabel = favorite ? `問題${question.number}のお気に入りを解除` : `問題${question.number}をお気に入りに追加`;
+          const commentNoticeCount = commentNotificationCountForQuestionV65(question);
+          const commentNotice = notificationBadgeMarkupV65(commentNoticeCount, `問題${question.number}の新着コメント${commentNoticeCount}件`, `data-menu-question-notification="${escapeHtml(questionKeyV16(question))}"`);
           const trashMarkup = trashed
             ? `<button class="menu-card-icon-action is-trashed" type="button" data-menu-action="restore" data-question-index="${index}" aria-label="問題${question.number}を復元" title="復元">↶</button>`
             : `<button class="menu-card-icon-action" type="button" data-menu-action="trash" data-question-index="${index}" aria-label="問題${question.number}をゴミ箱へ" title="ゴミ箱へ">${menuTrashIconV63()}</button>`;
-          return `<article class="menu-card"><button class="menu-card-open" type="button" data-question-index="${index}"><span class="menu-card-heading"><span class="menu-card-title">${title}</span></span><span class="menu-card-meta">${escapeHtml(typeMetadata)}</span></button><div class="menu-card-status">${statusMarkup}</div><span class="menu-card-latest${scores.length ? "" : " is-empty"}" aria-label="${escapeHtml(historyLabel)}">${history}</span><button class="menu-card-icon-action${favorite ? " is-active" : ""}" type="button" data-menu-action="favorite" data-question-index="${index}" aria-pressed="${favorite}" aria-label="${escapeHtml(favoriteLabel)}" title="${escapeHtml(favoriteLabel)}">${favorite ? "★" : "☆"}</button>${trashMarkup}</article>`;
+          return `<article class="menu-card"><button class="menu-card-open" type="button" data-question-index="${index}"><span class="menu-card-heading"><span class="menu-card-title">${title}</span><span class="menu-card-notification">${commentNotice}</span></span><span class="menu-card-meta">${escapeHtml(typeMetadata)}</span></button><div class="menu-card-status">${statusMarkup}</div><span class="menu-card-latest${scores.length ? "" : " is-empty"}" aria-label="${escapeHtml(historyLabel)}">${history}</span><button class="menu-card-icon-action${favorite ? " is-active" : ""}" type="button" data-menu-action="favorite" data-question-index="${index}" aria-pressed="${favorite}" aria-label="${escapeHtml(favoriteLabel)}" title="${escapeHtml(favoriteLabel)}">${favorite ? "★" : "☆"}</button>${trashMarkup}</article>`;
         }).join("");
       }
 
@@ -3409,7 +3991,7 @@
           studentNav.hidden = true;
           return;
         }
-        const displayName = session.user.user_metadata?.full_name || session.user.user_metadata?.name || "Discordユーザー";
+        const displayName = currentUserDisplayNameV47();
         status.textContent = `${displayName}としてログイン中。履歴は他の利用者と混ざりません。`;
         authButton.textContent = "ログアウト";
         importButton.hidden = false;
@@ -3484,26 +4066,9 @@
         if (!window.NagaSupabase?.configured) throw new Error("共有問題集を開くためのSupabase接続が未設定です。");
         const result = await window.NagaSupabase.loadSharedCollection(shareSlug);
         sharedCollectionV46 = { ...result.collection, share_slug: shareSlug };
-        questionsV16 = (result.questions || []).map((row, index) => {
-          const payload = { ...(row.payload || {}) };
-          payload.image ||= payload.images?.off;
-          delete payload.images;
-          return {
-            ...payload,
-            id: row.id,
-            serverQuestionId: row.id,
-            legacyKey: row.legacy_key,
-            number: payload.number ?? index + 1,
-            title: row.title || payload.title || `問題${index + 1}`,
-            hasRiichiJudgment: payload.decisionType !== "call" && Array.isArray(payload.reach) && payload.reach.some(value => Number(value) > 0),
-            sharedCollectionSlug: shareSlug,
-            visibility: "unlisted",
-            createdById: row.created_by || row.creator_id || payload.createdById || payload.created_by || null,
-            createdByName: row.created_by_name || row.creator_name || payload.createdByName || payload.creatorName || null,
-            updatedById: row.updated_by || row.last_updated_by || payload.updatedById || payload.updated_by || null,
-            updatedByName: row.updated_by_name || row.last_updated_by_name || payload.updatedByName || payload.lastUpdatedByName || null
-          };
-        });
+        const normalizedQuestions = (result.questions || []).map((row, index) => normalizeSharedQuestionV66(row, index, shareSlug)).filter(Boolean);
+        questionsV16 = normalizedQuestions.map(row => row.question);
+        adoptSharedQuestionRowsV66(normalizedQuestions);
         document.title = `${sharedCollectionV46.title}｜NAGA局面ドリル`;
         return true;
       }
@@ -3513,10 +4078,11 @@
         try {
           const serverComments = await window.NagaSupabase.loadSharedComments(sharedCollectionV46.share_slug, question.serverQuestionId);
           if (question !== questionsV16[currentQuestionIndexV16]) return;
-          const converted = serverComments.map(comment => ({ id: comment.id, author: comment.author_name, createdAt: comment.created_at, content: comment.body, attachments: [] }));
+          const converted = serverComments.map(comment => ({ id: comment.id, author: comment.author_name, createdAt: comment.created_at, content: comment.body, questionId: comment.question_id || question.serverQuestionId, attachments: [] }));
           const base = (SCENE.comments || []).map(message => ({ ...message, attachments: [...(message.attachments || [])] }));
           state.comments = [...base, ...converted];
           renderComments();
+          markQuestionCommentsReadV65(question.serverQuestionId);
         } catch (error) {
           console.warn("共有コメントを読み込めませんでした", error);
         }
@@ -3551,6 +4117,7 @@
         migrateAnswerHistoryScoresV16();
         renderQuestionOptionsV16();
         renderMenuCardsV16();
+        if (loadedSharedCollection) await startCommentNotificationPollingV65();
         applyQuestionV16(questionsV16[0], 0);
         showMenuV16();
         document.getElementById("questionSelect").addEventListener("change", event => openQuestionV16(Number(event.target.value)));
@@ -3585,6 +4152,25 @@
         document.getElementById("questionManageDialog").addEventListener("click", event => {
           const button = event.target.closest("[data-manage-action]");
           if (button) manageQuestionV44(button.dataset.manageAction);
+        });
+        document.getElementById("announcementButton").addEventListener("click", openAnnouncementDialogV65);
+        document.getElementById("commentNotificationsButton").addEventListener("click", openCommentNotificationDialogV65);
+        document.getElementById("announcementDialogClose").addEventListener("click", () => document.getElementById("announcementDialog").close());
+        document.getElementById("commentNotificationDialogClose").addEventListener("click", () => document.getElementById("commentNotificationDialog").close());
+        document.getElementById("commentNotificationDialogDone").addEventListener("click", () => document.getElementById("commentNotificationDialog").close());
+        document.getElementById("markAllCommentsReadButton").addEventListener("click", markAllCommentsReadV65);
+        document.getElementById("commentNotificationList").addEventListener("click", event => {
+          const button = event.target.closest("[data-community-notification-question]");
+          if (!button) return;
+          const index = Number(button.dataset.communityNotificationQuestion);
+          const question = questionsV16[index];
+          if (button.dataset.communityNotificationKind === "question") {
+            if (question?.serverQuestionId) markQuestionAddedReadV66(question.serverQuestionId);
+          } else if (question?.serverQuestionId) {
+            markQuestionCommentsReadV65(question.serverQuestionId);
+          }
+          document.getElementById("commentNotificationDialog").close();
+          openQuestionV16(index);
         });
         document.addEventListener("keydown", event => {
           if (["INPUT", "TEXTAREA", "SELECT"].includes(document.activeElement?.tagName)) return;
