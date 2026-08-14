@@ -871,8 +871,8 @@
       border-color: #ffe08a;
     }
     .menu-list-header {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
+      grid-template-columns: 1fr;
+      gap: 0;
       padding: 0 12px 7px;
       color: #b8d2d7;
       border-bottom-color: rgba(190, 220, 225, .3);
@@ -886,9 +886,12 @@
       align-items: center;
       min-width: 0;
     }
+    .menu-list-header-group:nth-child(2) {
+      display: none;
+    }
     .menu-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 0 12px;
+      grid-template-columns: 1fr;
+      gap: 0;
       border-top: 0;
     }
     .menu-card {
@@ -1465,7 +1468,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 77;
+    const APP_VERSION = 78;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -2243,7 +2246,8 @@
         { version: 74, date: "2026-08-15", title: "アナウンスを新しい順に表示するようにしました", body: "最新の修正内容が上に表示されるようになりました。" },
         { version: 75, date: "2026-08-15", title: "コメントを編集・削除できるようにしました", body: "自分が投稿したコメントを後から編集・削除できるようになりました。" },
         { version: 76, date: "2026-08-15", title: "問題一覧を2列表示に対応しました", body: "PCでは各問題を2列で表示し、左右それぞれにステータス・直近結果・お気に入り・ゴミ箱を配置しました。スマホでは1列表示に戻ります。" },
-        { version: APP_VERSION, date: "2026-08-15", title: "未回答問題を続けて解けるようにしました", body: "未回答問題のセッション完了後は、回答済みを混ぜずに次の未回答10問へ進めます。解答後の次の問題ボタンも、結果のすぐ下から押せます。" }
+        { version: 77, date: "2026-08-15", title: "未回答問題を続けて解けるようにしました", body: "未回答問題のセッション完了後は、回答済みを混ぜずに次の未回答10問へ進めます。解答後の次の問題ボタンも、結果のすぐ下から押せます。" },
+        { version: APP_VERSION, date: "2026-08-15", title: "問題一覧を1列表示に戻しました", body: "問題名や種別が崩れないよう、PCとスマホの問題一覧を1列表示に戻しました。" }
       ];
       let commentNoticeStoreV65 = loadCommentNoticeStoreV65();
       let sharedCommentRowsV65 = [];
