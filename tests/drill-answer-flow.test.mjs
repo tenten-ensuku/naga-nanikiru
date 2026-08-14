@@ -34,7 +34,7 @@ test("requires explicit confirmation before revealing or recording an answer", a
 
 test("records answer timing and exposes the synchronized drill version", async () => {
   const html = await source();
-  assert.match(html, /const APP_VERSION = 71;/);
+  assert.match(html, /const APP_VERSION = 72;/);
   assert.match(html, /responseTimeMs:\s*Math\.max\(0, confirmedAt - startedAt\)/);
   assert.match(html, /startedAt:\s*new Date\(startedAt\)\.toISOString\(\)/);
   assert.match(html, /const historicalCard = SCENE\.actualDiscard \?/);

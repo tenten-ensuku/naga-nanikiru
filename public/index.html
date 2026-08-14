@@ -292,6 +292,21 @@
     .riichi-button:hover, .riichi-button:focus-visible { background: linear-gradient(145deg, #a63b3f, #681d24); outline: 2px solid rgba(255, 221, 127, .65); outline-offset: 2px; }
     .riichi-button[aria-pressed="true"] { color: #24120e; background: linear-gradient(145deg, #ffe493, #e9a93f); }
     .call-controls { display: flex; align-items: center; justify-content: center; gap: 5px; margin-top: 4px; }
+    .scene-frame.is-call-decision .call-controls {
+      position: absolute;
+      left: var(--call-controls-left, 50%);
+      bottom: calc(var(--hand-mask-height, 20.7%) - 8%);
+      z-index: 5;
+      width: max-content;
+      max-width: calc(100% - 10px);
+      box-sizing: border-box;
+      margin-top: 0;
+      padding: 3px 5px;
+      border-radius: 8px;
+      background: rgba(3, 24, 39, .84);
+      box-shadow: 0 3px 10px rgba(0, 0, 0, .34);
+      transform: translateX(-50%);
+    }
     .call-prompt { color: #fff1bd; font-size: clamp(10px, 1.2vw, 14px); font-weight: 900; }
     .call-target-label { color: #ffd7a0; font-size: clamp(9px, 1vw, 12px); font-weight: 900; }
     .call-target-tile { display: inline-flex; align-items: center; justify-content: center; padding: 2px; border: 3px solid #f08b2d; border-radius: 5px; background: #fff7e6; box-shadow: 0 0 0 1px rgba(255, 232, 183, .72), 0 2px 7px rgba(0, 0, 0, .35); }
@@ -1164,6 +1179,7 @@
       .page.desktop-split-layout { display: flex; }
       .page.desktop-split-layout .comments-panel { position: static; max-height: none; overflow: visible; }
       .page.desktop-split-layout .comments-scroll { max-height: min(52vh, 720px); }
+      .scene-frame.is-call-decision .call-controls { bottom: calc(var(--hand-mask-height, 20.7%) + 1%); }
     }
   </style>
 </head>
@@ -1409,7 +1425,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 71;
+    const APP_VERSION = 72;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -2062,7 +2078,8 @@
         { version: 67, date: "2026-08-14", title: "作成者表示名の設定を追加しました", body: "設定から1〜5文字の表示名を登録できます。コメントや問題作成時の作成者名に使用されます。" },
         { version: 69, date: "2026-08-14", title: "コメントの書式と画像添付に対応しました", body: "太字・伏せ字・色・デカ文字、画像の貼り付けとドラッグ＆ドロップに対応しました。" },
         { version: 70, date: "2026-08-15", title: "PCの問題画面を2ペインにしました", body: "PCでは問題と解答を左、コメントを右に分けて表示します。設定から従来の1列表示にも戻せます。" },
-        { version: APP_VERSION, date: "2026-08-15", title: "PC表示の切り替え幅を調整しました", body: "内部ブラウザのような幅でも、スマホ以外では問題とコメントを左右に分けて表示できるようにしました。" }
+        { version: 71, date: "2026-08-15", title: "PC表示の切り替え幅を調整しました", body: "内部ブラウザのような幅でも、スマホ以外では問題とコメントを左右に分けて表示できるようにしました。" },
+        { version: APP_VERSION, date: "2026-08-15", title: "副露判断の対象牌を手牌の上に移動しました", body: "対象牌と鳴きボタンが手牌の横幅を圧迫しないよう、手牌の上部に独立表示します。" }
       ];
       let commentNoticeStoreV65 = loadCommentNoticeStoreV65();
       let sharedCommentRowsV65 = [];
@@ -2947,10 +2964,13 @@
         const closed = sortHandV20(SCENE.handBeforeDraw || []).map((tile, index) => tileButtonV16(tile, index)).join("");
         const draw = SCENE.draw ? tileButtonV16(SCENE.draw, SCENE.handBeforeDraw.length, true) : "";
         const riichiButton = hasReachV16() ? `<button class="riichi-button" id="riichiButton" type="button" aria-pressed="${state.riichi}" title="リーチを宣言する">${state.riichi ? "リーチ済" : "リーチ"}</button>` : "";
-        document.getElementById("handLayer").innerHTML = `<div class="hand-controls"><div class="hand-row"><div class="closed-hand">${closed}</div>${draw ? `<span class="draw-divider" aria-hidden="true"></span>${draw}` : ""}</div>${riichiButton}</div>`;
+        const handLayer = document.getElementById("handLayer");
+        sceneFrameV16.querySelector(".call-controls")?.remove();
+        sceneFrameV16.classList.toggle("is-call-decision", SCENE.decisionType === "call");
+        handLayer.innerHTML = `<div class="hand-controls"><div class="hand-row"><div class="closed-hand">${closed}</div>${draw ? `<span class="draw-divider" aria-hidden="true"></span>${draw}` : ""}</div>${riichiButton}</div>`;
         if (SCENE.decisionType === "call") {
           const callTarget = SCENE.callTile ? `<span class="call-target-label">対象牌</span><span class="call-target-tile" title="${tileLabel(SCENE.callTile)}への副露判断" aria-label="副露対象牌 ${tileLabel(SCENE.callTile)}">${tileImage(SCENE.callTile)}</span>` : "";
-          document.getElementById("handLayer").insertAdjacentHTML("beforeend", `<div class="call-controls" role="group" aria-label="副露判断">${callTarget}<span class="call-prompt">鳴く？</span><button class="call-choice-button call-yes${state.callDecision === true ? " is-selected" : ""}" type="button" data-call-decision="true">鳴く</button><button class="call-choice-button call-no${state.callDecision === false ? " is-selected" : ""}" type="button" data-call-decision="false">鳴かない</button></div>`);
+          sceneFrameV16.insertAdjacentHTML("beforeend", `<div class="call-controls" role="group" aria-label="副露判断">${callTarget}<span class="call-prompt">鳴く？</span><button class="call-choice-button call-yes${state.callDecision === true ? " is-selected" : ""}" type="button" data-call-decision="true">鳴く</button><button class="call-choice-button call-no${state.callDecision === false ? " is-selected" : ""}" type="button" data-call-decision="false">鳴かない</button></div>`);
         }
         document.querySelectorAll("[data-tile-index]").forEach(button => button.addEventListener("click", () => selectTileV16(Number(button.dataset.tileIndex))));
         document.querySelectorAll("[data-call-decision]").forEach(button => button.addEventListener("click", () => selectCallV16(button.dataset.callDecision === "true")));
@@ -3274,7 +3294,7 @@
       function clearHandLayoutV18() {
         activeHandQuestionV18 = null;
         activeHandMaskV18 = null;
-        ["--hand-layer-left", "--hand-layer-width", "--hand-tile-width"].forEach(property => sceneFrameV16.style.removeProperty(property));
+        ["--hand-layer-left", "--hand-layer-width", "--hand-tile-width", "--call-controls-left"].forEach(property => sceneFrameV16.style.removeProperty(property));
       }
 
       function setHandLayoutV18(question, mask) {
@@ -3293,9 +3313,12 @@
         const availableWidth = Math.max(0, maskWidthPx - insetPx * 2 - dividerWidth - riichiWidth - gapWidth);
         const baseTileWidth = Math.min(36, Math.max(24, frameWidth * .041));
         const tileWidth = tileCount ? Math.max(12, Math.min(baseTileWidth, availableWidth / tileCount)) : baseTileWidth;
-        sceneFrameV16.style.setProperty("--hand-layer-left", `${mask.left + insetPx / frameWidth * 100}%`);
-        sceneFrameV16.style.setProperty("--hand-layer-width", `${Math.max(0, (maskWidthPx - insetPx * 2) / frameWidth * 100)}%`);
+        const handLayerLeft = mask.left + insetPx / frameWidth * 100;
+        const handLayerWidth = Math.max(0, (maskWidthPx - insetPx * 2) / frameWidth * 100);
+        sceneFrameV16.style.setProperty("--hand-layer-left", `${handLayerLeft}%`);
+        sceneFrameV16.style.setProperty("--hand-layer-width", `${handLayerWidth}%`);
         sceneFrameV16.style.setProperty("--hand-tile-width", `${tileWidth}px`);
+        sceneFrameV16.style.setProperty("--call-controls-left", `${handLayerLeft + handLayerWidth / 2}%`);
       }
 
       window.addEventListener("resize", () => {

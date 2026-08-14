@@ -4,9 +4,9 @@ import test from "node:test";
 
 const indexUrl = new URL("../public/index.html", import.meta.url);
 
-test("renders the v71 scene and half-game generator controls", async () => {
+test("renders the v72 scene and half-game generator controls", async () => {
   const html = await readFile(indexUrl, "utf8");
-  assert.match(html, /const APP_VERSION = 71/);
+  assert.match(html, /const APP_VERSION = 72/);
   assert.match(html, /data-menu-view="settings"/);
   assert.match(html, /id="displayNameForm"/);
   assert.match(html, /displayNameLengthV67/);
@@ -41,6 +41,10 @@ test("renders the v71 scene and half-game generator controls", async () => {
   assert.match(html, /name="generatorMode"/);
   assert.match(html, /value="scene"/);
   assert.match(html, /class="call-target-tile"/);
+  assert.match(html, /sceneFrameV16\.querySelector\("\.call-controls"\)\?\.remove\(\)/);
+  assert.match(html, /sceneFrameV16\.classList\.toggle\("is-call-decision", SCENE\.decisionType === "call"\)/);
+  assert.match(html, /sceneFrameV16\.insertAdjacentHTML\("beforeend", `<div class="call-controls"/);
+  assert.doesNotMatch(html, /getElementById\("handLayer"\)\.insertAdjacentHTML\("beforeend", `<div class="call-controls"/);
   assert.match(html, /当時の選択（鳴き）/);
   assert.match(html, /value="match"/);
   assert.match(html, /id="generatorSeat"/);
