@@ -46,3 +46,7 @@ next-env.d.ts
 /.site-stage*/
 /naga-nanikiru-site*.tar.gz
 /tsconfig.tsbuildinfo
+
+# Temporary NAGA capture artifacts (the committed question images are WebP)
+/.naga-capture-raw/
+/public/question-images/q220.png

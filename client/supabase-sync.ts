@@ -154,11 +154,41 @@ async function loadSharedComments(shareSlug: string, questionId?: string | null)
   return data ?? [];
 }
 
-async function postSharedComment(shareSlug: string, body: string, questionId?: string | null) {
+function publicCommentAssetUrl(path: string) {
+  const normalized = String(path ?? "").replace(/^\/+/, "");
+  if (!normalized || !config.supabaseUrl) return "";
+  return `${config.supabaseUrl.replace(/\/$/, "")}/storage/v1/object/public/comment-assets/${normalized.split("/").map(encodeURIComponent).join("/")}`;
+}
+
+async function uploadCommentAttachment(file: File) {
+  const session = await currentSession();
+  if (!session?.user?.id) throw new Error("共有コメントの画像添付にはDiscordログインが必要です。");
+  const allowedTypes = new Set(["image/png", "image/jpeg", "image/webp", "image/gif"]);
+  if (!allowedTypes.has(file.type)) throw new Error("PNG・JPEG・WebP・GIF画像のみ添付できます。");
+  if (file.size > 5 * 1024 * 1024) throw new Error("画像は1枚5MB以内にしてください。");
+  const extension = ({ "image/png": "png", "image/jpeg": "jpg", "image/webp": "webp", "image/gif": "gif" } as Record<string, string>)[file.type] || "img";
+  const path = `${session.user.id}/comments/${crypto.randomUUID()}.${extension}`;
+  const { error } = await requireClient().storage.from("comment-assets").upload(path, file, {
+    cacheControl: "31536000",
+    contentType: file.type,
+    upsert: false,
+  });
+  if (error) throw error;
+  return { path, src: publicCommentAssetUrl(path), alt: file.name || "添付画像" };
+}
+
+async function removeCommentAttachment(path: string) {
+  if (!path) return;
+  const { error } = await requireClient().storage.from("comment-assets").remove([path]);
+  if (error) throw error;
+}
+
+async function postSharedComment(shareSlug: string, body: string, questionId?: string | null, attachments: Array<{ path: string; alt?: string }> = []) {
   const { data, error } = await requireClient().rpc("post_shared_comment", {
     p_share_slug: shareSlug,
     p_question_id: questionId ?? null,
     p_body: body,
+    p_attachments: attachments.map((attachment) => ({ path: attachment.path, alt: String(attachment.alt ?? "添付画像").slice(0, 200) })),
   });
   if (error) throw error;
   return data;
@@ -442,6 +472,9 @@ function buildApi() {
     updateProfileDisplayName,
     loadSharedCollection,
     loadSharedComments,
+    publicCommentAssetUrl,
+    uploadCommentAttachment,
+    removeCommentAttachment,
     postSharedComment,
     recordSharedAttempt,
     getMyCapabilities,

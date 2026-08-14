@@ -4,9 +4,9 @@ import test from "node:test";
 
 const indexUrl = new URL("../public/index.html", import.meta.url);
 
-test("renders the v67 scene and half-game generator controls", async () => {
+test("renders the v69 scene and half-game generator controls", async () => {
   const html = await readFile(indexUrl, "utf8");
-  assert.match(html, /const APP_VERSION = 67/);
+  assert.match(html, /const APP_VERSION = 69/);
   assert.match(html, /data-menu-view="settings"/);
   assert.match(html, /id="displayNameForm"/);
   assert.match(html, /displayNameLengthV67/);
@@ -40,6 +40,8 @@ test("renders the v67 scene and half-game generator controls", async () => {
   assert.match(html, /aspect-ratio: 14 \/ 13/);
   assert.match(html, /name="generatorMode"/);
   assert.match(html, /value="scene"/);
+  assert.match(html, /class="call-target-tile"/);
+  assert.match(html, /当時の選択（鳴き）/);
   assert.match(html, /value="match"/);
   assert.match(html, /id="generatorSeat"/);
   assert.match(html, /player_info\?\.name/);
@@ -61,6 +63,12 @@ test("renders the v67 scene and half-game generator controls", async () => {
   assert.doesNotMatch(html, /id="surroundingsToggle"/);
   assert.doesNotMatch(html, /SCENE_IMAGES/);
   assert.doesNotMatch(html, /images: \{ off: candidate\._imageData, open: candidate\._imageData \}/);
+  assert.match(html, /data-comment-format="bold"/);
+  assert.match(html, /data-comment-format="spoiler"/);
+  assert.match(html, /id="commentColorSelect"/);
+  assert.match(html, /id="commentSizeSelect"/);
+  assert.match(html, /id="commentDropzone"/);
+  assert.match(html, /function addCommentFilesV68/);
 });
 
 test("renders NAGA-like inset probability bars with a dynamic judge highlight", async () => {

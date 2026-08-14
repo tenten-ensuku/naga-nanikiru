@@ -290,6 +290,9 @@
     .riichi-button[aria-pressed="true"] { color: #24120e; background: linear-gradient(145deg, #ffe493, #e9a93f); }
     .call-controls { display: flex; align-items: center; justify-content: center; gap: 5px; margin-top: 4px; }
     .call-prompt { color: #fff1bd; font-size: clamp(10px, 1.2vw, 14px); font-weight: 900; }
+    .call-target-label { color: #ffd7a0; font-size: clamp(9px, 1vw, 12px); font-weight: 900; }
+    .call-target-tile { display: inline-flex; align-items: center; justify-content: center; padding: 2px; border: 3px solid #f08b2d; border-radius: 5px; background: #fff7e6; box-shadow: 0 0 0 1px rgba(255, 232, 183, .72), 0 2px 7px rgba(0, 0, 0, .35); }
+    .call-target-tile img { display: block; width: clamp(22px, 3.4vw, 32px); height: auto; border-radius: 2px; }
     .call-choice-button { min-width: clamp(42px, 4.8vw, 62px); min-height: clamp(27px, 3.8vw, 38px); padding: 4px 7px; color: #e7f8ff; background: #164862; border: 1px solid rgba(113,183,255,.55); border-radius: 5px; font-size: clamp(10px, 1.1vw, 13px); font-weight: 900; }
     .call-choice-button:hover, .call-choice-button:focus-visible { background: #246b8a; outline: 2px solid rgba(113,183,255,.3); outline-offset: 1px; }
     .call-choice-button.call-yes { background: linear-gradient(145deg, #286b67, #123f44); border-color: rgba(155,232,216,.8); }
@@ -428,6 +431,12 @@
     .comment-spoiler.is-revealed { color: inherit; background: rgba(155,232,216,.12); }
     .comment-spoiler.is-revealed .comment-spoiler-cover { display: none; }
     .comment-spoiler.is-revealed .comment-spoiler-content { display: inline; }
+    .comment-body .comment-color-red { color: #ff9c9c; font-weight: 800; }
+    .comment-body .comment-color-yellow { color: #ffe08a; font-weight: 800; }
+    .comment-body .comment-color-blue { color: #8fc9ff; font-weight: 800; }
+    .comment-body .comment-color-green { color: #8be4bd; font-weight: 800; }
+    .comment-body .comment-color-purple { color: #d1a7ff; font-weight: 800; }
+    .comment-body .comment-size-large { display: inline-block; color: #fff; font-size: 1.45em; font-weight: 900; line-height: 1.2; }
     .comment-attachment-button { display: block; max-width: min(100%, 560px); margin-top: 5px; padding: 0; overflow: hidden; border: 1px solid rgba(255,255,255,.12); border-radius: 5px; background: #031521; cursor: zoom-in; }
     .comment-attachment-button:hover, .comment-attachment-button:focus-visible { border-color: rgba(155,232,216,.9); outline: 2px solid rgba(155,232,216,.25); outline-offset: 2px; }
     .comment-attachment { display: block; width: 100%; max-height: 150px; object-fit: contain; }
@@ -442,6 +451,23 @@
     .comment-form label { grid-column: 1 / -1; color: #eafefe; font-size: 11px; font-weight: 800; }
     .comment-form textarea { min-height: 58px; resize: vertical; padding: 7px 8px; color: var(--ink); background: #061c2c; border: 1px solid rgba(255,255,255,.18); border-radius: 6px; font: inherit; font-size: 13px; line-height: 1.45; }
     .comment-form textarea:focus { border-color: rgba(113,183,255,.8); outline: 2px solid rgba(113,183,255,.18); }
+    .comment-compose-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; grid-column: 1 / -1; }
+    .comment-format-button, .comment-format-select, .comment-image-button { min-height: 30px; padding: 5px 8px; color: #e7f8ff; background: #164862; border: 1px solid rgba(113,183,255,.5); border-radius: 5px; font-size: 10px; font-weight: 800; }
+    .comment-format-button:hover, .comment-format-button:focus-visible, .comment-image-button:hover, .comment-image-button:focus-visible { background: #246b8a; outline: 2px solid rgba(155,232,216,.22); outline-offset: 1px; }
+    .comment-format-select { padding-right: 23px; }
+    .comment-image-button { color: #12211e; background: #bde7e0; border-color: #d6fff5; }
+    .comment-file-input { display: none; }
+    .comment-compose-editor { position: relative; grid-column: 1 / -1; }
+    .comment-compose-editor.is-dragover .comment-dropzone { color: #10211e; background: #bde7e0; border-color: #d6fff5; }
+    .comment-dropzone { display: flex; align-items: center; justify-content: center; min-height: 28px; margin-top: 5px; padding: 5px 8px; color: #a9cbd2; background: rgba(0,0,0,.16); border: 1px dashed rgba(113,183,255,.45); border-radius: 5px; font-size: 10px; text-align: center; }
+    .comment-attachment-preview { display: flex; flex-wrap: wrap; gap: 7px; grid-column: 1 / -1; }
+    .comment-attachment-preview[hidden] { display: none; }
+    .comment-pending-attachment { position: relative; width: 82px; height: 64px; overflow: hidden; background: #031521; border: 1px solid rgba(155,232,216,.45); border-radius: 5px; }
+    .comment-pending-attachment img { display: block; width: 100%; height: 100%; object-fit: cover; }
+    .comment-pending-remove { position: absolute; top: 2px; right: 2px; min-width: 22px; min-height: 22px; padding: 2px 5px; color: #fff; background: rgba(100,20,28,.92); border: 1px solid rgba(255,255,255,.7); border-radius: 4px; font-size: 11px; font-weight: 900; }
+    .comment-form-status { grid-column: 1 / -1; min-height: 15px; color: var(--muted); font-size: 10px; line-height: 1.35; }
+    .comment-form-status.is-error { color: #ffb0b0; }
+    .comment-format-help { grid-column: 1 / -1; margin: 0; color: var(--muted); font-size: 9px; line-height: 1.35; }
     .comment-submit { min-width: 88px; padding: 7px 8px; color: #12211e; background: #bde7e0; border: 1px solid #d6fff5; border-radius: 6px; font-size: 9px; font-weight: 800; }
     .comment-submit:hover { background: #d6fff5; }
     .comment-sync-note { margin: 0; color: var(--muted); font-size: 8px; line-height: 1.35; }
@@ -1195,7 +1221,7 @@
 
     <section class="scene-card" aria-label="NAGA局面スクリーンショット">
       <div class="scene-frame">
-        <img class="scene-image" id="sceneImage" src="naga-scene-off.jpg" alt="指定NAGA局面の伏牌スクリーンショット">
+        <img class="scene-image" id="sceneImage" src="question-images/q249.webp" alt="指定NAGA局面の伏牌スクリーンショット">
         <div class="hand-mask" aria-hidden="true"></div>
         <div class="hand-layer" id="handLayer" aria-label="選択できる自分の手牌"></div>
       </div>
@@ -1235,11 +1261,35 @@
       </div>
       <div class="comments-scroll" id="commentsScroll" tabindex="0" aria-label="スレッド内のコメント一覧"></div>
       <form class="comment-form" id="commentForm" hidden>
-        <label for="commentInput">コメントを追加（この画面内のみ）</label>
-        <textarea id="commentInput" maxlength="2000" placeholder="コメントを書き込む"></textarea>
+        <label for="commentInput">コメントを追加</label>
+        <div class="comment-compose-toolbar" role="toolbar" aria-label="コメントの書式設定">
+          <button class="comment-format-button" type="button" data-comment-format="bold" title="選択範囲を太字にする"><strong>B</strong> 太字</button>
+          <button class="comment-format-button" type="button" data-comment-format="spoiler" title="選択範囲を伏せ字にする">|| 伏せ字</button>
+          <select class="comment-format-select" id="commentColorSelect" aria-label="文字色">
+            <option value="">色</option>
+            <option value="red">赤</option>
+            <option value="yellow">黄</option>
+            <option value="blue">青</option>
+            <option value="green">緑</option>
+            <option value="purple">紫</option>
+          </select>
+          <select class="comment-format-select" id="commentSizeSelect" aria-label="文字サイズ">
+            <option value="">サイズ</option>
+            <option value="large">デカ文字</option>
+          </select>
+          <button class="comment-image-button" id="commentImageButton" type="button">画像を追加</button>
+          <input class="comment-file-input" id="commentImageInput" type="file" accept="image/png,image/jpeg,image/webp,image/gif" multiple>
+        </div>
+        <div class="comment-compose-editor" id="commentComposeEditor">
+          <textarea id="commentInput" maxlength="2000" placeholder="コメントを書き込む"></textarea>
+          <div class="comment-dropzone" id="commentDropzone">画像をここへドラッグ＆ドロップ、または貼り付け</div>
+        </div>
+        <div class="comment-attachment-preview" id="commentAttachmentPreview" hidden></div>
+        <p class="comment-format-help">選択範囲に書式を適用できます。麻雀牌表記（1ｍ・4ｐなど）も自動で牌画像になります。</p>
+        <p class="comment-form-status" id="commentFormStatus" aria-live="polite"></p>
         <button class="comment-submit" type="submit">コメントを追加</button>
       </form>
-      <p class="comment-sync-note">追加したコメントはこのアプリ内に保存されます。Discordのスレッドには投稿されません。</p>
+      <p class="comment-sync-note">追加したコメントはこのアプリ内に保存されます。共有問題集ではDiscordログイン後に他の利用者にも表示されます。Discordのスレッドには投稿されません。</p>
       <div class="comments-footer">
         <button class="comment-add-button" id="commentAddButton" type="button" aria-expanded="false">コメント追加</button>
         <a id="threadLink" href="https://discord.com/channels/1166706544856006656/1532011607209541833" target="_blank" rel="noreferrer">Discordで開く</a>
@@ -1312,7 +1362,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 67;
+    const APP_VERSION = 69;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -1350,7 +1400,10 @@
       { id: "1532012487212536022", author: "てんてん", createdAt: "2026-07-29T13:10:40.367Z", content: "聴牌取らずは良いが、打8ｓ推奨。\n打北は面子手立直進行に於ける二大タブー（①単独暗刻の破壊②単独雀頭の破壊）に抵触。\n打8ｓとすれば、ヘッドレス2型連続形となるため、4ｐ6ｐ引きでも三色聴牌となるし、9ｐ引きも悪くない。", attachments: [] },
       { id: "1532017637700272302", author: "くにたそ", createdAt: "2026-07-29T13:31:08.339Z", content: "恥ずかしながら、時間切れの北でした……笑\n7と8sで迷って結局時間切れましたが、テンパイ取らずの8s、僕はすごく大好きです！めちゃくちゃ言われて参考になりました！👍", attachments: [] }
     ];
-    const state = { selected: null, selectedIndex: null, callDecision: null, revealed: false, answerRecorded: false, answerAttemptId: null, questionStartedAt: Date.now(), judgeModel: 2, riichi: false, commentsExpanded: false, commentComposerOpen: false, comments: THREAD_MESSAGES.map(message => ({ ...message, attachments: [...message.attachments] })) };
+    const COMMENT_MAX_ATTACHMENTS_V68 = 4;
+    const COMMENT_MAX_IMAGE_BYTES_V68 = 5 * 1024 * 1024;
+    const COMMENT_IMAGE_TYPES_V68 = new Set(["image/png", "image/jpeg", "image/webp", "image/gif"]);
+    const state = { selected: null, selectedIndex: null, callDecision: null, revealed: false, answerRecorded: false, answerAttemptId: null, questionStartedAt: Date.now(), judgeModel: 2, riichi: false, commentsExpanded: false, commentComposerOpen: false, commentAttachments: [], comments: THREAD_MESSAGES.map(message => ({ ...message, attachments: [...message.attachments] })) };
 
     function tileLabel(tile) {
       if (TILE_NAMES[tile]) return TILE_NAMES[tile];
@@ -1479,6 +1532,8 @@
         return token;
       });
       formatted = formatted.replace(/\*\*([\s\S]*?)\*\*/g, "<strong>$1</strong>");
+      formatted = formatted.replace(/\[color:(red|yellow|blue|green|purple)\]([\s\S]*?)\[\/color\]/gi, (_, color, inner) => `<span class="comment-color-${String(color).toLowerCase()}">${inner}</span>`);
+      formatted = formatted.replace(/\[size:large\]([\s\S]*?)\[\/size\]/gi, "<span class=\"comment-size-large\">$1</span>");
       formatted = formatCommentTileNotation(formatted);
       return formatted;
     }
@@ -1498,6 +1553,141 @@
         return `<button class="comment-spoiler" type="button" aria-expanded="false" aria-label="伏せ字を表示"><span class="comment-spoiler-cover">伏せ字</span><span class="comment-spoiler-content" aria-hidden="true">${inner}</span></button>`;
       });
       return formatted.replace(/@@COMMENT_LINK_(\d+)@@/g, (token, index) => links[Number(index)] || token);
+    }
+
+    function setCommentFormStatusV68(message, isError = false) {
+      const status = document.getElementById("commentFormStatus");
+      if (!status) return;
+      status.textContent = message || "";
+      status.classList.toggle("is-error", Boolean(isError));
+    }
+
+    function renderCommentAttachmentPreviewV68() {
+      const preview = document.getElementById("commentAttachmentPreview");
+      if (!preview) return;
+      if (!state.commentAttachments.length) {
+        preview.hidden = true;
+        preview.innerHTML = "";
+        return;
+      }
+      preview.hidden = false;
+      preview.innerHTML = state.commentAttachments.map((attachment, index) => `<div class="comment-pending-attachment"><img src="${escapeHtml(attachment.src)}" alt="${escapeHtml(attachment.alt || "添付画像")}" loading="lazy"><button class="comment-pending-remove" type="button" data-comment-attachment-index="${index}" aria-label="${escapeHtml(attachment.alt || "添付画像")}を削除">×</button></div>`).join("");
+    }
+
+    function clearCommentDraftV68({ clearStatus = true } = {}) {
+      state.commentAttachments = [];
+      const input = document.getElementById("commentImageInput");
+      if (input) input.value = "";
+      renderCommentAttachmentPreviewV68();
+      if (clearStatus) setCommentFormStatusV68("");
+    }
+
+    function readCommentFileV68(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.addEventListener("load", () => resolve(String(reader.result || "")));
+        reader.addEventListener("error", () => reject(new Error("画像を読み込めませんでした。")));
+        reader.readAsDataURL(file);
+      });
+    }
+
+    async function addCommentFilesV68(fileList) {
+      const files = [...(fileList || [])];
+      if (!files.length) return;
+      const available = COMMENT_MAX_ATTACHMENTS_V68 - state.commentAttachments.length;
+      if (available <= 0) {
+        setCommentFormStatusV68(`画像は最大${COMMENT_MAX_ATTACHMENTS_V68}枚まで添付できます。`, true);
+        return;
+      }
+      const accepted = files.slice(0, available);
+      for (const file of accepted) {
+        if (!COMMENT_IMAGE_TYPES_V68.has(file.type)) {
+          setCommentFormStatusV68("PNG・JPEG・WebP・GIF画像のみ添付できます。", true);
+          continue;
+        }
+        if (file.size > COMMENT_MAX_IMAGE_BYTES_V68) {
+          setCommentFormStatusV68("画像は1枚5MB以内にしてください。", true);
+          continue;
+        }
+        try {
+          const src = await readCommentFileV68(file);
+          state.commentAttachments.push({ id: globalThis.crypto?.randomUUID?.() || `attachment-${Date.now()}-${state.commentAttachments.length}`, file, src, alt: file.name || "添付画像" });
+        } catch (error) {
+          setCommentFormStatusV68(error?.message || "画像を読み込めませんでした。", true);
+        }
+      }
+      renderCommentAttachmentPreviewV68();
+      if (state.commentAttachments.length) setCommentFormStatusV68(`${state.commentAttachments.length}枚の画像を添付しています。`);
+    }
+
+    function applyCommentFormatV68(kind, value = "") {
+      const input = document.getElementById("commentInput");
+      if (!input) return;
+      const wrappers = {
+        bold: ["**", "**"],
+        spoiler: ["||", "||"],
+        color: [`[color:${value}]`, "[/color]"],
+        size: [`[size:${value}]`, "[/size]"]
+      };
+      const wrapper = wrappers[kind];
+      if (!wrapper?.[0]) return;
+      const start = input.selectionStart ?? input.value.length;
+      const end = input.selectionEnd ?? start;
+      const selected = input.value.slice(start, end) || "ここに文字";
+      const replacement = `${wrapper[0]}${selected}${wrapper[1]}`;
+      input.setRangeText(replacement, start, end, "select");
+      input.focus();
+    }
+
+    function initCommentComposerV68() {
+      document.querySelectorAll("[data-comment-format]").forEach(button => button.addEventListener("click", () => applyCommentFormatV68(button.dataset.commentFormat)));
+      document.getElementById("commentColorSelect")?.addEventListener("change", event => {
+        if (event.target.value) applyCommentFormatV68("color", event.target.value);
+        event.target.value = "";
+      });
+      document.getElementById("commentSizeSelect")?.addEventListener("change", event => {
+        if (event.target.value) applyCommentFormatV68("size", event.target.value);
+        event.target.value = "";
+      });
+      const imageInput = document.getElementById("commentImageInput");
+      document.getElementById("commentImageButton")?.addEventListener("click", () => imageInput?.click());
+      imageInput?.addEventListener("change", event => {
+        void addCommentFilesV68(event.target.files);
+        event.target.value = "";
+      });
+      const editor = document.getElementById("commentComposeEditor");
+      const dropzone = document.getElementById("commentDropzone");
+      [editor, dropzone].forEach(target => {
+        if (!target) return;
+        target.addEventListener("dragover", event => {
+          if (!event.dataTransfer || ![...event.dataTransfer.types].includes("Files")) return;
+          event.preventDefault();
+          editor.classList.add("is-dragover");
+        });
+        target.addEventListener("dragleave", () => editor.classList.remove("is-dragover"));
+        target.addEventListener("drop", event => {
+          if (!event.dataTransfer?.files?.length) return;
+          event.preventDefault();
+          editor.classList.remove("is-dragover");
+          void addCommentFilesV68(event.dataTransfer.files);
+        });
+      });
+      document.getElementById("commentInput")?.addEventListener("paste", event => {
+        const imageFiles = [...(event.clipboardData?.items || [])]
+          .filter(item => item.kind === "file" && COMMENT_IMAGE_TYPES_V68.has(item.type))
+          .map(item => item.getAsFile())
+          .filter(Boolean);
+        if (!imageFiles.length) return;
+        event.preventDefault();
+        void addCommentFilesV68(imageFiles);
+      });
+      document.getElementById("commentAttachmentPreview")?.addEventListener("click", event => {
+        const button = event.target.closest("[data-comment-attachment-index]");
+        if (!button) return;
+        state.commentAttachments.splice(Number(button.dataset.commentAttachmentIndex), 1);
+        renderCommentAttachmentPreviewV68();
+        setCommentFormStatusV68(state.commentAttachments.length ? `${state.commentAttachments.length}枚の画像を添付しています。` : "");
+      });
     }
 
     function formatCommentTime(value) {
@@ -1671,15 +1861,26 @@
       if (state.commentComposerOpen) document.getElementById("commentInput").focus();
     }
 
-    function submitComment(event) {
+    async function submitComment(event) {
       event.preventDefault();
       const input = document.getElementById("commentInput");
       const content = input.value.trim();
-      if (!content) return;
-      const message = { id: `local-${Date.now()}`, author: typeof currentUserDisplayNameV47 === "function" ? currentUserDisplayNameV47() : "このブラウザ", createdAt: new Date().toISOString(), content, attachments: [] };
+      if (!content && !state.commentAttachments.length) {
+        setCommentFormStatusV68("本文または画像を入力してください。", true);
+        return;
+      }
+      const message = { id: `local-${Date.now()}`, author: typeof currentUserDisplayNameV47 === "function" ? currentUserDisplayNameV47() : "このブラウザ", createdAt: new Date().toISOString(), content, attachments: state.commentAttachments.map(attachment => ({ ...attachment })) };
       state.comments.push(message);
-      window.persistLocalCommentV44?.(message);
       input.value = "";
+      clearCommentDraftV68({ clearStatus: false });
+      renderComments({ scrollToBottom: true });
+      setCommentFormStatusV68("投稿中…");
+      try {
+        const result = await window.persistLocalCommentV44?.(message);
+        setCommentFormStatusV68(result?.shared ? "共有コメントとして投稿しました。" : "この端末に保存しました。");
+      } catch (error) {
+        setCommentFormStatusV68(error?.message || "コメントを送信できませんでした。", true);
+      }
       renderComments({ scrollToBottom: true });
     }
 
@@ -1690,6 +1891,7 @@
       state.riichi = false;
       state.commentsExpanded = false;
       state.commentComposerOpen = false;
+      clearCommentDraftV68();
       document.getElementById("commentForm").hidden = true;
       document.getElementById("commentAddButton").setAttribute("aria-expanded", "false");
       document.getElementById("commentAddButton").textContent = "コメント追加";
@@ -1713,6 +1915,7 @@
       document.getElementById("commentsExpandButton").addEventListener("click", toggleCommentsExpanded);
       document.getElementById("commentAddButton").addEventListener("click", toggleCommentComposer);
       document.getElementById("commentForm").addEventListener("submit", submitComment);
+      initCommentComposerV68();
       initCommentImageViewer();
       document.getElementById("threadLink").href = THREAD_URL;
       renderComments();
@@ -1807,7 +2010,8 @@
       const ANNOUNCEMENT_SEEN_STORAGE_KEY_V65 = storageKey("announcement-seen-v1");
       const APP_ANNOUNCEMENTS_V66 = [
         { version: 66, date: "2026-08-14", title: "コメント・問題追加通知を追加しました", body: "新しいコメントに加えて、他の利用者が共有問題集へ追加した問題も通知一覧で確認できるようになりました。" },
-        { version: APP_VERSION, date: "2026-08-14", title: "作成者表示名の設定を追加しました", body: "設定から1〜5文字の表示名を登録できます。コメントや問題作成時の作成者名に使用されます。" }
+        { version: 67, date: "2026-08-14", title: "作成者表示名の設定を追加しました", body: "設定から1〜5文字の表示名を登録できます。コメントや問題作成時の作成者名に使用されます。" },
+        { version: APP_VERSION, date: "2026-08-14", title: "コメントの書式と画像添付に対応しました", body: "太字・伏せ字・色・デカ文字、画像の貼り付けとドラッグ＆ドロップに対応しました。" }
       ];
       let commentNoticeStoreV65 = loadCommentNoticeStoreV65();
       let sharedCommentRowsV65 = [];
@@ -2434,26 +2638,50 @@
           if (!session) {
             state.comments = state.comments.filter(comment => comment.id !== message.id);
             renderComments();
-            window.alert("共有問題集へのコメント投稿にはDiscordログインが必要です。");
-            return;
+            throw new Error("共有問題集へのコメント投稿にはDiscordログインが必要です。");
           }
+          const uploadedPaths = [];
           try {
-            const id = await window.NagaSupabase.postSharedComment(sharedCollectionV46.share_slug, message.content, question.serverQuestionId);
+            const uploadedAttachments = [];
+            for (const attachment of message.attachments || []) {
+              const uploaded = attachment.file
+                ? await window.NagaSupabase.uploadCommentAttachment(attachment.file)
+                : attachment.path
+                  ? { path: attachment.path, src: attachment.src || window.NagaSupabase.publicCommentAssetUrl(attachment.path), alt: attachment.alt || "添付画像" }
+                  : null;
+              if (!uploaded) continue;
+              uploadedPaths.push(uploaded.path);
+              uploadedAttachments.push(uploaded);
+            }
+            const id = await window.NagaSupabase.postSharedComment(sharedCollectionV46.share_slug, message.content, question.serverQuestionId, uploadedAttachments.map(({ path, alt }) => ({ path, alt })));
             message.id = String(id);
             message.author = currentUserDisplayNameV47();
+            message.attachments = uploadedAttachments;
             markSharedCommentKnownV65(message.id);
             renderComments({ scrollToBottom: true });
+            return { shared: true };
           } catch (error) {
+            for (const path of uploadedPaths) {
+              try { await window.NagaSupabase.removeCommentAttachment(path); } catch { /* keep the original posting error */ }
+            }
             state.comments = state.comments.filter(comment => comment.id !== message.id);
             renderComments();
-            window.alert(error?.message || "コメントを送信できませんでした。");
+            throw new Error(error?.message || "コメントを送信できませんでした。");
           }
-          return;
         }
         const key = questionKeyV16(question);
-        userStateV16.localComments ||= {};
-        userStateV16.localComments[key] = [...(userStateV16.localComments[key] || []), message].slice(-100);
-        saveUserStateV16();
+        try {
+          userStateV16.localComments ||= {};
+          const storedMessage = { ...message, attachments: (message.attachments || []).map(({ src, alt }) => ({ src, alt: alt || "添付画像" })) };
+          userStateV16.localComments[key] = [...(userStateV16.localComments[key] || []), storedMessage].slice(-100);
+          saveUserStateV16();
+          message.attachments = storedMessage.attachments;
+          return { shared: false };
+        } catch {
+          state.comments = state.comments.filter(comment => comment.id !== message.id);
+          renderComments();
+          throw new Error("この端末の保存容量が不足しています。画像を減らすか、Discordログイン後に共有してください。");
+        }
       };
 
       function activeSessionV44() {
@@ -2654,7 +2882,8 @@
         const riichiButton = hasReachV16() ? `<button class="riichi-button" id="riichiButton" type="button" aria-pressed="${state.riichi}" title="リーチを宣言する">${state.riichi ? "リーチ済" : "リーチ"}</button>` : "";
         document.getElementById("handLayer").innerHTML = `<div class="hand-controls"><div class="hand-row"><div class="closed-hand">${closed}</div>${draw ? `<span class="draw-divider" aria-hidden="true"></span>${draw}` : ""}</div>${riichiButton}</div>`;
         if (SCENE.decisionType === "call") {
-          document.getElementById("handLayer").insertAdjacentHTML("beforeend", `<div class="call-controls" role="group" aria-label="副露判断"><span class="call-prompt">鳴く？</span><button class="call-choice-button call-yes${state.callDecision === true ? " is-selected" : ""}" type="button" data-call-decision="true">鳴く</button><button class="call-choice-button call-no${state.callDecision === false ? " is-selected" : ""}" type="button" data-call-decision="false">鳴かない</button></div>`);
+          const callTarget = SCENE.callTile ? `<span class="call-target-label">対象牌</span><span class="call-target-tile" title="${tileLabel(SCENE.callTile)}への副露判断" aria-label="副露対象牌 ${tileLabel(SCENE.callTile)}">${tileImage(SCENE.callTile)}</span>` : "";
+          document.getElementById("handLayer").insertAdjacentHTML("beforeend", `<div class="call-controls" role="group" aria-label="副露判断">${callTarget}<span class="call-prompt">鳴く？</span><button class="call-choice-button call-yes${state.callDecision === true ? " is-selected" : ""}" type="button" data-call-decision="true">鳴く</button><button class="call-choice-button call-no${state.callDecision === false ? " is-selected" : ""}" type="button" data-call-decision="false">鳴かない</button></div>`);
         }
         document.querySelectorAll("[data-tile-index]").forEach(button => button.addEventListener("click", () => selectTileV16(Number(button.dataset.tileIndex))));
         document.querySelectorAll("[data-call-decision]").forEach(button => button.addEventListener("click", () => selectCallV16(button.dataset.callDecision === "true")));
@@ -2752,15 +2981,17 @@
           const correctCall = callRecommendedV16(state.judgeModel);
           const isCallCorrect = state.callDecision === correctCall;
           document.getElementById("answerTitle").textContent = isCallCorrect ? `正解：${state.callDecision ? "鳴く" : "鳴かない"}` : `推奨：${correctCall ? "鳴く" : "鳴かない"}`;
-          document.getElementById("answerDetail").textContent = `副露判断：${SCENE.callTile ? tileLabel(SCENE.callTile) + "に対して" : ""}${state.callDecision ? "鳴く" : "鳴かない"}`;
+           const historicalCallDetail = typeof SCENE.actualCall === "boolean" ? ` ／ 当時の選択：${SCENE.actualCall ? "鳴いた" : "鳴かなかった"}` : "";
+           document.getElementById("answerDetail").textContent = `副露判断：${SCENE.callTile ? tileLabel(SCENE.callTile) + "に対して" : ""}${state.callDecision ? "鳴く" : "鳴かない"}${historicalCallDetail}`;
           const topCallModelIndices = priorityIndicesV16(3);
-          const playerCallCard = `<div class="answer-choice player-choice"><span class="answer-choice-label">あなたの選択</span><strong class="call-answer-value">${state.callDecision ? "鳴く" : "鳴かない"}</strong></div>`;
+           const playerCallCard = `<div class="answer-choice player-choice"><span class="answer-choice-label">あなたの選択</span><strong class="call-answer-value">${state.callDecision ? "鳴く" : "鳴かない"}</strong></div>`;
+           const historicalCallCard = typeof SCENE.actualCall === "boolean" ? `<div class="answer-choice historical-choice"><span class="answer-choice-label">当時の選択（鳴き）</span><strong class="call-answer-value">${SCENE.actualCall ? "鳴いた" : "鳴かなかった"}</strong></div>` : "";
           const callModelCards = topCallModelIndices.map(index => {
             const model = SCENE.models[index];
             const value = (state.callDecision ? SCENE.callProbabilities?.call?.[index] : SCENE.callProbabilities?.pass?.[index]) ?? 0;
             return `<div class="answer-choice model-choice"><span class="answer-choice-label">${model.name}・第一推奨</span><strong class="call-answer-value">${callRecommendedV16(index) ? "鳴く" : "鳴かない"}</strong><div class="answer-choice-reach"><span class="answer-choice-reach-label">${state.callDecision ? "鳴く" : "鳴かない"} ${value.toFixed(1)}%</span><span class="answer-choice-reach-track"><span class="answer-choice-reach-fill ${modelColorV16(index)}" style="width:${value}%"></span></span></div></div>`;
           }).join("");
-          document.getElementById("answerComparison").innerHTML = `${playerCallCard}${callModelCards}`;
+           document.getElementById("answerComparison").innerHTML = `${playerCallCard}${historicalCallCard}${callModelCards}`;
           document.getElementById("riichiPanels").innerHTML = "";
           answerStrip.hidden = false;
           commentsPanel.hidden = false;
@@ -2836,6 +3067,7 @@
         state.riichi = false;
         state.commentsExpanded = false;
         state.commentComposerOpen = false;
+        clearCommentDraftV68();
         document.getElementById("commentForm").hidden = true;
         document.getElementById("commentAddButton").setAttribute("aria-expanded", "false");
         document.getElementById("commentAddButton").textContent = "コメント追加";
@@ -4078,7 +4310,18 @@
         try {
           const serverComments = await window.NagaSupabase.loadSharedComments(sharedCollectionV46.share_slug, question.serverQuestionId);
           if (question !== questionsV16[currentQuestionIndexV16]) return;
-          const converted = serverComments.map(comment => ({ id: comment.id, author: comment.author_name, createdAt: comment.created_at, content: comment.body, questionId: comment.question_id || question.serverQuestionId, attachments: [] }));
+          const converted = serverComments.map(comment => ({
+            id: comment.id,
+            author: comment.author_name,
+            createdAt: comment.created_at,
+            content: comment.body,
+            questionId: comment.question_id || question.serverQuestionId,
+            attachments: (Array.isArray(comment.attachments) ? comment.attachments : []).map(attachment => ({
+              path: attachment?.path || "",
+              src: attachment?.src || window.NagaSupabase.publicCommentAssetUrl(attachment?.path || ""),
+              alt: attachment?.alt || "添付画像"
+            })).filter(attachment => attachment.src)
+          }));
           const base = (SCENE.comments || []).map(message => ({ ...message, attachments: [...(message.attachments || [])] }));
           state.comments = [...base, ...converted];
           renderComments();
