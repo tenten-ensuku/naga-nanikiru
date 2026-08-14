@@ -79,6 +79,7 @@ test("pins Supabase dependencies and protects the NAGA proxy", async () => {
   assert.match(clientSource, /naga:autherror/);
   assert.match(clientSource, /importLocalHistory/);
   assert.match(clientSource, /createSharedQuestion/);
+  assert.match(clientSource, /updateProfileDisplayName/);
   assert.match(clientSource, /requestQuestionDeletion/);
   assert.match(clientSource, /loadQuestionPollStats/);
 });

@@ -118,6 +118,22 @@ async function signOut() {
   if (error) throw error;
 }
 
+async function updateProfileDisplayName(displayName: string) {
+  const normalized = displayName.trim();
+  if (!normalized || Array.from(normalized).length > 5) {
+    throw new Error("表示名は1〜5文字で入力してください。");
+  }
+  const session = await currentSession();
+  if (!session?.user?.id) throw new Error("Discordログインが必要です。");
+  const { data, error } = await requireClient()
+    .from("profiles")
+    .upsert({ id: session.user.id, display_name: normalized, updated_at: new Date().toISOString() }, { onConflict: "id" })
+    .select("display_name")
+    .single();
+  if (error) throw error;
+  return String(data?.display_name || normalized);
+}
+
 async function loadSharedCollection(shareSlug: string) {
   const supabase = requireClient();
   const [collection, questions] = await Promise.all([
@@ -423,6 +439,7 @@ function buildApi() {
     currentSession,
     signInWithDiscord,
     signOut,
+    updateProfileDisplayName,
     loadSharedCollection,
     loadSharedComments,
     postSharedComment,
