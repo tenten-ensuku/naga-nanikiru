@@ -4,9 +4,9 @@ import test from "node:test";
 
 const indexUrl = new URL("../public/index.html", import.meta.url);
 
-test("renders the v78 scene and half-game generator controls", async () => {
+test("renders the v79 scene and half-game generator controls", async () => {
   const html = await readFile(indexUrl, "utf8");
-  assert.match(html, /const APP_VERSION = 78/);
+  assert.match(html, /const APP_VERSION = 79/);
   assert.match(html, /\[\.\.\.APP_ANNOUNCEMENTS_V66\]\s*\.sort\(\(left, right\) => right\.version - left\.version\)/);
   assert.match(html, /data-menu-view="settings"/);
   assert.match(html, /id="displayNameForm"/);
@@ -36,6 +36,9 @@ test("renders the v78 scene and half-game generator controls", async () => {
   assert.match(html, /class="menu-list-header-group"><span>問題<\/span>/);
   assert.match(html, /\.menu-list-header \{[\s\S]*?grid-template-columns: 1fr;[\s\S]*?gap: 0;/);
   assert.match(html, /\.menu-grid \{[\s\S]*?grid-template-columns: 1fr;[\s\S]*?gap: 0;/);
+  assert.match(html, /function normalizeQuestionTitleV79\(title, number\)/);
+  assert.match(html, /title: `問題\$\{nextNumber\}`/);
+  assert.match(html, /normalizeQuestionTitlesV79\(\);/);
   assert.match(html, /menu-card-latest/);
   assert.match(html, /data-menu-action="favorite"/);
   assert.match(html, /data-menu-action="trash"/);

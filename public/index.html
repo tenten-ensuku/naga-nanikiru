@@ -1468,7 +1468,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 78;
+    const APP_VERSION = 79;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -2247,7 +2247,8 @@
         { version: 75, date: "2026-08-15", title: "コメントを編集・削除できるようにしました", body: "自分が投稿したコメントを後から編集・削除できるようになりました。" },
         { version: 76, date: "2026-08-15", title: "問題一覧を2列表示に対応しました", body: "PCでは各問題を2列で表示し、左右それぞれにステータス・直近結果・お気に入り・ゴミ箱を配置しました。スマホでは1列表示に戻ります。" },
         { version: 77, date: "2026-08-15", title: "未回答問題を続けて解けるようにしました", body: "未回答問題のセッション完了後は、回答済みを混ぜずに次の未回答10問へ進めます。解答後の次の問題ボタンも、結果のすぐ下から押せます。" },
-        { version: APP_VERSION, date: "2026-08-15", title: "問題一覧を1列表示に戻しました", body: "問題名や種別が崩れないよう、PCとスマホの問題一覧を1列表示に戻しました。" }
+        { version: 78, date: "2026-08-15", title: "問題一覧を1列表示に戻しました", body: "問題名や種別が崩れないよう、PCとスマホの問題一覧を1列表示に戻しました。" },
+        { version: APP_VERSION, date: "2026-08-15", title: "問題名から「追加」の文言を削除しました", body: "追加問題250のように表示されていた問題名を、問題250の形式に統一しました。既存の問題名も自動で読み替えます。" }
       ];
       let commentNoticeStoreV65 = loadCommentNoticeStoreV65();
       let sharedCommentRowsV65 = [];
@@ -2303,6 +2304,30 @@
         return current;
       }
 
+      function normalizeQuestionTitleV79(title, number) {
+        const fallback = `問題${number ?? ""}`;
+        const value = String(title || "").trim() || fallback;
+        return value.replace(/^追加問題(?=\d|$)/, "問題");
+      }
+
+      function normalizeQuestionTitlesV79() {
+        const normalize = question => {
+          if (!question || typeof question !== "object") return question;
+          const title = normalizeQuestionTitleV79(question.title, question.number);
+          return title === question.title ? question : { ...question, title };
+        };
+        const previousQuestions = questionsV16;
+        const normalizedQuestions = previousQuestions.map(normalize);
+        const previousCustomQuestions = Array.isArray(userStateV16.customQuestions) ? userStateV16.customQuestions : [];
+        const normalizedCustomQuestions = previousCustomQuestions.map(normalize);
+        const customChanged = normalizedCustomQuestions.some((question, index) => question !== previousCustomQuestions[index]);
+        questionsV16 = normalizedQuestions;
+        if (customChanged) {
+          userStateV16.customQuestions = normalizedCustomQuestions;
+          saveUserStateV16();
+        }
+      }
+
       function normalizeSharedQuestionV66(row, index = 0, shareSlug = sharedCollectionV46?.share_slug || "") {
         const sourcePayload = row?.question && typeof row.question === "object" ? row.question : (row?.payload && typeof row.payload === "object" ? row.payload : {});
         const payload = { ...sourcePayload };
@@ -2311,7 +2336,7 @@
         const id = String(row?.id || row?.question_id || payload.serverQuestionId || "");
         if (!id) return null;
         const number = payload.number ?? row?.number ?? index + 1;
-        const title = String(row?.title || payload.title || `問題${number}`);
+        const title = normalizeQuestionTitleV79(row?.title || payload.title, number);
         const createdById = row?.created_by || row?.creator_id || payload.createdById || payload.created_by || null;
         const createdByName = row?.created_by_name || row?.creator_name || payload.createdByName || payload.creatorName || "利用者";
         const question = {
@@ -2346,7 +2371,17 @@
       }
 
       function adoptSharedQuestionRowsV66(rows) {
-        const normalized = (Array.isArray(rows) ? rows : []).map((row, index) => row?.question ? row : normalizeSharedQuestionV66(row, index)).filter(Boolean);
+        const normalized = (Array.isArray(rows) ? rows : []).map((row, index) => {
+          const normalizedRow = row?.question ? row : normalizeSharedQuestionV66(row, index);
+          if (!normalizedRow?.question) return null;
+          return {
+            ...normalizedRow,
+            question: {
+              ...normalizedRow.question,
+              title: normalizeQuestionTitleV79(normalizedRow.question.title, normalizedRow.question.number)
+            }
+          };
+        }).filter(Boolean);
         const bucket = questionNoticeBucketV66();
         const currentIds = new Set(normalized.map(row => row.id));
         const known = new Set(bucket.knownIds);
@@ -2373,6 +2408,7 @@
         const additions = rows.filter(row => !existingIds.has(row.id)).map(row => row.question).filter(Boolean);
         if (!additions.length) return;
         questionsV16 = questionsV16.concat(additions);
+        normalizeQuestionTitlesV79();
         renderQuestionOptionsV16();
         if (document.querySelector(".page")?.classList.contains("menu-active")) renderMenuCardsV16();
       }
@@ -4443,9 +4479,9 @@
         const question = {
           ...candidate,
           number: nextNumber,
-          title: `追加問題${nextNumber}`,
+          title: `問題${nextNumber}`,
           image: candidate._imageData,
-          comments: [{ id: `generated-${Date.now()}`, author: "問題生成", createdAt: now, content: "NAGA URLから追加した問題です。", attachments: [] }],
+          comments: [{ id: `generated-${Date.now()}`, author: "問題生成", createdAt: now, content: "NAGA URLから作成した問題です。", attachments: [] }],
           threadUrl: candidate.threadUrl || "#",
           localGenerated: true,
           needsScreenshot: false,
@@ -4716,6 +4752,7 @@
           })));
         }
         applyQuestionOverridesV47();
+        normalizeQuestionTitlesV79();
         migrateAnswerHistoryScoresV16();
         renderQuestionOptionsV16();
         renderMenuCardsV16();
