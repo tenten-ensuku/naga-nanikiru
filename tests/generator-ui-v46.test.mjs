@@ -4,10 +4,25 @@ import test from "node:test";
 
 const indexUrl = new URL("../public/index.html", import.meta.url);
 
-test("renders the v59 scene and half-game generator controls", async () => {
+test("renders the v64 scene and half-game generator controls", async () => {
   const html = await readFile(indexUrl, "utf8");
-  assert.match(html, /const APP_VERSION = 59/);
-  assert.match(html, /My問題集 <span class="menu-nav-version">V<span id="menuVersion"><\/span><\/span>/);
+  assert.match(html, /const APP_VERSION = 64/);
+  assert.doesNotMatch(html, /data-menu-view="session"/);
+  assert.match(html, /grid-template-columns: repeat\(5, minmax\(0, 1fr\)\)/);
+  assert.doesNotMatch(html, /id="menuViewNote"/);
+  assert.doesNotMatch(html, /解きたい局面を選んでください/);
+  assert.match(html, /function menuRowStatusV63/);
+  assert.match(html, /function menuScoreMarkClassV63/);
+  assert.match(html, /function menuTrashIconV63/);
+  assert.match(html, /class="menu-sidebar"/);
+  assert.match(html, /id="menuListHeader"/);
+  assert.match(html, /menu-card-latest/);
+  assert.match(html, /data-menu-action="favorite"/);
+  assert.match(html, /data-menu-action="trash"/);
+  assert.match(html, /id="menuRangeTabs"/);
+  assert.match(html, /function menuRangeOptionsV60\(\)/);
+  assert.match(html, /sourceQuestions\.filter\(menuRangeMatchesV60\)/);
+  assert.match(html, /<span>My問題集<\/span><span class="menu-brand-version">V<span id="menuVersion"><\/span><\/span>/);
   assert.match(html, /getElementById\("menuVersion"\)\.textContent = APP_VERSION/);
   assert.match(html, /width: min\(850px, 100%\)/);
   assert.match(html, /aspect-ratio: 14 \/ 13/);
