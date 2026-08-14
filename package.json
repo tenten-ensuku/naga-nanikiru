@@ -17,7 +17,7 @@
     "import:questions": "node scripts/import-existing-questions.mjs",
     "supabase:types": "supabase gen types typescript --local > supabase/database.types.ts",
     "audit:reach": "node scripts/sync-naga-reach.mjs",
-    "lint": "eslint . --ignore-pattern dist --ignore-pattern .next --ignore-pattern .site-stage* --ignore-pattern public/supabase-sync-v46.js --ignore-pattern public/supabase-sync-v47.js",
+    "lint": "eslint . --ignore-pattern dist --ignore-pattern .next --ignore-pattern .site-stage* --ignore-pattern public/supabase-sync-v46.js --ignore-pattern public/supabase-sync-v47.js --ignore-pattern public/supabase-sync-v48.js",
     "db:generate": "drizzle-kit generate"
   },
   "dependencies": {

@@ -50,17 +50,17 @@
     button { cursor: pointer; }
     .page { display: flex; flex-direction: column; width: min(1380px, calc(100% - 24px)); margin: 0 auto; padding: 18px 0 36px; }
     .page.menu-active > .header, .page.menu-active > .source-bar, .page.menu-active > .session-strip, .page.menu-active > .scene-card, .page.menu-active > .answer-strip, .page.menu-active > .comments-panel, .page.menu-active > .below-note { display: none; }
-    .menu-panel { display: grid; gap: 16px; min-height: min(720px, calc(100vh - 54px)); align-content: start; padding: clamp(24px, 5vw, 58px); background: linear-gradient(145deg, rgba(12, 49, 68, .98), rgba(5, 23, 37, .98)); border: 1px solid var(--line); border-radius: 18px; box-shadow: var(--shadow); }
+    .menu-panel { display: grid; gap: 16px; min-height: min(720px, calc(100vh - 54px)); align-content: start; padding: clamp(20px, 4vw, 46px); background: linear-gradient(145deg, rgba(12, 49, 68, .98), rgba(5, 23, 37, .98)); border: 1px solid var(--line); border-radius: 18px; box-shadow: var(--shadow); }
     .menu-panel[hidden] { display: none; }
     .menu-heading { max-width: 720px; }
     .menu-heading .eyebrow { margin-bottom: 8px; }
     .menu-heading h2 { margin: 0; font-size: clamp(26px, 4vw, 44px); letter-spacing: -.05em; }
     .menu-heading p:not(.eyebrow) { margin: 8px 0 0; color: var(--muted); font-size: 13px; line-height: 1.6; }
-    .menu-summary { display: flex; flex-wrap: wrap; gap: 6px 10px; margin-top: 12px; color: var(--muted); font-size: 11px; }
+    .menu-summary { display: flex; flex-wrap: wrap; gap: 6px 12px; margin-top: 12px; color: var(--muted); font-size: 12px; }
     .menu-summary strong { color: #fff7d6; }
-    .account-strip { display: flex; align-items: center; flex-wrap: wrap; gap: 7px; padding: 8px 9px; color: var(--muted); background: rgba(0,0,0,.14); border: 1px solid rgba(255,255,255,.1); border-radius: 10px; font-size: 10px; }
+    .account-strip { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; padding: 10px 11px; color: var(--muted); background: rgba(0,0,0,.14); border: 1px solid rgba(255,255,255,.1); border-radius: 10px; font-size: 12px; }
     .account-status { flex: 1 1 220px; min-width: 0; }
-    .account-strip button { padding: 6px 8px; color: #eafefe; background: #164862; border: 1px solid rgba(113,183,255,.45); border-radius: 7px; font-size: 9px; font-weight: 850; }
+    .account-strip button { min-height: 40px; padding: 8px 11px; color: #eafefe; background: #164862; border: 1px solid rgba(113,183,255,.45); border-radius: 7px; font-size: 11px; font-weight: 850; }
     .account-strip button.primary { color: #17231d; background: #f1c457; border-color: #ffdb7d; }
     .account-strip button[hidden] { display: none; }
     .student-dashboard { display: grid; gap: 10px; }
@@ -69,27 +69,32 @@
     .student-metric { color: var(--muted); font-size: 9px; }
     .student-metric b { display: block; margin-top: 2px; color: #eafefe; font-size: 13px; }
     .menu-nav { display: flex; flex-wrap: wrap; gap: 7px; padding: 7px; border: 1px solid rgba(255,255,255,.1); border-radius: 11px; background: rgba(0,0,0,.14); }
-    .menu-nav-button { display: inline-flex; align-items: center; gap: 6px; padding: 8px 10px; color: #cfe9ed; background: transparent; border: 1px solid transparent; border-radius: 8px; font-size: 11px; font-weight: 800; }
+    .menu-nav-button { display: inline-flex; align-items: center; gap: 7px; min-height: 44px; padding: 9px 12px; color: #cfe9ed; background: transparent; border: 1px solid transparent; border-radius: 8px; font-size: 14px; font-weight: 800; }
     .menu-nav-button[hidden] { display: none; }
     .menu-nav-button:hover, .menu-nav-button:focus-visible { color: #fff; background: rgba(22,80,103,.7); outline: none; }
     .menu-nav-button.is-active { color: #12211e; background: var(--gold); border-color: #ffdb7d; }
     .menu-nav-button.is-active:hover, .menu-nav-button.is-active:focus-visible { background: #ffda77; }
-    .menu-nav-badge { min-width: 18px; padding: 2px 4px; color: #dffbfb; background: rgba(255,255,255,.14); border-radius: 999px; font-size: 9px; line-height: 1; text-align: center; }
+    .menu-nav-badge { min-width: 22px; padding: 3px 5px; color: #dffbfb; background: rgba(255,255,255,.14); border-radius: 999px; font-size: 11px; line-height: 1; text-align: center; }
     .menu-nav-button.is-active .menu-nav-badge { color: #12211e; background: rgba(255,255,255,.5); }
     .menu-nav-version { margin-left: auto; color: currentColor; font-size: 9px; font-weight: 950; letter-spacing: .04em; opacity: .86; }
-    .menu-view-note { margin: -4px 0 -5px; color: var(--muted); font-size: 11px; line-height: 1.5; }
-    .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; }
-    .menu-card { display: grid; gap: 7px; min-height: 92px; padding: 10px 11px; color: var(--ink); text-align: left; background: rgba(0,0,0,.19); border: 1px solid rgba(255,255,255,.13); border-radius: 12px; transition: transform .15s ease, border-color .15s ease, background .15s ease; }
+    .menu-range-tabs { display: flex; align-items: center; gap: 6px; overflow-x: auto; padding: 6px; border: 1px solid rgba(255,255,255,.1); border-radius: 10px; background: rgba(0,0,0,.12); scrollbar-width: thin; }
+    .menu-range-tabs[hidden] { display: none; }
+    .menu-range-label { flex: 0 0 auto; padding: 0 5px; color: var(--muted); font-size: 12px; font-weight: 800; white-space: nowrap; }
+    .menu-range-tab { flex: 0 0 auto; min-height: 40px; padding: 7px 11px; color: #cfe9ed; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.12); border-radius: 7px; font-size: 12px; font-weight: 800; white-space: nowrap; }
+    .menu-range-tab:hover, .menu-range-tab:focus-visible { color: #fff; background: #164862; border-color: rgba(113,183,255,.7); outline: none; }
+    .menu-range-tab.is-active { color: #12211e; background: var(--gold); border-color: #ffdb7d; }
+    .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
+    .menu-card { display: grid; gap: 10px; min-height: 124px; padding: 15px 16px; color: var(--ink); text-align: left; background: rgba(0,0,0,.19); border: 1px solid rgba(255,255,255,.13); border-radius: 12px; transition: transform .15s ease, border-color .15s ease, background .15s ease; }
     .menu-card:hover, .menu-card:focus-within { background: rgba(22, 80, 103, .82); border-color: rgba(113,183,255,.75); transform: translateY(-2px); }
     .menu-card-open { display: grid; gap: 5px; width: 100%; min-width: 0; padding: 0; color: var(--ink); text-align: left; background: transparent; border: 0; }
     .menu-card-open:focus-visible { outline: 2px solid rgba(113,183,255,.85); outline-offset: 4px; border-radius: 5px; }
     .menu-card-heading { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
-    .menu-card-title { font-size: 17px; font-weight: 900; }
-    .menu-card-history { display: inline-flex; align-items: center; gap: 3px; min-height: 20px; padding: 2px 5px; color: #dffbfb; background: rgba(0,0,0,.2); border: 1px solid rgba(255,255,255,.12); border-radius: 6px; font-size: 13px; line-height: 1; letter-spacing: .02em; white-space: nowrap; }
-    .menu-card-history.is-empty { color: var(--muted); font-size: 9px; letter-spacing: 0; }
-    .menu-card-history-mark { display: inline-flex; align-items: center; justify-content: center; width: 16px; height: 16px; }
+    .menu-card-title { font-size: 20px; font-weight: 900; }
+    .menu-card-history { display: inline-flex; align-items: center; gap: 4px; min-height: 24px; padding: 3px 6px; color: #dffbfb; background: rgba(0,0,0,.2); border: 1px solid rgba(255,255,255,.12); border-radius: 6px; font-size: 15px; line-height: 1; letter-spacing: .02em; white-space: nowrap; }
+    .menu-card-history.is-empty { color: var(--muted); font-size: 11px; letter-spacing: 0; }
+    .menu-card-history-mark { display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; }
     .menu-card-actions { display: flex; flex-wrap: wrap; gap: 5px; margin-top: auto; }
-    .menu-card-action { padding: 5px 7px; color: #d8f2f5; background: rgba(0,0,0,.2); border: 1px solid rgba(255,255,255,.14); border-radius: 6px; font-size: 9px; font-weight: 800; }
+    .menu-card-action { min-height: 40px; padding: 8px 10px; color: #d8f2f5; background: rgba(0,0,0,.2); border: 1px solid rgba(255,255,255,.14); border-radius: 6px; font-size: 11px; font-weight: 800; }
     .menu-card-action:hover, .menu-card-action:focus-visible { color: #fff; background: #164862; border-color: rgba(113,183,255,.7); outline: none; }
     .menu-card-action.is-active { color: #12211e; background: #f1c457; border-color: #ffdb7d; }
     .menu-empty, .menu-placeholder { padding: 22px 16px; color: var(--muted); text-align: center; background: rgba(0,0,0,.16); border: 1px dashed rgba(255,255,255,.18); border-radius: 11px; font-size: 12px; line-height: 1.7; }
@@ -105,12 +110,12 @@
     .quick-start[hidden], .quick-start-card[hidden] { display: none; }
     .menu-filters { display: grid; grid-template-columns: minmax(170px, 1fr) repeat(2, minmax(120px, auto)); gap: 7px; padding: 8px; border: 1px solid rgba(255,255,255,.1); border-radius: 10px; background: rgba(0,0,0,.12); }
     .menu-filters[hidden] { display: none; }
-    .menu-filters input, .menu-filters select, .generator-form input, .generator-form select, .generator-form textarea { width: 100%; box-sizing: border-box; padding: 8px 9px; color: var(--ink); background: #061c2c; border: 1px solid rgba(255,255,255,.18); border-radius: 7px; font: inherit; font-size: 11px; }
+    .menu-filters input, .menu-filters select, .generator-form input, .generator-form select, .generator-form textarea { width: 100%; box-sizing: border-box; padding: 10px 11px; color: var(--ink); background: #061c2c; border: 1px solid rgba(255,255,255,.18); border-radius: 7px; font: inherit; font-size: 13px; }
     .menu-filters input:focus, .menu-filters select:focus, .generator-form input:focus, .generator-form select:focus, .generator-form textarea:focus { border-color: rgba(113,183,255,.8); outline: 2px solid rgba(113,183,255,.16); }
-    .menu-card-meta { display: flex; flex-wrap: wrap; gap: 4px; color: var(--muted); font-size: 8px; }
+    .menu-card-meta { display: flex; flex-wrap: wrap; gap: 5px; color: var(--muted); font-size: 11px; }
     .menu-card-tag { padding: 2px 5px; background: rgba(255,255,255,.07); border-radius: 999px; }
     .menu-card-tag.is-due { color: #171e18; background: #bde7e0; }
-    .menu-card-provenance { display: block; color: #b6d6dc; font-size: 8px; line-height: 1.35; }
+    .menu-card-provenance { display: block; color: #b6d6dc; font-size: 11px; line-height: 1.4; }
     .session-strip { display: grid; grid-template-columns: auto minmax(90px, 1fr) auto; align-items: center; gap: 8px; max-width: 860px; width: 100%; box-sizing: border-box; margin: -4px auto 10px; padding: 7px 10px; color: #dffbfb; background: rgba(7,28,43,.94); border: 1px solid rgba(155,232,216,.28); border-radius: 9px; font-size: 10px; font-weight: 800; }
     .session-strip[hidden] { display: none; }
     .session-progress-track { height: 5px; overflow: hidden; background: rgba(255,255,255,.12); border-radius: 999px; }
@@ -377,8 +382,79 @@
     .below-note { display: none; }
     .below-note strong { color: #c9eff0; }
 
+    /* Problem-list layout: a compact navigation rail plus a readable result table. */
+    .menu-panel { grid-template-columns: 214px minmax(0, 1fr); gap: 0; min-height: min(760px, calc(100vh - 54px)); padding: 0; overflow: hidden; }
+    .menu-sidebar { position: sticky; top: 12px; align-self: start; display: flex; flex-direction: column; gap: 16px; min-width: 0; max-height: calc(100vh - 30px); overflow-y: auto; padding: 22px 13px 16px; background: linear-gradient(180deg, rgba(4, 24, 39, .98), rgba(3, 17, 29, .98)); border-right: 1px solid rgba(255,255,255,.1); }
+    .menu-brand { display: flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 7px; color: #f5f7f1; font-family: Georgia, "Times New Roman", serif; font-size: 20px; font-weight: 700; white-space: nowrap; }
+    .menu-brand-tile { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 36px; color: #b7272e; background: #fffdf3; border: 1px solid #d8cba8; border-radius: 4px; font-family: "Noto Sans JP", sans-serif; font-size: 21px; font-weight: 900; box-shadow: 0 3px 7px rgba(0,0,0,.3); }
+    .menu-brand-version { margin-left: auto; color: var(--muted); font-family: Inter, sans-serif; font-size: 10px; font-weight: 800; }
+    .menu-sidebar .menu-nav { display: grid; gap: 4px; padding: 0; border: 0; background: transparent; }
+    .menu-sidebar .menu-nav-button { width: 100%; justify-content: flex-start; min-height: 42px; padding: 9px 10px; border-radius: 6px; font-size: 13px; font-weight: 800; }
+    .menu-sidebar .menu-nav-button.is-active { color: #b9f4ec; background: linear-gradient(90deg, rgba(0,116,126,.64), rgba(0,77,92,.28)); border-color: transparent; }
+    .menu-sidebar .menu-nav-button:hover, .menu-sidebar .menu-nav-button:focus-visible { color: #fff; background: rgba(22,80,103,.7); }
+    .menu-nav-icon { display: inline-flex; align-items: center; justify-content: center; width: 20px; color: #9ab8c2; font-size: 17px; line-height: 1; }
+    .menu-sidebar .menu-nav-button.is-active .menu-nav-icon { color: #9be8d8; }
+    .menu-sidebar .menu-nav-badge { margin-left: auto; min-width: 22px; padding: 3px 5px; font-size: 10px; }
+    .menu-sidebar-progress { display: grid; gap: 7px; margin-top: auto; padding: 12px 11px; color: var(--muted); background: rgba(12,50,70,.42); border: 1px solid rgba(155,232,216,.15); border-radius: 8px; }
+    .menu-sidebar-progress:empty { display: none; }
+    .menu-sidebar-progress-title { color: #dffbfb; font-size: 11px; font-weight: 800; }
+    .menu-sidebar-progress-value { color: #fff7d6; font-size: 24px; font-weight: 950; line-height: 1; }
+    .menu-sidebar-progress-note { font-size: 10px; line-height: 1.35; }
+    .menu-sidebar-progress-track { height: 5px; overflow: hidden; background: rgba(255,255,255,.12); border-radius: 999px; }
+    .menu-sidebar-progress-fill { display: block; height: 100%; background: linear-gradient(90deg, #63d6cc, var(--gold)); border-radius: inherit; }
+    .menu-sidebar .account-strip { display: grid; gap: 7px; padding: 9px; border-radius: 8px; font-size: 10px; }
+    .menu-sidebar .account-status { font-size: 10px; line-height: 1.4; }
+    .menu-sidebar .account-strip button { width: 100%; min-height: 36px; padding: 7px 8px; font-size: 10px; }
+    .menu-content { display: grid; align-content: start; gap: 14px; min-width: 0; padding: clamp(22px, 3.6vw, 42px); }
+    .menu-content .menu-heading { max-width: none; }
+    .menu-content .menu-heading h2 { font-size: clamp(30px, 4vw, 48px); }
+    .menu-content .menu-heading p:not(.eyebrow) { font-size: 14px; }
+    .menu-summary { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; margin-top: 15px; padding: 12px 0; background: rgba(0,0,0,.13); border: 1px solid rgba(255,255,255,.1); border-radius: 8px; overflow: hidden; }
+    .menu-summary-stat { display: grid; gap: 4px; min-width: 0; padding: 0 14px; border-right: 1px solid rgba(255,255,255,.12); }
+    .menu-summary-stat:last-child { border-right: 0; }
+    .menu-summary-stat strong { display: block; color: #fff7d6; font-size: 26px; line-height: 1; }
+    .menu-summary-stat strong em { margin-left: 3px; color: var(--muted); font-size: 11px; font-style: normal; font-weight: 800; }
+    .menu-summary-stat small { color: var(--muted); font-size: 11px; white-space: nowrap; }
+    .menu-summary-stat.is-alert strong { color: #f1c457; }
+    .menu-content > .quick-start { display: none; }
+    .menu-content .menu-filters { grid-template-columns: minmax(160px, 1fr) repeat(2, minmax(120px, auto)); padding: 0; border: 0; background: transparent; }
+    .menu-content .menu-filters input, .menu-content .menu-filters select { background: rgba(0,0,0,.2); }
+    .menu-range-tabs { border-radius: 7px; }
+    .menu-range-tab { min-width: 74px; text-align: center; }
+    .menu-range-actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
+    .menu-range-actions[hidden] { display: none; }
+    .menu-range-action { display: inline-flex; align-items: center; justify-content: space-between; gap: 14px; min-width: 150px; min-height: 42px; padding: 8px 13px; color: #e7f8ff; background: rgba(0,0,0,.2); border: 1px solid rgba(113,183,255,.45); border-radius: 6px; font-size: 12px; font-weight: 850; }
+    .menu-range-action.primary { color: #18241c; background: linear-gradient(145deg, #ffe18a, #dca944); border-color: #ffe9a9; }
+    .menu-range-action:hover, .menu-range-action:focus-visible { outline: 2px solid rgba(155,232,216,.25); outline-offset: 1px; }
+    .menu-list-header { display: grid; grid-template-columns: minmax(150px, 1fr) 150px 124px 76px 64px; gap: 8px; align-items: center; padding: 0 14px 5px; color: var(--muted); border-bottom: 1px solid rgba(255,255,255,.12); font-size: 10px; font-weight: 800; }
+    .menu-list-header[hidden] { display: none; }
+    .menu-grid { display: grid; gap: 0; }
+    .menu-card { grid-template-columns: minmax(150px, 1fr) 150px 124px 76px 64px; gap: 8px; align-items: center; min-height: 66px; padding: 9px 14px; border-width: 0 0 1px; border-radius: 0; background: transparent; }
+    .menu-card:hover, .menu-card:focus-within { transform: none; background: rgba(22,80,103,.5); border-color: rgba(113,183,255,.45); }
+    .menu-card-open { align-self: stretch; justify-content: stretch; justify-items: start; }
+    .menu-card-heading { display: block; }
+    .menu-card-title { display: block; font-size: 18px; line-height: 1.1; }
+    .menu-card-history { display: none; }
+    .menu-card-meta { margin-top: 5px; gap: 4px; font-size: 10px; }
+    .menu-card-provenance { margin-top: 4px; font-size: 10px; }
+    .menu-card-status { display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
+    .menu-card-status .menu-card-tag { padding: 4px 7px; color: #bfe9df; background: rgba(0,108,100,.44); border: 1px solid rgba(155,232,216,.18); border-radius: 4px; font-size: 11px; font-weight: 800; }
+    .menu-card-status .menu-card-tag.is-due { color: #172018; background: #f1c457; border-color: #ffdb7d; }
+    .menu-card-row-manage { min-height: 28px; margin-left: auto; padding: 4px 7px; color: #a9cbd2; background: transparent; border: 1px solid rgba(255,255,255,.16); border-radius: 5px; font-size: 10px; font-weight: 800; }
+    .menu-card-row-manage:hover, .menu-card-row-manage:focus-visible { color: #fff; background: rgba(22,80,103,.8); border-color: rgba(113,183,255,.65); outline: none; }
+    .menu-card-latest { display: inline-flex; align-items: center; gap: 5px; min-height: 30px; color: #dffbfb; font-size: 20px; letter-spacing: .04em; }
+    .menu-card-latest.is-empty { color: var(--muted); font-size: 12px; letter-spacing: 0; }
+    .menu-card-latest-mark { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; }
+    .menu-card-icon-action { display: inline-flex; align-items: center; justify-content: center; width: 42px; min-height: 42px; padding: 5px; color: #a9c2cc; background: transparent; border: 1px solid transparent; border-radius: 6px; font-size: 23px; line-height: 1; }
+    .menu-card-icon-action:hover, .menu-card-icon-action:focus-visible { color: #fff; background: rgba(22,80,103,.8); border-color: rgba(113,183,255,.65); outline: none; }
+    .menu-card-icon-action.is-active { color: #f1c457; }
+    .menu-card-icon-action.is-trashed { color: #f1c457; }
+    .menu-card-actions { display: contents; }
+    .menu-card-action { min-height: 42px; padding: 5px 8px; }
+
     @media (max-width: 800px) {
       .page { width: calc(100% - 12px); padding-top: 10px; }
+      .menu-panel { gap: 13px; padding: 16px 12px 22px; border-radius: 14px; }
       .header { align-items: flex-start; }
       .version { padding-top: 5px; }
       .source-bar { align-items: stretch; }
@@ -386,9 +462,45 @@
       .model-control, .question-control { justify-content: space-between; width: 100%; margin-left: 0; }
       .model-control select, .question-control select { flex: 1; }
       .menu-button { width: 100%; }
+      .menu-nav { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: thin; }
+      .menu-nav-button { flex: 0 0 auto; }
       .quick-start { grid-template-columns: 1fr 1fr; }
       .quick-start-card.primary { grid-column: 1 / -1; }
       .menu-filters { grid-template-columns: 1fr; }
+      .menu-range-tabs { margin-inline: -2px; }
+      .menu-grid { grid-template-columns: 1fr; gap: 9px; }
+      .menu-card { min-height: 116px; padding: 14px; }
+      .menu-panel { grid-template-columns: 1fr; min-height: 0; padding: 0; overflow: visible; }
+      .menu-sidebar { position: static; align-self: stretch; max-height: none; overflow: visible; gap: 10px; padding: 14px 12px 11px; border-right: 0; border-bottom: 1px solid rgba(255,255,255,.1); }
+      .menu-brand { min-height: 36px; font-size: 18px; }
+      .menu-brand-tile { width: 26px; height: 31px; font-size: 18px; }
+      .menu-sidebar .menu-nav { display: flex; gap: 5px; overflow-x: auto; padding-bottom: 2px; scrollbar-width: thin; }
+      .menu-sidebar .menu-nav-button { flex: 0 0 auto; width: auto; min-height: 40px; padding: 8px 10px; font-size: 12px; }
+      .menu-sidebar .menu-nav-button .menu-nav-badge { display: none; }
+      .menu-sidebar-progress { margin-top: 0; padding: 9px 10px; grid-template-columns: auto auto 1fr; align-items: center; gap: 6px 8px; }
+      .menu-sidebar-progress-title { grid-column: 1 / -1; }
+      .menu-sidebar-progress-value { font-size: 20px; }
+      .menu-sidebar-progress-note { font-size: 10px; }
+      .menu-sidebar-progress-track { grid-column: 1 / -1; }
+      .menu-sidebar .account-strip { grid-template-columns: 1fr auto; align-items: center; }
+      .menu-sidebar .account-status { grid-column: 1 / -1; }
+      .menu-sidebar .account-strip button { width: auto; min-width: 130px; }
+      .menu-content { padding: 18px 14px 24px; }
+      .menu-content .menu-heading h2 { font-size: clamp(28px, 9vw, 38px); }
+      .menu-summary-stat { padding: 0 9px; }
+      .menu-summary-stat strong { font-size: 22px; }
+      .menu-summary-stat small { font-size: 10px; }
+      .menu-range-actions { justify-content: stretch; }
+      .menu-range-action { flex: 1 1 160px; min-width: 0; }
+      .menu-list-header { grid-template-columns: minmax(0, 1fr) 106px 76px 42px 42px; gap: 4px; padding-inline: 8px; font-size: 9px; }
+      .menu-card { grid-template-columns: minmax(0, 1fr) 106px 76px 42px 42px; gap: 4px; min-height: 72px; padding: 8px; }
+      .menu-card-title { font-size: 16px; }
+      .menu-card-meta, .menu-card-provenance { font-size: 9px; }
+      .menu-card-status .menu-card-tag { padding: 3px 5px; font-size: 9px; }
+      .menu-card-row-manage { min-height: 26px; padding: 3px 5px; font-size: 9px; }
+      .menu-card-latest { gap: 2px; font-size: 17px; }
+      .menu-card-latest-mark { width: 18px; height: 18px; }
+      .menu-card-icon-action { width: 38px; min-height: 38px; font-size: 21px; }
       .dashboard-grid, .analysis-grid { grid-template-columns: 1fr 1fr; }
       .analysis-breakdowns { grid-template-columns: 1fr; }
       .generator-form { grid-template-columns: 1fr; }
@@ -415,25 +527,515 @@
       .comment-form { grid-template-columns: 1fr; }
       .comment-submit { width: 100%; }
       .below-note { display: none; }
+      @media (min-width: 621px) and (max-width: 800px) {
+        .menu-panel { grid-template-columns: 150px minmax(0, 1fr); min-height: min(760px, calc(100vh - 20px)); overflow: hidden; }
+        .menu-sidebar { position: sticky; top: 12px; align-self: start; max-height: calc(100vh - 30px); overflow-y: auto; gap: 12px; padding: 16px 8px 12px; border-right: 1px solid rgba(255,255,255,.1); border-bottom: 0; }
+        .menu-brand { gap: 5px; min-height: 36px; padding: 0 3px; font-size: 16px; }
+        .menu-brand-tile { width: 24px; height: 29px; font-size: 17px; }
+        .menu-sidebar .menu-nav { display: grid; gap: 3px; overflow: visible; padding: 0; }
+        .menu-sidebar .menu-nav-button { width: 100%; min-height: 36px; padding: 7px 6px; font-size: 10px; }
+        .menu-sidebar .menu-nav-icon { width: 16px; font-size: 14px; }
+        .menu-sidebar .menu-nav-badge { display: inline; min-width: 18px; padding: 2px 3px; font-size: 9px; }
+        .menu-sidebar-progress { grid-template-columns: 1fr; gap: 5px; margin-top: auto; padding: 9px 7px; }
+        .menu-sidebar-progress-title { grid-column: auto; font-size: 10px; }
+        .menu-sidebar-progress-value { font-size: 21px; }
+        .menu-sidebar-progress-note { font-size: 9px; }
+        .menu-sidebar-progress-track { grid-column: auto; }
+        .menu-sidebar .account-strip { grid-template-columns: 1fr; gap: 5px; padding: 7px; }
+        .menu-sidebar .account-status { grid-column: auto; font-size: 9px; }
+        .menu-sidebar .account-strip button { width: 100%; min-width: 0; min-height: 32px; padding: 6px; font-size: 9px; }
+        .menu-content { padding: 18px 12px 22px; }
+        .menu-content .menu-heading h2 { font-size: 32px; }
+        .menu-content .menu-heading p:not(.eyebrow) { font-size: 11px; }
+        .menu-summary-stat { padding: 0 7px; }
+        .menu-summary-stat strong { font-size: 21px; }
+        .menu-summary-stat small { font-size: 9px; }
+        .menu-range-actions { gap: 5px; }
+        .menu-range-action { flex: 1 1 0; min-width: 0; padding-inline: 8px; font-size: 10px; }
+        .menu-list-header { grid-template-columns: minmax(0, 1fr) 92px 68px 36px 36px; gap: 4px; padding-inline: 8px; font-size: 9px; }
+        .menu-card { grid-template-columns: minmax(0, 1fr) 92px 68px 36px 36px; gap: 4px; min-height: 68px; padding: 8px; }
+        .menu-card-title { font-size: 15px; }
+        .menu-card-meta, .menu-card-provenance { font-size: 9px; }
+        .menu-card-status .menu-card-tag { padding: 3px 5px; font-size: 9px; }
+        .menu-card-row-manage { min-height: 25px; padding: 3px 5px; font-size: 9px; }
+        .menu-card-latest { gap: 2px; font-size: 16px; }
+        .menu-card-latest-mark { width: 17px; height: 17px; }
+        .menu-card-icon-action { width: 34px; min-height: 34px; font-size: 19px; }
+      }
+    }
+
+    /* V63 visual polish: editorial list first, decorative surfaces second. */
+    :root {
+      --ink: #f3f8fb;
+      --muted: #b5cbd1;
+      --line: rgba(190, 220, 225, .22);
+      --gold: #f2c34f;
+      --panel: #071b2a;
+      --panel-2: #0a2a3a;
+    }
+    body {
+      color: var(--ink);
+      background: #061522;
+      font-family: "Yu Gothic UI", "Noto Sans JP", "Yu Gothic", Meiryo, system-ui, sans-serif;
+      font-size: 14px;
+      letter-spacing: .01em;
+    }
+    .menu-panel {
+      min-height: min(820px, calc(100vh - 42px));
+      background: #092538;
+      border: 1px solid rgba(176, 216, 222, .28);
+      border-radius: 8px;
+      box-shadow: 0 18px 42px rgba(0, 0, 0, .28);
+    }
+    .menu-sidebar {
+      background: #061a2a;
+      border-right-color: rgba(176, 216, 222, .2);
+    }
+    .menu-brand {
+      color: #f8f5e8;
+      font-family: "Yu Gothic UI", "Noto Sans JP", "Yu Gothic", Meiryo, sans-serif;
+      font-size: 19px;
+      font-weight: 800;
+      letter-spacing: -.02em;
+    }
+    .menu-brand-tile {
+      box-shadow: 0 2px 5px rgba(0, 0, 0, .28);
+    }
+    .menu-sidebar .menu-nav-button {
+      min-height: 44px;
+      color: #c8dadd;
+      border-left: 3px solid transparent;
+      border-radius: 4px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .menu-sidebar .menu-nav-button.is-active {
+      color: #baf2e8;
+      background: #0a5967;
+      border-left-color: var(--gold);
+    }
+    .menu-sidebar .menu-nav-button:hover,
+    .menu-sidebar .menu-nav-button:focus-visible {
+      background: #0c3c50;
+    }
+    .menu-sidebar-progress,
+    .menu-sidebar .account-strip {
+      background: #0a2637;
+      border-color: rgba(176, 216, 222, .2);
+      border-radius: 5px;
+      box-shadow: none;
+    }
+    .menu-sidebar-progress-title,
+    .menu-sidebar .account-status {
+      color: #d3e5e7;
+    }
+    .menu-content {
+      gap: 18px;
+      padding: clamp(24px, 3.6vw, 42px);
+      background: #0a2b3c;
+    }
+    .menu-content .menu-heading h2 {
+      color: #f8fbfc;
+      font-size: clamp(32px, 4vw, 48px);
+      font-weight: 900;
+      letter-spacing: -.055em;
+    }
+    .menu-content .menu-heading .eyebrow {
+      color: var(--gold);
+      font-size: 10px;
+      letter-spacing: .17em;
+    }
+    .menu-summary {
+      margin-top: 13px;
+      padding: 14px 0;
+      background: #0b4655;
+      border-color: rgba(176, 216, 222, .28);
+      border-radius: 6px;
+    }
+    .menu-summary-stat {
+      padding: 0 16px;
+      border-right-color: rgba(190, 220, 225, .25);
+    }
+    .menu-summary-stat small {
+      color: #c5dadd;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .menu-summary-stat strong {
+      color: #fffaf0;
+      font-size: 30px;
+      font-weight: 900;
+    }
+    .menu-summary-stat strong em {
+      color: #c9dfe0;
+      font-size: 12px;
+    }
+    .menu-summary-stat.is-alert strong {
+      color: #ffd05a;
+    }
+    .menu-content .menu-filters {
+      gap: 8px;
+    }
+    .menu-content .menu-filters input,
+    .menu-content .menu-filters select {
+      min-height: 44px;
+      color: #edf8f9;
+      background: #071e2e;
+      border-color: rgba(190, 220, 225, .28);
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    .menu-range-tabs {
+      gap: 2px;
+      padding: 0;
+      background: transparent;
+      border: 0;
+      border-bottom: 1px solid rgba(190, 220, 225, .32);
+      border-radius: 0;
+    }
+    .menu-range-label {
+      padding: 0 10px 8px 0;
+      color: #c5dadd;
+      font-size: 11px;
+    }
+    .menu-range-tab {
+      min-height: 42px;
+      padding: 8px 17px;
+      color: #d2e3e6;
+      background: #123446;
+      border-color: rgba(190, 220, 225, .28);
+      border-bottom-color: transparent;
+      border-radius: 5px 5px 0 0;
+      font-size: 13px;
+      font-weight: 800;
+    }
+    .menu-range-tab:hover,
+    .menu-range-tab:focus-visible {
+      background: #1b4b5d;
+    }
+    .menu-range-tab.is-active {
+      color: #172215;
+      background: var(--gold);
+      border-color: #ffe08a;
+    }
+    .menu-range-actions {
+      gap: 8px;
+    }
+    .menu-range-action {
+      min-height: 44px;
+      padding: 9px 15px;
+      color: #e7f6f7;
+      background: transparent;
+      border-color: rgba(190, 220, 225, .38);
+      border-radius: 5px;
+      font-size: 13px;
+      font-weight: 800;
+    }
+    .menu-range-action.primary {
+      color: #192417;
+      background: var(--gold);
+      border-color: #ffe08a;
+    }
+    .menu-list-header {
+      grid-template-columns: minmax(190px, 1fr) 156px 128px 62px 58px;
+      gap: 10px;
+      padding: 0 12px 7px;
+      color: #b8d2d7;
+      border-bottom-color: rgba(190, 220, 225, .3);
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .menu-grid {
+      border-top: 0;
+    }
+    .menu-card {
+      grid-template-columns: minmax(190px, 1fr) 156px 128px 62px 58px;
+      gap: 10px;
+      min-height: 78px;
+      padding: 12px;
+      background: transparent;
+      border-color: rgba(190, 220, 225, .2);
+      border-radius: 0;
+    }
+    .menu-card:hover,
+    .menu-card:focus-within {
+      background: rgba(39, 112, 128, .24);
+      border-color: rgba(190, 220, 225, .36);
+    }
+    .menu-card-title {
+      color: #f8fbfc;
+      font-size: 20px;
+      font-weight: 900;
+      letter-spacing: -.025em;
+    }
+    .menu-card-meta {
+      margin-top: 7px;
+      color: #c0d7da;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .menu-card-status {
+      gap: 7px;
+    }
+    .menu-row-status {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 70px;
+      min-height: 33px;
+      padding: 6px 10px;
+      color: #dffff7;
+      background: #09675d;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+    .menu-row-status.is-unanswered {
+      color: #fff1b5;
+      background: #715b13;
+    }
+    .menu-row-status.is-review {
+      color: #f0ddff;
+      background: #554080;
+    }
+    .menu-row-status.is-answered {
+      color: #d9edf0;
+      background: #245467;
+    }
+    .menu-card-row-manage {
+      min-height: 28px;
+      margin-left: 0;
+      padding: 4px 8px;
+      color: #b5cdd1;
+      border-color: rgba(190, 220, 225, .25);
+      border-radius: 4px;
+      font-size: 11px;
+      opacity: .8;
+    }
+    .menu-card-row-manage:hover,
+    .menu-card-row-manage:focus-visible {
+      background: #164b5c;
+      opacity: 1;
+    }
+    .menu-card-latest {
+      min-height: 33px;
+      gap: 4px;
+      color: #e5f4f5;
+      font-size: 22px;
+      font-weight: 900;
+    }
+    .menu-card-latest.is-empty {
+      color: #a4c0c7;
+      font-size: 15px;
+    }
+    .menu-card-latest-mark {
+      width: 23px;
+      height: 23px;
+    }
+    .menu-card-latest-mark.is-excellent { color: #72e0b6; }
+    .menu-card-latest-mark.is-safe { color: #65d6d2; }
+    .menu-card-latest-mark.is-review { color: #c7a1ff; }
+    .menu-card-latest-mark.is-miss { color: #ff9ba9; }
+    .menu-card-icon-action {
+      width: 44px;
+      min-height: 44px;
+      color: #b7cbd0;
+      border-radius: 4px;
+      font-size: 25px;
+    }
+    .menu-card-icon-action:hover,
+    .menu-card-icon-action:focus-visible {
+      background: #164b5c;
+    }
+    .menu-card-icon-action.is-active {
+      color: var(--gold);
+    }
+    .menu-card-icon-action.is-trashed {
+      color: #ffd574;
+    }
+    .menu-trash-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+    }
+    .menu-trash-icon svg {
+      width: 19px;
+      height: 19px;
+      fill: none;
+      stroke: currentColor;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-width: 1.7;
+    }
+
+    @media (max-width: 800px) {
+      .menu-content {
+        padding: 22px 14px 28px;
+      }
+      .menu-content .menu-heading h2 {
+        font-size: clamp(30px, 8vw, 42px);
+      }
+      .menu-summary {
+        padding: 13px 0;
+      }
+      .menu-summary-stat {
+        padding: 0 10px;
+      }
+      .menu-summary-stat strong {
+        font-size: 24px;
+      }
+      .menu-summary-stat small {
+        font-size: 11px;
+      }
+      .menu-list-header {
+        grid-template-columns: minmax(0, 1fr) 108px 78px 43px 43px;
+        gap: 5px;
+        padding-inline: 8px;
+        font-size: 10px;
+      }
+      .menu-card {
+        grid-template-columns: minmax(0, 1fr) 108px 78px 43px 43px;
+        gap: 5px;
+        min-height: 74px;
+        padding: 9px 8px;
+      }
+      .menu-card-title {
+        font-size: 17px;
+      }
+      .menu-card-meta {
+        margin-top: 5px;
+        font-size: 10px;
+      }
+      .menu-row-status {
+        min-width: 60px;
+        min-height: 30px;
+        padding: 5px 7px;
+        font-size: 10px;
+      }
+      .menu-card-latest {
+        font-size: 18px;
+      }
+      .menu-card-latest-mark {
+        width: 18px;
+        height: 18px;
+      }
+      .menu-card-icon-action {
+        width: 38px;
+        min-height: 38px;
+        font-size: 21px;
+      }
+      .menu-trash-icon svg {
+        width: 17px;
+        height: 17px;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .menu-sidebar .menu-nav {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 3px;
+        overflow: visible;
+        padding: 0;
+      }
+      .menu-sidebar .menu-nav-button {
+        width: 100%;
+        min-width: 0;
+        min-height: 42px;
+        padding: 7px 3px;
+        gap: 3px;
+        flex-direction: column;
+        justify-content: center;
+        font-size: 10px;
+        line-height: 1.1;
+      }
+      .menu-sidebar .menu-nav-icon {
+        width: auto;
+        height: 15px;
+        flex: 0 0 auto;
+        font-size: 14px;
+      }
+      .menu-sidebar .menu-nav-button > span:not(.menu-nav-icon):not(.menu-nav-badge) {
+        width: 100%;
+        min-width: 0;
+        overflow: hidden;
+        text-align: center;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .menu-list-header {
+        grid-template-columns: minmax(0, 1fr) 86px 63px 38px 38px;
+        gap: 3px;
+        font-size: 9px;
+      }
+      .menu-card {
+        grid-template-columns: minmax(0, 1fr) 86px 63px 38px 38px;
+        gap: 3px;
+        min-height: 70px;
+        padding: 8px 5px;
+      }
+      .menu-card-title {
+        font-size: 16px;
+      }
+      .menu-card-meta {
+        font-size: 9px;
+      }
+      .menu-row-status {
+        min-width: 52px;
+        padding-inline: 5px;
+        font-size: 9px;
+      }
+      .menu-card-latest {
+        gap: 1px;
+        font-size: 16px;
+      }
+      .menu-card-latest-mark {
+        width: 16px;
+        height: 16px;
+      }
+      .menu-card-icon-action {
+        width: 34px;
+        min-height: 34px;
+        font-size: 19px;
+      }
+      .menu-trash-icon svg {
+        width: 16px;
+        height: 16px;
+      }
     }
   </style>
 </head>
 <body>
   <main class="page">
     <section class="menu-panel" id="menuPanel" aria-labelledby="menuTitle">
-      <div class="menu-heading">
-        <p class="eyebrow">NAGA SCREENSHOT-BASED DRILL</p>
-        <h2 id="menuTitle">問題メニュー</h2>
-        <p>解きたい局面を選んでください。解答後は「次の問題へ」で続けて挑戦できます。</p>
-        <div class="menu-summary" id="menuSummary" aria-live="polite"></div>
-      </div>
-      <div class="account-strip" id="accountStrip">
-        <span class="account-status" id="accountStatus">回答履歴はこの端末だけに保存されています。</span>
-        <button class="primary" id="discordAuthButton" type="button">Discordでログイン</button>
-        <button id="importHistoryButton" type="button" hidden>この端末の履歴を取り込む</button>
-        <button id="copyShareUrlButton" type="button" hidden>共有URLをコピー</button>
-      </div>
-      <section class="quick-start" id="quickStart" aria-label="すぐに始める">
+      <aside class="menu-sidebar" aria-label="問題集ナビゲーション">
+        <div class="menu-brand"><span class="menu-brand-tile" aria-hidden="true">中</span><span>My問題集</span><span class="menu-brand-version">V<span id="menuVersion"></span></span></div>
+        <nav class="menu-nav" aria-label="問題集メニュー">
+          <button class="menu-nav-button is-active" type="button" data-menu-view="my"><span class="menu-nav-icon" aria-hidden="true">▤</span><span>問題一覧</span><span class="menu-nav-badge" data-menu-count="my">0</span></button>
+          <button class="menu-nav-button" type="button" data-menu-view="analysis"><span class="menu-nav-icon" aria-hidden="true">▥</span><span>成績・履歴</span></button>
+          <button class="menu-nav-button" type="button" data-menu-view="favorites"><span class="menu-nav-icon" aria-hidden="true">☆</span><span>お気に入り</span><span class="menu-nav-badge" data-menu-count="favorites">0</span></button>
+          <button class="menu-nav-button" type="button" data-menu-view="trash"><span class="menu-nav-icon" aria-hidden="true">↶</span><span>ゴミ箱</span><span class="menu-nav-badge" data-menu-count="trash">0</span></button>
+          <button class="menu-nav-button" type="button" data-menu-view="generator"><span class="menu-nav-icon" aria-hidden="true">＋</span><span>問題生成</span></button>
+          <button class="menu-nav-button" id="studentHistoryNav" type="button" data-menu-view="students" hidden><span class="menu-nav-icon" aria-hidden="true">◎</span><span>生徒履歴</span></button>
+        </nav>
+        <div class="menu-sidebar-progress" id="menuSidebarProgress" aria-live="polite"></div>
+        <div class="account-strip" id="accountStrip">
+          <span class="account-status" id="accountStatus">回答履歴はこの端末だけに保存されています。</span>
+          <button class="primary" id="discordAuthButton" type="button">Discordでログイン</button>
+          <button id="importHistoryButton" type="button" hidden>この端末の履歴を取り込む</button>
+          <button id="copyShareUrlButton" type="button" hidden>共有URLをコピー</button>
+        </div>
+      </aside>
+      <div class="menu-content">
+        <div class="menu-heading">
+          <p class="eyebrow">NAGA SCREENSHOT-BASED DRILL</p>
+          <h2 id="menuTitle">問題一覧</h2>
+          <div class="menu-summary" id="menuSummary" aria-live="polite"></div>
+        </div>
+        <section class="quick-start" id="quickStart" aria-label="すぐに始める">
         <button class="quick-start-card primary" type="button" data-session-mode="today">
           <span class="quick-start-kicker">DAILY DRILL</span>
           <span class="quick-start-title">今日の10問</span>
@@ -454,17 +1056,8 @@
           <span class="quick-start-title">未回答10問</span>
           <span class="quick-start-note">まだ解いていない問題</span>
         </button>
-      </section>
-      <nav class="menu-nav" aria-label="問題集メニュー">
-        <button class="menu-nav-button is-active" type="button" data-menu-view="my">My問題集 <span class="menu-nav-version">V<span id="menuVersion"></span></span> <span class="menu-nav-badge" data-menu-count="my">0</span></button>
-        <button class="menu-nav-button" type="button" data-menu-view="favorites">お気に入り <span class="menu-nav-badge" data-menu-count="favorites">0</span></button>
-        <button class="menu-nav-button" type="button" data-menu-view="trash">ゴミ箱 <span class="menu-nav-badge" data-menu-count="trash">0</span></button>
-        <button class="menu-nav-button" type="button" data-menu-view="generator">問題生成</button>
-        <button class="menu-nav-button" type="button" data-menu-view="analysis">自己分析</button>
-        <button class="menu-nav-button" id="studentHistoryNav" type="button" data-menu-view="students" hidden>生徒履歴</button>
-      </nav>
-      <p class="menu-view-note" id="menuViewNote"></p>
-      <div class="menu-filters" id="menuFilters">
+        </section>
+        <div class="menu-filters" id="menuFilters">
         <input id="menuSearch" type="search" placeholder="問題番号・種類で検索" aria-label="問題を検索">
         <select id="menuStatusFilter" aria-label="回答状態で絞り込み">
           <option value="all">すべての状態</option>
@@ -480,9 +1073,16 @@
           <option value="call">副露判断</option>
           <option value="disagreement">モデル意見割れ</option>
         </select>
+        </div>
+        <div class="menu-range-tabs" id="menuRangeTabs" role="tablist" aria-label="問題番号の範囲" hidden></div>
+        <div class="menu-range-actions" id="menuRangeActions" hidden>
+          <button class="menu-range-action primary" type="button" data-range-session="all">この範囲から解く <span aria-hidden="true">→</span></button>
+          <button class="menu-range-action" type="button" data-range-session="unanswered">未回答だけ解く <span aria-hidden="true">→</span></button>
+        </div>
+        <div class="menu-list-header" id="menuListHeader" aria-hidden="true"><span>問題</span><span>ステータス</span><span>直近の結果</span><span>お気に入り</span><span>ゴミ箱</span></div>
+        <div class="menu-grid" id="menuGrid"></div>
+        <div class="menu-empty" id="menuEmpty" hidden></div>
       </div>
-      <div class="menu-grid" id="menuGrid"></div>
-      <div class="menu-empty" id="menuEmpty" hidden></div>
     </section>
     <header class="header">
       <div>
@@ -608,7 +1208,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 59;
+    const APP_VERSION = 64;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -1016,6 +1616,7 @@
       let menuSearchV44 = "";
       let menuStatusV44 = "all";
       let menuTypeV44 = "all";
+      let menuRangeV60 = "all";
       let managedQuestionIndexV44 = null;
       let generatorCandidatesV44 = [];
       let generatorReportV44 = null;
@@ -1029,13 +1630,13 @@
       const USER_STATE_KEY_V16 = storageKey("user-state-v1");
       const LEGACY_USER_STATE_KEY_V16 = "naga-nanikiru-user-state-v1";
       const MENU_VIEW_COPY_V16 = {
-        my: { title: "MY問題集", note: "出題できる問題を新しい順に表示しています。お気に入り登録やゴミ箱への移動は、この端末内だけに保存されます。" },
-        favorites: { title: "お気に入り", note: "あとで繰り返したい問題をまとめています。ゴミ箱に移した問題はここから一時的に外れます。" },
-        trash: { title: "ゴミ箱", note: "しばらく見たくない問題です。復元するか、この端末では完全に非表示にできます。" },
-        generator: { title: "問題生成", note: "局面URLは盤面画像まで自動生成します。半荘URLは指定プレイヤーの悪手候補を抽出します。" },
-        analysis: { title: "自己分析", note: "回答履歴から正答率・回答時間・復習期限・判断種別ごとの傾向を集計します。" },
-        students: { title: "生徒の回答履歴", note: "所属設定された生徒だけを表示します。生徒本人としてログインする必要はありません。" },
-        session: { title: "セッション結果", note: "今回の結果を確認し、苦手問題だけを続けて復習できます。" }
+        my: { title: "MY問題集" },
+        favorites: { title: "お気に入り" },
+        trash: { title: "ゴミ箱" },
+        generator: { title: "問題生成" },
+        analysis: { title: "自己分析" },
+        students: { title: "生徒の回答履歴" },
+        session: { title: "セッション結果" }
       };
       let userStateV16 = loadUserStateV16();
       const sceneFrameV16 = document.querySelector(".scene-frame");
@@ -1835,7 +2436,7 @@
       }
 
       function sessionModeLabelV44(mode) {
-        return { today: "今日の10問", weak: "苦手10問", unanswered: "未回答10問", riichi: "リーチ判断", call: "副露判断", favorites: "お気に入り" }[mode] || "選択ドリル";
+        return { today: "今日の10問", weak: "苦手10問", unanswered: "未回答10問", riichi: "リーチ判断", call: "副露判断", favorites: "お気に入り", range: "この範囲", "range-unanswered": "この範囲の未回答" }[mode] || "選択ドリル";
       }
 
       function nextButtonLabelV44() {
@@ -1889,6 +2490,12 @@
         saveUserStateV16();
         const firstIndex = questionIndexByKeyV44(questionKeys[0]);
         if (firstIndex >= 0) openQuestionV16(firstIndex, { preserveSession: true });
+      }
+
+      function startRangeSessionV61(mode) {
+        const unansweredOnly = mode === "unanswered";
+        const candidates = questionsV16.filter(question => menuRangeMatchesV60(question) && isPlayableV16(question) && (!unansweredOnly || !latestAnswerV44(question)));
+        startSessionV44(unansweredOnly ? "range-unanswered" : "range", candidates);
       }
 
       function completeSessionV44(session) {
@@ -2011,10 +2618,17 @@
           badge.textContent = String(counts[badge.dataset.menuCount] ?? 0);
         });
         const summary = document.getElementById("menuSummary");
-        summary.innerHTML = `<span>全${questionsV16.length}問</span><span>出題中 <strong>${counts.my}</strong></span><span>復習期限 <strong>${analytics.dueCount ?? 0}</strong></span><span>連続学習 <strong>${analytics.streakDays ?? 0}日</strong></span><span>回答履歴 <strong>${userStateV16.answerHistory.length}</strong></span>`;
+        const rangeQuestions = questionsV16.filter(menuRangeMatchesV60).filter(isPlayableV16);
+        const rangeAnswered = rangeQuestions.filter(question => latestAnswerV44(question));
+        const rangeUnanswered = rangeQuestions.length - rangeAnswered.length;
+        const rangeDue = rangeQuestions.filter(question => reviewTagV44(question) === "復習期限").length;
+        summary.innerHTML = `<div class="menu-summary-stat"><small>この範囲の問題</small><strong>${rangeQuestions.length}<em>問</em></strong></div><div class="menu-summary-stat${rangeUnanswered ? " is-alert" : ""}"><small>未回答</small><strong>${rangeUnanswered}<em>問</em></strong></div><div class="menu-summary-stat${rangeDue ? " is-alert" : ""}"><small>復習期限</small><strong>${rangeDue}<em>問</em></strong></div><div class="menu-summary-stat"><small>回答済み</small><strong>${rangeAnswered.length}<em>問</em></strong></div>`;
+        const allPlayable = questionsV16.filter(isPlayableV16);
+        const allAnswered = allPlayable.filter(question => latestAnswerV44(question)).length;
+        const progress = allPlayable.length ? Math.round(allAnswered / allPlayable.length * 100) : 0;
+        document.getElementById("menuSidebarProgress").innerHTML = `<span class="menu-sidebar-progress-title">学習の進捗</span><strong class="menu-sidebar-progress-value">${progress}%</strong><span class="menu-sidebar-progress-note">${allAnswered} / ${allPlayable.length}問を回答済み</span><span class="menu-sidebar-progress-track" aria-hidden="true"><span class="menu-sidebar-progress-fill" style="width:${progress}%"></span></span>`;
         const copy = MENU_VIEW_COPY_V16[menuViewV16];
         document.getElementById("menuTitle").textContent = copy.title;
-        document.getElementById("menuViewNote").textContent = copy.note;
         const resume = activeSessionV44();
         const resumeButton = document.getElementById("resumeSessionButton");
         resumeButton.hidden = !resume;
@@ -2022,6 +2636,49 @@
         document.getElementById("todayDrillNote").textContent = analytics.dueCount ? `復習期限 ${analytics.dueCount}問を優先` : "苦手問題と未回答をバランスよく出題";
         document.getElementById("quickStart").hidden = ["generator", "analysis", "students", "session"].includes(menuViewV16);
         document.getElementById("menuFilters").hidden = !["my", "favorites", "trash"].includes(menuViewV16);
+        const listView = ["my", "favorites", "trash"].includes(menuViewV16);
+        document.getElementById("menuRangeActions").hidden = menuViewV16 !== "my";
+        document.getElementById("menuListHeader").hidden = !listView;
+        document.getElementById("menuListHeader").setAttribute("aria-hidden", String(!listView));
+        renderMenuRangeTabsV60();
+      }
+
+      function menuQuestionNumberV60(question) {
+        const number = Number(question?.number);
+        return Number.isInteger(number) && number > 0 ? number : null;
+      }
+
+      function menuRangeOptionsV60() {
+        const maxNumber = questionsV16.reduce((max, question) => Math.max(max, menuQuestionNumberV60(question) || 0), 0);
+        const options = [{ key: "all", label: "すべて" }];
+        for (let start = 1; start <= Math.max(maxNumber, 1); start += 20) {
+          options.push({ key: `${start}-${start + 19}`, label: `${start}–${start + 19}` });
+        }
+        return options;
+      }
+
+      function menuRangeMatchesV60(question) {
+        if (menuRangeV60 === "all") return true;
+        const [start, end] = menuRangeV60.split("-").map(Number);
+        const number = menuQuestionNumberV60(question);
+        return Number.isInteger(number) && number >= start && number <= end;
+      }
+
+      function renderMenuRangeTabsV60() {
+        const tabs = document.getElementById("menuRangeTabs");
+        const visible = ["my", "favorites", "trash"].includes(menuViewV16);
+        tabs.hidden = !visible;
+        if (!visible) {
+          tabs.innerHTML = "";
+          return;
+        }
+        const options = menuRangeOptionsV60();
+        if (!options.some(option => option.key === menuRangeV60)) menuRangeV60 = "all";
+        tabs.innerHTML = `<span class="menu-range-label">問題番号</span>${options.map(option => `<button class="menu-range-tab${option.key === menuRangeV60 ? " is-active" : ""}" type="button" role="tab" aria-selected="${option.key === menuRangeV60}" data-menu-range="${option.key}">${option.label}</button>`).join("")}`;
+        tabs.querySelectorAll("[data-menu-range]").forEach(button => button.addEventListener("click", () => {
+          menuRangeV60 = button.dataset.menuRange || "all";
+          renderMenuCardsV16();
+        }));
       }
 
       function latestAnswerV44(question) {
@@ -2119,6 +2776,32 @@
         }
       }
 
+      function menuRowStatusV63(question) {
+        const scores = recentScoresV16(question);
+        const latest = scores[0] || null;
+        const latestMark = latest?.scoreMark || "";
+        if (reviewTagV44(question) === "復習期限" || ["△", "×"].includes(latestMark)) {
+          return { label: "復習", className: "is-review" };
+        }
+        if (["💮", "〇"].includes(latestMark)) {
+          return { label: "正解", className: "is-correct" };
+        }
+        if (latest) return { label: "回答済み", className: "is-answered" };
+        return { label: "未回答", className: "is-unanswered" };
+      }
+
+      function menuScoreMarkClassV63(mark) {
+        if (mark === "💮") return "is-excellent";
+        if (mark === "〇") return "is-safe";
+        if (mark === "△") return "is-review";
+        if (mark === "×") return "is-miss";
+        return "";
+      }
+
+      function menuTrashIconV63() {
+        return `<span class="menu-trash-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M8 7v12m4-12v12m4-12v12M5 7h14M9 4h6l1 3H8l1-3Zm-2 3 1 14h8l1-14"></path></svg></span>`;
+      }
+
       function renderMenuCardsV16() {
         const grid = document.getElementById("menuGrid");
         const empty = document.getElementById("menuEmpty");
@@ -2156,7 +2839,7 @@
           if (menuViewV16 === "favorites") return isFavoriteV16(question) && isPlayableV16(question);
           return isPlayableV16(question);
         });
-        const entries = sourceQuestions.map(question => ({ question, index: questionIndexByKeyV44(questionKeyV16(question)) })).filter(({ index }) => index >= 0);
+        const entries = sourceQuestions.filter(menuRangeMatchesV60).map(question => ({ question, index: questionIndexByKeyV44(questionKeyV16(question)) })).filter(({ index }) => index >= 0);
         empty.hidden = entries.length > 0;
         empty.textContent = menuViewV16 === "trash" ? "ゴミ箱は空です。" : menuViewV16 === "favorites" ? "お気に入り登録した問題はまだありません。" : "出題できる問題がありません。";
         grid.innerHTML = entries.map(({ question, index }) => {
@@ -2164,11 +2847,16 @@
           const trashed = isTrashedV16(question);
           const title = escapeHtml(question.title || `問題${question.number}`);
           const scores = recentScoresV16(question);
-          const historyLabel = scores.length ? `直近${scores.length}回の採点履歴` : "採点履歴はまだありません";
-          const history = scores.length ? scores.map(entry => `<span class="menu-card-history-mark" title="${escapeHtml(entry.scoreLabel || "採点結果")}">${escapeHtml(entry.scoreMark)}</span>`).join("") : "未回答";
-          const reviewTag = reviewTagV44(question);
-          const tags = `<span class="menu-card-tag">${questionTypeV44(question)}</span>${isSharedQuestionV47(question) ? `<span class="menu-card-tag">共有</span>` : ""}${hasModelDisagreementV44(question) ? `<span class="menu-card-tag">モデル意見割れ</span>` : ""}${reviewTag ? `<span class="menu-card-tag${reviewTag === "復習期限" ? " is-due" : ""}">${reviewTag}</span>` : ""}`;
-          return `<article class="menu-card"><button class="menu-card-open" type="button" data-question-index="${index}"><span class="menu-card-heading"><span class="menu-card-title">${title}</span><span class="menu-card-history${scores.length ? "" : " is-empty"}" aria-label="${historyLabel}">${history}</span></span><span class="menu-card-meta">${tags}</span>${questionProvenanceV47(question)}</button><div class="menu-card-actions"><button class="menu-card-action${favorite ? " is-active" : ""}" type="button" data-menu-action="favorite" data-question-index="${index}" aria-pressed="${favorite}">${favorite ? "★ お気に入り済" : "☆ お気に入り"}</button>${trashed ? `<button class="menu-card-action" type="button" data-menu-action="restore" data-question-index="${index}">復元</button>` : ""}<button class="menu-card-action" type="button" data-menu-action="manage" data-question-index="${index}">整理</button></div></article>`;
+          const historyLabel = scores.length ? `直近${scores.length}回の採点履歴：${scores.map(entry => `${entry.scoreMark} ${entry.scoreLabel || scoreForQuestionV16(question, entry)?.label || "採点結果"}`).join("、")}` : "採点履歴はまだありません";
+          const history = scores.length ? scores.map(entry => `<span class="menu-card-latest-mark ${menuScoreMarkClassV63(entry.scoreMark)}" title="${escapeHtml(entry.scoreLabel || scoreForQuestionV16(question, entry)?.label || "採点結果")}">${escapeHtml(entry.scoreMark)}</span>`).join("") : "—";
+          const typeMetadata = [questionTypeV44(question), isSharedQuestionV47(question) ? "共有" : "", hasModelDisagreementV44(question) ? "意見割れ" : ""].filter(Boolean).join(" · ");
+          const status = menuRowStatusV63(question);
+          const statusMarkup = `<span class="menu-row-status ${status.className}">${status.label}</span><button class="menu-card-row-manage" type="button" data-menu-action="manage" data-question-index="${index}">整理</button>`;
+          const favoriteLabel = favorite ? `問題${question.number}のお気に入りを解除` : `問題${question.number}をお気に入りに追加`;
+          const trashMarkup = trashed
+            ? `<button class="menu-card-icon-action is-trashed" type="button" data-menu-action="restore" data-question-index="${index}" aria-label="問題${question.number}を復元" title="復元">↶</button>`
+            : `<button class="menu-card-icon-action" type="button" data-menu-action="trash" data-question-index="${index}" aria-label="問題${question.number}をゴミ箱へ" title="ゴミ箱へ">${menuTrashIconV63()}</button>`;
+          return `<article class="menu-card"><button class="menu-card-open" type="button" data-question-index="${index}"><span class="menu-card-heading"><span class="menu-card-title">${title}</span></span><span class="menu-card-meta">${escapeHtml(typeMetadata)}</span></button><div class="menu-card-status">${statusMarkup}</div><span class="menu-card-latest${scores.length ? "" : " is-empty"}" aria-label="${escapeHtml(historyLabel)}">${history}</span><button class="menu-card-icon-action${favorite ? " is-active" : ""}" type="button" data-menu-action="favorite" data-question-index="${index}" aria-pressed="${favorite}" aria-label="${escapeHtml(favoriteLabel)}" title="${escapeHtml(favoriteLabel)}">${favorite ? "★" : "☆"}</button>${trashMarkup}</article>`;
         }).join("");
       }
 
@@ -2659,15 +3347,20 @@
             const key = questionKeyV16(question);
             userState.favorites = userState.favorites.includes(key) ? userState.favorites.filter(value => value !== key) : [...userState.favorites, key];
           });
-          if (action === "trash") updateUserStateV16(userState => {
+          if (action === "trash" && !isSharedQuestionV47(question)) updateUserStateV16(userState => {
             const key = questionKeyV16(question);
             if (!userState.trashed.includes(key)) userState.trashed.push(key);
           });
-          if (action === "restore") updateUserStateV16(userState => {
+          if (action === "restore" && !isSharedQuestionV47(question)) updateUserStateV16(userState => {
             const key = questionKeyV16(question);
             userState.trashed = userState.trashed.filter(value => value !== key);
             delete userState.snoozed?.[key];
           });
+          if ((action === "trash" || action === "restore") && isSharedQuestionV47(question)) {
+            openQuestionManageV44(Number(actionButton.dataset.questionIndex));
+            void manageQuestionV44(action);
+            return;
+          }
           if (action === "manage") openQuestionManageV44(Number(actionButton.dataset.questionIndex));
           if (action === "hide") {
             const key = questionKeyV16(question);
@@ -2866,6 +3559,10 @@
         document.getElementById("quickStart").addEventListener("click", event => {
           const button = event.target.closest("[data-session-mode]");
           if (button) startSessionV44(button.dataset.sessionMode);
+        });
+        document.getElementById("menuRangeActions").addEventListener("click", event => {
+          const button = event.target.closest("[data-range-session]");
+          if (button) startRangeSessionV61(button.dataset.rangeSession);
         });
         document.getElementById("menuSearch").addEventListener("input", event => { menuSearchV44 = event.target.value; renderMenuCardsV16(); });
         document.getElementById("menuStatusFilter").addEventListener("change", event => { menuStatusV44 = event.target.value; renderMenuCardsV16(); });
