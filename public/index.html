@@ -1123,7 +1123,7 @@
     }
 
     /* V70: PCでは問題とコメントを左右に分け、スマホでは従来の縦配置を保つ。 */
-    @media (min-width: 1024px) {
+    @media (min-width: 801px) {
       .page.desktop-split-layout:not(.menu-active) {
         display: grid;
         grid-template-columns: minmax(0, 1.15fr) minmax(340px, .85fr);
@@ -1160,7 +1160,7 @@
       .page.desktop-split-layout:not(.menu-active) .scene-frame { max-width: none; }
     }
 
-    @media (max-width: 1023px) {
+    @media (max-width: 800px) {
       .page.desktop-split-layout { display: flex; }
       .page.desktop-split-layout .comments-panel { position: static; max-height: none; overflow: visible; }
       .page.desktop-split-layout .comments-scroll { max-height: min(52vh, 720px); }
@@ -1409,7 +1409,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 70;
+    const APP_VERSION = 71;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -2061,7 +2061,8 @@
         { version: 66, date: "2026-08-14", title: "コメント・問題追加通知を追加しました", body: "新しいコメントに加えて、他の利用者が共有問題集へ追加した問題も通知一覧で確認できるようになりました。" },
         { version: 67, date: "2026-08-14", title: "作成者表示名の設定を追加しました", body: "設定から1〜5文字の表示名を登録できます。コメントや問題作成時の作成者名に使用されます。" },
         { version: 69, date: "2026-08-14", title: "コメントの書式と画像添付に対応しました", body: "太字・伏せ字・色・デカ文字、画像の貼り付けとドラッグ＆ドロップに対応しました。" },
-        { version: APP_VERSION, date: "2026-08-15", title: "PCの問題画面を2ペインにしました", body: "PCでは問題と解答を左、コメントを右に分けて表示します。設定から従来の1列表示にも戻せます。" }
+        { version: 70, date: "2026-08-15", title: "PCの問題画面を2ペインにしました", body: "PCでは問題と解答を左、コメントを右に分けて表示します。設定から従来の1列表示にも戻せます。" },
+        { version: APP_VERSION, date: "2026-08-15", title: "PC表示の切り替え幅を調整しました", body: "内部ブラウザのような幅でも、スマホ以外では問題とコメントを左右に分けて表示できるようにしました。" }
       ];
       let commentNoticeStoreV65 = loadCommentNoticeStoreV65();
       let sharedCommentRowsV65 = [];
@@ -2517,7 +2518,7 @@
         const page = document.querySelector(".page");
         if (!page) return;
         const layout = userStateV16.settings?.desktopLayout === "single" ? "single" : "split";
-        const desktop = window.matchMedia("(min-width: 1024px)").matches;
+        const desktop = window.matchMedia("(min-width: 801px)").matches;
         page.classList.toggle("desktop-split-layout", desktop && layout === "split");
         page.dataset.desktopLayout = desktop && layout === "split" ? "split" : "single";
       }
