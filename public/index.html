@@ -1427,7 +1427,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 73;
+    const APP_VERSION = 74;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -2085,7 +2085,8 @@
         { version: 70, date: "2026-08-15", title: "PCの問題画面を2ペインにしました", body: "PCでは問題と解答を左、コメントを右に分けて表示します。設定から従来の1列表示にも戻せます。" },
         { version: 71, date: "2026-08-15", title: "PC表示の切り替え幅を調整しました", body: "内部ブラウザのような幅でも、スマホ以外では問題とコメントを左右に分けて表示できるようにしました。" },
         { version: 72, date: "2026-08-15", title: "副露判断の対象牌を手牌の上に移動しました", body: "対象牌と鳴きボタンが手牌の横幅を圧迫しないよう、手牌の上部に独立表示します。" },
-        { version: APP_VERSION, date: "2026-08-15", title: "リーチ判断ボタンを手牌の外へ移動しました", body: "リーチ判断ボタンをマスク外の右側へ配置し、手牌の横幅を圧迫しないようにしました。" }
+        { version: 73, date: "2026-08-15", title: "リーチ判断ボタンを手牌の外へ移動しました", body: "リーチ判断ボタンをマスク外の右側へ配置し、手牌の横幅を圧迫しないようにしました。" },
+        { version: APP_VERSION, date: "2026-08-15", title: "アナウンスを新しい順に表示するようにしました", body: "最新の修正内容が上に表示されるようになりました。" }
       ];
       let commentNoticeStoreV65 = loadCommentNoticeStoreV65();
       let sharedCommentRowsV65 = [];
@@ -2357,7 +2358,10 @@
       function renderAnnouncementListV65() {
         const list = document.getElementById("announcementList");
         if (!list) return;
-        list.innerHTML = APP_ANNOUNCEMENTS_V66.map(item => `<article class="notice-item"><div class="notice-item-top"><strong class="notice-item-question">V${item.version}　${escapeHtml(item.title)}</strong><time>${escapeHtml(item.date)}</time></div><div class="notice-item-body">${escapeHtml(item.body)}</div></article>`).join("");
+        list.innerHTML = [...APP_ANNOUNCEMENTS_V66]
+          .sort((left, right) => right.version - left.version)
+          .map(item => `<article class="notice-item"><div class="notice-item-top"><strong class="notice-item-question">V${item.version}　${escapeHtml(item.title)}</strong><time>${escapeHtml(item.date)}</time></div><div class="notice-item-body">${escapeHtml(item.body)}</div></article>`)
+          .join("");
       }
 
       function openAnnouncementDialogV65() {
