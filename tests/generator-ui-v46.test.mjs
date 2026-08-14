@@ -4,9 +4,9 @@ import test from "node:test";
 
 const indexUrl = new URL("../public/index.html", import.meta.url);
 
-test("renders the v75 scene and half-game generator controls", async () => {
+test("renders the v76 scene and half-game generator controls", async () => {
   const html = await readFile(indexUrl, "utf8");
-  assert.match(html, /const APP_VERSION = 75/);
+  assert.match(html, /const APP_VERSION = 76/);
   assert.match(html, /\[\.\.\.APP_ANNOUNCEMENTS_V66\]\s*\.sort\(\(left, right\) => right\.version - left\.version\)/);
   assert.match(html, /data-menu-view="settings"/);
   assert.match(html, /id="displayNameForm"/);
@@ -33,6 +33,8 @@ test("renders the v75 scene and half-game generator controls", async () => {
   assert.match(html, /function menuTrashIconV63/);
   assert.match(html, /class="menu-sidebar"/);
   assert.match(html, /id="menuListHeader"/);
+  assert.match(html, /class="menu-list-header-group"><span>問題<\/span>/);
+  assert.match(html, /grid-template-columns: repeat\(2, minmax\(0, 1fr\)\)/);
   assert.match(html, /menu-card-latest/);
   assert.match(html, /data-menu-action="favorite"/);
   assert.match(html, /data-menu-action="trash"/);
@@ -81,6 +83,9 @@ test("renders the v75 scene and half-game generator controls", async () => {
   assert.match(html, /id="commentSizeSelect"/);
   assert.match(html, /id="commentDropzone"/);
   assert.match(html, /function addCommentFilesV68/);
+  assert.match(html, /id="nextQuestionButton"[^>]*>次の問題へ<\/button>/);
+  assert.doesNotMatch(html, /id="resetButton"/);
+  assert.match(html, /id="currentManageButton"[^>]*>整理<\/button>/);
 });
 
 test("renders NAGA-like inset probability bars with a dynamic judge highlight", async () => {

@@ -397,8 +397,7 @@
     .riichi-bar-fill { position: absolute; right: 0; bottom: 0; left: 0; border-radius: 2px 2px 1px 1px; }
     .riichi-bar-model { max-width: 30px; overflow: hidden; color: var(--muted); font-size: 7px; line-height: 1; text-overflow: ellipsis; white-space: nowrap; }
     .answer-actions { display: flex; flex-direction: column; gap: 7px; }
-    .reset-button, .next-button { min-width: 118px; padding: 9px 11px; color: #12211e; background: var(--gold); border: 1px solid #ffdb7d; border-radius: 8px; font-size: 11px; font-weight: 800; }
-    .reset-button:hover { background: #ffda77; }
+    .next-button { min-width: 118px; padding: 9px 11px; color: #12211e; background: var(--gold); border: 1px solid #ffdb7d; border-radius: 8px; font-size: 11px; font-weight: 800; }
     .next-button { color: #eaffff; background: #216f89; border-color: rgba(163,230,239,.7); }
     .next-button:hover { background: #2e8da4; }
     .answer-organize-button { min-width: 118px; padding: 7px 9px; color: #dffbfb; background: rgba(0,0,0,.18); border: 1px solid rgba(255,255,255,.15); border-radius: 7px; font-size: 9px; font-weight: 800; }
@@ -582,6 +581,7 @@
       .model-control, .question-control { justify-content: space-between; width: 100%; margin-left: 0; }
       .model-control select, .question-control select { flex: 1; }
       .menu-button { width: 100%; }
+      .source-bar .next-button { width: 100%; }
       .menu-nav { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: thin; }
       .menu-nav-button { flex: 0 0 auto; }
       .quick-start { grid-template-columns: 1fr 1fr; }
@@ -642,7 +642,7 @@
       .answer-heading-row { display: block; }
       .answer-detail { margin-top: 3px; text-align: left; }
       .answer-actions { flex-direction: row; flex-wrap: wrap; }
-      .reset-button, .next-button, .answer-organize-button { flex: 1; min-width: 0; }
+      .next-button, .answer-organize-button { flex: 1; min-width: 0; }
       .answer-choice-tile img { width: 30px; }
       .answer-confirmation { position: sticky; bottom: max(8px, env(safe-area-inset-bottom)); width: calc(100% - 8px); gap: 8px; padding: 7px 8px; }
       .answer-confirm-button { min-width: 120px; padding: 9px 10px; }
@@ -871,21 +871,31 @@
       border-color: #ffe08a;
     }
     .menu-list-header {
-      grid-template-columns: minmax(190px, 1fr) 156px 128px 62px 58px;
-      gap: 10px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
       padding: 0 12px 7px;
       color: #b8d2d7;
       border-bottom-color: rgba(190, 220, 225, .3);
       font-size: 11px;
       font-weight: 800;
     }
+    .menu-list-header-group {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(106px, auto) minmax(56px, auto) 44px 44px;
+      gap: 10px;
+      align-items: center;
+      min-width: 0;
+    }
     .menu-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0 12px;
       border-top: 0;
     }
     .menu-card {
-      grid-template-columns: minmax(190px, 1fr) 156px 128px 62px 58px;
+      grid-template-columns: minmax(0, 1fr) minmax(106px, auto) minmax(56px, auto) 44px 44px;
       gap: 10px;
       min-height: 78px;
+      min-width: 0;
       padding: 12px;
       background: transparent;
       border-color: rgba(190, 220, 225, .2);
@@ -895,6 +905,9 @@
     .menu-card:focus-within {
       background: rgba(39, 112, 128, .24);
       border-color: rgba(190, 220, 225, .36);
+    }
+    .menu-card > * {
+      min-width: 0;
     }
     .menu-card-title {
       color: #f8fbfc;
@@ -1025,10 +1038,21 @@
         font-size: 11px;
       }
       .menu-list-header {
+        grid-template-columns: 1fr;
+        gap: 0;
+        font-size: 10px;
+      }
+      .menu-list-header-group {
         grid-template-columns: minmax(0, 1fr) 108px 78px 43px 43px;
         gap: 5px;
         padding-inline: 8px;
-        font-size: 10px;
+      }
+      .menu-list-header-group:nth-child(2) {
+        display: none;
+      }
+      .menu-grid {
+        grid-template-columns: 1fr;
+        gap: 0;
       }
       .menu-card {
         grid-template-columns: minmax(0, 1fr) 108px 78px 43px 43px;
@@ -1101,9 +1125,14 @@
         white-space: nowrap;
       }
       .menu-list-header {
+        grid-template-columns: 1fr;
+        gap: 0;
+        font-size: 9px;
+      }
+      .menu-list-header-group {
         grid-template-columns: minmax(0, 1fr) 86px 63px 38px 38px;
         gap: 3px;
-        font-size: 9px;
+        padding-inline: 5px;
       }
       .menu-card {
         grid-template-columns: minmax(0, 1fr) 86px 63px 38px 38px;
@@ -1265,7 +1294,7 @@
           <button class="menu-range-action primary" type="button" data-range-session="all">この範囲から解く <span aria-hidden="true">→</span></button>
           <button class="menu-range-action" type="button" data-range-session="unanswered">未回答だけ解く <span aria-hidden="true">→</span></button>
         </div>
-        <div class="menu-list-header" id="menuListHeader" aria-hidden="true"><span>問題</span><span>ステータス</span><span>直近の結果</span><span>お気に入り</span><span>ゴミ箱</span></div>
+        <div class="menu-list-header" id="menuListHeader" aria-hidden="true"><span class="menu-list-header-group"><span>問題</span><span>ステータス</span><span>直近の結果</span><span>お気に入り</span><span>ゴミ箱</span></span><span class="menu-list-header-group"><span>問題</span><span>ステータス</span><span>直近の結果</span><span>お気に入り</span><span>ゴミ箱</span></span></div>
         <div class="menu-grid" id="menuGrid"></div>
         <div class="menu-empty" id="menuEmpty" hidden></div>
       </div>
@@ -1284,6 +1313,7 @@
       <label class="question-control">問題を選ぶ <select id="questionSelect" aria-label="問題を選ぶ"></select></label>
       <label class="model-control">正誤判定基準 <select id="modelSelect" aria-label="正誤判定基準"></select></label>
       <button class="menu-button" id="menuButton" type="button">問題一覧へ</button>
+      <button class="next-button" id="nextQuestionButton" type="button" hidden>次の問題へ</button>
     </div>
 
     <div class="session-strip" id="sessionStrip" aria-live="polite" hidden>
@@ -1318,10 +1348,8 @@
         <div class="riichi-panels" id="riichiPanels"></div>
       </div>
       <div class="answer-actions">
-        <button class="reset-button" id="resetButton" type="button">もう一度選ぶ</button>
         <button class="answer-organize-button" id="currentFavoriteButton" type="button">☆ お気に入り</button>
-        <button class="answer-organize-button" id="currentManageButton" type="button">休む・整理</button>
-        <button class="next-button" id="nextQuestionButton" type="button" hidden>次の問題へ</button>
+        <button class="answer-organize-button" id="currentManageButton" type="button">整理</button>
       </div>
     </section>
 
@@ -1436,7 +1464,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 75;
+    const APP_VERSION = 76;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -2113,7 +2141,6 @@
       initCommentImageViewer();
       document.getElementById("threadLink").href = THREAD_URL;
       renderComments();
-      document.getElementById("resetButton").addEventListener("click", () => reset());
       renderHand();
       renderAnswer();
     }
@@ -2213,7 +2240,8 @@
         { version: 72, date: "2026-08-15", title: "副露判断の対象牌を手牌の上に移動しました", body: "対象牌と鳴きボタンが手牌の横幅を圧迫しないよう、手牌の上部に独立表示します。" },
         { version: 73, date: "2026-08-15", title: "リーチ判断ボタンを手牌の外へ移動しました", body: "リーチ判断ボタンをマスク外の右側へ配置し、手牌の横幅を圧迫しないようにしました。" },
         { version: 74, date: "2026-08-15", title: "アナウンスを新しい順に表示するようにしました", body: "最新の修正内容が上に表示されるようになりました。" },
-        { version: APP_VERSION, date: "2026-08-15", title: "コメントを編集・削除できるようにしました", body: "自分が投稿したコメントを後から編集・削除できるようになりました。" }
+        { version: 75, date: "2026-08-15", title: "コメントを編集・削除できるようにしました", body: "自分が投稿したコメントを後から編集・削除できるようになりました。" },
+        { version: APP_VERSION, date: "2026-08-15", title: "問題一覧を2列表示に対応しました", body: "PCでは各問題を2列で表示し、左右それぞれにステータス・直近結果・お気に入り・ゴミ箱を配置しました。スマホでは1列表示に戻ります。" }
       ];
       let commentNoticeStoreV65 = loadCommentNoticeStoreV65();
       let sharedCommentRowsV65 = [];
