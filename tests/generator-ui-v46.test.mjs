@@ -4,9 +4,9 @@ import test from "node:test";
 
 const indexUrl = new URL("../public/index.html", import.meta.url);
 
-test("renders the v76 scene and half-game generator controls", async () => {
+test("renders the v77 scene and half-game generator controls", async () => {
   const html = await readFile(indexUrl, "utf8");
-  assert.match(html, /const APP_VERSION = 76/);
+  assert.match(html, /const APP_VERSION = 77/);
   assert.match(html, /\[\.\.\.APP_ANNOUNCEMENTS_V66\]\s*\.sort\(\(left, right\) => right\.version - left\.version\)/);
   assert.match(html, /data-menu-view="settings"/);
   assert.match(html, /id="displayNameForm"/);
@@ -84,8 +84,12 @@ test("renders the v76 scene and half-game generator controls", async () => {
   assert.match(html, /id="commentDropzone"/);
   assert.match(html, /function addCommentFilesV68/);
   assert.match(html, /id="nextQuestionButton"[^>]*>次の問題へ<\/button>/);
+  assert.match(html, /id="nextQuestionBottomButton"[^>]*>次の問題へ<\/button>/);
   assert.doesNotMatch(html, /id="resetButton"/);
   assert.match(html, /id="currentManageButton"[^>]*>整理<\/button>/);
+  assert.match(html, /const nextTenAction = result\.mode === "range-unanswered" \? "range-unanswered" : "unanswered";/);
+  assert.match(html, /const nextTenLabel = unansweredMode \? "次の10問へ" : "新しい10問";/);
+  assert.match(html, /action === "unanswered"/);
 });
 
 test("renders NAGA-like inset probability bars with a dynamic judge highlight", async () => {

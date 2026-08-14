@@ -1348,6 +1348,7 @@
         <div class="riichi-panels" id="riichiPanels"></div>
       </div>
       <div class="answer-actions">
+        <button class="next-button" id="nextQuestionBottomButton" type="button" hidden>次の問題へ</button>
         <button class="answer-organize-button" id="currentFavoriteButton" type="button">☆ お気に入り</button>
         <button class="answer-organize-button" id="currentManageButton" type="button">整理</button>
       </div>
@@ -1464,7 +1465,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 76;
+    const APP_VERSION = 77;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -2241,7 +2242,8 @@
         { version: 73, date: "2026-08-15", title: "リーチ判断ボタンを手牌の外へ移動しました", body: "リーチ判断ボタンをマスク外の右側へ配置し、手牌の横幅を圧迫しないようにしました。" },
         { version: 74, date: "2026-08-15", title: "アナウンスを新しい順に表示するようにしました", body: "最新の修正内容が上に表示されるようになりました。" },
         { version: 75, date: "2026-08-15", title: "コメントを編集・削除できるようにしました", body: "自分が投稿したコメントを後から編集・削除できるようになりました。" },
-        { version: APP_VERSION, date: "2026-08-15", title: "問題一覧を2列表示に対応しました", body: "PCでは各問題を2列で表示し、左右それぞれにステータス・直近結果・お気に入り・ゴミ箱を配置しました。スマホでは1列表示に戻ります。" }
+        { version: 76, date: "2026-08-15", title: "問題一覧を2列表示に対応しました", body: "PCでは各問題を2列で表示し、左右それぞれにステータス・直近結果・お気に入り・ゴミ箱を配置しました。スマホでは1列表示に戻ります。" },
+        { version: APP_VERSION, date: "2026-08-15", title: "未回答問題を続けて解けるようにしました", body: "未回答問題のセッション完了後は、回答済みを混ぜずに次の未回答10問へ進めます。解答後の次の問題ボタンも、結果のすぐ下から押せます。" }
       ];
       let commentNoticeStoreV65 = loadCommentNoticeStoreV65();
       let sharedCommentRowsV65 = [];
@@ -3289,11 +3291,19 @@
         const answerStrip = document.getElementById("answerStrip");
         const commentsPanel = document.getElementById("commentsPanel");
         const nextButton = document.getElementById("nextQuestionButton");
+        const nextBottomButton = document.getElementById("nextQuestionBottomButton");
+        const setNextButtonState = (hidden, text = "次の問題へ") => {
+          [nextButton, nextBottomButton].forEach(button => {
+            if (!button) return;
+            button.hidden = hidden;
+            button.textContent = text;
+          });
+        };
         renderAnswerConfirmationV41();
         if (!state.revealed) {
           answerStrip.hidden = true;
           commentsPanel.hidden = true;
-          nextButton.hidden = true;
+          setNextButtonState(true);
           renderChoiceScoreV16();
           return;
         }
@@ -3319,8 +3329,7 @@
           document.getElementById("riichiPanels").innerHTML = "";
           answerStrip.hidden = false;
           commentsPanel.hidden = false;
-          nextButton.hidden = false;
-          nextButton.textContent = nextButtonLabelV44();
+          setNextButtonState(false, nextButtonLabelV44());
           renderComments();
           return;
         }
@@ -3342,8 +3351,7 @@
         riichiPanels.innerHTML = hasReachV16() ? renderRiichiPanelsV16() : "";
         answerStrip.hidden = false;
         commentsPanel.hidden = false;
-        nextButton.hidden = false;
-        nextButton.textContent = nextButtonLabelV44();
+        setNextButtonState(false, nextButtonLabelV44());
         renderComments();
       }
 
@@ -3600,7 +3608,9 @@
           if (index >= 0) openQuestionV16(index, { preserveSession: true });
           return;
         }
-        const built = explicitQuestions || window.DrillUxV44?.buildQueue?.({ questions: questionsV16, state: userStateV16, mode, limit: 10, now: new Date() }) || questionsV16.filter(isPlayableV16).slice(0, 10);
+        const unansweredOnly = mode === "unanswered" || mode === "range-unanswered";
+        const requested = explicitQuestions || window.DrillUxV44?.buildQueue?.({ questions: questionsV16, state: userStateV16, mode, limit: 10, now: new Date() }) || questionsV16.filter(isPlayableV16).slice(0, 10);
+        const built = unansweredOnly ? requested.filter(question => isPlayableV16(question) && !latestAnswerV44(question)) : requested;
         const questionKeys = normalizedQueueKeysV44(built).slice(0, 10);
         if (!questionKeys.length) {
           window.alert("この条件で出題できる問題がありません。別のメニューをお試しください。");
@@ -3816,7 +3826,14 @@
       }
 
       function latestAnswerV44(question) {
-        return userStateV16.answerHistory.find(entry => entry.questionKey === questionKeyV16(question)) || null;
+        const key = questionKeyV16(question);
+        return userStateV16.answerHistory
+          .filter(entry => entry.questionKey === key)
+          .sort((left, right) => {
+            const leftAt = Date.parse(left.answeredAt || left.completedAt || left.createdAt || "") || 0;
+            const rightAt = Date.parse(right.answeredAt || right.completedAt || right.createdAt || "") || 0;
+            return rightAt - leftAt;
+          })[0] || null;
       }
 
       function hasModelDisagreementV44(question) {
@@ -3861,7 +3878,10 @@
         const counts = rows.reduce((map, row) => ({ ...map, [row.scoreMark]: (map[row.scoreMark] || 0) + 1 }), {});
         const average = rows.length ? (rows.reduce((sum, row) => sum + Number(row.responseTimeMs || 0), 0) / rows.length / 1000).toFixed(1) : "0.0";
         const weak = rows.filter(row => ["×", "△"].includes(row.scoreMark)).length;
-        return `<section class="session-result"><h3>${sessionModeLabelV44(result.mode)} 完了</h3><div class="dashboard-grid"><div class="stat-card"><span class="stat-label">回答</span><span class="stat-value">${rows.length}</span></div><div class="stat-card"><span class="stat-label">💮・〇</span><span class="stat-value">${(counts["💮"] || 0) + (counts["〇"] || 0)}</span></div><div class="stat-card"><span class="stat-label">△・×</span><span class="stat-value">${weak}</span></div><div class="stat-card"><span class="stat-label">平均時間</span><span class="stat-value">${average}<small>秒</small></span></div></div><p>💮 ${counts["💮"] || 0}　〇 ${counts["〇"] || 0}　△ ${counts["△"] || 0}　× ${counts["×"] || 0}</p><div class="session-result-actions">${weak ? `<button class="drill-action" type="button" data-result-action="retry-weak">間違えた${weak}問をもう一度</button>` : ""}<button class="drill-action secondary" type="button" data-result-action="today">新しい10問</button><button class="drill-action secondary" type="button" data-result-action="menu">MY問題集へ</button></div></section>`;
+        const unansweredMode = result.mode === "unanswered" || result.mode === "range-unanswered";
+        const nextTenAction = result.mode === "range-unanswered" ? "range-unanswered" : "unanswered";
+        const nextTenLabel = unansweredMode ? "次の10問へ" : "新しい10問";
+        return `<section class="session-result"><h3>${sessionModeLabelV44(result.mode)} 完了</h3><div class="dashboard-grid"><div class="stat-card"><span class="stat-label">回答</span><span class="stat-value">${rows.length}</span></div><div class="stat-card"><span class="stat-label">💮・〇</span><span class="stat-value">${(counts["💮"] || 0) + (counts["〇"] || 0)}</span></div><div class="stat-card"><span class="stat-label">△・×</span><span class="stat-value">${weak}</span></div><div class="stat-card"><span class="stat-label">平均時間</span><span class="stat-value">${average}<small>秒</small></span></div></div><p>💮 ${counts["💮"] || 0}　〇 ${counts["〇"] || 0}　△ ${counts["△"] || 0}　× ${counts["×"] || 0}</p><div class="session-result-actions">${weak ? `<button class="drill-action" type="button" data-result-action="retry-weak">間違えた${weak}問をもう一度</button>` : ""}<button class="drill-action secondary" type="button" data-result-action="${nextTenAction}">${nextTenLabel}</button><button class="drill-action secondary" type="button" data-result-action="menu">MY問題集へ</button></div></section>`;
       }
 
       function generatorSeatOptionsV46() {
@@ -4476,6 +4496,8 @@
           const action = resultButton.dataset.resultAction;
           if (action === "menu") return showMenuV16("my");
           if (action === "today") return startSessionV44("today");
+          if (action === "unanswered") return startSessionV44("unanswered");
+          if (action === "range-unanswered") return startRangeSessionV61("unanswered");
           if (action === "retry-weak") {
             const keys = (userStateV16.lastSessionResult?.results || []).filter(row => ["×", "△"].includes(row.scoreMark)).map(row => row.questionKey);
             return startSessionV44("weak", keys.map(key => questionsV16[questionIndexByKeyV44(key)]).filter(Boolean));
@@ -4712,6 +4734,7 @@
         document.getElementById("menuTypeFilter").addEventListener("change", event => { menuTypeV44 = event.target.value; renderMenuCardsV16(); });
         document.getElementById("menuButton").addEventListener("click", () => showMenuV16("my"));
         document.getElementById("nextQuestionButton").addEventListener("click", advanceQuestionV44);
+        document.getElementById("nextQuestionBottomButton").addEventListener("click", advanceQuestionV44);
         document.getElementById("currentFavoriteButton").addEventListener("click", () => {
           const question = questionsV16[currentQuestionIndexV16];
           if (!question) return;
