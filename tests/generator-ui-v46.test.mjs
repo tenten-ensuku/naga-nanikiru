@@ -4,9 +4,9 @@ import test from "node:test";
 
 const indexUrl = new URL("../public/index.html", import.meta.url);
 
-test("renders the v74 scene and half-game generator controls", async () => {
+test("renders the v75 scene and half-game generator controls", async () => {
   const html = await readFile(indexUrl, "utf8");
-  assert.match(html, /const APP_VERSION = 74/);
+  assert.match(html, /const APP_VERSION = 75/);
   assert.match(html, /\[\.\.\.APP_ANNOUNCEMENTS_V66\]\s*\.sort\(\(left, right\) => right\.version - left\.version\)/);
   assert.match(html, /data-menu-view="settings"/);
   assert.match(html, /id="displayNameForm"/);
@@ -17,6 +17,10 @@ test("renders the v74 scene and half-game generator controls", async () => {
   assert.match(html, /function refreshSharedQuestionNotificationsV66/);
   assert.match(html, /QUESTION_NOTICE_STORAGE_KEY_V66/);
   assert.match(html, /function renderCommunityNotificationListV66/);
+  assert.match(html, /data-comment-action="edit"/);
+  assert.match(html, /data-comment-action="delete"/);
+  assert.match(html, /function beginCommentEditV75/);
+  assert.match(html, /function deleteCommentV75/);
   assert.match(html, /data-community-notification-kind="question"/);
   assert.match(html, /data-menu-question-notification/);
   assert.match(html, /data-menu-range-notification/);

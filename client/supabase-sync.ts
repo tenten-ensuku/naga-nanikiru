@@ -194,6 +194,21 @@ async function postSharedComment(shareSlug: string, body: string, questionId?: s
   return data;
 }
 
+async function updateSharedComment(commentId: string, body: string, attachments: Array<{ path: string; alt?: string }> = []) {
+  const { error } = await requireClient().rpc("update_shared_comment", {
+    p_comment_id: commentId,
+    p_body: body,
+    p_attachments: attachments.map((attachment) => ({ path: attachment.path, alt: String(attachment.alt ?? "添付画像").slice(0, 200) })),
+  });
+  if (error) throw error;
+}
+
+async function deleteSharedComment(commentId: string) {
+  const { data, error } = await requireClient().rpc("delete_shared_comment", { p_comment_id: commentId });
+  if (error) throw error;
+  return Array.isArray(data) ? data : [];
+}
+
 async function recordSharedAttempt(input: {
   shareSlug: string;
   questionId: string;
@@ -476,6 +491,8 @@ function buildApi() {
     uploadCommentAttachment,
     removeCommentAttachment,
     postSharedComment,
+    updateSharedComment,
+    deleteSharedComment,
     recordSharedAttempt,
     getMyCapabilities,
     createSharedQuestion,

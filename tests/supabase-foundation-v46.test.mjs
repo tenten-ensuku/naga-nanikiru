@@ -79,9 +79,21 @@ test("pins Supabase dependencies and protects the NAGA proxy", async () => {
   assert.match(clientSource, /naga:autherror/);
   assert.match(clientSource, /importLocalHistory/);
   assert.match(clientSource, /createSharedQuestion/);
+  assert.match(clientSource, /updateSharedComment/);
+  assert.match(clientSource, /deleteSharedComment/);
   assert.match(clientSource, /updateProfileDisplayName/);
   assert.match(clientSource, /requestQuestionDeletion/);
   assert.match(clientSource, /loadQuestionPollStats/);
+});
+
+test("scopes shared comment edits and deletes to authenticated owners or managers", async () => {
+  const migration = await fs.readFile(new URL("../supabase/migrations/20260814210757_comment_edit_delete.sql", import.meta.url), "utf8");
+  assert.match(migration, /create policy comments_update[\s\S]*user_id = \(select auth\.uid\(\)\)[\s\S]*private\.can_manage_collection/i);
+  assert.match(migration, /create function public\.update_shared_comment[\s\S]*security invoker/i);
+  assert.match(migration, /user_id = \(select auth\.uid\(\)\)[\s\S]*deleted_at is null[\s\S]*returning id into updated_comment_id/i);
+  assert.match(migration, /create function public\.delete_shared_comment[\s\S]*security invoker/i);
+  assert.match(migration, /grant execute on function public\.update_shared_comment\(uuid, text, jsonb\) to authenticated/i);
+  assert.match(migration, /grant execute on function public\.delete_shared_comment\(uuid\) to authenticated/i);
 });
 
 test("generates browser runtime config without accepting server secrets", async () => {

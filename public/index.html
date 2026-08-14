@@ -440,6 +440,12 @@
     .comment-entry + .comment-entry { margin-top: 9px; padding-top: 9px; border-top: 1px solid rgba(255, 255, 255, .1); }
     .comment-card-meta { display: flex; justify-content: flex-end; gap: 10px; min-height: 14px; }
     .comment-time { color: var(--muted); font-size: 9px; white-space: nowrap; }
+    .comment-entry-actions { display: inline-flex; align-items: center; gap: 4px; margin-left: auto; }
+    .comment-action-button { min-height: 22px; padding: 2px 6px; color: #cfe9ed; background: rgba(22,72,98,.7); border: 1px solid rgba(113,183,255,.42); border-radius: 4px; font-size: 9px; font-weight: 800; }
+    .comment-action-button:hover, .comment-action-button:focus-visible { color: #fff; background: #246b8a; outline: 2px solid rgba(155,232,216,.18); outline-offset: 1px; }
+    .comment-action-button.danger { color: #ffc0c0; border-color: rgba(255,150,150,.42); }
+    .comment-action-button.danger:hover, .comment-action-button.danger:focus-visible { color: #fff; background: #793b45; }
+    .comment-entry.is-editing { margin: -3px -5px; padding: 3px 5px; border-radius: 5px; background: rgba(155,232,216,.08); }
     .comment-body { margin: 0; color: #e6f4f7; font-size: clamp(13px, 1.25vw, 16px); line-height: 1.6; overflow-wrap: anywhere; }
     .comment-body strong { color: #fff; font-weight: 900; }
     .comment-body a { color: #9bdcff; }
@@ -490,6 +496,8 @@
     .comment-format-help { grid-column: 1 / -1; margin: 0; color: var(--muted); font-size: 9px; line-height: 1.35; }
     .comment-submit { min-width: 88px; padding: 7px 8px; color: #12211e; background: #bde7e0; border: 1px solid #d6fff5; border-radius: 6px; font-size: 9px; font-weight: 800; }
     .comment-submit:hover { background: #d6fff5; }
+    .comment-edit-cancel { min-width: 88px; padding: 7px 8px; color: #e7f8ff; background: #164862; border: 1px solid rgba(113,183,255,.55); border-radius: 6px; font-size: 9px; font-weight: 800; }
+    .comment-edit-cancel:hover, .comment-edit-cancel:focus-visible { background: #246b8a; outline: 2px solid rgba(155,232,216,.18); outline-offset: 1px; }
     .comment-sync-note { margin: 0; color: var(--muted); font-size: 8px; line-height: 1.35; }
     .below-note { display: none; }
     .below-note strong { color: #c9eff0; }
@@ -1352,7 +1360,8 @@
         <div class="comment-attachment-preview" id="commentAttachmentPreview" hidden></div>
         <p class="comment-format-help">選択範囲に書式を適用できます。麻雀牌表記（1ｍ・4ｐなど）も自動で牌画像になります。</p>
         <p class="comment-form-status" id="commentFormStatus" aria-live="polite"></p>
-        <button class="comment-submit" type="submit">コメントを追加</button>
+        <button class="comment-submit" id="commentSubmitButton" type="submit">コメントを追加</button>
+        <button class="comment-edit-cancel" id="commentEditCancelButton" type="button" hidden>編集をキャンセル</button>
       </form>
       <p class="comment-sync-note">追加したコメントはこのアプリ内に保存されます。共有問題集ではDiscordログイン後に他の利用者にも表示されます。Discordのスレッドには投稿されません。</p>
       <div class="comments-footer">
@@ -1427,7 +1436,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 74;
+    const APP_VERSION = 75;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -1468,7 +1477,7 @@
     const COMMENT_MAX_ATTACHMENTS_V68 = 4;
     const COMMENT_MAX_IMAGE_BYTES_V68 = 5 * 1024 * 1024;
     const COMMENT_IMAGE_TYPES_V68 = new Set(["image/png", "image/jpeg", "image/webp", "image/gif"]);
-    const state = { selected: null, selectedIndex: null, callDecision: null, revealed: false, answerRecorded: false, answerAttemptId: null, questionStartedAt: Date.now(), judgeModel: 2, riichi: false, commentsExpanded: false, commentComposerOpen: false, commentAttachments: [], comments: THREAD_MESSAGES.map(message => ({ ...message, attachments: [...message.attachments] })) };
+    const state = { selected: null, selectedIndex: null, callDecision: null, revealed: false, answerRecorded: false, answerAttemptId: null, questionStartedAt: Date.now(), judgeModel: 2, riichi: false, commentsExpanded: false, commentComposerOpen: false, commentEditingId: null, commentAttachments: [], comments: THREAD_MESSAGES.map(message => ({ ...message, attachments: [...message.attachments] })) };
 
     function tileLabel(tile) {
       if (TILE_NAMES[tile]) return TILE_NAMES[tile];
@@ -1775,8 +1784,22 @@
       }, []);
     }
 
+    function canEditCommentV75(message) {
+      const id = String(message?.id || "");
+      if (id.startsWith("local-")) return true;
+      const currentUserId = String(window.nagaCurrentUserIdV75 || "");
+      return Boolean(currentUserId && message?.authorId && String(message.authorId) === currentUserId);
+    }
+
+    function commentActionMarkupV75(message) {
+      if (!canEditCommentV75(message)) return "";
+      const id = escapeHtml(message.id);
+      return `<span class="comment-entry-actions"><button class="comment-action-button" type="button" data-comment-action="edit" data-comment-id="${id}">編集</button><button class="comment-action-button danger" type="button" data-comment-action="delete" data-comment-id="${id}">削除</button></span>`;
+    }
+
     function renderCommentEntryV65(message) {
-      return `<div class="comment-entry"><div class="comment-card-meta"><time class="comment-time" datetime="${escapeHtml(message.createdAt)}">${formatCommentTime(message.createdAt)}</time></div>${message.content ? `<div class="comment-body">${formatCommentContent(message.content)}</div>` : ""}${(message.attachments || []).map(attachment => `<button class="comment-attachment-button" type="button" data-comment-image-src="${escapeHtml(attachment.src)}" data-comment-image-alt="${escapeHtml(attachment.alt)}" aria-label="${escapeHtml(attachment.alt)}を拡大"><img class="comment-attachment" src="${escapeHtml(attachment.src)}" alt="${escapeHtml(attachment.alt)}" loading="lazy"></button>`).join("")}</div>`;
+      const editingClass = state.commentEditingId === message.id ? " is-editing" : "";
+      return `<div class="comment-entry${editingClass}" data-comment-id="${escapeHtml(message.id)}"><div class="comment-card-meta"><time class="comment-time" datetime="${escapeHtml(message.createdAt)}">${formatCommentTime(message.createdAt)}</time>${commentActionMarkupV75(message)}</div>${message.content ? `<div class="comment-body">${formatCommentContent(message.content)}</div>` : ""}${(message.attachments || []).map(attachment => `<button class="comment-attachment-button" type="button" data-comment-image-src="${escapeHtml(attachment.src)}" data-comment-image-alt="${escapeHtml(attachment.alt)}" aria-label="${escapeHtml(attachment.alt)}を拡大"><img class="comment-attachment" src="${escapeHtml(attachment.src)}" alt="${escapeHtml(attachment.alt)}" loading="lazy"></button>`).join("")}</div>`;
     }
 
     function renderComments({ scrollToBottom = false } = {}) {
@@ -1812,6 +1835,13 @@
 
     function initCommentImageViewer() {
       document.getElementById("commentsScroll").addEventListener("click", event => {
+        const action = event.target.closest("[data-comment-action]");
+        if (action) {
+          const commentId = action.dataset.commentId;
+          if (action.dataset.commentAction === "edit") beginCommentEditV75(commentId);
+          if (action.dataset.commentAction === "delete") deleteCommentV75(commentId);
+          return;
+        }
         const spoiler = event.target.closest(".comment-spoiler");
         if (spoiler) {
           const revealed = spoiler.classList.toggle("is-revealed");
@@ -1920,13 +1950,119 @@
     }
 
     function toggleCommentComposer() {
+      if (state.commentComposerOpen && state.commentEditingId) cancelCommentEditV75();
       state.commentComposerOpen = !state.commentComposerOpen;
+      syncCommentComposerV75();
+      if (state.commentComposerOpen) document.getElementById("commentInput").focus();
+    }
+
+    function syncCommentComposerV75() {
       const form = document.getElementById("commentForm");
       const button = document.getElementById("commentAddButton");
+      const label = document.querySelector("#commentForm label[for='commentInput']");
+      const submit = document.getElementById("commentSubmitButton");
+      const cancel = document.getElementById("commentEditCancelButton");
       form.hidden = !state.commentComposerOpen;
       button.setAttribute("aria-expanded", String(state.commentComposerOpen));
-      button.textContent = state.commentComposerOpen ? "コメント入力を閉じる" : "コメント追加";
-      if (state.commentComposerOpen) document.getElementById("commentInput").focus();
+      button.textContent = state.commentComposerOpen ? (state.commentEditingId ? "編集を閉じる" : "コメント入力を閉じる") : "コメント追加";
+      if (label) label.textContent = state.commentEditingId ? "コメントを編集" : "コメントを追加";
+      if (submit) submit.textContent = state.commentEditingId ? "コメントを更新" : "コメントを追加";
+      if (cancel) cancel.hidden = !state.commentEditingId;
+    }
+
+    function beginCommentEditV75(commentId) {
+      const message = state.comments.find(candidate => String(candidate.id) === String(commentId));
+      if (!message || !canEditCommentV75(message)) return;
+      state.commentEditingId = message.id;
+      state.commentComposerOpen = true;
+      state.commentAttachments = (message.attachments || []).map((attachment, index) => ({ ...attachment, id: attachment.id || `existing-${message.id}-${index}` }));
+      document.getElementById("commentInput").value = message.content || "";
+      renderCommentAttachmentPreviewV68();
+      syncCommentComposerV75();
+      renderComments();
+      setCommentFormStatusV68("編集中です。内容を修正して更新してください。");
+      document.getElementById("commentInput").focus();
+    }
+
+    function cancelCommentEditV75() {
+      state.commentEditingId = null;
+      document.getElementById("commentInput").value = "";
+      clearCommentDraftV68({ clearStatus: true });
+      syncCommentComposerV75();
+      renderComments();
+    }
+
+    async function updateCommentV75(event) {
+      event.preventDefault();
+      const input = document.getElementById("commentInput");
+      const content = input.value.trim();
+      if (!content && !state.commentAttachments.length) {
+        setCommentFormStatusV68("本文または画像を入力してください。", true);
+        return;
+      }
+      const editingId = state.commentEditingId;
+      const original = editingId ? state.comments.find(message => String(message.id) === String(editingId)) : null;
+      if (!original) return submitNewCommentV75(content);
+      if (!canEditCommentV75(original)) {
+        setCommentFormStatusV68("このコメントを編集する権限がありません。", true);
+        return;
+      }
+      const previousAttachments = (original.attachments || []).map(attachment => ({ ...attachment }));
+      const updated = { ...original, content, attachments: state.commentAttachments.map(attachment => ({ ...attachment })), updatedAt: new Date().toISOString() };
+      state.comments = state.comments.map(message => message.id === editingId ? updated : message);
+      state.commentEditingId = null;
+      input.value = "";
+      clearCommentDraftV68({ clearStatus: false });
+      syncCommentComposerV75();
+      renderComments();
+      setCommentFormStatusV68("更新中…");
+      try {
+        await window.persistCommentEditV75?.(updated, previousAttachments);
+        setCommentFormStatusV68("コメントを更新しました。");
+      } catch (error) {
+        state.comments = state.comments.map(message => message.id === editingId ? original : message);
+        state.commentEditingId = editingId;
+        state.commentAttachments = previousAttachments;
+        input.value = original.content || "";
+        syncCommentComposerV75();
+        renderCommentAttachmentPreviewV68();
+        renderComments();
+        setCommentFormStatusV68(error?.message || "コメントを更新できませんでした。", true);
+      }
+    }
+
+    function submitNewCommentV75(content) {
+      const input = document.getElementById("commentInput");
+      const message = { id: `local-${Date.now()}`, author: typeof currentUserDisplayNameV47 === "function" ? currentUserDisplayNameV47() : "このブラウザ", createdAt: new Date().toISOString(), content, attachments: state.commentAttachments.map(attachment => ({ ...attachment })) };
+      state.comments.push(message);
+      input.value = "";
+      clearCommentDraftV68({ clearStatus: false });
+      renderComments({ scrollToBottom: true });
+      setCommentFormStatusV68("投稿中…");
+      return window.persistLocalCommentV44?.(message).then(result => {
+        setCommentFormStatusV68(result?.shared ? "共有コメントとして投稿しました。" : "この端末に保存しました。");
+      }).catch(error => {
+        setCommentFormStatusV68(error?.message || "コメントを送信できませんでした。", true);
+      }).finally(() => renderComments({ scrollToBottom: true }));
+    }
+
+    async function deleteCommentV75(commentId) {
+      const message = state.comments.find(candidate => String(candidate.id) === String(commentId));
+      if (!message || !canEditCommentV75(message)) return;
+      if (!window.confirm("このコメントを削除しますか？")) return;
+      const originalIndex = state.comments.indexOf(message);
+      if (state.commentEditingId === message.id) cancelCommentEditV75();
+      state.comments = state.comments.filter(candidate => candidate.id !== message.id);
+      renderComments();
+      setCommentFormStatusV68("削除中…");
+      try {
+        await window.persistCommentDeleteV75?.(message);
+        setCommentFormStatusV68("コメントを削除しました。");
+      } catch (error) {
+        state.comments.splice(originalIndex, 0, message);
+        renderComments();
+        setCommentFormStatusV68(error?.message || "コメントを削除できませんでした。", true);
+      }
     }
 
     async function submitComment(event) {
@@ -1937,19 +2073,8 @@
         setCommentFormStatusV68("本文または画像を入力してください。", true);
         return;
       }
-      const message = { id: `local-${Date.now()}`, author: typeof currentUserDisplayNameV47 === "function" ? currentUserDisplayNameV47() : "このブラウザ", createdAt: new Date().toISOString(), content, attachments: state.commentAttachments.map(attachment => ({ ...attachment })) };
-      state.comments.push(message);
-      input.value = "";
-      clearCommentDraftV68({ clearStatus: false });
-      renderComments({ scrollToBottom: true });
-      setCommentFormStatusV68("投稿中…");
-      try {
-        const result = await window.persistLocalCommentV44?.(message);
-        setCommentFormStatusV68(result?.shared ? "共有コメントとして投稿しました。" : "この端末に保存しました。");
-      } catch (error) {
-        setCommentFormStatusV68(error?.message || "コメントを送信できませんでした。", true);
-      }
-      renderComments({ scrollToBottom: true });
+      if (state.commentEditingId) return updateCommentV75(event);
+      await submitNewCommentV75(content);
     }
 
     function reset() {
@@ -1959,10 +2084,10 @@
       state.riichi = false;
       state.commentsExpanded = false;
       state.commentComposerOpen = false;
+      state.commentEditingId = null;
+      document.getElementById("commentInput").value = "";
       clearCommentDraftV68();
-      document.getElementById("commentForm").hidden = true;
-      document.getElementById("commentAddButton").setAttribute("aria-expanded", "false");
-      document.getElementById("commentAddButton").textContent = "コメント追加";
+      syncCommentComposerV75();
       document.querySelector(".page").classList.remove("comments-expanded");
       document.getElementById("commentsPanel").classList.remove("is-expanded");
       document.getElementById("commentsPanel").hidden = true;
@@ -1982,6 +2107,7 @@
       document.getElementById("modelSelect").addEventListener("change", event => { state.judgeModel = Number(event.target.value); renderHand(); renderAnswer(); });
       document.getElementById("commentsExpandButton").addEventListener("click", toggleCommentsExpanded);
       document.getElementById("commentAddButton").addEventListener("click", toggleCommentComposer);
+      document.getElementById("commentEditCancelButton").addEventListener("click", cancelCommentEditV75);
       document.getElementById("commentForm").addEventListener("submit", submitComment);
       initCommentComposerV68();
       initCommentImageViewer();
@@ -2086,7 +2212,8 @@
         { version: 71, date: "2026-08-15", title: "PC表示の切り替え幅を調整しました", body: "内部ブラウザのような幅でも、スマホ以外では問題とコメントを左右に分けて表示できるようにしました。" },
         { version: 72, date: "2026-08-15", title: "副露判断の対象牌を手牌の上に移動しました", body: "対象牌と鳴きボタンが手牌の横幅を圧迫しないよう、手牌の上部に独立表示します。" },
         { version: 73, date: "2026-08-15", title: "リーチ判断ボタンを手牌の外へ移動しました", body: "リーチ判断ボタンをマスク外の右側へ配置し、手牌の横幅を圧迫しないようにしました。" },
-        { version: APP_VERSION, date: "2026-08-15", title: "アナウンスを新しい順に表示するようにしました", body: "最新の修正内容が上に表示されるようになりました。" }
+        { version: 74, date: "2026-08-15", title: "アナウンスを新しい順に表示するようにしました", body: "最新の修正内容が上に表示されるようになりました。" },
+        { version: APP_VERSION, date: "2026-08-15", title: "コメントを編集・削除できるようにしました", body: "自分が投稿したコメントを後から編集・削除できるようになりました。" }
       ];
       let commentNoticeStoreV65 = loadCommentNoticeStoreV65();
       let sharedCommentRowsV65 = [];
@@ -2778,6 +2905,76 @@
         }
       };
 
+      window.persistCommentEditV75 = async (message, previousAttachments = []) => {
+        const question = questionsV16[currentQuestionIndexV16];
+        if (!question) throw new Error("問題を特定できませんでした。");
+        if (sharedCollectionV46 && question.serverQuestionId) {
+          const session = await window.NagaSupabase?.currentSession?.();
+          if (!session) throw new Error("共有問題集のコメント編集にはDiscordログインが必要です。");
+          const uploadedPaths = [];
+          try {
+            const uploadedAttachments = [];
+            for (const attachment of message.attachments || []) {
+              const uploaded = attachment.file
+                ? await window.NagaSupabase.uploadCommentAttachment(attachment.file)
+                : attachment.path
+                  ? { path: attachment.path, src: attachment.src || window.NagaSupabase.publicCommentAssetUrl(attachment.path), alt: attachment.alt || "添付画像" }
+                  : null;
+              if (!uploaded) continue;
+              uploadedPaths.push(uploaded.path);
+              uploadedAttachments.push(uploaded);
+            }
+            await window.NagaSupabase.updateSharedComment(message.id, message.content, uploadedAttachments.map(({ path, alt }) => ({ path, alt })));
+            const retainedPaths = new Set(uploadedAttachments.map(attachment => attachment.path));
+            for (const path of previousAttachments.map(attachment => attachment.path).filter(path => path && !retainedPaths.has(path))) {
+              try { await window.NagaSupabase.removeCommentAttachment(path); } catch { /* keep the updated comment when cleanup is unavailable */ }
+            }
+            message.author = currentUserDisplayNameV47();
+            message.authorId = session.user.id;
+            message.attachments = uploadedAttachments;
+            state.comments = state.comments.map(candidate => candidate.id === message.id ? { ...message } : candidate);
+            renderComments();
+            return { shared: true };
+          } catch (error) {
+            for (const path of uploadedPaths) {
+              if (!previousAttachments.some(attachment => attachment.path === path)) {
+                try { await window.NagaSupabase.removeCommentAttachment(path); } catch { /* keep the original update error */ }
+              }
+            }
+            throw new Error(error?.message || "コメントを更新できませんでした。");
+          }
+        }
+        const key = questionKeyV16(question);
+        const comments = userStateV16.localComments?.[key] || [];
+        const index = comments.findIndex(candidate => candidate.id === message.id);
+        if (index < 0) throw new Error("このコメントを編集できませんでした。");
+        const storedMessage = { ...message, attachments: (message.attachments || []).map(({ src, alt }) => ({ src, alt: alt || "添付画像" })) };
+        userStateV16.localComments[key] = comments.map((candidate, candidateIndex) => candidateIndex === index ? storedMessage : candidate);
+        saveUserStateV16();
+        message.attachments = storedMessage.attachments;
+        state.comments = state.comments.map(candidate => candidate.id === message.id ? { ...message } : candidate);
+        renderComments();
+        return { shared: false };
+      };
+
+      window.persistCommentDeleteV75 = async message => {
+        const question = questionsV16[currentQuestionIndexV16];
+        if (!question) throw new Error("問題を特定できませんでした。");
+        if (sharedCollectionV46 && question.serverQuestionId) {
+          const removedAttachments = await window.NagaSupabase.deleteSharedComment(message.id);
+          for (const attachment of removedAttachments) {
+            if (!attachment?.path) continue;
+            try { await window.NagaSupabase.removeCommentAttachment(attachment.path); } catch { /* the comment is already hidden */ }
+          }
+          return { shared: true };
+        }
+        const key = questionKeyV16(question);
+        const comments = userStateV16.localComments?.[key] || [];
+        userStateV16.localComments[key] = comments.filter(candidate => candidate.id !== message.id);
+        saveUserStateV16();
+        return { shared: false };
+      };
+
       function activeSessionV44() {
         return userStateV16.activeSessionId ? userStateV16.sessions?.[userStateV16.activeSessionId] || null : null;
       }
@@ -3166,10 +3363,10 @@
         state.riichi = false;
         state.commentsExpanded = false;
         state.commentComposerOpen = false;
+        state.commentEditingId = null;
+        document.getElementById("commentInput").value = "";
         clearCommentDraftV68();
-        document.getElementById("commentForm").hidden = true;
-        document.getElementById("commentAddButton").setAttribute("aria-expanded", "false");
-        document.getElementById("commentAddButton").textContent = "コメント追加";
+        syncCommentComposerV75();
         document.querySelector(".page").classList.remove("comments-expanded");
         document.getElementById("commentsPanel").classList.remove("is-expanded");
         document.getElementById("commentsPanel").hidden = true;
@@ -3449,9 +3646,10 @@
         state.riichi = false;
         state.commentsExpanded = false;
         state.commentComposerOpen = false;
-        document.getElementById("commentForm").hidden = true;
-        document.getElementById("commentAddButton").setAttribute("aria-expanded", "false");
-        document.getElementById("commentAddButton").textContent = "コメント追加";
+        state.commentEditingId = null;
+        document.getElementById("commentInput").value = "";
+        clearCommentDraftV68();
+        syncCommentComposerV75();
         const localCommentsV44 = userStateV16.localComments?.[questionKeyV16(question)] || [];
         state.comments = [...(SCENE.comments || []), ...localCommentsV44].map(message => ({ ...message, attachments: [...(message.attachments || [])] }));
         state.judgeModel = Math.max(0, SCENE.models.findIndex(model => model.name === "ニシキ"));
@@ -4303,6 +4501,8 @@
 
       async function refreshAccountV46(session = null) {
         supabaseSessionV46 = session;
+        window.nagaCurrentUserIdV75 = String(session?.user?.id || "");
+        if (typeof renderComments === "function") renderComments();
         const status = document.getElementById("accountStatus");
         const authButton = document.getElementById("discordAuthButton");
         const importButton = document.getElementById("importHistoryButton");
@@ -4416,7 +4616,9 @@
           const converted = serverComments.map(comment => ({
             id: comment.id,
             author: comment.author_name,
+            authorId: comment.author_id || comment.authorId || "",
             createdAt: comment.created_at,
+            updatedAt: comment.updated_at || comment.updatedAt || comment.created_at,
             content: comment.body,
             questionId: comment.question_id || question.serverQuestionId,
             attachments: (Array.isArray(comment.attachments) ? comment.attachments : []).map(attachment => ({
