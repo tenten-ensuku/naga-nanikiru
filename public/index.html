@@ -1468,7 +1468,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 79;
+    const APP_VERSION = 80;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -2248,7 +2248,8 @@
         { version: 76, date: "2026-08-15", title: "問題一覧を2列表示に対応しました", body: "PCでは各問題を2列で表示し、左右それぞれにステータス・直近結果・お気に入り・ゴミ箱を配置しました。スマホでは1列表示に戻ります。" },
         { version: 77, date: "2026-08-15", title: "未回答問題を続けて解けるようにしました", body: "未回答問題のセッション完了後は、回答済みを混ぜずに次の未回答10問へ進めます。解答後の次の問題ボタンも、結果のすぐ下から押せます。" },
         { version: 78, date: "2026-08-15", title: "問題一覧を1列表示に戻しました", body: "問題名や種別が崩れないよう、PCとスマホの問題一覧を1列表示に戻しました。" },
-        { version: APP_VERSION, date: "2026-08-15", title: "問題名から「追加」の文言を削除しました", body: "追加問題250のように表示されていた問題名を、問題250の形式に統一しました。既存の問題名も自動で読み替えます。" }
+        { version: 79, date: "2026-08-15", title: "問題名から「追加」の文言を削除しました", body: "追加問題250のように表示されていた問題名を、問題250の形式に統一しました。既存の問題名も自動で読み替えます。" },
+        { version: APP_VERSION, date: "2026-08-15", title: "絞り込み中の次の問題を正しく出題するようにしました", body: "副露判断などの種別で絞り込んだ状態でも、次の問題へ進む際に同じ絞り込みを維持し、種別指定時はランダムに出題します。" }
       ];
       let commentNoticeStoreV65 = loadCommentNoticeStoreV65();
       let sharedCommentRowsV65 = [];
@@ -3619,7 +3620,13 @@
 
       function nextButtonLabelV44() {
         const session = activeSessionV44();
-        if (!session) return currentQuestionIndexV16 < questionsV16.length - 1 ? "次の問題へ" : "問題一覧へ";
+        if (!session) {
+          if (menuFilterActiveV80()) {
+            const filteredCandidates = menuFilteredQuestionsV80().filter(isPlayableV16).filter(question => questionKeyV16(question) !== questionKeyV16(questionsV16[currentQuestionIndexV16]));
+            return filteredCandidates.length ? "次の問題へ" : "問題一覧へ";
+          }
+          return currentQuestionIndexV16 < questionsV16.length - 1 ? "次の問題へ" : "問題一覧へ";
+        }
         return Number(session.cursor || 0) < session.questionKeys.length - 1 ? "次の問題へ" : "結果を見る";
       }
 
@@ -3674,8 +3681,9 @@
 
       function startRangeSessionV61(mode) {
         const unansweredOnly = mode === "unanswered";
-        const candidates = questionsV16.filter(question => menuRangeMatchesV60(question) && isPlayableV16(question) && (!unansweredOnly || !latestAnswerV44(question)));
-        startSessionV44(unansweredOnly ? "range-unanswered" : "range", candidates);
+        const candidates = menuFilteredQuestionsV80().filter(question => isPlayableV16(question) && (!unansweredOnly || !latestAnswerV44(question)));
+        const orderedCandidates = menuTypeV44 === "all" ? candidates : shuffleQuestionsV80(candidates);
+        startSessionV44(unansweredOnly ? "range-unanswered" : "range", orderedCandidates);
       }
 
       function completeSessionV44(session) {
@@ -3693,6 +3701,20 @@
       function advanceQuestionV44() {
         const session = activeSessionV44();
         if (!session) {
+          if (menuFilterActiveV80()) {
+            const currentKey = questionKeyV16(questionsV16[currentQuestionIndexV16]);
+            const filteredCandidates = menuFilteredQuestionsV80().filter(isPlayableV16).filter(question => questionKeyV16(question) !== currentKey);
+            if (filteredCandidates.length) {
+              const nextQuestion = menuTypeV44 === "all" ? filteredCandidates[0] : shuffleQuestionsV80(filteredCandidates)[0];
+              const nextIndex = questionIndexByKeyV44(questionKeyV16(nextQuestion));
+              if (nextIndex >= 0) {
+                openQuestionV16(nextIndex);
+                return;
+              }
+            }
+            showMenuV16("my");
+            return;
+          }
           const nextIndex = questionsV16.findIndex((question, index) => index > currentQuestionIndexV16 && isPlayableV16(question));
           if (nextIndex >= 0) openQuestionV16(nextIndex);
           else showMenuV16("my");
@@ -3846,6 +3868,29 @@
         const [start, end] = menuRangeV60.split("-").map(Number);
         const number = menuQuestionNumberV60(question);
         return Number.isInteger(number) && number >= start && number <= end;
+      }
+
+      function menuFilterActiveV80() {
+        return menuViewV16 !== "my" || menuTypeV44 !== "all" || menuStatusV44 !== "all" || Boolean(menuSearchV44.trim()) || menuRangeV60 !== "all";
+      }
+
+      function menuFilteredQuestionsV80() {
+        const filteredByHelper = window.DrillUxV44?.filterQuestions?.({ questions: questionsV16, state: userStateV16, view: menuViewV16, query: menuSearchV44, status: menuStatusV44, type: menuTypeV44, now: new Date() });
+        const sourceQuestions = Array.isArray(filteredByHelper) ? filteredByHelper : questionsV16.filter(question => {
+          if (menuViewV16 === "trash") return isTrashedV16(question) || (window.DrillUxV44?.isSnoozed?.(userStateV16, questionKeyV16(question), new Date()) || false);
+          if (menuViewV16 === "favorites") return isFavoriteV16(question) && isPlayableV16(question);
+          return isPlayableV16(question);
+        });
+        return sourceQuestions.filter(menuRangeMatchesV60);
+      }
+
+      function shuffleQuestionsV80(items) {
+        const shuffled = [...(items || [])];
+        for (let index = shuffled.length - 1; index > 0; index -= 1) {
+          const swapIndex = Math.floor(Math.random() * (index + 1));
+          [shuffled[index], shuffled[swapIndex]] = [shuffled[swapIndex], shuffled[index]];
+        }
+        return shuffled;
       }
 
       function renderMenuRangeTabsV60() {
