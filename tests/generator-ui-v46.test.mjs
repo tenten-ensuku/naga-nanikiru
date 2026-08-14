@@ -4,9 +4,9 @@ import test from "node:test";
 
 const indexUrl = new URL("../public/index.html", import.meta.url);
 
-test("renders the v69 scene and half-game generator controls", async () => {
+test("renders the v70 scene and half-game generator controls", async () => {
   const html = await readFile(indexUrl, "utf8");
-  assert.match(html, /const APP_VERSION = 69/);
+  assert.match(html, /const APP_VERSION = 70/);
   assert.match(html, /data-menu-view="settings"/);
   assert.match(html, /id="displayNameForm"/);
   assert.match(html, /displayNameLengthV67/);

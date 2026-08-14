@@ -172,7 +172,10 @@
     .settings-form { display: grid; gap: 8px; max-width: 460px; }
     .settings-form label { display: grid; gap: 5px; color: #dffbfb; font-size: 11px; font-weight: 800; }
     .settings-form input { width: 100%; box-sizing: border-box; padding: 10px 11px; color: var(--ink); background: #061c2c; border: 1px solid rgba(255,255,255,.18); border-radius: 7px; font: inherit; font-size: 15px; }
+    .settings-form select { width: 100%; box-sizing: border-box; padding: 10px 11px; color: var(--ink); background: #061c2c; border: 1px solid rgba(255,255,255,.18); border-radius: 7px; font: inherit; font-size: 15px; }
     .settings-form input:focus { border-color: rgba(113,183,255,.8); outline: 2px solid rgba(113,183,255,.16); }
+    .settings-form select:focus { border-color: rgba(113,183,255,.8); outline: 2px solid rgba(113,183,255,.16); }
+    .settings-divider { width: 100%; height: 1px; margin: 4px 0; background: rgba(255,255,255,.12); }
     .settings-form input[aria-invalid="true"] { border-color: #ef4055; }
     .settings-form-note { margin: 0; color: var(--muted); font-size: 10px !important; }
     .settings-form-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
@@ -1118,6 +1121,50 @@
       .menu-content .menu-filters input,
       .menu-content .menu-filters select { min-width: 0; width: 100%; }
     }
+
+    /* V70: PCでは問題とコメントを左右に分け、スマホでは従来の縦配置を保つ。 */
+    @media (min-width: 1024px) {
+      .page.desktop-split-layout:not(.menu-active) {
+        display: grid;
+        grid-template-columns: minmax(0, 1.15fr) minmax(340px, .85fr);
+        grid-template-areas:
+          "header header"
+          "source source"
+          "session session"
+          "scene comments"
+          "answer comments"
+          "note note";
+        align-items: start;
+        column-gap: 16px;
+        row-gap: 12px;
+      }
+      .page.desktop-split-layout:not(.menu-active) > .header { grid-area: header; }
+      .page.desktop-split-layout:not(.menu-active) > .source-bar { grid-area: source; margin-bottom: 0; }
+      .page.desktop-split-layout:not(.menu-active) > .session-strip { grid-area: session; margin-bottom: 0; }
+      .page.desktop-split-layout:not(.menu-active) > .scene-card { grid-area: scene; min-width: 0; align-self: start; }
+      .page.desktop-split-layout:not(.menu-active) > .answer-strip { grid-area: answer; min-width: 0; margin-top: 0; }
+      .page.desktop-split-layout:not(.menu-active) > .comments-panel {
+        grid-area: comments;
+        min-width: 0;
+        max-height: calc(100vh - 24px);
+        margin-top: 0;
+        position: sticky;
+        top: 12px;
+        overflow: hidden;
+      }
+      .page.desktop-split-layout:not(.menu-active) > .comments-panel .comments-scroll {
+        min-height: 220px;
+        max-height: calc(100vh - 190px);
+      }
+      .page.desktop-split-layout:not(.menu-active) > .below-note { grid-area: note; }
+      .page.desktop-split-layout:not(.menu-active) .scene-frame { max-width: none; }
+    }
+
+    @media (max-width: 1023px) {
+      .page.desktop-split-layout { display: flex; }
+      .page.desktop-split-layout .comments-panel { position: static; max-height: none; overflow: visible; }
+      .page.desktop-split-layout .comments-scroll { max-height: min(52vh, 720px); }
+    }
   </style>
 </head>
 <body>
@@ -1362,7 +1409,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 69;
+    const APP_VERSION = 70;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -1983,6 +2030,8 @@
           const saved = JSON.parse(window.localStorage.getItem(USER_STATE_KEY_V16) || "null");
           const migrated = window.DrillUxV44?.migrateState?.(saved) || saved || fallback;
           migrated.localComments = migrated.localComments && typeof migrated.localComments === "object" ? migrated.localComments : {};
+          migrated.settings = migrated.settings && typeof migrated.settings === "object" ? migrated.settings : {};
+          if (!["split", "single"].includes(migrated.settings.desktopLayout)) migrated.settings.desktopLayout = "split";
           migrated.questionOverrides = migrated.questionOverrides && typeof migrated.questionOverrides === "object" ? migrated.questionOverrides : {};
           migrated.deletionProposals = migrated.deletionProposals && typeof migrated.deletionProposals === "object" ? migrated.deletionProposals : {};
           return migrated;
@@ -2011,7 +2060,8 @@
       const APP_ANNOUNCEMENTS_V66 = [
         { version: 66, date: "2026-08-14", title: "コメント・問題追加通知を追加しました", body: "新しいコメントに加えて、他の利用者が共有問題集へ追加した問題も通知一覧で確認できるようになりました。" },
         { version: 67, date: "2026-08-14", title: "作成者表示名の設定を追加しました", body: "設定から1〜5文字の表示名を登録できます。コメントや問題作成時の作成者名に使用されます。" },
-        { version: APP_VERSION, date: "2026-08-14", title: "コメントの書式と画像添付に対応しました", body: "太字・伏せ字・色・デカ文字、画像の貼り付けとドラッグ＆ドロップに対応しました。" }
+        { version: 69, date: "2026-08-14", title: "コメントの書式と画像添付に対応しました", body: "太字・伏せ字・色・デカ文字、画像の貼り付けとドラッグ＆ドロップに対応しました。" },
+        { version: APP_VERSION, date: "2026-08-15", title: "PCの問題画面を2ペインにしました", body: "PCでは問題と解答を左、コメントを右に分けて表示します。設定から従来の1列表示にも戻せます。" }
       ];
       let commentNoticeStoreV65 = loadCommentNoticeStoreV65();
       let sharedCommentRowsV65 = [];
@@ -2406,16 +2456,16 @@
       function renderSettingsViewV67() {
         const configuredName = String(userStateV16.settings?.displayName || "").trim();
         const fallbackName = currentUserDisplayNameV47();
+        const desktopLayout = userStateV16.settings?.desktopLayout === "single" ? "single" : "split";
         const syncNote = supabaseSessionV46
           ? "ログイン中：保存すると共有コメントと問題作成にも反映されます。"
           : "未ログイン：この端末に保存されます。共有コメント・問題作成へ反映するにはDiscordログイン後に再保存してください。";
-        return `<section class="settings-section"><h3>表示名の設定</h3><p>コメントや問題作成時に表示する名前を登録できます。読みやすさを保つため、1〜5文字で入力してください。</p><form class="settings-form" id="displayNameForm"><label for="displayNameInput">作成者表示名<input id="displayNameInput" type="text" maxlength="5" minlength="1" value="${escapeHtml(configuredName)}" placeholder="${escapeHtml(fallbackName)}" autocomplete="nickname" required></label><p class="settings-form-note">${escapeHtml(syncNote)}</p><div class="settings-form-actions"><button class="primary" type="submit">表示名を保存</button><span class="settings-form-status" id="displayNameStatus" aria-live="polite"></span></div></form></section>`;
+        return `<section class="settings-section"><h3>表示名の設定</h3><p>コメントや問題作成時に表示する名前を登録できます。読みやすさを保つため、1〜5文字で入力してください。</p><form class="settings-form" id="displayNameForm"><label for="displayNameInput">作成者表示名<input id="displayNameInput" type="text" maxlength="5" minlength="1" value="${escapeHtml(configuredName)}" placeholder="${escapeHtml(fallbackName)}" autocomplete="nickname" required></label><p class="settings-form-note">${escapeHtml(syncNote)}</p><div class="settings-form-actions"><button class="primary" type="submit">表示名を保存</button><span class="settings-form-status" id="displayNameStatus" aria-live="polite"></span></div></form><div class="settings-divider" role="presentation"></div><h3>PCの問題画面</h3><p>PCでは問題とコメントを左右に分けると、局面画像を小さく保ったままコメントを読みやすくできます。スマホでは常に縦配置です。</p><div class="settings-form" id="layoutPreferenceForm"><label for="desktopLayoutSelect">PCレイアウト<select id="desktopLayoutSelect"><option value="split"${desktopLayout === "split" ? " selected" : ""}>左右2ペイン（おすすめ）</option><option value="single"${desktopLayout === "single" ? " selected" : ""}>1列（従来の表示）</option></select></label><p class="settings-form-note">設定はこのブラウザに保存されます。変更は次に問題画面を開いたときから反映されます。</p></div></section>`;
       }
 
       function bindSettingsViewV67() {
         const form = document.getElementById("displayNameForm");
-        if (!form) return;
-        form.addEventListener("submit", async event => {
+        if (form) form.addEventListener("submit", async event => {
           event.preventDefault();
           const input = document.getElementById("displayNameInput");
           const status = document.getElementById("displayNameStatus");
@@ -2454,6 +2504,22 @@
             refreshAccountV46(supabaseSessionV46);
           }
         });
+        const layoutSelect = document.getElementById("desktopLayoutSelect");
+        if (layoutSelect) layoutSelect.addEventListener("change", event => {
+          userStateV16.settings ||= {};
+          userStateV16.settings.desktopLayout = event.target.value === "single" ? "single" : "split";
+          saveUserStateV16();
+          applyDesktopLayoutV70();
+        });
+      }
+
+      function applyDesktopLayoutV70() {
+        const page = document.querySelector(".page");
+        if (!page) return;
+        const layout = userStateV16.settings?.desktopLayout === "single" ? "single" : "split";
+        const desktop = window.matchMedia("(min-width: 1024px)").matches;
+        page.classList.toggle("desktop-split-layout", desktop && layout === "split");
+        page.dataset.desktopLayout = desktop && layout === "split" ? "split" : "single";
       }
 
       function questionMetadataValueV47(question, keys) {
@@ -3388,6 +3454,7 @@
 
       function showMenuV16(view = menuViewV16) {
         menuViewV16 = MENU_VIEW_COPY_V16[view] ? view : "my";
+        applyDesktopLayoutV70();
         document.querySelector(".page").classList.add("menu-active");
         document.getElementById("menuPanel").hidden = false;
         renderMenuCardsV16();
@@ -3403,6 +3470,7 @@
         document.getElementById("questionSelect").value = String(index);
         document.getElementById("menuPanel").hidden = true;
         document.querySelector(".page").classList.remove("menu-active");
+        applyDesktopLayoutV70();
         applyQuestionV16(question, index);
       }
 
@@ -4402,6 +4470,8 @@
         document.getElementById("commentNotificationDialogClose").addEventListener("click", () => document.getElementById("commentNotificationDialog").close());
         document.getElementById("commentNotificationDialogDone").addEventListener("click", () => document.getElementById("commentNotificationDialog").close());
         document.getElementById("markAllCommentsReadButton").addEventListener("click", markAllCommentsReadV65);
+        window.addEventListener("resize", applyDesktopLayoutV70, { passive: true });
+        applyDesktopLayoutV70();
         document.getElementById("commentNotificationList").addEventListener("click", event => {
           const button = event.target.closest("[data-community-notification-question]");
           if (!button) return;
