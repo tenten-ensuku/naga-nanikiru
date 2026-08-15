@@ -881,7 +881,8 @@
     }
     .menu-list-header-group {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(106px, auto) minmax(56px, auto) 44px 44px;
+      /* V82: match every row with fixed action/history tracks. */
+      grid-template-columns: minmax(0, 1fr) 136px 142px 44px 44px;
       gap: 10px;
       align-items: center;
       min-width: 0;
@@ -895,7 +896,8 @@
       border-top: 0;
     }
     .menu-card {
-      grid-template-columns: minmax(0, 1fr) minmax(106px, auto) minmax(56px, auto) 44px 44px;
+      /* V82: auto tracks made each row shift when its history count differed. */
+      grid-template-columns: minmax(0, 1fr) 136px 142px 44px 44px;
       gap: 10px;
       min-height: 78px;
       min-width: 0;
@@ -926,6 +928,8 @@
     }
     .menu-card-status {
       gap: 7px;
+      min-width: 0;
+      justify-content: flex-start;
     }
     .menu-row-status {
       display: inline-flex;
@@ -974,6 +978,10 @@
       color: #e5f4f5;
       font-size: 22px;
       font-weight: 900;
+      min-width: 0;
+      justify-content: flex-start;
+      overflow: hidden;
+      white-space: nowrap;
     }
     .menu-card-latest.is-empty {
       color: #a4c0c7;
@@ -1046,7 +1054,7 @@
         font-size: 10px;
       }
       .menu-list-header-group {
-        grid-template-columns: minmax(0, 1fr) 108px 78px 43px 43px;
+        grid-template-columns: minmax(0, 1fr) 124px 132px 40px 40px;
         gap: 5px;
         padding-inline: 8px;
       }
@@ -1058,7 +1066,7 @@
         gap: 0;
       }
       .menu-card {
-        grid-template-columns: minmax(0, 1fr) 108px 78px 43px 43px;
+        grid-template-columns: minmax(0, 1fr) 124px 132px 40px 40px;
         gap: 5px;
         min-height: 74px;
         padding: 9px 8px;
@@ -1133,12 +1141,12 @@
         font-size: 9px;
       }
       .menu-list-header-group {
-        grid-template-columns: minmax(0, 1fr) 86px 63px 38px 38px;
+        grid-template-columns: minmax(0, 1fr) 100px 112px 36px 36px;
         gap: 3px;
         padding-inline: 5px;
       }
       .menu-card {
-        grid-template-columns: minmax(0, 1fr) 86px 63px 38px 38px;
+        grid-template-columns: minmax(0, 1fr) 100px 112px 36px 36px;
         gap: 3px;
         min-height: 70px;
         padding: 8px 5px;
@@ -1171,6 +1179,26 @@
         width: 16px;
         height: 16px;
       }
+    }
+    @media (max-width: 480px) {
+      /* Keep the title readable on narrow phones; actions form one stable second row. */
+      .menu-list-header { display: none; }
+      .menu-card {
+        grid-template-columns: minmax(0, 1fr) 72px 36px 36px;
+        grid-template-rows: auto auto;
+        grid-template-areas:
+          "open open open open"
+          "status latest favorite trash";
+        column-gap: 4px;
+        row-gap: 6px;
+        min-height: 92px;
+        padding: 9px 5px;
+      }
+      .menu-card-open { grid-area: open; }
+      .menu-card-status { grid-area: status; }
+      .menu-card-latest { grid-area: latest; gap: 0; font-size: 14px; }
+      .menu-card-latest-mark { width: 13px; height: 13px; }
+      .menu-card-icon-action { width: 36px; min-height: 36px; font-size: 19px; }
     }
     @media (max-width: 800px) {
       .menu-content > * { min-width: 0; max-width: 100%; }
@@ -1468,7 +1496,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 81;
+    const APP_VERSION = 82;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -2253,7 +2281,8 @@
         { version: 78, date: "2026-08-15", title: "問題一覧を1列表示に戻しました", body: "問題名や種別が崩れないよう、PCとスマホの問題一覧を1列表示に戻しました。" },
         { version: 79, date: "2026-08-15", title: "問題名から「追加」の文言を削除しました", body: "追加問題250のように表示されていた問題名を、問題250の形式に統一しました。既存の問題名も自動で読み替えます。" },
         { version: 80, date: "2026-08-15", title: "絞り込み中の次の問題を正しく出題するようにしました", body: "副露判断などの種別で絞り込んだ状態でも、次の問題へ進む際に同じ絞り込みを維持し、種別指定時はランダムに出題します。" },
-        { version: APP_VERSION, date: "2026-08-15", title: "ログインした端末間で回答履歴を同期するようにしました", body: "Discordログイン後、Supabaseに保存された自分の回答履歴をこの端末へ取り込み、PCと携帯で同じ履歴を確認できるようにしました。" }
+        { version: 81, date: "2026-08-15", title: "ログインした端末間で回答履歴を同期するようにしました", body: "Discordログイン後、Supabaseに保存された自分の回答履歴をこの端末へ取り込み、PCと携帯で同じ履歴を確認できるようにしました。" },
+        { version: APP_VERSION, date: "2026-08-15", title: "問題一覧の列を揃えました", body: "直近の採点履歴の件数に左右されず、ステータス・履歴・お気に入り・ゴミ箱の位置が行ごとに揃って表示されるようにしました。" }
       ];
       let commentNoticeStoreV65 = loadCommentNoticeStoreV65();
       let sharedCommentRowsV65 = [];
