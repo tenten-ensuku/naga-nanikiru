@@ -34,7 +34,7 @@ test("requires explicit confirmation before revealing or recording an answer", a
 
 test("records answer timing and exposes the synchronized drill version", async () => {
   const html = await source();
-  assert.match(html, /const APP_VERSION = 87;/);
+  assert.match(html, /const APP_VERSION = 88;/);
   assert.match(html, /function nextFilteredQuestionV87\(\)/);
   assert.match(html, /id="nextQuestionBottomButton"/);
   assert.match(html, /function latestAnswerV44\(question\)[\s\S]*?\.sort\(/);
@@ -57,4 +57,12 @@ test("derives riichi controls from NAGA reach data", async () => {
     .map(question => question.number);
   assert.deepEqual(riichiNumbers, [41, 47, 138, 141, 151, 156, 165, 179, 198]);
   assert.ok(questions.filter(question => question.hasRiichiJudgment).every(question => riichiNumbers.includes(question.number)));
+
+  const question158 = questions.find(question => question.number === 158);
+  assert.equal(question158?.decisionType, "call");
+  assert.equal(question158?.nagaUrl, "https://naga.dmv.nico/htmls/acd736f52c73f007190f3e9f8391be6ca1693750a555b6a66bb18b2e174ca8ccv2_2.html?tw=0&ts=4&tv=24");
+  assert.equal(question158?.image, "question-images/q158.webp");
+  assert.equal(question158?.callTile, "pin1");
+  assert.deepEqual(question158?.callRecommended, [true, true, true]);
+  assert.deepEqual(question158?.callProbabilities?.call, [91.11, 84.83, 53.76]);
 });

@@ -1638,7 +1638,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 87;
+    const APP_VERSION = 88;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -2428,7 +2428,8 @@
         { version: 81, date: "2026-08-15", title: "ログインした端末間で回答履歴を同期するようにしました", body: "Discordログイン後、Supabaseに保存された自分の回答履歴をこの端末へ取り込み、PCと携帯で同じ履歴を確認できるようにしました。" },
         { version: 82, date: "2026-08-15", title: "問題一覧の列を揃えました", body: "直近の採点履歴の件数に左右されず、ステータス・履歴・お気に入り・ゴミ箱の位置が行ごとに揃って表示されるようにしました。" },
         { version: 83, date: "2026-08-15", title: "問題一覧の絞り込みをシンプルにしました", body: "検索窓をなくし、問題範囲とジャンルを分けて選べるようにしました。回答状態などの詳細条件は必要なときだけ開けます。" },
-        { version: APP_VERSION, date: "2026-08-15", title: "所有者専用の生徒進捗画面を追加しました", body: "所有者アカウントだけが、生徒の回答数・安全回答数・要復習数・平均回答時間を確認できるようになりました。" }
+        { version: 87, date: "2026-08-15", title: "所有者専用の生徒進捗画面を追加しました", body: "所有者アカウントだけが、生徒の回答数・安全回答数・要復習数・平均回答時間を確認できるようになりました。" },
+        { version: APP_VERSION, date: "2026-08-15", title: "問題158を副露判断の局面に差し替えました", body: "指定されたNAGA局面URLから、1pへのポン判断として問題158を更新しました。" }
       ];
       let commentNoticeStoreV65 = loadCommentNoticeStoreV65();
       let sharedCommentRowsV65 = [];

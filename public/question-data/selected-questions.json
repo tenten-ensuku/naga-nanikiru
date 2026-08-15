@@ -38727,234 +38727,87 @@
     "id": "139",
     "number": 158,
     "title": "問題158",
-    "nagaUrl": "https://naga.dmv.nico/htmls/acd736f52c73f007190f3e9f8391be6ca1693750a555b6a66bb18b2e174ca8ccv2_2.html?tw=0&ts=4&tv=44",
+    "nagaUrl": "https://naga.dmv.nico/htmls/acd736f52c73f007190f3e9f8391be6ca1693750a555b6a66bb18b2e174ca8ccv2_2.html?tw=0&ts=4&tv=24",
     "threadUrl": "https://discord.com/channels/1166706544856006656/1456526367784042728",
-    "image": "question-images/q139.webp",
+    "image": "question-images/q158.webp",
     "handBeforeDraw": [
       "man2",
       "sou6",
+      "pin6",
       "man7",
       "man4",
       "ji2",
       "sou7",
       "man7",
       "pin1",
+      "sou8",
       "man3",
       "pin1",
-      "ji2",
-      "aka3",
-      "man8"
+      "ji2"
     ],
-    "draw": "ji3",
-    "actualDiscard": "ji3",
+    "draw": null,
+    "actualDiscard": null,
     "doraMarker": "pin7",
     "models": [
       {
         "name": "ニシキ",
-        "recommendation": "ji3",
-        "label": "ji3",
-        "actualProbability": 95.97
+        "recommendation": "ポン",
+        "recommendationCode": 4,
+        "label": "ポン"
       },
       {
         "name": "ヒバカリ",
-        "recommendation": "ji3",
-        "label": "ji3",
-        "actualProbability": 60.57
+        "recommendation": "ポン",
+        "recommendationCode": 4,
+        "label": "ポン"
       },
       {
         "name": "カガシ",
-        "recommendation": "ji3",
-        "label": "ji3",
-        "actualProbability": 96.09
+        "recommendation": "ポン",
+        "recommendationCode": 4,
+        "label": "ポン"
       }
     ],
-    "probabilities": {
-      "man1": [
-        0,
-        0,
-        0
+    "probabilities": {},
+    "decisionType": "call",
+    "callTile": "pin1",
+    "callOptions": [
+      {
+        "code": 0,
+        "label": "鳴かない",
+        "values": [
+          8.88,
+          15.16,
+          46.23
+        ]
+      },
+      {
+        "code": 4,
+        "label": "ポン",
+        "values": [
+          91.11,
+          84.83,
+          53.76
+        ]
+      }
+    ],
+    "callProbabilities": {
+      "pass": [
+        8.88,
+        15.16,
+        46.23
       ],
-      "man2": [
-        0,
-        0,
-        0
-      ],
-      "man3": [
-        0,
-        0,
-        0
-      ],
-      "man4": [
-        0,
-        0,
-        0
-      ],
-      "man5": [
-        0,
-        0,
-        0
-      ],
-      "man6": [
-        0,
-        0,
-        0
-      ],
-      "man7": [
-        4.02,
-        39.42,
-        3.89
-      ],
-      "man8": [
-        0,
-        0,
-        0
-      ],
-      "man9": [
-        0,
-        0,
-        0
-      ],
-      "pin1": [
-        0,
-        0,
-        0
-      ],
-      "pin2": [
-        0,
-        0,
-        0
-      ],
-      "pin3": [
-        0,
-        0,
-        0
-      ],
-      "pin4": [
-        0,
-        0,
-        0
-      ],
-      "pin5": [
-        0,
-        0,
-        0
-      ],
-      "pin6": [
-        0,
-        0,
-        0
-      ],
-      "pin7": [
-        0,
-        0,
-        0
-      ],
-      "pin8": [
-        0,
-        0,
-        0
-      ],
-      "pin9": [
-        0,
-        0,
-        0
-      ],
-      "sou1": [
-        0,
-        0,
-        0
-      ],
-      "sou2": [
-        0,
-        0,
-        0
-      ],
-      "sou3": [
-        0,
-        0,
-        0
-      ],
-      "sou4": [
-        0,
-        0,
-        0
-      ],
-      "sou5": [
-        0,
-        0,
-        0
-      ],
-      "sou6": [
-        0,
-        0,
-        0
-      ],
-      "sou7": [
-        0,
-        0,
-        0
-      ],
-      "sou8": [
-        0,
-        0,
-        0
-      ],
-      "sou9": [
-        0,
-        0,
-        0
-      ],
-      "ji1": [
-        0,
-        0,
-        0
-      ],
-      "ji2": [
-        0,
-        0,
-        0
-      ],
-      "ji3": [
-        95.97,
-        60.57,
-        96.09
-      ],
-      "ji4": [
-        0,
-        0,
-        0
-      ],
-      "ji5": [
-        0,
-        0,
-        0
-      ],
-      "ji6": [
-        0,
-        0,
-        0
-      ],
-      "ji7": [
-        0,
-        0,
-        0
-      ],
-      "aka3": [
-        0,
-        0,
-        0
+      "call": [
+        91.11,
+        84.83,
+        53.76
       ]
     },
-    "reach": [
-      0,
-      0,
-      0
+    "callRecommended": [
+      true,
+      true,
+      true
     ],
-    "decisionType": "discard",
-    "callTile": null,
-    "callOptions": [],
-    "callProbabilities": null,
-    "callRecommended": null,
     "comments": [
       {
         "id": "1456527270347931785",
@@ -38970,25 +38823,26 @@
     "playerSeat": 0,
     "tw": 0,
     "ts": 4,
-    "tv": 43,
-    "actualDiscardNaga": "W",
-    "actualDiscardProbability": [
-      95.97,
-      60.57,
-      96.09
+    "tv": 24,
+    "actualCall": false,
+    "actualCallCode": 0,
+    "actualCallType": null,
+    "actualDecision": 0,
+    "actualCallProbability": [
+      8.88,
+      15.16,
+      46.23
+    ],
+    "actualCallProbabilityRaw": [
+      888,
+      1516,
+      4623
     ],
     "reached": false,
-    "sourceTv": 44,
-    "predictionType": "tsumo",
     "sourceReportId": "acd736f52c73f007190f3e9f8391be6ca1693750a555b6a66bb18b2e174ca8ccv2_2",
     "sourceTw": 0,
     "sourceTs": 4,
-    "actualCall": null,
-    "actualCallCode": null,
-    "actualCallType": null,
-    "actualDecision": null,
-    "actualCallProbability": null,
-    "actualCallProbabilityRaw": null
+    "sourceTv": 24
   },
   {
     "id": "140",
