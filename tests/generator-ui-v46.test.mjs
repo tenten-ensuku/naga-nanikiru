@@ -4,9 +4,9 @@ import test from "node:test";
 
 const indexUrl = new URL("../public/index.html", import.meta.url);
 
-test("renders the v83 scene and half-game generator controls", async () => {
+test("renders the v84 scene and half-game generator controls", async () => {
   const html = await readFile(indexUrl, "utf8");
-  assert.match(html, /const APP_VERSION = 83/);
+  assert.match(html, /const APP_VERSION = 84/);
   assert.match(html, /\[\.\.\.APP_ANNOUNCEMENTS_V66\]\s*\.sort\(\(left, right\) => right\.version - left\.version\)/);
   assert.match(html, /data-menu-view="settings"/);
   assert.match(html, /id="displayNameForm"/);
@@ -57,6 +57,9 @@ test("renders the v83 scene and half-game generator controls", async () => {
   assert.match(html, /function renderMenuTypeFiltersV83\(\)/);
   assert.doesNotMatch(html, /id="menuSearch"/);
   assert.doesNotMatch(html, /id="menuTypeFilter"/);
+  assert.match(html, /function canViewStudentDashboardV84\(\)/);
+  assert.match(html, /studentNav\.hidden = !canViewStudentDashboardV84\(\)/);
+  assert.match(html, /所有者専用の生徒進捗画面を追加しました/);
   assert.match(html, /function menuRangeOptionsV60\(\)/);
   assert.match(html, /sourceQuestions\.filter\(menuRangeMatchesV60\)/);
   assert.match(html, /class="menu-brand-title">My問題集<\/span><span class="menu-brand-actions">/);

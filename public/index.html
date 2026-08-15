@@ -1616,7 +1616,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 83;
+    const APP_VERSION = 84;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -2341,7 +2341,7 @@
         generator: { title: "問題生成" },
         settings: { title: "設定" },
         analysis: { title: "自己分析" },
-        students: { title: "生徒の回答履歴" },
+        students: { title: "生徒の進捗" },
         session: { title: "セッション結果" }
       };
       let userStateV16 = loadUserStateV16();
@@ -2404,7 +2404,8 @@
         { version: 80, date: "2026-08-15", title: "絞り込み中の次の問題を正しく出題するようにしました", body: "副露判断などの種別で絞り込んだ状態でも、次の問題へ進む際に同じ絞り込みを維持し、種別指定時はランダムに出題します。" },
         { version: 81, date: "2026-08-15", title: "ログインした端末間で回答履歴を同期するようにしました", body: "Discordログイン後、Supabaseに保存された自分の回答履歴をこの端末へ取り込み、PCと携帯で同じ履歴を確認できるようにしました。" },
         { version: 82, date: "2026-08-15", title: "問題一覧の列を揃えました", body: "直近の採点履歴の件数に左右されず、ステータス・履歴・お気に入り・ゴミ箱の位置が行ごとに揃って表示されるようにしました。" },
-        { version: APP_VERSION, date: "2026-08-15", title: "問題一覧の絞り込みをシンプルにしました", body: "検索窓をなくし、問題範囲とジャンルを分けて選べるようにしました。回答状態などの詳細条件は必要なときだけ開けます。" }
+        { version: 83, date: "2026-08-15", title: "問題一覧の絞り込みをシンプルにしました", body: "検索窓をなくし、問題範囲とジャンルを分けて選べるようにしました。回答状態などの詳細条件は必要なときだけ開けます。" },
+        { version: APP_VERSION, date: "2026-08-15", title: "所有者専用の生徒進捗画面を追加しました", body: "所有者アカウントだけが、生徒の回答数・安全回答数・要復習数・平均回答時間を確認できるようになりました。" }
       ];
       let commentNoticeStoreV65 = loadCommentNoticeStoreV65();
       let sharedCommentRowsV65 = [];
@@ -2951,6 +2952,10 @@
         const roles = [user?.app_metadata?.role, user?.app_metadata?.user_role]
           .map(value => String(value || "").toLowerCase());
         return roles.some(role => ["admin", "administrator"].includes(role));
+      }
+
+      function canViewStudentDashboardV84() {
+        return Boolean(supabaseSessionV46 && isQuestionAdminV47());
       }
 
       function isCollectionManagerV47() {
@@ -4170,13 +4175,17 @@
       async function renderStudentDashboardV46() {
         const grid = document.getElementById("menuGrid");
         if (!window.NagaSupabase?.configured || !supabaseSessionV46) {
-          grid.innerHTML = `<div class="menu-placeholder"><strong>Discordログインが必要です</strong>教師として所属設定された生徒の履歴だけを確認できます。</div>`;
+          grid.innerHTML = `<div class="menu-placeholder"><strong>所有者アカウントでログインしてください</strong>生徒の進捗は所有者だけが確認できます。</div>`;
+          return;
+        }
+        if (!canViewStudentDashboardV84()) {
+          grid.innerHTML = `<div class="menu-placeholder"><strong>この画面は所有者専用です</strong>生徒の進捗情報は表示されません。</div>`;
           return;
         }
         try {
           const rows = await window.NagaSupabase.loadStudentSummaries();
           const students = rows.filter(row => row.user_id !== supabaseSessionV46.user.id);
-          grid.innerHTML = students.length ? `<section class="student-dashboard">${students.map(row => `<article class="student-row"><strong>${escapeHtml(row.display_name || "生徒")}</strong><span class="student-metric">回答数<b>${Number(row.attempt_count || 0)}</b></span><span class="student-metric">安全回答<b>${Number(row.safe_count || 0)}</b></span><span class="student-metric">要復習<b>${Number(row.weak_count || 0)}</b></span><span class="student-metric">平均時間<b>${row.average_seconds ?? "-"}秒</b></span></article>`).join("")}</section>` : `<div class="menu-placeholder"><strong>表示できる回答履歴はまだありません</strong>所属済みの生徒が回答すると、ここに集計されます。</div>`;
+          grid.innerHTML = students.length ? `<section class="student-dashboard"><p class="student-dashboard-note">あなたは所有者として、生徒の集計情報を確認できます。個々の生徒の回答内容は公開しません。</p>${students.map(row => `<article class="student-row"><strong>${escapeHtml(row.display_name || "生徒")}</strong><span class="student-metric">回答数<b>${Number(row.attempt_count || 0)}</b></span><span class="student-metric">安全回答<b>${Number(row.safe_count || 0)}</b></span><span class="student-metric">要復習<b>${Number(row.weak_count || 0)}</b></span><span class="student-metric">平均時間<b>${row.average_seconds ?? "-"}秒</b></span></article>`).join("")}</section>` : `<div class="menu-placeholder"><strong>表示できる回答履歴はまだありません</strong>生徒がログインして回答すると、ここに集計されます。</div>`;
         } catch (error) {
           grid.innerHTML = `<div class="menu-placeholder"><strong>履歴を読み込めませんでした</strong>${escapeHtml(error?.message || "権限設定を確認してください。")}</div>`;
         }
@@ -4918,12 +4927,7 @@
         authButton.textContent = "ログアウト";
         importButton.hidden = false;
         shareButton.hidden = !sharedCollectionV46;
-        try {
-          const memberships = await window.NagaSupabase.loadMemberships();
-          studentNav.hidden = !memberships.some(member => ["owner", "teacher"].includes(member.role));
-        } catch {
-          studentNav.hidden = true;
-        }
+        studentNav.hidden = !canViewStudentDashboardV84();
         const synced = await hydrateRemoteAnswerHistoryV81();
         if (synced > 0) status.textContent = `${displayName}としてログイン中。回答履歴を${synced}件同期しました。`;
       }

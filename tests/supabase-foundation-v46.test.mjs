@@ -3,6 +3,17 @@ import fs from "node:fs/promises";
 import test from "node:test";
 
 const migrationPath = new URL("../supabase/migrations/20260803165942_learning_platform_core.sql", import.meta.url);
+const ownerProgressMigrationPath = new URL("../supabase/migrations/20260815173000_owner_only_student_progress_v84.sql", import.meta.url);
+
+test("restricts student progress to the application owner and enrolls future users", async () => {
+  const sql = await fs.readFile(ownerProgressMigrationPath, "utf8");
+  assert.match(sql, /create or replace function private\.can_view_student[\s\S]*private\.is_app_admin\(\)/i);
+  assert.match(sql, /owner_member\.role = 'owner'/i);
+  assert.match(sql, /student_member\.role = 'student'/i);
+  assert.match(sql, /create or replace function private\.add_default_naga_student/i);
+  assert.match(sql, /on_profile_created_add_default_naga_student/i);
+  assert.match(sql, /NAGA問題集/i);
+});
 
 test("enables RLS and scopes private learning history", async () => {
   const sql = await fs.readFile(migrationPath, "utf8");
