@@ -855,6 +855,98 @@
     .menu-range-actions {
       gap: 8px;
     }
+    /* V83: one clear filter hierarchy: range first, genre second, status only on demand. */
+    .menu-filter-stack {
+      display: grid;
+      gap: 12px;
+      min-width: 0;
+    }
+    .menu-filter-stack[hidden] {
+      display: none;
+    }
+    .menu-filter-row {
+      display: grid;
+      gap: 7px;
+      min-width: 0;
+    }
+    .menu-filter-heading {
+      margin: 0;
+      color: #c5dadd;
+      font-size: 11px;
+      font-weight: 850;
+      letter-spacing: .03em;
+    }
+    .menu-genre-row {
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 10px;
+    }
+    .menu-genre-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      min-width: 0;
+    }
+    .menu-genre-tab,
+    .menu-filter-advanced-toggle {
+      min-height: 40px;
+      padding: 8px 12px;
+      color: #d2e3e6;
+      background: #123446;
+      border: 1px solid rgba(190, 220, 225, .28);
+      border-radius: 5px;
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+    .menu-genre-tab:hover,
+    .menu-genre-tab:focus-visible,
+    .menu-filter-advanced-toggle:hover,
+    .menu-filter-advanced-toggle:focus-visible {
+      background: #1b4b5d;
+      border-color: rgba(190, 220, 225, .58);
+      outline: 2px solid rgba(155, 232, 216, .2);
+      outline-offset: 1px;
+    }
+    .menu-genre-tab.is-active {
+      color: #172215;
+      background: var(--gold);
+      border-color: #ffe08a;
+    }
+    .menu-filter-advanced-toggle {
+      color: #c5dadd;
+      background: transparent;
+    }
+    .menu-filter-advanced-toggle[aria-expanded="true"] {
+      color: #172215;
+      background: #bde7e0;
+      border-color: #d6fff5;
+    }
+    .menu-content .menu-filters-advanced {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px;
+      border: 1px solid rgba(190, 220, 225, .2);
+      border-radius: 5px;
+      background: rgba(0, 0, 0, .14);
+    }
+    .menu-content .menu-filters-advanced[hidden] {
+      display: none;
+    }
+    .menu-advanced-label {
+      flex: 0 0 auto;
+      color: #c5dadd;
+      font-size: 11px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+    .menu-content .menu-filters-advanced select {
+      flex: 1 1 auto;
+      min-height: 40px;
+      width: auto;
+      min-width: 180px;
+    }
     .menu-range-action {
       min-height: 44px;
       padding: 9px 15px;
@@ -1202,6 +1294,25 @@
     }
     @media (max-width: 800px) {
       .menu-content > * { min-width: 0; max-width: 100%; }
+      .menu-genre-row {
+        grid-template-columns: 1fr;
+        gap: 6px;
+      }
+      .menu-genre-tabs {
+        gap: 5px;
+      }
+      .menu-genre-tab {
+        flex: 1 1 90px;
+        padding-inline: 7px;
+        font-size: 11px;
+      }
+      .menu-filter-advanced-toggle {
+        justify-self: start;
+      }
+      .menu-content .menu-filters-advanced {
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr);
+      }
       .menu-content .menu-filters { grid-template-columns: minmax(0, 1fr); }
       .menu-content .menu-filters input,
       .menu-content .menu-filters select { min-width: 0; width: 100%; }
@@ -1303,24 +1414,33 @@
           <span class="quick-start-note">まだ解いていない問題</span>
         </button>
         </section>
-        <div class="menu-filters" id="menuFilters">
-        <input id="menuSearch" type="search" placeholder="問題番号・種類で検索" aria-label="問題を検索">
-        <select id="menuStatusFilter" aria-label="回答状態で絞り込み">
-          <option value="all">すべての状態</option>
-          <option value="due">復習期限</option>
-          <option value="unanswered">未回答</option>
-          <option value="weak">×・△あり</option>
-          <option value="mastered">習得済み</option>
-        </select>
-        <select id="menuTypeFilter" aria-label="問題種別で絞り込み">
-          <option value="all">すべての種類</option>
-          <option value="discard">打牌判断</option>
-          <option value="riichi">リーチ判断</option>
-          <option value="call">副露判断</option>
-          <option value="disagreement">モデル意見割れ</option>
-        </select>
+        <div class="menu-filter-stack" id="menuFilters">
+          <section class="menu-filter-row" aria-labelledby="menuRangeHeading">
+            <h3 class="menu-filter-heading" id="menuRangeHeading">問題範囲</h3>
+            <div class="menu-range-tabs" id="menuRangeTabs" role="tablist" aria-labelledby="menuRangeHeading" hidden></div>
+          </section>
+          <section class="menu-filter-row menu-genre-row" aria-labelledby="menuGenreHeading">
+            <h3 class="menu-filter-heading" id="menuGenreHeading">ジャンル</h3>
+            <div class="menu-genre-tabs" id="menuTypeFilters" role="group" aria-labelledby="menuGenreHeading">
+              <button class="menu-genre-tab is-active" type="button" data-menu-type="all" aria-pressed="true">すべて</button>
+              <button class="menu-genre-tab" type="button" data-menu-type="discard" aria-pressed="false">打牌判断</button>
+              <button class="menu-genre-tab" type="button" data-menu-type="riichi" aria-pressed="false">リーチ判断</button>
+              <button class="menu-genre-tab" type="button" data-menu-type="call" aria-pressed="false">副露判断</button>
+              <button class="menu-genre-tab" type="button" data-menu-type="disagreement" aria-pressed="false">意見割れ</button>
+            </div>
+            <button class="menu-filter-advanced-toggle" id="menuAdvancedToggle" type="button" aria-expanded="false" aria-controls="menuAdvancedFilters">詳細条件⌄</button>
+          </section>
+          <div class="menu-filters menu-filters-advanced" id="menuAdvancedFilters" hidden>
+            <label class="menu-advanced-label" for="menuStatusFilter">回答状態</label>
+            <select id="menuStatusFilter" aria-label="回答状態で絞り込み">
+              <option value="all">すべて</option>
+              <option value="due">復習期限</option>
+              <option value="unanswered">未回答</option>
+              <option value="weak">×・△あり</option>
+              <option value="mastered">習得済み</option>
+            </select>
+          </div>
         </div>
-        <div class="menu-range-tabs" id="menuRangeTabs" role="tablist" aria-label="問題番号の範囲" hidden></div>
         <div class="menu-range-actions" id="menuRangeActions" hidden>
           <button class="menu-range-action primary" type="button" data-range-session="all">この範囲から解く <span aria-hidden="true">→</span></button>
           <button class="menu-range-action" type="button" data-range-session="unanswered">未回答だけ解く <span aria-hidden="true">→</span></button>
@@ -1496,7 +1616,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 82;
+    const APP_VERSION = 83;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -2198,6 +2318,7 @@
       let menuStatusV44 = "all";
       let menuTypeV44 = "all";
       let menuRangeV60 = "all";
+      let menuAdvancedFiltersOpenV83 = false;
       let managedQuestionIndexV44 = null;
       let generatorCandidatesV44 = [];
       let generatorReportV44 = null;
@@ -2282,7 +2403,8 @@
         { version: 79, date: "2026-08-15", title: "問題名から「追加」の文言を削除しました", body: "追加問題250のように表示されていた問題名を、問題250の形式に統一しました。既存の問題名も自動で読み替えます。" },
         { version: 80, date: "2026-08-15", title: "絞り込み中の次の問題を正しく出題するようにしました", body: "副露判断などの種別で絞り込んだ状態でも、次の問題へ進む際に同じ絞り込みを維持し、種別指定時はランダムに出題します。" },
         { version: 81, date: "2026-08-15", title: "ログインした端末間で回答履歴を同期するようにしました", body: "Discordログイン後、Supabaseに保存された自分の回答履歴をこの端末へ取り込み、PCと携帯で同じ履歴を確認できるようにしました。" },
-        { version: APP_VERSION, date: "2026-08-15", title: "問題一覧の列を揃えました", body: "直近の採点履歴の件数に左右されず、ステータス・履歴・お気に入り・ゴミ箱の位置が行ごとに揃って表示されるようにしました。" }
+        { version: 82, date: "2026-08-15", title: "問題一覧の列を揃えました", body: "直近の採点履歴の件数に左右されず、ステータス・履歴・お気に入り・ゴミ箱の位置が行ごとに揃って表示されるようにしました。" },
+        { version: APP_VERSION, date: "2026-08-15", title: "問題一覧の絞り込みをシンプルにしました", body: "検索窓をなくし、問題範囲とジャンルを分けて選べるようにしました。回答状態などの詳細条件は必要なときだけ開けます。" }
       ];
       let commentNoticeStoreV65 = loadCommentNoticeStoreV65();
       let sharedCommentRowsV65 = [];
@@ -3882,6 +4004,7 @@
         document.getElementById("menuListHeader").hidden = !listView;
         document.getElementById("menuListHeader").setAttribute("aria-hidden", String(!listView));
         renderMenuRangeTabsV60();
+        renderMenuTypeFiltersV83();
         renderNotificationBadgesV65();
       }
 
@@ -3939,11 +4062,19 @@
         }
         const options = menuRangeOptionsV60();
         if (!options.some(option => option.key === menuRangeV60)) menuRangeV60 = "all";
-        tabs.innerHTML = `<span class="menu-range-label">問題番号</span>${options.map(option => { const count = commentNotificationCountForRangeV65(option.key); return `<button class="menu-range-tab${option.key === menuRangeV60 ? " is-active" : ""}" type="button" role="tab" aria-selected="${option.key === menuRangeV60}" aria-label="${option.label}・新着コメント${count}件" data-menu-range="${option.key}">${option.label}${notificationBadgeMarkupV65(count, `${option.label}の新着コメント${count}件`, `data-menu-range-notification="${escapeHtml(option.key)}"`)}</button>`; }).join("")}`;
+        tabs.innerHTML = options.map(option => { const count = commentNotificationCountForRangeV65(option.key); return `<button class="menu-range-tab${option.key === menuRangeV60 ? " is-active" : ""}" type="button" role="tab" aria-selected="${option.key === menuRangeV60}" aria-label="${option.label}・新着コメント${count}件" data-menu-range="${option.key}">${option.label}${notificationBadgeMarkupV65(count, `${option.label}の新着コメント${count}件`, `data-menu-range-notification="${escapeHtml(option.key)}"`)}</button>`; }).join("");
         tabs.querySelectorAll("[data-menu-range]").forEach(button => button.addEventListener("click", () => {
           menuRangeV60 = button.dataset.menuRange || "all";
           renderMenuCardsV16();
         }));
+      }
+
+      function renderMenuTypeFiltersV83() {
+        document.querySelectorAll("[data-menu-type]").forEach(button => {
+          const active = button.dataset.menuType === menuTypeV44;
+          button.classList.toggle("is-active", active);
+          button.setAttribute("aria-pressed", String(active));
+        });
       }
 
       function latestAnswerV44(question) {
@@ -4939,9 +5070,18 @@
           const button = event.target.closest("[data-range-session]");
           if (button) startRangeSessionV61(button.dataset.rangeSession);
         });
-        document.getElementById("menuSearch").addEventListener("input", event => { menuSearchV44 = event.target.value; renderMenuCardsV16(); });
         document.getElementById("menuStatusFilter").addEventListener("change", event => { menuStatusV44 = event.target.value; renderMenuCardsV16(); });
-        document.getElementById("menuTypeFilter").addEventListener("change", event => { menuTypeV44 = event.target.value; renderMenuCardsV16(); });
+        document.querySelectorAll("[data-menu-type]").forEach(button => button.addEventListener("click", () => {
+          menuTypeV44 = button.dataset.menuType || "all";
+          renderMenuCardsV16();
+        }));
+        document.getElementById("menuAdvancedToggle").addEventListener("click", () => {
+          menuAdvancedFiltersOpenV83 = !menuAdvancedFiltersOpenV83;
+          const toggle = document.getElementById("menuAdvancedToggle");
+          const panel = document.getElementById("menuAdvancedFilters");
+          toggle.setAttribute("aria-expanded", String(menuAdvancedFiltersOpenV83));
+          panel.hidden = !menuAdvancedFiltersOpenV83;
+        });
         document.getElementById("menuButton").addEventListener("click", () => showMenuV16("my"));
         document.getElementById("nextQuestionButton").addEventListener("click", advanceQuestionV44);
         document.getElementById("nextQuestionBottomButton").addEventListener("click", advanceQuestionV44);

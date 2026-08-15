@@ -4,9 +4,9 @@ import test from "node:test";
 
 const indexUrl = new URL("../public/index.html", import.meta.url);
 
-test("renders the v82 scene and half-game generator controls", async () => {
+test("renders the v83 scene and half-game generator controls", async () => {
   const html = await readFile(indexUrl, "utf8");
-  assert.match(html, /const APP_VERSION = 82/);
+  assert.match(html, /const APP_VERSION = 83/);
   assert.match(html, /\[\.\.\.APP_ANNOUNCEMENTS_V66\]\s*\.sort\(\(left, right\) => right\.version - left\.version\)/);
   assert.match(html, /data-menu-view="settings"/);
   assert.match(html, /id="displayNameForm"/);
@@ -49,6 +49,14 @@ test("renders the v82 scene and half-game generator controls", async () => {
   assert.match(html, /data-menu-action="favorite"/);
   assert.match(html, /data-menu-action="trash"/);
   assert.match(html, /id="menuRangeTabs"/);
+  assert.match(html, /id="menuRangeHeading">問題範囲/);
+  assert.match(html, /id="menuTypeFilters"/);
+  assert.match(html, /data-menu-type="call"/);
+  assert.match(html, /id="menuAdvancedToggle"/);
+  assert.match(html, /id="menuAdvancedFilters"/);
+  assert.match(html, /function renderMenuTypeFiltersV83\(\)/);
+  assert.doesNotMatch(html, /id="menuSearch"/);
+  assert.doesNotMatch(html, /id="menuTypeFilter"/);
   assert.match(html, /function menuRangeOptionsV60\(\)/);
   assert.match(html, /sourceQuestions\.filter\(menuRangeMatchesV60\)/);
   assert.match(html, /class="menu-brand-title">My問題集<\/span><span class="menu-brand-actions">/);
