@@ -1426,7 +1426,6 @@
               <button class="menu-genre-tab" type="button" data-menu-type="discard" aria-pressed="false">打牌判断</button>
               <button class="menu-genre-tab" type="button" data-menu-type="riichi" aria-pressed="false">リーチ判断</button>
               <button class="menu-genre-tab" type="button" data-menu-type="call" aria-pressed="false">副露判断</button>
-              <button class="menu-genre-tab" type="button" data-menu-type="disagreement" aria-pressed="false">意見割れ</button>
             </div>
             <button class="menu-filter-advanced-toggle" id="menuAdvancedToggle" type="button" aria-expanded="false" aria-controls="menuAdvancedFilters">詳細条件⌄</button>
           </section>
@@ -1616,7 +1615,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 84;
+    const APP_VERSION = 85;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -4093,11 +4092,6 @@
           })[0] || null;
       }
 
-      function hasModelDisagreementV44(question) {
-        if (question.decisionType === "call") return new Set((question.callRecommended || []).map(Boolean)).size > 1;
-        return new Set((question.models || []).map(model => model.recommendation).filter(Boolean)).size > 1;
-      }
-
       function questionTypeV44(question) {
         if (question.decisionType === "call") return "副露判断";
         if (Array.isArray(question.reach) && question.reach.some(value => Number(value) > 0)) return "リーチ判断";
@@ -4271,7 +4265,7 @@
           const scores = recentScoresV16(question);
           const historyLabel = scores.length ? `直近${scores.length}回の採点履歴：${scores.map(entry => `${entry.scoreMark} ${entry.scoreLabel || scoreForQuestionV16(question, entry)?.label || "採点結果"}`).join("、")}` : "採点履歴はまだありません";
           const history = scores.length ? scores.map(entry => `<span class="menu-card-latest-mark ${menuScoreMarkClassV63(entry.scoreMark)}" title="${escapeHtml(entry.scoreLabel || scoreForQuestionV16(question, entry)?.label || "採点結果")}">${escapeHtml(entry.scoreMark)}</span>`).join("") : "—";
-          const typeMetadata = [questionTypeV44(question), isSharedQuestionV47(question) ? "共有" : "", hasModelDisagreementV44(question) ? "意見割れ" : ""].filter(Boolean).join(" · ");
+          const typeMetadata = [questionTypeV44(question), isSharedQuestionV47(question) ? "共有" : ""].filter(Boolean).join(" · ");
           const status = menuRowStatusV63(question);
           const statusMarkup = `<span class="menu-row-status ${status.className}">${status.label}</span><button class="menu-card-row-manage" type="button" data-menu-action="manage" data-question-index="${index}">整理</button>`;
           const favoriteLabel = favorite ? `問題${question.number}のお気に入りを解除` : `問題${question.number}をお気に入りに追加`;

@@ -6,7 +6,7 @@ const indexUrl = new URL("../public/index.html", import.meta.url);
 
 test("renders the v84 scene and half-game generator controls", async () => {
   const html = await readFile(indexUrl, "utf8");
-  assert.match(html, /const APP_VERSION = 84/);
+  assert.match(html, /const APP_VERSION = 85/);
   assert.match(html, /\[\.\.\.APP_ANNOUNCEMENTS_V66\]\s*\.sort\(\(left, right\) => right\.version - left\.version\)/);
   assert.match(html, /data-menu-view="settings"/);
   assert.match(html, /id="displayNameForm"/);
