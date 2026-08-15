@@ -10,7 +10,7 @@ async function source() {
 
 test("exposes v65 ownership-aware problem management controls", async () => {
   const html = await source();
-  assert.match(html, /const APP_VERSION = 89;/);
+  assert.match(html, /const APP_VERSION = 90;/);
   assert.match(html, /id="questionManageEditForm"/);
   assert.match(html, /id="questionManageProposeDeleteButton"[^>]*data-manage-action="propose-delete"/);
   assert.match(html, /id="questionManageDeleteButton"[^>]*data-manage-action="delete"/);

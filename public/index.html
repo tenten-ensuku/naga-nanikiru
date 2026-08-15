@@ -1638,7 +1638,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 89;
+    const APP_VERSION = 90;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -2439,7 +2439,8 @@
         { version: 83, date: "2026-08-15", title: "問題一覧の絞り込みをシンプルにしました", body: "検索窓をなくし、問題範囲とジャンルを分けて選べるようにしました。回答状態などの詳細条件は必要なときだけ開けます。" },
         { version: 87, date: "2026-08-15", title: "所有者専用の生徒進捗画面を追加しました", body: "所有者アカウントだけが、生徒の回答数・安全回答数・要復習数・平均回答時間を確認できるようになりました。" },
         { version: 88, date: "2026-08-15", title: "問題158を副露判断の局面に差し替えました", body: "指定されたNAGA局面URLから、1pへのポン判断として問題158を更新しました。" },
-        { version: APP_VERSION, date: "2026-08-15", title: "赤牌記法を牌画像に変換するようにしました", body: "44r5sのような表記を、4索・4索・赤5索の牌画像として表示します。" }
+        { version: 89, date: "2026-08-15", title: "赤牌記法を牌画像に変換するようにしました", body: "44r5sのような表記を、4索・4索・赤5索の牌画像として表示します。" },
+        { version: APP_VERSION, date: "2026-08-15", title: "共有問題集の問題158を指定局面へ修正しました", body: "くにたそチェック側にも、tv=24の副露判断・1p対象牌として反映しました。" }
       ];
       let commentNoticeStoreV65 = loadCommentNoticeStoreV65();
       let sharedCommentRowsV65 = [];
