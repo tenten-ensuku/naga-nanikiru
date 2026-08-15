@@ -1468,7 +1468,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 80;
+    const APP_VERSION = 81;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -2179,6 +2179,9 @@
       let supabaseSessionV46 = null;
       let authPendingV46 = false;
       let sharedCollectionV46 = null;
+      let remoteHistorySyncUserIdV81 = "";
+      let remoteHistorySyncPromiseV81 = null;
+      let importedQuestionsReadyV81 = false;
       const modelColorByNameV16 = { オメガ: "model-omega", ガンマ: "model-gamma", ニシキ: "model-nishiki", ヒバカリ: "model-hihikari", カガシ: "model-kagashi" };
       const USER_STATE_KEY_V16 = storageKey("user-state-v1");
       const LEGACY_USER_STATE_KEY_V16 = "naga-nanikiru-user-state-v1";
@@ -2249,7 +2252,8 @@
         { version: 77, date: "2026-08-15", title: "未回答問題を続けて解けるようにしました", body: "未回答問題のセッション完了後は、回答済みを混ぜずに次の未回答10問へ進めます。解答後の次の問題ボタンも、結果のすぐ下から押せます。" },
         { version: 78, date: "2026-08-15", title: "問題一覧を1列表示に戻しました", body: "問題名や種別が崩れないよう、PCとスマホの問題一覧を1列表示に戻しました。" },
         { version: 79, date: "2026-08-15", title: "問題名から「追加」の文言を削除しました", body: "追加問題250のように表示されていた問題名を、問題250の形式に統一しました。既存の問題名も自動で読み替えます。" },
-        { version: APP_VERSION, date: "2026-08-15", title: "絞り込み中の次の問題を正しく出題するようにしました", body: "副露判断などの種別で絞り込んだ状態でも、次の問題へ進む際に同じ絞り込みを維持し、種別指定時はランダムに出題します。" }
+        { version: 80, date: "2026-08-15", title: "絞り込み中の次の問題を正しく出題するようにしました", body: "副露判断などの種別で絞り込んだ状態でも、次の問題へ進む際に同じ絞り込みを維持し、種別指定時はランダムに出題します。" },
+        { version: APP_VERSION, date: "2026-08-15", title: "ログインした端末間で回答履歴を同期するようにしました", body: "Discordログイン後、Supabaseに保存された自分の回答履歴をこの端末へ取り込み、PCと携帯で同じ履歴を確認できるようにしました。" }
       ];
       let commentNoticeStoreV65 = loadCommentNoticeStoreV65();
       let sharedCommentRowsV65 = [];
@@ -3102,7 +3106,9 @@
           scoreLabel: score.label
         };
         if (!state.answerRecorded) {
-          state.answerAttemptId = `attempt-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+          state.answerAttemptId = typeof crypto !== "undefined" && typeof crypto.randomUUID === "function"
+            ? crypto.randomUUID()
+            : `attempt-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
           userStateV16.answerHistory.unshift({ ...answer, attemptId: state.answerAttemptId });
           state.answerRecorded = true;
           updateLearningProgressV44(question, score, now, answer.responseTimeMs);
@@ -3125,6 +3131,7 @@
             return window.NagaSupabase.recordSharedAttempt({
               shareSlug: sharedCollectionV46.share_slug,
               questionId: question.serverQuestionId,
+              clientAttemptId: /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(String(state.answerAttemptId || "")) ? state.answerAttemptId : undefined,
               answer: { selected: answer.selected, callDecision: answer.callDecision, riichi: answer.riichi, judgeModel: answer.judgeModel },
               grade: answer.scoreMark,
               elapsedMs: answer.responseTimeMs,
@@ -4634,8 +4641,93 @@
         select.disabled = entries.length === 0;
       }
 
+      function answerHistorySignatureV81(entry) {
+        return JSON.stringify([
+          String(entry?.questionKey || entry?.serverQuestionId || ""),
+          String(entry?.answeredAt || ""),
+          String(entry?.scoreMark || ""),
+          entry?.selected ?? null,
+          entry?.callDecision ?? null,
+          entry?.riichi ?? null,
+          String(entry?.judgeModel || "")
+        ]);
+      }
+
+      function remoteAttemptToLocalV81(row, questionByServerId) {
+        const questionId = String(row?.question_id || "");
+        const question = questionByServerId.get(questionId);
+        const grade = String(row?.grade || "");
+        const answeredDate = new Date(String(row?.answered_at || ""));
+        if (!question || !["💮", "◎", "〇", "△", "×"].includes(grade) || !Number.isFinite(answeredDate.getTime())) return null;
+        const answer = row?.answer && typeof row.answer === "object" && !Array.isArray(row.answer) ? row.answer : {};
+        const elapsedMs = row?.elapsed_ms == null ? null : Number(row.elapsed_ms);
+        return {
+          questionKey: questionKeyV16(question),
+          serverQuestionId: question.serverQuestionId || question.id,
+          shareSlug: sharedCollectionV46?.share_slug || null,
+          number: question.number,
+          startedAt: answeredDate.toISOString(),
+          answeredAt: answeredDate.toISOString(),
+          responseTimeMs: Number.isFinite(elapsedMs) ? Math.max(0, elapsedMs) : null,
+          decisionType: question.decisionType || "discard",
+          selected: answer.selected ?? null,
+          callDecision: answer.callDecision ?? null,
+          riichi: answer.riichi ?? false,
+          judgeModel: String(answer.judgeModel || "ニシキ"),
+          scoreMark: grade,
+          scoreLabel: "",
+          attemptId: String(row?.client_attempt_id || `remote-${questionId}-${answeredDate.toISOString()}`)
+        };
+      }
+
+      async function hydrateRemoteAnswerHistoryV81() {
+        if (!window.NagaSupabase?.configured || !supabaseSessionV46 || !importedQuestionsReadyV81 || typeof window.NagaSupabase.loadMyAttempts !== "function") return 0;
+        const userId = String(supabaseSessionV46.user?.id || "");
+        if (!userId || remoteHistorySyncUserIdV81 === userId) return 0;
+        if (remoteHistorySyncPromiseV81) return remoteHistorySyncPromiseV81;
+        const syncPromise = (async () => {
+          const rows = await window.NagaSupabase.loadMyAttempts(500);
+          const questionByServerId = new Map(questionsV16
+            .filter(question => question?.serverQuestionId)
+            .map(question => [String(question.serverQuestionId), question]));
+          const remoteEntries = rows.map(row => remoteAttemptToLocalV81(row, questionByServerId)).filter(Boolean);
+          const localEntries = Array.isArray(userStateV16.answerHistory) ? userStateV16.answerHistory : [];
+          const seenAttemptIds = new Set(localEntries.map(entry => String(entry?.attemptId || "")).filter(Boolean));
+          const seenSignatures = new Set(localEntries.map(answerHistorySignatureV81));
+          let added = 0;
+          for (const entry of remoteEntries) {
+            const attemptId = String(entry.attemptId || "");
+            const signature = answerHistorySignatureV81(entry);
+            if ((attemptId && seenAttemptIds.has(attemptId)) || seenSignatures.has(signature)) continue;
+            localEntries.push(entry);
+            if (attemptId) seenAttemptIds.add(attemptId);
+            seenSignatures.add(signature);
+            added += 1;
+          }
+          if (added) {
+            userStateV16.answerHistory = localEntries
+              .sort((left, right) => new Date(right.answeredAt || 0) - new Date(left.answeredAt || 0))
+              .slice(0, 500);
+            saveUserStateV16();
+            renderMenuCardsV16();
+          }
+          remoteHistorySyncUserIdV81 = userId;
+          return added;
+        })();
+        remoteHistorySyncPromiseV81 = syncPromise;
+        try {
+          return await syncPromise;
+        } catch (error) {
+          console.warn("回答履歴の取得に失敗しました", error);
+          return 0;
+        } finally {
+          if (remoteHistorySyncPromiseV81 === syncPromise) remoteHistorySyncPromiseV81 = null;
+        }
+      }
+
       async function refreshAccountV46(session = null) {
         supabaseSessionV46 = session;
+        if (!session) remoteHistorySyncUserIdV81 = "";
         window.nagaCurrentUserIdV75 = String(session?.user?.id || "");
         if (typeof renderComments === "function") renderComments();
         const status = document.getElementById("accountStatus");
@@ -4672,6 +4764,8 @@
         } catch {
           studentNav.hidden = true;
         }
+        const synced = await hydrateRemoteAnswerHistoryV81();
+        if (synced > 0) status.textContent = `${displayName}としてログイン中。回答履歴を${synced}件同期しました。`;
       }
 
       async function initializeAccountV46() {
@@ -4799,6 +4893,7 @@
         applyQuestionOverridesV47();
         normalizeQuestionTitlesV79();
         migrateAnswerHistoryScoresV16();
+        importedQuestionsReadyV81 = true;
         renderQuestionOptionsV16();
         renderMenuCardsV16();
         if (loadedSharedCollection) await startCommentNotificationPollingV65();

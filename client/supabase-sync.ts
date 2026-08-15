@@ -231,6 +231,17 @@ async function recordSharedAttempt(input: {
   return data;
 }
 
+async function loadMyAttempts(limit = 500) {
+  const safeLimit = Math.min(500, Math.max(1, Math.floor(Number(limit) || 500)));
+  const { data, error } = await requireClient()
+    .from("answer_attempts")
+    .select("client_attempt_id,question_id,answer,grade,elapsed_ms,answered_at")
+    .order("answered_at", { ascending: false })
+    .limit(safeLimit);
+  if (error) throw error;
+  return data ?? [];
+}
+
 async function getMyCapabilities() {
   const { data, error } = await requireClient().rpc("get_my_capabilities");
   if (error) throw error;
@@ -494,6 +505,7 @@ function buildApi() {
     updateSharedComment,
     deleteSharedComment,
     recordSharedAttempt,
+    loadMyAttempts,
     getMyCapabilities,
     createSharedQuestion,
     updateSharedQuestion,

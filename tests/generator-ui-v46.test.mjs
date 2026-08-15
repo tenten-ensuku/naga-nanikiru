@@ -4,9 +4,9 @@ import test from "node:test";
 
 const indexUrl = new URL("../public/index.html", import.meta.url);
 
-test("renders the v80 scene and half-game generator controls", async () => {
+test("renders the v81 scene and half-game generator controls", async () => {
   const html = await readFile(indexUrl, "utf8");
-  assert.match(html, /const APP_VERSION = 80/);
+  assert.match(html, /const APP_VERSION = 81/);
   assert.match(html, /\[\.\.\.APP_ANNOUNCEMENTS_V66\]\s*\.sort\(\(left, right\) => right\.version - left\.version\)/);
   assert.match(html, /data-menu-view="settings"/);
   assert.match(html, /id="displayNameForm"/);
@@ -41,6 +41,8 @@ test("renders the v80 scene and half-game generator controls", async () => {
   assert.match(html, /normalizeQuestionTitlesV79\(\);/);
   assert.match(html, /function menuFilterActiveV80\(\)/);
   assert.match(html, /function menuFilteredQuestionsV80\(\)/);
+  assert.match(html, /function hydrateRemoteAnswerHistoryV81\(\)/);
+  assert.match(html, /loadMyAttempts\(500\)/);
   assert.match(html, /const orderedCandidates = menuTypeV44 === "all" \? candidates : shuffleQuestionsV80\(candidates\);/);
   assert.match(html, /const nextQuestion = menuTypeV44 === "all" \? filteredCandidates\[0\] : shuffleQuestionsV80\(filteredCandidates\)\[0\];/);
   assert.match(html, /menu-card-latest/);

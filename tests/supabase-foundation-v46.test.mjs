@@ -78,6 +78,8 @@ test("pins Supabase dependencies and protects the NAGA proxy", async () => {
   assert.match(clientSource, /redirectTo: buildOAuthRedirectUrl\(\)/);
   assert.match(clientSource, /naga:autherror/);
   assert.match(clientSource, /importLocalHistory/);
+  assert.match(clientSource, /async function loadMyAttempts\(limit = 500\)/);
+  assert.match(clientSource, /answer_attempts/);
   assert.match(clientSource, /createSharedQuestion/);
   assert.match(clientSource, /updateSharedComment/);
   assert.match(clientSource, /deleteSharedComment/);
