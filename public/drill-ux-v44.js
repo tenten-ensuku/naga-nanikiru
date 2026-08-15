@@ -4,12 +4,6 @@
   var STORAGE_KEY = "naga-nanikiru-user-state-v1";
   var DAY_MS = 24 * 60 * 60 * 1000;
   var SCORE_MARKS = ["×", "△", "〇", "💮"];
-  var SCORE_DAYS = {
-    "×": 1,
-    "△": 3,
-    "〇": 7,
-    "💮": 30
-  };
 
   function isRecord(value) {
     return value !== null && typeof value === "object" && !Array.isArray(value);
@@ -137,7 +131,6 @@
       hidden: [],
       answerHistory: [],
       snoozed: {},
-      reviewSchedule: {},
       studyDates: [],
       sessions: {},
       activeSessionId: null,
@@ -157,7 +150,7 @@
     result.hidden = uniqueKeys(source.hidden);
     result.answerHistory = Array.isArray(source.answerHistory) ? cloneValue(source.answerHistory) : [];
     result.snoozed = cloneObject(source.snoozed);
-    result.reviewSchedule = cloneObject(source.reviewSchedule);
+    delete result.reviewSchedule;
     result.studyDates = Array.from(new Set(asArray(source.studyDates).map(function (value) {
       return String(value);
     }).filter(Boolean)));
@@ -206,23 +199,6 @@
       storageObject.setItem(storageKey, JSON.stringify(migrated));
     }
     return migrated;
-  }
-
-  function reviewDays(mark) {
-    var value = mark === undefined || mark === null ? "" : String(mark).trim();
-    if (value === "○" || value === "◯") {
-      value = "〇";
-    }
-    return SCORE_DAYS[value] || 0;
-  }
-
-  function nextReview(mark, answeredAt) {
-    var days = reviewDays(mark);
-    var answeredMs = timeMs(answeredAt);
-    if (!days || answeredMs === null) {
-      return null;
-    }
-    return new Date(answeredMs + (days * DAY_MS)).toISOString();
   }
 
   function isForeverSnooze(value) {
@@ -412,49 +388,6 @@
     });
   }
 
-  function scheduleTime(value) {
-    if (isRecord(value)) {
-      var fields = ["nextReviewAt", "nextDueAt", "dueAt", "reviewAt", "nextReview"];
-      for (var index = 0; index < fields.length; index += 1) {
-        if (value[fields[index]] !== undefined) {
-          var parsed = timeMs(value[fields[index]]);
-          if (parsed !== null) {
-            return parsed;
-          }
-        }
-      }
-      return null;
-    }
-    return timeMs(value);
-  }
-
-  function reviewTimeFor(state, key, latest) {
-    var schedule = isRecord(state.reviewSchedule) ? state.reviewSchedule[key] : undefined;
-    var scheduled = scheduleTime(schedule);
-    if (scheduled !== null) {
-      return scheduled;
-    }
-    if (isRecord(latest)) {
-      var fields = ["nextReviewAt", "nextDueAt", "reviewAt", "nextReview"];
-      for (var index = 0; index < fields.length; index += 1) {
-        if (latest[fields[index]] !== undefined) {
-          var parsed = timeMs(latest[fields[index]]);
-          if (parsed !== null) {
-            return parsed;
-          }
-        }
-      }
-    }
-    return null;
-  }
-
-  function isDue(state, question, now, latestMap) {
-    var key = questionKey(question);
-    var map = latestMap || latestAnswerMap(state);
-    var reviewAt = reviewTimeFor(isRecord(state) ? state : {}, key, map[key]);
-    return reviewAt !== null && reviewAt <= nowMs(now);
-  }
-
   function isWeakMark(mark) {
     return mark === "×" || mark === "△";
   }
@@ -571,12 +504,11 @@
       var latestEntry = latest[key];
       var unanswered = !latestEntry;
       var weak = hasWeakInRecentAnswers(state, key, 3);
-      var due = isDue(state, question, now, latest);
       var type = questionType(question);
       var favorite = hasKey(state.favorites, key);
       var matches = true;
-      if (mode === "today") {
-        matches = due || weak || unanswered;
+      if (mode === "today" || mode === "recommended") {
+        matches = weak || unanswered;
       } else if (mode === "unanswered") {
         matches = unanswered;
       } else if (mode === "weak") {
@@ -587,22 +519,19 @@
         matches = favorite;
       }
       if (matches) {
-        candidates.push({ question: question, index: index, due: due, weak: weak, unanswered: unanswered });
+        candidates.push({ question: question, index: index, weak: weak, unanswered: unanswered });
       }
     });
 
     candidates.sort(function (left, right) {
       function priority(item) {
-        if (item.due) {
+        if (item.weak) {
           return 0;
         }
-        if (item.weak) {
+        if (item.unanswered) {
           return 1;
         }
-        if (item.unanswered) {
-          return 2;
-        }
-        return 3;
+        return 2;
       }
       var leftPriority = priority(left);
       var rightPriority = priority(right);
@@ -734,7 +663,6 @@
     var state = migrateState(settings.state);
     var entries = historyArray(state).slice();
     var summary = summarizeAnswers(entries);
-    var latest = latestAnswerMap(entries);
     var questionMap = Object.create(null);
     questions.forEach(function (question) {
       var key = questionKey(question);
@@ -755,20 +683,14 @@
       riichi: summarizeAnswers(breakdownEntries.riichi)
     };
 
-    var dueSeen = Object.create(null);
-    var dueCount = 0;
     var masteredSeen = Object.create(null);
     var masteredCount = 0;
     questions.forEach(function (question) {
       var key = questionKey(question);
-      if (!key || dueSeen[key]) {
+      if (!key || masteredSeen[key]) {
         return;
       }
-      dueSeen[key] = true;
-      if (isPlayable(state, question, settings.now) && isDue(state, question, settings.now, latest)) {
-        dueCount += 1;
-      }
-      if (!masteredSeen[key] && isMasteredByRecentAnswers(state, key, 2)) {
+      if (isMasteredByRecentAnswers(state, key, 2)) {
         masteredSeen[key] = true;
         masteredCount += 1;
       }
@@ -784,7 +706,6 @@
       rates: summary.rates,
       scoreRates: summary.scoreRates,
       streakDays: studyStreak(state, entries, settings.now),
-      dueCount: dueCount,
       masteredCount: masteredCount,
       breakdowns: breakdowns
     };
@@ -820,9 +741,6 @@
     if (value === "mastered") {
       return isMasteredByRecentAnswers(state, key, 2);
     }
-    if (value === "due" || value === "today") {
-      return isDue(state, question, now, latest);
-    }
     if (value === "snoozed") {
       return isSnoozed(state, key, now);
     }
@@ -852,9 +770,6 @@
     }
     if (value === "favorite" || value === "favorites" || value === "お気に入り") {
       return hasKey(state.favorites, key) && isPlayable(state, question, now);
-    }
-    if (value === "due" || value === "today" || value === "review") {
-      return isPlayable(state, question, now) && isDue(state, question, now, latest);
     }
     return isPlayable(state, question, now);
   }
@@ -958,8 +873,6 @@
     loadState: loadState,
     saveState: saveState,
     questionKey: questionKey,
-    reviewDays: reviewDays,
-    nextReview: nextReview,
     isSnoozed: isSnoozed,
     isPlayable: isPlayable,
     latestAnswerMap: latestAnswerMap,
@@ -974,8 +887,7 @@
     analytics: analytics,
     filterQuestions: filterQuestions,
     sessionResult: sessionResult,
-    questionType: questionType,
-    isDue: isDue
+    questionType: questionType
   };
 
   globalObject.DrillUxV44 = api;

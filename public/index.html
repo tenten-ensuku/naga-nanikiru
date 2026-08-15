@@ -7,7 +7,7 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=58">
   <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=58">
   <title>NAGA局面ドリル｜何切る復習問題集</title>
-  <meta name="description" content="NAGAの局面を解き、復習予定・苦手分析・URLからの問題生成まで行える麻雀学習アプリ。">
+  <meta name="description" content="NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリ。">
   <meta name="theme-color" content="#06131e">
   <meta property="og:type" content="website">
   <meta property="og:title" content="NAGA局面ドリル｜何切る復習問題集">
@@ -16,7 +16,7 @@
   <meta property="og:image" content="https://tenten-ensuku.github.io/naga-nanikiru/og-v44.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="NAGA局面ドリル｜何切る復習問題集">
-  <meta name="twitter:description" content="今日の10問、復習管理、自己分析、NAGA URLからの問題生成。">
+  <meta name="twitter:description" content="おすすめ問題、習熟度分析、NAGA URLからの問題生成。">
   <meta name="twitter:image" content="https://tenten-ensuku.github.io/naga-nanikiru/og-v44.png">
   <style>
     :root {
@@ -1416,10 +1416,10 @@
           <div class="menu-summary" id="menuSummary" aria-live="polite"></div>
         </div>
         <section class="quick-start" id="quickStart" aria-label="すぐに始める">
-        <button class="quick-start-card primary" type="button" data-session-mode="today">
+        <button class="quick-start-card primary" type="button" data-session-mode="recommended">
           <span class="quick-start-kicker">DAILY DRILL</span>
-          <span class="quick-start-title">今日の10問</span>
-          <span class="quick-start-note" id="todayDrillNote">復習期限と苦手問題を優先します</span>
+          <span class="quick-start-title">おすすめ10問</span>
+          <span class="quick-start-note" id="recommendedDrillNote">苦手問題と未回答を優先します</span>
         </button>
         <button class="quick-start-card" id="resumeSessionButton" type="button" data-session-mode="resume" hidden>
           <span class="quick-start-kicker">RESUME</span>
@@ -1456,7 +1456,6 @@
             <fieldset class="menu-status-filter-group">
               <legend>回答状態（複数選択可）</legend>
               <div class="menu-status-filter-options">
-                <label class="menu-status-filter-option"><input type="checkbox" data-menu-status="due">復習期限</label>
                 <label class="menu-status-filter-option"><input type="checkbox" data-menu-status="unanswered">未回答</label>
                 <label class="menu-status-filter-option"><input type="checkbox" data-menu-status="weak">×・△あり</label>
                 <label class="menu-status-filter-option"><input type="checkbox" data-menu-status="mastered">習得済み</label>
@@ -1640,7 +1639,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 94;
+    const APP_VERSION = 95;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -2385,7 +2384,7 @@
       const sourceMetaV16 = document.getElementById("sceneMeta");
 
       function loadUserStateV16() {
-        const fallback = window.DrillUxV44?.migrateState?.(null) || { schemaVersion: 2, favorites: [], trashed: [], hidden: [], answerHistory: [], snoozed: {}, reviewSchedule: {}, studyDates: [], sessions: {}, activeSessionId: null, lastSessionResult: null, customQuestions: [], pendingGenerated: [], settings: {}, localComments: {}, questionOverrides: {}, deletionProposals: {} };
+        const fallback = window.DrillUxV44?.migrateState?.(null) || { schemaVersion: 2, favorites: [], trashed: [], hidden: [], answerHistory: [], snoozed: {}, studyDates: [], sessions: {}, activeSessionId: null, lastSessionResult: null, customQuestions: [], pendingGenerated: [], settings: {}, localComments: {}, questionOverrides: {}, deletionProposals: {} };
         try {
           if (window.localStorage.getItem(USER_STATE_KEY_V16) === null) {
             const legacyValue = window.localStorage.getItem(LEGACY_USER_STATE_KEY_V16);
@@ -2446,7 +2445,8 @@
         { version: 91, date: "2026-08-15", title: "学習進捗に習熟度を追加しました", body: "回答率に加えて、直近2回が連続で💮になった問題の割合を習熟度として表示します。×・△ありは直近3回の回答履歴を見て判定します。" },
         { version: 92, date: "2026-08-16", title: "出題順と詳細条件を選びやすくしました", body: "順番・逆順・未回答優先ランダムを選べるようにし、回答状態は複数のチェックボックスで絞り込めるようにしました。" },
         { version: 93, date: "2026-08-16", title: "ランダム出題を解答数の少ない順にしました", body: "ランダム出題では、これまでの解答回数が少ない問題を優先し、同じ解答回数の問題はランダムに並べます。" },
-        { version: APP_VERSION, date: "2026-08-16", title: "ランダム出題の優先基準を表示しました", body: "出題順の選択肢に、ランダム出題が解答数の少ない順であることを明記しました。" }
+        { version: 94, date: "2026-08-16", title: "ランダム出題の優先基準を表示しました", body: "出題順の選択肢に、ランダム出題が解答数の少ない順であることを明記しました。" },
+        { version: APP_VERSION, date: "2026-08-16", title: "復習期限の仕組みを整理しました", body: "自動の復習期限と期限フィルターを廃止し、苦手問題・未回答問題・習熟度を中心に、よりシンプルに学習できるようにしました。" }
       ];
       let commentNoticeStoreV65 = loadCommentNoticeStoreV65();
       let sharedCommentRowsV65 = [];
@@ -3256,24 +3256,7 @@
         return [date.getFullYear(), String(date.getMonth() + 1).padStart(2, "0"), String(date.getDate()).padStart(2, "0")].join("-");
       }
 
-      function updateLearningProgressV44(question, score, answeredAt, responseTimeMs) {
-        const key = questionKeyV16(question);
-        const intervalDays = window.DrillUxV44?.reviewDays?.(score.mark) ?? ({ "×": 1, "△": 3, "〇": 7, "💮": 30 }[score.mark] || 7);
-        const due = new Date(answeredAt);
-        due.setDate(due.getDate() + intervalDays);
-        const previous = userStateV16.reviewSchedule?.[key] || {};
-        userStateV16.reviewSchedule ||= {};
-        userStateV16.reviewSchedule[key] = {
-          attempts: Number(previous.attempts || 0) + 1,
-          lastScoreMark: score.mark,
-          lastScoreLabel: score.label,
-          lastAnsweredAt: answeredAt,
-          nextDueAt: due.toISOString(),
-          intervalDays,
-          averageResponseTimeMs: previous.attempts
-            ? Math.round((Number(previous.averageResponseTimeMs || 0) * Number(previous.attempts) + responseTimeMs) / (Number(previous.attempts) + 1))
-            : responseTimeMs
-        };
+      function recordStudyDateV44(answeredAt) {
         userStateV16.studyDates = [...new Set([...(userStateV16.studyDates || []), localDateKeyV44(answeredAt)])].slice(-370);
       }
 
@@ -3308,7 +3291,7 @@
             : `attempt-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
           userStateV16.answerHistory.unshift({ ...answer, attemptId: state.answerAttemptId });
           state.answerRecorded = true;
-          updateLearningProgressV44(question, score, now, answer.responseTimeMs);
+          recordStudyDateV44(now);
           const session = activeSessionV44();
           if (session) {
             session.results ||= [];
@@ -3819,7 +3802,7 @@
       }
 
       function sessionModeLabelV44(mode) {
-        return { today: "今日の10問", weak: "苦手10問", unanswered: "未回答10問", riichi: "リーチ判断", call: "副露判断", favorites: "お気に入り", range: "この範囲の10問", "range-unanswered": "未回答の10問" }[mode] || "選択ドリル";
+        return { today: "おすすめ10問", recommended: "おすすめ10問", weak: "苦手10問", unanswered: "未回答10問", riichi: "リーチ判断", call: "副露判断", favorites: "お気に入り", range: "この範囲の10問", "range-unanswered": "未回答の10問" }[mode] || "選択ドリル";
       }
 
       function nextFilteredQuestionV87() {
@@ -4039,8 +4022,7 @@
         const rangeQuestions = questionsV16.filter(menuRangeMatchesV60).filter(isPlayableV16);
         const rangeAnswered = rangeQuestions.filter(question => latestAnswerV44(question));
         const rangeUnanswered = rangeQuestions.length - rangeAnswered.length;
-        const rangeDue = rangeQuestions.filter(question => reviewTagV44(question) === "復習期限").length;
-        summary.innerHTML = `<div class="menu-summary-stat"><small>この範囲の問題</small><strong>${rangeQuestions.length}<em>問</em></strong></div><div class="menu-summary-stat${rangeUnanswered ? " is-alert" : ""}"><small>未回答</small><strong>${rangeUnanswered}<em>問</em></strong></div><div class="menu-summary-stat${rangeDue ? " is-alert" : ""}"><small>復習期限</small><strong>${rangeDue}<em>問</em></strong></div><div class="menu-summary-stat"><small>回答済み</small><strong>${rangeAnswered.length}<em>問</em></strong></div>`;
+        summary.innerHTML = `<div class="menu-summary-stat"><small>この範囲の問題</small><strong>${rangeQuestions.length}<em>問</em></strong></div><div class="menu-summary-stat${rangeUnanswered ? " is-alert" : ""}"><small>未回答</small><strong>${rangeUnanswered}<em>問</em></strong></div><div class="menu-summary-stat"><small>回答済み</small><strong>${rangeAnswered.length}<em>問</em></strong></div>`;
         const allPlayable = questionsV16.filter(isPlayableV16);
         const allAnswered = allPlayable.filter(question => latestAnswerV44(question)).length;
         const progress = allPlayable.length ? Math.round(allAnswered / allPlayable.length * 100) : 0;
@@ -4053,7 +4035,7 @@
         const resumeButton = document.getElementById("resumeSessionButton");
         resumeButton.hidden = !resume;
         if (resume) document.getElementById("resumeSessionNote").textContent = `${Number(resume.cursor || 0) + 1} / ${resume.questionKeys.length} から再開`;
-        document.getElementById("todayDrillNote").textContent = analytics.dueCount ? `復習期限 ${analytics.dueCount}問を優先` : "苦手問題と未回答をバランスよく出題";
+        document.getElementById("recommendedDrillNote").textContent = "苦手問題と未回答をバランスよく出題";
         document.getElementById("quickStart").hidden = ["generator", "analysis", "students", "session", "settings"].includes(menuViewV16);
         document.getElementById("menuFilters").hidden = !["my", "favorites", "trash"].includes(menuViewV16);
         const listView = ["my", "favorites", "trash"].includes(menuViewV16);
@@ -4181,16 +4163,6 @@
         return "打牌判断";
       }
 
-      function reviewTagV44(question) {
-        const key = questionKeyV16(question);
-        const snooze = userStateV16.snoozed?.[key];
-        if (snooze === "forever") return "無期限休止";
-        if (snooze && new Date(snooze) > new Date()) return `${new Intl.DateTimeFormat("ja-JP", { month: "numeric", day: "numeric" }).format(new Date(snooze))}まで休止`;
-        const review = userStateV16.reviewSchedule?.[key];
-        if (review?.nextDueAt && new Date(review.nextDueAt) <= new Date()) return "復習期限";
-        return "";
-      }
-
       function renderAnalysisViewV44() {
         const stats = window.DrillUxV44?.analytics?.({ questions: questionsV16, state: userStateV16, now: new Date() }) || {};
         const attempts = stats.totalAttempts ?? userStateV16.answerHistory.length;
@@ -4202,12 +4174,12 @@
           ["リーチ判断", stats.breakdowns?.riichi],
           ["副露判断", stats.breakdowns?.call]
         ].map(([label, value]) => `<div class="analysis-breakdown"><strong>${label}</strong><span>${value?.attempts || 0}回答・悪手回避率 ${Math.round(value?.safeRate || 0)}%</span></div>`).join("");
-        return `<section class="analysis-section"><h3>学習の現在地</h3><div class="analysis-grid"><div class="stat-card"><span class="stat-label">回答数</span><span class="stat-value">${attempts}</span></div><div class="stat-card"><span class="stat-label">悪手回避率</span><span class="stat-value">${safeRate}%</span></div><div class="stat-card"><span class="stat-label">平均回答時間</span><span class="stat-value">${averageSeconds}<small>秒</small></span></div><div class="stat-card"><span class="stat-label">連続学習</span><span class="stat-value">${stats.streakDays || 0}<small>日</small></span></div></div><div class="analysis-breakdowns">${breakdowns}</div><div class="drill-actions"><button class="drill-action" type="button" data-analysis-drill="weak">×・△を10問</button><button class="drill-action secondary" type="button" data-analysis-drill="riichi">リーチ判断を10問</button><button class="drill-action secondary" type="button" data-analysis-drill="call">副露判断を10問</button><button class="drill-action secondary" type="button" data-analysis-drill="unanswered">未回答を10問</button></div><p>回答履歴と復習予定はこの端末内に保存されます。別の端末とは同期されません。</p></section>`;
+        return `<section class="analysis-section"><h3>学習の現在地</h3><div class="analysis-grid"><div class="stat-card"><span class="stat-label">回答数</span><span class="stat-value">${attempts}</span></div><div class="stat-card"><span class="stat-label">悪手回避率</span><span class="stat-value">${safeRate}%</span></div><div class="stat-card"><span class="stat-label">平均回答時間</span><span class="stat-value">${averageSeconds}<small>秒</small></span></div><div class="stat-card"><span class="stat-label">連続学習</span><span class="stat-value">${stats.streakDays || 0}<small>日</small></span></div></div><div class="analysis-breakdowns">${breakdowns}</div><div class="drill-actions"><button class="drill-action" type="button" data-analysis-drill="weak">×・△を10問</button><button class="drill-action secondary" type="button" data-analysis-drill="riichi">リーチ判断を10問</button><button class="drill-action secondary" type="button" data-analysis-drill="call">副露判断を10問</button><button class="drill-action secondary" type="button" data-analysis-drill="unanswered">未回答を10問</button></div><p>回答履歴はこの端末内に保存されます。別の端末とは同期されません。</p></section>`;
       }
 
       function renderSessionResultV44() {
         const result = userStateV16.lastSessionResult;
-        if (!result) return `<div class="menu-placeholder"><strong>まだ終了したセッションがありません</strong>「今日の10問」から学習を始めてください。</div>`;
+        if (!result) return `<div class="menu-placeholder"><strong>まだ終了したセッションがありません</strong>「おすすめ10問」から学習を始めてください。</div>`;
         const rows = result.results || [];
         const counts = rows.reduce((map, row) => ({ ...map, [row.scoreMark]: (map[row.scoreMark] || 0) + 1 }), {});
         const average = rows.length ? (rows.reduce((sum, row) => sum + Number(row.responseTimeMs || 0), 0) / rows.length / 1000).toFixed(1) : "0.0";
@@ -4262,7 +4234,7 @@
         try {
           const rows = await window.NagaSupabase.loadStudentSummaries();
           const students = rows.filter(row => row.user_id !== supabaseSessionV46.user.id);
-          grid.innerHTML = students.length ? `<section class="student-dashboard"><p class="student-dashboard-note">あなたは所有者として、生徒の集計情報を確認できます。個々の生徒の回答内容は公開しません。</p>${students.map(row => `<article class="student-row"><strong>${escapeHtml(row.display_name || "生徒")}</strong><span class="student-metric">回答数<b>${Number(row.attempt_count || 0)}</b></span><span class="student-metric">安全回答<b>${Number(row.safe_count || 0)}</b></span><span class="student-metric">要復習<b>${Number(row.weak_count || 0)}</b></span><span class="student-metric">平均時間<b>${row.average_seconds ?? "-"}秒</b></span></article>`).join("")}</section>` : `<div class="menu-placeholder"><strong>表示できる回答履歴はまだありません</strong>生徒がログインして回答すると、ここに集計されます。</div>`;
+          grid.innerHTML = students.length ? `<section class="student-dashboard"><p class="student-dashboard-note">あなたは所有者として、生徒の集計情報を確認できます。個々の生徒の回答内容は公開しません。</p>${students.map(row => `<article class="student-row"><strong>${escapeHtml(row.display_name || "生徒")}</strong><span class="student-metric">回答数<b>${Number(row.attempt_count || 0)}</b></span><span class="student-metric">安全回答<b>${Number(row.safe_count || 0)}</b></span><span class="student-metric">苦手回答<b>${Number(row.weak_count || 0)}</b></span><span class="student-metric">平均時間<b>${row.average_seconds ?? "-"}秒</b></span></article>`).join("")}</section>` : `<div class="menu-placeholder"><strong>表示できる回答履歴はまだありません</strong>生徒がログインして回答すると、ここに集計されます。</div>`;
         } catch (error) {
           grid.innerHTML = `<div class="menu-placeholder"><strong>履歴を読み込めませんでした</strong>${escapeHtml(error?.message || "権限設定を確認してください。")}</div>`;
         }
@@ -4273,8 +4245,8 @@
         const latest = scores[0] || null;
         const latestMark = latest?.scoreMark || "";
         const hasRecentWeak = window.DrillUxV44?.hasWeakInRecentAnswers?.(userStateV16, questionKeyV16(question), 3) || false;
-        if (reviewTagV44(question) === "復習期限" || hasRecentWeak) {
-          return { label: "復習", className: "is-review" };
+        if (hasRecentWeak) {
+          return { label: "苦手", className: "is-review" };
         }
         if (["💮", "〇"].includes(latestMark)) {
           return { label: "正解", className: "is-correct" };

@@ -31,7 +31,6 @@ function hostValue(value) {
   return JSON.parse(JSON.stringify(value));
 }
 
-const DAY = 24 * 60 * 60 * 1000;
 const NOW = "2026-08-03T00:00:00.000Z";
 
 test("migrates v1 state without losing existing collections", async () => {
@@ -52,7 +51,7 @@ test("migrates v1 state without losing existing collections", async () => {
   assert.deepEqual(hostValue(migrated.answerHistory), oldState.answerHistory);
   assert.equal(migrated.unrelatedLegacyValue, "keep me");
   assert.deepEqual(hostValue(migrated.snoozed), {});
-  assert.deepEqual(hostValue(migrated.reviewSchedule), {});
+  assert.equal(Object.prototype.hasOwnProperty.call(migrated, "reviewSchedule"), false);
   assert.deepEqual(hostValue(migrated.studyDates), []);
   assert.deepEqual(hostValue(migrated.sessions), {});
   assert.equal(migrated.activeSessionId, null);
@@ -67,21 +66,6 @@ test("migrates v1 state without losing existing collections", async () => {
   assert.deepEqual(hostValue(loaded.favorites), ["001"]);
   api.saveState(loaded, storage);
   assert.equal(storage.read().schemaVersion, 2);
-});
-
-test("uses all requested review intervals and returns an ISO timestamp", async () => {
-  const api = await loadApi();
-  assert.equal(api.reviewDays(MARK_X), 1);
-  assert.equal(api.reviewDays(MARK_TRIANGLE), 3);
-  assert.equal(api.reviewDays(MARK_CIRCLE), 7);
-  assert.equal(api.reviewDays(MARK_MASTERED), 30);
-  assert.equal(api.reviewDays("unknown"), 0);
-  const answeredAt = "2026-01-01T12:00:00.000Z";
-  assert.equal(api.nextReview(MARK_X, answeredAt), new Date(Date.parse(answeredAt) + DAY).toISOString());
-  assert.equal(api.nextReview(MARK_TRIANGLE, answeredAt), new Date(Date.parse(answeredAt) + DAY * 3).toISOString());
-  assert.equal(api.nextReview(MARK_CIRCLE, answeredAt), new Date(Date.parse(answeredAt) + DAY * 7).toISOString());
-  assert.equal(api.nextReview(MARK_MASTERED, answeredAt), new Date(Date.parse(answeredAt) + DAY * 30).toISOString());
-  assert.equal(api.nextReview(MARK_X, "not a date"), null);
 });
 
 test("recognizes expired, active, and forever snoozes", async () => {
@@ -104,7 +88,7 @@ test("recognizes expired, active, and forever snoozes", async () => {
   assert.equal(api.isPlayable({ ...state }, { id: "open" }, NOW), true);
 });
 
-test("builds a deterministic queue with due, weak, and unanswered priority", async () => {
+test("builds a deterministic queue with weak and unanswered priority", async () => {
   const api = await loadApi();
   const questions = [
     { id: "future", decisionType: "discard" },
@@ -122,17 +106,10 @@ test("builds a deterministic queue with due, weak, and unanswered priority", asy
       { questionKey: "riichi", scoreMark: MARK_CIRCLE, answeredAt: "2026-08-02T00:00:00Z" },
       { questionKey: "call", scoreMark: MARK_CIRCLE, answeredAt: "2026-08-02T00:00:00Z" }
     ],
-    reviewSchedule: {
-      future: "2026-08-10T00:00:00Z",
-      weak: "2026-08-10T00:00:00Z",
-      riichi: "2026-08-10T00:00:00Z",
-      call: "2026-08-10T00:00:00Z",
-      due: "2026-08-02T00:00:00Z"
-    }
   };
-  assert.deepEqual(hostValue(api.buildQueue({ questions, state, mode: "today", now: NOW }).map(api.questionKey)), ["due", "weak", "new"]);
-  assert.deepEqual(hostValue(api.buildQueue({ questions, state, mode: "today", limit: 2, now: NOW }).map(api.questionKey)), ["due", "weak"]);
-  assert.deepEqual(hostValue(api.buildQueue({ questions, state, mode: "unanswered", now: NOW }).map(api.questionKey)), ["due", "new"]);
+  assert.deepEqual(hostValue(api.buildQueue({ questions, state, mode: "recommended", now: NOW }).map(api.questionKey)), ["weak", "new", "due"]);
+  assert.deepEqual(hostValue(api.buildQueue({ questions, state, mode: "recommended", limit: 2, now: NOW }).map(api.questionKey)), ["weak", "new"]);
+  assert.deepEqual(hostValue(api.buildQueue({ questions, state, mode: "unanswered", now: NOW }).map(api.questionKey)), ["new", "due"]);
   assert.deepEqual(hostValue(api.buildQueue({ questions, state, mode: "weak", now: NOW }).map(api.questionKey)), ["weak"]);
   assert.deepEqual(hostValue(api.buildQueue({ questions, state, mode: "riichi", now: NOW }).map(api.questionKey)), ["riichi"]);
   assert.deepEqual(hostValue(api.buildQueue({ questions, state, mode: "call", now: NOW }).map(api.questionKey)), ["call"]);
@@ -148,7 +125,6 @@ test("returns latest history, analytics math, streak, and type breakdowns", asyn
   ];
   const state = {
     studyDates: ["2026-07-31", "2026-08-01", "2026-08-02", "2026-08-03"],
-    reviewSchedule: { discard: "2026-08-02T00:00:00Z" },
     answerHistory: [
       { questionKey: "discard", scoreMark: MARK_X, responseTimeMs: 1000, answeredAt: "2026-08-01T00:00:00Z" },
       { questionKey: "discard", scoreMark: MARK_CIRCLE, responseTimeMs: 2000, answeredAt: "2026-08-02T00:00:00Z" },
@@ -166,7 +142,7 @@ test("returns latest history, analytics math, streak, and type breakdowns", asyn
   assert.deepEqual(hostValue(result.scoreCounts), { [MARK_X]: 1, [MARK_TRIANGLE]: 1, [MARK_CIRCLE]: 1, [MARK_MASTERED]: 1 });
   assert.equal(result.rates[MARK_CIRCLE], 0.25);
   assert.equal(result.streakDays, 4);
-  assert.equal(result.dueCount, 1);
+  assert.equal(Object.prototype.hasOwnProperty.call(result, "dueCount"), false);
   assert.equal(result.masteredCount, 0);
   assert.equal(result.breakdowns.discard.totalAttempts, 2);
   assert.equal(result.breakdowns.call.totalAttempts, 1);

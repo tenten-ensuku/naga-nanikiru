@@ -32,11 +32,11 @@ test("wires v65 learning UX, generator, Supabase bridge, metadata, and social im
     readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
     access(new URL("../public/og-v44.png", import.meta.url)),
   ]);
-  assert.match(index, /const APP_VERSION = 94/);
+  assert.match(index, /const APP_VERSION = 95/);
   assert.match(index, /supabase-sync-v48\.js/);
   assert.match(index, /drill-ux-v44\.js/);
   assert.match(index, /naga-generator-v44\.js/);
-  assert.match(index, /今日の10問/);
+  assert.match(index, /おすすめ10問/);
   assert.match(index, /NAGA URLから問題生成/);
   assert.match(index, /property="og:image" content="https:\/\/tenten-ensuku\.github\.io\/naga-nanikiru\/og-v44\.png"/);
   assert.match(page, /src=\{`\$\{APP_BASE_PATH\}index\.html`\}/);
