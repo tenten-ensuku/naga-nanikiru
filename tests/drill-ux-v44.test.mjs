@@ -167,10 +167,41 @@ test("returns latest history, analytics math, streak, and type breakdowns", asyn
   assert.equal(result.rates[MARK_CIRCLE], 0.25);
   assert.equal(result.streakDays, 4);
   assert.equal(result.dueCount, 1);
-  assert.equal(result.masteredCount, 1);
+  assert.equal(result.masteredCount, 0);
   assert.equal(result.breakdowns.discard.totalAttempts, 2);
   assert.equal(result.breakdowns.call.totalAttempts, 1);
   assert.equal(result.breakdowns.riichi.totalAttempts, 1);
+});
+
+test("uses the recent history window for weak filters and mastery", async () => {
+  const api = await loadApi();
+  const questions = [
+    { id: "recent-weak", decisionType: "discard" },
+    { id: "one-mastered", decisionType: "discard" },
+    { id: "mastered", decisionType: "discard" },
+    { id: "old-weak", decisionType: "discard" }
+  ];
+  const state = {
+    answerHistory: [
+      { questionKey: "recent-weak", scoreMark: MARK_TRIANGLE, answeredAt: "2026-08-01T00:00:00Z" },
+      { questionKey: "recent-weak", scoreMark: MARK_CIRCLE, answeredAt: "2026-08-02T00:00:00Z" },
+      { questionKey: "recent-weak", scoreMark: MARK_MASTERED, answeredAt: "2026-08-03T00:00:00Z" },
+      { questionKey: "one-mastered", scoreMark: MARK_MASTERED, answeredAt: "2026-08-03T00:00:00Z" },
+      { questionKey: "mastered", scoreMark: MARK_MASTERED, answeredAt: "2026-08-02T00:00:00Z" },
+      { questionKey: "mastered", scoreMark: MARK_MASTERED, answeredAt: "2026-08-03T00:00:00Z" },
+      { questionKey: "old-weak", scoreMark: MARK_TRIANGLE, answeredAt: "2026-07-30T00:00:00Z" },
+      { questionKey: "old-weak", scoreMark: MARK_CIRCLE, answeredAt: "2026-08-01T00:00:00Z" },
+      { questionKey: "old-weak", scoreMark: MARK_CIRCLE, answeredAt: "2026-08-02T00:00:00Z" },
+      { questionKey: "old-weak", scoreMark: MARK_MASTERED, answeredAt: "2026-08-03T00:00:00Z" }
+    ]
+  };
+  assert.deepEqual(hostValue(api.recentAnswers(state, "recent-weak", 3).map(entry => entry.scoreMark)), [MARK_MASTERED, MARK_CIRCLE, MARK_TRIANGLE]);
+  assert.equal(api.hasWeakInRecentAnswers(state, "recent-weak"), true);
+  assert.equal(api.hasWeakInRecentAnswers(state, "old-weak"), false);
+  assert.equal(api.isMasteredByRecentAnswers(state, "one-mastered"), false);
+  assert.equal(api.isMasteredByRecentAnswers(state, "mastered"), true);
+  assert.deepEqual(hostValue(api.filterQuestions({ questions, state, status: "weak" }).map(api.questionKey)), ["recent-weak"]);
+  assert.equal(api.analytics({ questions, state, now: NOW }).masteredCount, 1);
 });
 
 test("filters stably by view, query, status, and question type", async () => {

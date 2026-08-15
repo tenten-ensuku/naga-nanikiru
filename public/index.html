@@ -514,13 +514,18 @@
     .menu-nav-icon { display: inline-flex; align-items: center; justify-content: center; width: 20px; color: #9ab8c2; font-size: 17px; line-height: 1; }
     .menu-sidebar .menu-nav-button.is-active .menu-nav-icon { color: #9be8d8; }
     .menu-sidebar .menu-nav-badge { margin-left: auto; min-width: 22px; padding: 3px 5px; font-size: 10px; }
-    .menu-sidebar-progress { display: grid; gap: 7px; margin-top: auto; padding: 12px 11px; color: var(--muted); background: rgba(12,50,70,.42); border: 1px solid rgba(155,232,216,.15); border-radius: 8px; }
+    .menu-sidebar-progress { display: grid; gap: 10px; margin-top: auto; padding: 12px 11px; color: var(--muted); background: rgba(12,50,70,.42); border: 1px solid rgba(155,232,216,.15); border-radius: 8px; }
     .menu-sidebar-progress:empty { display: none; }
     .menu-sidebar-progress-title { color: #dffbfb; font-size: 11px; font-weight: 800; }
-    .menu-sidebar-progress-value { color: #fff7d6; font-size: 24px; font-weight: 950; line-height: 1; }
-    .menu-sidebar-progress-note { font-size: 10px; line-height: 1.35; }
+    .menu-progress-metric { display: grid; gap: 4px; min-width: 0; }
+    .menu-progress-metric-head { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+    .menu-progress-metric-label { color: #dffbfb; font-size: 10px; font-weight: 800; }
+    .menu-progress-metric-value { color: #fff7d6; font-size: 21px; font-weight: 950; line-height: 1; }
+    .menu-progress-mastery .menu-progress-metric-value { color: #d8baff; }
+    .menu-progress-metric-note { font-size: 9px; line-height: 1.35; }
     .menu-sidebar-progress-track { height: 5px; overflow: hidden; background: rgba(255,255,255,.12); border-radius: 999px; }
     .menu-sidebar-progress-fill { display: block; height: 100%; background: linear-gradient(90deg, #63d6cc, var(--gold)); border-radius: inherit; }
+    .menu-sidebar-progress-fill.is-mastery { background: linear-gradient(90deg, #9e74dc, #e0c4ff); }
     .menu-sidebar .account-strip { display: grid; gap: 7px; padding: 9px; border-radius: 8px; font-size: 10px; }
     .menu-sidebar .account-status { font-size: 10px; line-height: 1.4; }
     .menu-sidebar .account-strip button { width: 100%; min-height: 36px; padding: 7px 8px; font-size: 10px; }
@@ -597,11 +602,10 @@
       .menu-sidebar .menu-nav { display: flex; gap: 5px; overflow-x: auto; padding-bottom: 2px; scrollbar-width: thin; }
       .menu-sidebar .menu-nav-button { flex: 0 0 auto; width: auto; min-height: 40px; padding: 8px 10px; font-size: 12px; }
       .menu-sidebar .menu-nav-button .menu-nav-badge { display: none; }
-      .menu-sidebar-progress { margin-top: 0; padding: 9px 10px; grid-template-columns: auto auto 1fr; align-items: center; gap: 6px 8px; }
-      .menu-sidebar-progress-title { grid-column: 1 / -1; }
-      .menu-sidebar-progress-value { font-size: 20px; }
-      .menu-sidebar-progress-note { font-size: 10px; }
-      .menu-sidebar-progress-track { grid-column: 1 / -1; }
+      .menu-sidebar-progress { margin-top: 0; padding: 9px 10px; grid-template-columns: 1fr; gap: 8px; }
+      .menu-sidebar-progress-title { grid-column: auto; }
+      .menu-progress-metric-value { font-size: 20px; }
+      .menu-progress-metric-note { font-size: 10px; }
       .menu-sidebar .account-strip { grid-template-columns: 1fr auto; align-items: center; }
       .menu-sidebar .account-status { grid-column: 1 / -1; }
       .menu-sidebar .account-strip button { width: auto; min-width: 130px; }
@@ -661,11 +665,10 @@
         .menu-sidebar .menu-nav-button { width: 100%; min-height: 36px; padding: 7px 6px; font-size: 10px; }
         .menu-sidebar .menu-nav-icon { width: 16px; font-size: 14px; }
         .menu-sidebar .menu-nav-badge { display: inline; min-width: 18px; padding: 2px 3px; font-size: 9px; }
-        .menu-sidebar-progress { grid-template-columns: 1fr; gap: 5px; margin-top: auto; padding: 9px 7px; }
+        .menu-sidebar-progress { grid-template-columns: 1fr; gap: 7px; margin-top: auto; padding: 9px 7px; }
         .menu-sidebar-progress-title { grid-column: auto; font-size: 10px; }
-        .menu-sidebar-progress-value { font-size: 21px; }
-        .menu-sidebar-progress-note { font-size: 9px; }
-        .menu-sidebar-progress-track { grid-column: auto; }
+        .menu-progress-metric-value { font-size: 21px; }
+        .menu-progress-metric-note { font-size: 9px; }
         .menu-sidebar .account-strip { grid-template-columns: 1fr; gap: 5px; padding: 7px; }
         .menu-sidebar .account-status { grid-column: auto; font-size: 9px; }
         .menu-sidebar .account-strip button { width: 100%; min-width: 0; min-height: 32px; padding: 6px; font-size: 9px; }
@@ -1638,7 +1641,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 90;
+    const APP_VERSION = 91;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -2440,7 +2443,8 @@
         { version: 87, date: "2026-08-15", title: "所有者専用の生徒進捗画面を追加しました", body: "所有者アカウントだけが、生徒の回答数・安全回答数・要復習数・平均回答時間を確認できるようになりました。" },
         { version: 88, date: "2026-08-15", title: "問題158を副露判断の局面に差し替えました", body: "指定されたNAGA局面URLから、1pへのポン判断として問題158を更新しました。" },
         { version: 89, date: "2026-08-15", title: "赤牌記法を牌画像に変換するようにしました", body: "44r5sのような表記を、4索・4索・赤5索の牌画像として表示します。" },
-        { version: APP_VERSION, date: "2026-08-15", title: "共有問題集の問題158を指定局面へ修正しました", body: "くにたそチェック側にも、tv=24の副露判断・1p対象牌として反映しました。" }
+        { version: 90, date: "2026-08-15", title: "共有問題集の問題158を指定局面へ修正しました", body: "くにたそチェック側にも、tv=24の副露判断・1p対象牌として反映しました。" },
+        { version: APP_VERSION, date: "2026-08-15", title: "学習進捗に習熟度を追加しました", body: "回答率に加えて、直近2回が連続で💮になった問題の割合を習熟度として表示します。×・△ありは直近3回の回答履歴を見て判定します。" }
       ];
       let commentNoticeStoreV65 = loadCommentNoticeStoreV65();
       let sharedCommentRowsV65 = [];
@@ -4036,7 +4040,9 @@
         const allPlayable = questionsV16.filter(isPlayableV16);
         const allAnswered = allPlayable.filter(question => latestAnswerV44(question)).length;
         const progress = allPlayable.length ? Math.round(allAnswered / allPlayable.length * 100) : 0;
-        document.getElementById("menuSidebarProgress").innerHTML = `<span class="menu-sidebar-progress-title">学習の進捗</span><strong class="menu-sidebar-progress-value">${progress}%</strong><span class="menu-sidebar-progress-note">${allAnswered} / ${allPlayable.length}問を回答済み</span><span class="menu-sidebar-progress-track" aria-hidden="true"><span class="menu-sidebar-progress-fill" style="width:${progress}%"></span></span>`;
+        const masteredCount = allPlayable.filter(question => window.DrillUxV44?.isMasteredByRecentAnswers?.(userStateV16, questionKeyV16(question), 2)).length;
+        const mastery = allPlayable.length ? Math.round(masteredCount / allPlayable.length * 100) : 0;
+        document.getElementById("menuSidebarProgress").innerHTML = `<span class="menu-sidebar-progress-title">学習の進捗</span><div class="menu-progress-metric"><div class="menu-progress-metric-head"><span class="menu-progress-metric-label">回答率</span><strong class="menu-progress-metric-value">${progress}%</strong></div><span class="menu-progress-metric-note">${allAnswered} / ${allPlayable.length}問を回答済み</span><span class="menu-sidebar-progress-track" aria-hidden="true"><span class="menu-sidebar-progress-fill" style="width:${progress}%"></span></span></div><div class="menu-progress-metric menu-progress-mastery"><div class="menu-progress-metric-head"><span class="menu-progress-metric-label">習熟度</span><strong class="menu-progress-metric-value">${mastery}%</strong></div><span class="menu-progress-metric-note">${masteredCount} / ${allPlayable.length}問が習熟（直近2回連続💮）</span><span class="menu-sidebar-progress-track" aria-hidden="true"><span class="menu-sidebar-progress-fill is-mastery" style="width:${mastery}%"></span></span></div>`;
         const copy = MENU_VIEW_COPY_V16[menuViewV16];
         document.getElementById("menuTitle").textContent = copy.title;
         const resume = activeSessionV44();
@@ -4232,7 +4238,8 @@
         const scores = recentScoresV16(question);
         const latest = scores[0] || null;
         const latestMark = latest?.scoreMark || "";
-        if (reviewTagV44(question) === "復習期限" || ["△", "×"].includes(latestMark)) {
+        const hasRecentWeak = window.DrillUxV44?.hasWeakInRecentAnswers?.(userStateV16, questionKeyV16(question), 3) || false;
+        if (reviewTagV44(question) === "復習期限" || hasRecentWeak) {
           return { label: "復習", className: "is-review" };
         }
         if (["💮", "〇"].includes(latestMark)) {

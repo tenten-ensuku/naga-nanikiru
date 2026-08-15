@@ -459,6 +459,34 @@
     return mark === "×" || mark === "△";
   }
 
+  // Answer history is stored oldest-first internally.  Learning decisions
+  // need the newest attempts first so that every screen uses the same rule.
+  function recentAnswers(source, key, limit) {
+    var normalizedKey = normalizeKey(key);
+    var numericLimit = Number(limit);
+    var maximum = Number.isFinite(numericLimit) ? Math.max(0, Math.floor(numericLimit)) : Infinity;
+    return historySort(historyArray(source)).filter(function (item) {
+      return !normalizedKey || answerKey(item.entry) === normalizedKey;
+    }).reverse().slice(0, maximum).map(function (item) {
+      return cloneValue(item.entry);
+    });
+  }
+
+  function hasWeakInRecentAnswers(source, key, limit) {
+    return recentAnswers(source, key, limit === undefined ? 3 : limit).some(function (entry) {
+      return isWeakMark(answerMark(entry));
+    });
+  }
+
+  function isMasteredByRecentAnswers(source, key, required) {
+    var count = Number(required);
+    var requiredCount = Number.isFinite(count) ? Math.max(1, Math.floor(count)) : 2;
+    var answers = recentAnswers(source, key, requiredCount);
+    return answers.length >= requiredCount && answers.every(function (entry) {
+      return answerMark(entry) === "💮";
+    });
+  }
+
   function positiveValue(value) {
     if (Array.isArray(value)) {
       return value.some(function (item) {
@@ -542,7 +570,7 @@
       seen[key] = true;
       var latestEntry = latest[key];
       var unanswered = !latestEntry;
-      var weak = Boolean(latestEntry && isWeakMark(answerMark(latestEntry)));
+      var weak = hasWeakInRecentAnswers(state, key, 3);
       var due = isDue(state, question, now, latest);
       var type = questionType(question);
       var favorite = hasKey(state.favorites, key);
@@ -740,7 +768,7 @@
       if (isPlayable(state, question, settings.now) && isDue(state, question, settings.now, latest)) {
         dueCount += 1;
       }
-      if (!masteredSeen[key] && latest[key] && answerMark(latest[key]) === "💮") {
+      if (!masteredSeen[key] && isMasteredByRecentAnswers(state, key, 2)) {
         masteredSeen[key] = true;
         masteredCount += 1;
       }
@@ -777,7 +805,6 @@
     var value = String(status || "all").toLowerCase();
     var key = questionKey(question);
     var entry = latest[key];
-    var mark = answerMark(entry);
     if (value === "all") {
       return true;
     }
@@ -788,10 +815,10 @@
       return Boolean(entry);
     }
     if (value === "weak") {
-      return isWeakMark(mark);
+      return hasWeakInRecentAnswers(state, key, 3);
     }
     if (value === "mastered") {
-      return mark === "💮";
+      return isMasteredByRecentAnswers(state, key, 2);
     }
     if (value === "due" || value === "today") {
       return isDue(state, question, now, latest);
@@ -939,6 +966,9 @@
     history: history,
     historyForQuestion: history,
     answerHistory: historyArray,
+    recentAnswers: recentAnswers,
+    hasWeakInRecentAnswers: hasWeakInRecentAnswers,
+    isMasteredByRecentAnswers: isMasteredByRecentAnswers,
     buildQueue: buildQueue,
     createSession: createSession,
     analytics: analytics,
