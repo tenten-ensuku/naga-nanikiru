@@ -23,6 +23,8 @@ test("renders ranges, adjacent notation, and compact tile sequences", async () =
   assert.equal(format("3344555ｍ"), "[man3][man3][man4][man4][man5][man5][man5]");
   assert.equal(format("5788ｐ"), "[pin5][pin7][pin8][pin8]");
   assert.equal(format("24556ｓ"), "[sou2][sou4][sou5][sou5][sou6]");
+  assert.equal(format("44r5s"), "[sou4][sou4][aka3]");
+  assert.equal(format("r5ｍ・35R5ｐ"), "[aka1]・[pin3][pin5][aka2]");
   assert.equal(format("３４m・５６p・７８s"), "[man3][man4]・[pin5][pin6]・[sou7][sou8]");
   assert.equal(format("和了率5％、5巡目"), "和了率5％、5巡目");
 });
@@ -36,6 +38,16 @@ test("problem 41 converts every tile in shorthand and adjacent notation", async 
   assert.match(rendered, /\[man3\]\[man4\]/);
   assert.match(rendered, /\[man2\]～\[man5\]/);
   assert.match(rendered, /\[man3\]\[man3\]\[man4\]\[man4\]\[man5\]\[man5\]\[man5\]/);
+});
+
+test("problem 163 converts r-prefixed red-five notation", async () => {
+  const format = await formatter();
+  const questions = JSON.parse(await readFile(questionsUrl, "utf8"));
+  const question = questions.find(item => item.number === 163);
+  assert.ok(question, "problem 163 should exist");
+  const rendered = format(question.comments.map(comment => comment.content).join("\n"));
+  assert.match(rendered, /\[sou4\]\[sou4\]\[aka3\]/);
+  assert.doesNotMatch(rendered, /44r5s/);
 });
 
 test("all stored comments leave no suited numeric shorthand unrendered", async () => {
