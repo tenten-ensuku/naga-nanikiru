@@ -6,7 +6,7 @@ const indexUrl = new URL("../public/index.html", import.meta.url);
 
 test("renders the v87 scene and half-game generator controls", async () => {
   const html = await readFile(indexUrl, "utf8");
-  assert.match(html, /const APP_VERSION = 92/);
+  assert.match(html, /const APP_VERSION = 93/);
   assert.match(html, /data-range-session="all">この範囲を10問解く/);
   assert.doesNotMatch(html, /data-range-session="unanswered">未回答を10問解く/);
   assert.match(html, /range: "この範囲の10問"/);
@@ -15,7 +15,9 @@ test("renders the v87 scene and half-game generator controls", async () => {
   assert.match(html, /let menuOrderV92 = "sequential"/);
   assert.match(html, /menuOrderV92 === "reverse"/);
   assert.match(html, /menuOrderV92 === "random"/);
-  assert.match(html, /candidates\.filter\(question => !latestAnswerV44\(question\)\)/);
+  assert.match(html, /function answerCountV93\(question\)/);
+  assert.match(html, /function randomizeQuestionsByAnswerCountV93\(items\)/);
+  assert.doesNotMatch(html, /candidates\.filter\(question => !latestAnswerV44\(question\)\)/);
   assert.match(html, /\[\.\.\.APP_ANNOUNCEMENTS_V66\]\s*\.sort\(\(left, right\) => right\.version - left\.version\)/);
   assert.match(html, /data-menu-view="settings"/);
   assert.match(html, /id="displayNameForm"/);
@@ -54,6 +56,7 @@ test("renders the v87 scene and half-game generator controls", async () => {
   assert.match(html, /loadMyAttempts\(500\)/);
   assert.match(html, /const orderedCandidates = menuOrderV92 === "reverse"/);
   assert.match(html, /menuOrderV92 === "random"/);
+  assert.match(html, /randomizeQuestionsByAnswerCountV93\(candidates\)/);
   assert.match(html, /function nextFilteredQuestionV87\(\)/);
   assert.match(html, /menu-card-latest/);
   assert.match(html, /data-menu-action="favorite"/);

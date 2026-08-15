@@ -1640,7 +1640,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 92;
+    const APP_VERSION = 93;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -2444,7 +2444,8 @@
         { version: 89, date: "2026-08-15", title: "赤牌記法を牌画像に変換するようにしました", body: "44r5sのような表記を、4索・4索・赤5索の牌画像として表示します。" },
         { version: 90, date: "2026-08-15", title: "共有問題集の問題158を指定局面へ修正しました", body: "くにたそチェック側にも、tv=24の副露判断・1p対象牌として反映しました。" },
         { version: 91, date: "2026-08-15", title: "学習進捗に習熟度を追加しました", body: "回答率に加えて、直近2回が連続で💮になった問題の割合を習熟度として表示します。×・△ありは直近3回の回答履歴を見て判定します。" },
-        { version: APP_VERSION, date: "2026-08-16", title: "出題順と詳細条件を選びやすくしました", body: "順番・逆順・未回答優先ランダムを選べるようにし、回答状態は複数のチェックボックスで絞り込めるようにしました。" }
+        { version: 92, date: "2026-08-16", title: "出題順と詳細条件を選びやすくしました", body: "順番・逆順・未回答優先ランダムを選べるようにし、回答状態は複数のチェックボックスで絞り込めるようにしました。" },
+        { version: APP_VERSION, date: "2026-08-16", title: "ランダム出題を解答数の少ない順にしました", body: "ランダム出題では、これまでの解答回数が少ない問題を優先し、同じ解答回数の問題はランダムに並べます。" }
       ];
       let commentNoticeStoreV65 = loadCommentNoticeStoreV65();
       let sharedCommentRowsV65 = [];
@@ -3894,7 +3895,7 @@
         const orderedCandidates = menuOrderV92 === "reverse"
           ? [...candidates].reverse()
           : menuOrderV92 === "random"
-          ? shuffleQuestionsV80(candidates.filter(question => !latestAnswerV44(question))).concat(shuffleQuestionsV80(candidates.filter(question => latestAnswerV44(question))))
+          ? randomizeQuestionsByAnswerCountV93(candidates)
           : candidates;
         startSessionV44(unansweredOnly ? "range-unanswered" : "range", orderedCandidates);
       }
@@ -4118,6 +4119,23 @@
           [shuffled[index], shuffled[swapIndex]] = [shuffled[swapIndex], shuffled[index]];
         }
         return shuffled;
+      }
+
+      function answerCountV93(question) {
+        const key = questionKeyV16(question);
+        return (userStateV16.answerHistory || []).filter(entry => entry?.questionKey === key).length;
+      }
+
+      function randomizeQuestionsByAnswerCountV93(items) {
+        const groups = new Map();
+        (items || []).forEach(question => {
+          const count = answerCountV93(question);
+          if (!groups.has(count)) groups.set(count, []);
+          groups.get(count).push(question);
+        });
+        return [...groups.entries()]
+          .sort(([leftCount], [rightCount]) => leftCount - rightCount)
+          .flatMap(([, questions]) => shuffleQuestionsV80(questions));
       }
 
       function renderMenuRangeTabsV60() {
