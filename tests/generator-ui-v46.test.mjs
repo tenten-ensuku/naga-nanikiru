@@ -4,9 +4,13 @@ import test from "node:test";
 
 const indexUrl = new URL("../public/index.html", import.meta.url);
 
-test("renders the v84 scene and half-game generator controls", async () => {
+test("renders the v86 scene and half-game generator controls", async () => {
   const html = await readFile(indexUrl, "utf8");
-  assert.match(html, /const APP_VERSION = 85/);
+  assert.match(html, /const APP_VERSION = 86/);
+  assert.match(html, /data-range-session="all">この範囲を10問解く/);
+  assert.match(html, /data-range-session="unanswered">未回答を10問解く/);
+  assert.match(html, /range: "この範囲の10問"/);
+  assert.match(html, /"range-unanswered": "未回答の10問"/);
   assert.match(html, /\[\.\.\.APP_ANNOUNCEMENTS_V66\]\s*\.sort\(\(left, right\) => right\.version - left\.version\)/);
   assert.match(html, /data-menu-view="settings"/);
   assert.match(html, /id="displayNameForm"/);

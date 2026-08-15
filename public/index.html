@@ -1441,8 +1441,8 @@
           </div>
         </div>
         <div class="menu-range-actions" id="menuRangeActions" hidden>
-          <button class="menu-range-action primary" type="button" data-range-session="all">この範囲から解く <span aria-hidden="true">→</span></button>
-          <button class="menu-range-action" type="button" data-range-session="unanswered">未回答だけ解く <span aria-hidden="true">→</span></button>
+          <button class="menu-range-action primary" type="button" data-range-session="all">この範囲を10問解く <span aria-hidden="true">→</span></button>
+          <button class="menu-range-action" type="button" data-range-session="unanswered">未回答を10問解く <span aria-hidden="true">→</span></button>
         </div>
         <div class="menu-list-header" id="menuListHeader" aria-hidden="true"><span class="menu-list-header-group"><span>問題</span><span>ステータス</span><span>直近の結果</span><span>お気に入り</span><span>ゴミ箱</span></span><span class="menu-list-header-group"><span>問題</span><span>ステータス</span><span>直近の結果</span><span>お気に入り</span><span>ゴミ箱</span></span></div>
         <div class="menu-grid" id="menuGrid"></div>
@@ -1615,7 +1615,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 85;
+    const APP_VERSION = 86;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -3777,7 +3777,7 @@
       }
 
       function sessionModeLabelV44(mode) {
-        return { today: "今日の10問", weak: "苦手10問", unanswered: "未回答10問", riichi: "リーチ判断", call: "副露判断", favorites: "お気に入り", range: "この範囲", "range-unanswered": "この範囲の未回答" }[mode] || "選択ドリル";
+        return { today: "今日の10問", weak: "苦手10問", unanswered: "未回答10問", riichi: "リーチ判断", call: "副露判断", favorites: "お気に入り", range: "この範囲の10問", "range-unanswered": "未回答の10問" }[mode] || "選択ドリル";
       }
 
       function nextButtonLabelV44() {
