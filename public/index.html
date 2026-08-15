@@ -1646,7 +1646,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 98;
+    const APP_VERSION = 99;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -2554,7 +2554,8 @@
         { version: 95, date: "2026-08-16", title: "復習期限の仕組みを整理しました", body: "自動の復習期限と期限フィルターを廃止し、苦手問題・未回答問題・習熟度を中心に、よりシンプルに学習できるようにしました。" },
         { version: 96, date: "2026-08-16", title: "解説内のYouTube動画を表示するようにしました", body: "解説文に含まれるYouTubeリンクを動画カードとして表示し、動画タイトル・サムネイル・リンクを確認できるようにしました。問題17の動画も復元しています。" },
         { version: 97, date: "2026-08-16", title: "局面NAGAURLへの移動を分かりやすくしました", body: "問題番号の隣に局面NAGAURLへの移動ボタンを配置し、技術的なURL情報を整理しました。" },
-        { version: APP_VERSION, date: "2026-08-16", title: "問題画面の表示をすっきり整理しました", body: "見出しとメニューへの戻り方を簡潔にし、問題一覧では共有状態の重複表示をなくしました。" }
+        { version: 98, date: "2026-08-16", title: "問題画面の表示をすっきり整理しました", body: "見出しとメニューへの戻り方を簡潔にし、問題一覧では共有状態の重複表示をなくしました。" },
+        { version: APP_VERSION, date: "2026-08-16", title: "問題一覧を番号順に並べました", body: "問題一覧をすべて表示したとき、問題1から問題番号の昇順で確認できるようにしました。" }
       ];
       let commentNoticeStoreV65 = loadCommentNoticeStoreV65();
       let sharedCommentRowsV65 = [];
@@ -4166,6 +4167,11 @@
         return Number.isInteger(number) && number >= start && number <= end;
       }
 
+      function menuQuestionSortKeyV99(question) {
+        const number = menuQuestionNumberV60(question);
+        return number === null ? Number.POSITIVE_INFINITY : number;
+      }
+
       function menuFilterActiveV80() {
         return menuViewV16 !== "my" || menuTypeV44 !== "all" || menuStatusFiltersV92.length > 0 || Boolean(menuSearchV44.trim()) || menuRangeV60 !== "all";
       }
@@ -4409,7 +4415,7 @@
           if (menuViewV16 === "favorites") return isFavoriteV16(question) && isPlayableV16(question);
           return isPlayableV16(question);
         });
-        const entries = sourceQuestions.filter(menuRangeMatchesV60).map(question => ({ question, index: questionIndexByKeyV44(questionKeyV16(question)) })).filter(({ index }) => index >= 0);
+        const entries = sourceQuestions.filter(menuRangeMatchesV60).map(question => ({ question, index: questionIndexByKeyV44(questionKeyV16(question)) })).filter(({ index }) => index >= 0).sort((left, right) => menuQuestionSortKeyV99(left.question) - menuQuestionSortKeyV99(right.question) || left.index - right.index);
         empty.hidden = entries.length > 0;
         empty.textContent = menuViewV16 === "trash" ? "ゴミ箱は空です。" : menuViewV16 === "favorites" ? "お気に入り登録した問題はまだありません。" : "出題できる問題がありません。";
         grid.innerHTML = entries.map(({ question, index }) => {
