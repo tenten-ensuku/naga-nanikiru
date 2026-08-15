@@ -462,6 +462,15 @@
     .comment-body .comment-color-green { color: #8be4bd; font-weight: 800; }
     .comment-body .comment-color-purple { color: #d1a7ff; font-weight: 800; }
     .comment-body .comment-size-large { display: inline-block; color: #fff; font-size: 1.45em; font-weight: 900; line-height: 1.2; }
+    .comment-youtube-card { display: flex; width: min(100%, 560px); min-height: 88px; margin: 8px 0 2px; overflow: hidden; color: #eaf8ff; text-decoration: none; background: #071c2b; border: 1px solid rgba(113,183,255,.48); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,.2); }
+    .comment-youtube-card:hover, .comment-youtube-card:focus-visible { border-color: rgba(155,232,216,.9); outline: 2px solid rgba(155,232,216,.25); outline-offset: 2px; }
+    .comment-youtube-thumb-wrap { flex: 0 0 clamp(132px, 30%, 210px); aspect-ratio: 16 / 9; background: #031521; }
+    .comment-youtube-thumb { display: block; width: 100%; height: 100%; object-fit: cover; }
+    .comment-youtube-card-body { display: grid; align-content: center; gap: 4px; min-width: 0; padding: 8px 10px; }
+    .comment-youtube-title { display: -webkit-box; overflow: hidden; color: #f5fdff; font-size: clamp(11px, 1.1vw, 14px); font-weight: 850; line-height: 1.35; -webkit-box-orient: vertical; -webkit-line-clamp: 3; }
+    .comment-youtube-source { color: #9bdcff; font-size: 9px; font-weight: 800; }
+    .comment-youtube-url { display: block; overflow: hidden; color: #86b8cc; font-size: 8px; line-height: 1.3; text-overflow: ellipsis; white-space: nowrap; }
+    .comment-youtube-placeholder { display: block; }
     .comment-attachment-button { display: block; max-width: min(100%, 560px); margin-top: 5px; padding: 0; overflow: hidden; border: 1px solid rgba(255,255,255,.12); border-radius: 5px; background: #031521; cursor: zoom-in; }
     .comment-attachment-button:hover, .comment-attachment-button:focus-visible { border-color: rgba(155,232,216,.9); outline: 2px solid rgba(155,232,216,.25); outline-offset: 2px; }
     .comment-attachment { display: block; width: 100%; max-height: 150px; object-fit: contain; }
@@ -1639,7 +1648,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 95;
+    const APP_VERSION = 96;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -1811,11 +1820,98 @@
       return formatted;
     }
 
-    function formatCommentFragment(value, links) {
-      let formatted = value.replace(/(https?:\/\/[^\s<]+)/g, url => {
+    function decodeCommentHtmlEntitiesV96(value) {
+      return String(value ?? "").replace(/&amp;/g, "&").replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&lt;/g, "<").replace(/&gt;/g, ">");
+    }
+
+    function trimCommentUrlV96(value) {
+      return decodeCommentHtmlEntitiesV96(value).replace(/[.,!?;:、。！？」』）】〉》)]+$/g, "");
+    }
+
+    function youtubeVideoIdV96(value) {
+      try {
+        const parsed = new URL(trimCommentUrlV96(value));
+        const host = parsed.hostname.toLowerCase().replace(/^www\./, "");
+        let candidate = "";
+        if (host === "youtu.be") candidate = parsed.pathname.split("/").filter(Boolean)[0] || "";
+        else if (host === "youtube.com" || host.endsWith(".youtube.com")) {
+          candidate = parsed.searchParams.get("v") || parsed.pathname.match(/^\/(?:shorts|embed|live)\/([^/?]+)/)?.[1] || "";
+        }
+        return /^[\w-]{6,}$/.test(candidate) ? candidate : "";
+      } catch {
+        return "";
+      }
+    }
+
+    function commentYoutubeEmbedV96(url, embeds = []) {
+      const normalizedUrl = trimCommentUrlV96(url);
+      const videoId = youtubeVideoIdV96(normalizedUrl);
+      if (!videoId) return null;
+      const metadata = (Array.isArray(embeds) ? embeds : []).find(embed => youtubeVideoIdV96(embed?.url || "") === videoId) || {};
+      return {
+        url: normalizedUrl,
+        videoId,
+        title: String(metadata.title || "YouTube動画"),
+        thumbnail: String(metadata.thumbnail || metadata.thumbnailUrl || `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`)
+      };
+    }
+
+    function commentYoutubePlaceholderV96(embed) {
+      return `<span class="comment-youtube-placeholder" data-youtube-url="${escapeHtml(embed.url)}" data-youtube-title="${escapeHtml(embed.title)}" data-youtube-thumbnail="${escapeHtml(embed.thumbnail)}"></span>`;
+    }
+
+    function hydrateCommentYoutubeCardsV96(root) {
+      root.querySelectorAll(".comment-youtube-placeholder").forEach(placeholder => {
+        const url = placeholder.dataset.youtubeUrl || "";
+        const title = placeholder.dataset.youtubeTitle || "YouTube動画";
+        const thumbnail = placeholder.dataset.youtubeThumbnail || "";
+        const link = document.createElement("a");
+        link.className = "comment-youtube-card";
+        link.href = url;
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+        link.setAttribute("aria-label", `${title}をYouTubeで開く`);
+        const thumbWrap = document.createElement("span");
+        thumbWrap.className = "comment-youtube-thumb-wrap";
+        const image = document.createElement("img");
+        image.className = "comment-youtube-thumb";
+        image.src = thumbnail;
+        image.alt = `${title}のサムネイル`;
+        image.loading = "lazy";
+        thumbWrap.append(image);
+        const body = document.createElement("span");
+        body.className = "comment-youtube-card-body";
+        const titleElement = document.createElement("strong");
+        titleElement.className = "comment-youtube-title";
+        titleElement.textContent = title;
+        const sourceElement = document.createElement("span");
+        sourceElement.className = "comment-youtube-source";
+        sourceElement.textContent = "YouTubeで開く";
+        const urlElement = document.createElement("span");
+        urlElement.className = "comment-youtube-url";
+        urlElement.textContent = url;
+        body.append(titleElement, sourceElement, urlElement);
+        link.append(thumbWrap, body);
+        placeholder.replaceWith(link);
+      });
+    }
+
+    function formatCommentFragment(value, links, options = {}) {
+      const youtubeCards = options.youtubeCards || [];
+      const renderYoutubeCards = options.renderYoutubeCards !== false;
+      let formatted = value.replace(/(https?:\/\/[^\s<]+)/g, rawUrl => {
+        const normalizedUrl = trimCommentUrlV96(rawUrl);
+        const decodedUrl = decodeCommentHtmlEntitiesV96(rawUrl);
+        const suffix = decodedUrl.slice(normalizedUrl.length);
+        const youtube = renderYoutubeCards ? commentYoutubeEmbedV96(normalizedUrl, options.youtubeEmbeds) : null;
+        if (youtube) {
+          const token = `@@COMMENT_YOUTUBE_${youtubeCards.length}@@`;
+          youtubeCards.push(youtube);
+          return `${token}${escapeHtml(suffix)}`;
+        }
         const token = `@@COMMENT_LINK_${links.length}@@`;
-        links.push(`<a href="${url}" target="_blank" rel="noreferrer">${url}</a>`);
-        return token;
+        links.push(`<a href="${escapeHtml(normalizedUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(normalizedUrl)}</a>`);
+        return `${token}${escapeHtml(suffix)}`;
       });
       formatted = formatted.replace(/\*\*([\s\S]*?)\*\*/g, "<strong>$1</strong>");
       formatted = formatted.replace(/\[color:(red|yellow|blue|green|purple)\]([\s\S]*?)\[\/color\]/gi, (_, color, inner) => `<span class="comment-color-${String(color).toLowerCase()}">${inner}</span>`);
@@ -1824,21 +1920,32 @@
       return formatted;
     }
 
-    function formatCommentContent(content) {
+    function formatCommentContent(content, embeds = []) {
       const links = [];
+      const youtubeCards = [];
       const spoilers = [];
       let formatted = escapeHtml(content).replace(/\|\|([\s\S]*?)\|\|/g, (_, inner) => {
         const token = `@@COMMENT_SPOILER_${spoilers.length}@@`;
         spoilers.push(inner);
         return token;
       });
-      formatted = formatCommentFragment(formatted, links);
+      formatted = formatCommentFragment(formatted, links, { youtubeEmbeds: embeds, youtubeCards });
       formatted = formatted.replace(/\n/g, "<br>");
       formatted = formatted.replace(/@@COMMENT_SPOILER_(\d+)@@/g, (token, index) => {
-        const inner = formatCommentFragment(spoilers[Number(index)] || "", links).replace(/\n/g, "<br>");
+        const inner = formatCommentFragment(spoilers[Number(index)] || "", links, { youtubeEmbeds: embeds, youtubeCards, renderYoutubeCards: false }).replace(/\n/g, "<br>");
         return `<button class="comment-spoiler" type="button" aria-expanded="false" aria-label="伏せ字を表示"><span class="comment-spoiler-cover">伏せ字</span><span class="comment-spoiler-content" aria-hidden="true">${inner}</span></button>`;
       });
-      return formatted.replace(/@@COMMENT_LINK_(\d+)@@/g, (token, index) => links[Number(index)] || token);
+      formatted = formatted.replace(/@@COMMENT_LINK_(\d+)@@/g, (token, index) => links[Number(index)] || token);
+      return formatted.replace(/@@COMMENT_YOUTUBE_(\d+)@@/g, (token, index) => commentYoutubePlaceholderV96(youtubeCards[Number(index)]) || token);
+    }
+
+    function renderCommentEmbedPlaceholdersV96(message) {
+      const contentVideoIds = new Set([...String(message?.content || "").matchAll(/https?:\/\/[^\s<]+/g)].map(match => youtubeVideoIdV96(match[0])).filter(Boolean));
+      return (Array.isArray(message?.embeds) ? message.embeds : [])
+        .map(embed => commentYoutubeEmbedV96(embed?.url || "", [embed]))
+        .filter(embed => embed && !contentVideoIds.has(embed.videoId))
+        .map(commentYoutubePlaceholderV96)
+        .join("");
     }
 
     function setCommentFormStatusV68(message, isError = false) {
@@ -2011,17 +2118,18 @@
 
     function renderCommentEntryV65(message) {
       const editingClass = state.commentEditingId === message.id ? " is-editing" : "";
-      return `<div class="comment-entry${editingClass}" data-comment-id="${escapeHtml(message.id)}"><div class="comment-card-meta"><time class="comment-time" datetime="${escapeHtml(message.createdAt)}">${formatCommentTime(message.createdAt)}</time>${commentActionMarkupV75(message)}</div>${message.content ? `<div class="comment-body">${formatCommentContent(message.content)}</div>` : ""}${(message.attachments || []).map(attachment => `<button class="comment-attachment-button" type="button" data-comment-image-src="${escapeHtml(attachment.src)}" data-comment-image-alt="${escapeHtml(attachment.alt)}" aria-label="${escapeHtml(attachment.alt)}を拡大"><img class="comment-attachment" src="${escapeHtml(attachment.src)}" alt="${escapeHtml(attachment.alt)}" loading="lazy"></button>`).join("")}</div>`;
+      return `<div class="comment-entry${editingClass}" data-comment-id="${escapeHtml(message.id)}"><div class="comment-card-meta"><time class="comment-time" datetime="${escapeHtml(message.createdAt)}">${formatCommentTime(message.createdAt)}</time>${commentActionMarkupV75(message)}</div>${message.content ? `<div class="comment-body">${formatCommentContent(message.content, message.embeds)}</div>` : ""}${renderCommentEmbedPlaceholdersV96(message)}${(message.attachments || []).map(attachment => `<button class="comment-attachment-button" type="button" data-comment-image-src="${escapeHtml(attachment.src)}" data-comment-image-alt="${escapeHtml(attachment.alt)}" aria-label="${escapeHtml(attachment.alt)}を拡大"><img class="comment-attachment" src="${escapeHtml(attachment.src)}" alt="${escapeHtml(attachment.alt)}" loading="lazy"></button>`).join("")}</div>`;
     }
 
     function renderComments({ scrollToBottom = false } = {}) {
       const list = document.getElementById("commentsScroll");
-      const messages = state.comments.filter(message => message.showInComments !== false && (message.content || message.attachments?.length));
+      const messages = state.comments.filter(message => message.showInComments !== false && (message.content || message.attachments?.length || message.embeds?.length));
       const groups = mergeCommentGroupsV65(messages);
       list.innerHTML = groups.map(group => {
         const authorClass = commentAuthorColorV65(group.author);
         return `<article class="comment-card comment-group ${authorClass}"><span class="comment-author-badge ${authorClass}" title="${escapeHtml(group.author)}">${escapeHtml(group.author)}</span><div class="comment-card-main">${group.messages.map(renderCommentEntryV65).join("")}</div></article>`;
       }).join("");
+      hydrateCommentYoutubeCardsV96(list);
       document.getElementById("commentsMeta").textContent = `${messages.length}件の投稿・${groups.length}人の発言（連続投稿は統合表示）`;
       if (scrollToBottom) list.scrollTop = list.scrollHeight;
     }
@@ -2446,7 +2554,8 @@
         { version: 92, date: "2026-08-16", title: "出題順と詳細条件を選びやすくしました", body: "順番・逆順・未回答優先ランダムを選べるようにし、回答状態は複数のチェックボックスで絞り込めるようにしました。" },
         { version: 93, date: "2026-08-16", title: "ランダム出題を解答数の少ない順にしました", body: "ランダム出題では、これまでの解答回数が少ない問題を優先し、同じ解答回数の問題はランダムに並べます。" },
         { version: 94, date: "2026-08-16", title: "ランダム出題の優先基準を表示しました", body: "出題順の選択肢に、ランダム出題が解答数の少ない順であることを明記しました。" },
-        { version: APP_VERSION, date: "2026-08-16", title: "復習期限の仕組みを整理しました", body: "自動の復習期限と期限フィルターを廃止し、苦手問題・未回答問題・習熟度を中心に、よりシンプルに学習できるようにしました。" }
+        { version: 95, date: "2026-08-16", title: "復習期限の仕組みを整理しました", body: "自動の復習期限と期限フィルターを廃止し、苦手問題・未回答問題・習熟度を中心に、よりシンプルに学習できるようにしました。" },
+        { version: APP_VERSION, date: "2026-08-16", title: "解説内のYouTube動画を表示するようにしました", body: "解説文に含まれるYouTubeリンクを動画カードとして表示し、動画タイトル・サムネイル・リンクを確認できるようにしました。問題17の動画も復元しています。" }
       ];
       let commentNoticeStoreV65 = loadCommentNoticeStoreV65();
       let sharedCommentRowsV65 = [];
