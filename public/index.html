@@ -1466,7 +1466,7 @@
           </div>
         </div>
         <div class="menu-range-actions" id="menuRangeActions" hidden>
-          <label class="menu-order-control" for="menuOrderSelect"><span>出題順</span><select id="menuOrderSelect" aria-label="出題順"><option value="sequential">順番</option><option value="reverse">逆順</option><option value="random">ランダム（未回答優先）</option></select></label>
+          <label class="menu-order-control" for="menuOrderSelect"><span>出題順</span><select id="menuOrderSelect" aria-label="出題順"><option value="sequential">順番</option><option value="reverse">逆順</option><option value="random">ランダム（解答数が少ない順）</option></select></label>
           <button class="menu-range-action primary" type="button" data-range-session="all">この範囲を10問解く <span aria-hidden="true">→</span></button>
         </div>
         <div class="menu-list-header" id="menuListHeader" aria-hidden="true"><span class="menu-list-header-group"><span>問題</span><span>ステータス</span><span>直近の結果</span><span>お気に入り</span><span>ゴミ箱</span></span><span class="menu-list-header-group"><span>問題</span><span>ステータス</span><span>直近の結果</span><span>お気に入り</span><span>ゴミ箱</span></span></div>
@@ -1640,7 +1640,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 93;
+    const APP_VERSION = 94;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -2445,7 +2445,8 @@
         { version: 90, date: "2026-08-15", title: "共有問題集の問題158を指定局面へ修正しました", body: "くにたそチェック側にも、tv=24の副露判断・1p対象牌として反映しました。" },
         { version: 91, date: "2026-08-15", title: "学習進捗に習熟度を追加しました", body: "回答率に加えて、直近2回が連続で💮になった問題の割合を習熟度として表示します。×・△ありは直近3回の回答履歴を見て判定します。" },
         { version: 92, date: "2026-08-16", title: "出題順と詳細条件を選びやすくしました", body: "順番・逆順・未回答優先ランダムを選べるようにし、回答状態は複数のチェックボックスで絞り込めるようにしました。" },
-        { version: APP_VERSION, date: "2026-08-16", title: "ランダム出題を解答数の少ない順にしました", body: "ランダム出題では、これまでの解答回数が少ない問題を優先し、同じ解答回数の問題はランダムに並べます。" }
+        { version: 93, date: "2026-08-16", title: "ランダム出題を解答数の少ない順にしました", body: "ランダム出題では、これまでの解答回数が少ない問題を優先し、同じ解答回数の問題はランダムに並べます。" },
+        { version: APP_VERSION, date: "2026-08-16", title: "ランダム出題の優先基準を表示しました", body: "出題順の選択肢に、ランダム出題が解答数の少ない順であることを明記しました。" }
       ];
       let commentNoticeStoreV65 = loadCommentNoticeStoreV65();
       let sharedCommentRowsV65 = [];
