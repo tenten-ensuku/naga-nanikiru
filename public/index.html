@@ -614,6 +614,8 @@
       .menu-summary-stat strong { font-size: 22px; }
       .menu-summary-stat small { font-size: 10px; }
       .menu-range-actions { justify-content: stretch; }
+      .menu-order-control { flex: 1 1 100%; justify-content: flex-end; }
+      .menu-order-control select { min-width: 0; max-width: 100%; }
       .menu-range-action { flex: 1 1 160px; min-width: 0; }
       .menu-list-header { grid-template-columns: minmax(0, 1fr) 106px 76px 42px 42px; gap: 4px; padding-inline: 8px; font-size: 9px; }
       .menu-card { grid-template-columns: minmax(0, 1fr) 106px 76px 42px 42px; gap: 4px; min-height: 72px; padding: 8px; }
@@ -854,6 +856,26 @@
     }
     .menu-range-actions {
       gap: 8px;
+    }
+    .menu-order-control {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      min-height: 44px;
+      color: #c5dadd;
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+    .menu-order-control select {
+      min-height: 44px;
+      min-width: 178px;
+      padding: 9px 30px 9px 11px;
+      color: #e7f6f7;
+      background: #123446;
+      border: 1px solid rgba(190, 220, 225, .38);
+      border-radius: 5px;
+      font: inherit;
     }
     /* V83: one clear filter hierarchy: range first, genre second, status only on demand. */
     .menu-filter-stack {
@@ -1441,6 +1463,7 @@
           </div>
         </div>
         <div class="menu-range-actions" id="menuRangeActions" hidden>
+          <label class="menu-order-control" for="menuOrderSelect"><span>出題順</span><select id="menuOrderSelect" aria-label="出題順"><option value="sequential">順番</option><option value="random">ランダム（未回答優先）</option></select></label>
           <button class="menu-range-action primary" type="button" data-range-session="all">この範囲を10問解く <span aria-hidden="true">→</span></button>
           <button class="menu-range-action" type="button" data-range-session="unanswered">未回答を10問解く <span aria-hidden="true">→</span></button>
         </div>
@@ -1615,7 +1638,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 86;
+    const APP_VERSION = 87;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -2318,6 +2341,7 @@
       let menuTypeV44 = "all";
       let menuRangeV60 = "all";
       let menuAdvancedFiltersOpenV83 = false;
+      let menuOrderV87 = "sequential";
       let managedQuestionIndexV44 = null;
       let generatorCandidatesV44 = [];
       let generatorReportV44 = null;
@@ -3780,12 +3804,19 @@
         return { today: "今日の10問", weak: "苦手10問", unanswered: "未回答10問", riichi: "リーチ判断", call: "副露判断", favorites: "お気に入り", range: "この範囲の10問", "range-unanswered": "未回答の10問" }[mode] || "選択ドリル";
       }
 
+      function nextFilteredQuestionV87() {
+        const currentKey = questionKeyV16(questionsV16[currentQuestionIndexV16]);
+        const filteredCandidates = menuFilteredQuestionsV80().filter(isPlayableV16);
+        const currentPosition = filteredCandidates.findIndex(question => questionKeyV16(question) === currentKey);
+        if (currentPosition >= 0) return filteredCandidates[currentPosition + 1] || null;
+        return filteredCandidates.find(question => questionIndexByKeyV44(questionKeyV16(question)) > currentQuestionIndexV16) || null;
+      }
+
       function nextButtonLabelV44() {
         const session = activeSessionV44();
         if (!session) {
           if (menuFilterActiveV80()) {
-            const filteredCandidates = menuFilteredQuestionsV80().filter(isPlayableV16).filter(question => questionKeyV16(question) !== questionKeyV16(questionsV16[currentQuestionIndexV16]));
-            return filteredCandidates.length ? "次の問題へ" : "問題一覧へ";
+            return nextFilteredQuestionV87() ? "次の問題へ" : "問題一覧へ";
           }
           return currentQuestionIndexV16 < questionsV16.length - 1 ? "次の問題へ" : "問題一覧へ";
         }
@@ -3844,7 +3875,9 @@
       function startRangeSessionV61(mode) {
         const unansweredOnly = mode === "unanswered";
         const candidates = menuFilteredQuestionsV80().filter(question => isPlayableV16(question) && (!unansweredOnly || !latestAnswerV44(question)));
-        const orderedCandidates = menuTypeV44 === "all" ? candidates : shuffleQuestionsV80(candidates);
+        const orderedCandidates = menuOrderV87 === "random"
+          ? shuffleQuestionsV80(candidates.filter(question => !latestAnswerV44(question))).concat(shuffleQuestionsV80(candidates.filter(question => latestAnswerV44(question))))
+          : candidates;
         startSessionV44(unansweredOnly ? "range-unanswered" : "range", orderedCandidates);
       }
 
@@ -3864,10 +3897,8 @@
         const session = activeSessionV44();
         if (!session) {
           if (menuFilterActiveV80()) {
-            const currentKey = questionKeyV16(questionsV16[currentQuestionIndexV16]);
-            const filteredCandidates = menuFilteredQuestionsV80().filter(isPlayableV16).filter(question => questionKeyV16(question) !== currentKey);
-            if (filteredCandidates.length) {
-              const nextQuestion = menuTypeV44 === "all" ? filteredCandidates[0] : shuffleQuestionsV80(filteredCandidates)[0];
+            const nextQuestion = nextFilteredQuestionV87();
+            if (nextQuestion) {
               const nextIndex = questionIndexByKeyV44(questionKeyV16(nextQuestion));
               if (nextIndex >= 0) {
                 openQuestionV16(nextIndex);
@@ -5067,6 +5098,9 @@
         document.getElementById("menuRangeActions").addEventListener("click", event => {
           const button = event.target.closest("[data-range-session]");
           if (button) startRangeSessionV61(button.dataset.rangeSession);
+        });
+        document.getElementById("menuOrderSelect").addEventListener("change", event => {
+          menuOrderV87 = event.target.value === "random" ? "random" : "sequential";
         });
         document.getElementById("menuStatusFilter").addEventListener("change", event => { menuStatusV44 = event.target.value; renderMenuCardsV16(); });
         document.querySelectorAll("[data-menu-type]").forEach(button => button.addEventListener("click", () => {
