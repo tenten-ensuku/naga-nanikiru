@@ -1484,8 +1484,7 @@
     <header class="header">
       <div>
         <p class="eyebrow">NAGA SCREENSHOT-BASED DRILL</p>
-        <h1>局面から何切る</h1>
-        <p class="header-note">NAGAの局面を解き、復習し、弱点を育て直す実戦問題集</p>
+        <h1>何切る？</h1>
       </div>
       <div class="version" id="versionLabel"></div>
     </header>
@@ -1494,7 +1493,7 @@
       <div class="source-url"><strong id="sceneProblemTitle">問題249</strong><a class="source-link" id="nagaSourceLink" href="#" target="_blank" rel="noopener noreferrer">局面NAGAURLに移動</a></div>
       <label class="question-control">問題を選ぶ <select id="questionSelect" aria-label="問題を選ぶ"></select></label>
       <label class="model-control">正誤判定基準 <select id="modelSelect" aria-label="正誤判定基準"></select></label>
-      <button class="menu-button" id="menuButton" type="button">問題一覧へ</button>
+      <button class="menu-button" id="menuButton" type="button">メニューに戻る</button>
       <button class="next-button" id="nextQuestionButton" type="button" hidden>次の問題へ</button>
     </div>
 
@@ -1647,7 +1646,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 97;
+    const APP_VERSION = 98;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -2554,7 +2553,8 @@
         { version: 94, date: "2026-08-16", title: "ランダム出題の優先基準を表示しました", body: "出題順の選択肢に、ランダム出題が解答数の少ない順であることを明記しました。" },
         { version: 95, date: "2026-08-16", title: "復習期限の仕組みを整理しました", body: "自動の復習期限と期限フィルターを廃止し、苦手問題・未回答問題・習熟度を中心に、よりシンプルに学習できるようにしました。" },
         { version: 96, date: "2026-08-16", title: "解説内のYouTube動画を表示するようにしました", body: "解説文に含まれるYouTubeリンクを動画カードとして表示し、動画タイトル・サムネイル・リンクを確認できるようにしました。問題17の動画も復元しています。" },
-        { version: APP_VERSION, date: "2026-08-16", title: "局面NAGAURLへの移動を分かりやすくしました", body: "問題番号の隣に局面NAGAURLへの移動ボタンを配置し、技術的なURL情報を整理しました。" }
+        { version: 97, date: "2026-08-16", title: "局面NAGAURLへの移動を分かりやすくしました", body: "問題番号の隣に局面NAGAURLへの移動ボタンを配置し、技術的なURL情報を整理しました。" },
+        { version: APP_VERSION, date: "2026-08-16", title: "問題画面の表示をすっきり整理しました", body: "見出しとメニューへの戻り方を簡潔にし、問題一覧では共有状態の重複表示をなくしました。" }
       ];
       let commentNoticeStoreV65 = loadCommentNoticeStoreV65();
       let sharedCommentRowsV65 = [];
@@ -4419,7 +4419,7 @@
           const scores = recentScoresV16(question);
           const historyLabel = scores.length ? `直近${scores.length}回の採点履歴：${scores.map(entry => `${entry.scoreMark} ${entry.scoreLabel || scoreForQuestionV16(question, entry)?.label || "採点結果"}`).join("、")}` : "採点履歴はまだありません";
           const history = scores.length ? scores.map(entry => `<span class="menu-card-latest-mark ${menuScoreMarkClassV63(entry.scoreMark)}" title="${escapeHtml(entry.scoreLabel || scoreForQuestionV16(question, entry)?.label || "採点結果")}">${escapeHtml(entry.scoreMark)}</span>`).join("") : "—";
-          const typeMetadata = [questionTypeV44(question), isSharedQuestionV47(question) ? "共有" : ""].filter(Boolean).join(" · ");
+          const typeMetadata = questionTypeV44(question);
           const status = menuRowStatusV63(question);
           const statusMarkup = `<span class="menu-row-status ${status.className}">${status.label}</span><button class="menu-card-row-manage" type="button" data-menu-action="manage" data-question-index="${index}">整理</button>`;
           const favoriteLabel = favorite ? `問題${question.number}のお気に入りを解除` : `問題${question.number}をお気に入りに追加`;
