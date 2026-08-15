@@ -32,7 +32,10 @@ test("wires v65 learning UX, generator, Supabase bridge, metadata, and social im
     readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
     access(new URL("../public/og-v44.png", import.meta.url)),
   ]);
-  assert.match(index, /const APP_VERSION = 96/);
+  assert.match(index, /const APP_VERSION = 97/);
+  assert.match(index, /id="sceneProblemTitle">問題249<\/strong><a class="source-link" id="nagaSourceLink"[^>]*>局面NAGAURLに移動<\/a>/);
+  assert.doesNotMatch(index, /<div class="source-url">.*元画面：.*<\/div>/);
+  assert.doesNotMatch(index, /<div class="source-url">.*report_viewer\.html.*<\/div>/);
   assert.match(index, /supabase-sync-v48\.js/);
   assert.match(index, /drill-ux-v44\.js/);
   assert.match(index, /naga-generator-v44\.js/);

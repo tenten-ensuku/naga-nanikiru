@@ -241,8 +241,7 @@
     .header-note { margin: 5px 0 0; color: var(--muted); font-size: 12px; }
     .version { color: var(--muted); font-size: 11px; letter-spacing: .08em; white-space: nowrap; }
     .source-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding: 9px 11px; margin-bottom: 12px; background: rgba(7, 28, 43, .92); border: 1px solid var(--line); border-radius: 11px; }
-    .source-url { min-width: 0; overflow: hidden; color: #c5e6ea; font-size: 11px; text-overflow: ellipsis; white-space: nowrap; }
-    .source-url span { color: var(--muted); }
+    .source-url { display: inline-flex; align-items: center; min-width: 0; overflow: hidden; color: #c5e6ea; font-size: 11px; text-overflow: ellipsis; white-space: nowrap; }
     .source-link { display: inline-flex; align-items: center; padding: 3px 7px; margin: 0 3px; color: #e7f8ff; background: #164862; border: 1px solid rgba(113,183,255,.55); border-radius: 6px; font-size: 9px; font-weight: 800; text-decoration: none; vertical-align: 1px; }
     .source-link:hover, .source-link:focus-visible { background: #246b8a; outline: 2px solid rgba(113,183,255,.28); outline-offset: 1px; }
     .model-control, .question-control { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 11px; white-space: nowrap; }
@@ -1492,7 +1491,7 @@
     </header>
 
     <div class="source-bar">
-      <div class="source-url"><span>元画面：</span> <strong id="sceneProblemTitle">問題249</strong> <a class="source-link" id="nagaSourceLink" href="#" target="_blank" rel="noopener noreferrer">URLに移動</a> <span id="sceneMeta">· report_viewer.html · ts=1 · tv=69 · tw=0</span></div>
+      <div class="source-url"><strong id="sceneProblemTitle">問題249</strong><a class="source-link" id="nagaSourceLink" href="#" target="_blank" rel="noopener noreferrer">局面NAGAURLに移動</a></div>
       <label class="question-control">問題を選ぶ <select id="questionSelect" aria-label="問題を選ぶ"></select></label>
       <label class="model-control">正誤判定基準 <select id="modelSelect" aria-label="正誤判定基準"></select></label>
       <button class="menu-button" id="menuButton" type="button">問題一覧へ</button>
@@ -1648,7 +1647,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 96;
+    const APP_VERSION = 97;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -2489,7 +2488,6 @@
       const sceneFrameV16 = document.querySelector(".scene-frame");
       const sceneImageV16 = document.getElementById("sceneImage");
       const sourceTitleV16 = document.getElementById("sceneProblemTitle");
-      const sourceMetaV16 = document.getElementById("sceneMeta");
 
       function loadUserStateV16() {
         const fallback = window.DrillUxV44?.migrateState?.(null) || { schemaVersion: 2, favorites: [], trashed: [], hidden: [], answerHistory: [], snoozed: {}, studyDates: [], sessions: {}, activeSessionId: null, lastSessionResult: null, customQuestions: [], pendingGenerated: [], settings: {}, localComments: {}, questionOverrides: {}, deletionProposals: {} };
@@ -2555,7 +2553,8 @@
         { version: 93, date: "2026-08-16", title: "ランダム出題を解答数の少ない順にしました", body: "ランダム出題では、これまでの解答回数が少ない問題を優先し、同じ解答回数の問題はランダムに並べます。" },
         { version: 94, date: "2026-08-16", title: "ランダム出題の優先基準を表示しました", body: "出題順の選択肢に、ランダム出題が解答数の少ない順であることを明記しました。" },
         { version: 95, date: "2026-08-16", title: "復習期限の仕組みを整理しました", body: "自動の復習期限と期限フィルターを廃止し、苦手問題・未回答問題・習熟度を中心に、よりシンプルに学習できるようにしました。" },
-        { version: APP_VERSION, date: "2026-08-16", title: "解説内のYouTube動画を表示するようにしました", body: "解説文に含まれるYouTubeリンクを動画カードとして表示し、動画タイトル・サムネイル・リンクを確認できるようにしました。問題17の動画も復元しています。" }
+        { version: 96, date: "2026-08-16", title: "解説内のYouTube動画を表示するようにしました", body: "解説文に含まれるYouTubeリンクを動画カードとして表示し、動画タイトル・サムネイル・リンクを確認できるようにしました。問題17の動画も復元しています。" },
+        { version: APP_VERSION, date: "2026-08-16", title: "局面NAGAURLへの移動を分かりやすくしました", body: "問題番号の隣に局面NAGAURLへの移動ボタンを配置し、技術的なURL情報を整理しました。" }
       ];
       let commentNoticeStoreV65 = loadCommentNoticeStoreV65();
       let sharedCommentRowsV65 = [];
@@ -3749,15 +3748,6 @@
         renderAnswerV16();
       }
 
-      function sceneMetaV16(url) {
-        try {
-          const parsed = new URL(url);
-          return `· report_viewer.html · ts=${parsed.searchParams.get("ts") || 0} · tv=${parsed.searchParams.get("tv") || 0} · tw=${parsed.searchParams.get("tw") || 0}`;
-        } catch {
-          return "";
-        }
-      }
-
       function handMaskFallbackV17(question) {
         const meldCount = Array.isArray(question?.melds) ? question.melds.length : 0;
         const closedCount = Array.isArray(question?.handBeforeDraw) ? question.handBeforeDraw.length : 0;
@@ -4068,7 +4058,6 @@
         document.getElementById("modelSelect").innerHTML = SCENE.models.map((model, index) => `<option value="${index}">${model.name}（正誤基準）</option>`).join("");
         document.getElementById("modelSelect").value = String(state.judgeModel);
         sourceTitleV16.textContent = `問題${SCENE.number}`;
-        sourceMetaV16.textContent = sceneMetaV16(SCENE.nagaUrl);
         document.getElementById("nagaSourceLink").href = SCENE.nagaUrl;
         document.getElementById("threadLink").href = SCENE.threadUrl;
         sceneImageV16.src = SCENE.image || SCENE.images?.off;
@@ -4515,7 +4504,6 @@
         renderMenuCardsV16();
         if (questionIndexByKeyV44(questionKeyV16(question)) === currentQuestionIndexV16) {
           sourceTitleV16.textContent = `問題${question.number}`;
-          sourceMetaV16.textContent = sceneMetaV16(question.nagaUrl);
           document.getElementById("nagaSourceLink").href = question.nagaUrl || "#";
           document.getElementById("threadLink").href = question.threadUrl || "#";
         }
