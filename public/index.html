@@ -948,9 +948,8 @@
       border-color: #d6fff5;
     }
     .menu-content .menu-filters-advanced {
-      display: flex;
-      align-items: center;
-      gap: 10px;
+      display: grid;
+      gap: 8px;
       padding: 10px;
       border: 1px solid rgba(190, 220, 225, .2);
       border-radius: 5px;
@@ -966,12 +965,14 @@
       font-weight: 800;
       white-space: nowrap;
     }
-    .menu-content .menu-filters-advanced select {
-      flex: 1 1 auto;
-      min-height: 40px;
-      width: auto;
-      min-width: 180px;
-    }
+    .menu-status-filter-group { display: grid; gap: 7px; margin: 0; padding: 0; border: 0; }
+    .menu-status-filter-group legend { padding: 0; color: #c5dadd; font-size: 11px; font-weight: 800; }
+    .menu-status-filter-options { display: flex; flex-wrap: wrap; gap: 6px; }
+    .menu-status-filter-option { display: inline-flex; align-items: center; gap: 6px; min-height: 34px; padding: 6px 9px; color: #e7f6f7; background: #123446; border: 1px solid rgba(190, 220, 225, .28); border-radius: 5px; font-size: 11px; font-weight: 800; cursor: pointer; }
+    .menu-status-filter-option:hover, .menu-status-filter-option:has(input:focus-visible) { border-color: rgba(155, 232, 216, .75); outline: 2px solid rgba(155, 232, 216, .16); outline-offset: 1px; }
+    .menu-status-filter-option:has(input:checked) { color: #172215; background: #bde7e0; border-color: #d6fff5; }
+    .menu-status-filter-option input { width: 15px !important; min-height: 15px !important; margin: 0; accent-color: #0a756c; }
+    .menu-status-filter-note { margin: 0; color: #9fbec4; font-size: 10px; line-height: 1.35; }
     .menu-range-action {
       min-height: 44px;
       padding: 9px 15px;
@@ -1334,10 +1335,7 @@
       .menu-filter-advanced-toggle {
         justify-self: start;
       }
-      .menu-content .menu-filters-advanced {
-        display: grid;
-        grid-template-columns: auto minmax(0, 1fr);
-      }
+      .menu-content .menu-filters-advanced { gap: 7px; }
       .menu-content .menu-filters { grid-template-columns: minmax(0, 1fr); }
       .menu-content .menu-filters input,
       .menu-content .menu-filters select { min-width: 0; width: 100%; }
@@ -1455,20 +1453,21 @@
             <button class="menu-filter-advanced-toggle" id="menuAdvancedToggle" type="button" aria-expanded="false" aria-controls="menuAdvancedFilters">詳細条件⌄</button>
           </section>
           <div class="menu-filters menu-filters-advanced" id="menuAdvancedFilters" hidden>
-            <label class="menu-advanced-label" for="menuStatusFilter">回答状態</label>
-            <select id="menuStatusFilter" aria-label="回答状態で絞り込み">
-              <option value="all">すべて</option>
-              <option value="due">復習期限</option>
-              <option value="unanswered">未回答</option>
-              <option value="weak">×・△あり</option>
-              <option value="mastered">習得済み</option>
-            </select>
+            <fieldset class="menu-status-filter-group">
+              <legend>回答状態（複数選択可）</legend>
+              <div class="menu-status-filter-options">
+                <label class="menu-status-filter-option"><input type="checkbox" data-menu-status="due">復習期限</label>
+                <label class="menu-status-filter-option"><input type="checkbox" data-menu-status="unanswered">未回答</label>
+                <label class="menu-status-filter-option"><input type="checkbox" data-menu-status="weak">×・△あり</label>
+                <label class="menu-status-filter-option"><input type="checkbox" data-menu-status="mastered">習得済み</label>
+              </div>
+            </fieldset>
+            <p class="menu-status-filter-note">未選択ならすべて表示。複数選択時は、いずれかの条件に当てはまる問題を表示します。</p>
           </div>
         </div>
         <div class="menu-range-actions" id="menuRangeActions" hidden>
-          <label class="menu-order-control" for="menuOrderSelect"><span>出題順</span><select id="menuOrderSelect" aria-label="出題順"><option value="sequential">順番</option><option value="random">ランダム（未回答優先）</option></select></label>
+          <label class="menu-order-control" for="menuOrderSelect"><span>出題順</span><select id="menuOrderSelect" aria-label="出題順"><option value="sequential">順番</option><option value="reverse">逆順</option><option value="random">ランダム（未回答優先）</option></select></label>
           <button class="menu-range-action primary" type="button" data-range-session="all">この範囲を10問解く <span aria-hidden="true">→</span></button>
-          <button class="menu-range-action" type="button" data-range-session="unanswered">未回答を10問解く <span aria-hidden="true">→</span></button>
         </div>
         <div class="menu-list-header" id="menuListHeader" aria-hidden="true"><span class="menu-list-header-group"><span>問題</span><span>ステータス</span><span>直近の結果</span><span>お気に入り</span><span>ゴミ箱</span></span><span class="menu-list-header-group"><span>問題</span><span>ステータス</span><span>直近の結果</span><span>お気に入り</span><span>ゴミ箱</span></span></div>
         <div class="menu-grid" id="menuGrid"></div>
@@ -1641,7 +1640,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 91;
+    const APP_VERSION = 92;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -2349,11 +2348,11 @@
       let currentQuestionIndexV16 = 0;
       let menuViewV16 = "my";
       let menuSearchV44 = "";
-      let menuStatusV44 = "all";
+      let menuStatusFiltersV92 = [];
       let menuTypeV44 = "all";
       let menuRangeV60 = "all";
       let menuAdvancedFiltersOpenV83 = false;
-      let menuOrderV87 = "sequential";
+      let menuOrderV92 = "sequential";
       let managedQuestionIndexV44 = null;
       let generatorCandidatesV44 = [];
       let generatorReportV44 = null;
@@ -2444,7 +2443,8 @@
         { version: 88, date: "2026-08-15", title: "問題158を副露判断の局面に差し替えました", body: "指定されたNAGA局面URLから、1pへのポン判断として問題158を更新しました。" },
         { version: 89, date: "2026-08-15", title: "赤牌記法を牌画像に変換するようにしました", body: "44r5sのような表記を、4索・4索・赤5索の牌画像として表示します。" },
         { version: 90, date: "2026-08-15", title: "共有問題集の問題158を指定局面へ修正しました", body: "くにたそチェック側にも、tv=24の副露判断・1p対象牌として反映しました。" },
-        { version: APP_VERSION, date: "2026-08-15", title: "学習進捗に習熟度を追加しました", body: "回答率に加えて、直近2回が連続で💮になった問題の割合を習熟度として表示します。×・△ありは直近3回の回答履歴を見て判定します。" }
+        { version: 91, date: "2026-08-15", title: "学習進捗に習熟度を追加しました", body: "回答率に加えて、直近2回が連続で💮になった問題の割合を習熟度として表示します。×・△ありは直近3回の回答履歴を見て判定します。" },
+        { version: APP_VERSION, date: "2026-08-16", title: "出題順と詳細条件を選びやすくしました", body: "順番・逆順・未回答優先ランダムを選べるようにし、回答状態は複数のチェックボックスで絞り込めるようにしました。" }
       ];
       let commentNoticeStoreV65 = loadCommentNoticeStoreV65();
       let sharedCommentRowsV65 = [];
@@ -3891,7 +3891,9 @@
       function startRangeSessionV61(mode) {
         const unansweredOnly = mode === "unanswered";
         const candidates = menuFilteredQuestionsV80().filter(question => isPlayableV16(question) && (!unansweredOnly || !latestAnswerV44(question)));
-        const orderedCandidates = menuOrderV87 === "random"
+        const orderedCandidates = menuOrderV92 === "reverse"
+          ? [...candidates].reverse()
+          : menuOrderV92 === "random"
           ? shuffleQuestionsV80(candidates.filter(question => !latestAnswerV44(question))).concat(shuffleQuestionsV80(candidates.filter(question => latestAnswerV44(question))))
           : candidates;
         startSessionV44(unansweredOnly ? "range-unanswered" : "range", orderedCandidates);
@@ -4083,11 +4085,24 @@
       }
 
       function menuFilterActiveV80() {
-        return menuViewV16 !== "my" || menuTypeV44 !== "all" || menuStatusV44 !== "all" || Boolean(menuSearchV44.trim()) || menuRangeV60 !== "all";
+        return menuViewV16 !== "my" || menuTypeV44 !== "all" || menuStatusFiltersV92.length > 0 || Boolean(menuSearchV44.trim()) || menuRangeV60 !== "all";
+      }
+
+      function menuStatusFilteredQuestionsV92() {
+        const filterQuestions = window.DrillUxV44?.filterQuestions;
+        if (typeof filterQuestions !== "function") return null;
+        const statuses = menuStatusFiltersV92.length ? menuStatusFiltersV92 : ["all"];
+        const allowedKeys = new Set();
+        const options = { questions: questionsV16, state: userStateV16, view: menuViewV16, query: menuSearchV44, type: menuTypeV44, now: new Date() };
+        statuses.forEach(status => {
+          const filtered = filterQuestions({ ...options, status });
+          if (Array.isArray(filtered)) filtered.forEach(question => allowedKeys.add(questionKeyV16(question)));
+        });
+        return questionsV16.filter(question => allowedKeys.has(questionKeyV16(question)));
       }
 
       function menuFilteredQuestionsV80() {
-        const filteredByHelper = window.DrillUxV44?.filterQuestions?.({ questions: questionsV16, state: userStateV16, view: menuViewV16, query: menuSearchV44, status: menuStatusV44, type: menuTypeV44, now: new Date() });
+        const filteredByHelper = menuStatusFilteredQuestionsV92();
         const sourceQuestions = Array.isArray(filteredByHelper) ? filteredByHelper : questionsV16.filter(question => {
           if (menuViewV16 === "trash") return isTrashedV16(question) || (window.DrillUxV44?.isSnoozed?.(userStateV16, questionKeyV16(question), new Date()) || false);
           if (menuViewV16 === "favorites") return isFavoriteV16(question) && isPlayableV16(question);
@@ -4299,7 +4314,7 @@
           return;
         }
         grid.style.display = "grid";
-        const filteredByHelper = window.DrillUxV44?.filterQuestions?.({ questions: questionsV16, state: userStateV16, view: menuViewV16, query: menuSearchV44, status: menuStatusV44, type: menuTypeV44, now: new Date() });
+        const filteredByHelper = menuStatusFilteredQuestionsV92();
         const sourceQuestions = Array.isArray(filteredByHelper) ? filteredByHelper : questionsV16.filter(question => {
           if (menuViewV16 === "trash") return isTrashedV16(question) || (window.DrillUxV44?.isSnoozed?.(userStateV16, questionKeyV16(question), new Date()) || false);
           if (menuViewV16 === "favorites") return isFavoriteV16(question) && isPlayableV16(question);
@@ -5119,9 +5134,12 @@
           if (button) startRangeSessionV61(button.dataset.rangeSession);
         });
         document.getElementById("menuOrderSelect").addEventListener("change", event => {
-          menuOrderV87 = event.target.value === "random" ? "random" : "sequential";
+          menuOrderV92 = ["sequential", "reverse", "random"].includes(event.target.value) ? event.target.value : "sequential";
         });
-        document.getElementById("menuStatusFilter").addEventListener("change", event => { menuStatusV44 = event.target.value; renderMenuCardsV16(); });
+        document.querySelectorAll("[data-menu-status]").forEach(input => input.addEventListener("change", () => {
+          menuStatusFiltersV92 = [...document.querySelectorAll("[data-menu-status]:checked")].map(checked => checked.dataset.menuStatus);
+          renderMenuCardsV16();
+        }));
         document.querySelectorAll("[data-menu-type]").forEach(button => button.addEventListener("click", () => {
           menuTypeV44 = button.dataset.menuType || "all";
           renderMenuCardsV16();

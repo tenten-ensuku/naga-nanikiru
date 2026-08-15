@@ -6,14 +6,15 @@ const indexUrl = new URL("../public/index.html", import.meta.url);
 
 test("renders the v87 scene and half-game generator controls", async () => {
   const html = await readFile(indexUrl, "utf8");
-  assert.match(html, /const APP_VERSION = 91/);
+  assert.match(html, /const APP_VERSION = 92/);
   assert.match(html, /data-range-session="all">この範囲を10問解く/);
-  assert.match(html, /data-range-session="unanswered">未回答を10問解く/);
+  assert.doesNotMatch(html, /data-range-session="unanswered">未回答を10問解く/);
   assert.match(html, /range: "この範囲の10問"/);
   assert.match(html, /"range-unanswered": "未回答の10問"/);
   assert.match(html, /id="menuOrderSelect"/);
-  assert.match(html, /let menuOrderV87 = "sequential"/);
-  assert.match(html, /menuOrderV87 === "random"/);
+  assert.match(html, /let menuOrderV92 = "sequential"/);
+  assert.match(html, /menuOrderV92 === "reverse"/);
+  assert.match(html, /menuOrderV92 === "random"/);
   assert.match(html, /candidates\.filter\(question => !latestAnswerV44\(question\)\)/);
   assert.match(html, /\[\.\.\.APP_ANNOUNCEMENTS_V66\]\s*\.sort\(\(left, right\) => right\.version - left\.version\)/);
   assert.match(html, /data-menu-view="settings"/);
@@ -51,7 +52,8 @@ test("renders the v87 scene and half-game generator controls", async () => {
   assert.match(html, /function menuFilteredQuestionsV80\(\)/);
   assert.match(html, /function hydrateRemoteAnswerHistoryV81\(\)/);
   assert.match(html, /loadMyAttempts\(500\)/);
-  assert.match(html, /const orderedCandidates = menuOrderV87 === "random"/);
+  assert.match(html, /const orderedCandidates = menuOrderV92 === "reverse"/);
+  assert.match(html, /menuOrderV92 === "random"/);
   assert.match(html, /function nextFilteredQuestionV87\(\)/);
   assert.match(html, /menu-card-latest/);
   assert.match(html, /data-menu-action="favorite"/);
@@ -62,6 +64,12 @@ test("renders the v87 scene and half-game generator controls", async () => {
   assert.match(html, /data-menu-type="call"/);
   assert.match(html, /id="menuAdvancedToggle"/);
   assert.match(html, /id="menuAdvancedFilters"/);
+  assert.match(html, /回答状態（複数選択可）/);
+  assert.match(html, /data-menu-status="due"/);
+  assert.match(html, /data-menu-status="unanswered"/);
+  assert.match(html, /data-menu-status="weak"/);
+  assert.match(html, /data-menu-status="mastered"/);
+  assert.doesNotMatch(html, /id="menuStatusFilter"/);
   assert.match(html, /function renderMenuTypeFiltersV83\(\)/);
   assert.doesNotMatch(html, /id="menuSearch"/);
   assert.doesNotMatch(html, /id="menuTypeFilter"/);
