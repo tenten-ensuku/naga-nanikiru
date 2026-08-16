@@ -137,12 +137,84 @@ async function updateProfileDisplayName(displayName: string) {
 async function loadSharedCollection(shareSlug: string) {
   const supabase = requireClient();
   const [collection, questions] = await Promise.all([
-    supabase.rpc("get_shared_collection", { p_share_slug: shareSlug }).single(),
+    supabase.rpc("get_shared_collection", { p_share_slug: shareSlug }).maybeSingle(),
     supabase.rpc("get_shared_questions", { p_share_slug: shareSlug }),
   ]);
   if (collection.error) throw collection.error;
   if (questions.error) throw questions.error;
+  if (!collection.data) throw new Error("指定された問題集が見つかりません。");
   return { collection: collection.data, questions: questions.data ?? [] };
+}
+
+async function loadMyCollections() {
+  const { data, error } = await requireClient().rpc("list_my_collections");
+  if (error) throw error;
+  return data ?? [];
+}
+
+async function requestCollectionAccess(shareSlug: string, message = "") {
+  const { data, error } = await requireClient().rpc("request_collection_access", {
+    p_share_slug: shareSlug,
+    p_message: message,
+  });
+  if (error) throw error;
+  return data;
+}
+
+async function loadCollectionAccessRequests(collectionId: string) {
+  const { data, error } = await requireClient().rpc("list_collection_access_requests", {
+    p_collection_id: collectionId,
+  });
+  if (error) throw error;
+  return data ?? [];
+}
+
+async function loadCollectionMembers(collectionId: string) {
+  const { data, error } = await requireClient().rpc("list_collection_members", {
+    p_collection_id: collectionId,
+  });
+  if (error) throw error;
+  return data ?? [];
+}
+
+async function reviewCollectionAccess(requestId: string, approve: boolean, role = "viewer") {
+  const { error } = await requireClient().rpc("review_collection_access", {
+    p_request_id: requestId,
+    p_approve: approve,
+    p_role: role,
+  });
+  if (error) throw error;
+}
+
+async function revokeCollectionAccess(collectionId: string, userId: string) {
+  const { error } = await requireClient().rpc("revoke_collection_access", {
+    p_collection_id: collectionId,
+    p_user_id: userId,
+  });
+  if (error) throw error;
+}
+
+async function setCollectionVisibility(collectionId: string, visibility: "private" | "request" | "limited" | "public") {
+  const { error } = await requireClient().rpc("set_collection_visibility", {
+    p_collection_id: collectionId,
+    p_visibility: visibility,
+  });
+  if (error) throw error;
+}
+
+async function loadCollectionNotifications(unreadOnly = false) {
+  const { data, error } = await requireClient().rpc("list_collection_notifications", {
+    p_unread_only: unreadOnly,
+  });
+  if (error) throw error;
+  return data ?? [];
+}
+
+async function markCollectionNotificationsRead(notificationIds: string[] | null = null) {
+  const { error } = await requireClient().rpc("mark_collection_notifications_read", {
+    p_notification_ids: notificationIds,
+  });
+  if (error) throw error;
 }
 
 async function loadSharedComments(shareSlug: string, questionId?: string | null) {
@@ -466,11 +538,12 @@ async function createCollection(input: {
   title: string;
   description?: string;
   workspaceId?: string | null;
-  visibility?: "private" | "unlisted" | "workspace" | "public";
+  visibility?: "private" | "request" | "limited" | "public";
   allowContributions?: boolean;
 }) {
   const session = await currentSession();
   if (!session) throw new Error("Discordログインが必要です。");
+  const visibility = input.visibility ?? "private";
   const { data, error } = await requireClient()
     .from("collections")
     .insert({
@@ -478,9 +551,9 @@ async function createCollection(input: {
       title: input.title,
       description: input.description ?? "",
       workspace_id: input.workspaceId ?? null,
-      visibility: input.visibility ?? "unlisted",
+      visibility,
       allow_contributions: input.allowContributions ?? true,
-      published_at: input.visibility === "private" ? null : new Date().toISOString(),
+      published_at: visibility === "private" ? null : new Date().toISOString(),
     })
     .select("*")
     .single();
@@ -497,6 +570,15 @@ function buildApi() {
     signOut,
     updateProfileDisplayName,
     loadSharedCollection,
+    loadMyCollections,
+    requestCollectionAccess,
+    loadCollectionAccessRequests,
+    loadCollectionMembers,
+    reviewCollectionAccess,
+    revokeCollectionAccess,
+    setCollectionVisibility,
+    loadCollectionNotifications,
+    markCollectionNotificationsRead,
     loadSharedComments,
     publicCommentAssetUrl,
     uploadCommentAttachment,

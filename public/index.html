@@ -1393,6 +1393,34 @@
       .page.desktop-split-layout .comments-scroll { max-height: min(52vh, 720px); }
       .scene-frame.is-call-decision .call-controls { bottom: calc(var(--hand-mask-height, 20.7%) + 1%); }
     }
+    .collection-space-panel { display: grid; gap: 10px; padding: 14px 16px; color: #eafefe; background: linear-gradient(135deg, rgba(9, 62, 79, .92), rgba(5, 29, 45, .94)); border: 1px solid rgba(155, 232, 216, .28); border-radius: 12px; }
+    .collection-space-panel[hidden] { display: none; }
+    .collection-space-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    .collection-space-title { margin: 0; color: #fff7d6; font-size: 18px; font-weight: 950; }
+    .collection-space-meta, .collection-space-note { margin: 2px 0 0; color: #b9d6da; font-size: 11px; line-height: 1.55; }
+    .collection-space-status { display: inline-flex; align-items: center; min-height: 28px; padding: 4px 9px; color: #15231e; background: #9be8d8; border-radius: 999px; font-size: 10px; font-weight: 900; white-space: nowrap; }
+    .collection-space-status.is-locked { color: #fff5dc; background: #875a36; }
+    .collection-space-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 7px; }
+    .collection-space-actions select, .collection-space-actions button { min-height: 38px; padding: 8px 10px; color: #eafefe; background: #0b3046; border: 1px solid rgba(113, 183, 255, .5); border-radius: 7px; font-size: 11px; font-weight: 850; }
+    .collection-space-actions button.primary { color: #17231d; background: #f1c457; border-color: #ffdb7d; }
+    .collection-space-actions button:disabled { cursor: wait; opacity: .65; }
+    .collection-access-request { display: grid; gap: 8px; max-width: 560px; padding-top: 3px; }
+    .collection-access-request textarea { width: 100%; min-height: 58px; resize: vertical; padding: 8px 10px; color: #eafefe; background: #061c2c; border: 1px solid rgba(255,255,255,.18); border-radius: 7px; font: inherit; font-size: 12px; }
+    .collection-access-request textarea:focus { border-color: rgba(155, 232, 216, .8); outline: 2px solid rgba(155, 232, 216, .16); }
+    .collection-access-request[hidden] { display: none; }
+    .collection-management { display: grid; gap: 10px; }
+    .collection-management h4 { margin: 0; color: #fff7d6; font-size: 15px; }
+    .collection-access-list { display: grid; gap: 6px; }
+    .collection-access-row { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 7px; align-items: center; padding: 8px 10px; color: #dffbfb; background: rgba(0,0,0,.17); border: 1px solid rgba(255,255,255,.1); border-radius: 7px; font-size: 11px; }
+    .collection-access-row small { display: block; color: var(--muted); margin-top: 2px; }
+    .collection-access-row button { min-height: 30px; padding: 5px 8px; color: #eafefe; background: #164862; border: 1px solid rgba(113,183,255,.45); border-radius: 6px; font-size: 10px; font-weight: 850; }
+    .collection-access-row button.is-danger { color: #ffe4e8; background: #5b2833; border-color: #b85b6a; }
+    .collection-access-empty { color: var(--muted); font-size: 11px; }
+    @media (max-width: 800px) {
+      .collection-space-panel { padding: 12px; }
+      .collection-access-row { grid-template-columns: 1fr 1fr; }
+      .collection-access-row > :first-child { grid-column: 1 / -1; }
+    }
   </style>
 </head>
 <body>
@@ -1423,6 +1451,7 @@
           <h2 id="menuTitle">問題一覧</h2>
           <div class="menu-summary" id="menuSummary" aria-live="polite"></div>
         </div>
+        <section class="collection-space-panel" id="collectionSpacePanel" aria-live="polite" hidden></section>
         <section class="quick-start" id="quickStart" aria-label="すぐに始める">
         <button class="quick-start-card primary" type="button" data-session-mode="recommended">
           <span class="quick-start-kicker">DAILY DRILL</span>
@@ -1646,7 +1675,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 99;
+    const APP_VERSION = 100;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -2467,6 +2496,11 @@
       let supabaseSessionV46 = null;
       let authPendingV46 = false;
       let sharedCollectionV46 = null;
+      let collectionCatalogV100 = [];
+      let collectionAccessRequestsV100 = [];
+      let collectionAccessMembersV100 = [];
+      let collectionAccessNotificationsV100 = [];
+      let collectionAccessBusyV100 = false;
       let remoteHistorySyncUserIdV81 = "";
       let remoteHistorySyncPromiseV81 = null;
       let importedQuestionsReadyV81 = false;
@@ -2555,7 +2589,8 @@
         { version: 96, date: "2026-08-16", title: "解説内のYouTube動画を表示するようにしました", body: "解説文に含まれるYouTubeリンクを動画カードとして表示し、動画タイトル・サムネイル・リンクを確認できるようにしました。問題17の動画も復元しています。" },
         { version: 97, date: "2026-08-16", title: "局面NAGAURLへの移動を分かりやすくしました", body: "問題番号の隣に局面NAGAURLへの移動ボタンを配置し、技術的なURL情報を整理しました。" },
         { version: 98, date: "2026-08-16", title: "問題画面の表示をすっきり整理しました", body: "見出しとメニューへの戻り方を簡潔にし、問題一覧では共有状態の重複表示をなくしました。" },
-        { version: APP_VERSION, date: "2026-08-16", title: "問題一覧を番号順に並べました", body: "問題一覧をすべて表示したとき、問題1から問題番号の昇順で確認できるようにしました。" }
+        { version: 99, date: "2026-08-16", title: "問題一覧を番号順に並べました", body: "問題一覧をすべて表示したとき、問題1から問題番号の昇順で確認できるようにしました。" },
+        { version: APP_VERSION, date: "2026-08-16", title: "問題集スペースと閲覧申請を追加しました", body: "問題集ごとに公開範囲を設定し、申請制の問題集では閲覧申請・承認・却下・権限取消を行えるようにしました。新しく作る問題集の初期値はプライベートです。" }
       ];
       let commentNoticeStoreV65 = loadCommentNoticeStoreV65();
       let sharedCommentRowsV65 = [];
@@ -2789,7 +2824,8 @@
       function renderNotificationBadgesV65() {
         const unreadCommentCount = commentNotificationCountForRangeV65("all");
         const unreadQuestionCount = questionNotificationCountV66();
-        const unreadCount = unreadCommentCount + unreadQuestionCount;
+        const unreadAccessCount = collectionAccessNotificationCountV100();
+        const unreadCount = unreadCommentCount + unreadQuestionCount + unreadAccessCount;
         const commentButton = document.getElementById("commentNotificationsButton");
         const commentBadge = document.getElementById("commentNotificationBadge");
         if (commentBadge) {
@@ -2797,8 +2833,8 @@
           commentBadge.textContent = unreadCount > 99 ? "99+" : String(unreadCount);
         }
         if (commentButton) {
-          commentButton.setAttribute("aria-label", unreadCount ? `コメント・追加通知。未読${unreadCount}件` : "コメント・追加通知。新着なし");
-          commentButton.title = unreadCount ? `コメント・追加通知（未読${unreadCount}件）` : "コメント・追加通知（新着なし）";
+          commentButton.setAttribute("aria-label", unreadCount ? `コメント・追加・アクセス通知。未読${unreadCount}件` : "コメント・追加・アクセス通知。新着なし");
+          commentButton.title = unreadCount ? `コメント・追加・アクセス通知（未読${unreadCount}件）` : "コメント・追加・アクセス通知（新着なし）";
         }
         const announcementBadge = document.getElementById("announcementBadge");
         const announcementUnread = Number(window.localStorage.getItem(ANNOUNCEMENT_SEEN_STORAGE_KEY_V65) || 0) < Math.max(...APP_ANNOUNCEMENTS_V66.map(item => item.version));
@@ -2883,13 +2919,18 @@
         const unreadQuestions = unreadQuestionIdsV66();
         const rows = [
           ...sharedCommentRowsV65.filter(row => unreadComments.has(row.id)).map(row => ({ ...row, kind: "comment" })),
-          ...sharedQuestionRowsV66.filter(row => unreadQuestions.has(row.id)).map(row => ({ ...row, kind: "question" }))
+          ...sharedQuestionRowsV66.filter(row => unreadQuestions.has(row.id)).map(row => ({ ...row, kind: "question" })),
+          ...collectionAccessNotificationsV100.filter(row => !row?.read_at && !row?.readAt).map(row => ({ ...row, kind: "access", createdAt: row.created_at || row.createdAt }))
         ].sort((left, right) => new Date(right.createdAt) - new Date(left.createdAt));
         if (!rows.length) {
-          list.innerHTML = `<div class="notice-empty">新しいコメント・追加問題はありません。</div>`;
+          list.innerHTML = `<div class="notice-empty">新しいコメント・追加問題・アクセス申請はありません。</div>`;
           return;
         }
         list.innerHTML = rows.map(row => {
+          if (row.kind === "access") {
+            const message = row.payload?.message ? `「${row.payload.message}」` : "メッセージなし";
+            return `<article class="notice-item"><span class="notice-item-top"><strong class="notice-item-question">問題集への閲覧申請</strong><span>${escapeHtml(formatCommentTime(row.createdAt))}</span></span><span class="notice-item-body">申請が届いています。設定の問題集スペース管理から承認・却下できます。${escapeHtml(message)}</span></article>`;
+          }
           if (row.kind === "question") {
             const index = questionsV16.findIndex(question => String(question.serverQuestionId || "") === row.id);
             const questionLabel = row.title || (row.number ? `問題${row.number}` : "新しい問題");
@@ -2925,6 +2966,8 @@
         const questionBucket = questionNoticeBucketV66();
         questionBucket.unreadIds = [];
         saveQuestionNoticeStoreV66();
+        collectionAccessNotificationsV100 = collectionAccessNotificationsV100.map(row => ({ ...row, read_at: row.read_at || new Date().toISOString() }));
+        if (supabaseSessionV46 && window.NagaSupabase?.markCollectionNotificationsRead) void window.NagaSupabase.markCollectionNotificationsRead(null).catch(error => console.warn("問題集通知を既読にできませんでした", error));
         renderNotificationBadgesV65();
         renderCommunityNotificationListV66();
       }
@@ -2985,6 +3028,225 @@
         return Array.from(String(value || "").trim()).length;
       }
 
+      function collectionVisibilityLabelV100(value) {
+        return ({
+          private: "プライベート",
+          request: "申請制",
+          limited: "限定共有",
+          public: "公開",
+          unlisted: "URLを知っている人に共有",
+          workspace: "ワークスペース内"
+        })[String(value || "")] || "非公開";
+      }
+
+      function collectionAccessNotificationCountV100() {
+        return collectionAccessNotificationsV100.filter(row => !row?.read_at && !row?.readAt).length;
+      }
+
+      function collectionCatalogOptionsV100() {
+        const rows = [...collectionCatalogV100];
+        if (sharedCollectionV46 && !rows.some(row => String(row.share_slug || "") === String(sharedCollectionV46.share_slug || ""))) {
+          rows.unshift({ ...sharedCollectionV46, share_slug: sharedCollectionV46.share_slug });
+        }
+        return rows.filter(row => row?.share_slug && row?.title);
+      }
+
+      function renderCollectionSpacePanelV100() {
+        const panel = document.getElementById("collectionSpacePanel");
+        if (!panel || !sharedCollectionV46) {
+          if (panel) panel.hidden = true;
+          return;
+        }
+        const collection = sharedCollectionV46;
+        const canView = Boolean(collection.can_view);
+        const canManage = Boolean(collection.can_manage) || isCollectionManagerV47();
+        const loggedIn = Boolean(supabaseSessionV46);
+        const requestStatus = String(collection.request_status || "");
+        const options = collectionCatalogOptionsV100();
+        const accessLabel = canView ? (canManage ? "所有者・管理者" : "閲覧可能") : collectionVisibilityLabelV100(collection.visibility);
+        const statusClass = canView ? "" : " is-locked";
+        let note = canView
+          ? `${collectionVisibilityLabelV100(collection.visibility)}。このスペースの問題・コメントを表示できます。`
+          : `${collectionVisibilityLabelV100(collection.visibility)}の問題集です。問題データは権限が付与されるまで表示されません。`;
+        let accessControls = "";
+        if (!canView && collection.visibility === "request") {
+          if (!loggedIn) {
+            note = "閲覧申請にはDiscordログインが必要です。ログイン後、このURLからもう一度開いてください。";
+          } else if (requestStatus === "pending") {
+            note = "閲覧申請を送信済みです。所有者の承認をお待ちください。";
+          } else if (requestStatus === "rejected") {
+            note = "前回の閲覧申請は却下されています。必要であれば、メッセージを添えて再申請できます。";
+            accessControls = `<div class="collection-access-request"><textarea id="collectionAccessMessage" maxlength="1000" placeholder="所有者へのメッセージ（任意）"></textarea><div class="collection-space-actions"><button class="primary" type="button" data-collection-action="request">閲覧を再申請</button></div></div>`;
+          } else {
+            accessControls = loggedIn
+              ? `<div class="collection-access-request"><textarea id="collectionAccessMessage" maxlength="1000" placeholder="所有者へのメッセージ（任意）"></textarea><div class="collection-space-actions"><button class="primary" type="button" data-collection-action="request">閲覧申請を送る</button></div></div>`
+              : "";
+          }
+        }
+        const selector = options.length > 1
+          ? `<label class="collection-space-actions"><span class="collection-space-meta">問題集スペース</span><select id="collectionSpaceSelect" aria-label="問題集スペースを選ぶ">${options.map(row => `<option value="${escapeHtml(row.share_slug)}"${String(row.share_slug) === String(collection.share_slug) ? " selected" : ""}>${escapeHtml(row.title)}</option>`).join("")}</select></label>`
+          : "";
+        panel.hidden = false;
+        panel.innerHTML = `<div class="collection-space-head"><div><p class="collection-space-title">${escapeHtml(collection.title || "問題集")}</p><p class="collection-space-meta">問題集スペース　・　公開範囲：${escapeHtml(collectionVisibilityLabelV100(collection.visibility))}</p></div><span class="collection-space-status${statusClass}">${escapeHtml(accessLabel)}</span></div><p class="collection-space-note">${escapeHtml(note)}</p>${selector}${accessControls}${canManage ? `<p class="collection-space-note">設定から公開範囲を変更し、閲覧申請を承認・却下できます。</p>` : ""}`;
+        bindCollectionSpacePanelV100();
+      }
+
+      function bindCollectionSpacePanelV100() {
+        const select = document.getElementById("collectionSpaceSelect");
+        if (select) select.addEventListener("change", () => {
+          const url = new URL(window.location.href);
+          url.searchParams.set("collection", select.value);
+          window.location.assign(url.toString());
+        });
+        const requestButton = document.querySelector('[data-collection-action="request"]');
+        if (requestButton) requestButton.addEventListener("click", async () => {
+          if (!supabaseSessionV46) {
+            window.alert("閲覧申請にはDiscordログインが必要です。");
+            return;
+          }
+          requestButton.disabled = true;
+          try {
+            const message = String(document.getElementById("collectionAccessMessage")?.value || "").trim();
+            await window.NagaSupabase.requestCollectionAccess(sharedCollectionV46.share_slug, message);
+            await loadSharedCollectionV46();
+            await refreshCollectionAccessStateV100();
+            document.getElementById("accountStatus").textContent = "閲覧申請を送信しました。所有者の承認をお待ちください。";
+          } catch (error) {
+            window.alert(error?.message || "閲覧申請を送信できませんでした。");
+          } finally {
+            requestButton.disabled = false;
+          }
+        });
+      }
+
+      function renderCollectionAccessRequestsV100() {
+        const requestList = document.getElementById("collectionAccessRequests");
+        if (requestList) {
+          const pending = collectionAccessRequestsV100.filter(row => row?.status === "pending");
+          requestList.innerHTML = pending.length ? pending.map(row => `<div class="collection-access-row"><span><strong>${escapeHtml(row.requester_name || "利用者")}</strong><small>${escapeHtml(row.message || "メッセージなし")}　${escapeHtml(formatCommentTime(row.created_at))}</small></span><select data-request-role="${escapeHtml(row.id)}" aria-label="付与する権限"><option value="viewer">閲覧</option><option value="editor">編集</option></select><span class="collection-space-actions"><button type="button" data-collection-request-action="approve" data-request-id="${escapeHtml(row.id)}">承認</button><button class="is-danger" type="button" data-collection-request-action="reject" data-request-id="${escapeHtml(row.id)}">却下</button></span></div>`).join("") : `<span class="collection-access-empty">保留中の閲覧申請はありません。</span>`;
+        }
+        const memberList = document.getElementById("collectionAccessMembers");
+        if (memberList) {
+          const members = collectionAccessMembersV100.filter(row => row?.status === "active");
+          memberList.innerHTML = members.length ? members.map(row => `<div class="collection-access-row"><span><strong>${escapeHtml(row.display_name || "利用者")}</strong><small>${row.role === "editor" ? "編集" : "閲覧"}　付与：${escapeHtml(formatCommentTime(row.granted_at))}</small></span><span></span><button class="is-danger" type="button" data-collection-member-action="revoke" data-member-id="${escapeHtml(row.user_id)}">権限を取消</button></div>`).join("") : `<span class="collection-access-empty">明示的なメンバーはいません。</span>`;
+        }
+      }
+
+      function renderCollectionManagementV100() {
+        const collection = sharedCollectionV46;
+        const canManage = Boolean(collection?.can_manage) || isCollectionManagerV47();
+        const currentVisibility = ["private", "request", "limited", "public"].includes(collection?.visibility) ? collection.visibility : "private";
+        const management = collection ? (canManage
+          ? `<div class="settings-divider" role="presentation"></div><div class="collection-management"><h3>この問題集スペースの管理</h3><p>公開範囲を変更すると、URLを知っている利用者の閲覧可否が変わります。</p><form class="settings-form" id="collectionVisibilityForm"><label for="collectionVisibilitySelect">公開範囲<select id="collectionVisibilitySelect"><option value="private"${currentVisibility === "private" ? " selected" : ""}>プライベート（所有者・管理者のみ）</option><option value="request"${currentVisibility === "request" ? " selected" : ""}>申請制（承認した利用者のみ）</option><option value="limited"${currentVisibility === "limited" ? " selected" : ""}>限定共有（所有者が付与）</option><option value="public"${currentVisibility === "public" ? " selected" : ""}>公開（URLから閲覧可能）</option></select></label><div class="settings-form-actions"><button class="primary" type="submit">公開範囲を保存</button><span class="settings-form-status" id="collectionVisibilityStatus" aria-live="polite"></span></div></form><h4>閲覧申請</h4><div class="collection-access-list" id="collectionAccessRequests"><span class="collection-access-empty">読み込み中…</span></div><h4>現在のメンバー</h4><div class="collection-access-list" id="collectionAccessMembers"><span class="collection-access-empty">読み込み中…</span></div></div>`
+          : `<div class="settings-divider" role="presentation"></div><div class="collection-management"><h3>問題集スペース</h3><p>現在の公開範囲：${escapeHtml(collectionVisibilityLabelV100(collection.visibility))}。公開範囲の変更と申請の承認は所有者・管理者のみ行えます。</p></div>`)
+          : "";
+        const create = supabaseSessionV46 ? `<div class="settings-divider" role="presentation"></div><div class="collection-management"><h3>新しい問題集スペースを作る</h3><p>新しく作る問題集は、最初は必ずプライベートです。作成後に公開範囲を変更できます。</p><form class="settings-form" id="collectionCreateForm"><label for="collectionCreateTitle">問題集名<input id="collectionCreateTitle" maxlength="80" required placeholder="例：ピエール問題集"></label><label for="collectionCreateDescription">説明（任意）<textarea id="collectionCreateDescription" maxlength="500" rows="3" placeholder="この問題集の説明"></textarea></label><div class="settings-form-actions"><button class="primary" type="submit">プライベートで作成</button><span class="settings-form-status" id="collectionCreateStatus" aria-live="polite"></span></div></form></div>` : "";
+        return `${management}${create}`;
+      }
+
+      async function loadCollectionManagementDataV100() {
+        collectionAccessRequestsV100 = [];
+        collectionAccessMembersV100 = [];
+        if (!supabaseSessionV46 || !sharedCollectionV46?.can_manage || !window.NagaSupabase) return;
+        try {
+          collectionAccessRequestsV100 = await window.NagaSupabase.loadCollectionAccessRequests(sharedCollectionV46.id);
+          if (typeof window.NagaSupabase.loadCollectionMembers === "function") collectionAccessMembersV100 = await window.NagaSupabase.loadCollectionMembers(sharedCollectionV46.id);
+        } catch (error) {
+          console.warn("問題集スペースの管理情報を読み込めませんでした", error);
+        }
+      }
+
+      function bindCollectionManagementV100() {
+        const visibilityForm = document.getElementById("collectionVisibilityForm");
+        if (visibilityForm) visibilityForm.addEventListener("submit", async event => {
+          event.preventDefault();
+          const select = document.getElementById("collectionVisibilitySelect");
+          const status = document.getElementById("collectionVisibilityStatus");
+          const value = String(select?.value || "private");
+          const button = visibilityForm.querySelector("button[type=submit]");
+          button.disabled = true;
+          status.textContent = "保存中…";
+          try {
+            await window.NagaSupabase.setCollectionVisibility(sharedCollectionV46.id, value);
+            await loadSharedCollectionV46();
+            await refreshCollectionAccessStateV100();
+            status.textContent = "公開範囲を保存しました。";
+          } catch (error) {
+            status.classList.add("is-error");
+            status.textContent = error?.message || "公開範囲を保存できませんでした。";
+          } finally {
+            button.disabled = false;
+          }
+        });
+        const createForm = document.getElementById("collectionCreateForm");
+        if (createForm) createForm.addEventListener("submit", async event => {
+          event.preventDefault();
+          const title = String(document.getElementById("collectionCreateTitle")?.value || "").trim();
+          const description = String(document.getElementById("collectionCreateDescription")?.value || "").trim();
+          const status = document.getElementById("collectionCreateStatus");
+          if (!title) return;
+          const button = createForm.querySelector("button[type=submit]");
+          button.disabled = true;
+          status.textContent = "作成中…";
+          try {
+            const created = await window.NagaSupabase.createCollection({ title, description });
+            const url = new URL(window.location.href);
+            url.searchParams.set("collection", created.share_slug);
+            window.location.assign(url.toString());
+          } catch (error) {
+            status.classList.add("is-error");
+            status.textContent = error?.message || "問題集スペースを作成できませんでした。";
+            button.disabled = false;
+          }
+        });
+        document.querySelectorAll("[data-collection-request-action]").forEach(button => button.addEventListener("click", async event => {
+          const actionButton = event.currentTarget;
+          const requestId = actionButton.dataset.requestId;
+          if (!requestId) return;
+          const approve = actionButton.dataset.collectionRequestAction === "approve";
+          const role = document.querySelector(`[data-request-role="${CSS.escape(requestId)}"]`)?.value || "viewer";
+          if (!approve && !window.confirm("この閲覧申請を却下しますか？")) return;
+          actionButton.disabled = true;
+          try {
+            await window.NagaSupabase.reviewCollectionAccess(requestId, approve, role);
+            await loadCollectionManagementDataV100();
+            await refreshCollectionAccessStateV100();
+          } catch (error) {
+            window.alert(error?.message || "閲覧申請を処理できませんでした。");
+            actionButton.disabled = false;
+          }
+        }));
+        document.querySelectorAll('[data-collection-member-action="revoke"]').forEach(button => button.addEventListener("click", async event => {
+          const actionButton = event.currentTarget;
+          const userId = actionButton.dataset.memberId;
+          if (!userId || !window.confirm("この利用者の問題集アクセス権を取り消しますか？")) return;
+          actionButton.disabled = true;
+          try {
+            await window.NagaSupabase.revokeCollectionAccess(sharedCollectionV46.id, userId);
+            await loadCollectionManagementDataV100();
+            renderCollectionAccessRequestsV100();
+            renderNotificationBadgesV65();
+          } catch (error) {
+            window.alert(error?.message || "アクセス権を取り消せませんでした。");
+            actionButton.disabled = false;
+          }
+        }));
+        renderCollectionAccessRequestsV100();
+      }
+
+      async function refreshCollectionAccessStateV100() {
+        collectionCatalogV100 = [];
+        collectionAccessNotificationsV100 = [];
+        if (supabaseSessionV46 && window.NagaSupabase?.configured) {
+          try { collectionCatalogV100 = await window.NagaSupabase.loadMyCollections(); } catch (error) { console.warn("問題集一覧を読み込めませんでした", error); }
+          try { collectionAccessNotificationsV100 = await window.NagaSupabase.loadCollectionNotifications(false); } catch (error) { console.warn("問題集通知を読み込めませんでした", error); }
+          await loadCollectionManagementDataV100();
+        }
+        renderCollectionSpacePanelV100();
+        renderNotificationBadgesV65();
+        if (document.querySelector(".page")?.classList.contains("menu-active")) renderMenuCardsV16();
+      }
+
       function renderSettingsViewV67() {
         const configuredName = String(userStateV16.settings?.displayName || "").trim();
         const fallbackName = currentUserDisplayNameV47();
@@ -2992,7 +3254,7 @@
         const syncNote = supabaseSessionV46
           ? "ログイン中：保存すると共有コメントと問題作成にも反映されます。"
           : "未ログイン：この端末に保存されます。共有コメント・問題作成へ反映するにはDiscordログイン後に再保存してください。";
-        return `<section class="settings-section"><h3>表示名の設定</h3><p>コメントや問題作成時に表示する名前を登録できます。読みやすさを保つため、1〜5文字で入力してください。</p><form class="settings-form" id="displayNameForm"><label for="displayNameInput">作成者表示名<input id="displayNameInput" type="text" maxlength="5" minlength="1" value="${escapeHtml(configuredName)}" placeholder="${escapeHtml(fallbackName)}" autocomplete="nickname" required></label><p class="settings-form-note">${escapeHtml(syncNote)}</p><div class="settings-form-actions"><button class="primary" type="submit">表示名を保存</button><span class="settings-form-status" id="displayNameStatus" aria-live="polite"></span></div></form><div class="settings-divider" role="presentation"></div><h3>PCの問題画面</h3><p>PCでは問題とコメントを左右に分けると、局面画像を小さく保ったままコメントを読みやすくできます。スマホでは常に縦配置です。</p><div class="settings-form" id="layoutPreferenceForm"><label for="desktopLayoutSelect">PCレイアウト<select id="desktopLayoutSelect"><option value="split"${desktopLayout === "split" ? " selected" : ""}>左右2ペイン（おすすめ）</option><option value="single"${desktopLayout === "single" ? " selected" : ""}>1列（従来の表示）</option></select></label><p class="settings-form-note">設定はこのブラウザに保存されます。変更は次に問題画面を開いたときから反映されます。</p></div></section>`;
+        return `<section class="settings-section"><h3>表示名の設定</h3><p>コメントや問題作成時に表示する名前を登録できます。読みやすさを保つため、1〜5文字で入力してください。</p><form class="settings-form" id="displayNameForm"><label for="displayNameInput">作成者表示名<input id="displayNameInput" type="text" maxlength="5" minlength="1" value="${escapeHtml(configuredName)}" placeholder="${escapeHtml(fallbackName)}" autocomplete="nickname" required></label><p class="settings-form-note">${escapeHtml(syncNote)}</p><div class="settings-form-actions"><button class="primary" type="submit">表示名を保存</button><span class="settings-form-status" id="displayNameStatus" aria-live="polite"></span></div></form><div class="settings-divider" role="presentation"></div><h3>PCの問題画面</h3><p>PCでは問題とコメントを左右に分けると、局面画像を小さく保ったままコメントを読みやすくできます。スマホでは常に縦配置です。</p><div class="settings-form" id="layoutPreferenceForm"><label for="desktopLayoutSelect">PCレイアウト<select id="desktopLayoutSelect"><option value="split"${desktopLayout === "split" ? " selected" : ""}>左右2ペイン（おすすめ）</option><option value="single"${desktopLayout === "single" ? " selected" : ""}>1列（従来の表示）</option></select></label><p class="settings-form-note">設定はこのブラウザに保存されます。変更は次に問題画面を開いたときから反映されます。</p></div>${renderCollectionManagementV100()}</section>`;
       }
 
       function bindSettingsViewV67() {
@@ -3043,6 +3305,7 @@
           saveUserStateV16();
           applyDesktopLayoutV70();
         });
+        bindCollectionManagementV100();
       }
 
       function applyDesktopLayoutV70() {
@@ -3110,15 +3373,19 @@
 
       function isCollectionManagerV47() {
         const userId = String(supabaseSessionV46?.user?.id || "");
-        return isQuestionAdminV47() || Boolean(userId && sharedCollectionV46 && String(sharedCollectionV46.owner_id || "") === userId);
+        return isQuestionAdminV47() || Boolean(sharedCollectionV46?.can_manage) || Boolean(userId && sharedCollectionV46 && String(sharedCollectionV46.owner_id || "") === userId);
+      }
+
+      function isCollectionEditorV100() {
+        return isCollectionManagerV47() || Boolean(sharedCollectionV46?.can_edit);
       }
 
       function canEditQuestionV47(question) {
-        return !isSharedQuestionV47(question) || isQuestionOwnerV47(question) || isCollectionManagerV47();
+        return !isSharedQuestionV47(question) || isQuestionOwnerV47(question) || isCollectionEditorV100();
       }
 
       function canTrashQuestionV47(question) {
-        return !isSharedQuestionV47(question) || isQuestionOwnerV47(question) || isCollectionManagerV47();
+        return !isSharedQuestionV47(question) || isQuestionOwnerV47(question) || isCollectionEditorV100();
       }
 
       function canDeleteQuestionV47(question) {
@@ -4143,6 +4410,7 @@
         document.getElementById("menuListHeader").setAttribute("aria-hidden", String(!listView));
         renderMenuRangeTabsV60();
         renderMenuTypeFiltersV83();
+        renderCollectionSpacePanelV100();
         renderNotificationBadgesV65();
       }
 
@@ -5064,6 +5332,7 @@
           importButton.hidden = true;
           shareButton.hidden = !sharedCollectionV46;
           studentNav.hidden = true;
+          await refreshCollectionAccessStateV100();
           return;
         }
         authButton.disabled = authPendingV46;
@@ -5073,6 +5342,7 @@
           importButton.hidden = true;
           shareButton.hidden = !sharedCollectionV46;
           studentNav.hidden = true;
+          await refreshCollectionAccessStateV100();
           return;
         }
         const displayName = currentUserDisplayNameV47();
@@ -5082,6 +5352,7 @@
         shareButton.hidden = !sharedCollectionV46;
         studentNav.hidden = !canViewStudentDashboardV84();
         const synced = await hydrateRemoteAnswerHistoryV81();
+        await refreshCollectionAccessStateV100();
         if (synced > 0) status.textContent = `${displayName}としてログイン中。回答履歴を${synced}件同期しました。`;
       }
 
@@ -5213,8 +5484,8 @@
         importedQuestionsReadyV81 = true;
         renderQuestionOptionsV16();
         renderMenuCardsV16();
-        if (loadedSharedCollection) await startCommentNotificationPollingV65();
-        applyQuestionV16(questionsV16[0], 0);
+        if (loadedSharedCollection && questionsV16.length) await startCommentNotificationPollingV65();
+        if (questionsV16.length) applyQuestionV16(questionsV16[0], 0);
         showMenuV16();
         document.getElementById("questionSelect").addEventListener("change", event => openQuestionV16(Number(event.target.value)));
         document.getElementById("menuGrid").addEventListener("click", handleMenuGridClickV16);

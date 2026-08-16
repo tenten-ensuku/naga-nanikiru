@@ -32,7 +32,7 @@ test("wires v65 learning UX, generator, Supabase bridge, metadata, and social im
     readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
     access(new URL("../public/og-v44.png", import.meta.url)),
   ]);
-  assert.match(index, /const APP_VERSION = 99/);
+  assert.match(index, /const APP_VERSION = 100/);
   assert.match(index, /function menuQuestionSortKeyV99\(question\)[\s\S]*?const entries = sourceQuestions[\s\S]*?\.sort\(\(left, right\) => menuQuestionSortKeyV99\(left\.question\) - menuQuestionSortKeyV99\(right\.question\)/);
   assert.match(index, /<h1>何切る？<\/h1>/);
   assert.doesNotMatch(index, /<p class="header-note">NAGAの局面を解き、復習し、弱点を育て直す実戦問題集<\/p>/);

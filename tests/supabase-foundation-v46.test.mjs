@@ -121,3 +121,26 @@ test("generates browser runtime config without accepting server secrets", async 
   assert.match(workflow, /npm run runtime:config/);
   assert.match(workflow, /path: public/);
 });
+
+test("supports private collection spaces and owner-reviewed access requests", async () => {
+  const [migration, memberMigration, clientSource, html] = await Promise.all([
+    fs.readFile(new URL("../supabase/migrations/20260816120000_collection_access_control_v100.sql", import.meta.url), "utf8"),
+    fs.readFile(new URL("../supabase/migrations/20260816123000_collection_access_members_v100.sql", import.meta.url), "utf8"),
+    fs.readFile(new URL("../client/supabase-sync.ts", import.meta.url), "utf8"),
+    fs.readFile(new URL("../public/index.html", import.meta.url), "utf8"),
+  ]);
+  assert.match(migration, /check \(visibility in \('private', 'request', 'limited', 'public'/i);
+  for (const table of ["collection_members", "collection_access_requests", "collection_access_notifications"]) {
+    assert.match(migration, new RegExp(`alter table public\\.${table} enable row level security`, "i"));
+  }
+  assert.match(migration, /request_collection_access[\s\S]*auth\.uid\(\)/i);
+  assert.match(migration, /review_collection_access[\s\S]*collection_members/i);
+  assert.match(migration, /revoke_collection_access[\s\S]*status = 'revoked'/i);
+  assert.match(memberMigration, /list_collection_members[\s\S]*can_manage_collection/i);
+  assert.match(clientSource, /const visibility = input\.visibility \?\? "private"/i);
+  assert.match(clientSource, /loadMyCollections|requestCollectionAccess|reviewCollectionAccess|revokeCollectionAccess/i);
+  assert.match(html, /const APP_VERSION = 100/);
+  assert.match(html, /id="collectionSpacePanel"/);
+  assert.match(html, /閲覧申請を送る/);
+  assert.match(html, /新しく作る問題集は、最初は必ずプライベート/);
+});
