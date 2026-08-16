@@ -1416,10 +1416,25 @@
     .collection-access-row button { min-height: 30px; padding: 5px 8px; color: #eafefe; background: #164862; border: 1px solid rgba(113,183,255,.45); border-radius: 6px; font-size: 10px; font-weight: 850; }
     .collection-access-row button.is-danger { color: #ffe4e8; background: #5b2833; border-color: #b85b6a; }
     .collection-access-empty { color: var(--muted); font-size: 11px; }
+    .collection-directory { display: grid; gap: 10px; }
+    .collection-directory-intro { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.65; }
+    .collection-directory-list { display: grid; gap: 8px; }
+    .collection-directory-item { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 14px 16px; color: var(--ink); background: rgba(0,0,0,.17); border: 1px solid rgba(255,255,255,.13); border-radius: 9px; }
+    .collection-directory-item.is-current { border-color: rgba(241,196,87,.7); background: rgba(71,61,26,.28); }
+    .collection-directory-open { display: grid; gap: 4px; min-width: 0; padding: 0; color: inherit; text-align: left; background: transparent; border: 0; }
+    .collection-directory-open:hover .collection-directory-title, .collection-directory-open:focus-visible .collection-directory-title { color: #ffdb7d; }
+    .collection-directory-open:focus-visible { outline: 2px solid rgba(113,183,255,.85); outline-offset: 4px; border-radius: 4px; }
+    .collection-directory-title { color: #fff7d6; font-size: 18px; font-weight: 900; }
+    .collection-directory-meta { color: var(--muted); font-size: 11px; line-height: 1.55; }
+    .collection-directory-status { display: inline-flex; align-items: center; justify-content: center; min-height: 30px; padding: 5px 10px; color: #dffbfb; background: #164862; border: 1px solid rgba(113,183,255,.45); border-radius: 999px; font-size: 10px; font-weight: 850; white-space: nowrap; }
+    .collection-directory-status.is-current { color: #17231d; background: #f1c457; border-color: #ffdb7d; }
+    .collection-directory-empty { padding: 22px 16px; color: var(--muted); text-align: center; background: rgba(0,0,0,.16); border: 1px dashed rgba(255,255,255,.18); border-radius: 11px; font-size: 12px; line-height: 1.7; }
     @media (max-width: 800px) {
       .collection-space-panel { padding: 12px; }
       .collection-access-row { grid-template-columns: 1fr 1fr; }
       .collection-access-row > :first-child { grid-column: 1 / -1; }
+      .collection-directory-item { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+      .collection-directory-status { justify-self: start; }
     }
   </style>
 </head>
@@ -1427,9 +1442,10 @@
   <main class="page">
     <section class="menu-panel" id="menuPanel" aria-labelledby="menuTitle">
       <aside class="menu-sidebar" aria-label="問題集ナビゲーション">
-        <div class="menu-brand"><span class="menu-brand-tile" aria-hidden="true">中</span><span class="menu-brand-title">My問題集</span><span class="menu-brand-actions"><button class="menu-notice-button" id="announcementButton" type="button" aria-label="アナウンスを開く" title="アナウンス">📢<span class="notification-badge" id="announcementBadge" hidden></span></button><button class="menu-notice-button" id="commentNotificationsButton" type="button" aria-label="コメント・追加通知を開く" title="コメント・追加通知">💬<span class="notification-badge" id="commentNotificationBadge" hidden></span></button><span class="menu-brand-version">V<span id="menuVersion"></span></span></span></div>
+        <div class="menu-brand"><span class="menu-brand-tile" aria-hidden="true">中</span><span class="menu-brand-title">問題集</span><span class="menu-brand-actions"><button class="menu-notice-button" id="announcementButton" type="button" aria-label="アナウンスを開く" title="アナウンス">📢<span class="notification-badge" id="announcementBadge" hidden></span></button><button class="menu-notice-button" id="commentNotificationsButton" type="button" aria-label="コメント・追加通知を開く" title="コメント・追加通知">💬<span class="notification-badge" id="commentNotificationBadge" hidden></span></button><span class="menu-brand-version">V<span id="menuVersion"></span></span></span></div>
         <nav class="menu-nav" aria-label="問題集メニュー">
-          <button class="menu-nav-button is-active" type="button" data-menu-view="my"><span class="menu-nav-icon" aria-hidden="true">▤</span><span>問題一覧</span><span class="menu-nav-badge" data-menu-count="my">0</span></button>
+          <button class="menu-nav-button" type="button" data-menu-view="collections"><span class="menu-nav-icon" aria-hidden="true">▦</span><span>問題集一覧</span><span class="menu-nav-badge" data-menu-count="collections">0</span></button>
+          <button class="menu-nav-button is-active" type="button" data-menu-view="my"><span class="menu-nav-icon" aria-hidden="true">▤</span><span id="menuCurrentCollectionNavLabel">クニタソ問題集</span><span class="menu-nav-badge" data-menu-count="my">0</span></button>
           <button class="menu-nav-button" type="button" data-menu-view="analysis"><span class="menu-nav-icon" aria-hidden="true">▥</span><span>成績・履歴</span></button>
           <button class="menu-nav-button" type="button" data-menu-view="favorites"><span class="menu-nav-icon" aria-hidden="true">☆</span><span>お気に入り</span><span class="menu-nav-badge" data-menu-count="favorites">0</span></button>
           <button class="menu-nav-button" type="button" data-menu-view="trash"><span class="menu-nav-icon" aria-hidden="true">↶</span><span>ゴミ箱</span><span class="menu-nav-badge" data-menu-count="trash">0</span></button>
@@ -1626,7 +1642,7 @@
     <div class="question-manage-inner">
       <h3 id="questionManageTitle">問題を整理</h3>
       <p class="question-manage-scope" id="questionManageScope"></p>
-      <p id="questionManageDescription">しばらく休む問題は期限後に自動でMY問題集へ戻ります。</p>
+      <p id="questionManageDescription">しばらく整理する問題は、この問題集の一覧からいつでも戻せます。</p>
       <p class="question-manage-notice" id="questionManageNotice" aria-live="polite"></p>
       <form class="question-manage-edit-form" id="questionManageEditForm" hidden>
         <label>問題タイトル<input id="questionEditTitle" type="text" maxlength="120" autocomplete="off"></label>
@@ -1675,7 +1691,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 100;
+    const APP_VERSION = 101;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -2508,7 +2524,8 @@
       const USER_STATE_KEY_V16 = storageKey("user-state-v1");
       const LEGACY_USER_STATE_KEY_V16 = "naga-nanikiru-user-state-v1";
       const MENU_VIEW_COPY_V16 = {
-        my: { title: "MY問題集" },
+        collections: { title: "問題集一覧" },
+        my: { title: "クニタソ問題集" },
         favorites: { title: "お気に入り" },
         trash: { title: "ゴミ箱" },
         generator: { title: "問題生成" },
@@ -2590,7 +2607,8 @@
         { version: 97, date: "2026-08-16", title: "局面NAGAURLへの移動を分かりやすくしました", body: "問題番号の隣に局面NAGAURLへの移動ボタンを配置し、技術的なURL情報を整理しました。" },
         { version: 98, date: "2026-08-16", title: "問題画面の表示をすっきり整理しました", body: "見出しとメニューへの戻り方を簡潔にし、問題一覧では共有状態の重複表示をなくしました。" },
         { version: 99, date: "2026-08-16", title: "問題一覧を番号順に並べました", body: "問題一覧をすべて表示したとき、問題1から問題番号の昇順で確認できるようにしました。" },
-        { version: APP_VERSION, date: "2026-08-16", title: "問題集スペースと閲覧申請を追加しました", body: "問題集ごとに公開範囲を設定し、申請制の問題集では閲覧申請・承認・却下・権限取消を行えるようにしました。新しく作る問題集の初期値はプライベートです。" }
+        { version: 100, date: "2026-08-16", title: "問題集スペースと閲覧申請を追加しました", body: "問題集ごとに公開範囲を設定し、申請制の問題集では閲覧申請・承認・却下・権限取消を行えるようにしました。新しく作る問題集の初期値はプライベートです。" },
+        { version: APP_VERSION, date: "2026-08-16", title: "問題集一覧を追加しました", body: "問題集一覧から各問題集を選び、クニタソ問題集の問題一覧へ移動できるようにしました。" }
       ];
       let commentNoticeStoreV65 = loadCommentNoticeStoreV65();
       let sharedCommentRowsV65 = [];
@@ -3039,6 +3057,12 @@
         })[String(value || "")] || "非公開";
       }
 
+      function collectionDisplayNameV101(collection = sharedCollectionV46) {
+        const title = String(collection?.title || "").trim();
+        if (String(collection?.share_slug || "") === DEFAULT_COLLECTION_SLUG || /くにたそ|クニタソ/i.test(title)) return "クニタソ問題集";
+        return title || "問題集";
+      }
+
       function collectionAccessNotificationCountV100() {
         return collectionAccessNotificationsV100.filter(row => !row?.read_at && !row?.readAt).length;
       }
@@ -3048,12 +3072,31 @@
         if (sharedCollectionV46 && !rows.some(row => String(row.share_slug || "") === String(sharedCollectionV46.share_slug || ""))) {
           rows.unshift({ ...sharedCollectionV46, share_slug: sharedCollectionV46.share_slug });
         }
-        return rows.filter(row => row?.share_slug && row?.title);
+        return rows.filter(row => row?.share_slug && row?.title).map(row => ({ ...row, display_title: collectionDisplayNameV101(row) }));
+      }
+
+      function renderCollectionDirectoryV101() {
+        const rows = collectionCatalogOptionsV100();
+        const intro = supabaseSessionV46
+          ? "閲覧できる問題集を選んでください。新しい問題集は設定から作成できます。"
+          : "問題集ごとに閲覧権限が分かれています。Discordでログインすると、参加できる問題集が表示されます。";
+        if (!rows.length) return `<section class="collection-directory"><p class="collection-directory-intro">${escapeHtml(intro)}</p><div class="collection-directory-empty">表示できる問題集がありません。共有URLを受け取った場合は、そのURLから開いてください。</div></section>`;
+        const currentSlug = String(sharedCollectionV46?.share_slug || "");
+        const cards = rows.map(row => {
+          const slug = String(row.share_slug || "");
+          const current = slug === currentSlug;
+          const canView = Boolean(row.can_view) || (current && Boolean(sharedCollectionV46?.can_view));
+          const status = current ? "閲覧中" : canView ? "閲覧可能" : collectionVisibilityLabelV100(row.visibility);
+          const statusClass = current ? " is-current" : "";
+          const note = canView ? `${collectionVisibilityLabelV100(row.visibility)}　・　問題を解けます` : "閲覧権限が必要です";
+          return `<article class="collection-directory-item${current ? " is-current" : ""}"><button class="collection-directory-open" type="button" data-collection-slug="${escapeHtml(slug)}"><span class="collection-directory-title">${escapeHtml(row.display_title || collectionDisplayNameV101(row))}</span><span class="collection-directory-meta">${escapeHtml(note)}</span></button><span class="collection-directory-status${statusClass}">${escapeHtml(status)}</span></article>`;
+        }).join("");
+        return `<section class="collection-directory"><p class="collection-directory-intro">${escapeHtml(intro)}</p><div class="collection-directory-list">${cards}</div></section>`;
       }
 
       function renderCollectionSpacePanelV100() {
         const panel = document.getElementById("collectionSpacePanel");
-        if (!panel || !sharedCollectionV46) {
+        if (!panel || !sharedCollectionV46 || menuViewV16 === "collections") {
           if (panel) panel.hidden = true;
           return;
         }
@@ -3084,10 +3127,10 @@
           }
         }
         const selector = options.length > 1
-          ? `<label class="collection-space-actions"><span class="collection-space-meta">問題集スペース</span><select id="collectionSpaceSelect" aria-label="問題集スペースを選ぶ">${options.map(row => `<option value="${escapeHtml(row.share_slug)}"${String(row.share_slug) === String(collection.share_slug) ? " selected" : ""}>${escapeHtml(row.title)}</option>`).join("")}</select></label>`
+          ? `<label class="collection-space-actions"><span class="collection-space-meta">問題集スペース</span><select id="collectionSpaceSelect" aria-label="問題集スペースを選ぶ">${options.map(row => `<option value="${escapeHtml(row.share_slug)}"${String(row.share_slug) === String(collection.share_slug) ? " selected" : ""}>${escapeHtml(row.display_title || collectionDisplayNameV101(row))}</option>`).join("")}</select></label>`
           : "";
         panel.hidden = false;
-        panel.innerHTML = `<div class="collection-space-head"><div><p class="collection-space-title">${escapeHtml(collection.title || "問題集")}</p><p class="collection-space-meta">問題集スペース　・　公開範囲：${escapeHtml(collectionVisibilityLabelV100(collection.visibility))}</p></div><span class="collection-space-status${statusClass}">${escapeHtml(accessLabel)}</span></div><p class="collection-space-note">${escapeHtml(note)}</p>${selector}${accessControls}${canManage ? `<p class="collection-space-note">設定から公開範囲を変更し、閲覧申請を承認・却下できます。</p>` : ""}`;
+        panel.innerHTML = `<div class="collection-space-head"><div><p class="collection-space-title">${escapeHtml(collectionDisplayNameV101(collection))}</p><p class="collection-space-meta">問題集スペース　・　公開範囲：${escapeHtml(collectionVisibilityLabelV100(collection.visibility))}</p></div><span class="collection-space-status${statusClass}">${escapeHtml(accessLabel)}</span></div><p class="collection-space-note">${escapeHtml(note)}</p>${selector}${accessControls}${canManage ? `<p class="collection-space-note">設定から公開範囲を変更し、閲覧申請を承認・却下できます。</p>` : ""}`;
         bindCollectionSpacePanelV100();
       }
 
@@ -3403,7 +3446,7 @@
       }
 
       function questionScopeTextV47(question) {
-        if (!isSharedQuestionV47(question)) return "MY問題集（この端末の自分の問題）";
+        if (!isSharedQuestionV47(question)) return "この端末の問題集";
         const title = sharedCollectionV46?.title || question?.collectionTitle || "共有問題集";
         if (isQuestionAdminV47()) return `共有問題集「${title}」・全体管理者操作（利用者全体に影響）`;
         if (isCollectionManagerV47()) return `共有問題集「${title}」・問題集管理者操作（利用者全体に影響）`;
@@ -4372,6 +4415,7 @@
       function renderMenuNavigationV16() {
         const analytics = window.DrillUxV44?.analytics?.({ questions: questionsV16, state: userStateV16, now: new Date() }) || {};
         const counts = {
+          collections: collectionCatalogOptionsV100().length,
           my: questionsV16.filter(question => isPlayableV16(question)).length,
           favorites: questionsV16.filter(question => isFavoriteV16(question) && isPlayableV16(question)).length,
           trash: questionsV16.filter(question => isTrashedV16(question) || (window.DrillUxV44?.isSnoozed?.(userStateV16, questionKeyV16(question), new Date()) || false)).length
@@ -4388,7 +4432,9 @@
         const rangeQuestions = questionsV16.filter(menuRangeMatchesV60).filter(isPlayableV16);
         const rangeAnswered = rangeQuestions.filter(question => latestAnswerV44(question));
         const rangeUnanswered = rangeQuestions.length - rangeAnswered.length;
-        summary.innerHTML = `<div class="menu-summary-stat"><small>この範囲の問題</small><strong>${rangeQuestions.length}<em>問</em></strong></div><div class="menu-summary-stat${rangeUnanswered ? " is-alert" : ""}"><small>未回答</small><strong>${rangeUnanswered}<em>問</em></strong></div><div class="menu-summary-stat"><small>回答済み</small><strong>${rangeAnswered.length}<em>問</em></strong></div>`;
+        summary.innerHTML = menuViewV16 === "collections"
+          ? `<div class="menu-summary-stat"><small>問題集</small><strong>${counts.collections}<em>件</em></strong></div><div class="menu-summary-stat"><small>現在の問題集</small><strong>${escapeHtml(collectionDisplayNameV101())}</strong></div>`
+          : `<div class="menu-summary-stat"><small>この範囲の問題</small><strong>${rangeQuestions.length}<em>問</em></strong></div><div class="menu-summary-stat${rangeUnanswered ? " is-alert" : ""}"><small>未回答</small><strong>${rangeUnanswered}<em>問</em></strong></div><div class="menu-summary-stat"><small>回答済み</small><strong>${rangeAnswered.length}<em>問</em></strong></div>`;
         const allPlayable = questionsV16.filter(isPlayableV16);
         const allAnswered = allPlayable.filter(question => latestAnswerV44(question)).length;
         const progress = allPlayable.length ? Math.round(allAnswered / allPlayable.length * 100) : 0;
@@ -4396,13 +4442,15 @@
         const mastery = allPlayable.length ? Math.round(masteredCount / allPlayable.length * 100) : 0;
         document.getElementById("menuSidebarProgress").innerHTML = `<span class="menu-sidebar-progress-title">学習の進捗</span><div class="menu-progress-metric"><div class="menu-progress-metric-head"><span class="menu-progress-metric-label">回答率</span><strong class="menu-progress-metric-value">${progress}%</strong></div><span class="menu-progress-metric-note">${allAnswered} / ${allPlayable.length}問を回答済み</span><span class="menu-sidebar-progress-track" aria-hidden="true"><span class="menu-sidebar-progress-fill" style="width:${progress}%"></span></span></div><div class="menu-progress-metric menu-progress-mastery"><div class="menu-progress-metric-head"><span class="menu-progress-metric-label">習熟度</span><strong class="menu-progress-metric-value">${mastery}%</strong></div><span class="menu-progress-metric-note">${masteredCount} / ${allPlayable.length}問が習熟（直近2回連続💮）</span><span class="menu-sidebar-progress-track" aria-hidden="true"><span class="menu-sidebar-progress-fill is-mastery" style="width:${mastery}%"></span></span></div>`;
         const copy = MENU_VIEW_COPY_V16[menuViewV16];
-        document.getElementById("menuTitle").textContent = copy.title;
+        document.getElementById("menuTitle").textContent = menuViewV16 === "my" ? collectionDisplayNameV101() : copy.title;
+        const collectionNavLabel = document.getElementById("menuCurrentCollectionNavLabel");
+        if (collectionNavLabel) collectionNavLabel.textContent = collectionDisplayNameV101();
         const resume = activeSessionV44();
         const resumeButton = document.getElementById("resumeSessionButton");
         resumeButton.hidden = !resume;
         if (resume) document.getElementById("resumeSessionNote").textContent = `${Number(resume.cursor || 0) + 1} / ${resume.questionKeys.length} から再開`;
         document.getElementById("recommendedDrillNote").textContent = "苦手問題と未回答をバランスよく出題";
-        document.getElementById("quickStart").hidden = ["generator", "analysis", "students", "session", "settings"].includes(menuViewV16);
+        document.getElementById("quickStart").hidden = ["collections", "generator", "analysis", "students", "session", "settings"].includes(menuViewV16);
         document.getElementById("menuFilters").hidden = !["my", "favorites", "trash"].includes(menuViewV16);
         const listView = ["my", "favorites", "trash"].includes(menuViewV16);
         document.getElementById("menuRangeActions").hidden = menuViewV16 !== "my";
@@ -4559,7 +4607,7 @@
         const unansweredMode = result.mode === "unanswered" || result.mode === "range-unanswered";
         const nextTenAction = result.mode === "range-unanswered" ? "range-unanswered" : "unanswered";
         const nextTenLabel = unansweredMode ? "次の10問へ" : "新しい10問";
-        return `<section class="session-result"><h3>${sessionModeLabelV44(result.mode)} 完了</h3><div class="dashboard-grid"><div class="stat-card"><span class="stat-label">回答</span><span class="stat-value">${rows.length}</span></div><div class="stat-card"><span class="stat-label">💮・〇</span><span class="stat-value">${(counts["💮"] || 0) + (counts["〇"] || 0)}</span></div><div class="stat-card"><span class="stat-label">△・×</span><span class="stat-value">${weak}</span></div><div class="stat-card"><span class="stat-label">平均時間</span><span class="stat-value">${average}<small>秒</small></span></div></div><p>💮 ${counts["💮"] || 0}　〇 ${counts["〇"] || 0}　△ ${counts["△"] || 0}　× ${counts["×"] || 0}</p><div class="session-result-actions">${weak ? `<button class="drill-action" type="button" data-result-action="retry-weak">間違えた${weak}問をもう一度</button>` : ""}<button class="drill-action secondary" type="button" data-result-action="${nextTenAction}">${nextTenLabel}</button><button class="drill-action secondary" type="button" data-result-action="menu">MY問題集へ</button></div></section>`;
+        return `<section class="session-result"><h3>${sessionModeLabelV44(result.mode)} 完了</h3><div class="dashboard-grid"><div class="stat-card"><span class="stat-label">回答</span><span class="stat-value">${rows.length}</span></div><div class="stat-card"><span class="stat-label">💮・〇</span><span class="stat-value">${(counts["💮"] || 0) + (counts["〇"] || 0)}</span></div><div class="stat-card"><span class="stat-label">△・×</span><span class="stat-value">${weak}</span></div><div class="stat-card"><span class="stat-label">平均時間</span><span class="stat-value">${average}<small>秒</small></span></div></div><p>💮 ${counts["💮"] || 0}　〇 ${counts["〇"] || 0}　△ ${counts["△"] || 0}　× ${counts["×"] || 0}</p><div class="session-result-actions">${weak ? `<button class="drill-action" type="button" data-result-action="retry-weak">間違えた${weak}問をもう一度</button>` : ""}<button class="drill-action secondary" type="button" data-result-action="${nextTenAction}">${nextTenLabel}</button><button class="drill-action secondary" type="button" data-result-action="menu">${escapeHtml(collectionDisplayNameV101())}へ</button></div></section>`;
       }
 
       function generatorSeatOptionsV46() {
@@ -4572,8 +4620,8 @@
 
       function renderGeneratorViewV44() {
         const sceneMode = generatorModeV46 === "scene";
-        const destination = sharedCollectionV46 ? `共有問題集「${escapeHtml(sharedCollectionV46.title || "共有問題集")}」` : "MY問題集";
-        const destinationNote = sharedCollectionV46 ? "共有URLを利用している全員に影響するため、追加時に確認が表示されます。Discordログインと共有保存APIが必要です。" : "追加した問題はこの端末のMY問題集に保存されます。";
+        const destination = sharedCollectionV46 ? `共有問題集「${escapeHtml(collectionDisplayNameV101())}」` : escapeHtml(collectionDisplayNameV101());
+        const destinationNote = sharedCollectionV46 ? "共有URLを利用している全員に影響するため、追加時に確認が表示されます。Discordログインと共有保存APIが必要です。" : `追加した問題はこの端末の${collectionDisplayNameV101()}に保存されます。`;
         return `<section class="generator-panel"><h3>NAGA URLから問題生成</h3><p>入力種類を選んでください。局面URLは解析後に盤面画像まで自動取得し、完成候補を表示します。</p><form class="generator-form generator-form-v46" id="generatorForm"><fieldset class="generator-mode-field"><legend>入力種類</legend><label><input type="radio" name="generatorMode" value="scene"${sceneMode ? " checked" : ""}> 局面URL（1問）</label><label><input type="radio" name="generatorMode" value="match"${sceneMode ? "" : " checked"}> 半荘URL（候補を一括抽出）</label></fieldset><label class="generator-url-field">NAGA URL<input id="generatorUrl" type="url" required inputmode="url" placeholder="https://naga.dmv.nico/htmls/..."></label><label id="generatorSeatLabel">対象プレイヤー<select id="generatorSeat">${generatorSeatOptionsV46()}</select></label><button class="generator-button" type="submit">${sceneMode ? "1問を生成" : "候補を抽出"}</button><details class="generator-custom-settings" id="generatorCustomSettings"${sceneMode ? " hidden" : ""}><summary>抽出条件をカスタム設定</summary><div class="generator-settings-grid"><label>悪手閾値（%）<input id="generatorThreshold" type="number" min="0.1" max="50" step="0.1" value="5"></label><label>対象判断<select id="generatorDecisionType"><option value="all">すべて</option><option value="discard">打牌</option><option value="call">副露</option><option value="reach">リーチ</option></select></label><label>モデル条件<select id="generatorModelMode"><option value="any">いずれかのモデルで悪手</option><option value="all">全モデルで悪手</option></select></label><label>最大抽出数<input id="generatorMaxCandidates" type="number" min="1" max="500" step="1" value="100"></label></div><p class="generator-settings-note">悪手は選択した打牌・副露の実際の選択率が閾値以下の候補です。リーチはリーチ判断を含む局面だけを対象にします。</p></details></form><div class="generator-status" id="generatorStatus" aria-live="polite"></div><div class="generator-results" id="generatorResults">${renderGeneratorCandidatesV44()}</div><p>${destination}へ追加します。${destinationNote}自動取得に失敗した場合だけ、手動でスクリーンショットを指定できます。</p></section>`;
       }
 
@@ -4584,7 +4632,7 @@
           const modelMarkup = (candidate.models || []).slice(0, 3).map(model => `<span class="candidate-model">${model.recommendation && candidate.decisionType !== "call" ? tileImage(model.recommendation) : ""}${escapeHtml(model.name)} ${candidate.decisionType === "call" ? escapeHtml(model.label || (candidate.callRecommended?.[(candidate.models || []).indexOf(model)] ? "鳴く" : "鳴かない")) : tileLabel(model.recommendation)}</span>`).join("");
           const choice = candidate.decisionType === "call" ? `副露判断・${candidate.actualCall ? "鳴いた" : "鳴かなかった"}` : `${tileLabel(candidate.actualDiscard)}を選択`;
           const badModels = candidate.badMoveModels?.length ? ` ／ ${candidate.badMoveModels.map(escapeHtml).join("・")}が${Number(candidate.badMoveThresholdPercent || 5)}%以下` : "";
-          const addLabel = sharedCollectionV46 ? "共有問題集へ追加" : "MY問題集へ追加";
+          const addLabel = sharedCollectionV46 ? "共有問題集へ追加" : `${collectionDisplayNameV101()}へ追加`;
           const preview = candidate._imageData ? `<div class="candidate-preview"><img src="${candidate._imageData}" alt="自動取得したNAGA局面"></div>` : "";
           const captureState = candidate._captureState === "loading" ? "盤面画像を自動取得しています…" : candidate._imageData ? "盤面画像を自動取得済み" : candidate._captureError || "盤面画像はまだありません";
           const captureErrorClass = candidate._captureError && !candidate._imageData ? " is-error" : "";
@@ -4643,6 +4691,12 @@
         const grid = document.getElementById("menuGrid");
         const empty = document.getElementById("menuEmpty");
         renderMenuNavigationV16();
+        if (menuViewV16 === "collections") {
+          grid.innerHTML = renderCollectionDirectoryV101();
+          grid.style.display = "block";
+          empty.hidden = true;
+          return;
+        }
         if (menuViewV16 === "generator") {
           grid.innerHTML = renderGeneratorViewV44();
           grid.style.display = "block";
@@ -4720,7 +4774,7 @@
         document.getElementById("questionManageScope").textContent = questionScopeTextV47(question);
         document.getElementById("questionManageDescription").textContent = shared
           ? "共有問題集の編集・ゴミ箱移動は、利用者全体への影響を確認してから実行します。"
-          : "個人MY問題集の作成・編集・削除は通常操作としてこの端末に反映されます。";
+          : "個人問題集の作成・編集・削除は通常操作としてこの端末に反映されます。";
         document.getElementById("questionManageNotice").textContent = questionProvenanceV47(question).replace(/<[^>]+>/g, "").replace(/&amp;/g, "&") || "";
         editForm.hidden = true;
         document.getElementById("questionEditTitle").value = question.title || `問題${question.number}`;
@@ -5084,7 +5138,7 @@
             generatorCandidatesV44[index]._imageData = await compressImageFileV44(file);
             generatorCandidatesV44[index]._captureState = "manual";
             generatorCandidatesV44[index]._captureError = "";
-            setGeneratorStatusV44("スクリーンショットを準備しました。「MY問題集へ追加」を押してください。");
+            setGeneratorStatusV44(`スクリーンショットを準備しました。「${collectionDisplayNameV101()}へ追加」を押してください。`);
             document.getElementById("generatorResults").innerHTML = renderGeneratorCandidatesV44();
             bindGeneratorCandidateInputsV44();
           } catch (error) {
@@ -5158,7 +5212,7 @@
           return;
         }
         renderQuestionOptionsV16();
-        setGeneratorStatusV44(`${question.title}を${sharedCollectionV46 ? "共有問題集" : "MY問題集"}へ追加しました。`);
+        setGeneratorStatusV44(`${question.title}を${sharedCollectionV46 ? "共有問題集" : collectionDisplayNameV101()}へ追加しました。`);
         document.getElementById("generatorResults").innerHTML = renderGeneratorCandidatesV44();
         bindGeneratorCandidateInputsV44();
       }
@@ -5171,6 +5225,16 @@
       }
 
       function handleMenuGridClickV16(event) {
+        const collectionButton = event.target.closest("[data-collection-slug]");
+        if (collectionButton) {
+          const slug = String(collectionButton.dataset.collectionSlug || "").trim();
+          if (!slug) return;
+          const url = new URL(window.location.href);
+          url.searchParams.set("collection", slug);
+          url.hash = "";
+          window.location.assign(url.toString());
+          return;
+        }
         const analysisButton = event.target.closest("[data-analysis-drill]");
         if (analysisButton) return startSessionV44(analysisButton.dataset.analysisDrill);
         const resultButton = event.target.closest("[data-result-action]");

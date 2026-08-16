@@ -6,7 +6,7 @@ const indexUrl = new URL("../public/index.html", import.meta.url);
 
 test("renders the v87 scene and half-game generator controls", async () => {
   const html = await readFile(indexUrl, "utf8");
-  assert.match(html, /const APP_VERSION = 100/);
+  assert.match(html, /const APP_VERSION = 101/);
   assert.match(html, /data-range-session="all">この範囲を10問解く/);
   assert.doesNotMatch(html, /data-range-session="unanswered">未回答を10問解く/);
   assert.match(html, /range: "この範囲の10問"/);
@@ -81,7 +81,7 @@ test("renders the v87 scene and half-game generator controls", async () => {
   assert.match(html, /所有者専用の生徒進捗画面を追加しました/);
   assert.match(html, /function menuRangeOptionsV60\(\)/);
   assert.match(html, /sourceQuestions\.filter\(menuRangeMatchesV60\)/);
-  assert.match(html, /class="menu-brand-title">My問題集<\/span><span class="menu-brand-actions">/);
+  assert.match(html, /class="menu-brand-title">問題集<\/span><span class="menu-brand-actions">/);
   assert.match(html, /getElementById\("menuVersion"\)\.textContent = APP_VERSION/);
   assert.match(html, /width: min\(850px, 100%\)/);
   assert.match(html, /aspect-ratio: 14 \/ 13/);
