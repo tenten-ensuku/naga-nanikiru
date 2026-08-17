@@ -1445,7 +1445,7 @@
         <div class="menu-brand"><span class="menu-brand-tile" aria-hidden="true">中</span><span class="menu-brand-title">問題集</span><span class="menu-brand-actions"><button class="menu-notice-button" id="announcementButton" type="button" aria-label="アナウンスを開く" title="アナウンス">📢<span class="notification-badge" id="announcementBadge" hidden></span></button><button class="menu-notice-button" id="commentNotificationsButton" type="button" aria-label="コメント・追加通知を開く" title="コメント・追加通知">💬<span class="notification-badge" id="commentNotificationBadge" hidden></span></button><span class="menu-brand-version">V<span id="menuVersion"></span></span></span></div>
         <nav class="menu-nav" aria-label="問題集メニュー">
           <button class="menu-nav-button" type="button" data-menu-view="collections"><span class="menu-nav-icon" aria-hidden="true">▦</span><span>問題集一覧</span><span class="menu-nav-badge" data-menu-count="collections">0</span></button>
-          <button class="menu-nav-button is-active" type="button" data-menu-view="my"><span class="menu-nav-icon" aria-hidden="true">▤</span><span id="menuCurrentCollectionNavLabel">クニタソ問題集</span><span class="menu-nav-badge" data-menu-count="my">0</span></button>
+          <button class="menu-nav-button is-active" type="button" data-menu-view="my"><span class="menu-nav-icon" aria-hidden="true">▤</span><span id="menuCurrentCollectionNavLabel">くにたそ問題集</span><span class="menu-nav-badge" data-menu-count="my">0</span></button>
           <button class="menu-nav-button" type="button" data-menu-view="analysis"><span class="menu-nav-icon" aria-hidden="true">▥</span><span>成績・履歴</span></button>
           <button class="menu-nav-button" type="button" data-menu-view="favorites"><span class="menu-nav-icon" aria-hidden="true">☆</span><span>お気に入り</span><span class="menu-nav-badge" data-menu-count="favorites">0</span></button>
           <button class="menu-nav-button" type="button" data-menu-view="trash"><span class="menu-nav-icon" aria-hidden="true">↶</span><span>ゴミ箱</span><span class="menu-nav-badge" data-menu-count="trash">0</span></button>
@@ -1463,7 +1463,6 @@
       </aside>
       <div class="menu-content">
         <div class="menu-heading">
-          <p class="eyebrow">NAGA SCREENSHOT-BASED DRILL</p>
           <h2 id="menuTitle">問題一覧</h2>
           <div class="menu-summary" id="menuSummary" aria-live="polite"></div>
         </div>
@@ -1691,7 +1690,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 102;
+    const APP_VERSION = 103;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -2525,7 +2524,7 @@
       const LEGACY_USER_STATE_KEY_V16 = "naga-nanikiru-user-state-v1";
       const MENU_VIEW_COPY_V16 = {
         collections: { title: "問題集一覧" },
-        my: { title: "クニタソ問題集" },
+        my: { title: "くにたそ問題集" },
         favorites: { title: "お気に入り" },
         trash: { title: "ゴミ箱" },
         generator: { title: "問題生成" },
@@ -2608,7 +2607,8 @@
         { version: 98, date: "2026-08-16", title: "問題画面の表示をすっきり整理しました", body: "見出しとメニューへの戻り方を簡潔にし、問題一覧では共有状態の重複表示をなくしました。" },
         { version: 99, date: "2026-08-16", title: "問題一覧を番号順に並べました", body: "問題一覧をすべて表示したとき、問題1から問題番号の昇順で確認できるようにしました。" },
         { version: 100, date: "2026-08-16", title: "問題集スペースと閲覧申請を追加しました", body: "問題集ごとに公開範囲を設定し、申請制の問題集では閲覧申請・承認・却下・権限取消を行えるようにしました。新しく作る問題集の初期値はプライベートです。" },
-        { version: APP_VERSION, date: "2026-08-17", title: "垣崎にま問題集を追加しました", body: "問題集一覧から垣崎にま問題集を選べるようになり、Discordの86問を収録しました。" }
+        { version: 102, date: "2026-08-17", title: "垣崎にま問題集を追加しました", body: "問題集一覧から垣崎にま問題集を選べるようになり、Discordの86問を収録しました。" },
+        { version: APP_VERSION, date: "2026-08-17", title: "問題集名を統一しました", body: "問題集一覧と画面内の表示を、ひらがなの「くにたそ問題集」に統一しました。" }
       ];
       let commentNoticeStoreV65 = loadCommentNoticeStoreV65();
       let sharedCommentRowsV65 = [];
@@ -3059,7 +3059,7 @@
 
       function collectionDisplayNameV101(collection = sharedCollectionV46) {
         const title = String(collection?.title || "").trim();
-        if (String(collection?.share_slug || "") === DEFAULT_COLLECTION_SLUG || /くにたそ|クニタソ/i.test(title)) return "クニタソ問題集";
+        if (String(collection?.share_slug || "") === DEFAULT_COLLECTION_SLUG || /くにたそ|クニタソ/i.test(title)) return "くにたそ問題集";
         return title || "問題集";
       }
 
