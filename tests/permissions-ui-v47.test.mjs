@@ -10,7 +10,7 @@ async function source() {
 
 test("exposes v65 ownership-aware problem management controls", async () => {
   const html = await source();
-  assert.match(html, /const APP_VERSION = 103;/);
+  assert.match(html, /const APP_VERSION = 104;/);
   assert.match(html, /id="questionManageEditForm"/);
   assert.match(html, /id="questionManageProposeDeleteButton"[^>]*data-manage-action="propose-delete"/);
   assert.match(html, /id="questionManageDeleteButton"[^>]*data-manage-action="delete"/);
@@ -40,4 +40,14 @@ test("records local ownership metadata and makes shared generator scope explicit
   assert.match(html, /共有問題集へ追加/);
   assert.match(html, /confirmSharedImpactV47\("add"/);
   assert.match(html, /共有問題集の保存APIが未接続です/);
+});
+
+test("limits comment editing to the original poster", async () => {
+  const html = await source();
+  assert.match(html, /function canEditCommentV75\(message\)/);
+  assert.match(html, /const authorId = String\(message\?\.authorId \|\| ""\)/);
+  assert.match(html, /authorId === currentUserId/);
+  assert.match(html, /message\.authorId = session\.user\.id/);
+  assert.match(html, /コメントの編集は投稿者本人だけが行えます/);
+  assert.match(html, /data-comment-action="edit"/);
 });

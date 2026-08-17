@@ -1617,7 +1617,7 @@
         <button class="comment-submit" id="commentSubmitButton" type="submit">コメントを追加</button>
         <button class="comment-edit-cancel" id="commentEditCancelButton" type="button" hidden>編集をキャンセル</button>
       </form>
-      <p class="comment-sync-note">追加したコメントはこのアプリ内に保存されます。共有問題集ではDiscordログイン後に他の利用者にも表示されます。Discordのスレッドには投稿されません。</p>
+      <p class="comment-sync-note">追加したコメントはこのアプリ内に保存されます。共有問題集ではDiscordログイン後に他の利用者にも表示されます。投稿者本人のコメントには「編集」が表示されます。Discordのスレッドには投稿されません。</p>
       <div class="comments-footer">
         <button class="comment-add-button" id="commentAddButton" type="button" aria-expanded="false">コメント追加</button>
         <a id="threadLink" href="https://discord.com/channels/1166706544856006656/1532011607209541833" target="_blank" rel="noreferrer">Discordで開く</a>
@@ -1690,7 +1690,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 103;
+    const APP_VERSION = 104;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -2147,15 +2147,16 @@
 
     function canEditCommentV75(message) {
       const id = String(message?.id || "");
-      if (id.startsWith("local-")) return true;
       const currentUserId = String(window.nagaCurrentUserIdV75 || "");
-      return Boolean(currentUserId && message?.authorId && String(message.authorId) === currentUserId);
+      const authorId = String(message?.authorId || "");
+      if (id.startsWith("local-")) return !authorId || Boolean(currentUserId && authorId === currentUserId);
+      return Boolean(currentUserId && authorId && authorId === currentUserId);
     }
 
     function commentActionMarkupV75(message) {
       if (!canEditCommentV75(message)) return "";
       const id = escapeHtml(message.id);
-      return `<span class="comment-entry-actions"><button class="comment-action-button" type="button" data-comment-action="edit" data-comment-id="${id}">編集</button><button class="comment-action-button danger" type="button" data-comment-action="delete" data-comment-id="${id}">削除</button></span>`;
+      return `<span class="comment-entry-actions"><button class="comment-action-button" type="button" data-comment-action="edit" data-comment-id="${id}" aria-label="このコメントを編集">編集</button><button class="comment-action-button danger" type="button" data-comment-action="delete" data-comment-id="${id}" aria-label="このコメントを削除">削除</button></span>`;
     }
 
     function renderCommentEntryV65(message) {
@@ -2395,7 +2396,7 @@
 
     function submitNewCommentV75(content) {
       const input = document.getElementById("commentInput");
-      const message = { id: `local-${Date.now()}`, author: typeof currentUserDisplayNameV47 === "function" ? currentUserDisplayNameV47() : "このブラウザ", createdAt: new Date().toISOString(), content, attachments: state.commentAttachments.map(attachment => ({ ...attachment })) };
+      const message = { id: `local-${Date.now()}`, author: typeof currentUserDisplayNameV47 === "function" ? currentUserDisplayNameV47() : "このブラウザ", authorId: String(window.nagaCurrentUserIdV75 || ""), createdAt: new Date().toISOString(), content, attachments: state.commentAttachments.map(attachment => ({ ...attachment })) };
       state.comments.push(message);
       input.value = "";
       clearCommentDraftV68({ clearStatus: false });
@@ -2608,7 +2609,8 @@
         { version: 99, date: "2026-08-16", title: "問題一覧を番号順に並べました", body: "問題一覧をすべて表示したとき、問題1から問題番号の昇順で確認できるようにしました。" },
         { version: 100, date: "2026-08-16", title: "問題集スペースと閲覧申請を追加しました", body: "問題集ごとに公開範囲を設定し、申請制の問題集では閲覧申請・承認・却下・権限取消を行えるようにしました。新しく作る問題集の初期値はプライベートです。" },
         { version: 102, date: "2026-08-17", title: "垣崎にま問題集を追加しました", body: "問題集一覧から垣崎にま問題集を選べるようになり、Discordの86問を収録しました。" },
-        { version: APP_VERSION, date: "2026-08-17", title: "問題集名を統一しました", body: "問題集一覧と画面内の表示を、ひらがなの「くにたそ問題集」に統一しました。" }
+        { version: 103, date: "2026-08-17", title: "問題集名を統一しました", body: "問題集一覧と画面内の表示を、ひらがなの「くにたそ問題集」に統一しました。" },
+        { version: APP_VERSION, date: "2026-08-17", title: "コメントを投稿者本人だけ編集できるようにしました", body: "共有コメントは投稿者本人にだけ「編集」ボタンを表示し、保存時にも本人確認を行います。" }
       ];
       let commentNoticeStoreV65 = loadCommentNoticeStoreV65();
       let sharedCommentRowsV65 = [];
@@ -3568,6 +3570,7 @@
             const id = await window.NagaSupabase.postSharedComment(sharedCollectionV46.share_slug, message.content, question.serverQuestionId, uploadedAttachments.map(({ path, alt }) => ({ path, alt })));
             message.id = String(id);
             message.author = currentUserDisplayNameV47();
+            message.authorId = session.user.id;
             message.attachments = uploadedAttachments;
             markSharedCommentKnownV65(message.id);
             renderComments({ scrollToBottom: true });
@@ -3602,6 +3605,9 @@
         if (sharedCollectionV46 && question.serverQuestionId) {
           const session = await window.NagaSupabase?.currentSession?.();
           if (!session) throw new Error("共有問題集のコメント編集にはDiscordログインが必要です。");
+          if (!message.authorId || String(message.authorId) !== String(session.user.id)) {
+            throw new Error("コメントの編集は投稿者本人だけが行えます。");
+          }
           const uploadedPaths = [];
           try {
             const uploadedAttachments = [];
