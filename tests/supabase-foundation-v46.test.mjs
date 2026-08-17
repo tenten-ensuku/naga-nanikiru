@@ -139,10 +139,14 @@ test("supports private collection spaces and owner-reviewed access requests", as
   assert.match(memberMigration, /list_collection_members[\s\S]*can_manage_collection/i);
   assert.match(clientSource, /const visibility = input\.visibility \?\? "private"/i);
   assert.match(clientSource, /loadMyCollections|requestCollectionAccess|reviewCollectionAccess|revokeCollectionAccess/i);
-  assert.match(html, /const APP_VERSION = 105/);
+  assert.match(html, /const APP_VERSION = 106/);
   assert.match(html, /id="collectionSpacePanel"/);
-  assert.match(html, /data-menu-view="collections"/);
-  assert.match(html, /問題集一覧/);
+  assert.doesNotMatch(html, /data-menu-view="collections"/);
+  assert.match(html, /data-menu-view="my"/);
+  assert.match(html, /collectionCreateFormMarkupV106/);
+  assert.match(html, /id="collectionCreateInlinePanel"/);
+  assert.match(html, /collectionCreateFormMarkupV106\("collectionCreateInline"\)/);
+  assert.match(html, /\$\{prefix\}Visibility/);
   assert.match(html, /くにたそ問題集/);
   assert.match(html, /renderCollectionDirectoryV101/);
   assert.match(html, /閲覧申請を送る/);

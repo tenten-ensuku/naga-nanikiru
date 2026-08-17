@@ -1417,6 +1417,8 @@
     .collection-access-row button.is-danger { color: #ffe4e8; background: #5b2833; border-color: #b85b6a; }
     .collection-access-empty { color: var(--muted); font-size: 11px; }
     .collection-directory { display: grid; gap: 10px; }
+    .collection-switcher-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+    .collection-directory-heading { margin: 0; color: #fff7d6; font-size: 17px; font-weight: 950; }
     .collection-directory-intro { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.65; }
     .collection-directory-list { display: grid; gap: 8px; }
     .collection-directory-item { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 14px 16px; color: var(--ink); background: rgba(0,0,0,.17); border: 1px solid rgba(255,255,255,.13); border-radius: 9px; }
@@ -1429,12 +1431,21 @@
     .collection-directory-status { display: inline-flex; align-items: center; justify-content: center; min-height: 30px; padding: 5px 10px; color: #dffbfb; background: #164862; border: 1px solid rgba(113,183,255,.45); border-radius: 999px; font-size: 10px; font-weight: 850; white-space: nowrap; }
     .collection-directory-status.is-current { color: #17231d; background: #f1c457; border-color: #ffdb7d; }
     .collection-directory-empty { padding: 22px 16px; color: var(--muted); text-align: center; background: rgba(0,0,0,.16); border: 1px dashed rgba(255,255,255,.18); border-radius: 11px; font-size: 12px; line-height: 1.7; }
+    .collection-create-open { flex: 0 0 auto; min-height: 38px; padding: 8px 12px; color: #17231d; background: #f1c457; border: 1px solid #ffdb7d; border-radius: 7px; font-size: 11px; font-weight: 900; }
+    .collection-create-open:hover, .collection-create-open:focus-visible { background: #ffda77; outline: 2px solid rgba(255,219,125,.2); outline-offset: 2px; }
+    .collection-create-inline { display: grid; gap: 8px; padding: 12px; background: rgba(0,0,0,.16); border: 1px solid rgba(255,255,255,.12); border-radius: 9px; }
+    .collection-create-inline[hidden] { display: none; }
+    .collection-create-inline h4 { margin: 0; color: #fff7d6; font-size: 15px; }
+    .collection-create-inline .settings-form { margin: 0; }
+    .collection-space-current { display: grid; gap: 8px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,.13); }
     @media (max-width: 800px) {
       .collection-space-panel { padding: 12px; }
       .collection-access-row { grid-template-columns: 1fr 1fr; }
       .collection-access-row > :first-child { grid-column: 1 / -1; }
       .collection-directory-item { grid-template-columns: minmax(0, 1fr); gap: 8px; }
       .collection-directory-status { justify-self: start; }
+      .collection-switcher-head { align-items: stretch; flex-direction: column; }
+      .collection-create-open { width: 100%; }
     }
   </style>
 </head>
@@ -1444,8 +1455,7 @@
       <aside class="menu-sidebar" aria-label="問題集ナビゲーション">
         <div class="menu-brand"><span class="menu-brand-tile" aria-hidden="true">中</span><span class="menu-brand-title">問題集</span><span class="menu-brand-actions"><button class="menu-notice-button" id="announcementButton" type="button" aria-label="アナウンスを開く" title="アナウンス">📢<span class="notification-badge" id="announcementBadge" hidden></span></button><button class="menu-notice-button" id="commentNotificationsButton" type="button" aria-label="コメント・追加通知を開く" title="コメント・追加通知">💬<span class="notification-badge" id="commentNotificationBadge" hidden></span></button><span class="menu-brand-version">V<span id="menuVersion"></span></span></span></div>
         <nav class="menu-nav" aria-label="問題集メニュー">
-          <button class="menu-nav-button" type="button" data-menu-view="collections"><span class="menu-nav-icon" aria-hidden="true">▦</span><span>問題集一覧</span><span class="menu-nav-badge" data-menu-count="collections">0</span></button>
-          <button class="menu-nav-button is-active" type="button" data-menu-view="my"><span class="menu-nav-icon" aria-hidden="true">▤</span><span id="menuCurrentCollectionNavLabel">くにたそ問題集</span><span class="menu-nav-badge" data-menu-count="my">0</span></button>
+          <button class="menu-nav-button is-active" type="button" data-menu-view="my"><span class="menu-nav-icon" aria-hidden="true">▦</span><span>問題集</span><span class="menu-nav-badge" data-menu-count="collections">0</span></button>
           <button class="menu-nav-button" type="button" data-menu-view="analysis"><span class="menu-nav-icon" aria-hidden="true">▥</span><span>成績・履歴</span></button>
           <button class="menu-nav-button" type="button" data-menu-view="favorites"><span class="menu-nav-icon" aria-hidden="true">☆</span><span>お気に入り</span><span class="menu-nav-badge" data-menu-count="favorites">0</span></button>
           <button class="menu-nav-button" type="button" data-menu-view="trash"><span class="menu-nav-icon" aria-hidden="true">↶</span><span>ゴミ箱</span><span class="menu-nav-badge" data-menu-count="trash">0</span></button>
@@ -1690,7 +1700,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 105;
+    const APP_VERSION = 106;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -2524,8 +2534,8 @@
       const USER_STATE_KEY_V16 = storageKey("user-state-v1");
       const LEGACY_USER_STATE_KEY_V16 = "naga-nanikiru-user-state-v1";
       const MENU_VIEW_COPY_V16 = {
-        collections: { title: "問題集一覧" },
-        my: { title: "くにたそ問題集" },
+        collections: { title: "問題集" },
+        my: { title: "問題集" },
         favorites: { title: "お気に入り" },
         trash: { title: "ゴミ箱" },
         generator: { title: "問題生成" },
@@ -2611,7 +2621,7 @@
         { version: 102, date: "2026-08-17", title: "垣崎にま問題集を追加しました", body: "問題集一覧から垣崎にま問題集を選べるようになり、Discordの86問を収録しました。" },
         { version: 103, date: "2026-08-17", title: "問題集名を統一しました", body: "問題集一覧と画面内の表示を、ひらがなの「くにたそ問題集」に統一しました。" },
         { version: 104, date: "2026-08-17", title: "コメントを投稿者本人だけ編集できるようにしました", body: "共有コメントは投稿者本人にだけ「編集」ボタンを表示し、保存時にも本人確認を行います。" },
-        { version: APP_VERSION, date: "2026-08-17", title: "垣崎にま問題集のコメント表示を整理しました", body: "問題画像・解説画像をコメント欄から除外し、スレッド冒頭のNAGA URLだけを表示しないようにしました。2つ目以降のNAGA URLは残ります。" }
+        { version: APP_VERSION, date: "2026-08-17", title: "問題集画面を統合し、自分の問題集を作れるようにしました", body: "問題集の切り替えと問題一覧を同じ画面にまとめました。Discordログイン後は「自分の問題集を作る」から公開範囲を選んで新しい問題集を作成できます。初期値はプライベートです。" }
       ];
       let commentNoticeStoreV65 = loadCommentNoticeStoreV65();
       let sharedCommentRowsV65 = [];
@@ -3112,12 +3122,58 @@
         return rows.filter(row => row?.share_slug && row?.title).map(row => ({ ...row, display_title: collectionDisplayNameV101(row) }));
       }
 
+      function collectionCreateFormMarkupV106(prefix = "collectionCreate") {
+        return `<form class="settings-form collection-create-form" id="${prefix}Form"><label for="${prefix}Title">問題集名<input id="${prefix}Title" maxlength="80" required placeholder="例：ピエール問題集"></label><label for="${prefix}Description">説明（任意）<textarea id="${prefix}Description" maxlength="500" rows="3" placeholder="この問題集の説明"></textarea></label><label for="${prefix}Visibility">公開範囲<select id="${prefix}Visibility"><option value="private" selected>プライベート（自分だけ）</option><option value="request">申請制（承認した人だけ）</option><option value="limited">限定共有（権限を付与した人だけ）</option><option value="public">公開（URLを知っている人が閲覧）</option></select></label><p class="settings-form-note">初期値はプライベートです。公開範囲は作成後に設定から変更できます。</p><div class="settings-form-actions"><button class="primary" type="submit">問題集を作成</button><span class="settings-form-status" id="${prefix}Status" aria-live="polite"></span></div></form>`;
+      }
+
+      function navigateToCollectionV106(slug) {
+        const value = String(slug || "").trim();
+        if (!value) return;
+        const url = new URL(window.location.href);
+        url.searchParams.set("collection", value);
+        url.hash = "";
+        window.location.assign(url.toString());
+      }
+
+      function bindCollectionCreateFormV106(prefix = "collectionCreate") {
+        const form = document.getElementById(`${prefix}Form`);
+        if (!form) return;
+        form.addEventListener("submit", async event => {
+          event.preventDefault();
+          const title = String(document.getElementById(`${prefix}Title`)?.value || "").trim();
+          const description = String(document.getElementById(`${prefix}Description`)?.value || "").trim();
+          const visibility = ["private", "request", "limited", "public"].includes(document.getElementById(`${prefix}Visibility`)?.value) ? document.getElementById(`${prefix}Visibility`).value : "private";
+          const status = document.getElementById(`${prefix}Status`);
+          if (!title || !status) return;
+          if (!supabaseSessionV46) {
+            status.classList.add("is-error");
+            status.textContent = "問題集の作成にはDiscordログインが必要です。";
+            return;
+          }
+          if (visibility !== "private" && !window.confirm(`公開範囲を「${collectionVisibilityLabelV100(visibility)}」にして問題集を作成します。作成後も設定から変更できます。`)) return;
+          const button = form.querySelector("button[type=submit]");
+          button.disabled = true;
+          status.classList.remove("is-error");
+          status.textContent = "作成中…";
+          try {
+            const created = await window.NagaSupabase.createCollection({ title, description, visibility });
+            const url = new URL(window.location.href);
+            url.searchParams.set("collection", created.share_slug);
+            url.hash = "";
+            window.location.assign(url.toString());
+          } catch (error) {
+            status.classList.add("is-error");
+            status.textContent = error?.message || "問題集スペースを作成できませんでした。";
+            button.disabled = false;
+          }
+        });
+      }
+
       function renderCollectionDirectoryV101() {
         const rows = collectionCatalogOptionsV100();
         const intro = supabaseSessionV46
-          ? "閲覧できる問題集を選んでください。新しい問題集は設定から作成できます。"
+          ? "問題集を切り替えたり、自分の問題集を作成できます。"
           : "問題集ごとに閲覧権限が分かれています。Discordでログインすると、参加できる問題集が表示されます。";
-        if (!rows.length) return `<section class="collection-directory"><p class="collection-directory-intro">${escapeHtml(intro)}</p><div class="collection-directory-empty">表示できる問題集がありません。共有URLを受け取った場合は、そのURLから開いてください。</div></section>`;
         const currentSlug = String(sharedCollectionV46?.share_slug || "");
         const cards = rows.map(row => {
           const slug = String(row.share_slug || "");
@@ -3126,23 +3182,33 @@
           const status = current ? "閲覧中" : canView ? "閲覧可能" : collectionVisibilityLabelV100(row.visibility);
           const statusClass = current ? " is-current" : "";
           const note = canView ? `${collectionVisibilityLabelV100(row.visibility)}　・　問題を解けます` : "閲覧権限が必要です";
-          return `<article class="collection-directory-item${current ? " is-current" : ""}"><button class="collection-directory-open" type="button" data-collection-slug="${escapeHtml(slug)}"><span class="collection-directory-title">${escapeHtml(row.display_title || collectionDisplayNameV101(row))}</span><span class="collection-directory-meta">${escapeHtml(note)}</span></button><span class="collection-directory-status${statusClass}">${escapeHtml(status)}</span></article>`;
+          return `<article class="collection-directory-item${current ? " is-current" : ""}"><button class="collection-directory-open" type="button" role="tab" aria-selected="${current}" data-collection-slug="${escapeHtml(slug)}"><span class="collection-directory-title">${escapeHtml(row.display_title || collectionDisplayNameV101(row))}</span><span class="collection-directory-meta">${escapeHtml(note)}</span></button><span class="collection-directory-status${statusClass}">${escapeHtml(status)}</span></article>`;
         }).join("");
-        return `<section class="collection-directory"><p class="collection-directory-intro">${escapeHtml(intro)}</p><div class="collection-directory-list">${cards}</div></section>`;
+        const empty = rows.length ? "" : `<div class="collection-directory-empty">表示できる問題集がありません。共有URLを受け取った場合は、そのURLから開いてください。</div>`;
+        const createButton = `<button class="collection-create-open" id="collectionCreateOpenButton" type="button" aria-expanded="false">＋ 自分の問題集を作る</button>`;
+        return `<section class="collection-directory" aria-labelledby="collectionDirectoryTitle"><div class="collection-switcher-head"><div><h3 class="collection-directory-heading" id="collectionDirectoryTitle">問題集を選ぶ</h3><p class="collection-directory-intro">${escapeHtml(intro)}</p></div>${createButton}</div><div class="collection-directory-list" role="tablist" aria-label="問題集を選ぶ">${cards}</div>${empty}<div class="collection-create-inline" id="collectionCreateInlinePanel" hidden><h4>自分の問題集を作る</h4><p class="collection-space-note">問題集を作成すると、自分で問題を追加・管理できます。</p>${collectionCreateFormMarkupV106("collectionCreateInline")}</div></section>`;
       }
 
       function renderCollectionSpacePanelV100() {
         const panel = document.getElementById("collectionSpacePanel");
-        if (!panel || !sharedCollectionV46 || menuViewV16 === "collections") {
-          if (panel) panel.hidden = true;
+        if (!panel || menuViewV16 !== "my") {
+          if (panel) {
+            panel.hidden = true;
+            panel.innerHTML = "";
+          }
           return;
         }
         const collection = sharedCollectionV46;
+        if (!collection) {
+          panel.hidden = false;
+          panel.innerHTML = renderCollectionDirectoryV101();
+          bindCollectionSpacePanelV100();
+          return;
+        }
         const canView = Boolean(collection.can_view);
         const canManage = Boolean(collection.can_manage) || isCollectionManagerV47();
         const loggedIn = Boolean(supabaseSessionV46);
         const requestStatus = String(collection.request_status || "");
-        const options = collectionCatalogOptionsV100();
         const accessLabel = canView ? (canManage ? "所有者・管理者" : "閲覧可能") : collectionVisibilityLabelV100(collection.visibility);
         const statusClass = canView ? "" : " is-locked";
         let note = canView
@@ -3163,21 +3229,26 @@
               : "";
           }
         }
-        const selector = options.length > 1
-          ? `<label class="collection-space-actions"><span class="collection-space-meta">問題集スペース</span><select id="collectionSpaceSelect" aria-label="問題集スペースを選ぶ">${options.map(row => `<option value="${escapeHtml(row.share_slug)}"${String(row.share_slug) === String(collection.share_slug) ? " selected" : ""}>${escapeHtml(row.display_title || collectionDisplayNameV101(row))}</option>`).join("")}</select></label>`
-          : "";
         panel.hidden = false;
-        panel.innerHTML = `<div class="collection-space-head"><div><p class="collection-space-title">${escapeHtml(collectionDisplayNameV101(collection))}</p><p class="collection-space-meta">問題集スペース　・　公開範囲：${escapeHtml(collectionVisibilityLabelV100(collection.visibility))}</p></div><span class="collection-space-status${statusClass}">${escapeHtml(accessLabel)}</span></div><p class="collection-space-note">${escapeHtml(note)}</p>${selector}${accessControls}${canManage ? `<p class="collection-space-note">設定から公開範囲を変更し、閲覧申請を承認・却下できます。</p>` : ""}`;
+        panel.innerHTML = `${renderCollectionDirectoryV101()}<div class="collection-space-current"><div class="collection-space-head"><div><p class="collection-space-title">${escapeHtml(collectionDisplayNameV101(collection))}</p><p class="collection-space-meta">現在の問題集　・　公開範囲：${escapeHtml(collectionVisibilityLabelV100(collection.visibility))}</p></div><span class="collection-space-status${statusClass}">${escapeHtml(accessLabel)}</span></div><p class="collection-space-note">${escapeHtml(note)}</p>${accessControls}${canManage ? `<p class="collection-space-note">設定から公開範囲を変更し、閲覧申請を承認・却下できます。</p>` : ""}</div>`;
         bindCollectionSpacePanelV100();
       }
 
       function bindCollectionSpacePanelV100() {
-        const select = document.getElementById("collectionSpaceSelect");
-        if (select) select.addEventListener("change", () => {
-          const url = new URL(window.location.href);
-          url.searchParams.set("collection", select.value);
-          window.location.assign(url.toString());
+        document.querySelectorAll("#collectionSpacePanel [data-collection-slug]").forEach(button => button.addEventListener("click", () => navigateToCollectionV106(button.dataset.collectionSlug)));
+        const createButton = document.getElementById("collectionCreateOpenButton");
+        const createPanel = document.getElementById("collectionCreateInlinePanel");
+        if (createButton && createPanel) createButton.addEventListener("click", () => {
+          if (!supabaseSessionV46) {
+            window.alert("自分の問題集を作るにはDiscordログインが必要です。");
+            document.getElementById("discordAuthButton")?.click();
+            return;
+          }
+          createPanel.hidden = !createPanel.hidden;
+          createButton.setAttribute("aria-expanded", String(!createPanel.hidden));
+          if (!createPanel.hidden) document.getElementById("collectionCreateInlineTitle")?.focus();
         });
+        bindCollectionCreateFormV106("collectionCreateInline");
         const requestButton = document.querySelector('[data-collection-action="request"]');
         if (requestButton) requestButton.addEventListener("click", async () => {
           if (!supabaseSessionV46) {
@@ -3220,7 +3291,7 @@
           ? `<div class="settings-divider" role="presentation"></div><div class="collection-management"><h3>この問題集スペースの管理</h3><p>公開範囲を変更すると、URLを知っている利用者の閲覧可否が変わります。</p><form class="settings-form" id="collectionVisibilityForm"><label for="collectionVisibilitySelect">公開範囲<select id="collectionVisibilitySelect"><option value="private"${currentVisibility === "private" ? " selected" : ""}>プライベート（所有者・管理者のみ）</option><option value="request"${currentVisibility === "request" ? " selected" : ""}>申請制（承認した利用者のみ）</option><option value="limited"${currentVisibility === "limited" ? " selected" : ""}>限定共有（所有者が付与）</option><option value="public"${currentVisibility === "public" ? " selected" : ""}>公開（URLから閲覧可能）</option></select></label><div class="settings-form-actions"><button class="primary" type="submit">公開範囲を保存</button><span class="settings-form-status" id="collectionVisibilityStatus" aria-live="polite"></span></div></form><h4>閲覧申請</h4><div class="collection-access-list" id="collectionAccessRequests"><span class="collection-access-empty">読み込み中…</span></div><h4>現在のメンバー</h4><div class="collection-access-list" id="collectionAccessMembers"><span class="collection-access-empty">読み込み中…</span></div></div>`
           : `<div class="settings-divider" role="presentation"></div><div class="collection-management"><h3>問題集スペース</h3><p>現在の公開範囲：${escapeHtml(collectionVisibilityLabelV100(collection.visibility))}。公開範囲の変更と申請の承認は所有者・管理者のみ行えます。</p></div>`)
           : "";
-        const create = supabaseSessionV46 ? `<div class="settings-divider" role="presentation"></div><div class="collection-management"><h3>新しい問題集スペースを作る</h3><p>新しく作る問題集は、最初は必ずプライベートです。作成後に公開範囲を変更できます。</p><form class="settings-form" id="collectionCreateForm"><label for="collectionCreateTitle">問題集名<input id="collectionCreateTitle" maxlength="80" required placeholder="例：ピエール問題集"></label><label for="collectionCreateDescription">説明（任意）<textarea id="collectionCreateDescription" maxlength="500" rows="3" placeholder="この問題集の説明"></textarea></label><div class="settings-form-actions"><button class="primary" type="submit">プライベートで作成</button><span class="settings-form-status" id="collectionCreateStatus" aria-live="polite"></span></div></form></div>` : "";
+        const create = supabaseSessionV46 ? `<div class="settings-divider" role="presentation"></div><div class="collection-management"><h3>新しい問題集スペースを作る</h3><p>新しく作る問題集は、最初は必ずプライベートです。作成時に公開範囲を選べます。</p>${collectionCreateFormMarkupV106("collectionCreate")}</div>` : "";
         return `${management}${create}`;
       }
 
@@ -3258,27 +3329,7 @@
             button.disabled = false;
           }
         });
-        const createForm = document.getElementById("collectionCreateForm");
-        if (createForm) createForm.addEventListener("submit", async event => {
-          event.preventDefault();
-          const title = String(document.getElementById("collectionCreateTitle")?.value || "").trim();
-          const description = String(document.getElementById("collectionCreateDescription")?.value || "").trim();
-          const status = document.getElementById("collectionCreateStatus");
-          if (!title) return;
-          const button = createForm.querySelector("button[type=submit]");
-          button.disabled = true;
-          status.textContent = "作成中…";
-          try {
-            const created = await window.NagaSupabase.createCollection({ title, description });
-            const url = new URL(window.location.href);
-            url.searchParams.set("collection", created.share_slug);
-            window.location.assign(url.toString());
-          } catch (error) {
-            status.classList.add("is-error");
-            status.textContent = error?.message || "問題集スペースを作成できませんでした。";
-            button.disabled = false;
-          }
-        });
+        bindCollectionCreateFormV106("collectionCreate");
         document.querySelectorAll("[data-collection-request-action]").forEach(button => button.addEventListener("click", async event => {
           const actionButton = event.currentTarget;
           const requestId = actionButton.dataset.requestId;
@@ -4432,7 +4483,8 @@
       }
 
       function showMenuV16(view = menuViewV16) {
-        menuViewV16 = MENU_VIEW_COPY_V16[view] ? view : "my";
+        const requestedView = view === "collections" ? "my" : view;
+        menuViewV16 = MENU_VIEW_COPY_V16[requestedView] ? requestedView : "my";
         applyDesktopLayoutV70();
         document.querySelector(".page").classList.add("menu-active");
         document.getElementById("menuPanel").hidden = false;
@@ -4473,9 +4525,7 @@
         const rangeQuestions = questionsV16.filter(menuRangeMatchesV60).filter(isPlayableV16);
         const rangeAnswered = rangeQuestions.filter(question => latestAnswerV44(question));
         const rangeUnanswered = rangeQuestions.length - rangeAnswered.length;
-        summary.innerHTML = menuViewV16 === "collections"
-          ? `<div class="menu-summary-stat"><small>問題集</small><strong>${counts.collections}<em>件</em></strong></div><div class="menu-summary-stat"><small>現在の問題集</small><strong>${escapeHtml(collectionDisplayNameV101())}</strong></div>`
-          : `<div class="menu-summary-stat"><small>この範囲の問題</small><strong>${rangeQuestions.length}<em>問</em></strong></div><div class="menu-summary-stat${rangeUnanswered ? " is-alert" : ""}"><small>未回答</small><strong>${rangeUnanswered}<em>問</em></strong></div><div class="menu-summary-stat"><small>回答済み</small><strong>${rangeAnswered.length}<em>問</em></strong></div>`;
+        summary.innerHTML = `<div class="menu-summary-stat"><small>この範囲の問題</small><strong>${rangeQuestions.length}<em>問</em></strong></div><div class="menu-summary-stat${rangeUnanswered ? " is-alert" : ""}"><small>未回答</small><strong>${rangeUnanswered}<em>問</em></strong></div><div class="menu-summary-stat"><small>回答済み</small><strong>${rangeAnswered.length}<em>問</em></strong></div>`;
         const allPlayable = questionsV16.filter(isPlayableV16);
         const allAnswered = allPlayable.filter(question => latestAnswerV44(question)).length;
         const progress = allPlayable.length ? Math.round(allAnswered / allPlayable.length * 100) : 0;
@@ -4483,9 +4533,7 @@
         const mastery = allPlayable.length ? Math.round(masteredCount / allPlayable.length * 100) : 0;
         document.getElementById("menuSidebarProgress").innerHTML = `<span class="menu-sidebar-progress-title">学習の進捗</span><div class="menu-progress-metric"><div class="menu-progress-metric-head"><span class="menu-progress-metric-label">回答率</span><strong class="menu-progress-metric-value">${progress}%</strong></div><span class="menu-progress-metric-note">${allAnswered} / ${allPlayable.length}問を回答済み</span><span class="menu-sidebar-progress-track" aria-hidden="true"><span class="menu-sidebar-progress-fill" style="width:${progress}%"></span></span></div><div class="menu-progress-metric menu-progress-mastery"><div class="menu-progress-metric-head"><span class="menu-progress-metric-label">習熟度</span><strong class="menu-progress-metric-value">${mastery}%</strong></div><span class="menu-progress-metric-note">${masteredCount} / ${allPlayable.length}問が習熟（直近2回連続💮）</span><span class="menu-sidebar-progress-track" aria-hidden="true"><span class="menu-sidebar-progress-fill is-mastery" style="width:${mastery}%"></span></span></div>`;
         const copy = MENU_VIEW_COPY_V16[menuViewV16];
-        document.getElementById("menuTitle").textContent = menuViewV16 === "my" ? collectionDisplayNameV101() : copy.title;
-        const collectionNavLabel = document.getElementById("menuCurrentCollectionNavLabel");
-        if (collectionNavLabel) collectionNavLabel.textContent = collectionDisplayNameV101();
+        document.getElementById("menuTitle").textContent = copy.title;
         const resume = activeSessionV44();
         const resumeButton = document.getElementById("resumeSessionButton");
         resumeButton.hidden = !resume;
@@ -4732,12 +4780,6 @@
         const grid = document.getElementById("menuGrid");
         const empty = document.getElementById("menuEmpty");
         renderMenuNavigationV16();
-        if (menuViewV16 === "collections") {
-          grid.innerHTML = renderCollectionDirectoryV101();
-          grid.style.display = "block";
-          empty.hidden = true;
-          return;
-        }
         if (menuViewV16 === "generator") {
           grid.innerHTML = renderGeneratorViewV44();
           grid.style.display = "block";
@@ -5268,12 +5310,7 @@
       function handleMenuGridClickV16(event) {
         const collectionButton = event.target.closest("[data-collection-slug]");
         if (collectionButton) {
-          const slug = String(collectionButton.dataset.collectionSlug || "").trim();
-          if (!slug) return;
-          const url = new URL(window.location.href);
-          url.searchParams.set("collection", slug);
-          url.hash = "";
-          window.location.assign(url.toString());
+          navigateToCollectionV106(collectionButton.dataset.collectionSlug);
           return;
         }
         const analysisButton = event.target.closest("[data-analysis-drill]");
