@@ -399,6 +399,8 @@
     .next-button { min-width: 118px; padding: 9px 11px; color: #12211e; background: var(--gold); border: 1px solid #ffdb7d; border-radius: 8px; font-size: 11px; font-weight: 800; }
     .next-button { color: #eaffff; background: #216f89; border-color: rgba(163,230,239,.7); }
     .next-button:hover { background: #2e8da4; }
+    .archive-next-button { min-width: 118px; padding: 9px 11px; color: #f5edff; background: rgba(97,64,135,.62); border: 1px solid rgba(210,178,255,.82); border-radius: 8px; font-size: 11px; font-weight: 800; }
+    .archive-next-button:hover, .archive-next-button:focus-visible { color: #fff; background: #7550a0; outline: 2px solid rgba(210,178,255,.3); outline-offset: 1px; }
     .answer-organize-button { min-width: 118px; padding: 7px 9px; color: #dffbfb; background: rgba(0,0,0,.18); border: 1px solid rgba(255,255,255,.15); border-radius: 7px; font-size: 9px; font-weight: 800; }
     .answer-organize-button:hover, .answer-organize-button:focus-visible { background: #164862; border-color: rgba(113,183,255,.6); outline: none; }
     .answer-organize-button.is-active { color: #18241c; background: var(--gold); border-color: #ffdb7d; }
@@ -581,6 +583,8 @@
     .menu-card-icon-action:hover, .menu-card-icon-action:focus-visible { color: #fff; background: rgba(22,80,103,.8); border-color: rgba(113,183,255,.65); outline: none; }
     .menu-card-icon-action.is-active { color: #f1c457; }
     .menu-card-icon-action.is-trashed { color: #f1c457; }
+    .menu-card-icon-action.is-archived { color: #d8baff; }
+    .menu-card-icon-placeholder { display: block; width: 42px; min-height: 42px; }
     .menu-card-actions { display: contents; }
     .menu-card-action { min-height: 42px; padding: 5px 8px; }
 
@@ -657,6 +661,7 @@
       .answer-detail { margin-top: 3px; text-align: left; }
       .answer-actions { flex-direction: row; flex-wrap: wrap; }
       .next-button, .answer-organize-button { flex: 1; min-width: 0; }
+      .archive-next-button { flex: 1 1 100%; min-width: 0; }
       .answer-choice-tile img { width: 30px; }
       .answer-confirmation { position: sticky; bottom: max(8px, env(safe-area-inset-bottom)); width: calc(100% - 8px); gap: 8px; padding: 7px 8px; }
       .answer-confirm-button { min-width: 120px; padding: 9px 10px; }
@@ -1138,6 +1143,30 @@
     .menu-card-icon-action.is-trashed {
       color: #ffd574;
     }
+    .menu-card-icon-action.is-archived {
+      color: #d8baff;
+    }
+    .menu-card-icon-placeholder {
+      display: block;
+      width: 44px;
+      min-height: 44px;
+    }
+    .menu-archive-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+    }
+    .menu-archive-icon svg {
+      width: 19px;
+      height: 19px;
+      fill: none;
+      stroke: currentColor;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-width: 1.7;
+    }
     .menu-trash-icon {
       display: inline-flex;
       align-items: center;
@@ -1301,6 +1330,10 @@
         min-height: 34px;
         font-size: 19px;
       }
+      .menu-card-icon-placeholder {
+        width: 34px;
+        min-height: 34px;
+      }
       .menu-trash-icon svg {
         width: 16px;
         height: 16px;
@@ -1314,7 +1347,7 @@
         grid-template-rows: auto auto;
         grid-template-areas:
           "open open open open"
-          "status latest favorite trash";
+          "status latest favorite archive";
         column-gap: 4px;
         row-gap: 6px;
         min-height: 92px;
@@ -1325,6 +1358,7 @@
       .menu-card-latest { grid-area: latest; gap: 0; font-size: 14px; }
       .menu-card-latest-mark { width: 13px; height: 13px; }
       .menu-card-icon-action { width: 36px; min-height: 36px; font-size: 19px; }
+      .menu-card-icon-placeholder { grid-area: archive; width: 36px; min-height: 36px; }
     }
     @media (max-width: 800px) {
       .menu-content > * { min-width: 0; max-width: 100%; }
@@ -1458,7 +1492,6 @@
           <button class="menu-nav-button is-active" type="button" data-menu-view="my"><span class="menu-nav-icon" aria-hidden="true">▦</span><span>問題集</span><span class="menu-nav-badge" data-menu-count="collections">0</span></button>
           <button class="menu-nav-button" type="button" data-menu-view="analysis"><span class="menu-nav-icon" aria-hidden="true">▥</span><span>成績・履歴</span></button>
           <button class="menu-nav-button" type="button" data-menu-view="favorites"><span class="menu-nav-icon" aria-hidden="true">☆</span><span>お気に入り</span><span class="menu-nav-badge" data-menu-count="favorites">0</span></button>
-          <button class="menu-nav-button" type="button" data-menu-view="trash"><span class="menu-nav-icon" aria-hidden="true">↶</span><span>ゴミ箱</span><span class="menu-nav-badge" data-menu-count="trash">0</span></button>
           <button class="menu-nav-button" type="button" data-menu-view="generator"><span class="menu-nav-icon" aria-hidden="true">＋</span><span>問題生成</span></button>
           <button class="menu-nav-button" type="button" data-menu-view="settings"><span class="menu-nav-icon" aria-hidden="true">⚙</span><span>設定</span></button>
           <button class="menu-nav-button" id="studentHistoryNav" type="button" data-menu-view="students" hidden><span class="menu-nav-icon" aria-hidden="true">◎</span><span>生徒履歴</span></button>
@@ -1530,7 +1563,7 @@
           <label class="menu-order-control" for="menuOrderSelect"><span>出題順</span><select id="menuOrderSelect" aria-label="出題順"><option value="sequential">順番</option><option value="reverse">逆順</option><option value="random">ランダム（解答数が少ない順）</option></select></label>
           <button class="menu-range-action primary" type="button" data-range-session="all">この範囲を10問解く <span aria-hidden="true">→</span></button>
         </div>
-        <div class="menu-list-header" id="menuListHeader" aria-hidden="true"><span class="menu-list-header-group"><span>問題</span><span>ステータス</span><span>直近の結果</span><span>お気に入り</span><span>ゴミ箱</span></span><span class="menu-list-header-group"><span>問題</span><span>ステータス</span><span>直近の結果</span><span>お気に入り</span><span>ゴミ箱</span></span></div>
+        <div class="menu-list-header" id="menuListHeader" aria-hidden="true"><span class="menu-list-header-group"><span>問題</span><span>ステータス</span><span>直近の結果</span><span>お気に入り</span><span>アーカイブ</span></span><span class="menu-list-header-group"><span>問題</span><span>ステータス</span><span>直近の結果</span><span>お気に入り</span><span>アーカイブ</span></span></div>
         <div class="menu-grid" id="menuGrid"></div>
         <div class="menu-empty" id="menuEmpty" hidden></div>
       </div>
@@ -1584,6 +1617,7 @@
       </div>
       <div class="answer-actions">
         <button class="next-button" id="nextQuestionBottomButton" type="button" hidden>次の問題へ</button>
+        <button class="archive-next-button" id="archiveQuestionButton" type="button" hidden>この問題をアーカイブに移して次の問題に進む</button>
         <button class="answer-organize-button" id="currentFavoriteButton" type="button">☆ お気に入り</button>
         <button class="answer-organize-button" id="currentManageButton" type="button">整理</button>
       </div>
@@ -1667,7 +1701,6 @@
         <button type="button" data-manage-action="snooze-week">1週間休む</button>
         <button type="button" data-manage-action="snooze-month">1か月休む</button>
         <button type="button" data-manage-action="snooze-forever">無期限で休む</button>
-        <button type="button" id="questionManageTrashButton" data-manage-action="trash">ゴミ箱へ</button>
         <button type="button" id="questionManageProposeDeleteButton" data-manage-action="propose-delete" hidden>削除を提案</button>
         <button class="danger" id="questionManageDeleteButton" type="button" data-manage-action="delete">完全削除</button>
         <button type="button" data-manage-action="restore">すべて解除</button>
@@ -1700,7 +1733,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 108;
+    const APP_VERSION = 109;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -2537,7 +2570,7 @@
         collections: { title: "問題集" },
         my: { title: "問題集" },
         favorites: { title: "お気に入り" },
-        trash: { title: "ゴミ箱" },
+        archive: { title: "アーカイブ" },
         generator: { title: "問題生成" },
         settings: { title: "設定" },
         analysis: { title: "自己分析" },
@@ -2550,7 +2583,7 @@
       const sourceTitleV16 = document.getElementById("sceneProblemTitle");
 
       function loadUserStateV16() {
-        const fallback = window.DrillUxV44?.migrateState?.(null) || { schemaVersion: 2, favorites: [], trashed: [], hidden: [], answerHistory: [], snoozed: {}, studyDates: [], sessions: {}, activeSessionId: null, lastSessionResult: null, customQuestions: [], pendingGenerated: [], settings: {}, localComments: {}, questionOverrides: {}, deletionProposals: {} };
+        const fallback = window.DrillUxV44?.migrateState?.(null) || { schemaVersion: 2, favorites: [], trashed: [], archived: [], hidden: [], answerHistory: [], snoozed: {}, studyDates: [], sessions: {}, activeSessionId: null, lastSessionResult: null, customQuestions: [], pendingGenerated: [], settings: {}, localComments: {}, questionOverrides: {}, deletionProposals: {} };
         try {
           if (window.localStorage.getItem(USER_STATE_KEY_V16) === null) {
             const legacyValue = window.localStorage.getItem(LEGACY_USER_STATE_KEY_V16);
@@ -2558,6 +2591,9 @@
           }
           const saved = JSON.parse(window.localStorage.getItem(USER_STATE_KEY_V16) || "null");
           const migrated = window.DrillUxV44?.migrateState?.(saved) || saved || fallback;
+          const legacyTrash = Array.isArray(migrated.trashed) ? migrated.trashed : [];
+          migrated.archived = [...new Set([...(Array.isArray(migrated.archived) ? migrated.archived : []), ...legacyTrash])];
+          migrated.trashed = [];
           migrated.localComments = migrated.localComments && typeof migrated.localComments === "object" ? migrated.localComments : {};
           migrated.settings = migrated.settings && typeof migrated.settings === "object" ? migrated.settings : {};
           if (!["split", "single"].includes(migrated.settings.desktopLayout)) migrated.settings.desktopLayout = "split";
@@ -2596,13 +2632,13 @@
         { version: 73, date: "2026-08-15", title: "リーチ判断ボタンを手牌の外へ移動しました", body: "リーチ判断ボタンをマスク外の右側へ配置し、手牌の横幅を圧迫しないようにしました。" },
         { version: 74, date: "2026-08-15", title: "アナウンスを新しい順に表示するようにしました", body: "最新の修正内容が上に表示されるようになりました。" },
         { version: 75, date: "2026-08-15", title: "コメントを編集・削除できるようにしました", body: "自分が投稿したコメントを後から編集・削除できるようになりました。" },
-        { version: 76, date: "2026-08-15", title: "問題一覧を2列表示に対応しました", body: "PCでは各問題を2列で表示し、左右それぞれにステータス・直近結果・お気に入り・ゴミ箱を配置しました。スマホでは1列表示に戻ります。" },
+        { version: 76, date: "2026-08-15", title: "問題一覧を2列表示に対応しました", body: "PCでは各問題を2列で表示し、左右それぞれにステータス・直近結果・お気に入り・整理操作を配置しました。スマホでは1列表示に戻ります。" },
         { version: 77, date: "2026-08-15", title: "未回答問題を続けて解けるようにしました", body: "未回答問題のセッション完了後は、回答済みを混ぜずに次の未回答10問へ進めます。解答後の次の問題ボタンも、結果のすぐ下から押せます。" },
         { version: 78, date: "2026-08-15", title: "問題一覧を1列表示に戻しました", body: "問題名や種別が崩れないよう、PCとスマホの問題一覧を1列表示に戻しました。" },
         { version: 79, date: "2026-08-15", title: "問題名から「追加」の文言を削除しました", body: "追加問題250のように表示されていた問題名を、問題250の形式に統一しました。既存の問題名も自動で読み替えます。" },
         { version: 80, date: "2026-08-15", title: "絞り込み中の次の問題を正しく出題するようにしました", body: "副露判断などの種別で絞り込んだ状態でも、次の問題へ進む際に同じ絞り込みを維持し、種別指定時はランダムに出題します。" },
         { version: 81, date: "2026-08-15", title: "ログインした端末間で回答履歴を同期するようにしました", body: "Discordログイン後、Supabaseに保存された自分の回答履歴をこの端末へ取り込み、PCと携帯で同じ履歴を確認できるようにしました。" },
-        { version: 82, date: "2026-08-15", title: "問題一覧の列を揃えました", body: "直近の採点履歴の件数に左右されず、ステータス・履歴・お気に入り・ゴミ箱の位置が行ごとに揃って表示されるようにしました。" },
+        { version: 82, date: "2026-08-15", title: "問題一覧の列を揃えました", body: "直近の採点履歴の件数に左右されず、ステータス・履歴・お気に入り・整理操作の位置が行ごとに揃って表示されるようにしました。" },
         { version: 83, date: "2026-08-15", title: "問題一覧の絞り込みをシンプルにしました", body: "検索窓をなくし、問題範囲とジャンルを分けて選べるようにしました。回答状態などの詳細条件は必要なときだけ開けます。" },
         { version: 87, date: "2026-08-15", title: "所有者専用の生徒進捗画面を追加しました", body: "所有者アカウントだけが、生徒の回答数・安全回答数・要復習数・平均回答時間を確認できるようになりました。" },
         { version: 88, date: "2026-08-15", title: "問題158を副露判断の局面に差し替えました", body: "指定されたNAGA局面URLから、1pへのポン判断として問題158を更新しました。" },
@@ -2621,8 +2657,9 @@
         { version: 102, date: "2026-08-17", title: "垣崎にま問題集を追加しました", body: "問題集一覧から垣崎にま問題集を選べるようになり、Discordの86問を収録しました。" },
         { version: 103, date: "2026-08-17", title: "問題集名を統一しました", body: "問題集一覧と画面内の表示を、ひらがなの「くにたそ問題集」に統一しました。" },
         { version: 104, date: "2026-08-17", title: "コメントを投稿者本人だけ編集できるようにしました", body: "共有コメントは投稿者本人にだけ「編集」ボタンを表示し、保存時にも本人確認を行います。" },
-        { version: 107, date: "2026-08-17", title: "問題の追加・削除を問題集オーナーに限定しました", body: "問題の追加・ゴミ箱移動・復元・完全削除は、アプリ所有者または問題集オーナーだけが行えるようになりました。問題集管理画面から、承認済みメンバーへオーナーを引き継ぐこともできます。" },
-        { version: APP_VERSION, date: "2026-08-17", title: "垣崎にまさんを問題集オーナーに設定しました", body: "既存のDiscordログイン履歴を確認し、垣崎にまさんのアカウントを垣崎にま問題集のオーナーに設定しました。" }
+        { version: 107, date: "2026-08-17", title: "問題の追加・削除を問題集オーナーに限定しました", body: "問題の追加・整理・完全削除は、アプリ所有者または問題集オーナーだけが行えるようになりました。問題集管理画面から、承認済みメンバーへオーナーを引き継ぐこともできます。" },
+        { version: 108, date: "2026-08-17", title: "垣崎にまさんを問題集オーナーに設定しました", body: "既存のDiscordログイン履歴を確認し、垣崎にまさんのアカウントを垣崎にま問題集のオーナーに設定しました。" },
+        { version: APP_VERSION, date: "2026-08-17", title: "💮正解した問題をアーカイブできるようにしました", body: "共有問題そのものは削除せず、自分の学習一覧からだけ整理できます。問題範囲タブの右端にあるアーカイブから、いつでも確認・復帰できます。" }
       ];
       let commentNoticeStoreV65 = loadCommentNoticeStoreV65();
       let sharedCommentRowsV65 = [];
@@ -2877,6 +2914,7 @@
       }
 
       function menuRangeMatchesForNotificationV65(question, rangeKey) {
+        if (rangeKey === "archive") return isArchivedV109(question);
         const [start, end] = String(rangeKey).split("-").map(Number);
         const number = menuQuestionNumberV60(question);
         return Number.isInteger(number) && number >= start && number <= end;
@@ -3289,7 +3327,7 @@
         const canManage = Boolean(collection?.can_manage) || isCollectionManagerV47();
         const currentVisibility = ["private", "request", "limited", "public"].includes(collection?.visibility) ? collection.visibility : "private";
         const management = collection ? (canManage
-          ? `<div class="settings-divider" role="presentation"></div><div class="collection-management"><h3>この問題集スペースの管理</h3><p>公開範囲を変更すると、URLを知っている利用者の閲覧可否が変わります。問題の追加・ゴミ箱移動・復元・完全削除は、アプリ所有者またはこの問題集のオーナーだけが行えます。</p><form class="settings-form" id="collectionVisibilityForm"><label for="collectionVisibilitySelect">公開範囲<select id="collectionVisibilitySelect"><option value="private"${currentVisibility === "private" ? " selected" : ""}>プライベート（所有者・管理者のみ）</option><option value="request"${currentVisibility === "request" ? " selected" : ""}>申請制（承認した利用者のみ）</option><option value="limited"${currentVisibility === "limited" ? " selected" : ""}>限定共有（所有者が付与）</option><option value="public"${currentVisibility === "public" ? " selected" : ""}>公開（URLから閲覧可能）</option></select></label><div class="settings-form-actions"><button class="primary" type="submit">公開範囲を保存</button><span class="settings-form-status" id="collectionVisibilityStatus" aria-live="polite"></span></div></form><h4>閲覧申請</h4><div class="collection-access-list" id="collectionAccessRequests"><span class="collection-access-empty">読み込み中…</span></div><h4>現在のメンバー</h4><p class="collection-space-note">垣崎にまさんなどに運営を任せる場合は、先に申請を承認してメンバーに追加し、ここで「オーナーにする」を選びます。</p><div class="collection-access-list" id="collectionAccessMembers"><span class="collection-access-empty">読み込み中…</span></div></div>`
+          ? `<div class="settings-divider" role="presentation"></div><div class="collection-management"><h3>この問題集スペースの管理</h3><p>公開範囲を変更すると、URLを知っている利用者の閲覧可否が変わります。問題の追加・整理・完全削除は、アプリ所有者またはこの問題集のオーナーだけが行えます。</p><form class="settings-form" id="collectionVisibilityForm"><label for="collectionVisibilitySelect">公開範囲<select id="collectionVisibilitySelect"><option value="private"${currentVisibility === "private" ? " selected" : ""}>プライベート（所有者・管理者のみ）</option><option value="request"${currentVisibility === "request" ? " selected" : ""}>申請制（承認した利用者のみ）</option><option value="limited"${currentVisibility === "limited" ? " selected" : ""}>限定共有（所有者が付与）</option><option value="public"${currentVisibility === "public" ? " selected" : ""}>公開（URLから閲覧可能）</option></select></label><div class="settings-form-actions"><button class="primary" type="submit">公開範囲を保存</button><span class="settings-form-status" id="collectionVisibilityStatus" aria-live="polite"></span></div></form><h4>閲覧申請</h4><div class="collection-access-list" id="collectionAccessRequests"><span class="collection-access-empty">読み込み中…</span></div><h4>現在のメンバー</h4><p class="collection-space-note">垣崎にまさんなどに運営を任せる場合は、先に申請を承認してメンバーに追加し、ここで「オーナーにする」を選びます。</p><div class="collection-access-list" id="collectionAccessMembers"><span class="collection-access-empty">読み込み中…</span></div></div>`
           : `<div class="settings-divider" role="presentation"></div><div class="collection-management"><h3>問題集スペース</h3><p>現在の公開範囲：${escapeHtml(collectionVisibilityLabelV100(collection.visibility))}。公開範囲の変更と申請の承認は所有者・管理者のみ行えます。</p></div>`)
           : "";
         const create = supabaseSessionV46 ? `<div class="settings-divider" role="presentation"></div><div class="collection-management"><h3>新しい問題集スペースを作る</h3><p>新しく作る問題集は、最初は必ずプライベートです。作成時に公開範囲を選べます。</p>${collectionCreateFormMarkupV106("collectionCreate")}</div>` : "";
@@ -3637,6 +3675,10 @@
         return userStateV16.trashed.includes(questionKeyV16(question)) && !isHiddenV16(question);
       }
 
+      function isArchivedV109(question) {
+        return (userStateV16.archived || []).includes(questionKeyV16(question)) && !isHiddenV16(question);
+      }
+
       function isFavoriteV16(question) {
         return userStateV16.favorites.includes(questionKeyV16(question)) && !isHiddenV16(question);
       }
@@ -3644,7 +3686,21 @@
       function isPlayableV16(question) {
         const key = questionKeyV16(question);
         const snoozed = window.DrillUxV44?.isSnoozed?.(userStateV16, key, new Date()) || false;
-        return !isHiddenV16(question) && !isTrashedV16(question) && !snoozed;
+        return !isHiddenV16(question) && !isTrashedV16(question) && !isArchivedV109(question) && !snoozed;
+      }
+
+      function archiveQuestionV109(question) {
+        const key = questionKeyV16(question);
+        userStateV16.archived ||= [];
+        if (!userStateV16.archived.includes(key)) userStateV16.archived.push(key);
+        userStateV16.trashed = (userStateV16.trashed || []).filter(value => value !== key);
+        delete userStateV16.snoozed?.[key];
+      }
+
+      function canArchiveCurrentQuestionV109() {
+        const question = questionsV16[currentQuestionIndexV16];
+        const latest = question ? latestAnswerV44(question) : null;
+        return Boolean(state.revealed && latest?.scoreMark === "💮" && !isArchivedV109(question));
       }
 
       function updateUserStateV16(mutator) {
@@ -4055,6 +4111,7 @@
         const commentsPanel = document.getElementById("commentsPanel");
         const nextButton = document.getElementById("nextQuestionButton");
         const nextBottomButton = document.getElementById("nextQuestionBottomButton");
+        const archiveButton = document.getElementById("archiveQuestionButton");
         const setNextButtonState = (hidden, text = "次の問題へ") => {
           [nextButton, nextBottomButton].forEach(button => {
             if (!button) return;
@@ -4062,11 +4119,15 @@
             button.textContent = text;
           });
         };
+        const setArchiveButtonState = () => {
+          if (archiveButton) archiveButton.hidden = !canArchiveCurrentQuestionV109();
+        };
         renderAnswerConfirmationV41();
         if (!state.revealed) {
           answerStrip.hidden = true;
           commentsPanel.hidden = true;
           setNextButtonState(true);
+          setArchiveButtonState();
           renderChoiceScoreV16();
           return;
         }
@@ -4093,6 +4154,7 @@
           answerStrip.hidden = false;
           commentsPanel.hidden = false;
           setNextButtonState(false, nextButtonLabelV44());
+          setArchiveButtonState();
           renderComments();
           return;
         }
@@ -4115,6 +4177,7 @@
         answerStrip.hidden = false;
         commentsPanel.hidden = false;
         setNextButtonState(false, nextButtonLabelV44());
+        setArchiveButtonState();
         renderComments();
       }
 
@@ -4454,6 +4517,16 @@
         else advanceQuestionV44();
       }
 
+      function archiveCurrentQuestionAndAdvanceV109() {
+        const question = questionsV16[currentQuestionIndexV16];
+        if (!question || !canArchiveCurrentQuestionV109()) return;
+        archiveQuestionV109(question);
+        saveUserStateV16();
+        renderQuestionOptionsV16();
+        renderMenuCardsV16();
+        advanceQuestionV44();
+      }
+
       function applyQuestionV16(question, index = questionsV16.indexOf(question)) {
         currentQuestionIndexV16 = index >= 0 ? index : 0;
         for (const key of Object.keys(SCENE)) delete SCENE[key];
@@ -4509,6 +4582,8 @@
       function showMenuV16(view = menuViewV16) {
         const requestedView = view === "collections" ? "my" : view;
         menuViewV16 = MENU_VIEW_COPY_V16[requestedView] ? requestedView : "my";
+        if (menuViewV16 !== "archive" && menuRangeV60 === "archive") menuRangeV60 = "all";
+        if (menuViewV16 === "archive") menuRangeV60 = "archive";
         applyDesktopLayoutV70();
         document.querySelector(".page").classList.add("menu-active");
         document.getElementById("menuPanel").hidden = false;
@@ -4535,10 +4610,10 @@
           collections: collectionCatalogOptionsV100().length,
           my: questionsV16.filter(question => isPlayableV16(question)).length,
           favorites: questionsV16.filter(question => isFavoriteV16(question) && isPlayableV16(question)).length,
-          trash: questionsV16.filter(question => isTrashedV16(question) || (window.DrillUxV44?.isSnoozed?.(userStateV16, questionKeyV16(question), new Date()) || false)).length
+          archive: questionsV16.filter(question => isArchivedV109(question)).length
         };
         document.querySelectorAll("[data-menu-view]").forEach(button => {
-          const active = button.dataset.menuView === menuViewV16;
+          const active = button.dataset.menuView === menuViewV16 || (menuViewV16 === "archive" && button.dataset.menuView === "my");
           button.classList.toggle("is-active", active);
           button.setAttribute("aria-pressed", String(active));
         });
@@ -4546,7 +4621,8 @@
           badge.textContent = String(counts[badge.dataset.menuCount] ?? 0);
         });
         const summary = document.getElementById("menuSummary");
-        const rangeQuestions = questionsV16.filter(menuRangeMatchesV60).filter(isPlayableV16);
+        const summaryQuestions = menuViewV16 === "archive" ? questionsV16.filter(isArchivedV109) : questionsV16.filter(isPlayableV16);
+        const rangeQuestions = summaryQuestions.filter(menuRangeMatchesV60);
         const rangeAnswered = rangeQuestions.filter(question => latestAnswerV44(question));
         const rangeUnanswered = rangeQuestions.length - rangeAnswered.length;
         summary.innerHTML = `<div class="menu-summary-stat"><small>この範囲の問題</small><strong>${rangeQuestions.length}<em>問</em></strong></div><div class="menu-summary-stat${rangeUnanswered ? " is-alert" : ""}"><small>未回答</small><strong>${rangeUnanswered}<em>問</em></strong></div><div class="menu-summary-stat"><small>回答済み</small><strong>${rangeAnswered.length}<em>問</em></strong></div>`;
@@ -4563,9 +4639,9 @@
         resumeButton.hidden = !resume;
         if (resume) document.getElementById("resumeSessionNote").textContent = `${Number(resume.cursor || 0) + 1} / ${resume.questionKeys.length} から再開`;
         document.getElementById("recommendedDrillNote").textContent = "苦手問題と未回答をバランスよく出題";
-        document.getElementById("quickStart").hidden = ["collections", "generator", "analysis", "students", "session", "settings"].includes(menuViewV16);
-        document.getElementById("menuFilters").hidden = !["my", "favorites", "trash"].includes(menuViewV16);
-        const listView = ["my", "favorites", "trash"].includes(menuViewV16);
+        document.getElementById("quickStart").hidden = ["collections", "generator", "analysis", "students", "session", "settings", "archive"].includes(menuViewV16);
+        document.getElementById("menuFilters").hidden = !["my", "favorites", "archive"].includes(menuViewV16);
+        const listView = ["my", "favorites", "archive"].includes(menuViewV16);
         document.getElementById("menuRangeActions").hidden = menuViewV16 !== "my";
         document.getElementById("menuListHeader").hidden = !listView;
         document.getElementById("menuListHeader").setAttribute("aria-hidden", String(!listView));
@@ -4586,10 +4662,12 @@
         for (let start = 1; start <= Math.max(maxNumber, 1); start += 20) {
           options.push({ key: `${start}-${start + 19}`, label: `${start}–${start + 19}` });
         }
+        options.push({ key: "archive", label: "アーカイブ" });
         return options;
       }
 
       function menuRangeMatchesV60(question) {
+        if (menuRangeV60 === "archive") return isArchivedV109(question);
         if (menuRangeV60 === "all") return true;
         const [start, end] = menuRangeV60.split("-").map(Number);
         const number = menuQuestionNumberV60(question);
@@ -4610,7 +4688,7 @@
         if (typeof filterQuestions !== "function") return null;
         const statuses = menuStatusFiltersV92.length ? menuStatusFiltersV92 : ["all"];
         const allowedKeys = new Set();
-        const options = { questions: questionsV16, state: userStateV16, view: menuViewV16, query: menuSearchV44, type: menuTypeV44, now: new Date() };
+        const options = { questions: questionsV16, state: userStateV16, view: menuViewV16 === "archive" ? "my" : menuViewV16, query: menuSearchV44, type: menuTypeV44, now: new Date() };
         statuses.forEach(status => {
           const filtered = filterQuestions({ ...options, status });
           if (Array.isArray(filtered)) filtered.forEach(question => allowedKeys.add(questionKeyV16(question)));
@@ -4620,8 +4698,8 @@
 
       function menuFilteredQuestionsV80() {
         const filteredByHelper = menuStatusFilteredQuestionsV92();
-        const sourceQuestions = Array.isArray(filteredByHelper) ? filteredByHelper : questionsV16.filter(question => {
-          if (menuViewV16 === "trash") return isTrashedV16(question) || (window.DrillUxV44?.isSnoozed?.(userStateV16, questionKeyV16(question), new Date()) || false);
+        const sourceQuestions = (Array.isArray(filteredByHelper) ? filteredByHelper : questionsV16).filter(question => {
+          if (menuViewV16 === "archive") return isArchivedV109(question);
           if (menuViewV16 === "favorites") return isFavoriteV16(question) && isPlayableV16(question);
           return isPlayableV16(question);
         });
@@ -4656,17 +4734,25 @@
 
       function renderMenuRangeTabsV60() {
         const tabs = document.getElementById("menuRangeTabs");
-        const visible = ["my", "favorites", "trash"].includes(menuViewV16);
+        const visible = ["my", "favorites", "archive"].includes(menuViewV16);
         tabs.hidden = !visible;
         if (!visible) {
           tabs.innerHTML = "";
           return;
         }
         const options = menuRangeOptionsV60();
-        if (!options.some(option => option.key === menuRangeV60)) menuRangeV60 = "all";
-        tabs.innerHTML = options.map(option => { const count = commentNotificationCountForRangeV65(option.key); return `<button class="menu-range-tab${option.key === menuRangeV60 ? " is-active" : ""}" type="button" role="tab" aria-selected="${option.key === menuRangeV60}" aria-label="${option.label}・新着コメント${count}件" data-menu-range="${option.key}">${option.label}${notificationBadgeMarkupV65(count, `${option.label}の新着コメント${count}件`, `data-menu-range-notification="${escapeHtml(option.key)}"`)}</button>`; }).join("");
+        const activeRange = menuViewV16 === "archive" ? "archive" : menuRangeV60;
+        if (!options.some(option => option.key === activeRange)) menuRangeV60 = "all";
+        tabs.innerHTML = options.map(option => { const count = commentNotificationCountForRangeV65(option.key); return `<button class="menu-range-tab${option.key === activeRange ? " is-active" : ""}" type="button" role="tab" aria-selected="${option.key === activeRange}" aria-label="${option.label}・新着コメント${count}件" data-menu-range="${option.key}">${option.label}${notificationBadgeMarkupV65(count, `${option.label}の新着コメント${count}件`, `data-menu-range-notification="${escapeHtml(option.key)}"`)}</button>`; }).join("");
         tabs.querySelectorAll("[data-menu-range]").forEach(button => button.addEventListener("click", () => {
-          menuRangeV60 = button.dataset.menuRange || "all";
+          const selectedRange = button.dataset.menuRange || "all";
+          if (selectedRange === "archive") {
+            menuViewV16 = "archive";
+            menuRangeV60 = "archive";
+          } else {
+            menuViewV16 = "my";
+            menuRangeV60 = selectedRange;
+          }
           renderMenuCardsV16();
         }));
       }
@@ -4806,6 +4892,10 @@
         return `<span class="menu-trash-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M8 7v12m4-12v12m4-12v12M5 7h14M9 4h6l1 3H8l1-3Zm-2 3 1 14h8l1-14"></path></svg></span>`;
       }
 
+      function menuArchiveIconV109() {
+        return `<span class="menu-archive-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M4 7.5h16v12H4zM3 4h18v3.5H3zM9 12h6"></path></svg></span>`;
+      }
+
       function renderMenuCardsV16() {
         const grid = document.getElementById("menuGrid");
         const empty = document.getElementById("menuEmpty");
@@ -4845,17 +4935,16 @@
         }
         grid.style.display = "grid";
         const filteredByHelper = menuStatusFilteredQuestionsV92();
-        const sourceQuestions = Array.isArray(filteredByHelper) ? filteredByHelper : questionsV16.filter(question => {
-          if (menuViewV16 === "trash") return isTrashedV16(question) || (window.DrillUxV44?.isSnoozed?.(userStateV16, questionKeyV16(question), new Date()) || false);
+        const sourceQuestions = (Array.isArray(filteredByHelper) ? filteredByHelper : questionsV16).filter(question => {
+          if (menuViewV16 === "archive") return isArchivedV109(question);
           if (menuViewV16 === "favorites") return isFavoriteV16(question) && isPlayableV16(question);
           return isPlayableV16(question);
         });
         const entries = sourceQuestions.filter(menuRangeMatchesV60).map(question => ({ question, index: questionIndexByKeyV44(questionKeyV16(question)) })).filter(({ index }) => index >= 0).sort((left, right) => menuQuestionSortKeyV99(left.question) - menuQuestionSortKeyV99(right.question) || left.index - right.index);
         empty.hidden = entries.length > 0;
-        empty.textContent = menuViewV16 === "trash" ? "ゴミ箱は空です。" : menuViewV16 === "favorites" ? "お気に入り登録した問題はまだありません。" : "出題できる問題がありません。";
+        empty.textContent = menuViewV16 === "archive" ? "アーカイブした問題はまだありません。" : menuViewV16 === "favorites" ? "お気に入り登録した問題はまだありません。" : "出題できる問題がありません。";
         grid.innerHTML = entries.map(({ question, index }) => {
           const favorite = isFavoriteV16(question);
-          const trashed = isTrashedV16(question);
           const title = escapeHtml(question.title || `問題${question.number}`);
           const scores = recentScoresV16(question);
           const historyLabel = scores.length ? `直近${scores.length}回の採点履歴：${scores.map(entry => `${entry.scoreMark} ${entry.scoreLabel || scoreForQuestionV16(question, entry)?.label || "採点結果"}`).join("、")}` : "採点履歴はまだありません";
@@ -4866,12 +4955,10 @@
           const favoriteLabel = favorite ? `問題${question.number}のお気に入りを解除` : `問題${question.number}をお気に入りに追加`;
           const commentNoticeCount = commentNotificationCountForQuestionV65(question);
           const commentNotice = notificationBadgeMarkupV65(commentNoticeCount, `問題${question.number}の新着コメント${commentNoticeCount}件`, `data-menu-question-notification="${escapeHtml(questionKeyV16(question))}"`);
-          const trashMarkup = canManageQuestionLifecycleV107(question)
-            ? trashed
-              ? `<button class="menu-card-icon-action is-trashed" type="button" data-menu-action="restore" data-question-index="${index}" aria-label="問題${question.number}を復元" title="復元">↶</button>`
-              : `<button class="menu-card-icon-action" type="button" data-menu-action="trash" data-question-index="${index}" aria-label="問題${question.number}をゴミ箱へ" title="ゴミ箱へ">${menuTrashIconV63()}</button>`
-            : "";
-          return `<article class="menu-card"><button class="menu-card-open" type="button" data-question-index="${index}"><span class="menu-card-heading"><span class="menu-card-title">${title}</span><span class="menu-card-notification">${commentNotice}</span></span><span class="menu-card-meta">${escapeHtml(typeMetadata)}</span></button><div class="menu-card-status">${statusMarkup}</div><span class="menu-card-latest${scores.length ? "" : " is-empty"}" aria-label="${escapeHtml(historyLabel)}">${history}</span><button class="menu-card-icon-action${favorite ? " is-active" : ""}" type="button" data-menu-action="favorite" data-question-index="${index}" aria-pressed="${favorite}" aria-label="${escapeHtml(favoriteLabel)}" title="${escapeHtml(favoriteLabel)}">${favorite ? "★" : "☆"}</button>${trashMarkup}</article>`;
+          const archiveMarkup = menuViewV16 === "archive"
+            ? `<button class="menu-card-icon-action is-archived" type="button" data-menu-action="unarchive" data-question-index="${index}" aria-label="問題${question.number}をアーカイブから戻す" title="アーカイブから戻す">${menuArchiveIconV109()}</button>`
+            : `<span class="menu-card-icon-placeholder" aria-hidden="true"></span>`;
+          return `<article class="menu-card"><button class="menu-card-open" type="button" data-question-index="${index}"><span class="menu-card-heading"><span class="menu-card-title">${title}</span><span class="menu-card-notification">${commentNotice}</span></span><span class="menu-card-meta">${escapeHtml(typeMetadata)}</span></button><div class="menu-card-status">${statusMarkup}</div><span class="menu-card-latest${scores.length ? "" : " is-empty"}" aria-label="${escapeHtml(historyLabel)}">${history}</span><button class="menu-card-icon-action${favorite ? " is-active" : ""}" type="button" data-menu-action="favorite" data-question-index="${index}" aria-pressed="${favorite}" aria-label="${escapeHtml(favoriteLabel)}" title="${escapeHtml(favoriteLabel)}">${favorite ? "★" : "☆"}</button>${archiveMarkup}</article>`;
         }).join("");
       }
 
@@ -4881,14 +4968,13 @@
         managedQuestionIndexV44 = index;
         const shared = isSharedQuestionV47(question);
         const editButton = document.getElementById("questionManageEditButton");
-        const trashButton = document.getElementById("questionManageTrashButton");
         const deleteButton = document.getElementById("questionManageDeleteButton");
         const proposeButton = document.getElementById("questionManageProposeDeleteButton");
         const editForm = document.getElementById("questionManageEditForm");
         document.getElementById("questionManageTitle").textContent = `${question.title || `問題${question.number}`}を整理`;
         document.getElementById("questionManageScope").textContent = questionScopeTextV47(question);
         document.getElementById("questionManageDescription").textContent = shared
-          ? "共有問題集の追加・ゴミ箱移動・復元・完全削除は、アプリ所有者または問題集オーナーだけが行えます。編集権限のある作成者は問題内容を編集できます。"
+          ? "共有問題集の追加・整理・完全削除は、アプリ所有者または問題集オーナーだけが行えます。編集権限のある作成者は問題内容を編集できます。"
           : "個人問題集の作成・編集・削除は通常操作としてこの端末に反映されます。";
         document.getElementById("questionManageNotice").textContent = questionProvenanceV47(question).replace(/<[^>]+>/g, "").replace(/&amp;/g, "&") || "";
         editForm.hidden = true;
@@ -4896,7 +4982,6 @@
         document.getElementById("questionEditNagaUrl").value = question.nagaUrl || "";
         document.getElementById("questionEditThreadUrl").value = question.threadUrl || "";
         editButton.hidden = !canEditQuestionV47(question);
-        trashButton.hidden = !canTrashQuestionV47(question);
         deleteButton.hidden = !canDeleteQuestionV47(question);
         proposeButton.hidden = !shared || isQuestionOwnerV47(question) || isCollectionManagerV47();
         document.querySelectorAll('#questionManageDialog [data-manage-action^="snooze"], #questionManageDialog [data-manage-action="restore"]').forEach(button => {
@@ -5372,6 +5457,10 @@
             const key = questionKeyV16(question);
             userState.favorites = userState.favorites.includes(key) ? userState.favorites.filter(value => value !== key) : [...userState.favorites, key];
           });
+          if (action === "unarchive") updateUserStateV16(userState => {
+            const key = questionKeyV16(question);
+            userState.archived = (userState.archived || []).filter(value => value !== key);
+          });
           if (action === "trash" && !isSharedQuestionV47(question)) updateUserStateV16(userState => {
             const key = questionKeyV16(question);
             if (!userState.trashed.includes(key)) userState.trashed.push(key);
@@ -5697,6 +5786,7 @@
         document.getElementById("menuButton").addEventListener("click", () => showMenuV16("my"));
         document.getElementById("nextQuestionButton").addEventListener("click", advanceQuestionV44);
         document.getElementById("nextQuestionBottomButton").addEventListener("click", advanceQuestionV44);
+        document.getElementById("archiveQuestionButton").addEventListener("click", archiveCurrentQuestionAndAdvanceV109);
         document.getElementById("currentFavoriteButton").addEventListener("click", () => {
           const question = questionsV16[currentQuestionIndexV16];
           if (!question) return;

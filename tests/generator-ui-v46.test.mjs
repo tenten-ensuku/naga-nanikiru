@@ -6,7 +6,7 @@ const indexUrl = new URL("../public/index.html", import.meta.url);
 
 test("renders the v87 scene and half-game generator controls", async () => {
   const html = await readFile(indexUrl, "utf8");
-  assert.match(html, /const APP_VERSION = 108/);
+  assert.match(html, /const APP_VERSION = 109/);
   assert.match(html, /data-range-session="all">この範囲を10問解く/);
   assert.doesNotMatch(html, /data-range-session="unanswered">未回答を10問解く/);
   assert.match(html, /range: "この範囲の10問"/);
@@ -60,7 +60,9 @@ test("renders the v87 scene and half-game generator controls", async () => {
   assert.match(html, /function nextFilteredQuestionV87\(\)/);
   assert.match(html, /menu-card-latest/);
   assert.match(html, /data-menu-action="favorite"/);
-  assert.match(html, /data-menu-action="trash"/);
+  assert.doesNotMatch(html, /data-menu-action="trash"/);
+  assert.match(html, /data-menu-action="unarchive"/);
+  assert.match(html, /id="archiveQuestionButton"[^>]*>この問題をアーカイブに移して次の問題に進む<\/button>/);
   assert.match(html, /id="menuRangeTabs"/);
   assert.match(html, /id="menuRangeHeading">問題範囲/);
   assert.match(html, /id="menuTypeFilters"/);

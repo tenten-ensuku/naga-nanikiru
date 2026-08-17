@@ -139,7 +139,7 @@ test("supports private collection spaces and owner-reviewed access requests", as
   assert.match(memberMigration, /list_collection_members[\s\S]*can_manage_collection/i);
   assert.match(clientSource, /const visibility = input\.visibility \?\? "private"/i);
   assert.match(clientSource, /loadMyCollections|requestCollectionAccess|reviewCollectionAccess|revokeCollectionAccess/i);
-  assert.match(html, /const APP_VERSION = 108/);
+  assert.match(html, /const APP_VERSION = 109/);
   assert.match(html, /id="collectionSpacePanel"/);
   assert.doesNotMatch(html, /data-menu-view="collections"/);
   assert.match(html, /data-menu-view="my"/);
@@ -162,7 +162,7 @@ test("preassigns the verified Kakisaki Nima account as the collection owner", as
   assert.match(migration, /public\.answer_attempts/);
   assert.match(migration, /title = '垣崎にま問題集'/i);
   assert.match(migration, /set owner_id = target_user_id/i);
-  assert.match(html, /const APP_VERSION = 108/);
+  assert.match(html, /const APP_VERSION = 109/);
   assert.match(html, /垣崎にまさんを問題集オーナーに設定しました/);
 });
 
