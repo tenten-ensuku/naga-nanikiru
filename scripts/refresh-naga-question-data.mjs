@@ -25,6 +25,7 @@ const DERIVED_FIELDS = [
   "actualDiscard", "actualDiscardNaga", "actualDiscardProbability", "doraMarker", "models",
   "probabilities", "reach", "hasRiichiJudgment", "callTile", "actualCall", "actualCallCode",
   "actualCallType", "actualDecision", "callOptions", "callProbabilities", "callRecommended",
+  "callActionOptions", "callActionProbabilities", "callRecommendedActions", "actualCallAction",
   "actualCallProbability", "actualCallProbabilityRaw", "melds", "reached", "sourceTv", "predictionType",
 ];
 
@@ -50,6 +51,10 @@ function applyCandidate(question, candidate, spec) {
     next.callOptions = [];
     next.callProbabilities = null;
     next.callRecommended = null;
+    next.callActionOptions = [];
+    next.callActionProbabilities = null;
+    next.callRecommendedActions = null;
+    next.actualCallAction = null;
     next.actualCallProbability = null;
     next.actualCallProbabilityRaw = null;
   }

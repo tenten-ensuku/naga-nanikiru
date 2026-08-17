@@ -203,6 +203,40 @@ test("builds huro pass/call options and infers the next actual call", async () =
   assert.deepEqual(Array.from(candidate.callRecommended), [false, true]);
 });
 
+test("builds kan choices from the separate kan prediction rows", async () => {
+  const api = await loadApi();
+  const report = {
+    reportId: "kan-report",
+    naga_types: { "0": "ニシキ", "1": "カガシ" },
+    player_info: { name: ["A", "B", "C", "D"] },
+    pred: [[
+      startKyoku([
+        ["4m", "W", "2m", "2m", "W", "5m", "8s", "6s", "7p", "3m", "8p", "W", "W"],
+        ["1p", "2p", "3p", "4p", "5p", "6p", "7p", "8p", "9p", "P", "F", "C", "1s"],
+        ["2s", "3s", "4s", "5s", "6s", "7s", "8s", "9s", "1m", "2m", "3m", "4m", "5m"],
+        ["6m", "7m", "8m", "9m", "1p", "2p", "3p", "4p", "5p", "6p", "7p", "8p", "9p"]
+      ]),
+      {
+        info: { msg: { type: "tsumo", actor: 0, pai: "4s", real_dahai: "?", pred_dahai: ["W", "W"] } },
+        kan: [{ "0": 88, "1": 9911 }, { "0": 2735, "1": 7264 }]
+      },
+      msg("ankan", { actor: 0, pai: "W", consumed: ["W", "W", "W", "W"] })
+    ]]
+  };
+  const candidate = api.sceneCandidate(report, { reportId: "kan-report", tw: 0, ts: 0, tv: 1 });
+  assert.equal(candidate.decisionType, "call");
+  assert.equal(candidate.predictionType, "kan");
+  assert.equal(candidate.callTile, "ji3");
+  assert.equal(candidate.draw, "sou4");
+  assert.deepEqual(Array.from(candidate.callActionOptions, option => option.action), ["pass", "kan"]);
+  assert.deepEqual(Array.from(candidate.callActionProbabilities.pass), [0.88, 27.35]);
+  assert.deepEqual(Array.from(candidate.callActionProbabilities.kan), [99.11, 72.64]);
+  assert.deepEqual(Array.from(candidate.callRecommendedActions), ["kan", "kan"]);
+  assert.deepEqual(Array.from(candidate.models, model => model.callAction), ["kan", "kan"]);
+  assert.equal(candidate.actualCallAction, "kan");
+  assert.equal(candidate.actualCallCode, 6);
+});
+
 test("uses tw as the seat and never as the pred/model index", async () => {
   const api = await loadApi();
   const rows = [Array(34).fill(0), Array(34).fill(0)];

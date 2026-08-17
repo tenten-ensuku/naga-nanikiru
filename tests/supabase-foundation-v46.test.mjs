@@ -150,7 +150,7 @@ test("supports private collection spaces and owner-reviewed access requests", as
   assert.match(memberMigration, /list_collection_members[\s\S]*can_manage_collection/i);
   assert.match(clientSource, /const visibility = input\.visibility \?\? "private"/i);
   assert.match(clientSource, /loadMyCollections|requestCollectionAccess|reviewCollectionAccess|revokeCollectionAccess/i);
-  assert.match(html, /const APP_VERSION = 111/);
+  assert.match(html, /const APP_VERSION = 112/);
   assert.match(html, /id="collectionSpacePanel"/);
   assert.doesNotMatch(html, /data-menu-view="collections"/);
   assert.match(html, /data-menu-view="my"/);
@@ -164,6 +164,13 @@ test("supports private collection spaces and owner-reviewed access requests", as
   assert.match(html, /新しく作る問題集は、最初は必ずプライベート/);
 });
 
+test("supports kan choices in shared poll aggregation", async () => {
+  const migration = await fs.readFile(new URL("../supabase/migrations/20260818120000_poll_counts_kan_choices_v112.sql", import.meta.url), "utf8");
+  assert.match(migration, /callDecision.*kan|kan.*callDecision/i);
+  assert.match(migration, /'call:kan'/i);
+  assert.match(migration, /get_question_poll_stats/i);
+});
+
 test("preassigns the verified Kakisaki Nima account as the collection owner", async () => {
   const [migration, html] = await Promise.all([
     fs.readFile(new URL("../supabase/migrations/20260817132405_kakisakinima_collection_owner_v108.sql", import.meta.url), "utf8"),
@@ -173,7 +180,7 @@ test("preassigns the verified Kakisaki Nima account as the collection owner", as
   assert.match(migration, /public\.answer_attempts/);
   assert.match(migration, /title = '垣崎にま問題集'/i);
   assert.match(migration, /set owner_id = target_user_id/i);
-  assert.match(html, /const APP_VERSION = 111/);
+  assert.match(html, /const APP_VERSION = 112/);
   assert.match(html, /垣崎にまさんを問題集オーナーに設定しました/);
 });
 
