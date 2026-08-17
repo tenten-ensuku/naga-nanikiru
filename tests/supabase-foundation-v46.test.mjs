@@ -139,7 +139,7 @@ test("supports private collection spaces and owner-reviewed access requests", as
   assert.match(memberMigration, /list_collection_members[\s\S]*can_manage_collection/i);
   assert.match(clientSource, /const visibility = input\.visibility \?\? "private"/i);
   assert.match(clientSource, /loadMyCollections|requestCollectionAccess|reviewCollectionAccess|revokeCollectionAccess/i);
-  assert.match(html, /const APP_VERSION = 104/);
+  assert.match(html, /const APP_VERSION = 105/);
   assert.match(html, /id="collectionSpacePanel"/);
   assert.match(html, /data-menu-view="collections"/);
   assert.match(html, /問題集一覧/);

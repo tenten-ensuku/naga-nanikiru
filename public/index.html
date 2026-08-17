@@ -1690,7 +1690,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 104;
+    const APP_VERSION = 105;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -2610,7 +2610,8 @@
         { version: 100, date: "2026-08-16", title: "問題集スペースと閲覧申請を追加しました", body: "問題集ごとに公開範囲を設定し、申請制の問題集では閲覧申請・承認・却下・権限取消を行えるようにしました。新しく作る問題集の初期値はプライベートです。" },
         { version: 102, date: "2026-08-17", title: "垣崎にま問題集を追加しました", body: "問題集一覧から垣崎にま問題集を選べるようになり、Discordの86問を収録しました。" },
         { version: 103, date: "2026-08-17", title: "問題集名を統一しました", body: "問題集一覧と画面内の表示を、ひらがなの「くにたそ問題集」に統一しました。" },
-        { version: APP_VERSION, date: "2026-08-17", title: "コメントを投稿者本人だけ編集できるようにしました", body: "共有コメントは投稿者本人にだけ「編集」ボタンを表示し、保存時にも本人確認を行います。" }
+        { version: 104, date: "2026-08-17", title: "コメントを投稿者本人だけ編集できるようにしました", body: "共有コメントは投稿者本人にだけ「編集」ボタンを表示し、保存時にも本人確認を行います。" },
+        { version: APP_VERSION, date: "2026-08-17", title: "垣崎にま問題集のコメント表示を整理しました", body: "問題画像・解説画像をコメント欄から除外し、スレッド冒頭のNAGA URLだけを表示しないようにしました。2つ目以降のNAGA URLは残ります。" }
       ];
       let commentNoticeStoreV65 = loadCommentNoticeStoreV65();
       let sharedCommentRowsV65 = [];
@@ -2695,6 +2696,7 @@
         const payload = { ...sourcePayload };
         payload.image ||= payload.images?.off;
         delete payload.images;
+        if (isNimaCollectionV105(shareSlug)) payload.comments = sanitizeNimaCommentsV105(payload.comments);
         const id = String(row?.id || row?.question_id || payload.serverQuestionId || "");
         if (!id) return null;
         const number = payload.number ?? row?.number ?? index + 1;
@@ -2725,6 +2727,39 @@
           createdAt: row?.created_at || row?.createdAt || new Date().toISOString(),
           question
         };
+      }
+
+      function isNimaCollectionV105(shareSlug = sharedCollectionV46?.share_slug || "") {
+        const collectionTitle = String(sharedCollectionV46?.title || "");
+        return /垣崎にま|にま問題集/.test(collectionTitle) || /垣崎にま|にま問題集/.test(String(shareSlug));
+      }
+
+      function sanitizeNimaCommentsV105(comments) {
+        let firstNagaUrlDropped = false;
+        let sceneImageCount = 0;
+        const nagaUrlPattern = /https?:\/\/naga\.dmv\.nico\/[^\s<>"']+/gi;
+        return (Array.isArray(comments) ? comments : [])
+          .map(message => {
+            const content = String(message?.content || "")
+              .replace(nagaUrlPattern, url => {
+                if (firstNagaUrlDropped) return url;
+                firstNagaUrlDropped = true;
+                return "";
+              })
+              .replace(/[ \t]+\n/g, "\n")
+              .replace(/\n{3,}/g, "\n\n")
+              .trim();
+            const attachments = (Array.isArray(message?.attachments) ? message.attachments : []).filter(attachment => {
+              const src = String(attachment?.src || "");
+              const contentType = String(attachment?.contentType || "");
+              const isImage = contentType.startsWith("image/") || /\.(?:png|jpe?g|webp|gif)(?:[?#]|$)/i.test(src);
+              if (!isImage || sceneImageCount >= 2) return true;
+              sceneImageCount += 1;
+              return false;
+            });
+            return { ...message, content, attachments };
+          })
+          .filter(message => message.content || message.attachments?.length || message.embeds?.length);
       }
 
       function isQuestionAddedByOtherV66(row) {
