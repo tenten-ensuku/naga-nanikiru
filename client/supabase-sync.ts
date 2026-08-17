@@ -202,6 +202,14 @@ async function setCollectionVisibility(collectionId: string, visibility: "privat
   if (error) throw error;
 }
 
+async function transferCollectionOwnership(collectionId: string, userId: string) {
+  const { error } = await requireClient().rpc("transfer_collection_ownership", {
+    p_collection_id: collectionId,
+    p_user_id: userId,
+  });
+  if (error) throw error;
+}
+
 async function loadCollectionNotifications(unreadOnly = false) {
   const { data, error } = await requireClient().rpc("list_collection_notifications", {
     p_unread_only: unreadOnly,
@@ -577,6 +585,7 @@ function buildApi() {
     reviewCollectionAccess,
     revokeCollectionAccess,
     setCollectionVisibility,
+    transferCollectionOwnership,
     loadCollectionNotifications,
     markCollectionNotificationsRead,
     loadSharedComments,

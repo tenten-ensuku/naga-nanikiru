@@ -139,7 +139,7 @@ test("supports private collection spaces and owner-reviewed access requests", as
   assert.match(memberMigration, /list_collection_members[\s\S]*can_manage_collection/i);
   assert.match(clientSource, /const visibility = input\.visibility \?\? "private"/i);
   assert.match(clientSource, /loadMyCollections|requestCollectionAccess|reviewCollectionAccess|revokeCollectionAccess/i);
-  assert.match(html, /const APP_VERSION = 106/);
+  assert.match(html, /const APP_VERSION = 107/);
   assert.match(html, /id="collectionSpacePanel"/);
   assert.doesNotMatch(html, /data-menu-view="collections"/);
   assert.match(html, /data-menu-view="my"/);
@@ -151,4 +151,23 @@ test("supports private collection spaces and owner-reviewed access requests", as
   assert.match(html, /renderCollectionDirectoryV101/);
   assert.match(html, /閲覧申請を送る/);
   assert.match(html, /新しく作る問題集は、最初は必ずプライベート/);
+});
+
+test("limits shared question lifecycle mutations to the application or collection owner", async () => {
+  const [migration, clientSource, html] = await Promise.all([
+    fs.readFile(new URL("../supabase/migrations/20260817125653_question_lifecycle_owner_only_v107.sql", import.meta.url), "utf8"),
+    fs.readFile(new URL("../client/supabase-sync.ts", import.meta.url), "utf8"),
+    fs.readFile(new URL("../public/index.html", import.meta.url), "utf8"),
+  ]);
+  assert.match(migration, /create or replace function private\.can_manage_question_lifecycle/i);
+  assert.match(migration, /c\.owner_id = \(select auth\.uid\(\)\)[\s\S]*private\.is_app_admin\(\)/i);
+  assert.match(migration, /create policy questions_insert[\s\S]*private\.can_manage_question_lifecycle/i);
+  assert.match(migration, /create policy questions_delete[\s\S]*private\.can_manage_question_lifecycle/i);
+  assert.match(migration, /create or replace function public\.trash_question[\s\S]*private\.can_manage_question_lifecycle/i);
+  assert.match(migration, /create or replace function public\.permanently_delete_question[\s\S]*private\.can_manage_question_lifecycle/i);
+  assert.match(migration, /create or replace function public\.transfer_collection_ownership[\s\S]*active collection member/i);
+  assert.match(clientSource, /async function transferCollectionOwnership\(collectionId: string, userId: string\)/i);
+  assert.match(clientSource, /transfer_collection_ownership/i);
+  assert.match(html, /オーナーにする/);
+  assert.match(html, /共有問題集への問題追加は、アプリ所有者または問題集オーナーだけが行えます/);
 });

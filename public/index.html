@@ -1700,7 +1700,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 106;
+    const APP_VERSION = 107;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -2621,7 +2621,7 @@
         { version: 102, date: "2026-08-17", title: "垣崎にま問題集を追加しました", body: "問題集一覧から垣崎にま問題集を選べるようになり、Discordの86問を収録しました。" },
         { version: 103, date: "2026-08-17", title: "問題集名を統一しました", body: "問題集一覧と画面内の表示を、ひらがなの「くにたそ問題集」に統一しました。" },
         { version: 104, date: "2026-08-17", title: "コメントを投稿者本人だけ編集できるようにしました", body: "共有コメントは投稿者本人にだけ「編集」ボタンを表示し、保存時にも本人確認を行います。" },
-        { version: APP_VERSION, date: "2026-08-17", title: "問題集画面を統合し、自分の問題集を作れるようにしました", body: "問題集の切り替えと問題一覧を同じ画面にまとめました。Discordログイン後は「自分の問題集を作る」から公開範囲を選んで新しい問題集を作成できます。初期値はプライベートです。" }
+        { version: APP_VERSION, date: "2026-08-17", title: "問題の追加・削除を問題集オーナーに限定しました", body: "問題の追加・ゴミ箱移動・復元・完全削除は、アプリ所有者または問題集オーナーだけが行えるようになりました。問題集管理画面から、承認済みメンバーへオーナーを引き継ぐこともできます。" }
       ];
       let commentNoticeStoreV65 = loadCommentNoticeStoreV65();
       let sharedCommentRowsV65 = [];
@@ -3279,7 +3279,7 @@
         const memberList = document.getElementById("collectionAccessMembers");
         if (memberList) {
           const members = collectionAccessMembersV100.filter(row => row?.status === "active");
-          memberList.innerHTML = members.length ? members.map(row => `<div class="collection-access-row"><span><strong>${escapeHtml(row.display_name || "利用者")}</strong><small>${row.role === "editor" ? "編集" : "閲覧"}　付与：${escapeHtml(formatCommentTime(row.granted_at))}</small></span><span></span><button class="is-danger" type="button" data-collection-member-action="revoke" data-member-id="${escapeHtml(row.user_id)}">権限を取消</button></div>`).join("") : `<span class="collection-access-empty">明示的なメンバーはいません。</span>`;
+          memberList.innerHTML = members.length ? members.map(row => `<div class="collection-access-row"><span><strong>${escapeHtml(row.display_name || "利用者")}</strong><small>${row.role === "editor" ? "編集" : "閲覧"}　付与：${escapeHtml(formatCommentTime(row.granted_at))}</small></span><span class="collection-space-actions">${String(row.user_id || "") !== String(sharedCollectionV46?.owner_id || "") ? `<button type="button" data-collection-member-action="transfer" data-member-id="${escapeHtml(row.user_id)}">オーナーにする</button>` : ""}</span><button class="is-danger" type="button" data-collection-member-action="revoke" data-member-id="${escapeHtml(row.user_id)}">権限を取消</button></div>`).join("") : `<span class="collection-access-empty">明示的なメンバーはいません。</span>`;
         }
       }
 
@@ -3288,7 +3288,7 @@
         const canManage = Boolean(collection?.can_manage) || isCollectionManagerV47();
         const currentVisibility = ["private", "request", "limited", "public"].includes(collection?.visibility) ? collection.visibility : "private";
         const management = collection ? (canManage
-          ? `<div class="settings-divider" role="presentation"></div><div class="collection-management"><h3>この問題集スペースの管理</h3><p>公開範囲を変更すると、URLを知っている利用者の閲覧可否が変わります。</p><form class="settings-form" id="collectionVisibilityForm"><label for="collectionVisibilitySelect">公開範囲<select id="collectionVisibilitySelect"><option value="private"${currentVisibility === "private" ? " selected" : ""}>プライベート（所有者・管理者のみ）</option><option value="request"${currentVisibility === "request" ? " selected" : ""}>申請制（承認した利用者のみ）</option><option value="limited"${currentVisibility === "limited" ? " selected" : ""}>限定共有（所有者が付与）</option><option value="public"${currentVisibility === "public" ? " selected" : ""}>公開（URLから閲覧可能）</option></select></label><div class="settings-form-actions"><button class="primary" type="submit">公開範囲を保存</button><span class="settings-form-status" id="collectionVisibilityStatus" aria-live="polite"></span></div></form><h4>閲覧申請</h4><div class="collection-access-list" id="collectionAccessRequests"><span class="collection-access-empty">読み込み中…</span></div><h4>現在のメンバー</h4><div class="collection-access-list" id="collectionAccessMembers"><span class="collection-access-empty">読み込み中…</span></div></div>`
+          ? `<div class="settings-divider" role="presentation"></div><div class="collection-management"><h3>この問題集スペースの管理</h3><p>公開範囲を変更すると、URLを知っている利用者の閲覧可否が変わります。問題の追加・ゴミ箱移動・復元・完全削除は、アプリ所有者またはこの問題集のオーナーだけが行えます。</p><form class="settings-form" id="collectionVisibilityForm"><label for="collectionVisibilitySelect">公開範囲<select id="collectionVisibilitySelect"><option value="private"${currentVisibility === "private" ? " selected" : ""}>プライベート（所有者・管理者のみ）</option><option value="request"${currentVisibility === "request" ? " selected" : ""}>申請制（承認した利用者のみ）</option><option value="limited"${currentVisibility === "limited" ? " selected" : ""}>限定共有（所有者が付与）</option><option value="public"${currentVisibility === "public" ? " selected" : ""}>公開（URLから閲覧可能）</option></select></label><div class="settings-form-actions"><button class="primary" type="submit">公開範囲を保存</button><span class="settings-form-status" id="collectionVisibilityStatus" aria-live="polite"></span></div></form><h4>閲覧申請</h4><div class="collection-access-list" id="collectionAccessRequests"><span class="collection-access-empty">読み込み中…</span></div><h4>現在のメンバー</h4><p class="collection-space-note">垣崎にまさんなどに運営を任せる場合は、先に申請を承認してメンバーに追加し、ここで「オーナーにする」を選びます。</p><div class="collection-access-list" id="collectionAccessMembers"><span class="collection-access-empty">読み込み中…</span></div></div>`
           : `<div class="settings-divider" role="presentation"></div><div class="collection-management"><h3>問題集スペース</h3><p>現在の公開範囲：${escapeHtml(collectionVisibilityLabelV100(collection.visibility))}。公開範囲の変更と申請の承認は所有者・管理者のみ行えます。</p></div>`)
           : "";
         const create = supabaseSessionV46 ? `<div class="settings-divider" role="presentation"></div><div class="collection-management"><h3>新しい問題集スペースを作る</h3><p>新しく作る問題集は、最初は必ずプライベートです。作成時に公開範囲を選べます。</p>${collectionCreateFormMarkupV106("collectionCreate")}</div>` : "";
@@ -3359,6 +3359,20 @@
             renderNotificationBadgesV65();
           } catch (error) {
             window.alert(error?.message || "アクセス権を取り消せませんでした。");
+            actionButton.disabled = false;
+          }
+        }));
+        document.querySelectorAll('[data-collection-member-action="transfer"]').forEach(button => button.addEventListener("click", async event => {
+          const actionButton = event.currentTarget;
+          const userId = actionButton.dataset.memberId;
+          if (!userId || !window.confirm("この利用者を問題集オーナーに変更しますか？あなたはアプリ所有者でなければ、オーナー権限を失います。")) return;
+          actionButton.disabled = true;
+          try {
+            await window.NagaSupabase.transferCollectionOwnership(sharedCollectionV46.id, userId);
+            await loadSharedCollectionV46();
+            await refreshCollectionAccessStateV100();
+          } catch (error) {
+            window.alert(error?.message || "問題集オーナーを変更できませんでした。");
             actionButton.disabled = false;
           }
         }));
@@ -3507,6 +3521,15 @@
         return isQuestionAdminV47() || Boolean(sharedCollectionV46?.can_manage) || Boolean(userId && sharedCollectionV46 && String(sharedCollectionV46.owner_id || "") === userId);
       }
 
+      function canManageQuestionLifecycleV107(question) {
+        if (!isSharedQuestionV47(question)) return true;
+        return Boolean(supabaseSessionV46 && sharedCollectionV46 && isCollectionManagerV47());
+      }
+
+      function canAddQuestionV107() {
+        return !sharedCollectionV46 || Boolean(supabaseSessionV46 && isCollectionManagerV47());
+      }
+
       function isCollectionEditorV100() {
         return isCollectionManagerV47() || Boolean(sharedCollectionV46?.can_edit);
       }
@@ -3516,11 +3539,11 @@
       }
 
       function canTrashQuestionV47(question) {
-        return !isSharedQuestionV47(question) || isQuestionOwnerV47(question) || isCollectionEditorV100();
+        return canManageQuestionLifecycleV107(question);
       }
 
       function canDeleteQuestionV47(question) {
-        return !isSharedQuestionV47(question) || isQuestionAdminV47();
+        return canManageQuestionLifecycleV107(question);
       }
 
       function questionProvenanceV47(question) {
@@ -4710,7 +4733,11 @@
       function renderGeneratorViewV44() {
         const sceneMode = generatorModeV46 === "scene";
         const destination = sharedCollectionV46 ? `共有問題集「${escapeHtml(collectionDisplayNameV101())}」` : escapeHtml(collectionDisplayNameV101());
-        const destinationNote = sharedCollectionV46 ? "共有URLを利用している全員に影響するため、追加時に確認が表示されます。Discordログインと共有保存APIが必要です。" : `追加した問題はこの端末の${collectionDisplayNameV101()}に保存されます。`;
+        const destinationNote = sharedCollectionV46
+          ? (canAddQuestionV107()
+            ? "共有URLを利用している全員に影響するため、追加時に確認が表示されます。"
+            : "共有問題集への問題追加は、アプリ所有者または問題集オーナーだけが行えます。")
+          : `追加した問題はこの端末の${collectionDisplayNameV101()}に保存されます。`;
         return `<section class="generator-panel"><h3>NAGA URLから問題生成</h3><p>入力種類を選んでください。局面URLは解析後に盤面画像まで自動取得し、完成候補を表示します。</p><form class="generator-form generator-form-v46" id="generatorForm"><fieldset class="generator-mode-field"><legend>入力種類</legend><label><input type="radio" name="generatorMode" value="scene"${sceneMode ? " checked" : ""}> 局面URL（1問）</label><label><input type="radio" name="generatorMode" value="match"${sceneMode ? "" : " checked"}> 半荘URL（候補を一括抽出）</label></fieldset><label class="generator-url-field">NAGA URL<input id="generatorUrl" type="url" required inputmode="url" placeholder="https://naga.dmv.nico/htmls/..."></label><label id="generatorSeatLabel">対象プレイヤー<select id="generatorSeat">${generatorSeatOptionsV46()}</select></label><button class="generator-button" type="submit">${sceneMode ? "1問を生成" : "候補を抽出"}</button><details class="generator-custom-settings" id="generatorCustomSettings"${sceneMode ? " hidden" : ""}><summary>抽出条件をカスタム設定</summary><div class="generator-settings-grid"><label>悪手閾値（%）<input id="generatorThreshold" type="number" min="0.1" max="50" step="0.1" value="5"></label><label>対象判断<select id="generatorDecisionType"><option value="all">すべて</option><option value="discard">打牌</option><option value="call">副露</option><option value="reach">リーチ</option></select></label><label>モデル条件<select id="generatorModelMode"><option value="any">いずれかのモデルで悪手</option><option value="all">全モデルで悪手</option></select></label><label>最大抽出数<input id="generatorMaxCandidates" type="number" min="1" max="500" step="1" value="100"></label></div><p class="generator-settings-note">悪手は選択した打牌・副露の実際の選択率が閾値以下の候補です。リーチはリーチ判断を含む局面だけを対象にします。</p></details></form><div class="generator-status" id="generatorStatus" aria-live="polite"></div><div class="generator-results" id="generatorResults">${renderGeneratorCandidatesV44()}</div><p>${destination}へ追加します。${destinationNote}自動取得に失敗した場合だけ、手動でスクリーンショットを指定できます。</p></section>`;
       }
 
@@ -4721,12 +4748,14 @@
           const modelMarkup = (candidate.models || []).slice(0, 3).map(model => `<span class="candidate-model">${model.recommendation && candidate.decisionType !== "call" ? tileImage(model.recommendation) : ""}${escapeHtml(model.name)} ${candidate.decisionType === "call" ? escapeHtml(model.label || (candidate.callRecommended?.[(candidate.models || []).indexOf(model)] ? "鳴く" : "鳴かない")) : tileLabel(model.recommendation)}</span>`).join("");
           const choice = candidate.decisionType === "call" ? `副露判断・${candidate.actualCall ? "鳴いた" : "鳴かなかった"}` : `${tileLabel(candidate.actualDiscard)}を選択`;
           const badModels = candidate.badMoveModels?.length ? ` ／ ${candidate.badMoveModels.map(escapeHtml).join("・")}が${Number(candidate.badMoveThresholdPercent || 5)}%以下` : "";
-          const addLabel = sharedCollectionV46 ? "共有問題集へ追加" : `${collectionDisplayNameV101()}へ追加`;
+          const canAdd = canAddQuestionV107();
+          const addLabel = !canAdd ? "オーナーのみ追加可能" : sharedCollectionV46 ? "共有問題集へ追加" : `${collectionDisplayNameV101()}へ追加`;
           const preview = candidate._imageData ? `<div class="candidate-preview"><img src="${candidate._imageData}" alt="自動取得したNAGA局面"></div>` : "";
           const captureState = candidate._captureState === "loading" ? "盤面画像を自動取得しています…" : candidate._imageData ? "盤面画像を自動取得済み" : candidate._captureError || "盤面画像はまだありません";
           const captureErrorClass = candidate._captureError && !candidate._imageData ? " is-error" : "";
           const captureLabel = candidate._imageData ? "盤面画像を再取得" : "盤面画像を自動取得";
-          return `<article class="generator-candidate${duplicate ? " is-duplicate" : ""}"><div><div class="candidate-title">${escapeHtml(candidate.playerName || `プレイヤー${Number(candidate.playerSeat ?? candidate.tw ?? 0) + 1}`)}・${choice}</div><div class="candidate-meta">${escapeHtml(candidate.title || `局${Number(candidate.ts || 0) + 1}・操作${candidate.tv}`)} ／ ${questionTypeV44(candidate)}${candidate.isBadMove ? ` ／ 悪手候補${badModels}` : ""}</div><div class="candidate-models">${modelMarkup}</div></div><div class="candidate-controls">${preview}<span class="candidate-capture-state${captureErrorClass}">${escapeHtml(captureState)}</span><button class="generator-button secondary" type="button" data-generator-capture="${index}"${candidate._captureState === "loading" ? " disabled" : ""}>${captureLabel}</button><label class="candidate-file-label">手動画像を使用<input type="file" accept="image/png,image/jpeg,image/webp" data-candidate-image="${index}" aria-label="この局面のスクリーンショット"></label><button class="generator-button${duplicate ? " secondary" : ""}" type="button" data-generator-add="${index}" ${duplicate ? "disabled" : ""}>${duplicate ? "追加済み" : addLabel}</button></div></article>`;
+          const addDisabled = duplicate || !canAdd;
+          return `<article class="generator-candidate${duplicate ? " is-duplicate" : ""}"><div><div class="candidate-title">${escapeHtml(candidate.playerName || `プレイヤー${Number(candidate.playerSeat ?? candidate.tw ?? 0) + 1}`)}・${choice}</div><div class="candidate-meta">${escapeHtml(candidate.title || `局${Number(candidate.ts || 0) + 1}・操作${candidate.tv}`)} ／ ${questionTypeV44(candidate)}${candidate.isBadMove ? ` ／ 悪手候補${badModels}` : ""}</div><div class="candidate-models">${modelMarkup}</div></div><div class="candidate-controls">${preview}<span class="candidate-capture-state${captureErrorClass}">${escapeHtml(captureState)}</span><button class="generator-button secondary" type="button" data-generator-capture="${index}"${candidate._captureState === "loading" ? " disabled" : ""}>${captureLabel}</button><label class="candidate-file-label">手動画像を使用<input type="file" accept="image/png,image/jpeg,image/webp" data-candidate-image="${index}" aria-label="この局面のスクリーンショット"></label><button class="generator-button${duplicate || !canAdd ? " secondary" : ""}" type="button" data-generator-add="${index}"${addDisabled ? " disabled" : ""}>${duplicate ? "追加済み" : addLabel}</button></div></article>`;
         }).join("");
       }
 
@@ -4836,9 +4865,11 @@
           const favoriteLabel = favorite ? `問題${question.number}のお気に入りを解除` : `問題${question.number}をお気に入りに追加`;
           const commentNoticeCount = commentNotificationCountForQuestionV65(question);
           const commentNotice = notificationBadgeMarkupV65(commentNoticeCount, `問題${question.number}の新着コメント${commentNoticeCount}件`, `data-menu-question-notification="${escapeHtml(questionKeyV16(question))}"`);
-          const trashMarkup = trashed
-            ? `<button class="menu-card-icon-action is-trashed" type="button" data-menu-action="restore" data-question-index="${index}" aria-label="問題${question.number}を復元" title="復元">↶</button>`
-            : `<button class="menu-card-icon-action" type="button" data-menu-action="trash" data-question-index="${index}" aria-label="問題${question.number}をゴミ箱へ" title="ゴミ箱へ">${menuTrashIconV63()}</button>`;
+          const trashMarkup = canManageQuestionLifecycleV107(question)
+            ? trashed
+              ? `<button class="menu-card-icon-action is-trashed" type="button" data-menu-action="restore" data-question-index="${index}" aria-label="問題${question.number}を復元" title="復元">↶</button>`
+              : `<button class="menu-card-icon-action" type="button" data-menu-action="trash" data-question-index="${index}" aria-label="問題${question.number}をゴミ箱へ" title="ゴミ箱へ">${menuTrashIconV63()}</button>`
+            : "";
           return `<article class="menu-card"><button class="menu-card-open" type="button" data-question-index="${index}"><span class="menu-card-heading"><span class="menu-card-title">${title}</span><span class="menu-card-notification">${commentNotice}</span></span><span class="menu-card-meta">${escapeHtml(typeMetadata)}</span></button><div class="menu-card-status">${statusMarkup}</div><span class="menu-card-latest${scores.length ? "" : " is-empty"}" aria-label="${escapeHtml(historyLabel)}">${history}</span><button class="menu-card-icon-action${favorite ? " is-active" : ""}" type="button" data-menu-action="favorite" data-question-index="${index}" aria-pressed="${favorite}" aria-label="${escapeHtml(favoriteLabel)}" title="${escapeHtml(favoriteLabel)}">${favorite ? "★" : "☆"}</button>${trashMarkup}</article>`;
         }).join("");
       }
@@ -4856,7 +4887,7 @@
         document.getElementById("questionManageTitle").textContent = `${question.title || `問題${question.number}`}を整理`;
         document.getElementById("questionManageScope").textContent = questionScopeTextV47(question);
         document.getElementById("questionManageDescription").textContent = shared
-          ? "共有問題集の編集・ゴミ箱移動は、利用者全体への影響を確認してから実行します。"
+          ? "共有問題集の追加・ゴミ箱移動・復元・完全削除は、アプリ所有者または問題集オーナーだけが行えます。編集権限のある作成者は問題内容を編集できます。"
           : "個人問題集の作成・編集・削除は通常操作としてこの端末に反映されます。";
         document.getElementById("questionManageNotice").textContent = questionProvenanceV47(question).replace(/<[^>]+>/g, "").replace(/&amp;/g, "&") || "";
         editForm.hidden = true;
@@ -4982,7 +5013,7 @@
         if (action === "trash") {
           if (shared) {
             if (!canTrashQuestionV47(question)) {
-              window.alert("他の利用者が作成した共有問題は直接ゴミ箱へ移動できません。削除を提案してください。");
+              window.alert("共有問題集の問題をゴミ箱へ移動できるのは、アプリ所有者または問題集オーナーだけです。必要なら削除を提案してください。");
               return;
             }
             if (!confirmSharedImpactV47("trash", question)) return;
@@ -5002,7 +5033,7 @@
         }
         if (action === "delete") {
           if (!canDeleteQuestionV47(question)) {
-            window.alert("共有問題集の完全削除は管理者だけが実行できます。必要なら削除を提案してください。");
+            window.alert("共有問題集の完全削除は、アプリ所有者または問題集オーナーだけが実行できます。必要なら削除を提案してください。");
             return;
           }
           if (shared) {
@@ -5235,6 +5266,10 @@
       async function addGeneratedQuestionV44(index) {
         const candidate = generatorCandidatesV44[index];
         if (!candidate) return;
+        if (!canAddQuestionV107()) {
+          setGeneratorStatusV44("共有問題集への問題追加は、アプリ所有者または問題集オーナーだけが行えます。", true);
+          return;
+        }
         if (!candidate._imageData) {
           setGeneratorStatusV44("追加する局面のスクリーンショットを選択してください。", true);
           return;
