@@ -24,7 +24,10 @@
   var NAGA_CALL_TYPES = {
     chi: true,
     pon: true,
-    daiminkan: true
+    daiminkan: true,
+    minkan: true,
+    ankan: true,
+    kakan: true
   };
 
   var REPLAY_MELD_TYPES = {
@@ -429,6 +432,18 @@
     return "カン";
   }
 
+  function callActionForCode(code) {
+    var numericCode = Number(code);
+    if (!Number.isFinite(numericCode) || numericCode === 0) return "pass";
+    return numericCode >= 5 ? "kan" : "call";
+  }
+
+  function callActionLabel(action) {
+    if (action === "kan") return "カン";
+    if (action === "call") return "鳴く";
+    return "鳴かない";
+  }
+
   function callCodeForMessage(message) {
     if (!message) return 0;
     if (message.type === "chi") {
@@ -436,8 +451,113 @@
       return chiKind != null && chiKind > 0 ? chiKind : 1;
     }
     if (message.type === "pon") return 4;
-    if (message.type === "daiminkan") return 5;
+    if (message.type === "daiminkan" || message.type === "minkan") return 5;
+    if (message.type === "ankan") return 6;
+    if (message.type === "kakan") return 7;
     return 0;
+  }
+
+  function callActionValue(rows, kanRows, modelIndex, action) {
+    var total = 0;
+    var row = Array.isArray(rows) ? rows[modelIndex] : null;
+    var kanRow = Array.isArray(kanRows) ? kanRows[modelIndex] : null;
+    if (action === "pass") {
+      total += huroValue(row, 0);
+      total += huroValue(kanRow, 0);
+    } else if (action === "call") {
+      for (var code = 1; code <= 4; code += 1) total += huroValue(row, code);
+    } else {
+      for (var huroCode = 5; huroCode <= 99; huroCode += 1) total += huroValue(row, huroCode);
+      total += huroValue(kanRow, 1);
+    }
+    return total;
+  }
+
+  function callActionOptions(rows, kanRows, count) {
+    var huroCodeList = huroCodes(rows);
+    var hasCall = huroCodeList.some(function (code) { return code >= 1 && code <= 4; });
+    var hasKan = huroCodeList.some(function (code) { return code >= 5; })
+      || (Array.isArray(kanRows) && kanRows.some(function (row) { return huroValue(row, 1) > 0 || own(row, "1"); }));
+    var actions = ["pass"];
+    if (hasCall) actions.push("call");
+    if (hasKan) actions.push("kan");
+    return actions.map(function (action) {
+      return {
+        action: action,
+        label: callActionLabel(action),
+        rawCodes: action === "pass" ? [0] : action === "call" ? [1, 2, 3, 4] : [5, 6, 7],
+        values: Array.from({ length: count }, function (_unused, modelIndex) {
+          return percentFromBasisPoints(callActionValue(rows, kanRows, modelIndex, action));
+        })
+      };
+    });
+  }
+
+  function bestCallActions(options, count) {
+    return Array.from({ length: count }, function (_unused, modelIndex) {
+      return options.reduce(function (best, option) {
+        return Number(option.values[modelIndex] || 0) > Number(best.values[modelIndex] || 0) ? option : best;
+      }, options[0] || { action: "pass", values: [0] }).action;
+    });
+  }
+
+  function callActionProbabilityMap(options, count) {
+    var map = { pass: [], call: [], kan: [] };
+    options.forEach(function (option) {
+      map[option.action] = Array.from({ length: count }, function (_unused, modelIndex) {
+        return Number(option.values[modelIndex] || 0);
+      });
+    });
+    return map;
+  }
+
+  function rawCallOptions(rows, kanRows, count) {
+    var codes = huroCodes(rows);
+    var options = codes.map(function (code) {
+      return {
+        code: code,
+        label: callLabel(code),
+        values: Array.from({ length: count }, function (_unused, modelIndex) {
+          return percentFromBasisPoints(huroValue(Array.isArray(rows) ? rows[modelIndex] : null, code));
+        })
+      };
+    });
+    var hasKan = Array.isArray(kanRows) && kanRows.some(function (row) { return huroValue(row, 1) > 0 || own(row, "1"); });
+    if (hasKan) {
+      options.push({
+        code: 6,
+        label: "カン",
+        values: Array.from({ length: count }, function (_unused, modelIndex) {
+          return percentFromBasisPoints(huroValue(kanRows[modelIndex], 1));
+        })
+      });
+    }
+    return options;
+  }
+
+  function inferKanTile(entries, targetTv, seat, snapshot, message) {
+    for (var index = targetTv + 1; index < entries.length; index += 1) {
+      var nextMessage = getMessage(entries[index]);
+      if (!nextMessage) continue;
+      if ((nextMessage.type === "ankan" || nextMessage.type === "minkan" || nextMessage.type === "daiminkan" || nextMessage.type === "kakan")
+        && validSeat(nextMessage.actor) === seat) {
+        var consumed = appList(nextMessage.consumed);
+        if (consumed.length) return consumed[0];
+        return tileToAppCode(nextMessage.pai);
+      }
+      if (nextMessage.type === "tsumo" && index > targetTv + 1) break;
+    }
+    var counts = {};
+    (snapshot && snapshot.handBeforeDraw || []).forEach(function (tile) {
+      var index = tileIndex(tile);
+      if (index != null) counts[index] = (counts[index] || 0) + 1;
+    });
+    if (message && message.type === "tsumo") {
+      var drawnIndex = tileIndex(message.pai);
+      if (drawnIndex != null) counts[drawnIndex] = (counts[drawnIndex] || 0) + 1;
+    }
+    var kanIndex = Object.keys(counts).find(function (key) { return counts[key] >= 4; });
+    return kanIndex == null ? null : standardAppCode(Number(kanIndex));
   }
 
   function inferActualCall(entries, targetTv, seat) {
@@ -554,8 +674,12 @@
       reach: [],
       callTile: null,
       callOptions: [],
+      callActionOptions: [],
       callProbabilities: null,
+      callActionProbabilities: null,
       callRecommended: null,
+      callRecommendedActions: null,
+      actualCallAction: null,
       melds: snapshot.melds.map(cloneMeld),
       comments: [],
       image: null,
@@ -622,61 +746,64 @@
     return candidate;
   }
 
-  function callCandidate(report, spec, entries, action, message, huro) {
+  function callCandidate(report, spec, entries, action, message, huro, kan) {
     var snapshot = replayKyoku(entries, spec.tv, spec.tw);
     var rows = huroRows(huro);
-    var count = modelCountFor(report, rows, []);
+    var kanRows = huroRows(kan);
+    var count = modelCountFor(report, rows, kanRows);
     var codes = huroCodes(rows);
     var actual = inferActualCall(entries, spec.tv, spec.tw);
+    var actionOptions = callActionOptions(rows, kanRows, count);
+    var actionProbabilities = callActionProbabilityMap(actionOptions, count);
+    var actionRecommendations = bestCallActions(actionOptions, count);
+    var hasCallAction = actionOptions.some(function (option) { return option.action === "call"; });
     var candidate = commonCandidate(spec.reportId, spec.tw, spec.ts, spec.tv, "call", report, snapshot);
-    candidate.callTile = tileToAppCode(message.pai);
+    candidate.callTile = kanRows.length
+      ? inferKanTile(entries, spec.tv, spec.tw, snapshot, message)
+      : tileToAppCode(message.pai);
+    candidate.draw = kanRows.length && message.type === "tsumo" ? tileToAppCode(message.pai) : null;
     candidate.actualCall = actual.called;
     candidate.actualCallCode = actual.code;
     candidate.actualCallType = actual.type;
+    candidate.actualCallAction = actual.called ? callActionForCode(actual.code) : "pass";
     candidate.actualDecision = actual.code;
-    candidate.callOptions = codes.map(function (code) {
-      return {
-        code: code,
-        label: callLabel(code),
-        values: Array.from({ length: count }, function (_unused, modelIndex) {
-          return percentFromBasisPoints(huroValue(rows[modelIndex], code));
-        })
-      };
-    });
+    candidate.callOptions = rawCallOptions(rows, kanRows, count);
+    candidate.callActionOptions = actionOptions;
+    candidate.callActionProbabilities = actionProbabilities;
     candidate.callProbabilities = {
-      pass: Array.from({ length: count }, function (_unused, modelIndex) {
-        return percentFromBasisPoints(huroValue(rows[modelIndex], 0));
-      }),
-      call: Array.from({ length: count }, function (_unused, modelIndex) {
-        return percentFromBasisPoints(codes
-          .filter(function (code) { return code !== 0; })
-          .reduce(function (sum, code) { return sum + huroValue(rows[modelIndex], code); }, 0));
-      })
+      pass: actionProbabilities.pass.slice(),
+      call: (hasCallAction ? actionProbabilities.call : actionProbabilities.kan).slice()
     };
-    candidate.callRecommended = candidate.callProbabilities.call.map(function (call, modelIndex) {
-      return call >= candidate.callProbabilities.pass[modelIndex];
-    });
+    candidate.callRecommendedActions = actionRecommendations;
+    candidate.callRecommended = actionRecommendations.map(function (recommendation) { return recommendation !== "pass"; });
     candidate.actualCallProbability = Array.from({ length: count }, function (_unused, modelIndex) {
-      return percentFromBasisPoints(huroValue(rows[modelIndex], actual.code));
+      var action = candidate.actualCallAction || "pass";
+      return actionProbabilities[action]?.[modelIndex] ?? 0;
     });
     candidate.actualCallProbabilityRaw = Array.from({ length: count }, function (_unused, modelIndex) {
-      return huroValue(rows[modelIndex], actual.code);
+      return callActionValue(rows, kanRows, modelIndex, candidate.actualCallAction || "pass");
     });
-    candidate.models = modelNames(report).concat(Array.from({ length: Math.max(0, count - modelNames(report).length) }, function (_unused, modelIndex) {
-      return "モデル" + (modelNames(report).length + modelIndex + 1);
+    var names = modelNames(report);
+    candidate.models = names.concat(Array.from({ length: Math.max(0, count - names.length) }, function (_unused, modelIndex) {
+      return "モデル" + (names.length + modelIndex + 1);
     })).slice(0, count).map(function (name, modelIndex) {
-      var bestCode = codes.reduce(function (best, code) {
-        return huroValue(rows[modelIndex], code) > huroValue(rows[modelIndex], best) ? code : best;
-      }, 0);
+      var bestAction = actionRecommendations[modelIndex] || "pass";
+      var recommendationCode = bestAction === "pass" ? 0 : bestAction === "kan" ? 6 : (codes.find(function (code) { return code >= 1 && code <= 4; }) || 1);
       return {
         name: name,
-        recommendation: bestCode === 0 ? null : callLabel(bestCode),
-        recommendationCode: bestCode,
-        label: bestCode === 0 ? "鳴かない" : callLabel(bestCode)
+        recommendation: bestAction === "pass" ? null : callActionLabel(bestAction),
+        recommendationCode: recommendationCode,
+        callAction: bestAction,
+        label: callActionLabel(bestAction)
       };
     });
     candidate.reached = Boolean(message.reached === true || action.reached === true || snapshot.reached);
+    candidate.predictionType = kanRows.length ? "kan" : "call";
     return candidate;
+  }
+
+  function kanCandidate(report, spec, entries, action, message) {
+    return callCandidate(report, spec, entries, action, message, null, action.kan);
   }
 
   function sceneCandidate(report, spec) {
@@ -703,6 +830,10 @@
     if (message.type === "dahai" && validSeat(message.actor) !== normalized.tw
       && action && action.huro && own(action.huro, String(normalized.tw))) {
       return callCandidate(report, normalized, entries, action, message, action.huro[String(normalized.tw)]);
+    }
+
+    if (action && Array.isArray(action.kan) && validSeat(message.actor) === normalized.tw) {
+      return kanCandidate(report, normalized, entries, action, message);
     }
 
     var sourceAction = action;
