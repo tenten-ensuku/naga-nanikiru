@@ -34,7 +34,10 @@ test("requires explicit confirmation before revealing or recording an answer", a
 
 test("records answer timing and exposes the synchronized drill version", async () => {
   const html = await source();
-  assert.match(html, /const APP_VERSION = 109;/);
+  assert.match(html, /const APP_VERSION = 110;/);
+  assert.match(html, /id="answerPollPanel"/);
+  assert.match(html, /void refreshQuestionPollStatsV110\(\)/);
+  assert.match(html, /archiveCurrentQuestionV110/);
   assert.match(html, /function nextFilteredQuestionV87\(\)/);
   assert.match(html, /id="nextQuestionBottomButton"/);
   assert.match(html, /function latestAnswerV44\(question\)[\s\S]*?\.sort\(/);

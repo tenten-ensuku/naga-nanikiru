@@ -344,6 +344,24 @@
     .answer-title { margin: 0; color: #fff7d6; font-size: clamp(21px, 2.6vw, 30px); line-height: 1.1; }
     .answer-detail strong { color: var(--ink); }
     .answer-comparison { display: grid; grid-template-columns: repeat(5, minmax(48px, 1fr)); gap: 6px; margin-top: 6px; }
+    .answer-poll-panel { margin-top: 8px; overflow: hidden; color: var(--ink); background: rgba(2, 19, 31, .52); border: 1px solid rgba(113,183,255,.26); border-radius: 8px; }
+    .answer-poll-panel[hidden] { display: none; }
+    .answer-poll-panel > summary { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 7px 9px; color: #eafefe; cursor: pointer; list-style: none; font-size: 10px; font-weight: 900; }
+    .answer-poll-panel > summary::-webkit-details-marker { display: none; }
+    .answer-poll-panel > summary::after { content: "＋"; color: #9fd6ff; font-size: 15px; line-height: 1; }
+    .answer-poll-panel[open] > summary::after { content: "−"; }
+    .answer-poll-summary-label { color: #fff1bd; }
+    .answer-poll-summary-value { margin-left: auto; color: #a7eee0; font-size: 9px; }
+    .answer-poll-content { display: grid; gap: 6px; padding: 0 9px 9px; }
+    .answer-poll-note { margin: 0; color: var(--muted); font-size: 8px; line-height: 1.45; }
+    .answer-poll-row { display: grid; grid-template-columns: minmax(72px, 1.1fr) minmax(80px, 2fr) auto; align-items: center; gap: 7px; min-width: 0; }
+    .answer-poll-choice { display: inline-flex; align-items: center; gap: 4px; min-width: 0; color: #f0ffff; font-size: 9px; font-weight: 800; white-space: nowrap; }
+    .answer-poll-choice-label { overflow: hidden; text-overflow: ellipsis; }
+    .answer-poll-choice-tile { display: inline-flex; flex: 0 0 auto; }
+    .answer-poll-choice-tile img { width: 22px; height: auto; border-radius: 2px; }
+    .answer-poll-track { display: block; width: 100%; height: 6px; overflow: hidden; background: rgba(255,255,255,.12); border-radius: 999px; }
+    .answer-poll-fill { display: block; height: 100%; min-width: 2px; background: linear-gradient(90deg, #64d9c6, #f4c957); border-radius: inherit; }
+      .answer-poll-count { color: #fff1bd; font-size: 9px; font-variant-numeric: tabular-nums; white-space: nowrap; }
     .answer-choice { min-width: 0; padding: 5px 4px 4px; text-align: center; border: 1px solid rgba(255,255,255,.12); border-radius: 7px; background: rgba(0,0,0,.16); }
     .answer-choice.player-choice { border-color: rgba(241,196,87,.55); background: rgba(77,56,22,.25); }
     .answer-choice.historical-choice { border-color: rgba(239,61,79,.62); background: rgba(97,22,31,.24); }
@@ -663,6 +681,8 @@
       .next-button, .answer-organize-button { flex: 1; min-width: 0; }
       .archive-next-button { flex: 1 1 100%; min-width: 0; }
       .answer-choice-tile img { width: 30px; }
+      .answer-poll-row { grid-template-columns: minmax(64px, 1fr) minmax(48px, 1.5fr) auto; gap: 5px; }
+      .answer-poll-choice { font-size: 8px; }
       .answer-confirmation { position: sticky; bottom: max(8px, env(safe-area-inset-bottom)); width: calc(100% - 8px); gap: 8px; padding: 7px 8px; }
       .answer-confirm-button { min-width: 120px; padding: 9px 10px; }
       .comments-footer { gap: 4px; }
@@ -1614,10 +1634,14 @@
         </div>
         <div class="answer-comparison" id="answerComparison"></div>
         <div class="riichi-panels" id="riichiPanels"></div>
+        <details class="answer-poll-panel" id="answerPollPanel" hidden>
+          <summary><span class="answer-poll-summary-label">みんなの回答</span><span class="answer-poll-summary-value" id="answerPollSummary">集計中…</span></summary>
+          <div class="answer-poll-content" id="answerPollContent"></div>
+        </details>
       </div>
       <div class="answer-actions">
         <button class="next-button" id="nextQuestionBottomButton" type="button" hidden>次の問題へ</button>
-        <button class="archive-next-button" id="archiveQuestionButton" type="button" hidden>この問題をアーカイブに移して次の問題に進む</button>
+        <button class="archive-next-button" id="archiveQuestionButton" type="button" hidden>アーカイブに移す</button>
         <button class="answer-organize-button" id="currentFavoriteButton" type="button">☆ お気に入り</button>
         <button class="answer-organize-button" id="currentManageButton" type="button">整理</button>
       </div>
@@ -1733,7 +1757,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 109;
+    const APP_VERSION = 110;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -1774,7 +1798,7 @@
     const COMMENT_MAX_ATTACHMENTS_V68 = 4;
     const COMMENT_MAX_IMAGE_BYTES_V68 = 5 * 1024 * 1024;
     const COMMENT_IMAGE_TYPES_V68 = new Set(["image/png", "image/jpeg", "image/webp", "image/gif"]);
-    const state = { selected: null, selectedIndex: null, callDecision: null, revealed: false, answerRecorded: false, answerAttemptId: null, questionStartedAt: Date.now(), judgeModel: 2, riichi: false, commentsExpanded: false, commentComposerOpen: false, commentEditingId: null, commentAttachments: [], comments: THREAD_MESSAGES.map(message => ({ ...message, attachments: [...message.attachments] })) };
+    const state = { selected: null, selectedIndex: null, callDecision: null, revealed: false, answerRecorded: false, answerAttemptId: null, sharedAttemptPromise: null, questionStartedAt: Date.now(), judgeModel: 2, riichi: false, commentsExpanded: false, commentComposerOpen: false, commentEditingId: null, commentAttachments: [], comments: THREAD_MESSAGES.map(message => ({ ...message, attachments: [...message.attachments] })) };
 
     function tileLabel(tile) {
       if (TILE_NAMES[tile]) return TILE_NAMES[tile];
@@ -2659,7 +2683,8 @@
         { version: 104, date: "2026-08-17", title: "コメントを投稿者本人だけ編集できるようにしました", body: "共有コメントは投稿者本人にだけ「編集」ボタンを表示し、保存時にも本人確認を行います。" },
         { version: 107, date: "2026-08-17", title: "問題の追加・削除を問題集オーナーに限定しました", body: "問題の追加・整理・完全削除は、アプリ所有者または問題集オーナーだけが行えるようになりました。問題集管理画面から、承認済みメンバーへオーナーを引き継ぐこともできます。" },
         { version: 108, date: "2026-08-17", title: "垣崎にまさんを問題集オーナーに設定しました", body: "既存のDiscordログイン履歴を確認し、垣崎にまさんのアカウントを垣崎にま問題集のオーナーに設定しました。" },
-        { version: APP_VERSION, date: "2026-08-17", title: "💮正解した問題をアーカイブできるようにしました", body: "共有問題そのものは削除せず、自分の学習一覧からだけ整理できます。問題範囲タブの右端にあるアーカイブから、いつでも確認・復帰できます。" }
+        { version: 109, date: "2026-08-17", title: "💮正解した問題をアーカイブできるようにしました", body: "共有問題そのものは削除せず、自分の学習一覧からだけ整理できます。問題範囲タブの右端にあるアーカイブから、いつでも確認・復帰できます。" },
+        { version: APP_VERSION, date: "2026-08-17", title: "みんなの回答数と得票率を表示するようにしました", body: "解答後に、問題ごとの回答数と選択肢別の得票率を確認できます。同じ人の繰り返し回答も、1回につき1票として集計します。" }
       ];
       let commentNoticeStoreV65 = loadCommentNoticeStoreV65();
       let sharedCommentRowsV65 = [];
@@ -3896,9 +3921,10 @@
         }
         userStateV16.answerHistory = userStateV16.answerHistory.slice(0, 500);
         saveUserStateV16();
+        state.sharedAttemptPromise = Promise.resolve();
         if (sharedCollectionV46 && question.serverQuestionId && window.NagaSupabase?.configured) {
-          window.NagaSupabase.currentSession().then(session => {
-            if (!session) return;
+          state.sharedAttemptPromise = window.NagaSupabase.currentSession().then(session => {
+            if (!session) return null;
             return window.NagaSupabase.recordSharedAttempt({
               shareSlug: sharedCollectionV46.share_slug,
               questionId: question.serverQuestionId,
@@ -3908,7 +3934,10 @@
               elapsedMs: answer.responseTimeMs,
               answeredAt: answer.answeredAt
             });
-          }).catch(error => console.warn("回答履歴の同期に失敗しました", error));
+          }).catch(error => {
+            console.warn("回答履歴の同期に失敗しました", error);
+            return null;
+          });
         }
       }
 
@@ -4106,6 +4135,103 @@
         return [...groups.entries()].map(([tile, indices]) => `<section class="riichi-panel" aria-label="${tileLabel(tile)}を切る場合のリーチ推奨度"><div class="riichi-panel-heading"><span>リーチ推奨度</span><strong>${tileLabel(tile)}を切る場合</strong></div><p class="riichi-panel-note">第1推奨打牌がリーチ候補のモデルのみ表示</p><div class="riichi-bar-list">${indices.map(index => { const value = SCENE.reach[index] / 100; return `<div class="riichi-bar-item"><span class="riichi-bar-value">${value.toFixed(1)}%</span><span class="riichi-bar-track"><span class="riichi-bar-fill ${modelColorV16(index)}" style="height:${value}%"></span></span><span class="riichi-bar-model" title="${SCENE.models[index].name}">${SCENE.models[index].name}</span></div>`; }).join("")}</div></section>`).join("");
       }
 
+      let questionPollStatsV110 = null;
+      let questionPollKeyV110 = "";
+      let questionPollRequestV110 = 0;
+
+      function clearQuestionPollStatsV110() {
+        const panel = document.getElementById("answerPollPanel");
+        const summary = document.getElementById("answerPollSummary");
+        const content = document.getElementById("answerPollContent");
+        if (!panel || !summary || !content) return;
+        questionPollRequestV110 += 1;
+        questionPollStatsV110 = null;
+        questionPollKeyV110 = "";
+        panel.hidden = true;
+        panel.open = false;
+        summary.textContent = "集計中…";
+        content.replaceChildren();
+      }
+
+      function pollTileLabelV110(tile) {
+        return ({ aka1: "赤5萬", aka2: "赤5筒", aka3: "赤5索" })[tile] || tileLabel(tile);
+      }
+
+      function pollChoiceV110(choice) {
+        const key = String(choice || "");
+        if (key === "call:yes") return { label: "鳴く", tile: null };
+        if (key === "call:no") return { label: "鳴かない", tile: null };
+        if (key === "unknown") return { label: "未選択", tile: null };
+        const [tile, reach] = key.split("|");
+        const validTile = Boolean(tile && (Object.prototype.hasOwnProperty.call(TILE_NAMES, tile) || /^(man|pin|sou)[1-9]$/.test(tile) || /^aka[1-3]$/.test(tile)));
+        const label = `${pollTileLabelV110(tile)}${hasReachV16() ? `・${reach === "reach" ? "リーチ" : "ダマ"}` : ""}`;
+        return { label, tile: validTile ? tile : null };
+      }
+
+      function renderQuestionPollStatsV110(stats) {
+        const panel = document.getElementById("answerPollPanel");
+        const summary = document.getElementById("answerPollSummary");
+        const content = document.getElementById("answerPollContent");
+        if (!panel || !summary || !content) return;
+        const total = Math.max(0, Number(stats?.sample_size) || 0);
+        const counts = stats?.choice_counts && typeof stats.choice_counts === "object" ? stats.choice_counts : {};
+        const entries = Object.entries(counts)
+          .map(([key, rawCount]) => ({ key, count: Math.max(0, Number(rawCount) || 0) }))
+          .filter(entry => entry.count > 0)
+          .sort((left, right) => right.count - left.count || left.key.localeCompare(right.key));
+        panel.hidden = false;
+        summary.textContent = total ? `${total}票` : "回答なし";
+        if (!entries.length) {
+          content.innerHTML = `<p class="answer-poll-note">この問題の回答はまだありません。</p>`;
+          return;
+        }
+        content.innerHTML = `${entries.map(({ key, count }) => {
+          const percentage = total ? Math.round((count / total) * 1000) / 10 : 0;
+          const choice = pollChoiceV110(key);
+          const tile = choice.tile ? `<span class="answer-poll-choice-tile">${tileImage(choice.tile)}</span>` : "";
+          return `<div class="answer-poll-row"><span class="answer-poll-choice">${tile}<span class="answer-poll-choice-label">${escapeHtml(choice.label)}</span></span><span class="answer-poll-track" aria-hidden="true"><span class="answer-poll-fill" style="width:${percentage}%"></span></span><span class="answer-poll-count">${count}票・${percentage.toFixed(1)}%</span></div>`;
+        }).join("")}<p class="answer-poll-note">同じ人の繰り返し回答も、1回につき1票として集計しています。</p>`;
+      }
+
+      async function refreshQuestionPollStatsV110() {
+        const question = questionsV16[currentQuestionIndexV16];
+        const panel = document.getElementById("answerPollPanel");
+        const summary = document.getElementById("answerPollSummary");
+        const content = document.getElementById("answerPollContent");
+        if (!question || !state.revealed || !sharedCollectionV46 || !question.serverQuestionId || !supabaseSessionV46 || !window.NagaSupabase?.configured || typeof window.NagaSupabase.loadQuestionPollStats !== "function") {
+          clearQuestionPollStatsV110();
+          return;
+        }
+        const key = `${sharedCollectionV46.share_slug}:${question.serverQuestionId}`;
+        if (questionPollKeyV110 === key && questionPollStatsV110) {
+          renderQuestionPollStatsV110(questionPollStatsV110);
+          return;
+        }
+        questionPollKeyV110 = key;
+        questionPollStatsV110 = null;
+        const requestId = ++questionPollRequestV110;
+        if (panel && summary && content) {
+          panel.hidden = false;
+          summary.textContent = "集計中…";
+          content.innerHTML = `<p class="answer-poll-note">回答数を集計しています…</p>`;
+        }
+        try {
+          await state.sharedAttemptPromise;
+          const stats = await window.NagaSupabase.loadQuestionPollStats(sharedCollectionV46.share_slug, question.serverQuestionId);
+          if (requestId !== questionPollRequestV110 || question !== questionsV16[currentQuestionIndexV16]) return;
+          questionPollStatsV110 = stats || { sample_size: 0, choice_counts: {} };
+          renderQuestionPollStatsV110(questionPollStatsV110);
+        } catch (error) {
+          if (requestId !== questionPollRequestV110) return;
+          if (panel && summary && content) {
+            panel.hidden = false;
+            summary.textContent = "集計できません";
+            content.innerHTML = `<p class="answer-poll-note">回答集計を読み込めませんでした。</p>`;
+          }
+          console.warn("回答集計の読み込みに失敗しました", error);
+        }
+      }
+
       function renderAnswerV16() {
         const answerStrip = document.getElementById("answerStrip");
         const commentsPanel = document.getElementById("commentsPanel");
@@ -4124,6 +4250,7 @@
         };
         renderAnswerConfirmationV41();
         if (!state.revealed) {
+          clearQuestionPollStatsV110();
           answerStrip.hidden = true;
           commentsPanel.hidden = true;
           setNextButtonState(true);
@@ -4156,6 +4283,7 @@
           setNextButtonState(false, nextButtonLabelV44());
           setArchiveButtonState();
           renderComments();
+          void refreshQuestionPollStatsV110();
           return;
         }
         const isCorrect = state.selected === correctTile && (!hasReachV16() || state.riichi === correctRiichi);
@@ -4179,6 +4307,7 @@
         setNextButtonState(false, nextButtonLabelV44());
         setArchiveButtonState();
         renderComments();
+        void refreshQuestionPollStatsV110();
       }
 
       function selectCallV16(decision) {
@@ -4221,6 +4350,7 @@
         state.revealed = false;
         state.answerRecorded = false;
         state.answerAttemptId = null;
+        state.sharedAttemptPromise = null;
         state.questionStartedAt = Date.now();
         state.riichi = false;
         state.commentsExpanded = false;
@@ -4517,14 +4647,14 @@
         else advanceQuestionV44();
       }
 
-      function archiveCurrentQuestionAndAdvanceV109() {
+      function archiveCurrentQuestionV110() {
         const question = questionsV16[currentQuestionIndexV16];
         if (!question || !canArchiveCurrentQuestionV109()) return;
         archiveQuestionV109(question);
         saveUserStateV16();
         renderQuestionOptionsV16();
         renderMenuCardsV16();
-        advanceQuestionV44();
+        renderAnswerV16();
       }
 
       function applyQuestionV16(question, index = questionsV16.indexOf(question)) {
@@ -4537,6 +4667,7 @@
         state.revealed = false;
         state.answerRecorded = false;
         state.answerAttemptId = null;
+        state.sharedAttemptPromise = null;
         state.questionStartedAt = Date.now();
         state.riichi = false;
         state.commentsExpanded = false;
@@ -5786,7 +5917,7 @@
         document.getElementById("menuButton").addEventListener("click", () => showMenuV16("my"));
         document.getElementById("nextQuestionButton").addEventListener("click", advanceQuestionV44);
         document.getElementById("nextQuestionBottomButton").addEventListener("click", advanceQuestionV44);
-        document.getElementById("archiveQuestionButton").addEventListener("click", archiveCurrentQuestionAndAdvanceV109);
+        document.getElementById("archiveQuestionButton").addEventListener("click", archiveCurrentQuestionV110);
         document.getElementById("currentFavoriteButton").addEventListener("click", () => {
           const question = questionsV16[currentQuestionIndexV16];
           if (!question) return;
