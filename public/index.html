@@ -1758,7 +1758,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 112;
+    const APP_VERSION = 113;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -4203,7 +4203,7 @@
       }
 
       function callActionProbabilityV112(action, index) {
-        return questionCallActionProbabilityV112(SCENE, action, index);
+        return questionCallProbabilityV112(SCENE, action, index);
       }
 
       function callRecommendedV16(index) {

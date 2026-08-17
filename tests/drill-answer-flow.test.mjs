@@ -34,7 +34,7 @@ test("requires explicit confirmation before revealing or recording an answer", a
 
 test("records answer timing and exposes the synchronized drill version", async () => {
   const html = await source();
-  assert.match(html, /const APP_VERSION = 112;/);
+  assert.match(html, /const APP_VERSION = 113;/);
   assert.match(html, /id="answerPollPanel"/);
   assert.match(html, /void refreshQuestionPollStatsV110\(\)/);
   assert.match(html, /archiveCurrentQuestionV110/);
@@ -45,6 +45,8 @@ test("records answer timing and exposes the synchronized drill version", async (
   assert.match(html, /responseTimeMs:\s*Math\.max\(0, confirmedAt - startedAt\)/);
   assert.match(html, /startedAt:\s*new Date\(startedAt\)\.toISOString\(\)/);
   assert.match(html, /const historicalCard = SCENE\.actualDiscard \?/);
+  assert.match(html, /function callActionProbabilityV112\(action, index\) \{[\s\S]*?return questionCallProbabilityV112\(SCENE, action, index\);/);
+  assert.doesNotMatch(html, /questionCallActionProbabilityV112/);
 });
 
 test("derives riichi controls from NAGA reach data", async () => {
