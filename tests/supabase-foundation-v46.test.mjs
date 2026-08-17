@@ -4,6 +4,7 @@ import test from "node:test";
 
 const migrationPath = new URL("../supabase/migrations/20260803165942_learning_platform_core.sql", import.meta.url);
 const ownerProgressMigrationPath = new URL("../supabase/migrations/20260815173000_owner_only_student_progress_v84.sql", import.meta.url);
+const pollAttemptMigrationPath = new URL("../supabase/migrations/20260817141847_poll_counts_all_attempts_v110.sql", import.meta.url);
 
 test("restricts student progress to the application owner and enrolls future users", async () => {
   const sql = await fs.readFile(ownerProgressMigrationPath, "utf8");
@@ -65,6 +66,16 @@ test("publishes anonymous first-answer stats only after five responses and after
   assert.match(statsFunction, /t\.n >= 5/i);
   assert.match(statsFunction, /mine\.user_id = \(select auth\.uid\(\)\)/i);
   assert.doesNotMatch(statsFunction, /display_name|discord_user_id|avatar_url/i);
+});
+
+test("counts every submitted answer event in community vote totals", async () => {
+  const sql = await fs.readFile(pollAttemptMigrationPath, "utf8");
+  const statsFunction = sql.match(/create or replace function public\.get_question_poll_stats[\s\S]*?\$\$;/i)?.[0] ?? "";
+  assert.doesNotMatch(statsFunction, /distinct on \(a\.user_id\)/i);
+  assert.match(statsFunction, /from all_attempts[\s\S]*count\(\*\)/i);
+  assert.match(statsFunction, /t\.n > 0/i);
+  assert.match(statsFunction, /answer ->> 'riichi'/i);
+  assert.match(sql, /grant execute on function public\.get_question_poll_stats\(text, uuid\) to authenticated/i);
 });
 
 test("pins Supabase dependencies and protects the NAGA proxy", async () => {
@@ -139,7 +150,7 @@ test("supports private collection spaces and owner-reviewed access requests", as
   assert.match(memberMigration, /list_collection_members[\s\S]*can_manage_collection/i);
   assert.match(clientSource, /const visibility = input\.visibility \?\? "private"/i);
   assert.match(clientSource, /loadMyCollections|requestCollectionAccess|reviewCollectionAccess|revokeCollectionAccess/i);
-  assert.match(html, /const APP_VERSION = 109/);
+  assert.match(html, /const APP_VERSION = 110/);
   assert.match(html, /id="collectionSpacePanel"/);
   assert.doesNotMatch(html, /data-menu-view="collections"/);
   assert.match(html, /data-menu-view="my"/);
@@ -162,7 +173,7 @@ test("preassigns the verified Kakisaki Nima account as the collection owner", as
   assert.match(migration, /public\.answer_attempts/);
   assert.match(migration, /title = '垣崎にま問題集'/i);
   assert.match(migration, /set owner_id = target_user_id/i);
-  assert.match(html, /const APP_VERSION = 109/);
+  assert.match(html, /const APP_VERSION = 110/);
   assert.match(html, /垣崎にまさんを問題集オーナーに設定しました/);
 });
 
