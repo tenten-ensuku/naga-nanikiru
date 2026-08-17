@@ -1757,7 +1757,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 110;
+    const APP_VERSION = 111;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -2684,7 +2684,8 @@
         { version: 107, date: "2026-08-17", title: "問題の追加・削除を問題集オーナーに限定しました", body: "問題の追加・整理・完全削除は、アプリ所有者または問題集オーナーだけが行えるようになりました。問題集管理画面から、承認済みメンバーへオーナーを引き継ぐこともできます。" },
         { version: 108, date: "2026-08-17", title: "垣崎にまさんを問題集オーナーに設定しました", body: "既存のDiscordログイン履歴を確認し、垣崎にまさんのアカウントを垣崎にま問題集のオーナーに設定しました。" },
         { version: 109, date: "2026-08-17", title: "💮正解した問題をアーカイブできるようにしました", body: "共有問題そのものは削除せず、自分の学習一覧からだけ整理できます。問題範囲タブの右端にあるアーカイブから、いつでも確認・復帰できます。" },
-        { version: APP_VERSION, date: "2026-08-17", title: "みんなの回答数と得票率を表示するようにしました", body: "解答後に、問題ごとの回答数と選択肢別の得票率を確認できます。同じ人の繰り返し回答も、1回につき1票として集計します。" }
+        { version: 110, date: "2026-08-17", title: "みんなの回答数と得票率を表示するようにしました", body: "解答後に、問題ごとの回答数と選択肢別の得票率を確認できます。同じ人の繰り返し回答も、1回につき1票として集計します。" },
+        { version: APP_VERSION, date: "2026-08-17", publishedAt: "2026-08-17T23:39:03+09:00", title: "アナウンスに時刻を表示するようにしました", body: "今後のアナウンスは日付に加えて時刻まで表示します。過去のアナウンスは、記録されている日付のみ表示します。" }
       ];
       let commentNoticeStoreV65 = loadCommentNoticeStoreV65();
       let sharedCommentRowsV65 = [];
@@ -3024,12 +3025,29 @@
         renderNotificationBadgesV65();
       }
 
+      function formatAnnouncementDateV111(item) {
+        const raw = String(item?.publishedAt || item?.date || "");
+        if (!item?.publishedAt) return raw;
+        const parsed = new Date(raw);
+        if (Number.isNaN(parsed.getTime())) return raw;
+        const parts = Object.fromEntries(new Intl.DateTimeFormat("ja-JP", {
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: false,
+          timeZone: "Asia/Tokyo"
+        }).formatToParts(parsed).filter(part => part.type !== "literal").map(part => [part.type, part.value]));
+        return `${parts.year}/${parts.month}/${parts.day} ${parts.hour}:${parts.minute}`;
+      }
+
       function renderAnnouncementListV65() {
         const list = document.getElementById("announcementList");
         if (!list) return;
         list.innerHTML = [...APP_ANNOUNCEMENTS_V66]
           .sort((left, right) => right.version - left.version)
-          .map(item => `<article class="notice-item"><div class="notice-item-top"><strong class="notice-item-question">V${item.version}　${escapeHtml(item.title)}</strong><time>${escapeHtml(item.date)}</time></div><div class="notice-item-body">${escapeHtml(item.body)}</div></article>`)
+          .map(item => `<article class="notice-item"><div class="notice-item-top"><strong class="notice-item-question">V${item.version}　${escapeHtml(item.title)}</strong><time datetime="${escapeHtml(item.publishedAt || item.date)}">${escapeHtml(formatAnnouncementDateV111(item))}</time></div><div class="notice-item-body">${escapeHtml(item.body)}</div></article>`)
           .join("");
       }
 
