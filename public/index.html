@@ -1785,7 +1785,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 115;
+    const APP_VERSION = 116;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -2746,7 +2746,8 @@
         { version: 110, date: "2026-08-17", title: "みんなの回答数と得票率を表示するようにしました", body: "解答後に、問題ごとの回答数と選択肢別の得票率を確認できます。同じ人の繰り返し回答も、1回につき1票として集計します。" },
         { version: 111, date: "2026-08-18", title: "問題集の公開範囲を3種類に整理しました", body: "新しく作る問題集は、プライベート・承認許可制・全体公開から選べます。既存の共有問題集はそのまま利用できます。" },
         { version: 114, date: "2026-08-18", publishedAt: "2026-08-18T00:12:00+09:00", title: "問題集作成時の認証状態を安定させました", body: "ログイン直後に問題集を作成した際も、入力内容を保ったまま処理できるようにしました。" },
-        { version: APP_VERSION, date: "2026-08-18", publishedAt: "2026-08-18T00:30:00+09:00", title: "問題集の一覧とインポートを追加しました", body: "公開・承認許可制の問題集名を一覧で確認できるようになり、閲覧中の問題を自分の問題集へ番号付きでインポートできるようになりました。" }
+        { version: 115, date: "2026-08-18", publishedAt: "2026-08-18T00:30:00+09:00", title: "問題集の一覧とインポートを追加しました", body: "公開・承認許可制の問題集名を一覧で確認できるようになり、閲覧中の問題を自分の問題集へ番号付きでインポートできるようになりました。" },
+        { version: APP_VERSION, date: "2026-08-18", publishedAt: "2026-08-18T12:35:07+09:00", title: "問題集作成の認証エラーを修正しました", body: "ログイン済みなのに問題集を作成できない場合がある不具合を修正しました。問題集作成時の所有者は、これまでどおりログイン中のDiscordアカウントに固定されます。" }
       ];
       let commentNoticeStoreV65 = loadCommentNoticeStoreV65();
       let sharedCommentRowsV65 = [];
@@ -3469,8 +3470,10 @@
           } catch (error) {
             status.classList.add("is-error");
             const rawMessage = String(error?.message || "");
-            status.textContent = /row-level security|RLS|authentication required/i.test(rawMessage)
-              ? "問題集を作成できませんでした。Discordログインの有効期限が切れている可能性があります。ページを再読み込みして、もう一度ログインしてください。"
+            status.textContent = /authentication required|jwt|token|session|not authenticated/i.test(rawMessage)
+              ? "問題集の作成にはDiscordログインが必要です。ログイン状態を更新して、もう一度お試しください。"
+              : /row-level security|RLS/i.test(rawMessage)
+                ? "問題集を作成できませんでした。作成権限の確認に失敗しました。ページを再読み込みして、もう一度お試しください。"
               : rawMessage || "問題集スペースを作成できませんでした。";
             button.disabled = false;
           }
