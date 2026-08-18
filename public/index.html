@@ -110,6 +110,10 @@
     .menu-card-action.is-active { color: #12211e; background: #f1c457; border-color: #ffdb7d; }
     .menu-empty, .menu-placeholder { padding: 22px 16px; color: var(--muted); text-align: center; background: rgba(0,0,0,.16); border: 1px dashed rgba(255,255,255,.18); border-radius: 11px; font-size: 12px; line-height: 1.7; }
     .menu-placeholder strong { display: block; margin-bottom: 5px; color: #fff7d6; font-size: 16px; }
+    .menu-load-more { display: flex; justify-content: center; padding: 14px 0 4px; }
+    .menu-load-more[hidden] { display: none; }
+    .menu-load-more-button { min-width: 210px; min-height: 42px; padding: 8px 14px; color: #e7f8ff; background: #164862; border: 1px solid rgba(113,183,255,.55); border-radius: 7px; font-size: 12px; font-weight: 850; }
+    .menu-load-more-button:hover, .menu-load-more-button:focus-visible { color: #fff; background: #246b8a; outline: 2px solid rgba(155,232,216,.22); outline-offset: 2px; }
     .quick-start { display: grid; grid-template-columns: minmax(220px, 1.45fr) repeat(3, minmax(145px, .72fr)); gap: 9px; }
     .quick-start-card { display: grid; align-content: center; min-height: 92px; padding: 13px 14px; color: #eafefe; text-align: left; background: linear-gradient(145deg, rgba(17,68,90,.92), rgba(7,34,51,.95)); border: 1px solid rgba(113,183,255,.34); border-radius: 12px; }
     .quick-start-card:hover, .quick-start-card:focus-visible { border-color: rgba(155,232,216,.9); background: linear-gradient(145deg, rgba(28,91,112,.95), rgba(10,45,64,.98)); outline: 2px solid rgba(155,232,216,.2); outline-offset: 2px; }
@@ -277,10 +281,6 @@
       width: var(--hand-mask-width, 41.3%);
       height: var(--hand-mask-height, 20.3%);
       background: linear-gradient(180deg, var(--hand-mask-top-color, #022045) 0%, var(--hand-mask-bottom-color, #021d41) 100%);
-    }
-    /* ピエール問題集はNAGA本家の暗い盤面に合わせ、手牌マスクもグレー系にする。 */
-    .scene-frame.is-pierre-theme .hand-mask {
-      background: linear-gradient(180deg, var(--hand-mask-top-color, #484848) 0%, var(--hand-mask-bottom-color, #1f1f1f) 100%);
     }
     .hand-score { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; width: fit-content; max-width: 100%; box-sizing: border-box; margin: 8px auto 0; padding: 7px 16px 8px; color: #fff; background: rgba(4, 19, 31, .96); border: 2px solid rgba(255,255,255,.5); border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,.34); font-size: clamp(14px, 2.6vw, 25px); font-weight: 900; line-height: 1.1; white-space: normal; text-align: center; }
     .hand-score[hidden] { display: none; }
@@ -1607,6 +1607,7 @@
         </div>
         <div class="menu-list-header" id="menuListHeader" aria-hidden="true"><span class="menu-list-header-group"><span>問題</span><span>ステータス</span><span>直近の結果</span><span>お気に入り</span><span>アーカイブ</span></span><span class="menu-list-header-group"><span>問題</span><span>ステータス</span><span>直近の結果</span><span>お気に入り</span><span>アーカイブ</span></span></div>
         <div class="menu-grid" id="menuGrid"></div>
+        <div class="menu-load-more" id="menuLoadMore" hidden></div>
         <div class="menu-empty" id="menuEmpty" hidden></div>
       </div>
     </section>
@@ -1789,7 +1790,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 118;
+    const APP_VERSION = 119;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -2633,6 +2634,9 @@
       let menuRangeV60 = "all";
       let menuAdvancedFiltersOpenV83 = false;
       let menuOrderV92 = "sequential";
+      const MENU_RENDER_THRESHOLD_V119 = 300;
+      const MENU_RENDER_BATCH_V119 = 100;
+      let menuRenderLimitV119 = MENU_RENDER_BATCH_V119;
       let managedQuestionIndexV44 = null;
       let generatorCandidatesV44 = [];
       let generatorReportV44 = null;
@@ -2752,7 +2756,8 @@
         { version: 114, date: "2026-08-18", publishedAt: "2026-08-18T00:12:00+09:00", title: "問題集作成時の認証状態を安定させました", body: "ログイン直後に問題集を作成した際も、入力内容を保ったまま処理できるようにしました。" },
         { version: 115, date: "2026-08-18", publishedAt: "2026-08-18T00:30:00+09:00", title: "問題集の一覧とインポートを追加しました", body: "公開・承認許可制の問題集名を一覧で確認できるようになり、閲覧中の問題を自分の問題集へ番号付きでインポートできるようになりました。" },
         { version: 116, date: "2026-08-18", publishedAt: "2026-08-18T12:35:07+09:00", title: "問題集作成の認証エラーを修正しました", body: "ログイン済みなのに問題集を作成できない場合がある不具合を修正しました。問題集作成時の所有者は、これまでどおりログイン中のDiscordアカウントに固定されます。" },
-        { version: APP_VERSION, date: "2026-08-18", publishedAt: "2026-08-18T15:20:00+09:00", title: "ピエール問題集の局面画像をNAGAから再構築しました", body: "ピエール問題集の局面画像をDiscord添付画像ではなく、各NAGA局面URLから伏牌状態で再取得しました。ピエール本家の盤面に合わせて手牌マスクの色も調整しています。" }
+        { version: 118, date: "2026-08-18", publishedAt: "2026-08-18T15:20:00+09:00", title: "ピエール問題集の局面画像をNAGAから再構築しました", body: "ピエール問題集の局面画像をDiscord添付画像ではなく、各NAGA局面URLから伏牌状態で再取得しました。" },
+        { version: APP_VERSION, date: "2026-08-18", publishedAt: "2026-08-18T16:00:00+09:00", title: "大量問題集を軽く表示できるようにしました", body: "問題一覧は最初の100問だけを表示し、必要な分だけ追加で読み込めるようにしました。ピエール問題集のような大規模な問題集でも、最初の表示が重くなりにくくなっています。局面を開いたときのマスクは、他の問題集と同じ青系に統一しました。" }
       ];
       let commentNoticeStoreV65 = loadCommentNoticeStoreV65();
       let sharedCommentRowsV65 = [];
@@ -3270,14 +3275,15 @@
         if (!sharedCollectionV46 || !window.NagaSupabase?.configured) return;
         if (commentPollTimerV65) window.clearInterval(commentPollTimerV65);
         if (questionPollTimerV66) window.clearInterval(questionPollTimerV66);
+        const isLargeCollectionV119 = questionsV16.length > MENU_RENDER_THRESHOLD_V119;
         await refreshSharedCommentNotificationsV65();
-        commentPollTimerV65 = window.setInterval(() => { void refreshSharedCommentNotificationsV65(); }, 30000);
-        questionPollTimerV66 = window.setInterval(() => { void refreshSharedQuestionNotificationsV66(); }, 60000);
+        commentPollTimerV65 = window.setInterval(() => { void refreshSharedCommentNotificationsV65(); }, isLargeCollectionV119 ? 120000 : 30000);
+        if (!isLargeCollectionV119) questionPollTimerV66 = window.setInterval(() => { void refreshSharedQuestionNotificationsV66(); }, 60000);
         if (!commentVisibilityHandlerBoundV65) {
           document.addEventListener("visibilitychange", () => {
             if (document.visibilityState === "visible") {
               void refreshSharedCommentNotificationsV65();
-              void refreshSharedQuestionNotificationsV66();
+              if (questionsV16.length <= MENU_RENDER_THRESHOLD_V119) void refreshSharedQuestionNotificationsV66();
             }
           });
           commentVisibilityHandlerBoundV65 = true;
@@ -4694,13 +4700,11 @@
       }
 
       function handMaskFallbackV17(question) {
-        const collectionTitle = `${sharedCollectionV46?.title || ""} ${question?.collectionTitle || ""}`;
-        const isPierre = /ピエール/.test(collectionTitle) || String(sharedCollectionV46?.share_slug || "") === "36375789797246e59e670802";
         const meldCount = Array.isArray(question?.melds) ? question.melds.length : 0;
         const closedCount = Array.isArray(question?.handBeforeDraw) ? question.handBeforeDraw.length : 0;
         const hasDraw = Boolean(question?.draw);
         if (meldCount === 0) {
-          return { left: 11.5, top: 79.3, width: 67.8, height: 20.7, topColor: isPierre ? "#484848" : "#06254a", bottomColor: isPierre ? "#1f1f1f" : "#02244c" };
+          return { left: 11.5, top: 79.3, width: 67.8, height: 20.7, topColor: "#06254a", bottomColor: "#02244c" };
         }
         const compactPanel = meldCount > 1 && closedCount + (hasDraw ? 1 : 0) <= 8;
         return {
@@ -4708,8 +4712,8 @@
           top: 78,
           width: compactPanel ? 41.4 : (hasDraw ? 54.5 : 62.5),
           height: 20.5,
-          topColor: isPierre ? "#484848" : "#022045",
-          bottomColor: isPierre ? "#1f1f1f" : "#021d41"
+          topColor: "#022045",
+          bottomColor: "#021d41"
         };
       }
 
@@ -5008,9 +5012,6 @@
         state.judgeModel = Math.max(0, SCENE.models.findIndex(model => model.name === "ニシキ"));
         const hasSelfMeldsV17 = (SCENE.melds || []).length > 0;
         const handMaskV18 = handMaskFallbackV17(question);
-        const isPierreThemeV118 = /ピエール/.test(`${sharedCollectionV46?.title || ""} ${question?.collectionTitle || ""}`) || String(sharedCollectionV46?.share_slug || "") === "36375789797246e59e670802";
-        const shouldDetectMaskV118 = hasSelfMeldsV17 || isPierreThemeV118;
-        sceneFrameV16.classList.toggle("is-pierre-theme", isPierreThemeV118);
         sceneFrameV16.classList.toggle("has-self-melds", hasSelfMeldsV17);
         clearHandMaskV17();
         clearHandLayoutV18();
@@ -5026,8 +5027,8 @@
         sceneImageV16.alt = `問題${SCENE.number}の伏牌スクリーンショット`;
         sceneImageV16.onload = () => {
           if (sceneImageV16.naturalWidth && sceneImageV16.naturalHeight) sceneFrameV16.style.aspectRatio = `${sceneImageV16.naturalWidth} / ${sceneImageV16.naturalHeight}`;
-          const detectedMaskV18 = shouldDetectMaskV118 ? detectHandMaskV17(sceneImageV16, handMaskV18) : handMaskV18;
-          if (shouldDetectMaskV118) setHandMaskV17(detectedMaskV18);
+          const detectedMaskV18 = hasSelfMeldsV17 ? detectHandMaskV17(sceneImageV16, handMaskV18) : handMaskV18;
+          if (hasSelfMeldsV17) setHandMaskV17(detectedMaskV18);
           setHandLayoutV18(question, detectedMaskV18);
         };
         if (sceneImageV16.complete) sceneImageV16.onload();
@@ -5215,6 +5216,7 @@
             menuViewV16 = "my";
             menuRangeV60 = selectedRange;
           }
+          resetMenuRenderLimitV119();
           renderMenuCardsV16();
         }));
       }
@@ -5359,9 +5361,31 @@
         return `<span class="menu-archive-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M4 7.5h16v12H4zM3 4h18v3.5H3zM9 12h6"></path></svg></span>`;
       }
 
+      function resetMenuRenderLimitV119() {
+        menuRenderLimitV119 = MENU_RENDER_BATCH_V119;
+      }
+
+      function renderMenuLoadMoreV119(total, visible) {
+        const panel = document.getElementById("menuLoadMore");
+        if (!panel) return;
+        if (total <= MENU_RENDER_THRESHOLD_V119 || visible >= total) {
+          panel.hidden = true;
+          panel.innerHTML = "";
+          return;
+        }
+        const nextCount = Math.min(MENU_RENDER_BATCH_V119, total - visible);
+        panel.hidden = false;
+        panel.innerHTML = `<button class="menu-load-more-button" type="button" id="menuLoadMoreButton">さらに${nextCount}問を表示（${visible} / ${total}問）</button>`;
+      }
+
       function renderMenuCardsV16() {
         const grid = document.getElementById("menuGrid");
         const empty = document.getElementById("menuEmpty");
+        const loadMore = document.getElementById("menuLoadMore");
+        if (loadMore) {
+          loadMore.hidden = true;
+          loadMore.innerHTML = "";
+        }
         renderMenuNavigationV16();
         if (menuViewV16 === "generator") {
           grid.innerHTML = renderGeneratorViewV44();
@@ -5406,7 +5430,9 @@
         const entries = sourceQuestions.filter(menuRangeMatchesV60).map(question => ({ question, index: questionIndexByKeyV44(questionKeyV16(question)) })).filter(({ index }) => index >= 0).sort((left, right) => menuQuestionSortKeyV99(left.question) - menuQuestionSortKeyV99(right.question) || left.index - right.index);
         empty.hidden = entries.length > 0;
         empty.textContent = menuViewV16 === "archive" ? "アーカイブした問題はまだありません。" : menuViewV16 === "favorites" ? "お気に入り登録した問題はまだありません。" : "出題できる問題がありません。";
-        grid.innerHTML = entries.map(({ question, index }) => {
+        const visibleEntries = entries.length > MENU_RENDER_THRESHOLD_V119 ? entries.slice(0, menuRenderLimitV119) : entries;
+        renderMenuLoadMoreV119(entries.length, visibleEntries.length);
+        grid.innerHTML = visibleEntries.map(({ question, index }) => {
           const favorite = isFavoriteV16(question);
           const title = escapeHtml(question.title || `問題${question.number}`);
           const scores = recentScoresV16(question);
@@ -6224,6 +6250,11 @@
         showMenuV16();
         document.getElementById("questionSelect").addEventListener("change", event => openQuestionV16(Number(event.target.value)));
         document.getElementById("menuGrid").addEventListener("click", handleMenuGridClickV16);
+        document.getElementById("menuLoadMore")?.addEventListener("click", event => {
+          if (!event.target.closest("#menuLoadMoreButton")) return;
+          menuRenderLimitV119 += MENU_RENDER_BATCH_V119;
+          renderMenuCardsV16();
+        });
         document.querySelectorAll("[data-menu-view]").forEach(button => button.addEventListener("click", () => showMenuV16(button.dataset.menuView)));
         document.getElementById("quickStart").addEventListener("click", event => {
           const button = event.target.closest("[data-session-mode]");
@@ -6238,10 +6269,12 @@
         });
         document.querySelectorAll("[data-menu-status]").forEach(input => input.addEventListener("change", () => {
           menuStatusFiltersV92 = [...document.querySelectorAll("[data-menu-status]:checked")].map(checked => checked.dataset.menuStatus);
+          resetMenuRenderLimitV119();
           renderMenuCardsV16();
         }));
         document.querySelectorAll("[data-menu-type]").forEach(button => button.addEventListener("click", () => {
           menuTypeV44 = button.dataset.menuType || "all";
+          resetMenuRenderLimitV119();
           renderMenuCardsV16();
         }));
         document.getElementById("menuAdvancedToggle").addEventListener("click", () => {

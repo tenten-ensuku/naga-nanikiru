@@ -32,7 +32,13 @@ test("wires v65 learning UX, generator, Supabase bridge, metadata, and social im
     readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
     access(new URL("../public/og-v44.png", import.meta.url)),
   ]);
-  assert.match(index, /const APP_VERSION = 118/);
+  assert.match(index, /const APP_VERSION = 119/);
+  assert.match(index, /id="menuLoadMore"/);
+  assert.match(index, /const MENU_RENDER_THRESHOLD_V119 = 300/);
+  assert.match(index, /const MENU_RENDER_BATCH_V119 = 100/);
+  assert.match(index, /さらに\$\{nextCount\}問を表示/);
+  assert.doesNotMatch(index, /is-pierre-theme/);
+  assert.match(index, /topColor: "#06254a", bottomColor: "#02244c"/);
   assert.doesNotMatch(index, /<div class="menu-heading">\s*<p class="eyebrow">NAGA SCREENSHOT-BASED DRILL<\/p>/);
   assert.match(index, /function menuQuestionSortKeyV99\(question\)[\s\S]*?const entries = sourceQuestions[\s\S]*?\.sort\(\(left, right\) => menuQuestionSortKeyV99\(left\.question\) - menuQuestionSortKeyV99\(right\.question\)/);
   assert.match(index, /<h1>何切る？<\/h1>/);
