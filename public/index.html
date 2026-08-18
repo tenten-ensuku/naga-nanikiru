@@ -278,6 +278,10 @@
       height: var(--hand-mask-height, 20.3%);
       background: linear-gradient(180deg, var(--hand-mask-top-color, #022045) 0%, var(--hand-mask-bottom-color, #021d41) 100%);
     }
+    /* ピエール問題集はNAGA本家の暗い盤面に合わせ、手牌マスクもグレー系にする。 */
+    .scene-frame.is-pierre-theme .hand-mask {
+      background: linear-gradient(180deg, var(--hand-mask-top-color, #484848) 0%, var(--hand-mask-bottom-color, #1f1f1f) 100%);
+    }
     .hand-score { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; width: fit-content; max-width: 100%; box-sizing: border-box; margin: 8px auto 0; padding: 7px 16px 8px; color: #fff; background: rgba(4, 19, 31, .96); border: 2px solid rgba(255,255,255,.5); border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,.34); font-size: clamp(14px, 2.6vw, 25px); font-weight: 900; line-height: 1.1; white-space: normal; text-align: center; }
     .hand-score[hidden] { display: none; }
     .hand-score-mark { font-size: 1.18em; line-height: 1; }
@@ -1785,7 +1789,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 117;
+    const APP_VERSION = 118;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -2748,7 +2752,7 @@
         { version: 114, date: "2026-08-18", publishedAt: "2026-08-18T00:12:00+09:00", title: "問題集作成時の認証状態を安定させました", body: "ログイン直後に問題集を作成した際も、入力内容を保ったまま処理できるようにしました。" },
         { version: 115, date: "2026-08-18", publishedAt: "2026-08-18T00:30:00+09:00", title: "問題集の一覧とインポートを追加しました", body: "公開・承認許可制の問題集名を一覧で確認できるようになり、閲覧中の問題を自分の問題集へ番号付きでインポートできるようになりました。" },
         { version: 116, date: "2026-08-18", publishedAt: "2026-08-18T12:35:07+09:00", title: "問題集作成の認証エラーを修正しました", body: "ログイン済みなのに問題集を作成できない場合がある不具合を修正しました。問題集作成時の所有者は、これまでどおりログイン中のDiscordアカウントに固定されます。" },
-        { version: APP_VERSION, date: "2026-08-18", publishedAt: "2026-08-18T15:20:00+09:00", title: "大量の問題集を全件表示できるようにしました", body: "1,000問を超える問題集も、複数回に分けて読み込み、最後の問題まで表示できるようにしました。" }
+        { version: APP_VERSION, date: "2026-08-18", publishedAt: "2026-08-18T15:20:00+09:00", title: "ピエール問題集の局面画像をNAGAから再構築しました", body: "ピエール問題集の局面画像をDiscord添付画像ではなく、各NAGA局面URLから伏牌状態で再取得しました。ピエール本家の盤面に合わせて手牌マスクの色も調整しています。" }
       ];
       let commentNoticeStoreV65 = loadCommentNoticeStoreV65();
       let sharedCommentRowsV65 = [];
@@ -4690,11 +4694,13 @@
       }
 
       function handMaskFallbackV17(question) {
+        const collectionTitle = `${sharedCollectionV46?.title || ""} ${question?.collectionTitle || ""}`;
+        const isPierre = /ピエール/.test(collectionTitle) || String(sharedCollectionV46?.share_slug || "") === "36375789797246e59e670802";
         const meldCount = Array.isArray(question?.melds) ? question.melds.length : 0;
         const closedCount = Array.isArray(question?.handBeforeDraw) ? question.handBeforeDraw.length : 0;
         const hasDraw = Boolean(question?.draw);
         if (meldCount === 0) {
-          return { left: 11.5, top: 79.3, width: 67.8, height: 20.7, topColor: "#06254a", bottomColor: "#02244c" };
+          return { left: 11.5, top: 79.3, width: 67.8, height: 20.7, topColor: isPierre ? "#484848" : "#06254a", bottomColor: isPierre ? "#1f1f1f" : "#02244c" };
         }
         const compactPanel = meldCount > 1 && closedCount + (hasDraw ? 1 : 0) <= 8;
         return {
@@ -4702,8 +4708,8 @@
           top: 78,
           width: compactPanel ? 41.4 : (hasDraw ? 54.5 : 62.5),
           height: 20.5,
-          topColor: "#022045",
-          bottomColor: "#021d41"
+          topColor: isPierre ? "#484848" : "#022045",
+          bottomColor: isPierre ? "#1f1f1f" : "#021d41"
         };
       }
 
@@ -5002,10 +5008,13 @@
         state.judgeModel = Math.max(0, SCENE.models.findIndex(model => model.name === "ニシキ"));
         const hasSelfMeldsV17 = (SCENE.melds || []).length > 0;
         const handMaskV18 = handMaskFallbackV17(question);
+        const isPierreThemeV118 = /ピエール/.test(`${sharedCollectionV46?.title || ""} ${question?.collectionTitle || ""}`) || String(sharedCollectionV46?.share_slug || "") === "36375789797246e59e670802";
+        const shouldDetectMaskV118 = hasSelfMeldsV17 || isPierreThemeV118;
+        sceneFrameV16.classList.toggle("is-pierre-theme", isPierreThemeV118);
         sceneFrameV16.classList.toggle("has-self-melds", hasSelfMeldsV17);
         clearHandMaskV17();
         clearHandLayoutV18();
-        if (hasSelfMeldsV17) setHandMaskV17(handMaskV18);
+        setHandMaskV17(handMaskV18);
         setHandLayoutV18(question, handMaskV18);
         document.getElementById("modelSelect").innerHTML = SCENE.models.map((model, index) => `<option value="${index}">${model.name}（正誤基準）</option>`).join("");
         document.getElementById("modelSelect").value = String(state.judgeModel);
@@ -5017,8 +5026,8 @@
         sceneImageV16.alt = `問題${SCENE.number}の伏牌スクリーンショット`;
         sceneImageV16.onload = () => {
           if (sceneImageV16.naturalWidth && sceneImageV16.naturalHeight) sceneFrameV16.style.aspectRatio = `${sceneImageV16.naturalWidth} / ${sceneImageV16.naturalHeight}`;
-          const detectedMaskV18 = hasSelfMeldsV17 ? detectHandMaskV17(sceneImageV16, handMaskV18) : handMaskV18;
-          if (hasSelfMeldsV17) setHandMaskV17(detectedMaskV18);
+          const detectedMaskV18 = shouldDetectMaskV118 ? detectHandMaskV17(sceneImageV16, handMaskV18) : handMaskV18;
+          if (shouldDetectMaskV118) setHandMaskV17(detectedMaskV18);
           setHandLayoutV18(question, detectedMaskV18);
         };
         if (sceneImageV16.complete) sceneImageV16.onload();
