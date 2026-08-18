@@ -151,6 +151,20 @@
     .notice-item-author.comment-author-color-4 { color: #eb91b0; }
     .notice-item-author.comment-author-color-5 { color: #aecb73; }
     .notice-item-author.comment-author-color-6 { color: #8fc5d4; }
+    .import-question-dialog { width: min(92vw, 460px); padding: 0; color: var(--ink); background: #071c2b; border: 1px solid rgba(113,183,255,.48); border-radius: 13px; box-shadow: var(--shadow); }
+    .import-question-dialog::backdrop { background: rgba(2, 10, 17, .78); }
+    .import-question-dialog-inner { display: grid; gap: 12px; padding: 18px; }
+    .import-question-dialog h3 { margin: 0; color: #fff7d6; font-size: 20px; }
+    .import-question-dialog p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.6; }
+    .import-question-dialog select { width: 100%; box-sizing: border-box; padding: 9px 10px; color: var(--ink); background: #061c2c; border: 1px solid rgba(255,255,255,.18); border-radius: 7px; font: inherit; font-size: 13px; }
+    .import-question-dialog select:focus { border-color: rgba(113,183,255,.8); outline: 2px solid rgba(113,183,255,.16); }
+    .import-question-dialog-actions { display: flex; justify-content: flex-end; gap: 8px; }
+    .import-question-dialog-actions button { min-height: 36px; padding: 7px 12px; color: #eafefe; background: #164862; border: 1px solid rgba(113,183,255,.45); border-radius: 7px; font-size: 11px; font-weight: 850; }
+    .import-question-dialog-actions button.primary { color: #17231d; background: #bde7e0; border-color: #d6fff5; }
+    .import-question-dialog-actions button:hover, .import-question-dialog-actions button:focus-visible { background: #246b8a; outline: 2px solid rgba(113,183,255,.2); outline-offset: 2px; }
+    .import-question-dialog-actions button.primary:hover, .import-question-dialog-actions button.primary:focus-visible { background: #d6fff5; }
+    .import-question-dialog-status { min-height: 18px; color: #bde7e0 !important; font-size: 11px !important; }
+    .import-question-dialog-status.is-error { color: #ff8790 !important; }
     .notice-item-body { color: #e6f4f7; font-size: 13px; line-height: 1.55; overflow-wrap: anywhere; white-space: pre-wrap; }
     .notice-dialog-actions { display: flex; justify-content: flex-end; gap: 7px; padding-top: 7px; border-top: 1px solid rgba(255, 255, 255, .1); }
     .notice-dialog-action { min-height: 38px; padding: 7px 10px; color: #10211e; background: #bde7e0; border: 1px solid #d6fff5; border-radius: 6px; font-size: 10px; font-weight: 900; }
@@ -244,6 +258,9 @@
     .source-url { display: inline-flex; align-items: center; min-width: 0; overflow: hidden; color: #c5e6ea; font-size: 11px; text-overflow: ellipsis; white-space: nowrap; }
     .source-link { display: inline-flex; align-items: center; padding: 3px 7px; margin: 0 3px; color: #e7f8ff; background: #164862; border: 1px solid rgba(113,183,255,.55); border-radius: 6px; font-size: 9px; font-weight: 800; text-decoration: none; vertical-align: 1px; }
     .source-link:hover, .source-link:focus-visible { background: #246b8a; outline: 2px solid rgba(113,183,255,.28); outline-offset: 1px; }
+    .import-question-button { display: inline-flex; align-items: center; padding: 3px 7px; margin: 0 3px; color: #18241c; background: #bde7e0; border: 1px solid #d6fff5; border-radius: 6px; font-size: 9px; font-weight: 900; vertical-align: 1px; }
+    .import-question-button:hover, .import-question-button:focus-visible { background: #d6fff5; outline: 2px solid rgba(155,232,216,.24); outline-offset: 1px; }
+    .import-question-button[hidden] { display: none; }
     .model-control, .question-control { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 11px; white-space: nowrap; }
     .question-control { margin-left: auto; }
     .model-control select, .question-control select { padding: 5px 8px; color: var(--ink); background: #071b28; border: 1px solid var(--line); border-radius: 7px; }
@@ -1598,7 +1615,7 @@
     </header>
 
     <div class="source-bar">
-      <div class="source-url"><strong id="sceneProblemTitle">問題249</strong><a class="source-link" id="nagaSourceLink" href="#" target="_blank" rel="noopener noreferrer">局面NAGAURLに移動</a></div>
+      <div class="source-url"><strong id="sceneProblemTitle">問題249</strong><a class="source-link" id="nagaSourceLink" href="#" target="_blank" rel="noopener noreferrer">局面NAGAURLに移動</a><button class="import-question-button" id="importQuestionButton" type="button" hidden>自分の問題集にインポート</button></div>
       <label class="question-control">問題を選ぶ <select id="questionSelect" aria-label="問題を選ぶ"></select></label>
       <label class="model-control">正誤判定基準 <select id="modelSelect" aria-label="正誤判定基準"></select></label>
       <button class="menu-button" id="menuButton" type="button">メニューに戻る</button>
@@ -1751,6 +1768,16 @@
     </div>
   </dialog>
 
+  <dialog class="import-question-dialog" id="importQuestionDialog" aria-labelledby="importQuestionDialogTitle">
+    <div class="import-question-dialog-inner">
+      <h3 id="importQuestionDialogTitle">自分の問題集にインポート</h3>
+      <p id="importQuestionDialogDescription">この問題の画像・解説・NAGA局面情報を、選択した問題集へコピーします。問題番号は移行先で自動採番されます。</p>
+      <label for="importTargetCollectionSelect">インポート先<select id="importTargetCollectionSelect" aria-label="インポート先"></select></label>
+      <p class="import-question-dialog-status" id="importQuestionDialogStatus" aria-live="polite"></p>
+      <div class="import-question-dialog-actions"><button type="button" id="importQuestionCreateButton">問題集を作る</button><button type="button" id="importQuestionDialogCancel">キャンセル</button><button class="primary" type="button" id="importQuestionConfirmButton">インポート</button></div>
+    </div>
+  </dialog>
+
   <script src="runtime-config.js"></script>
   <script src="supabase-sync-v48.js"></script>
   <script src="drill-ux-v44.js"></script>
@@ -1758,7 +1785,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 114;
+    const APP_VERSION = 115;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -2717,7 +2744,9 @@
         { version: 108, date: "2026-08-17", title: "垣崎にまさんを問題集オーナーに設定しました", body: "既存のDiscordログイン履歴を確認し、垣崎にまさんのアカウントを垣崎にま問題集のオーナーに設定しました。" },
         { version: 109, date: "2026-08-17", title: "💮正解した問題をアーカイブできるようにしました", body: "共有問題そのものは削除せず、自分の学習一覧からだけ整理できます。問題範囲タブの右端にあるアーカイブから、いつでも確認・復帰できます。" },
         { version: 110, date: "2026-08-17", title: "みんなの回答数と得票率を表示するようにしました", body: "解答後に、問題ごとの回答数と選択肢別の得票率を確認できます。同じ人の繰り返し回答も、1回につき1票として集計します。" },
-        { version: APP_VERSION, date: "2026-08-17", publishedAt: "2026-08-17T23:39:03+09:00", title: "アナウンスに時刻を表示するようにしました", body: "今後のアナウンスは日付に加えて時刻まで表示します。過去のアナウンスは、記録されている日付のみ表示します。" }
+        { version: 111, date: "2026-08-18", title: "問題集の公開範囲を3種類に整理しました", body: "新しく作る問題集は、プライベート・承認許可制・全体公開から選べます。既存の共有問題集はそのまま利用できます。" },
+        { version: 114, date: "2026-08-18", publishedAt: "2026-08-18T00:12:00+09:00", title: "問題集作成時の認証状態を安定させました", body: "ログイン直後に問題集を作成した際も、入力内容を保ったまま処理できるようにしました。" },
+        { version: APP_VERSION, date: "2026-08-18", publishedAt: "2026-08-18T00:30:00+09:00", title: "問題集の一覧とインポートを追加しました", body: "公開・承認許可制の問題集名を一覧で確認できるようになり、閲覧中の問題を自分の問題集へ番号付きでインポートできるようになりました。" }
       ];
       let commentNoticeStoreV65 = loadCommentNoticeStoreV65();
       let sharedCommentRowsV65 = [];
@@ -3263,10 +3292,9 @@
       function collectionVisibilityLabelV100(value) {
         return ({
           private: "プライベート",
-          request: "申請制",
-          limited: "限定共有",
-          public: "公開",
-          unlisted: "URLを知っている人に共有",
+          request: "承認許可制",
+          public: "全体公開",
+          unlisted: "全体公開",
           workspace: "ワークスペース内"
         })[String(value || "")] || "非公開";
       }
@@ -3289,8 +3317,89 @@
         return rows.filter(row => row?.share_slug && row?.title).map(row => ({ ...row, display_title: collectionDisplayNameV101(row) }));
       }
 
+      function ownedCollectionOptionsV115() {
+        const userId = String(supabaseSessionV46?.user?.id || "");
+        const currentSlug = String(sharedCollectionV46?.share_slug || "");
+        return collectionCatalogOptionsV100()
+          .filter(row => String(row.share_slug || "") !== currentSlug)
+          .filter(row => Boolean(row.can_manage) || (userId && String(row.owner_id || "") === userId));
+      }
+
+      function renderImportQuestionButtonV115() {
+        const button = document.getElementById("importQuestionButton");
+        const question = questionsV16[currentQuestionIndexV16];
+        if (!button) return;
+        button.hidden = !Boolean(sharedCollectionV46 && question?.serverQuestionId);
+      }
+
+      function openImportQuestionDialogV115() {
+        const dialog = document.getElementById("importQuestionDialog");
+        const select = document.getElementById("importTargetCollectionSelect");
+        const status = document.getElementById("importQuestionDialogStatus");
+        const confirmButton = document.getElementById("importQuestionConfirmButton");
+        if (!dialog || !select || !status || !confirmButton) return;
+        status.classList.remove("is-error");
+        status.textContent = "";
+        const targets = ownedCollectionOptionsV115();
+        select.innerHTML = targets.map(row => `<option value="${escapeHtml(row.share_slug)}">${escapeHtml(row.display_title || collectionDisplayNameV101(row))}</option>`).join("");
+        const hasTarget = targets.length > 0;
+        select.hidden = !hasTarget;
+        select.disabled = !hasTarget;
+        confirmButton.disabled = !hasTarget;
+        if (!hasTarget) {
+          status.textContent = supabaseSessionV46
+            ? "インポート先の自分の問題集がありません。「問題集を作る」から先に作成してください。"
+            : "インポートにはDiscordログインが必要です。ログイン後にもう一度お試しください。";
+        }
+        if (typeof dialog.showModal === "function") dialog.showModal();
+        else dialog.setAttribute("open", "");
+      }
+
+      function openCollectionCreateFromImportV115() {
+        document.getElementById("importQuestionDialog")?.close();
+        showMenuV16("my");
+        window.setTimeout(() => {
+          const button = document.getElementById("collectionCreateOpenButton");
+          if (button && button.getAttribute("aria-expanded") !== "true") button.click();
+          document.getElementById("collectionCreateInlinePanel")?.scrollIntoView({ behavior: "smooth", block: "center" });
+        }, 0);
+      }
+
+      function bindImportQuestionDialogV115() {
+        document.getElementById("importQuestionButton")?.addEventListener("click", () => {
+          if (!supabaseSessionV46) {
+            window.alert("自分の問題集へのインポートにはDiscordログインが必要です。");
+            document.getElementById("discordAuthButton")?.click();
+            return;
+          }
+          openImportQuestionDialogV115();
+        });
+        document.getElementById("importQuestionDialogCancel")?.addEventListener("click", () => document.getElementById("importQuestionDialog")?.close());
+        document.getElementById("importQuestionCreateButton")?.addEventListener("click", openCollectionCreateFromImportV115);
+        document.getElementById("importQuestionConfirmButton")?.addEventListener("click", async event => {
+          const button = event.currentTarget;
+          const targetSlug = String(document.getElementById("importTargetCollectionSelect")?.value || "");
+          const question = questionsV16[currentQuestionIndexV16];
+          const status = document.getElementById("importQuestionDialogStatus");
+          if (!targetSlug || !question?.serverQuestionId || !status) return;
+          button.disabled = true;
+          status.classList.remove("is-error");
+          status.textContent = "インポート中…";
+          try {
+            await window.NagaSupabase.importSharedQuestion(question.serverQuestionId, targetSlug);
+            status.textContent = "インポートしました。移行先で問題番号を自動採番しています。";
+            await refreshCollectionAccessStateV100();
+            window.setTimeout(() => document.getElementById("importQuestionDialog")?.close(), 900);
+          } catch (error) {
+            status.classList.add("is-error");
+            status.textContent = error?.message || "問題をインポートできませんでした。";
+            button.disabled = false;
+          }
+        });
+      }
+
       function collectionCreateFormMarkupV106(prefix = "collectionCreate") {
-        return `<form class="settings-form collection-create-form" id="${prefix}Form"><label for="${prefix}Title">問題集名<input id="${prefix}Title" maxlength="80" required placeholder="例：ピエール問題集"></label><label for="${prefix}Description">説明（任意）<textarea id="${prefix}Description" maxlength="500" rows="3" placeholder="この問題集の説明"></textarea></label><label for="${prefix}Visibility">公開範囲<select id="${prefix}Visibility"><option value="private" selected>プライベート（自分だけ）</option><option value="request">申請制（承認した人だけ）</option><option value="limited">限定共有（権限を付与した人だけ）</option><option value="public">公開（URLを知っている人が閲覧）</option></select></label><p class="settings-form-note">初期値はプライベートです。公開範囲は作成後に設定から変更できます。</p><div class="settings-form-actions"><button class="primary" type="submit">問題集を作成</button><span class="settings-form-status" id="${prefix}Status" aria-live="polite"></span></div></form>`;
+        return `<form class="settings-form collection-create-form" id="${prefix}Form"><label for="${prefix}Title">問題集名<input id="${prefix}Title" maxlength="80" required placeholder="例：ピエール問題集"></label><label for="${prefix}Description">説明（任意）<textarea id="${prefix}Description" maxlength="500" rows="3" placeholder="この問題集の説明"></textarea></label><label for="${prefix}Visibility">公開範囲<select id="${prefix}Visibility"><option value="private" selected>プライベート（自分だけ）</option><option value="request">承認許可制（許可した人だけ）</option><option value="public">全体公開（誰でも閲覧）</option></select></label><p class="settings-form-note">初期値は必ずプライベートです。承認許可制では問題集名だけ公開され、申請が承認されるまで問題は表示されません。</p><div class="settings-form-actions"><button class="primary" type="submit">問題集を作成</button><span class="settings-form-status" id="${prefix}Status" aria-live="polite"></span></div></form>`;
       }
 
       function navigateToCollectionV106(slug) {
@@ -3310,7 +3419,7 @@
           open: true,
           title: String(document.getElementById("collectionCreateInlineTitle")?.value || ""),
           description: String(document.getElementById("collectionCreateInlineDescription")?.value || ""),
-          visibility: ["private", "request", "limited", "public"].includes(visibility) ? visibility : "private"
+          visibility: ["private", "request", "public"].includes(visibility) ? visibility : "private"
         };
       }
 
@@ -3336,7 +3445,7 @@
           event.preventDefault();
           const title = String(document.getElementById(`${prefix}Title`)?.value || "").trim();
           const description = String(document.getElementById(`${prefix}Description`)?.value || "").trim();
-          const visibility = ["private", "request", "limited", "public"].includes(document.getElementById(`${prefix}Visibility`)?.value) ? document.getElementById(`${prefix}Visibility`).value : "private";
+          const visibility = ["private", "request", "public"].includes(document.getElementById(`${prefix}Visibility`)?.value) ? document.getElementById(`${prefix}Visibility`).value : "private";
           const status = document.getElementById(`${prefix}Status`);
           if (!title || !status) return;
           if (!supabaseSessionV46) {
@@ -3359,7 +3468,10 @@
             window.location.assign(url.toString());
           } catch (error) {
             status.classList.add("is-error");
-            status.textContent = error?.message || "問題集スペースを作成できませんでした。";
+            const rawMessage = String(error?.message || "");
+            status.textContent = /row-level security|RLS|authentication required/i.test(rawMessage)
+              ? "問題集を作成できませんでした。Discordログインの有効期限が切れている可能性があります。ページを再読み込みして、もう一度ログインしてください。"
+              : rawMessage || "問題集スペースを作成できませんでした。";
             button.disabled = false;
           }
         });
@@ -3368,16 +3480,17 @@
       function renderCollectionDirectoryV101() {
         const rows = collectionCatalogOptionsV100();
         const intro = supabaseSessionV46
-          ? "問題集を切り替えたり、自分の問題集を作成できます。"
-          : "問題集ごとに閲覧権限が分かれています。Discordでログインすると、参加できる問題集が表示されます。";
+          ? "公開・承認許可制の問題集を切り替えたり、自分の問題集を作成できます。"
+          : "公開・承認許可制の問題集名を確認できます。閲覧申請や自分の問題集の作成にはDiscordログインが必要です。";
         const currentSlug = String(sharedCollectionV46?.share_slug || "");
         const cards = rows.map(row => {
           const slug = String(row.share_slug || "");
           const current = slug === currentSlug;
           const canView = Boolean(row.can_view) || (current && Boolean(sharedCollectionV46?.can_view));
-          const status = current ? "閲覧中" : canView ? "閲覧可能" : collectionVisibilityLabelV100(row.visibility);
+          const requestStatus = String(row.request_status || "");
+          const status = current ? "閲覧中" : canView ? "閲覧可能" : requestStatus === "pending" ? "申請中" : collectionVisibilityLabelV100(row.visibility);
           const statusClass = current ? " is-current" : "";
-          const note = canView ? `${collectionVisibilityLabelV100(row.visibility)}　・　問題を解けます` : "閲覧権限が必要です";
+          const note = canView ? `${collectionVisibilityLabelV100(row.visibility)}　・　問題を解けます` : requestStatus === "pending" ? "承認待ちです。クリックすると問題集を開けます" : row.visibility === "request" ? "問題集名を公開中　・　閲覧申請が必要です" : "閲覧権限が必要です";
           return `<article class="collection-directory-item${current ? " is-current" : ""}"><button class="collection-directory-open" type="button" role="tab" aria-selected="${current}" data-collection-slug="${escapeHtml(slug)}"><span class="collection-directory-title">${escapeHtml(row.display_title || collectionDisplayNameV101(row))}</span><span class="collection-directory-meta">${escapeHtml(note)}</span></button><span class="collection-directory-status${statusClass}">${escapeHtml(status)}</span></article>`;
         }).join("");
         const empty = rows.length ? "" : `<div class="collection-directory-empty">表示できる問題集がありません。共有URLを受け取った場合は、そのURLから開いてください。</div>`;
@@ -3485,9 +3598,9 @@
       function renderCollectionManagementV100() {
         const collection = sharedCollectionV46;
         const canManage = Boolean(collection?.can_manage) || isCollectionManagerV47();
-        const currentVisibility = ["private", "request", "limited", "public"].includes(collection?.visibility) ? collection.visibility : "private";
+        const currentVisibility = ["private", "request", "public"].includes(collection?.visibility) ? collection.visibility : collection?.visibility === "unlisted" ? "public" : "private";
         const management = collection ? (canManage
-          ? `<div class="settings-divider" role="presentation"></div><div class="collection-management"><h3>この問題集スペースの管理</h3><p>公開範囲を変更すると、URLを知っている利用者の閲覧可否が変わります。問題の追加・整理・完全削除は、アプリ所有者またはこの問題集のオーナーだけが行えます。</p><form class="settings-form" id="collectionVisibilityForm"><label for="collectionVisibilitySelect">公開範囲<select id="collectionVisibilitySelect"><option value="private"${currentVisibility === "private" ? " selected" : ""}>プライベート（所有者・管理者のみ）</option><option value="request"${currentVisibility === "request" ? " selected" : ""}>申請制（承認した利用者のみ）</option><option value="limited"${currentVisibility === "limited" ? " selected" : ""}>限定共有（所有者が付与）</option><option value="public"${currentVisibility === "public" ? " selected" : ""}>公開（URLから閲覧可能）</option></select></label><div class="settings-form-actions"><button class="primary" type="submit">公開範囲を保存</button><span class="settings-form-status" id="collectionVisibilityStatus" aria-live="polite"></span></div></form><h4>閲覧申請</h4><div class="collection-access-list" id="collectionAccessRequests"><span class="collection-access-empty">読み込み中…</span></div><h4>現在のメンバー</h4><p class="collection-space-note">垣崎にまさんなどに運営を任せる場合は、先に申請を承認してメンバーに追加し、ここで「オーナーにする」を選びます。</p><div class="collection-access-list" id="collectionAccessMembers"><span class="collection-access-empty">読み込み中…</span></div></div>`
+          ? `<div class="settings-divider" role="presentation"></div><div class="collection-management"><h3>この問題集スペースの管理</h3><p>公開範囲を変更すると、問題集名と問題の閲覧可否が変わります。問題の追加・整理・完全削除は、アプリ所有者またはこの問題集のオーナーだけが行えます。</p><form class="settings-form" id="collectionVisibilityForm"><label for="collectionVisibilitySelect">公開範囲<select id="collectionVisibilitySelect"><option value="private"${currentVisibility === "private" ? " selected" : ""}>プライベート（所有者・管理者のみ）</option><option value="request"${currentVisibility === "request" ? " selected" : ""}>承認許可制（承認した利用者のみ）</option><option value="public"${currentVisibility === "public" ? " selected" : ""}>全体公開（誰でも閲覧可能）</option></select></label><div class="settings-form-actions"><button class="primary" type="submit">公開範囲を保存</button><span class="settings-form-status" id="collectionVisibilityStatus" aria-live="polite"></span></div></form><h4>閲覧申請</h4><div class="collection-access-list" id="collectionAccessRequests"><span class="collection-access-empty">読み込み中…</span></div><h4>現在のメンバー</h4><p class="collection-space-note">垣崎にまさんなどに運営を任せる場合は、先に申請を承認してメンバーに追加し、ここで「オーナーにする」を選びます。</p><div class="collection-access-list" id="collectionAccessMembers"><span class="collection-access-empty">読み込み中…</span></div></div>`
           : `<div class="settings-divider" role="presentation"></div><div class="collection-management"><h3>問題集スペース</h3><p>現在の公開範囲：${escapeHtml(collectionVisibilityLabelV100(collection.visibility))}。公開範囲の変更と申請の承認は所有者・管理者のみ行えます。</p></div>`)
           : "";
         const create = supabaseSessionV46 ? `<div class="settings-divider" role="presentation"></div><div class="collection-management"><h3>新しい問題集スペースを作る</h3><p>新しく作る問題集は、最初は必ずプライベートです。作成時に公開範囲を選べます。</p>${collectionCreateFormMarkupV106("collectionCreate")}</div>` : "";
@@ -3581,12 +3694,36 @@
       async function refreshCollectionAccessStateV100() {
         collectionCatalogV100 = [];
         collectionAccessNotificationsV100 = [];
-        if (supabaseSessionV46 && window.NagaSupabase?.configured) {
-          try { collectionCatalogV100 = await window.NagaSupabase.loadMyCollections(); } catch (error) { console.warn("問題集一覧を読み込めませんでした", error); }
-          try { collectionAccessNotificationsV100 = await window.NagaSupabase.loadCollectionNotifications(false); } catch (error) { console.warn("問題集通知を読み込めませんでした", error); }
+        if (window.NagaSupabase?.configured) {
+          const catalogBySlug = new Map();
+          try {
+            const directoryRows = await window.NagaSupabase.loadCollectionDirectory();
+            (Array.isArray(directoryRows) ? directoryRows : []).forEach(row => {
+              const slug = String(row?.share_slug || "");
+              if (slug) catalogBySlug.set(slug, row);
+            });
+          } catch (error) {
+            console.warn("公開問題集の一覧を読み込めませんでした", error);
+          }
+          if (supabaseSessionV46) {
+            try {
+              const myRows = await window.NagaSupabase.loadMyCollections();
+              (Array.isArray(myRows) ? myRows : []).forEach(row => {
+                const slug = String(row?.share_slug || "");
+                if (slug) catalogBySlug.set(slug, { ...(catalogBySlug.get(slug) || {}), ...row });
+              });
+            } catch (error) {
+              console.warn("自分が参加できる問題集の一覧を読み込めませんでした", error);
+            }
+          }
+          collectionCatalogV100 = [...catalogBySlug.values()];
+          if (supabaseSessionV46) {
+            try { collectionAccessNotificationsV100 = await window.NagaSupabase.loadCollectionNotifications(false); } catch (error) { console.warn("問題集通知を読み込めませんでした", error); }
+          }
           await loadCollectionManagementDataV100();
         }
         renderCollectionSpacePanelV100();
+        renderImportQuestionButtonV115();
         renderNotificationBadgesV65();
         if (document.querySelector(".page")?.classList.contains("menu-active")) renderMenuCardsV16();
       }
@@ -4871,6 +5008,7 @@
         sourceTitleV16.textContent = `問題${SCENE.number}`;
         document.getElementById("nagaSourceLink").href = SCENE.nagaUrl;
         document.getElementById("threadLink").href = SCENE.threadUrl;
+        renderImportQuestionButtonV115();
         sceneImageV16.src = SCENE.image || SCENE.images?.off;
         sceneImageV16.alt = `問題${SCENE.number}の伏牌スクリーンショット`;
         sceneImageV16.onload = () => {
@@ -6101,6 +6239,7 @@
           panel.hidden = !menuAdvancedFiltersOpenV83;
         });
         document.getElementById("menuButton").addEventListener("click", () => showMenuV16("my"));
+        bindImportQuestionDialogV115();
         document.getElementById("nextQuestionButton").addEventListener("click", advanceQuestionV44);
         document.getElementById("nextQuestionBottomButton").addEventListener("click", advanceQuestionV44);
         document.getElementById("archiveQuestionButton").addEventListener("click", archiveCurrentQuestionV110);
