@@ -1758,7 +1758,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 113;
+    const APP_VERSION = 114;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -3302,6 +3302,33 @@
         window.location.assign(url.toString());
       }
 
+      function captureCollectionCreateDraftV114() {
+        const panel = document.getElementById("collectionCreateInlinePanel");
+        if (!panel || panel.hidden) return null;
+        const visibility = String(document.getElementById("collectionCreateInlineVisibility")?.value || "private");
+        return {
+          open: true,
+          title: String(document.getElementById("collectionCreateInlineTitle")?.value || ""),
+          description: String(document.getElementById("collectionCreateInlineDescription")?.value || ""),
+          visibility: ["private", "request", "limited", "public"].includes(visibility) ? visibility : "private"
+        };
+      }
+
+      function restoreCollectionCreateDraftV114(draft) {
+        if (!draft?.open) return;
+        const panel = document.getElementById("collectionCreateInlinePanel");
+        const button = document.getElementById("collectionCreateOpenButton");
+        if (!panel || !button) return;
+        panel.hidden = false;
+        button.setAttribute("aria-expanded", "true");
+        const title = document.getElementById("collectionCreateInlineTitle");
+        const description = document.getElementById("collectionCreateInlineDescription");
+        const visibility = document.getElementById("collectionCreateInlineVisibility");
+        if (title) title.value = draft.title;
+        if (description) description.value = draft.description;
+        if (visibility) visibility.value = draft.visibility;
+      }
+
       function bindCollectionCreateFormV106(prefix = "collectionCreate") {
         const form = document.getElementById(`${prefix}Form`);
         if (!form) return;
@@ -3324,8 +3351,10 @@
           status.textContent = "作成中…";
           try {
             const created = await window.NagaSupabase.createCollection({ title, description, visibility });
+            const shareSlug = String(created?.share_slug || "").trim();
+            if (!shareSlug) throw new Error("問題集は作成されましたが、問題集URLを取得できませんでした。問題集一覧から開き直してください。");
             const url = new URL(window.location.href);
-            url.searchParams.set("collection", created.share_slug);
+            url.searchParams.set("collection", shareSlug);
             url.hash = "";
             window.location.assign(url.toString());
           } catch (error) {
@@ -3365,11 +3394,13 @@
           }
           return;
         }
+        const createDraft = captureCollectionCreateDraftV114();
         const collection = sharedCollectionV46;
         if (!collection) {
           panel.hidden = false;
           panel.innerHTML = renderCollectionDirectoryV101();
           bindCollectionSpacePanelV100();
+          restoreCollectionCreateDraftV114(createDraft);
           return;
         }
         const canView = Boolean(collection.can_view);
@@ -3399,6 +3430,7 @@
         panel.hidden = false;
         panel.innerHTML = `${renderCollectionDirectoryV101()}<div class="collection-space-current"><div class="collection-space-head"><div><p class="collection-space-title">${escapeHtml(collectionDisplayNameV101(collection))}</p><p class="collection-space-meta">現在の問題集　・　公開範囲：${escapeHtml(collectionVisibilityLabelV100(collection.visibility))}</p></div><span class="collection-space-status${statusClass}">${escapeHtml(accessLabel)}</span></div><p class="collection-space-note">${escapeHtml(note)}</p>${accessControls}${canManage ? `<p class="collection-space-note">設定から公開範囲を変更し、閲覧申請を承認・却下できます。</p>` : ""}</div>`;
         bindCollectionSpacePanelV100();
+        restoreCollectionCreateDraftV114(createDraft);
       }
 
       function bindCollectionSpacePanelV100() {
@@ -6002,9 +6034,10 @@
 
       async function initImportedQuestionsV16() {
         let loadedSharedCollection = false;
+        const requestedCollectionSlug = new URL(window.location.href).searchParams.get("collection")?.trim() || "";
         try {
           loadedSharedCollection = await loadSharedCollectionV46();
-          if (!loadedSharedCollection) {
+          if (!loadedSharedCollection && !requestedCollectionSlug) {
             const response = await fetch("question-data/selected-questions.json", { cache: "no-store" });
             if (!response.ok) throw new Error(`question data ${response.status}`);
             const imported = await response.json();
@@ -6019,11 +6052,15 @@
           document.getElementById("accountStatus").textContent = error?.message || "問題集を読み込めませんでした。";
         }
         if (!loadedSharedCollection) {
-          questionsV16 = questionsV16.concat((userStateV16.customQuestions || []).filter(question => question?.id && question?.image).map(question => ({
+          if (requestedCollectionSlug) {
+            questionsV16 = [];
+          } else {
+            questionsV16 = questionsV16.concat((userStateV16.customQuestions || []).filter(question => question?.id && question?.image).map(question => ({
             ...question,
             images: question.images || { off: question.image, open: question.image },
             hasRiichiJudgment: question.decisionType !== "call" && Array.isArray(question.reach) && question.reach.some(value => Number(value) > 0)
-          })));
+            })));
+          }
         }
         applyQuestionOverridesV47();
         normalizeQuestionTitlesV79();
