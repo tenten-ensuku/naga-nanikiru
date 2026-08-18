@@ -3,10 +3,14 @@ import { readFile } from "node:fs/promises";
 import test from "node:test";
 
 const indexUrl = new URL("../public/index.html", import.meta.url);
+const generatorUrl = new URL("../public/naga-generator-v44.js", import.meta.url);
 
 test("renders the v87 scene and half-game generator controls", async () => {
-  const html = await readFile(indexUrl, "utf8");
-  assert.match(html, /const APP_VERSION = 122/);
+  const [html, generator] = await Promise.all([
+    readFile(indexUrl, "utf8"),
+    readFile(generatorUrl, "utf8")
+  ]);
+  assert.match(html, /const APP_VERSION = 123/);
   assert.match(html, /data-range-session="all">この範囲を10問解く/);
   assert.doesNotMatch(html, /data-range-session="unanswered">未回答を10問解く/);
   assert.match(html, /range: "この範囲の10問"/);
@@ -106,6 +110,7 @@ test("renders the v87 scene and half-game generator controls", async () => {
   assert.match(html, /value="discard"/);
   assert.match(html, /value="call"/);
   assert.match(html, /value="reach"/);
+  assert.match(generator, /actualReach/);
   assert.match(html, /id="generatorModelMode"/);
   assert.match(html, /value="all">全モデルで悪手/);
   assert.match(html, /id="generatorMaxCandidates"[^>]+max="500"/);

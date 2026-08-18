@@ -23,7 +23,7 @@ function reportSpec(generator, rawUrl) {
 const DERIVED_FIELDS = [
   "playerName", "playerSeat", "tw", "ts", "tv", "decisionType", "handBeforeDraw", "draw",
   "actualDiscard", "actualDiscardNaga", "actualDiscardProbability", "doraMarker", "models",
-  "probabilities", "reach", "hasRiichiJudgment", "callTile", "actualCall", "actualCallCode",
+  "probabilities", "reach", "hasRiichiJudgment", "actualReach", "callTile", "actualCall", "actualCallCode",
   "actualCallType", "actualDecision", "callOptions", "callProbabilities", "callRecommended",
   "callActionOptions", "callActionProbabilities", "callRecommendedActions", "actualCallAction",
   "actualCallProbability", "actualCallProbabilityRaw", "melds", "reached", "sourceTv", "predictionType",

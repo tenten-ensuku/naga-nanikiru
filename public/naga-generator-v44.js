@@ -654,6 +654,19 @@
     });
   }
 
+  function hasActualReachAfterPrediction(entries, predictionIndex, targetSeat) {
+    var index = asInteger(predictionIndex);
+    var seat = validSeat(targetSeat);
+    if (index == null || index < 0 || seat == null || !Array.isArray(entries)) return false;
+    // NAGA records the player's real reach as a separate event immediately
+    // after the prediction-bearing action and before the following discard.
+    // Keep the window short so a later unrelated reach is never attached.
+    return entries.slice(index + 1, index + 4).some(function (entry) {
+      var message = getMessage(entry);
+      return message && message.type === "reach" && validSeat(message.actor) === seat;
+    });
+  }
+
   function commonCandidate(reportId, seat, ts, tv, decisionType, report, snapshot) {
     var playerNames = report && report.player_info && report.player_info.name;
     var player = Array.isArray(playerNames) ? playerNames[seat] || null : null;
@@ -688,6 +701,7 @@
       imageOpen: null,
       needsScreenshot: true,
       reached: snapshot.reached,
+      actualReach: false,
       ts: ts,
       tv: tv,
       sourceReportId: reportId
@@ -739,7 +753,9 @@
       : Array.isArray(message.reach)
         ? message.reach.slice()
         : [];
-    candidate.hasRiichiJudgment = candidate.reach.some(function (value) { return Number(value) > 0; });
+    candidate.actualReach = hasActualReachAfterPrediction(entries, candidateTv, seat);
+    candidate.hasRiichiJudgment = candidate.reach.some(function (value) { return Number(value) > 0; })
+      || candidate.actualReach;
     candidate.sourceTv = candidateTv;
     candidate.predictionType = sourceType;
     candidate.reached = Boolean(message.reached === true || action.reached === true || snapshot.reached);
