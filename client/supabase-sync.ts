@@ -138,12 +138,25 @@ async function loadSharedCollection(shareSlug: string) {
   const supabase = requireClient();
   const [collection, questions] = await Promise.all([
     supabase.rpc("get_shared_collection", { p_share_slug: shareSlug }).maybeSingle(),
-    supabase.rpc("get_shared_questions", { p_share_slug: shareSlug }),
+    (async () => {
+      const pageSize = 1000;
+      const allQuestions: unknown[] = [];
+      for (let offset = 0; ; offset += pageSize) {
+        const page = await supabase.rpc("get_shared_questions_page", {
+          p_share_slug: shareSlug,
+          p_offset: offset,
+          p_limit: pageSize,
+        });
+        if (page.error) throw page.error;
+        const rows = page.data ?? [];
+        allQuestions.push(...rows);
+        if (rows.length < pageSize) return allQuestions;
+      }
+    })(),
   ]);
   if (collection.error) throw collection.error;
-  if (questions.error) throw questions.error;
   if (!collection.data) throw new Error("指定された問題集が見つかりません。");
-  return { collection: collection.data, questions: questions.data ?? [] };
+  return { collection: collection.data, questions };
 }
 
 async function loadMyCollections() {
