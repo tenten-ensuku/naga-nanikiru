@@ -1492,20 +1492,15 @@
     .collection-access-row button { min-height: 30px; padding: 5px 8px; color: #eafefe; background: #164862; border: 1px solid rgba(113,183,255,.45); border-radius: 6px; font-size: 10px; font-weight: 850; }
     .collection-access-row button.is-danger { color: #ffe4e8; background: #5b2833; border-color: #b85b6a; }
     .collection-access-empty { color: var(--muted); font-size: 11px; }
-    .collection-directory { display: grid; gap: 10px; }
-    .collection-switcher-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+    .collection-directory { display: grid; gap: 8px; }
+    .collection-switcher-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
     .collection-directory-heading { margin: 0; color: #fff7d6; font-size: 17px; font-weight: 950; }
-    .collection-directory-intro { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.65; }
-    .collection-directory-list { display: grid; gap: 8px; }
-    .collection-directory-item { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 14px 16px; color: var(--ink); background: rgba(0,0,0,.17); border: 1px solid rgba(255,255,255,.13); border-radius: 9px; }
-    .collection-directory-item.is-current { border-color: rgba(241,196,87,.7); background: rgba(71,61,26,.28); }
-    .collection-directory-open { display: grid; gap: 4px; min-width: 0; padding: 0; color: inherit; text-align: left; background: transparent; border: 0; }
-    .collection-directory-open:hover .collection-directory-title, .collection-directory-open:focus-visible .collection-directory-title { color: #ffdb7d; }
-    .collection-directory-open:focus-visible { outline: 2px solid rgba(113,183,255,.85); outline-offset: 4px; border-radius: 4px; }
-    .collection-directory-title { color: #fff7d6; font-size: 18px; font-weight: 900; }
-    .collection-directory-meta { color: var(--muted); font-size: 11px; line-height: 1.55; }
-    .collection-directory-status { display: inline-flex; align-items: center; justify-content: center; min-height: 30px; padding: 5px 10px; color: #dffbfb; background: #164862; border: 1px solid rgba(113,183,255,.45); border-radius: 999px; font-size: 10px; font-weight: 850; white-space: nowrap; }
-    .collection-directory-status.is-current { color: #17231d; background: #f1c457; border-color: #ffdb7d; }
+    .collection-directory-intro { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.55; }
+    .collection-directory-select-row { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 9px; align-items: center; }
+    .collection-directory-select-row > span { color: #c5dadd; font-size: 11px; font-weight: 850; white-space: nowrap; }
+    .collection-directory-select-row select { width: 100%; min-height: 42px; padding: 8px 34px 8px 11px; color: #eafefe; background: #071e2e; border: 1px solid rgba(190,220,225,.38); border-radius: 6px; font: inherit; font-size: 13px; font-weight: 800; }
+    .collection-directory-select-row select:focus-visible { border-color: rgba(155,232,216,.9); outline: 2px solid rgba(155,232,216,.16); outline-offset: 2px; }
+    .collection-directory-selection-note { margin: 0; color: var(--muted); font-size: 11px; line-height: 1.5; }
     .collection-directory-empty { padding: 22px 16px; color: var(--muted); text-align: center; background: rgba(0,0,0,.16); border: 1px dashed rgba(255,255,255,.18); border-radius: 11px; font-size: 12px; line-height: 1.7; }
     .collection-create-open { flex: 0 0 auto; min-height: 38px; padding: 8px 12px; color: #17231d; background: #f1c457; border: 1px solid #ffdb7d; border-radius: 7px; font-size: 11px; font-weight: 900; }
     .collection-create-open:hover, .collection-create-open:focus-visible { background: #ffda77; outline: 2px solid rgba(255,219,125,.2); outline-offset: 2px; }
@@ -1518,10 +1513,9 @@
       .collection-space-panel { padding: 12px; }
       .collection-access-row { grid-template-columns: 1fr 1fr; }
       .collection-access-row > :first-child { grid-column: 1 / -1; }
-      .collection-directory-item { grid-template-columns: minmax(0, 1fr); gap: 8px; }
-      .collection-directory-status { justify-self: start; }
       .collection-switcher-head { align-items: stretch; flex-direction: column; }
       .collection-create-open { width: 100%; }
+      .collection-directory-select-row { grid-template-columns: 1fr; gap: 4px; }
     }
   </style>
 </head>
@@ -1790,7 +1784,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 119;
+    const APP_VERSION = 120;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -2757,7 +2751,8 @@
         { version: 115, date: "2026-08-18", publishedAt: "2026-08-18T00:30:00+09:00", title: "問題集の一覧とインポートを追加しました", body: "公開・承認許可制の問題集名を一覧で確認できるようになり、閲覧中の問題を自分の問題集へ番号付きでインポートできるようになりました。" },
         { version: 116, date: "2026-08-18", publishedAt: "2026-08-18T12:35:07+09:00", title: "問題集作成の認証エラーを修正しました", body: "ログイン済みなのに問題集を作成できない場合がある不具合を修正しました。問題集作成時の所有者は、これまでどおりログイン中のDiscordアカウントに固定されます。" },
         { version: 118, date: "2026-08-18", publishedAt: "2026-08-18T15:20:00+09:00", title: "ピエール問題集の局面画像をNAGAから再構築しました", body: "ピエール問題集の局面画像をDiscord添付画像ではなく、各NAGA局面URLから伏牌状態で再取得しました。" },
-        { version: APP_VERSION, date: "2026-08-18", publishedAt: "2026-08-18T16:00:00+09:00", title: "大量問題集を軽く表示できるようにしました", body: "問題一覧は最初の100問だけを表示し、必要な分だけ追加で読み込めるようにしました。ピエール問題集のような大規模な問題集でも、最初の表示が重くなりにくくなっています。局面を開いたときのマスクは、他の問題集と同じ青系に統一しました。" }
+        { version: 119, date: "2026-08-18", publishedAt: "2026-08-18T16:00:00+09:00", title: "大量問題集を軽く表示できるようにしました", body: "問題一覧は最初の100問だけを表示し、必要な分だけ追加で読み込めるようにしました。ピエール問題集のような大規模な問題集でも、最初の表示が重くなりにくくなっています。局面を開いたときのマスクは、他の問題集と同じ青系に統一しました。" },
+        { version: APP_VERSION, date: "2026-08-18", publishedAt: "2026-08-18T20:45:29+09:00", title: "大規模問題集の範囲表示を整理しました", body: "300問を超える問題集は、問題範囲を100問ごとのタブにまとめました。問題集の切り替えも一覧カードをやめ、1つのプルダウンから選べるようにして、必要な操作だけをコンパクトにしました。" }
       ];
       let commentNoticeStoreV65 = loadCommentNoticeStoreV65();
       let sharedCommentRowsV65 = [];
@@ -3497,19 +3492,26 @@
           ? "公開・承認許可制の問題集を切り替えたり、自分の問題集を作成できます。"
           : "公開・承認許可制の問題集名を確認できます。閲覧申請や自分の問題集の作成にはDiscordログインが必要です。";
         const currentSlug = String(sharedCollectionV46?.share_slug || "");
-        const cards = rows.map(row => {
+        const currentRow = rows.find(row => String(row.share_slug || "") === currentSlug);
+        const options = rows.map(row => {
           const slug = String(row.share_slug || "");
           const current = slug === currentSlug;
           const canView = Boolean(row.can_view) || (current && Boolean(sharedCollectionV46?.can_view));
           const requestStatus = String(row.request_status || "");
           const status = current ? "閲覧中" : canView ? "閲覧可能" : requestStatus === "pending" ? "申請中" : collectionVisibilityLabelV100(row.visibility);
-          const statusClass = current ? " is-current" : "";
-          const note = canView ? `${collectionVisibilityLabelV100(row.visibility)}　・　問題を解けます` : requestStatus === "pending" ? "承認待ちです。クリックすると問題集を開けます" : row.visibility === "request" ? "問題集名を公開中　・　閲覧申請が必要です" : "閲覧権限が必要です";
-          return `<article class="collection-directory-item${current ? " is-current" : ""}"><button class="collection-directory-open" type="button" role="tab" aria-selected="${current}" data-collection-slug="${escapeHtml(slug)}"><span class="collection-directory-title">${escapeHtml(row.display_title || collectionDisplayNameV101(row))}</span><span class="collection-directory-meta">${escapeHtml(note)}</span></button><span class="collection-directory-status${statusClass}">${escapeHtml(status)}</span></article>`;
+          const title = row.display_title || collectionDisplayNameV101(row);
+          return `<option value="${escapeHtml(slug)}"${current ? " selected" : ""}>${escapeHtml(title)}　（${escapeHtml(status)}）</option>`;
         }).join("");
         const empty = rows.length ? "" : `<div class="collection-directory-empty">表示できる問題集がありません。共有URLを受け取った場合は、そのURLから開いてください。</div>`;
         const createButton = `<button class="collection-create-open" id="collectionCreateOpenButton" type="button" aria-expanded="false">＋ 自分の問題集を作る</button>`;
-        return `<section class="collection-directory" aria-labelledby="collectionDirectoryTitle"><div class="collection-switcher-head"><div><h3 class="collection-directory-heading" id="collectionDirectoryTitle">問題集を選ぶ</h3><p class="collection-directory-intro">${escapeHtml(intro)}</p></div>${createButton}</div><div class="collection-directory-list" role="tablist" aria-label="問題集を選ぶ">${cards}</div>${empty}<div class="collection-create-inline" id="collectionCreateInlinePanel" hidden><h4>自分の問題集を作る</h4><p class="collection-space-note">問題集を作成すると、自分で問題を追加・管理できます。</p>${collectionCreateFormMarkupV106("collectionCreateInline")}</div></section>`;
+        const currentTitle = currentRow ? (currentRow.display_title || collectionDisplayNameV101(currentRow)) : sharedCollectionV46 ? collectionDisplayNameV101(sharedCollectionV46) : "未選択";
+        const currentNote = currentRow
+          ? (Boolean(currentRow.can_view) || (currentSlug && Boolean(sharedCollectionV46?.can_view)) ? `${collectionVisibilityLabelV100(currentRow.visibility)}　・　問題を解けます` : currentRow.request_status === "pending" ? "承認待ちです。選択すると申請状況を確認できます" : currentRow.visibility === "request" ? "問題集名を公開中　・　閲覧申請が必要です" : "閲覧権限が必要です")
+          : "問題集を選ぶと、ここに公開範囲と利用状況が表示されます。";
+        const picker = rows.length
+          ? `<label class="collection-directory-select-row" for="collectionDirectorySelect"><span>問題集</span><select id="collectionDirectorySelect" aria-label="問題集を選ぶ">${currentSlug ? "" : "<option value=\"\" selected disabled>問題集を選択</option>"}${options}</select></label><p class="collection-directory-selection-note">選択中：<strong>${escapeHtml(currentTitle)}</strong>　${escapeHtml(currentNote)}</p>`
+          : empty;
+        return `<section class="collection-directory" aria-labelledby="collectionDirectoryTitle"><div class="collection-switcher-head"><div><h3 class="collection-directory-heading" id="collectionDirectoryTitle">問題集を選ぶ</h3><p class="collection-directory-intro">${escapeHtml(intro)}</p></div>${createButton}</div>${picker}<div class="collection-create-inline" id="collectionCreateInlinePanel" hidden><h4>自分の問題集を作る</h4><p class="collection-space-note">問題集を作成すると、自分で問題を追加・管理できます。</p>${collectionCreateFormMarkupV106("collectionCreateInline")}</div></section>`;
       }
 
       function renderCollectionSpacePanelV100() {
@@ -3561,7 +3563,11 @@
       }
 
       function bindCollectionSpacePanelV100() {
-        document.querySelectorAll("#collectionSpacePanel [data-collection-slug]").forEach(button => button.addEventListener("click", () => navigateToCollectionV106(button.dataset.collectionSlug)));
+        const collectionSelect = document.getElementById("collectionDirectorySelect");
+        if (collectionSelect) collectionSelect.addEventListener("change", () => {
+          const slug = String(collectionSelect.value || "").trim();
+          if (slug) navigateToCollectionV106(slug);
+        });
         const createButton = document.getElementById("collectionCreateOpenButton");
         const createPanel = document.getElementById("collectionCreateInlinePanel");
         if (createButton && createPanel) createButton.addEventListener("click", () => {
@@ -5121,12 +5127,18 @@
 
       function menuRangeOptionsV60() {
         const maxNumber = questionsV16.reduce((max, question) => Math.max(max, menuQuestionNumberV60(question) || 0), 0);
+        const step = menuRangeStepV120();
         const options = [{ key: "all", label: "すべて" }];
-        for (let start = 1; start <= Math.max(maxNumber, 1); start += 20) {
-          options.push({ key: `${start}-${start + 19}`, label: `${start}–${start + 19}` });
+        for (let start = 1; start <= Math.max(maxNumber, 1); start += step) {
+          options.push({ key: `${start}-${start + step - 1}`, label: `${start}–${start + step - 1}` });
         }
         options.push({ key: "archive", label: "アーカイブ" });
         return options;
+      }
+
+      function menuRangeStepV120() {
+        const maxNumber = questionsV16.reduce((max, question) => Math.max(max, menuQuestionNumberV60(question) || 0), 0);
+        return Math.max(maxNumber, questionsV16.length) > MENU_RENDER_THRESHOLD_V119 ? 100 : 20;
       }
 
       function menuRangeMatchesV60(question) {
