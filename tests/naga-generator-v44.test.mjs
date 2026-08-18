@@ -140,6 +140,32 @@ test("builds a q41-like discard candidate with percentage probabilities and raw 
   assert.match(candidate.id, /^q41report\|3\|0\|1\|discard$/);
 });
 
+test("marks an actual reach as a reach judgment even when model reach rates are zero", async () => {
+  const api = await loadApi();
+  const rows = [Array(34).fill(0), Array(34).fill(0)];
+  rows[0][4] = 9000;
+  rows[1][4] = 9000;
+  const report = {
+    reportId: "actual-reach-report",
+    naga_types: { "0": "ニシキ", "1": "カガシ" },
+    player_info: { name: ["A", "B", "C", "D"] },
+    pred: [[
+      startKyoku(),
+      discardPrediction(3, "5m", ["4s", "4s"], rows, { reach: [0, 0] }),
+      msg("reach", { actor: 3 }),
+      msg("dahai", { actor: 3, pai: "5m" })
+    ]]
+  };
+  const candidate = api.sceneCandidate(report, {
+    reportId: "actual-reach-report",
+    tw: 3,
+    ts: 0,
+    tv: 1
+  });
+  assert.equal(candidate.actualReach, true);
+  assert.equal(candidate.hasRiichiJudgment, true);
+});
+
 test("handles a dahai fallback by using the previous tsumo prediction", async () => {
   const api = await loadApi();
   const rows = [Array(34).fill(0)];
