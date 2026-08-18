@@ -34,7 +34,7 @@ test("requires explicit confirmation before revealing or recording an answer", a
 
 test("records answer timing and exposes the synchronized drill version", async () => {
   const html = await source();
-  assert.match(html, /const APP_VERSION = 120;/);
+  assert.match(html, /const APP_VERSION = 121;/);
   assert.match(html, /id="answerPollPanel"/);
   assert.match(html, /void refreshQuestionPollStatsV110\(\)/);
   assert.match(html, /archiveCurrentQuestionV110/);
@@ -47,6 +47,14 @@ test("records answer timing and exposes the synchronized drill version", async (
   assert.match(html, /const historicalCard = SCENE\.actualDiscard \?/);
   assert.match(html, /function callActionProbabilityV112\(action, index\) \{[\s\S]*?return questionCallProbabilityV112\(SCENE, action, index\);/);
   assert.doesNotMatch(html, /questionCallActionProbabilityV112/);
+});
+
+test("detects self-meld hand masks from dark-blue panels and image-bottom panels", async () => {
+  const html = await source();
+  const body = functionBody(html, "detectHandMaskV17", "clearHandMaskV17");
+  assert.match(body, /backgroundBlue/);
+  assert.match(body, /backgroundBlue\(y\) - rgb\[2\] >= 18/);
+  assert.match(body, /if \(top >= 0 && bottom < 0\) bottom = height - 1/);
 });
 
 test("derives riichi controls from NAGA reach data", async () => {

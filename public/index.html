@@ -1784,7 +1784,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 120;
+    const APP_VERSION = 121;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -2752,7 +2752,7 @@
         { version: 116, date: "2026-08-18", publishedAt: "2026-08-18T12:35:07+09:00", title: "問題集作成の認証エラーを修正しました", body: "ログイン済みなのに問題集を作成できない場合がある不具合を修正しました。問題集作成時の所有者は、これまでどおりログイン中のDiscordアカウントに固定されます。" },
         { version: 118, date: "2026-08-18", publishedAt: "2026-08-18T15:20:00+09:00", title: "ピエール問題集の局面画像をNAGAから再構築しました", body: "ピエール問題集の局面画像をDiscord添付画像ではなく、各NAGA局面URLから伏牌状態で再取得しました。" },
         { version: 119, date: "2026-08-18", publishedAt: "2026-08-18T16:00:00+09:00", title: "大量問題集を軽く表示できるようにしました", body: "問題一覧は最初の100問だけを表示し、必要な分だけ追加で読み込めるようにしました。ピエール問題集のような大規模な問題集でも、最初の表示が重くなりにくくなっています。局面を開いたときのマスクは、他の問題集と同じ青系に統一しました。" },
-        { version: APP_VERSION, date: "2026-08-18", publishedAt: "2026-08-18T20:45:29+09:00", title: "大規模問題集の範囲表示を整理しました", body: "300問を超える問題集は、問題範囲を100問ごとのタブにまとめました。問題集の切り替えも一覧カードをやめ、1つのプルダウンから選べるようにして、必要な操作だけをコンパクトにしました。" }
+        { version: APP_VERSION, date: "2026-08-19", publishedAt: "2026-08-19T01:49:52+09:00", title: "垣崎にま問題集のマスク位置を改善しました", body: "副露がある局面では、画像の青色成分も用いて元画像の手牌マスクを検出するようにしました。画像下端まで続くマスクにも対応し、元の局面に合わせて手牌を配置します。" }
       ];
       let commentNoticeStoreV65 = loadCommentNoticeStoreV65();
       let sharedCommentRowsV65 = [];
@@ -4751,7 +4751,14 @@
             const values = sampleXs.map(x => luminance(pixel(x, y))).sort((left, right) => left - right);
             return values[Math.min(2, values.length - 1)];
           };
-          const isMaskPixel = (x, y) => backgroundLuminance(y) - luminance(pixel(x, y)) >= 12;
+          const backgroundBlue = y => {
+            const values = sampleXs.map(x => pixel(x, y)[2]).sort((left, right) => left - right);
+            return values[Math.min(2, values.length - 1)];
+          };
+          const isMaskPixel = (x, y) => {
+            const rgb = pixel(x, y);
+            return backgroundLuminance(y) - luminance(rgb) >= 12 || backgroundBlue(y) - rgb[2] >= 18;
+          };
           const candidates = [];
           const minimumRun = Math.max(20, width * .25);
           for (let y = Math.floor(height * .68); y < Math.floor(height * .995); y += 1) {
@@ -4776,6 +4783,7 @@
                       top = -1;
                     }
                   }
+                  if (top >= 0 && bottom < 0) bottom = height - 1;
                   const panelHeight = bottom >= top && top >= 0 ? bottom - top + 1 : 0;
                   const normalizedTop = top / height;
                   const normalizedHeight = panelHeight / height;
