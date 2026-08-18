@@ -426,7 +426,7 @@
   }
 
   function callLabel(code) {
-    if (code === 0) return "鳴かない";
+    if (code === 0) return "スルー";
     if (code >= 1 && code <= 3) return "チー";
     if (code === 4) return "ポン";
     return "カン";
@@ -441,7 +441,7 @@
   function callActionLabel(action) {
     if (action === "kan") return "カン";
     if (action === "call") return "鳴く";
-    return "鳴かない";
+    return "スルー";
   }
 
   function callCodeForMessage(message) {
