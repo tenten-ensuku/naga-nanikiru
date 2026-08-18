@@ -34,7 +34,7 @@ test("requires explicit confirmation before revealing or recording an answer", a
 
 test("records answer timing and exposes the synchronized drill version", async () => {
   const html = await source();
-  assert.match(html, /const APP_VERSION = 121;/);
+  assert.match(html, /const APP_VERSION = 122;/);
   assert.match(html, /id="answerPollPanel"/);
   assert.match(html, /void refreshQuestionPollStatsV110\(\)/);
   assert.match(html, /archiveCurrentQuestionV110/);
@@ -62,7 +62,7 @@ test("derives riichi controls from NAGA reach data", async () => {
   const body = functionBody(html, "hasReachV16", "recommendedRiichiV16");
   assert.match(body, /Array\.isArray\(SCENE\.reach\)/);
   assert.match(body, /reach\.some\(value => Number\(value\) > 0\)/);
-  assert.doesNotMatch(body, /hasRiichiJudgment/);
+  assert.match(body, /SCENE\.hasRiichiJudgment === true/);
 
   const questions = JSON.parse(await readFile(new URL("../public/question-data/selected-questions.json", import.meta.url), "utf8"));
   const riichiNumbers = questions

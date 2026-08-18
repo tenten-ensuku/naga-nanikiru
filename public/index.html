@@ -1784,7 +1784,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 121;
+    const APP_VERSION = 122;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -2752,7 +2752,8 @@
         { version: 116, date: "2026-08-18", publishedAt: "2026-08-18T12:35:07+09:00", title: "問題集作成の認証エラーを修正しました", body: "ログイン済みなのに問題集を作成できない場合がある不具合を修正しました。問題集作成時の所有者は、これまでどおりログイン中のDiscordアカウントに固定されます。" },
         { version: 118, date: "2026-08-18", publishedAt: "2026-08-18T15:20:00+09:00", title: "ピエール問題集の局面画像をNAGAから再構築しました", body: "ピエール問題集の局面画像をDiscord添付画像ではなく、各NAGA局面URLから伏牌状態で再取得しました。" },
         { version: 119, date: "2026-08-18", publishedAt: "2026-08-18T16:00:00+09:00", title: "大量問題集を軽く表示できるようにしました", body: "問題一覧は最初の100問だけを表示し、必要な分だけ追加で読み込めるようにしました。ピエール問題集のような大規模な問題集でも、最初の表示が重くなりにくくなっています。局面を開いたときのマスクは、他の問題集と同じ青系に統一しました。" },
-        { version: APP_VERSION, date: "2026-08-19", publishedAt: "2026-08-19T01:49:52+09:00", title: "垣崎にま問題集のマスク位置を改善しました", body: "副露がある局面では、画像の青色成分も用いて元画像の手牌マスクを検出するようにしました。画像下端まで続くマスクにも対応し、元の局面に合わせて手牌を配置します。" }
+        { version: 121, date: "2026-08-19", publishedAt: "2026-08-19T01:49:52+09:00", title: "垣崎にま問題集のマスク位置を改善しました", body: "副露がある局面では、画像の青色成分も用いて元画像の手牌マスクを検出するようにしました。画像下端まで続くマスクにも対応し、元の局面に合わせて手牌を配置します。" },
+        { version: APP_VERSION, date: "2026-08-19", publishedAt: "2026-08-19T02:10:38+09:00", title: "垣崎にま問題集のリーチ判断を補正しました", body: "NAGAの推奨率だけでなく、局面直後に実際のリーチ操作が行われた場合もリーチ判断として扱い、問題22・35にもリーチ選択肢とジャンルタグを表示します。" }
       ];
       let commentNoticeStoreV65 = loadCommentNoticeStoreV65();
       let sharedCommentRowsV65 = [];
@@ -2904,7 +2905,7 @@
           legacyKey: row?.legacy_key || payload.legacyKey,
           number,
           title,
-          hasRiichiJudgment: payload.decisionType !== "call" && Array.isArray(payload.reach) && payload.reach.some(value => Number(value) > 0),
+          hasRiichiJudgment: payload.decisionType !== "call" && (payload.hasRiichiJudgment === true || Array.isArray(payload.reach) && payload.reach.some(value => Number(value) > 0)),
           sharedCollectionSlug: shareSlug,
           visibility: "unlisted",
           createdById,
@@ -4259,7 +4260,7 @@
         const modelNames = models.filter(model => model.recommendation === entry.selected).map(model => model.name);
         const modelMatch = modelNames.length ? `◎ ${modelNames.join("・")}と一致！！` : "";
         if (!entry.selected) return null;
-        const hasReach = question.decisionType === "discard" && Array.isArray(question.reach) && question.reach.some(value => Number(value) > 0);
+        const hasReach = question.decisionType === "discard" && (question.hasRiichiJudgment === true || Array.isArray(question.reach) && question.reach.some(value => Number(value) > 0));
         const judgeRecommendation = models[judgeIndex]?.recommendation;
         const judgeRiichi = hasReach && (question.reach?.[judgeIndex] || 0) >= 5000;
         if (entry.selected === judgeRecommendation && (!hasReach || Boolean(entry.riichi) === judgeRiichi)) return { mark: "💮", label: "第一推奨と一致", modelMatch };
@@ -4298,7 +4299,7 @@
 
       function hasReachV16() {
         const reach = Array.isArray(SCENE.reach) ? SCENE.reach : [];
-        return SCENE.decisionType !== "call" && reach.some(value => Number(value) > 0);
+        return SCENE.decisionType !== "call" && (SCENE.hasRiichiJudgment === true || reach.some(value => Number(value) > 0));
       }
 
       function recommendedRiichiV16(index) {
@@ -5262,7 +5263,7 @@
 
       function questionTypeV44(question) {
         if (question.decisionType === "call") return "副露判断";
-        if (Array.isArray(question.reach) && question.reach.some(value => Number(value) > 0)) return "リーチ判断";
+        if (question.hasRiichiJudgment === true || Array.isArray(question.reach) && question.reach.some(value => Number(value) > 0)) return "リーチ判断";
         return "打牌判断";
       }
 
@@ -6241,7 +6242,7 @@
             questionsV16 = questionsV16.concat(imported.map(question => ({
               ...question,
               images: question.images || { off: question.image, open: question.image },
-              hasRiichiJudgment: question.decisionType !== "call" && Array.isArray(question.reach) && question.reach.some(value => Number(value) > 0)
+              hasRiichiJudgment: question.decisionType !== "call" && (question.hasRiichiJudgment === true || Array.isArray(question.reach) && question.reach.some(value => Number(value) > 0))
             })));
           }
         } catch (error) {
@@ -6255,7 +6256,7 @@
             questionsV16 = questionsV16.concat((userStateV16.customQuestions || []).filter(question => question?.id && question?.image).map(question => ({
             ...question,
             images: question.images || { off: question.image, open: question.image },
-            hasRiichiJudgment: question.decisionType !== "call" && Array.isArray(question.reach) && question.reach.some(value => Number(value) > 0)
+            hasRiichiJudgment: question.decisionType !== "call" && (question.hasRiichiJudgment === true || Array.isArray(question.reach) && question.reach.some(value => Number(value) > 0))
             })));
           }
         }
