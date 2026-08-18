@@ -6,7 +6,7 @@ const indexUrl = new URL("../public/index.html", import.meta.url);
 
 test("renders the v87 scene and half-game generator controls", async () => {
   const html = await readFile(indexUrl, "utf8");
-  assert.match(html, /const APP_VERSION = 113/);
+  assert.match(html, /const APP_VERSION = 114/);
   assert.match(html, /data-range-session="all">この範囲を10問解く/);
   assert.doesNotMatch(html, /data-range-session="unanswered">未回答を10問解く/);
   assert.match(html, /range: "この範囲の10問"/);
