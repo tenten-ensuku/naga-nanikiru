@@ -34,7 +34,7 @@ test("requires explicit confirmation before revealing or recording an answer", a
 
 test("records answer timing and exposes the synchronized drill version", async () => {
   const html = await source();
-  assert.match(html, /const APP_VERSION = 123;/);
+  assert.match(html, /const APP_VERSION = 124;/);
   assert.match(html, /id="answerPollPanel"/);
   assert.match(html, /void refreshQuestionPollStatsV110\(\)/);
   assert.match(html, /archiveCurrentQuestionV110/);
@@ -47,6 +47,15 @@ test("records answer timing and exposes the synchronized drill version", async (
   assert.match(html, /const historicalCard = SCENE\.actualDiscard \?/);
   assert.match(html, /function callActionProbabilityV112\(action, index\) \{[\s\S]*?return questionCallProbabilityV112\(SCENE, action, index\);/);
   assert.doesNotMatch(html, /questionCallActionProbabilityV112/);
+});
+
+test("uses pass-through wording and a call recommendation percentage for every call result", async () => {
+  const html = await source();
+  assert.match(html, /function callActionLabelV112\(action\)[\s\S]*?return "スルー";/);
+  assert.match(html, /function callRecommendationProbabilityV112\(index\)/);
+  assert.match(html, /副露推奨度 \$\{value\.toFixed\(1\)\}%/);
+  assert.match(html, /副露推奨度50％以下はスルー推奨/);
+  assert.doesNotMatch(html, /answer-choice-reach-label">\$\{selectedLabel\}/);
 });
 
 test("detects self-meld hand masks from dark-blue panels and image-bottom panels", async () => {
