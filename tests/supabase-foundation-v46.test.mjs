@@ -134,9 +134,10 @@ test("generates browser runtime config without accepting server secrets", async 
 });
 
 test("supports private collection spaces and owner-reviewed access requests", async () => {
-  const [migration, memberMigration, clientSource, html] = await Promise.all([
+  const [migration, memberMigration, featureMigration, clientSource, html] = await Promise.all([
     fs.readFile(new URL("../supabase/migrations/20260816120000_collection_access_control_v100.sql", import.meta.url), "utf8"),
     fs.readFile(new URL("../supabase/migrations/20260816123000_collection_access_members_v100.sql", import.meta.url), "utf8"),
+    fs.readFile(new URL("../supabase/migrations/20260818150000_collection_directory_import_v115.sql", import.meta.url), "utf8"),
     fs.readFile(new URL("../client/supabase-sync.ts", import.meta.url), "utf8"),
     fs.readFile(new URL("../public/index.html", import.meta.url), "utf8"),
   ]);
@@ -149,8 +150,10 @@ test("supports private collection spaces and owner-reviewed access requests", as
   assert.match(migration, /revoke_collection_access[\s\S]*status = 'revoked'/i);
   assert.match(memberMigration, /list_collection_members[\s\S]*can_manage_collection/i);
   assert.match(clientSource, /const visibility = input\.visibility \?\? "private"/i);
-  assert.match(clientSource, /loadMyCollections|requestCollectionAccess|reviewCollectionAccess|revokeCollectionAccess/i);
-  assert.match(html, /const APP_VERSION = 114/);
+  assert.match(clientSource, /loadMyCollections|loadCollectionDirectory|requestCollectionAccess|reviewCollectionAccess|revokeCollectionAccess/i);
+  assert.match(clientSource, /rpc\("create_collection"/i);
+  assert.match(clientSource, /rpc\("import_shared_question"/i);
+  assert.match(html, /const APP_VERSION = 115/);
   assert.match(html, /id="collectionSpacePanel"/);
   assert.doesNotMatch(html, /data-menu-view="collections"/);
   assert.match(html, /data-menu-view="my"/);
@@ -166,6 +169,17 @@ test("supports private collection spaces and owner-reviewed access requests", as
   assert.match(html, /requestedCollectionSlug/);
   assert.match(html, /閲覧申請を送る/);
   assert.match(html, /新しく作る問題集は、最初は必ずプライベート/);
+  assert.match(html, /承認許可制/);
+  assert.match(html, /全体公開/);
+  assert.doesNotMatch(html, /限定共有（権限を付与した人だけ）/);
+  assert.match(html, /id="importQuestionButton"/);
+  assert.match(html, /自分の問題集にインポート/);
+  assert.match(html, /function renderImportQuestionButtonV115/);
+  assert.match(featureMigration, /create function public\.create_collection[\s\S]*security invoker/i);
+  assert.match(featureMigration, /create function public\.list_collection_directory[\s\S]*security definer/i);
+  assert.match(featureMigration, /create function public\.import_shared_question[\s\S]*security invoker/i);
+  assert.match(featureMigration, /importedFromQuestionId/i);
+  assert.match(featureMigration, /p_visibility not in \('private', 'request', 'public'\)/i);
 });
 
 test("supports kan choices in shared poll aggregation", async () => {
@@ -184,7 +198,7 @@ test("preassigns the verified Kakisaki Nima account as the collection owner", as
   assert.match(migration, /public\.answer_attempts/);
   assert.match(migration, /title = '垣崎にま問題集'/i);
   assert.match(migration, /set owner_id = target_user_id/i);
-  assert.match(html, /const APP_VERSION = 114/);
+  assert.match(html, /const APP_VERSION = 115/);
   assert.match(html, /垣崎にまさんを問題集オーナーに設定しました/);
 });
 

@@ -152,6 +152,12 @@ async function loadMyCollections() {
   return data ?? [];
 }
 
+async function loadCollectionDirectory() {
+  const { data, error } = await requireClient().rpc("list_collection_directory");
+  if (error) throw error;
+  return data ?? [];
+}
+
 async function requestCollectionAccess(shareSlug: string, message = "") {
   const { data, error } = await requireClient().rpc("request_collection_access", {
     p_share_slug: shareSlug,
@@ -194,7 +200,7 @@ async function revokeCollectionAccess(collectionId: string, userId: string) {
   if (error) throw error;
 }
 
-async function setCollectionVisibility(collectionId: string, visibility: "private" | "request" | "limited" | "public") {
+async function setCollectionVisibility(collectionId: string, visibility: "private" | "request" | "public") {
   const { error } = await requireClient().rpc("set_collection_visibility", {
     p_collection_id: collectionId,
     p_visibility: visibility,
@@ -546,25 +552,31 @@ async function createCollection(input: {
   title: string;
   description?: string;
   workspaceId?: string | null;
-  visibility?: "private" | "request" | "limited" | "public";
+  visibility?: "private" | "request" | "public";
   allowContributions?: boolean;
 }) {
   const session = await currentSession();
   if (!session) throw new Error("Discordログインが必要です。");
   const visibility = input.visibility ?? "private";
-  const { data, error } = await requireClient()
-    .from("collections")
-    .insert({
-      owner_id: session.user.id,
-      title: input.title,
-      description: input.description ?? "",
-      workspace_id: input.workspaceId ?? null,
-      visibility,
-      allow_contributions: input.allowContributions ?? true,
-      published_at: visibility === "private" ? null : new Date().toISOString(),
-    })
-    .select("*")
-    .single();
+  if (!["private", "request", "public"].includes(visibility)) {
+    throw new Error("公開範囲はプライベート・承認許可制・全体公開から選択してください。");
+  }
+  const { data, error } = await requireClient().rpc("create_collection", {
+    p_title: input.title,
+    p_description: input.description ?? "",
+    p_workspace_id: input.workspaceId ?? null,
+    p_visibility: visibility,
+    p_allow_contributions: input.allowContributions ?? true,
+  });
+  if (error) throw error;
+  return data;
+}
+
+async function importSharedQuestion(sourceQuestionId: string, targetShareSlug: string) {
+  const { data, error } = await requireClient().rpc("import_shared_question", {
+    p_source_question_id: sourceQuestionId,
+    p_target_share_slug: targetShareSlug,
+  });
   if (error) throw error;
   return data;
 }
@@ -579,6 +591,7 @@ function buildApi() {
     updateProfileDisplayName,
     loadSharedCollection,
     loadMyCollections,
+    loadCollectionDirectory,
     requestCollectionAccess,
     loadCollectionAccessRequests,
     loadCollectionMembers,
@@ -613,6 +626,7 @@ function buildApi() {
     loadMemberships,
     loadStudentAttempts,
     createCollection,
+    importSharedQuestion,
   };
 }
 
