@@ -34,7 +34,12 @@ test("requires explicit confirmation before revealing or recording an answer", a
 
 test("records answer timing and exposes the synchronized drill version", async () => {
   const html = await source();
-  assert.match(html, /const APP_VERSION = 124;/);
+  assert.match(html, /const APP_VERSION = 125;/);
+  assert.match(html, /const MODEL_PRIORITY = \["ニシキ", "ヒバカリ", "カガシ", "ガンマ", "オメガ"\];/);
+  assert.match(html, /const HAND_BAR_MODEL_NAMES = \["ニシキ", "ヒバカリ", "カガシ"\];/);
+  assert.match(html, /const topCallModelIndices = priorityIndicesV16\(3\);/);
+  assert.match(html, /const topModelIndices = priorityIndicesV16\(3\);/);
+  assert.match(html, /indices\.sort\(\(a, b\) => modelPriorityRank\(a\) - modelPriorityRank\(b\)\)/);
   assert.match(html, /id="answerPollPanel"/);
   assert.match(html, /void refreshQuestionPollStatsV110\(\)/);
   assert.match(html, /archiveCurrentQuestionV110/);
