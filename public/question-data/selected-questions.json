@@ -310,7 +310,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "76a403373c3ab73a6d56307633651fb7c4c382a7194197e1412e568d64e74918"
+    "sourceFingerprint": "76a403373c3ab73a6d56307633651fb7c4c382a7194197e1412e568d64e74918",
+    "images": {
+      "off": "question-images/q001.webp",
+      "open": "question-images/q001.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "002",
@@ -591,7 +597,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "66d1e44841e18b95fa503182215e82f9cd9e973e3fbd360a8614584257ed976a"
+    "sourceFingerprint": "66d1e44841e18b95fa503182215e82f9cd9e973e3fbd360a8614584257ed976a",
+    "images": {
+      "off": "question-images/q002.webp",
+      "open": "question-images/q002.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "003",
@@ -866,7 +878,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "8702c75637544612e785dfa22577d63e5496bc5d8d2993d12fee2288ba707ff6"
+    "sourceFingerprint": "8702c75637544612e785dfa22577d63e5496bc5d8d2993d12fee2288ba707ff6",
+    "images": {
+      "off": "question-images/q003.webp",
+      "open": "question-images/q003.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "004",
@@ -1165,7 +1183,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "0798093ccd01967d31e2ec194ff5a9b60ae26f018d0b0df7f6899cd2f9408bad"
+    "sourceFingerprint": "0798093ccd01967d31e2ec194ff5a9b60ae26f018d0b0df7f6899cd2f9408bad",
+    "images": {
+      "off": "question-images/q004.webp",
+      "open": "question-images/q004.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "005",
@@ -1440,7 +1464,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "f570651ec938b84ee9bd81cf7d3f390264b45d6810de393cbfa7c793a78b280c"
+    "sourceFingerprint": "f570651ec938b84ee9bd81cf7d3f390264b45d6810de393cbfa7c793a78b280c",
+    "images": {
+      "off": "question-images/q005.webp",
+      "open": "question-images/q005.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "006",
@@ -1746,7 +1776,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "03db100f0236cae10694dbe4e85451c80abe729182c906d39d2024cafa1309df"
+    "sourceFingerprint": "03db100f0236cae10694dbe4e85451c80abe729182c906d39d2024cafa1309df",
+    "images": {
+      "off": "question-images/q006.webp",
+      "open": "question-images/q006.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "007",
@@ -2047,7 +2083,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "fff687697d0f172c0316d1441cfa68f61894abc96f59f45b7aee8ef076e6f6c9"
+    "sourceFingerprint": "fff687697d0f172c0316d1441cfa68f61894abc96f59f45b7aee8ef076e6f6c9",
+    "images": {
+      "off": "question-images/q007.webp",
+      "open": "question-images/q007.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "008",
@@ -2384,7 +2426,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "c4463fa65e5ef1cc57dc0ded1138ee4b58d5c0cb3c01c68a208f130b25930b72"
+    "sourceFingerprint": "c4463fa65e5ef1cc57dc0ded1138ee4b58d5c0cb3c01c68a208f130b25930b72",
+    "images": {
+      "off": "question-images/q008.webp",
+      "open": "question-images/q008.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "009",
@@ -2678,7 +2726,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "3a0b8338367585f858e026b8627ac3cea54b0583a8df1ec74cf9668f88dcea5b"
+    "sourceFingerprint": "3a0b8338367585f858e026b8627ac3cea54b0583a8df1ec74cf9668f88dcea5b",
+    "images": {
+      "off": "question-images/q009.webp",
+      "open": "question-images/q009.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "010",
@@ -3062,7 +3116,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "1436b4a8e500897a67631596d874591b077210f450606aaa39e2422c5adf02f5"
+    "sourceFingerprint": "1436b4a8e500897a67631596d874591b077210f450606aaa39e2422c5adf02f5",
+    "images": {
+      "off": "question-images/q010.webp",
+      "open": "question-images/q010.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "011",
@@ -3363,7 +3423,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "e7d688efd5584a51b2a7270567e41ec4a424a272f4ef5e9ab77b075c8ad365d5"
+    "sourceFingerprint": "e7d688efd5584a51b2a7270567e41ec4a424a272f4ef5e9ab77b075c8ad365d5",
+    "images": {
+      "off": "question-images/q011.webp",
+      "open": "question-images/q011.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "012",
@@ -3643,7 +3709,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "91c501ed67f569096a590d83a2bc03ff1fc42409cd9e9acd9a2422871e3ae33d"
+    "sourceFingerprint": "91c501ed67f569096a590d83a2bc03ff1fc42409cd9e9acd9a2422871e3ae33d",
+    "images": {
+      "off": "question-images/q012.webp",
+      "open": "question-images/q012.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "013",
@@ -3936,7 +4008,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "10f56a4ff7297adec6d5a1a8a1999db65783e60cbaead419779eec6d4550b6d2"
+    "sourceFingerprint": "10f56a4ff7297adec6d5a1a8a1999db65783e60cbaead419779eec6d4550b6d2",
+    "images": {
+      "off": "question-images/q013.webp",
+      "open": "question-images/q013.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "014",
@@ -4225,7 +4303,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "ed5187b29f71dec5d4c7ad6cb72373dadcdc5e92381bcac4d194aa93d0a00162"
+    "sourceFingerprint": "ed5187b29f71dec5d4c7ad6cb72373dadcdc5e92381bcac4d194aa93d0a00162",
+    "images": {
+      "off": "question-images/q014.webp",
+      "open": "question-images/q014.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "015",
@@ -4547,7 +4631,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "34cb59a46c0385d1f8ef973aa23912e336933419f2f2c86a714b07a239dbe05a"
+    "sourceFingerprint": "34cb59a46c0385d1f8ef973aa23912e336933419f2f2c86a714b07a239dbe05a",
+    "images": {
+      "off": "question-images/q015.webp",
+      "open": "question-images/q015.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "016",
@@ -4843,7 +4933,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "888e64a14f7a1f546693e68ed8a46cb1de5a3106dcfb57b904eade37c4447585"
+    "sourceFingerprint": "888e64a14f7a1f546693e68ed8a46cb1de5a3106dcfb57b904eade37c4447585",
+    "images": {
+      "off": "question-images/q016.webp",
+      "open": "question-images/q016.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "017",
@@ -5118,7 +5214,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "228355453b5899a9c0ba743340e5bd71edf7ee77ba2338cf5a6aa906041da193"
+    "sourceFingerprint": "228355453b5899a9c0ba743340e5bd71edf7ee77ba2338cf5a6aa906041da193",
+    "images": {
+      "off": "question-images/q017.webp",
+      "open": "question-images/q017.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "018",
@@ -5426,7 +5528,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "95a68c06fd88252f376558088de7b8c18632cd03e8fc0ac789081009cb4a6dd1"
+    "sourceFingerprint": "95a68c06fd88252f376558088de7b8c18632cd03e8fc0ac789081009cb4a6dd1",
+    "images": {
+      "off": "question-images/q018.webp",
+      "open": "question-images/q018.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "019",
@@ -5706,7 +5814,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "bcbc967cd54791098f63fce72ae2f08940a34b2b9108d022aa3d8b0347fab290"
+    "sourceFingerprint": "bcbc967cd54791098f63fce72ae2f08940a34b2b9108d022aa3d8b0347fab290",
+    "images": {
+      "off": "question-images/q019.webp",
+      "open": "question-images/q019.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "020",
@@ -6000,7 +6114,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "630caf1ffa35a76a1fff4da4742b113923243d7b29bb3b6cf0bc521ead642d1b"
+    "sourceFingerprint": "630caf1ffa35a76a1fff4da4742b113923243d7b29bb3b6cf0bc521ead642d1b",
+    "images": {
+      "off": "question-images/q020.webp",
+      "open": "question-images/q020.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "021",
@@ -6291,7 +6411,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "68e8dcd43a1e30ed6fbca18552e71ad3191d3cccb667c3bc43306b716a5746e4"
+    "sourceFingerprint": "68e8dcd43a1e30ed6fbca18552e71ad3191d3cccb667c3bc43306b716a5746e4",
+    "images": {
+      "off": "question-images/q021.webp",
+      "open": "question-images/q021.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "022",
@@ -6566,7 +6692,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "ad9a3f70c05c545c5ab4aa4d1d6d59c39ab3412d488d84e8ac3bab2ebefb3896"
+    "sourceFingerprint": "ad9a3f70c05c545c5ab4aa4d1d6d59c39ab3412d488d84e8ac3bab2ebefb3896",
+    "images": {
+      "off": "question-images/q022.webp",
+      "open": "question-images/q022.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "023",
@@ -6848,7 +6980,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "e83d24ce5bde4bcdbda302df030ec2e6f327e044f74d30928525d64883f133ce"
+    "sourceFingerprint": "e83d24ce5bde4bcdbda302df030ec2e6f327e044f74d30928525d64883f133ce",
+    "images": {
+      "off": "question-images/q023.webp",
+      "open": "question-images/q023.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "024",
@@ -7121,7 +7259,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "fb9f4819c805ec56a5336f59e2d74304fd8b38c2b276b1754cca26ef07ccd020"
+    "sourceFingerprint": "fb9f4819c805ec56a5336f59e2d74304fd8b38c2b276b1754cca26ef07ccd020",
+    "images": {
+      "off": "question-images/q024.webp",
+      "open": "question-images/q024.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "025",
@@ -7401,7 +7545,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "76eb2b8a2c2f9283f9138c3615331223a6d71766dcc6f937f5d5961340b57d24"
+    "sourceFingerprint": "76eb2b8a2c2f9283f9138c3615331223a6d71766dcc6f937f5d5961340b57d24",
+    "images": {
+      "off": "question-images/q025.webp",
+      "open": "question-images/q025.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "026",
@@ -7676,7 +7826,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "ad71264e36b7605807cbe4a5a677416bd1e54c1f7141236c919e6a785dfc6066"
+    "sourceFingerprint": "ad71264e36b7605807cbe4a5a677416bd1e54c1f7141236c919e6a785dfc6066",
+    "images": {
+      "off": "question-images/q026.webp",
+      "open": "question-images/q026.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "027",
@@ -7971,7 +8127,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "57776e1144f42f279569dfbc04250b33ac3a25b2da07123d8fa18b8959caaf5f"
+    "sourceFingerprint": "57776e1144f42f279569dfbc04250b33ac3a25b2da07123d8fa18b8959caaf5f",
+    "images": {
+      "off": "question-images/q027.webp",
+      "open": "question-images/q027.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "028",
@@ -8279,7 +8441,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "0fb259b7ad34b15dc89e5ebf4797c28b8f4c17f9d5e2a4c1498b13746e3e27b9"
+    "sourceFingerprint": "0fb259b7ad34b15dc89e5ebf4797c28b8f4c17f9d5e2a4c1498b13746e3e27b9",
+    "images": {
+      "off": "question-images/q028.webp",
+      "open": "question-images/q028.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "029",
@@ -8561,7 +8729,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "b40db9cfefe923cbb3ad76ea69527a4c061bb755d8407dda0b72f890e372d74e"
+    "sourceFingerprint": "b40db9cfefe923cbb3ad76ea69527a4c061bb755d8407dda0b72f890e372d74e",
+    "images": {
+      "off": "question-images/q029.webp",
+      "open": "question-images/q029.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "030",
@@ -8836,7 +9010,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "ecb3a300caff4ead884fe3e1c298e4e2a1585329338e5020996e0d512d9056c1"
+    "sourceFingerprint": "ecb3a300caff4ead884fe3e1c298e4e2a1585329338e5020996e0d512d9056c1",
+    "images": {
+      "off": "question-images/q030.webp",
+      "open": "question-images/q030.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "031",
@@ -9130,7 +9310,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "16f175c1aa0b509b75d850cef454b11856a68630f69262df70c896c1e6f27ceb"
+    "sourceFingerprint": "16f175c1aa0b509b75d850cef454b11856a68630f69262df70c896c1e6f27ceb",
+    "images": {
+      "off": "question-images/q031.webp",
+      "open": "question-images/q031.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "032",
@@ -9429,7 +9615,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "76c0dd20193cd2de3c166ca819eac22e29dfbc1c041d135fac520839ee62573a"
+    "sourceFingerprint": "76c0dd20193cd2de3c166ca819eac22e29dfbc1c041d135fac520839ee62573a",
+    "images": {
+      "off": "question-images/q032.webp",
+      "open": "question-images/q032.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "033",
@@ -9740,7 +9932,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "27ade1c2440ee6f748d82929cc4e62c81628fdb7913b7993c771a6823dea99ca"
+    "sourceFingerprint": "27ade1c2440ee6f748d82929cc4e62c81628fdb7913b7993c771a6823dea99ca",
+    "images": {
+      "off": "question-images/q033.webp",
+      "open": "question-images/q033.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "034",
@@ -10008,7 +10206,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "4daca90f35fe54c39fb37886b85a10836a1492f621864492fef602d4c985cf08"
+    "sourceFingerprint": "4daca90f35fe54c39fb37886b85a10836a1492f621864492fef602d4c985cf08",
+    "images": {
+      "off": "question-images/q034.webp",
+      "open": "question-images/q034.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "035",
@@ -10302,7 +10506,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "cb423bec00762e5e6e31130c48fc52c3f27f4a83bf1334f7e130b14a32f7214a"
+    "sourceFingerprint": "cb423bec00762e5e6e31130c48fc52c3f27f4a83bf1334f7e130b14a32f7214a",
+    "images": {
+      "off": "question-images/q035.webp",
+      "open": "question-images/q035.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "036",
@@ -10584,7 +10794,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "d52890c64aefaed0d4fba4386729a54c11745d027bc3c31bdc5ed8e5a3286d44"
+    "sourceFingerprint": "d52890c64aefaed0d4fba4386729a54c11745d027bc3c31bdc5ed8e5a3286d44",
+    "images": {
+      "off": "question-images/q036.webp",
+      "open": "question-images/q036.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "037",
@@ -10859,7 +11075,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "67fb932e8c75d48cfdb0f70f21723246359aa65ccdf7c4d30d8f45c1eff55c32"
+    "sourceFingerprint": "67fb932e8c75d48cfdb0f70f21723246359aa65ccdf7c4d30d8f45c1eff55c32",
+    "images": {
+      "off": "question-images/q037.webp",
+      "open": "question-images/q037.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "038",
@@ -11140,7 +11362,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "d85a40b62463ea7862b4de533fbd6810e26c35b5abaa36bfb94031bbdcaec714"
+    "sourceFingerprint": "d85a40b62463ea7862b4de533fbd6810e26c35b5abaa36bfb94031bbdcaec714",
+    "images": {
+      "off": "question-images/q038.webp",
+      "open": "question-images/q038.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "039",
@@ -11420,7 +11648,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "abf6b93c9a0043d9901d3376b17b7e46ccdb99e695fe0dd21ef895c319da59fd"
+    "sourceFingerprint": "abf6b93c9a0043d9901d3376b17b7e46ccdb99e695fe0dd21ef895c319da59fd",
+    "images": {
+      "off": "question-images/q039.webp",
+      "open": "question-images/q039.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "040",
@@ -11714,7 +11948,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "efaeb73a6023db16de5834fce54bcf14552959a3b9a07bb4791e05ef7e960dbb"
+    "sourceFingerprint": "efaeb73a6023db16de5834fce54bcf14552959a3b9a07bb4791e05ef7e960dbb",
+    "images": {
+      "off": "question-images/q040.webp",
+      "open": "question-images/q040.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "041",
@@ -11994,7 +12234,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "f1aea2a7669194329e4d985558d227acf4bb287072f465b65d7808431a6b2d65"
+    "sourceFingerprint": "f1aea2a7669194329e4d985558d227acf4bb287072f465b65d7808431a6b2d65",
+    "images": {
+      "off": "question-images/q041.webp",
+      "open": "question-images/q041.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "042",
@@ -12269,7 +12515,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "d58fa71eb5d4f72662a3c0ada364ab6e9cd6658ae4b5dc587c2180b440a85f5c"
+    "sourceFingerprint": "d58fa71eb5d4f72662a3c0ada364ab6e9cd6658ae4b5dc587c2180b440a85f5c",
+    "images": {
+      "off": "question-images/q042.webp",
+      "open": "question-images/q042.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "043",
@@ -12544,7 +12796,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "74ec4118ca50f0e767496aa0455d305c52ebf911331e29b43df81b20fb26311a"
+    "sourceFingerprint": "74ec4118ca50f0e767496aa0455d305c52ebf911331e29b43df81b20fb26311a",
+    "images": {
+      "off": "question-images/q043.webp",
+      "open": "question-images/q043.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "044",
@@ -12819,7 +13077,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "96fac29a42c9b607dda79d802929df587fdd1c8a8eebf2a8e1c6ba1ff6f3ece6"
+    "sourceFingerprint": "96fac29a42c9b607dda79d802929df587fdd1c8a8eebf2a8e1c6ba1ff6f3ece6",
+    "images": {
+      "off": "question-images/q044.webp",
+      "open": "question-images/q044.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "045",
@@ -13094,7 +13358,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "01a7b05efcfe24bd70a43883ac74d5ffdc1ec01c3a89b1ead94d80cfe487d41d"
+    "sourceFingerprint": "01a7b05efcfe24bd70a43883ac74d5ffdc1ec01c3a89b1ead94d80cfe487d41d",
+    "images": {
+      "off": "question-images/q045.webp",
+      "open": "question-images/q045.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "046",
@@ -13374,7 +13644,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "6c3230daa725a2fcf2d79d0e48cc20fa3c3a3ad8d5ae72379b5d9bae6d2e045e"
+    "sourceFingerprint": "6c3230daa725a2fcf2d79d0e48cc20fa3c3a3ad8d5ae72379b5d9bae6d2e045e",
+    "images": {
+      "off": "question-images/q046.webp",
+      "open": "question-images/q046.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "047",
@@ -13704,7 +13980,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "5c9f2070d85bf2be9f9b53bca75817d30f40eb757989e871b76d1679fc00176a"
+    "sourceFingerprint": "5c9f2070d85bf2be9f9b53bca75817d30f40eb757989e871b76d1679fc00176a",
+    "images": {
+      "off": "question-images/q047.webp",
+      "open": "question-images/q047.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "048",
@@ -13985,7 +14267,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "3f4174d41ad48686372fa27494af92bc03c75dbdafad68b292f5ef1c2376a974"
+    "sourceFingerprint": "3f4174d41ad48686372fa27494af92bc03c75dbdafad68b292f5ef1c2376a974",
+    "images": {
+      "off": "question-images/q048.webp",
+      "open": "question-images/q048.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "049",
@@ -14272,7 +14560,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "d5a1aa11bd53c87e5da3238b5c5ea5b4c500b756b61774f1d7de02abd151de92"
+    "sourceFingerprint": "d5a1aa11bd53c87e5da3238b5c5ea5b4c500b756b61774f1d7de02abd151de92",
+    "images": {
+      "off": "question-images/q049.webp",
+      "open": "question-images/q049.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "050",
@@ -14571,7 +14865,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "9e98363e1653a947eb085417ffa225069f190f1b8f4ffa41eee75610fbae287c"
+    "sourceFingerprint": "9e98363e1653a947eb085417ffa225069f190f1b8f4ffa41eee75610fbae287c",
+    "images": {
+      "off": "question-images/q050.webp",
+      "open": "question-images/q050.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "051",
@@ -14858,7 +15158,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "037952a64328077bbb9067aedfe1d4afb30261d8682f7f9dc933ae163b26870b"
+    "sourceFingerprint": "037952a64328077bbb9067aedfe1d4afb30261d8682f7f9dc933ae163b26870b",
+    "images": {
+      "off": "question-images/q051.webp",
+      "open": "question-images/q051.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "052",
@@ -15133,7 +15439,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "e63cabae6800232ff20873aad8a05d9eec48fca9151e6ed8c9c1c682bd6506d0"
+    "sourceFingerprint": "e63cabae6800232ff20873aad8a05d9eec48fca9151e6ed8c9c1c682bd6506d0",
+    "images": {
+      "off": "question-images/q052.webp",
+      "open": "question-images/q052.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "053",
@@ -15408,7 +15720,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "1760554c521d97fdc14ecfe9df127e4dd19fb064ab0e1e4f68bc0706828d3e17"
+    "sourceFingerprint": "1760554c521d97fdc14ecfe9df127e4dd19fb064ab0e1e4f68bc0706828d3e17",
+    "images": {
+      "off": "question-images/q053.webp",
+      "open": "question-images/q053.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "054",
@@ -15690,7 +16008,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "2dbdd49a6f64435a57a3607f567b3bd41e529a2e6a9b7dc0c9504d0632a37608"
+    "sourceFingerprint": "2dbdd49a6f64435a57a3607f567b3bd41e529a2e6a9b7dc0c9504d0632a37608",
+    "images": {
+      "off": "question-images/q054.webp",
+      "open": "question-images/q054.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "055",
@@ -15972,7 +16296,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "29a3f26bd0e154a59877f2fc2f1f5e50024e8b72ef910802c9cea63bafb48c5e"
+    "sourceFingerprint": "29a3f26bd0e154a59877f2fc2f1f5e50024e8b72ef910802c9cea63bafb48c5e",
+    "images": {
+      "off": "question-images/q055.webp",
+      "open": "question-images/q055.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "056",
@@ -16247,7 +16577,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "cf7e2c04a3a8b3bebbe8529470966d415724f738c368d9651a00a47ca70e78a9"
+    "sourceFingerprint": "cf7e2c04a3a8b3bebbe8529470966d415724f738c368d9651a00a47ca70e78a9",
+    "images": {
+      "off": "question-images/q056.webp",
+      "open": "question-images/q056.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "057",
@@ -16553,7 +16889,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "c32f391b9a968d10b5b1af6b20dee85ce2211aa98130c20b7bf189d5b2e3ce77"
+    "sourceFingerprint": "c32f391b9a968d10b5b1af6b20dee85ce2211aa98130c20b7bf189d5b2e3ce77",
+    "images": {
+      "off": "question-images/q057.webp",
+      "open": "question-images/q057.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "058",
@@ -16790,7 +17132,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "c64b49b62863482e3ae78a05ac5a57a308e48f00d289fe9ab9b84d81a27faf43"
+    "sourceFingerprint": "c64b49b62863482e3ae78a05ac5a57a308e48f00d289fe9ab9b84d81a27faf43",
+    "images": {
+      "off": "question-images/q058.webp",
+      "open": "question-images/q058.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "059",
@@ -17031,7 +17379,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "d86fbd1700687357195eef2ba309b8a8766c7f81b6c2cfed3283fbc62823ea44"
+    "sourceFingerprint": "d86fbd1700687357195eef2ba309b8a8766c7f81b6c2cfed3283fbc62823ea44",
+    "images": {
+      "off": "question-images/q059.webp",
+      "open": "question-images/q059.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "060",
@@ -17156,7 +17510,13 @@
     "sourceTw": 0,
     "sourceTs": 4,
     "sourceTv": 50,
-    "sourceFingerprint": "1c300ab4afe28bb80317316288408d00152306aeb78745aa4070ac968ce7ab36"
+    "sourceFingerprint": "1c300ab4afe28bb80317316288408d00152306aeb78745aa4070ac968ce7ab36",
+    "images": {
+      "off": "question-images/q060.webp",
+      "open": "question-images/q060.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "061",
@@ -17408,7 +17768,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "327526db7c38b086ada884e92e8851638bed0152bcfe6eb28caf5c04d68b7ddb"
+    "sourceFingerprint": "327526db7c38b086ada884e92e8851638bed0152bcfe6eb28caf5c04d68b7ddb",
+    "images": {
+      "off": "question-images/q061.webp",
+      "open": "question-images/q061.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "062",
@@ -17647,7 +18013,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "0ad6b29f136a698b86af828e91940bf45045a8a179189015209eb0e00ea3aaee"
+    "sourceFingerprint": "0ad6b29f136a698b86af828e91940bf45045a8a179189015209eb0e00ea3aaee",
+    "images": {
+      "off": "question-images/q062.webp",
+      "open": "question-images/q062.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "063",
@@ -17922,7 +18294,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "6c5d79e6c0bd160ed2ecd6cf0a8a6674d00690c9ee1ad80f9c7ba89509091544"
+    "sourceFingerprint": "6c5d79e6c0bd160ed2ecd6cf0a8a6674d00690c9ee1ad80f9c7ba89509091544",
+    "images": {
+      "off": "question-images/q063.webp",
+      "open": "question-images/q063.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "064",
@@ -18106,7 +18484,13 @@
     "sourceTw": 0,
     "sourceTs": 0,
     "sourceTv": 62,
-    "sourceFingerprint": "5638ab602271fd8d71c1b37281558860f104d4b1ed3db4492b0912713b42d97e"
+    "sourceFingerprint": "5638ab602271fd8d71c1b37281558860f104d4b1ed3db4492b0912713b42d97e",
+    "images": {
+      "off": "question-images/q064.webp",
+      "open": "question-images/q064.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "065",
@@ -18490,7 +18874,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "8329478ed05d2624793d644667fc5f6989ba42f20fc1678b6fcf14ee41ffdbea"
+    "sourceFingerprint": "8329478ed05d2624793d644667fc5f6989ba42f20fc1678b6fcf14ee41ffdbea",
+    "images": {
+      "off": "question-images/q065.webp",
+      "open": "question-images/q065.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "066",
@@ -18849,7 +19239,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "ee9dc5d6c85fc0708b95e6a05666330b3f81a5fe0251291b57e28e4d894701dc"
+    "sourceFingerprint": "ee9dc5d6c85fc0708b95e6a05666330b3f81a5fe0251291b57e28e4d894701dc",
+    "images": {
+      "off": "question-images/q066.webp",
+      "open": "question-images/q066.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "067",
@@ -19143,7 +19539,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "a65b4e8c0749984c80404aed16e52e234a0fcf038a73b1af46b16fef994771e2"
+    "sourceFingerprint": "a65b4e8c0749984c80404aed16e52e234a0fcf038a73b1af46b16fef994771e2",
+    "images": {
+      "off": "question-images/q067.webp",
+      "open": "question-images/q067.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "068",
@@ -19432,7 +19834,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "08c657a5554c0e942c852b680c544202c63880f261d882801f0a85d99084ae1d"
+    "sourceFingerprint": "08c657a5554c0e942c852b680c544202c63880f261d882801f0a85d99084ae1d",
+    "images": {
+      "off": "question-images/q068.webp",
+      "open": "question-images/q068.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "069",
@@ -19623,7 +20031,13 @@
     "sourceTw": 3,
     "sourceTs": 5,
     "sourceTv": 44,
-    "sourceFingerprint": "1a30e09a99c6f70d90d08a2a88fb7cac423b18e66d9452cc00e34cf34365b584"
+    "sourceFingerprint": "1a30e09a99c6f70d90d08a2a88fb7cac423b18e66d9452cc00e34cf34365b584",
+    "images": {
+      "off": "question-images/q069.webp",
+      "open": "question-images/q069.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "070",
@@ -19964,7 +20378,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "9258234c6b87cb8d56b32aa976504fb010d2e1da8051c33edccfeb9ed320dc42"
+    "sourceFingerprint": "9258234c6b87cb8d56b32aa976504fb010d2e1da8051c33edccfeb9ed320dc42",
+    "images": {
+      "off": "question-images/q070.webp",
+      "open": "question-images/q070.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "071",
@@ -20256,7 +20676,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "da222b781ea969360209f040ea02751dbbc71c74d6e23a69417b8bff3753604d"
+    "sourceFingerprint": "da222b781ea969360209f040ea02751dbbc71c74d6e23a69417b8bff3753604d",
+    "images": {
+      "off": "question-images/q071.webp",
+      "open": "question-images/q071.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "072",
@@ -20588,7 +21014,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "cfcad55b595df07381a501b4ae58d1bcdbadfd0c973dd3470a8cc8bc33945779"
+    "sourceFingerprint": "cfcad55b595df07381a501b4ae58d1bcdbadfd0c973dd3470a8cc8bc33945779",
+    "images": {
+      "off": "question-images/q072.webp",
+      "open": "question-images/q072.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "073",
@@ -20889,7 +21321,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "aeec5227af04f160745eab4b3be15b266848be7371be56968cacb555d0679c0e"
+    "sourceFingerprint": "aeec5227af04f160745eab4b3be15b266848be7371be56968cacb555d0679c0e",
+    "images": {
+      "off": "question-images/q073.webp",
+      "open": "question-images/q073.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "074",
@@ -21176,7 +21614,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "423c317322c5fabd5e8bf7a583957e2dae64240416cb2e2e6ff571e0ec0b7bc8"
+    "sourceFingerprint": "423c317322c5fabd5e8bf7a583957e2dae64240416cb2e2e6ff571e0ec0b7bc8",
+    "images": {
+      "off": "question-images/q074.webp",
+      "open": "question-images/q074.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "075",
@@ -21475,7 +21919,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "97ed4bd8f2b813bfa7930b08bbe7eae1a4711cceccb67e5764995a8cd7695593"
+    "sourceFingerprint": "97ed4bd8f2b813bfa7930b08bbe7eae1a4711cceccb67e5764995a8cd7695593",
+    "images": {
+      "off": "question-images/q075.webp",
+      "open": "question-images/q075.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "076",
@@ -21762,7 +22212,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "50442d9116a1438130414ed61ce82757295a6e65d5ecf4c6a9493a01fe235b53"
+    "sourceFingerprint": "50442d9116a1438130414ed61ce82757295a6e65d5ecf4c6a9493a01fe235b53",
+    "images": {
+      "off": "question-images/q076.webp",
+      "open": "question-images/q076.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "077",
@@ -22100,7 +22556,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "fe537f4b48a6579767c093bf88f5ea0e609d2073a74313649d77cbeb044f6747"
+    "sourceFingerprint": "fe537f4b48a6579767c093bf88f5ea0e609d2073a74313649d77cbeb044f6747",
+    "images": {
+      "off": "question-images/q077.webp",
+      "open": "question-images/q077.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "078",
@@ -22408,7 +22870,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "9425be9e036344f0653763e3c9f96ee4fcf972d8b624edeabf32869b17d85faa"
+    "sourceFingerprint": "9425be9e036344f0653763e3c9f96ee4fcf972d8b624edeabf32869b17d85faa",
+    "images": {
+      "off": "question-images/q078.webp",
+      "open": "question-images/q078.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "079",
@@ -22756,7 +23224,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "8cafa2fb8cc9da540b36fce0b27e19a02e54e2e7924f3e567c2915c2e3d44e85"
+    "sourceFingerprint": "8cafa2fb8cc9da540b36fce0b27e19a02e54e2e7924f3e567c2915c2e3d44e85",
+    "images": {
+      "off": "question-images/q079.webp",
+      "open": "question-images/q079.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "080",
@@ -23043,7 +23517,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "76b756d9641c13e01e5338d0de79571a30fa3fe47b0aae3404efe6562ab8bd55"
+    "sourceFingerprint": "76b756d9641c13e01e5338d0de79571a30fa3fe47b0aae3404efe6562ab8bd55",
+    "images": {
+      "off": "question-images/q080.webp",
+      "open": "question-images/q080.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "081",
@@ -23335,7 +23815,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "8245250ae720eecc655839bd18846552cfcc0339a59af185858baaed0ce24847"
+    "sourceFingerprint": "8245250ae720eecc655839bd18846552cfcc0339a59af185858baaed0ce24847",
+    "images": {
+      "off": "question-images/q081.webp",
+      "open": "question-images/q081.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "082",
@@ -23648,7 +24134,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "579cbdb8de1efce922a1fe8950c9b87f676304256f7650a9f5f432ee4cf4eb4c"
+    "sourceFingerprint": "579cbdb8de1efce922a1fe8950c9b87f676304256f7650a9f5f432ee4cf4eb4c",
+    "images": {
+      "off": "question-images/q082.webp",
+      "open": "question-images/q082.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "083",
@@ -23960,7 +24452,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "2bccfc0ed373e04d01f3729f0e70f795798192b9f34396ec9fb6930db5853f6a"
+    "sourceFingerprint": "2bccfc0ed373e04d01f3729f0e70f795798192b9f34396ec9fb6930db5853f6a",
+    "images": {
+      "off": "question-images/q083.webp",
+      "open": "question-images/q083.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "084",
@@ -24358,7 +24856,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "a95146cc25872c9f1d81ae5eb65715ccab941306738e8a8f65fbef581014742d"
+    "sourceFingerprint": "a95146cc25872c9f1d81ae5eb65715ccab941306738e8a8f65fbef581014742d",
+    "images": {
+      "off": "question-images/q084.webp",
+      "open": "question-images/q084.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "085",
@@ -24755,7 +25259,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "8b2f1c093fff860b496d402175e30f536d9199b12f06d60933fe9f56969da762"
+    "sourceFingerprint": "8b2f1c093fff860b496d402175e30f536d9199b12f06d60933fe9f56969da762",
+    "images": {
+      "off": "question-images/q085.webp",
+      "open": "question-images/q085.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "086",
@@ -25140,7 +25650,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "90c3fd5a17d38b54c9332b295599f5e7abb020ae43b8e89cd1948f22bf4d81e2"
+    "sourceFingerprint": "90c3fd5a17d38b54c9332b295599f5e7abb020ae43b8e89cd1948f22bf4d81e2",
+    "images": {
+      "off": "question-images/q086.webp",
+      "open": "question-images/q086.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "087",
@@ -25517,7 +26033,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "f553fa627f4dfa89ceb29e1832f6332a4ca9fd74cd182c323b0c14f11bae1a26"
+    "sourceFingerprint": "f553fa627f4dfa89ceb29e1832f6332a4ca9fd74cd182c323b0c14f11bae1a26",
+    "images": {
+      "off": "question-images/q087.webp",
+      "open": "question-images/q087.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "088",
@@ -25909,7 +26431,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "b301a4cca4b0b71dc0bfd23be781978519bb703f865bbba2d8fd0072d88e7ebd"
+    "sourceFingerprint": "b301a4cca4b0b71dc0bfd23be781978519bb703f865bbba2d8fd0072d88e7ebd",
+    "images": {
+      "off": "question-images/q088.webp",
+      "open": "question-images/q088.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "089",
@@ -26280,7 +26808,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "8b777611e3680eb3fddb15a825d16bed85613b070dbb82d6d4fd5cb9eef5e20e"
+    "sourceFingerprint": "8b777611e3680eb3fddb15a825d16bed85613b070dbb82d6d4fd5cb9eef5e20e",
+    "images": {
+      "off": "question-images/q089.webp",
+      "open": "question-images/q089.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "090",
@@ -26658,7 +27192,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "5bfa109b72f38710dc506695a98d5e0ecc855d8bd848623350c112e118826bf9"
+    "sourceFingerprint": "5bfa109b72f38710dc506695a98d5e0ecc855d8bd848623350c112e118826bf9",
+    "images": {
+      "off": "question-images/q090.webp",
+      "open": "question-images/q090.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "091",
@@ -27060,7 +27600,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "c411967e8e4504a2768db32cc3627a6bae39fe876df33507f35911f0b164453b"
+    "sourceFingerprint": "c411967e8e4504a2768db32cc3627a6bae39fe876df33507f35911f0b164453b",
+    "images": {
+      "off": "question-images/q091.webp",
+      "open": "question-images/q091.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "092",
@@ -27457,7 +28003,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "c13287294ae9dbd8ba28d9ed9f464c1f02b68485f93a3cff3af92c151a9296f1"
+    "sourceFingerprint": "c13287294ae9dbd8ba28d9ed9f464c1f02b68485f93a3cff3af92c151a9296f1",
+    "images": {
+      "off": "question-images/q092.webp",
+      "open": "question-images/q092.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "093",
@@ -27853,7 +28405,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "e811d9f1ae076e1d76f35acc8192a78f091bfdcf30d6d51b8f2ed1213ef19ed2"
+    "sourceFingerprint": "e811d9f1ae076e1d76f35acc8192a78f091bfdcf30d6d51b8f2ed1213ef19ed2",
+    "images": {
+      "off": "question-images/q093.webp",
+      "open": "question-images/q093.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "094",
@@ -28171,7 +28729,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "a4ef74ba2b3a00a13eaa0b3b25d04608608175218b64446f89614a7a46271908"
+    "sourceFingerprint": "a4ef74ba2b3a00a13eaa0b3b25d04608608175218b64446f89614a7a46271908",
+    "images": {
+      "off": "question-images/q094.webp",
+      "open": "question-images/q094.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "095",
@@ -28458,7 +29022,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "afe38865e50a0f2dae44f20a32a44722d07815a0c3d1c93ce1361ba37faa4005"
+    "sourceFingerprint": "afe38865e50a0f2dae44f20a32a44722d07815a0c3d1c93ce1361ba37faa4005",
+    "images": {
+      "off": "question-images/q095.webp",
+      "open": "question-images/q095.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "096",
@@ -28745,7 +29315,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "22ecd13b0d4af8758b7e4c8c589172b3d9c4bf7dcc9676c4a6684957c59be250"
+    "sourceFingerprint": "22ecd13b0d4af8758b7e4c8c589172b3d9c4bf7dcc9676c4a6684957c59be250",
+    "images": {
+      "off": "question-images/q096.webp",
+      "open": "question-images/q096.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "097",
@@ -29070,7 +29646,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "ab1b84f11989c7d23a2e7403358316593ecbd66de009c41ff76c22a4b903b82e"
+    "sourceFingerprint": "ab1b84f11989c7d23a2e7403358316593ecbd66de009c41ff76c22a4b903b82e",
+    "images": {
+      "off": "question-images/q097.webp",
+      "open": "question-images/q097.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "098",
@@ -29357,7 +29939,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "bb1042d04d2a734a6cf04befda78c7497ba4dce02c67cac854f2eafb4bd7dea4"
+    "sourceFingerprint": "bb1042d04d2a734a6cf04befda78c7497ba4dce02c67cac854f2eafb4bd7dea4",
+    "images": {
+      "off": "question-images/q098.webp",
+      "open": "question-images/q098.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "099",
@@ -29644,7 +30232,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "573750f26009859d3a79ebb0ae7af9187efeccbe8f4b80598819e9bf501c7872"
+    "sourceFingerprint": "573750f26009859d3a79ebb0ae7af9187efeccbe8f4b80598819e9bf501c7872",
+    "images": {
+      "off": "question-images/q099.webp",
+      "open": "question-images/q099.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "100",
@@ -30022,7 +30616,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "48f7f37f08cc8b1f6bf9669db568792b3c09bc4f494b88ba61dff5b45f6d9bfd"
+    "sourceFingerprint": "48f7f37f08cc8b1f6bf9669db568792b3c09bc4f494b88ba61dff5b45f6d9bfd",
+    "images": {
+      "off": "question-images/q100.webp",
+      "open": "question-images/q100.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "101",
@@ -30201,7 +30801,13 @@
     "sourceTw": 0,
     "sourceTs": 0,
     "sourceTv": 20,
-    "sourceFingerprint": "ed465d11f71409cb0b8d338466bb4d053316e233df478da8e2609b0cd8b3c26e"
+    "sourceFingerprint": "ed465d11f71409cb0b8d338466bb4d053316e233df478da8e2609b0cd8b3c26e",
+    "images": {
+      "off": "question-images/q101.webp",
+      "open": "question-images/q101.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "102",
@@ -30380,7 +30986,13 @@
     "sourceTw": 0,
     "sourceTs": 2,
     "sourceTv": 36,
-    "sourceFingerprint": "beee9cb79d0498ea69fadeaf29da9af27bae80b15e214db6198838f4bc035008"
+    "sourceFingerprint": "beee9cb79d0498ea69fadeaf29da9af27bae80b15e214db6198838f4bc035008",
+    "images": {
+      "off": "question-images/q102.webp",
+      "open": "question-images/q102.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "103",
@@ -30751,7 +31363,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "dd7bb5ec5c3a33c9f049603fcfd1870bc8966599b05e4fdb9fc6f9577c88c522"
+    "sourceFingerprint": "dd7bb5ec5c3a33c9f049603fcfd1870bc8966599b05e4fdb9fc6f9577c88c522",
+    "images": {
+      "off": "question-images/q103.webp",
+      "open": "question-images/q103.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "104",
@@ -31129,7 +31747,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "6a36cd55b9fca943b157da3026a56b814815bd74c85392d4add27aff4b4839bd"
+    "sourceFingerprint": "6a36cd55b9fca943b157da3026a56b814815bd74c85392d4add27aff4b4839bd",
+    "images": {
+      "off": "question-images/q104.webp",
+      "open": "question-images/q104.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "105",
@@ -31519,7 +32143,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "12b4c1e82ae460364b554115af2191111113812abef54fe9ac603e2702e01de4"
+    "sourceFingerprint": "12b4c1e82ae460364b554115af2191111113812abef54fe9ac603e2702e01de4",
+    "images": {
+      "off": "question-images/q105.webp",
+      "open": "question-images/q105.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "106",
@@ -31890,7 +32520,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "cf1236d4aa382f356c7a8793706c02a7c42f87f9faf299ba8116c50d5988921f"
+    "sourceFingerprint": "cf1236d4aa382f356c7a8793706c02a7c42f87f9faf299ba8116c50d5988921f",
+    "images": {
+      "off": "question-images/q106.webp",
+      "open": "question-images/q106.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "107",
@@ -32069,7 +32705,13 @@
     "sourceTw": 0,
     "sourceTs": 8,
     "sourceTv": 24,
-    "sourceFingerprint": "9b2b6214d51f6c42de14420a0dc040bccabd0869e8e3c5d0ae1fb14231d885de"
+    "sourceFingerprint": "9b2b6214d51f6c42de14420a0dc040bccabd0869e8e3c5d0ae1fb14231d885de",
+    "images": {
+      "off": "question-images/q107.webp",
+      "open": "question-images/q107.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "108",
@@ -32447,7 +33089,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "b245639a3761e33979d30f15ac3d57f574b96c7dc2ec87dd6fb04674b3a0f50d"
+    "sourceFingerprint": "b245639a3761e33979d30f15ac3d57f574b96c7dc2ec87dd6fb04674b3a0f50d",
+    "images": {
+      "off": "question-images/q108.webp",
+      "open": "question-images/q108.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "109",
@@ -32851,7 +33499,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "de03ce18f12c89be6dd91811231d31a192e5265b0f8ed38c6b69377db834a958"
+    "sourceFingerprint": "de03ce18f12c89be6dd91811231d31a192e5265b0f8ed38c6b69377db834a958",
+    "images": {
+      "off": "question-images/q109.webp",
+      "open": "question-images/q109.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "110",
@@ -33150,7 +33804,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "80dc71cdb32d9e3b34533a9b79386ce90f5b465b7a02fd0c881d0fef03599847"
+    "sourceFingerprint": "80dc71cdb32d9e3b34533a9b79386ce90f5b465b7a02fd0c881d0fef03599847",
+    "images": {
+      "off": "question-images/q110.webp",
+      "open": "question-images/q110.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "111",
@@ -33463,7 +34123,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "9d0a57bd87a836c17d685c9db01b2f721c4c6c938c1a4dcc51476b27055de64a"
+    "sourceFingerprint": "9d0a57bd87a836c17d685c9db01b2f721c4c6c938c1a4dcc51476b27055de64a",
+    "images": {
+      "off": "question-images/q111.webp",
+      "open": "question-images/q111.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "112",
@@ -33786,7 +34452,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "a518f0d64d9fa762e7311b98eabb4284c172843c6a4ba550c84259fd98550edc"
+    "sourceFingerprint": "a518f0d64d9fa762e7311b98eabb4284c172843c6a4ba550c84259fd98550edc",
+    "images": {
+      "off": "question-images/q112.webp",
+      "open": "question-images/q112.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "113",
@@ -34125,7 +34797,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "275863108306d14b889563ca5c2727de79403e4d2133cf64e4ccda225c289025"
+    "sourceFingerprint": "275863108306d14b889563ca5c2727de79403e4d2133cf64e4ccda225c289025",
+    "images": {
+      "off": "question-images/q113.webp",
+      "open": "question-images/q113.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "114",
@@ -34431,7 +35109,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "73de2fb5bfc543dca2aa7bae661a00f9640d0d57499c142b1556146671136373"
+    "sourceFingerprint": "73de2fb5bfc543dca2aa7bae661a00f9640d0d57499c142b1556146671136373",
+    "images": {
+      "off": "question-images/q114.webp",
+      "open": "question-images/q114.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "115",
@@ -34737,7 +35421,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "0fd71be6286463df08199d93d412a5409d4d6a9bd9971b669ea0d1799b607e82"
+    "sourceFingerprint": "0fd71be6286463df08199d93d412a5409d4d6a9bd9971b669ea0d1799b607e82",
+    "images": {
+      "off": "question-images/q115.webp",
+      "open": "question-images/q115.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "116",
@@ -35062,7 +35752,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "2219ceca7915605d2fbc1ff30b6c050cd04e5554319324299fd39ea77b369cfb"
+    "sourceFingerprint": "2219ceca7915605d2fbc1ff30b6c050cd04e5554319324299fd39ea77b369cfb",
+    "images": {
+      "off": "question-images/q116.webp",
+      "open": "question-images/q116.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "117",
@@ -35349,7 +36045,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "77953a0fc6ed85111c46ccd71ccfa7c2a91eef9e2c2d2a012da847dd1ff9db2d"
+    "sourceFingerprint": "77953a0fc6ed85111c46ccd71ccfa7c2a91eef9e2c2d2a012da847dd1ff9db2d",
+    "images": {
+      "off": "question-images/q117.webp",
+      "open": "question-images/q117.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "118",
@@ -35636,7 +36338,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "7ce420e5093280634962b5164585c03c55d25c21c6342afb87636414f298447d"
+    "sourceFingerprint": "7ce420e5093280634962b5164585c03c55d25c21c6342afb87636414f298447d",
+    "images": {
+      "off": "question-images/q118.webp",
+      "open": "question-images/q118.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "119",
@@ -35987,7 +36695,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "52e1c543a90c8acd68d347745045adbd9892b2823a4b3d413c7c9551223bffbb"
+    "sourceFingerprint": "52e1c543a90c8acd68d347745045adbd9892b2823a4b3d413c7c9551223bffbb",
+    "images": {
+      "off": "question-images/q119.webp",
+      "open": "question-images/q119.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "120",
@@ -36262,7 +36976,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "6c8be681951989224b0a21c9db47b39116801f33e540be490970251e1c8a5b36"
+    "sourceFingerprint": "6c8be681951989224b0a21c9db47b39116801f33e540be490970251e1c8a5b36",
+    "images": {
+      "off": "question-images/q120.webp",
+      "open": "question-images/q120.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "121",
@@ -36549,7 +37269,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "6b0196701b10d3ec199cf5f0a25a1eff833bab9a6114e099edf7382ec452419f"
+    "sourceFingerprint": "6b0196701b10d3ec199cf5f0a25a1eff833bab9a6114e099edf7382ec452419f",
+    "images": {
+      "off": "question-images/q121.webp",
+      "open": "question-images/q121.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "122",
@@ -36836,7 +37562,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "5dfde26810b2bf772fcdfbd8a3f5f9000b5b5c8279032296e20375d2567dd1aa"
+    "sourceFingerprint": "5dfde26810b2bf772fcdfbd8a3f5f9000b5b5c8279032296e20375d2567dd1aa",
+    "images": {
+      "off": "question-images/q122.webp",
+      "open": "question-images/q122.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "123",
@@ -37128,7 +37860,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "bbd0ed95e8777647837f61cbf9d5e09ee7bab0992ee03e33fd62c9f263a29307"
+    "sourceFingerprint": "bbd0ed95e8777647837f61cbf9d5e09ee7bab0992ee03e33fd62c9f263a29307",
+    "images": {
+      "off": "question-images/q123.webp",
+      "open": "question-images/q123.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "124",
@@ -37426,7 +38164,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "499b8bea944e84b2ebc2ba9c018197422059fa82b8d8ed8df426279cd4709b57"
+    "sourceFingerprint": "499b8bea944e84b2ebc2ba9c018197422059fa82b8d8ed8df426279cd4709b57",
+    "images": {
+      "off": "question-images/q124.webp",
+      "open": "question-images/q124.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "125",
@@ -37718,7 +38462,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "346d88d71c233e5cecebe922f17ce041071ad87666dd71ca08a8284f012aab0b"
+    "sourceFingerprint": "346d88d71c233e5cecebe922f17ce041071ad87666dd71ca08a8284f012aab0b",
+    "images": {
+      "off": "question-images/q125.webp",
+      "open": "question-images/q125.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "126",
@@ -37912,7 +38662,13 @@
     "sourceTw": 3,
     "sourceTs": 3,
     "sourceTv": 26,
-    "sourceFingerprint": "331f081be233faed1edc13f033adf3c1e83a24410552038e64e14a5389170f32"
+    "sourceFingerprint": "331f081be233faed1edc13f033adf3c1e83a24410552038e64e14a5389170f32",
+    "images": {
+      "off": "question-images/q126.webp",
+      "open": "question-images/q126.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "127",
@@ -38220,7 +38976,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "dd1d260b76a010c37b0c9b8d7817a64e38a104cc80bc5fb43657f5652f84ad68"
+    "sourceFingerprint": "dd1d260b76a010c37b0c9b8d7817a64e38a104cc80bc5fb43657f5652f84ad68",
+    "images": {
+      "off": "question-images/q127.webp",
+      "open": "question-images/q127.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "128",
@@ -38519,7 +39281,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "6863634889dc5aee1e22a6506e75bd9f3fd1e8e1d5a14260645c0b20249584d2"
+    "sourceFingerprint": "6863634889dc5aee1e22a6506e75bd9f3fd1e8e1d5a14260645c0b20249584d2",
+    "images": {
+      "off": "question-images/q128.webp",
+      "open": "question-images/q128.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "129",
@@ -38811,7 +39579,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "665dc518025c741d9c249f39a19bc5737f9cc33c8130ff3607cf941fc6fb8652"
+    "sourceFingerprint": "665dc518025c741d9c249f39a19bc5737f9cc33c8130ff3607cf941fc6fb8652",
+    "images": {
+      "off": "question-images/q129.webp",
+      "open": "question-images/q129.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "130",
@@ -39115,7 +39889,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "cce25e6c12ae54a931ce4117d313844bb33367b71302d15c6328b19f0b0b286a"
+    "sourceFingerprint": "cce25e6c12ae54a931ce4117d313844bb33367b71302d15c6328b19f0b0b286a",
+    "images": {
+      "off": "question-images/q130.webp",
+      "open": "question-images/q130.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "131",
@@ -39447,7 +40227,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "f164886873e61a6cc20fb5469f345f5cd9b204b26125c540670dd814bc7e1eff"
+    "sourceFingerprint": "f164886873e61a6cc20fb5469f345f5cd9b204b26125c540670dd814bc7e1eff",
+    "images": {
+      "off": "question-images/q131.webp",
+      "open": "question-images/q131.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "132",
@@ -39758,7 +40544,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "9eed057b8770029fa81fb00e824e6a591785d7093bcd24fe9c8e35893df166ef"
+    "sourceFingerprint": "9eed057b8770029fa81fb00e824e6a591785d7093bcd24fe9c8e35893df166ef",
+    "images": {
+      "off": "question-images/q132.webp",
+      "open": "question-images/q132.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "133",
@@ -40052,7 +40844,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "45bdcc749dcc9c7011707e42b1cd6025f375b0bf6bcd287c52c49203e4a1ddd3"
+    "sourceFingerprint": "45bdcc749dcc9c7011707e42b1cd6025f375b0bf6bcd287c52c49203e4a1ddd3",
+    "images": {
+      "off": "question-images/q133.webp",
+      "open": "question-images/q133.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "134",
@@ -40243,7 +41041,13 @@
     "sourceTw": 1,
     "sourceTs": 12,
     "sourceTv": 28,
-    "sourceFingerprint": "e433bb074c7b358af92a09898d3959d2dc55308ac8da7e3e484df45ce96b4d5d"
+    "sourceFingerprint": "e433bb074c7b358af92a09898d3959d2dc55308ac8da7e3e484df45ce96b4d5d",
+    "images": {
+      "off": "question-images/q134.webp",
+      "open": "question-images/q134.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "135",
@@ -40559,7 +41363,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "8aed41163a4aa4eda2fccc0585c4595c984f1115eae8b8083bef22986a1afd32"
+    "sourceFingerprint": "8aed41163a4aa4eda2fccc0585c4595c984f1115eae8b8083bef22986a1afd32",
+    "images": {
+      "off": "question-images/q135.webp",
+      "open": "question-images/q135.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "136",
@@ -40865,7 +41675,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "a1b1aac5c4413814ba8c36c27bd0d632411ba06926697b575532680d64c5f56c"
+    "sourceFingerprint": "a1b1aac5c4413814ba8c36c27bd0d632411ba06926697b575532680d64c5f56c",
+    "images": {
+      "off": "question-images/q136.webp",
+      "open": "question-images/q136.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "137",
@@ -41171,7 +41987,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "425f3b3884e8fb02114f4cf527eb3211cb9720fb5c0320c4871a05961ca2547f"
+    "sourceFingerprint": "425f3b3884e8fb02114f4cf527eb3211cb9720fb5c0320c4871a05961ca2547f",
+    "images": {
+      "off": "question-images/q137.webp",
+      "open": "question-images/q137.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "138",
@@ -41477,7 +42299,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "125b67e451fe1d0a92af0ee9e4f6e8164d87489d7d7a395d011de17a1ef99698"
+    "sourceFingerprint": "125b67e451fe1d0a92af0ee9e4f6e8164d87489d7d7a395d011de17a1ef99698",
+    "images": {
+      "off": "question-images/q138.webp",
+      "open": "question-images/q138.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "139",
@@ -41623,7 +42451,13 @@
     "sourceTw": 0,
     "sourceTs": 4,
     "sourceTv": 24,
-    "sourceFingerprint": "fa52679078a72b28fecd0252a92369482f04ed5312b8cf3be19eda0572ef7248"
+    "sourceFingerprint": "fa52679078a72b28fecd0252a92369482f04ed5312b8cf3be19eda0572ef7248",
+    "images": {
+      "off": "question-images/q158.webp",
+      "open": "question-images/q158.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "140",
@@ -41994,7 +42828,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "ec3031f0e896c55a57dfe96567f2c0e99f55e7b11c128d7af806cc199a20a80a"
+    "sourceFingerprint": "ec3031f0e896c55a57dfe96567f2c0e99f55e7b11c128d7af806cc199a20a80a",
+    "images": {
+      "off": "question-images/q140.webp",
+      "open": "question-images/q140.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "141",
@@ -42384,7 +43224,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "e6e90b2e2f9b861c45eca7d9e5b956bdfbc366bb097ac6f9940f1225c410d42f"
+    "sourceFingerprint": "e6e90b2e2f9b861c45eca7d9e5b956bdfbc366bb097ac6f9940f1225c410d42f",
+    "images": {
+      "off": "question-images/q141.webp",
+      "open": "question-images/q141.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "142",
@@ -42762,7 +43608,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "5374fa02024c40230239e4579e4627bc0dc3d1f2d2c880e715e65385faebaad3"
+    "sourceFingerprint": "5374fa02024c40230239e4579e4627bc0dc3d1f2d2c880e715e65385faebaad3",
+    "images": {
+      "off": "question-images/q142.webp",
+      "open": "question-images/q142.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "143",
@@ -43173,7 +44025,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "931ea2a63436dccc2ab499524ba79852c4ad91b0c01c3bb48a7be36c43e32c34"
+    "sourceFingerprint": "931ea2a63436dccc2ab499524ba79852c4ad91b0c01c3bb48a7be36c43e32c34",
+    "images": {
+      "off": "question-images/q143.webp",
+      "open": "question-images/q143.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "144",
@@ -43507,7 +44365,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "1b54c8f7da04697276f9b4e963db8486bfcd97d096ceec16669c603aae1bada4"
+    "sourceFingerprint": "1b54c8f7da04697276f9b4e963db8486bfcd97d096ceec16669c603aae1bada4",
+    "images": {
+      "off": "question-images/q144.webp",
+      "open": "question-images/q144.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "145",
@@ -43820,7 +44684,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "a60d22ed52cb196d69b40dfb5d99cc853198b1acea84c38410dc595e99f40d40"
+    "sourceFingerprint": "a60d22ed52cb196d69b40dfb5d99cc853198b1acea84c38410dc595e99f40d40",
+    "images": {
+      "off": "question-images/q145.webp",
+      "open": "question-images/q145.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "146",
@@ -44138,7 +45008,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "19e4123c3e27f6afffeb5411e8b9d8b251e5aa3e559ab492158818c87b4dae2d"
+    "sourceFingerprint": "19e4123c3e27f6afffeb5411e8b9d8b251e5aa3e559ab492158818c87b4dae2d",
+    "images": {
+      "off": "question-images/q146.webp",
+      "open": "question-images/q146.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "147",
@@ -44441,7 +45317,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "aecfbb506a7a259e08bc2fda9cdb8d5a1ed9d25baee6e8e93133be37e54f2e33"
+    "sourceFingerprint": "aecfbb506a7a259e08bc2fda9cdb8d5a1ed9d25baee6e8e93133be37e54f2e33",
+    "images": {
+      "off": "question-images/q147.webp",
+      "open": "question-images/q147.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "148",
@@ -44766,7 +45648,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "89e9dff81b785f14d69f95b834a093d1f46ebd5ece33a7c707b5fdb4470334b3"
+    "sourceFingerprint": "89e9dff81b785f14d69f95b834a093d1f46ebd5ece33a7c707b5fdb4470334b3",
+    "images": {
+      "off": "question-images/q148.webp",
+      "open": "question-images/q148.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "149",
@@ -45065,7 +45953,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "0f9e95a6720611d6b8f3938be2335ab1b1674bf273a88ffc8e94bca639996a88"
+    "sourceFingerprint": "0f9e95a6720611d6b8f3938be2335ab1b1674bf273a88ffc8e94bca639996a88",
+    "images": {
+      "off": "question-images/q149.webp",
+      "open": "question-images/q149.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "150",
@@ -45378,7 +46272,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "e0e6dcfed8c1a2e97221942d16b148c0025327b7e222a86019ea9afed1528141"
+    "sourceFingerprint": "e0e6dcfed8c1a2e97221942d16b148c0025327b7e222a86019ea9afed1528141",
+    "images": {
+      "off": "question-images/q150.webp",
+      "open": "question-images/q150.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "151",
@@ -45679,7 +46579,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "1d20be265a14a69ce2591c49031f1617aee004a8c99a2f5dbc2a2d81a4a938fe"
+    "sourceFingerprint": "1d20be265a14a69ce2591c49031f1617aee004a8c99a2f5dbc2a2d81a4a938fe",
+    "images": {
+      "off": "question-images/q151.webp",
+      "open": "question-images/q151.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "152",
@@ -45966,7 +46872,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "288509f807236c5ef6d31819c831a4e10691a5e92bdd36f7fd84657c67e776bb"
+    "sourceFingerprint": "288509f807236c5ef6d31819c831a4e10691a5e92bdd36f7fd84657c67e776bb",
+    "images": {
+      "off": "question-images/q152.webp",
+      "open": "question-images/q152.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "153",
@@ -46255,7 +47167,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "07478ddab1a17539d1946f0f0bcb71c164870983f1f20429afca812772d1f160"
+    "sourceFingerprint": "07478ddab1a17539d1946f0f0bcb71c164870983f1f20429afca812772d1f160",
+    "images": {
+      "off": "question-images/q153.webp",
+      "open": "question-images/q153.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "154",
@@ -46542,7 +47460,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "741929c2bc51e6b8fc8c4f8ce808186fdc3078200645a2bfa731b27d27158316"
+    "sourceFingerprint": "741929c2bc51e6b8fc8c4f8ce808186fdc3078200645a2bfa731b27d27158316",
+    "images": {
+      "off": "question-images/q154.webp",
+      "open": "question-images/q154.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "155",
@@ -46841,7 +47765,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "bc84788cacf7e649ad19a17f807f9aef5137ab1ca5b387a29661050b9661f21a"
+    "sourceFingerprint": "bc84788cacf7e649ad19a17f807f9aef5137ab1ca5b387a29661050b9661f21a",
+    "images": {
+      "off": "question-images/q155.webp",
+      "open": "question-images/q155.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "156",
@@ -47142,7 +48072,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "6c33e75f2d0f2c279622248a570a6383779343ca6d36fd869a484883e2ca49fe"
+    "sourceFingerprint": "6c33e75f2d0f2c279622248a570a6383779343ca6d36fd869a484883e2ca49fe",
+    "images": {
+      "off": "question-images/q156.webp",
+      "open": "question-images/q156.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "157",
@@ -47469,7 +48405,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "2916823b435bc0459485c6a1c708ab2a00a64cb49e3cef1c50c3ca6111c8fdfa"
+    "sourceFingerprint": "2916823b435bc0459485c6a1c708ab2a00a64cb49e3cef1c50c3ca6111c8fdfa",
+    "images": {
+      "off": "question-images/q157.webp",
+      "open": "question-images/q157.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "158",
@@ -47775,7 +48717,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "822558315b2bade48a1cc6ccd6ef31ba3b7961d54ce8d0bffd66dffe5b307c38"
+    "sourceFingerprint": "822558315b2bade48a1cc6ccd6ef31ba3b7961d54ce8d0bffd66dffe5b307c38",
+    "images": {
+      "off": "question-images/q158.webp",
+      "open": "question-images/q158.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "159",
@@ -48062,7 +49010,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "2b610c4f18052c21eff773f1b095a0b1d83749af81d0e598076b958c37265f52"
+    "sourceFingerprint": "2b610c4f18052c21eff773f1b095a0b1d83749af81d0e598076b958c37265f52",
+    "images": {
+      "off": "question-images/q159.webp",
+      "open": "question-images/q159.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "160",
@@ -48368,7 +49322,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "0f74a94fdf7ab7dbd9985f4b3829eb06fad180ef6150b19a71d71d6995b6d7d5"
+    "sourceFingerprint": "0f74a94fdf7ab7dbd9985f4b3829eb06fad180ef6150b19a71d71d6995b6d7d5",
+    "images": {
+      "off": "question-images/q160.webp",
+      "open": "question-images/q160.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "161",
@@ -48681,7 +49641,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "cf652b95d2b57c99933b6da9b270e77871003ec73130328be7c4fa19c6f9ddae"
+    "sourceFingerprint": "cf652b95d2b57c99933b6da9b270e77871003ec73130328be7c4fa19c6f9ddae",
+    "images": {
+      "off": "question-images/q161.webp",
+      "open": "question-images/q161.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "162",
@@ -48975,7 +49941,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "726917b9ca6c3f26677ec95aa14fa7527908d866a1716c20e09fa6455eace431"
+    "sourceFingerprint": "726917b9ca6c3f26677ec95aa14fa7527908d866a1716c20e09fa6455eace431",
+    "images": {
+      "off": "question-images/q162.webp",
+      "open": "question-images/q162.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "163",
@@ -49142,7 +50114,13 @@
     "sourceTw": 3,
     "sourceTs": 5,
     "sourceTv": 98,
-    "sourceFingerprint": "0d82a064a1351fa3bd456ac5215466dc889aad50907823c21546ce1d875e2d72"
+    "sourceFingerprint": "0d82a064a1351fa3bd456ac5215466dc889aad50907823c21546ce1d875e2d72",
+    "images": {
+      "off": "question-images/q163.webp",
+      "open": "question-images/q163.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "164",
@@ -49436,7 +50414,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "54feae4db8a974f0e829a35d0cf01c1b189add8a9e472d4ba5bc4557fd1ca778"
+    "sourceFingerprint": "54feae4db8a974f0e829a35d0cf01c1b189add8a9e472d4ba5bc4557fd1ca778",
+    "images": {
+      "off": "question-images/q164.webp",
+      "open": "question-images/q164.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "165",
@@ -49737,7 +50721,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "d8392dea582b2d2cbfed520e681a24a787b44b85bfe079f2f32041eb4a6bb4d8"
+    "sourceFingerprint": "d8392dea582b2d2cbfed520e681a24a787b44b85bfe079f2f32041eb4a6bb4d8",
+    "images": {
+      "off": "question-images/q165.webp",
+      "open": "question-images/q165.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "166",
@@ -50051,7 +51041,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "ee9ff8a4fa66f83422cbaf077230b05adedddc3b9b5ecb2ab5e0f3dc3e60dd22"
+    "sourceFingerprint": "ee9ff8a4fa66f83422cbaf077230b05adedddc3b9b5ecb2ab5e0f3dc3e60dd22",
+    "images": {
+      "off": "question-images/q166.webp",
+      "open": "question-images/q166.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "167",
@@ -50376,7 +51372,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "0d97dea3ef84902b25dfe53997ebf10b11e336197644ece998491936ffc4809e"
+    "sourceFingerprint": "0d97dea3ef84902b25dfe53997ebf10b11e336197644ece998491936ffc4809e",
+    "images": {
+      "off": "question-images/q167.webp",
+      "open": "question-images/q167.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "168",
@@ -50658,7 +51660,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "8b92496b2b68c9fc6cffaa27e1f3d26baedfffd626749622506a890f6b4ba611"
+    "sourceFingerprint": "8b92496b2b68c9fc6cffaa27e1f3d26baedfffd626749622506a890f6b4ba611",
+    "images": {
+      "off": "question-images/q168.webp",
+      "open": "question-images/q168.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "169",
@@ -50964,7 +51972,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "1715bc4c78070b7517283466e00726bf80fc859a3c88d0d5ab603c316503feda"
+    "sourceFingerprint": "1715bc4c78070b7517283466e00726bf80fc859a3c88d0d5ab603c316503feda",
+    "images": {
+      "off": "question-images/q169.webp",
+      "open": "question-images/q169.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "170",
@@ -51110,7 +52124,13 @@
     "sourceTw": 2,
     "sourceTs": 7,
     "sourceTv": 64,
-    "sourceFingerprint": "f2389dd00e01fc1da4b8a29741582fe716bd34ff5badfc5c558eff3df8fdcbfb"
+    "sourceFingerprint": "f2389dd00e01fc1da4b8a29741582fe716bd34ff5badfc5c558eff3df8fdcbfb",
+    "images": {
+      "off": "question-images/q170.webp",
+      "open": "question-images/q170.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "171",
@@ -51270,7 +52290,13 @@
     "sourceTw": 1,
     "sourceTs": 0,
     "sourceTv": 50,
-    "sourceFingerprint": "456817be12003525c801d53fc457f6c2dda80889b14498589af0fe3585148a42"
+    "sourceFingerprint": "456817be12003525c801d53fc457f6c2dda80889b14498589af0fe3585148a42",
+    "images": {
+      "off": "question-images/q171.webp",
+      "open": "question-images/q171.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "172",
@@ -51576,7 +52602,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "01700e04e6d830880e17d8ac40dc6769e1543e1a1a59215c0c299ac15480193a"
+    "sourceFingerprint": "01700e04e6d830880e17d8ac40dc6769e1543e1a1a59215c0c299ac15480193a",
+    "images": {
+      "off": "question-images/q172.webp",
+      "open": "question-images/q172.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "173",
@@ -51746,7 +52778,13 @@
     "sourceTw": 1,
     "sourceTs": 1,
     "sourceTv": 46,
-    "sourceFingerprint": "7c4631df34053634433b058205a48ed0b7d4c70105df92f48507a2b8a8f88c60"
+    "sourceFingerprint": "7c4631df34053634433b058205a48ed0b7d4c70105df92f48507a2b8a8f88c60",
+    "images": {
+      "off": "question-images/q173.webp",
+      "open": "question-images/q173.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "174",
@@ -52046,7 +53084,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "56d6e8a72e18071135f2988a07546bcc93b80c73c599f7a12a54a3fd4ff1f44a"
+    "sourceFingerprint": "56d6e8a72e18071135f2988a07546bcc93b80c73c599f7a12a54a3fd4ff1f44a",
+    "images": {
+      "off": "question-images/q174.webp",
+      "open": "question-images/q174.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "175",
@@ -52333,7 +53377,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "f9c1983d84b156d2ce2fdcf0bc60e2d47ca41aa63949c87bce1644553ffc0ff6"
+    "sourceFingerprint": "f9c1983d84b156d2ce2fdcf0bc60e2d47ca41aa63949c87bce1644553ffc0ff6",
+    "images": {
+      "off": "question-images/q175.webp",
+      "open": "question-images/q175.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "176",
@@ -52620,7 +53670,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "7d418521b00368fa88032cb1bb6d9f39f41e221018f24b36fcf4bbcf53ec42a7"
+    "sourceFingerprint": "7d418521b00368fa88032cb1bb6d9f39f41e221018f24b36fcf4bbcf53ec42a7",
+    "images": {
+      "off": "question-images/q176.webp",
+      "open": "question-images/q176.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "177",
@@ -52907,7 +53963,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "ab07df2e4572c25a50c7bb5412574321d4174272ca6fbe1fc083242f05527fc3"
+    "sourceFingerprint": "ab07df2e4572c25a50c7bb5412574321d4174272ca6fbe1fc083242f05527fc3",
+    "images": {
+      "off": "question-images/q177.webp",
+      "open": "question-images/q177.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "178",
@@ -53209,7 +54271,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "0be38f8474a55f5a8a72268511c35a66dc45558c2a80939d3be4ba5d885bee7a"
+    "sourceFingerprint": "0be38f8474a55f5a8a72268511c35a66dc45558c2a80939d3be4ba5d885bee7a",
+    "images": {
+      "off": "question-images/q178.webp",
+      "open": "question-images/q178.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "179",
@@ -53505,7 +54573,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "c36ae486ce4609d270778db0ad5d5eec495caa7a22285e261ea7aad34357203e"
+    "sourceFingerprint": "c36ae486ce4609d270778db0ad5d5eec495caa7a22285e261ea7aad34357203e",
+    "images": {
+      "off": "question-images/q179.webp",
+      "open": "question-images/q179.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "180",
@@ -53822,7 +54896,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "cec50b16e3b6e82e9dbea3796a43be166eac84a12360f4a6ecc2c33041eeb7ae"
+    "sourceFingerprint": "cec50b16e3b6e82e9dbea3796a43be166eac84a12360f4a6ecc2c33041eeb7ae",
+    "images": {
+      "off": "question-images/q180.webp",
+      "open": "question-images/q180.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "181",
@@ -53968,7 +55048,13 @@
     "sourceTw": 3,
     "sourceTs": 1,
     "sourceTv": 130,
-    "sourceFingerprint": "1863eefdb59e50c383c95c2b02e0f3dc5e5a1d2b7159e5797269465df092d7a0"
+    "sourceFingerprint": "1863eefdb59e50c383c95c2b02e0f3dc5e5a1d2b7159e5797269465df092d7a0",
+    "images": {
+      "off": "question-images/q181.webp",
+      "open": "question-images/q181.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "182",
@@ -54255,7 +55341,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "d2bdf006c2723e7887f5d60fa4a19899fac257bea11af16d86c7944668f7b10d"
+    "sourceFingerprint": "d2bdf006c2723e7887f5d60fa4a19899fac257bea11af16d86c7944668f7b10d",
+    "images": {
+      "off": "question-images/q182.webp",
+      "open": "question-images/q182.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "183",
@@ -54554,7 +55646,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "56d4e833eac60ab259d50b74a11ed0cda34d2839ada344264eb64f79bf7f980b"
+    "sourceFingerprint": "56d4e833eac60ab259d50b74a11ed0cda34d2839ada344264eb64f79bf7f980b",
+    "images": {
+      "off": "question-images/q183.webp",
+      "open": "question-images/q183.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "184",
@@ -54858,7 +55956,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "fe8bf7b22d362496ed5116cd5a8b52492e25ba8f653d5f2886b4cfda33775e5e"
+    "sourceFingerprint": "fe8bf7b22d362496ed5116cd5a8b52492e25ba8f653d5f2886b4cfda33775e5e",
+    "images": {
+      "off": "question-images/q184.webp",
+      "open": "question-images/q184.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "185",
@@ -55159,7 +56263,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "854314a1919faffa63a723b931e269a2a695f97aa8f4b2f0224ea995d0a337f7"
+    "sourceFingerprint": "854314a1919faffa63a723b931e269a2a695f97aa8f4b2f0224ea995d0a337f7",
+    "images": {
+      "off": "question-images/q185.webp",
+      "open": "question-images/q185.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "186",
@@ -55453,7 +56563,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "70e990be42e2c325fd6cb9d7d03df2703fbf2de255fb1d00eaa683e3e4aa5f83"
+    "sourceFingerprint": "70e990be42e2c325fd6cb9d7d03df2703fbf2de255fb1d00eaa683e3e4aa5f83",
+    "images": {
+      "off": "question-images/q186.webp",
+      "open": "question-images/q186.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "187",
@@ -55740,7 +56856,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "e9187760e3f53bdefdd04b2c9cfc09ea59ebf7f8ab95746c6be7f07494d912e6"
+    "sourceFingerprint": "e9187760e3f53bdefdd04b2c9cfc09ea59ebf7f8ab95746c6be7f07494d912e6",
+    "images": {
+      "off": "question-images/q187.webp",
+      "open": "question-images/q187.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "188",
@@ -56027,7 +57149,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "e2504c65c44f9a8742f7cf8dbbbf4ca2a169ec9e2db0f2ab6ecd4efb7c51fe57"
+    "sourceFingerprint": "e2504c65c44f9a8742f7cf8dbbbf4ca2a169ec9e2db0f2ab6ecd4efb7c51fe57",
+    "images": {
+      "off": "question-images/q188.webp",
+      "open": "question-images/q188.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "189",
@@ -56319,7 +57447,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "2cecc37bf209395b323041f909add4a32f48c8912e57a3d24ae86cc1279f18f8"
+    "sourceFingerprint": "2cecc37bf209395b323041f909add4a32f48c8912e57a3d24ae86cc1279f18f8",
+    "images": {
+      "off": "question-images/q189.webp",
+      "open": "question-images/q189.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "190",
@@ -56594,7 +57728,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "5cadc0ab155b63cc4c2f8a17b3322ce30f628fcde2e655563c7890b6dd181266"
+    "sourceFingerprint": "5cadc0ab155b63cc4c2f8a17b3322ce30f628fcde2e655563c7890b6dd181266",
+    "images": {
+      "off": "question-images/q190.webp",
+      "open": "question-images/q190.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "191",
@@ -56869,7 +58009,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "3382ccf2268085e016cf6e174f31a8d005b001abe416d12d4e64fad758217312"
+    "sourceFingerprint": "3382ccf2268085e016cf6e174f31a8d005b001abe416d12d4e64fad758217312",
+    "images": {
+      "off": "question-images/q191.webp",
+      "open": "question-images/q191.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "192",
@@ -57184,7 +58330,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "9e680d1c2528af6b3731053779970d0cd9656d0333a5c09dbc70acb6cc6b6168"
+    "sourceFingerprint": "9e680d1c2528af6b3731053779970d0cd9656d0333a5c09dbc70acb6cc6b6168",
+    "images": {
+      "off": "question-images/q192.webp",
+      "open": "question-images/q192.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "193",
@@ -57342,7 +58494,13 @@
     "sourceTw": 0,
     "sourceTs": 3,
     "sourceTv": 10,
-    "sourceFingerprint": "3307fc6a1b4774bed4ee304e3f4054913d891c48496a71f2efae96110eb5da57"
+    "sourceFingerprint": "3307fc6a1b4774bed4ee304e3f4054913d891c48496a71f2efae96110eb5da57",
+    "images": {
+      "off": "question-images/q193.webp",
+      "open": "question-images/q193.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "194",
@@ -57642,7 +58800,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "f2e21e110723e459fed861d73ba687a7acc734d5530918db26286f443303bd17"
+    "sourceFingerprint": "f2e21e110723e459fed861d73ba687a7acc734d5530918db26286f443303bd17",
+    "images": {
+      "off": "question-images/q194.webp",
+      "open": "question-images/q194.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "195",
@@ -57934,7 +59098,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "1768349d5ab88d48242bbc0a336dc2bcd4b865548e779f467ca5a88f6cd7dbf8"
+    "sourceFingerprint": "1768349d5ab88d48242bbc0a336dc2bcd4b865548e779f467ca5a88f6cd7dbf8",
+    "images": {
+      "off": "question-images/q195.webp",
+      "open": "question-images/q195.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "196",
@@ -58252,7 +59422,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "e5d38c34a4a9aba3cd1f957bf8fc34de38d3da5e73a9768b2aeeb42e709778bb"
+    "sourceFingerprint": "e5d38c34a4a9aba3cd1f957bf8fc34de38d3da5e73a9768b2aeeb42e709778bb",
+    "images": {
+      "off": "question-images/q196.webp",
+      "open": "question-images/q196.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "197",
@@ -58546,7 +59722,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "4a160701f3bc39815c50b366a644ee2729df74281cbe244a02cc438627dfed2d"
+    "sourceFingerprint": "4a160701f3bc39815c50b366a644ee2729df74281cbe244a02cc438627dfed2d",
+    "images": {
+      "off": "question-images/q197.webp",
+      "open": "question-images/q197.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "198",
@@ -58845,7 +60027,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "21f38bae5246a7328299a891312b9e7f54a40728fc5c94a5ac21b6588535b133"
+    "sourceFingerprint": "21f38bae5246a7328299a891312b9e7f54a40728fc5c94a5ac21b6588535b133",
+    "images": {
+      "off": "question-images/q198.webp",
+      "open": "question-images/q198.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "199",
@@ -59165,7 +60353,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "76ae6e4e54b1b04d686a0ef165fbaae4fe1e158b524ae347245fad5a6dd938a0"
+    "sourceFingerprint": "76ae6e4e54b1b04d686a0ef165fbaae4fe1e158b524ae347245fad5a6dd938a0",
+    "images": {
+      "off": "question-images/q199.webp",
+      "open": "question-images/q199.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "200",
@@ -59464,7 +60658,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "cb5b861bf50e810b59cd38c2fcf6f1ccaeac7c278a7a19aba6ce16759a139f26"
+    "sourceFingerprint": "cb5b861bf50e810b59cd38c2fcf6f1ccaeac7c278a7a19aba6ce16759a139f26",
+    "images": {
+      "off": "question-images/q200.webp",
+      "open": "question-images/q200.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "201",
@@ -59629,7 +60829,13 @@
     "sourceTw": 2,
     "sourceTs": 2,
     "sourceTv": 46,
-    "sourceFingerprint": "7df25169572feb89061390672a08f6bd8d07874843375631b49ebf12b2b3506f"
+    "sourceFingerprint": "7df25169572feb89061390672a08f6bd8d07874843375631b49ebf12b2b3506f",
+    "images": {
+      "off": "question-images/q201.webp",
+      "open": "question-images/q201.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "202",
@@ -59968,7 +61174,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "30628bae28f20ee686086a5fd1173b688442704e1dfad76541a99cd1c1c21dfd"
+    "sourceFingerprint": "30628bae28f20ee686086a5fd1173b688442704e1dfad76541a99cd1c1c21dfd",
+    "images": {
+      "off": "question-images/q202.webp",
+      "open": "question-images/q202.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "203",
@@ -60267,7 +61479,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "7234bd461113d7b57a0b9275e21ccfc47932e2ad37d2ce12e728d88154b51fae"
+    "sourceFingerprint": "7234bd461113d7b57a0b9275e21ccfc47932e2ad37d2ce12e728d88154b51fae",
+    "images": {
+      "off": "question-images/q203.webp",
+      "open": "question-images/q203.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "204",
@@ -60566,7 +61784,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "ec7f7670ba9670bc1342678c34b9615bd7d30d66bf2e9f1a4ae268500213560c"
+    "sourceFingerprint": "ec7f7670ba9670bc1342678c34b9615bd7d30d66bf2e9f1a4ae268500213560c",
+    "images": {
+      "off": "question-images/q204.webp",
+      "open": "question-images/q204.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "205",
@@ -60903,7 +62127,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "07f6e91c06fd1d8cfd4cd8c541cb2678a1a2288df7761300d3bb7100566a93fe"
+    "sourceFingerprint": "07f6e91c06fd1d8cfd4cd8c541cb2678a1a2288df7761300d3bb7100566a93fe",
+    "images": {
+      "off": "question-images/q205.webp",
+      "open": "question-images/q205.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "206",
@@ -61204,7 +62434,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "9d0ca584006d5115f27324dec041a83b67017870a0ac9bc60f22aac6ee945b7c"
+    "sourceFingerprint": "9d0ca584006d5115f27324dec041a83b67017870a0ac9bc60f22aac6ee945b7c",
+    "images": {
+      "off": "question-images/q206.webp",
+      "open": "question-images/q206.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "207",
@@ -61510,7 +62746,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "f0ba854910c4ff7ab19b29779418a8ecab993b617b60ee6c5c6459d64187c630"
+    "sourceFingerprint": "f0ba854910c4ff7ab19b29779418a8ecab993b617b60ee6c5c6459d64187c630",
+    "images": {
+      "off": "question-images/q207.webp",
+      "open": "question-images/q207.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "208",
@@ -61797,7 +63039,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "2398b580dedda26533c25e4ef0e448c2908f276cda6df07eb74b50739ffe21a8"
+    "sourceFingerprint": "2398b580dedda26533c25e4ef0e448c2908f276cda6df07eb74b50739ffe21a8",
+    "images": {
+      "off": "question-images/q208.webp",
+      "open": "question-images/q208.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "209",
@@ -62089,7 +63337,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "c3c164d00e64e3dbde7b737d73ee12c3c330c8d9556d124ed31ff0dc9895e602"
+    "sourceFingerprint": "c3c164d00e64e3dbde7b737d73ee12c3c330c8d9556d124ed31ff0dc9895e602",
+    "images": {
+      "off": "question-images/q209.webp",
+      "open": "question-images/q209.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "210",
@@ -62402,7 +63656,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "8806b86acef3477597478bb1e8889bd64606ae339592f719a47706f4a3edf0db"
+    "sourceFingerprint": "8806b86acef3477597478bb1e8889bd64606ae339592f719a47706f4a3edf0db",
+    "images": {
+      "off": "question-images/q210.webp",
+      "open": "question-images/q210.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "211",
@@ -62703,7 +63963,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "00a7c7e9cc59b293a743e05d7f79f726e757c93c86c9cc5c0cc1dadee9564aba"
+    "sourceFingerprint": "00a7c7e9cc59b293a743e05d7f79f726e757c93c86c9cc5c0cc1dadee9564aba",
+    "images": {
+      "off": "question-images/q211.webp",
+      "open": "question-images/q211.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "212",
@@ -62997,7 +64263,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "eab53a099370ac4da2981cdd8884924e46b3c003158e635251ffc4eb453f9e91"
+    "sourceFingerprint": "eab53a099370ac4da2981cdd8884924e46b3c003158e635251ffc4eb453f9e91",
+    "images": {
+      "off": "question-images/q212.webp",
+      "open": "question-images/q212.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "213",
@@ -63163,7 +64435,13 @@
     "sourceTw": 0,
     "sourceTs": 10,
     "sourceTv": 76,
-    "sourceFingerprint": "0e95ce6865553009008fcd650699fe9849e48a8f5e9f639396f2fc0bf9874a8d"
+    "sourceFingerprint": "0e95ce6865553009008fcd650699fe9849e48a8f5e9f639396f2fc0bf9874a8d",
+    "images": {
+      "off": "question-images/q213.webp",
+      "open": "question-images/q213.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "214",
@@ -63321,7 +64599,13 @@
     "sourceTw": 0,
     "sourceTs": 0,
     "sourceTv": 68,
-    "sourceFingerprint": "0674a8cfc6885c5b07b4bbf708c540fc2654e57025da85a8230d0fc8f73dbdac"
+    "sourceFingerprint": "0674a8cfc6885c5b07b4bbf708c540fc2654e57025da85a8230d0fc8f73dbdac",
+    "images": {
+      "off": "question-images/q214.webp",
+      "open": "question-images/q214.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "215",
@@ -63625,7 +64909,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "1806be7062ad93eef19307c67aaca20afc5f459a0e27c70276968b73a6bf0ee1"
+    "sourceFingerprint": "1806be7062ad93eef19307c67aaca20afc5f459a0e27c70276968b73a6bf0ee1",
+    "images": {
+      "off": "question-images/q215.webp",
+      "open": "question-images/q215.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "216",
@@ -63947,7 +65237,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "c720031ec9c0bbb8fd7b349409f80113bd61cc47ff46630f9b350e3780cf1559"
+    "sourceFingerprint": "c720031ec9c0bbb8fd7b349409f80113bd61cc47ff46630f9b350e3780cf1559",
+    "images": {
+      "off": "question-images/q216.webp",
+      "open": "question-images/q216.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "217",
@@ -64241,7 +65537,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "a3c5d9191f748ed0fd8a087d12f261ed2182acbf59fec3230cbbadad17387c59"
+    "sourceFingerprint": "a3c5d9191f748ed0fd8a087d12f261ed2182acbf59fec3230cbbadad17387c59",
+    "images": {
+      "off": "question-images/q217.webp",
+      "open": "question-images/q217.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "218",
@@ -64523,7 +65825,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "79e8d3770833123dfe77e47712bf60807618b7b5062f9032f5ee2b9236eb4f55"
+    "sourceFingerprint": "79e8d3770833123dfe77e47712bf60807618b7b5062f9032f5ee2b9236eb4f55",
+    "images": {
+      "off": "question-images/q218.webp",
+      "open": "question-images/q218.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "219",
@@ -64836,7 +66144,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "c03f393943b8ae81bc820ca7cc05b96e91a7d2763045932e1dc96096d87da67a"
+    "sourceFingerprint": "c03f393943b8ae81bc820ca7cc05b96e91a7d2763045932e1dc96096d87da67a",
+    "images": {
+      "off": "question-images/q219.webp",
+      "open": "question-images/q219.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "220",
@@ -65017,7 +66331,13 @@
     "sourceTw": 2,
     "sourceTs": 0,
     "sourceTv": 88,
-    "sourceFingerprint": "1b8b0e8f91af993c374007d867677ee85122fc62f07e409ad63cdc31dc0a7ca7"
+    "sourceFingerprint": "1b8b0e8f91af993c374007d867677ee85122fc62f07e409ad63cdc31dc0a7ca7",
+    "images": {
+      "off": "question-images/q220.webp",
+      "open": "question-images/q220.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "221",
@@ -65324,7 +66644,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "88adf7d9ec7e468af9f5ce1b10c2f4dcfa98c2bdd6e803bd5db342815a9459db"
+    "sourceFingerprint": "88adf7d9ec7e468af9f5ce1b10c2f4dcfa98c2bdd6e803bd5db342815a9459db",
+    "images": {
+      "off": "question-images/q221.webp",
+      "open": "question-images/q221.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "222",
@@ -65625,7 +66951,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "49947a3a899e82473dd993b4374f181af2832508ee5533c094977427a7977ff6"
+    "sourceFingerprint": "49947a3a899e82473dd993b4374f181af2832508ee5533c094977427a7977ff6",
+    "images": {
+      "off": "question-images/q222.webp",
+      "open": "question-images/q222.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "223",
@@ -65914,7 +67246,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "ea8524cca0a6f2f8d40a3fae0ff81278f3b34f894fe2a849846dc08c7315be0f"
+    "sourceFingerprint": "ea8524cca0a6f2f8d40a3fae0ff81278f3b34f894fe2a849846dc08c7315be0f",
+    "images": {
+      "off": "question-images/q223.webp",
+      "open": "question-images/q223.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "224",
@@ -66231,7 +67569,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "18216daaebb6797cf1bcdf4db187698de202b8484ca29fe8d7af14e68dd168c3"
+    "sourceFingerprint": "18216daaebb6797cf1bcdf4db187698de202b8484ca29fe8d7af14e68dd168c3",
+    "images": {
+      "off": "question-images/q224.webp",
+      "open": "question-images/q224.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "225",
@@ -66544,7 +67888,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "21f5ffb6716d5fe9f2b23274e2648d40eb285d9c31860dab01ca0ed7c25a2e29"
+    "sourceFingerprint": "21f5ffb6716d5fe9f2b23274e2648d40eb285d9c31860dab01ca0ed7c25a2e29",
+    "images": {
+      "off": "question-images/q225.webp",
+      "open": "question-images/q225.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "226",
@@ -66826,7 +68176,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "b1c0abcef6f888f5ea00f39b63d3cf36a7ba50baab48bc76726d6c9ae7e0f147"
+    "sourceFingerprint": "b1c0abcef6f888f5ea00f39b63d3cf36a7ba50baab48bc76726d6c9ae7e0f147",
+    "images": {
+      "off": "question-images/q226.webp",
+      "open": "question-images/q226.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "227",
@@ -67132,7 +68488,13 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "e1e281648ef64c7207241edb1fb05f56d79a026179feef22f3ae81058057cd31"
+    "sourceFingerprint": "e1e281648ef64c7207241edb1fb05f56d79a026179feef22f3ae81058057cd31",
+    "images": {
+      "off": "question-images/q227.webp",
+      "open": "question-images/q227.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   },
   {
     "id": "228",
@@ -67490,6 +68852,12 @@
     "actualDecision": null,
     "actualCallProbability": null,
     "actualCallProbabilityRaw": null,
-    "sourceFingerprint": "f3b36403ff7efc95f59d5289a5254f5254250b77ddcb980e490fc901d46080d4"
+    "sourceFingerprint": "f3b36403ff7efc95f59d5289a5254f5254250b77ddcb980e490fc901d46080d4",
+    "images": {
+      "off": "question-images/q228.webp",
+      "open": "question-images/q228.webp"
+    },
+    "imageSource": "naga_url",
+    "imageSourceRuleVersion": "naga-url-capture-v2"
   }
 ]

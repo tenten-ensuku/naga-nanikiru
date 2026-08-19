@@ -1784,7 +1784,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 127;
+    const APP_VERSION = 128;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -1846,6 +1846,17 @@
       if (action === "kan") return "カン";
       if (action === "call") return "鳴く";
       return "スルー";
+    }
+
+    // 副露判断の採点・投票は、チー/ポン/カンの細かな種別ではなく、
+    // 「鳴く」か「スルー」かの二択で統一する。回答ボタンだけは、
+    // カン問題の具体的な選択肢を残しておく。
+    function callBinaryKindV128(action) {
+      return normalizeCallActionV112(action) === "pass" ? "pass" : "call";
+    }
+
+    function callBinaryLabelV128(action) {
+      return callBinaryKindV128(action) === "pass" ? "スルー" : "鳴く";
     }
 
     function questionCallActionV112(question, index) {
@@ -2760,7 +2771,8 @@
         { version: 121, date: "2026-08-19", publishedAt: "2026-08-19T01:49:52+09:00", title: "垣崎にま問題集のマスク位置を改善しました", body: "副露がある局面では、画像の青色成分も用いて元画像の手牌マスクを検出するようにしました。画像下端まで続くマスクにも対応し、元の局面に合わせて手牌を配置します。" },
         { version: 123, date: "2026-08-19", publishedAt: "2026-08-19T02:10:38+09:00", title: "垣崎にま問題集のリーチ判断を補正しました", body: "NAGAの推奨率だけでなく、局面直後に実際のリーチ操作が行われた場合もリーチ判断として扱い、問題22・35にもリーチ選択肢とジャンルタグを表示します。" },
         { version: 124, date: "2026-08-19", publishedAt: "2026-08-19T08:10:26+09:00", title: "副露判断の表記を分かりやすくしました", body: "副露しない選択肢を「スルー」に統一し、解説内の数値を「副露推奨度」として表示します。副露推奨度が50％以下の場合はスルー推奨です。" },
-        { version: APP_VERSION, date: "2026-08-19", publishedAt: "2026-08-19T17:50:43+09:00", title: "コメント画像の取り込みを全問題集で再監査しました", body: "スレッド作成者がスレッド全体で最初に投稿した画像1枚と最初のNAGA URLだけを除外し、それ以外の画像・文章・後続URLを漏れなく解説へ転送するルールを、くにたそ・垣崎にま・ピエールの全問題に適用して再生成しました。" }
+        { version: 127, date: "2026-08-19", publishedAt: "2026-08-19T17:50:43+09:00", title: "コメント画像の取り込みを全問題集で再監査しました", body: "スレッド作成者がスレッド全体で最初に投稿した画像1枚と最初のNAGA URLだけを除外し、それ以外の画像・文章・後続URLを漏れなく解説へ転送するルールを、くにたそ・垣崎にま・ピエールの全問題に適用して再生成しました。" },
+        { version: APP_VERSION, date: "2026-08-19", publishedAt: "2026-08-19T21:47:44+09:00", title: "副露判定と局面画像のルールを統一しました", body: "副露判定の採点とみんなの回答を「鳴く／スルー」の二択に統一しました。また、くにたそ・垣崎にま・ピエールの全問題画像を、投稿画像ではなく各NAGA局面URLから青背景・伏牌状態で再生成し、副露数ごとのマスク基準を適用しました。" }
       ];
       let commentNoticeStoreV65 = loadCommentNoticeStoreV65();
       let sharedCommentRowsV65 = [];
@@ -4197,7 +4209,7 @@
           riichi: state.riichi,
           judgeModel: SCENE.models?.[state.judgeModel]?.name || "ニシキ",
           sessionId: userStateV16.activeSessionId || null,
-          scoreRuleVersion: 1,
+          scoreRuleVersion: 2,
           scoreMark: score.mark,
           scoreLabel: score.label
         };
@@ -4254,15 +4266,13 @@
         if (question.decisionType === "call") {
           const selectedAction = normalizeCallActionV112(entry.callDecision);
           if (!selectedAction) return null;
-          const modelNames = models.filter((model, index) => questionCallActionV112(question, index) === selectedAction).map(model => model.name);
+          const selectedKind = callBinaryKindV128(selectedAction);
+          const modelNames = models.filter((model, index) => callBinaryKindV128(questionCallActionV112(question, index)) === selectedKind).map(model => model.name);
           const modelMatch = modelNames.length ? `◎ ${modelNames.join("・")}と一致！！` : "";
-          const recommended = questionCallActionV112(question, judgeIndex);
-          if (selectedAction === recommended) return { mark: "💮", label: "第一推奨と一致", modelMatch };
-          const probabilities = models.map((model, index) => questionCallProbabilityV112(question, selectedAction, index));
-          const badCount = probabilities.filter(value => value <= 5).length;
-          if (badCount === 0) return { mark: "〇", label: "全モデル悪手（推奨率5％以下）回避", modelMatch };
-          if (badCount === models.length) return { mark: "×", label: "全モデル悪手判定", modelMatch };
-          return { mark: "△", label: "特定モデルの悪手は回避", modelMatch };
+          const targetKind = callBinaryKindV128(questionCallActionV112(question, judgeIndex));
+          if (selectedKind === targetKind) return { mark: "💮", label: "第一推奨と一致", modelMatch };
+          if (modelNames.length) return { mark: "△", label: "他モデルの第一推奨と一致", modelMatch };
+          return { mark: "×", label: "全モデルと不一致", modelMatch };
         }
         const modelNames = models.filter(model => model.recommendation === entry.selected).map(model => model.name);
         const modelMatch = modelNames.length ? `◎ ${modelNames.join("・")}と一致！！` : "";
@@ -4281,12 +4291,13 @@
       function migrateAnswerHistoryScoresV16() {
         let changed = false;
         for (const entry of userStateV16.answerHistory) {
-          if (entry.scoreMark) continue;
+          if (entry.scoreMark && Number(entry.scoreRuleVersion || 0) >= 2) continue;
           const question = questionsV16.find(candidate => questionKeyV16(candidate) === entry.questionKey);
           const score = question ? scoreForQuestionV16(question, entry) : null;
           if (!score) continue;
           entry.scoreMark = score.mark;
           entry.scoreLabel = score.label;
+          entry.scoreRuleVersion = 2;
           changed = true;
         }
         if (changed) saveUserStateV16();
@@ -4428,15 +4439,13 @@
       function choiceScoreV16() {
         if (SCENE.decisionType === "call") {
           const selectedAction = selectedCallActionV112();
-          const modelNames = SCENE.models.filter((model, index) => callActionRecommendationV112(index) === selectedAction).map(model => model.name);
+          const selectedKind = callBinaryKindV128(selectedAction);
+          const modelNames = SCENE.models.filter((model, index) => callBinaryKindV128(callActionRecommendationV112(index)) === selectedKind).map(model => model.name);
           const modelMatch = modelNames.length ? `◎ ${modelNames.join("・")}と一致！！` : "";
-          const first = selectedAction && selectedAction === callActionRecommendationV112(state.judgeModel);
+          const first = selectedKind === callBinaryKindV128(callActionRecommendationV112(state.judgeModel));
           if (first) return { className: "score-first", mark: "💮", label: "第一推奨と一致", modelMatch };
-          const probabilities = SCENE.models.map((model, index) => callActionProbabilityV112(selectedAction, index));
-          const badCount = probabilities.filter(value => value <= 5).length;
-          if (badCount === 0) return { className: "score-safe", mark: "〇", label: "全モデル悪手（推奨率5％以下）回避", modelMatch };
-          if (badCount === SCENE.models.length) return { className: "score-bad", mark: "×", label: "全モデル悪手判定", modelMatch };
-          return { className: "score-partial", mark: "△", label: "特定モデルの悪手は回避", modelMatch };
+          if (modelNames.length) return { className: "score-partial", mark: "△", label: "他モデルの第一推奨と一致", modelMatch };
+          return { className: "score-bad", mark: "×", label: "全モデルと不一致", modelMatch };
         }
         const judge = SCENE.models[state.judgeModel];
         const modelNames = SCENE.models.filter(model => model.recommendation === state.selected).map(model => model.name);
@@ -4533,8 +4542,19 @@
         if (!panel || !summary || !content) return;
         const total = Math.max(0, Number(stats?.sample_size) || 0);
         const counts = stats?.choice_counts && typeof stats.choice_counts === "object" ? stats.choice_counts : {};
-        const entries = Object.entries(counts)
-          .map(([key, rawCount]) => ({ key, count: Math.max(0, Number(rawCount) || 0) }))
+        const normalizedCounts = new Map();
+        for (const [rawKey, rawCount] of Object.entries(counts)) {
+          const count = Math.max(0, Number(rawCount) || 0);
+          if (!count) continue;
+          let key = rawKey;
+          if (SCENE.decisionType === "call") {
+            const action = normalizeCallActionV112(rawKey.replace(/^call:/, ""));
+            key = action === "pass" ? "call:no" : "call:yes";
+          }
+          normalizedCounts.set(key, (normalizedCounts.get(key) || 0) + count);
+        }
+        const entries = [...normalizedCounts.entries()]
+          .map(([key, count]) => ({ key, count }))
           .filter(entry => entry.count > 0)
           .sort((left, right) => right.count - left.count || left.key.localeCompare(right.key));
         panel.hidden = false;
@@ -4623,21 +4643,21 @@
         if (SCENE.decisionType === "call") {
           const selectedAction = selectedCallActionV112();
           const correctAction = callActionRecommendationV112(state.judgeModel);
-          const isCallCorrect = selectedAction === correctAction;
-          const selectedLabel = callActionLabelV112(selectedAction);
-          const correctLabel = callActionLabelV112(correctAction);
+          const isCallCorrect = callBinaryKindV128(selectedAction) === callBinaryKindV128(correctAction);
+          const selectedLabel = callBinaryLabelV128(selectedAction);
+          const correctLabel = callBinaryLabelV128(correctAction);
           document.getElementById("answerTitle").textContent = isCallCorrect ? `正解：${selectedLabel}` : `推奨：${correctLabel}`;
           const historicalAction = normalizeCallActionV112(SCENE.actualCallAction) || (typeof SCENE.actualCall === "boolean" ? (SCENE.actualCall ? "call" : "pass") : null);
-          const historicalCallDetail = historicalAction ? ` ／ 当時の選択：${callActionLabelV112(historicalAction)}` : "";
-          document.getElementById("answerDetail").textContent = `副露判断：${SCENE.callTile ? tileLabel(SCENE.callTile) + "に対して" : ""}${selectedLabel}${historicalCallDetail} ／ 副露推奨度50％以下はスルー推奨`;
+          const historicalCallDetail = historicalAction ? ` ／ 当時の選択：${callBinaryLabelV128(historicalAction)}` : "";
+          document.getElementById("answerDetail").textContent = `副露判断：${SCENE.callTile ? tileLabel(SCENE.callTile) + "に対して" : ""}${selectedLabel}${historicalCallDetail}`;
           const topCallModelIndices = priorityIndicesV16(3);
           const playerCallCard = `<div class="answer-choice player-choice"><span class="answer-choice-label">あなたの選択</span><strong class="call-answer-value">${selectedLabel}</strong></div>`;
-          const historicalCallCard = historicalAction ? `<div class="answer-choice historical-choice"><span class="answer-choice-label">当時の選択</span><strong class="call-answer-value">${callActionLabelV112(historicalAction)}</strong></div>` : "";
+          const historicalCallCard = historicalAction ? `<div class="answer-choice historical-choice"><span class="answer-choice-label">当時の選択</span><strong class="call-answer-value">${callBinaryLabelV128(historicalAction)}</strong></div>` : "";
           const callModelCards = topCallModelIndices.map(index => {
             const model = SCENE.models[index];
             const recommendation = callActionRecommendationV112(index);
             const value = callRecommendationProbabilityV112(index);
-            return `<div class="answer-choice model-choice"><span class="answer-choice-label">${model.name}・第一推奨</span><strong class="call-answer-value">${callActionLabelV112(recommendation)}</strong><div class="answer-choice-reach" aria-label="${model.name}の副露推奨度。50パーセント以下はスルー推奨"><span class="answer-choice-reach-label">副露推奨度 ${value.toFixed(1)}%</span><span class="answer-choice-reach-track"><span class="answer-choice-reach-fill ${modelColorV16(index)}" style="width:${value}%"></span></span></div></div>`;
+            return `<div class="answer-choice model-choice"><span class="answer-choice-label">${model.name}・第一推奨</span><strong class="call-answer-value">${callBinaryLabelV128(recommendation)}</strong><div class="answer-choice-reach" aria-label="${model.name}の副露推奨度"><span class="answer-choice-reach-label">副露推奨度 ${value.toFixed(1)}%</span><span class="answer-choice-reach-track"><span class="answer-choice-reach-fill ${modelColorV16(index)}" style="width:${value}%"></span></span></div></div>`;
           }).join("");
           document.getElementById("answerComparison").innerHTML = `${playerCallCard}${historicalCallCard}${callModelCards}`;
           document.getElementById("riichiPanels").innerHTML = "";
@@ -4731,22 +4751,22 @@
         renderAnswerV16();
       }
 
+      // NAGA局面URLから取得した標準画像で、手牌マスクの基準範囲を副露数ごとに固定する。
+      // 画像内の暗色パネルを検出できない場合も、この基準で描画するため、投稿者の
+      // スクリーンショットの切り取り範囲や背景色に引きずられない。
+      const HAND_MASK_PRESETS_V128 = Object.freeze({
+        0: { left: 11.5, top: 79.3, width: 67.8, height: 20.7, topColor: "#06254a", bottomColor: "#02244c" },
+        1: { left: 11.5, top: 78.0, width: 54.5, height: 20.5, topColor: "#022045", bottomColor: "#021d41" },
+        2: { left: 12.1, top: 78.0, width: 41.4, height: 20.5, topColor: "#022045", bottomColor: "#021d41" },
+        3: { left: 12.1, top: 78.0, width: 32.5, height: 20.5, topColor: "#022045", bottomColor: "#021d41" },
+        4: { left: 12.1, top: 78.0, width: 26.5, height: 20.5, topColor: "#022045", bottomColor: "#021d41" },
+        5: { left: 12.1, top: 78.0, width: 22.5, height: 20.5, topColor: "#022045", bottomColor: "#021d41" }
+      });
+
       function handMaskFallbackV17(question) {
-        const meldCount = Array.isArray(question?.melds) ? question.melds.length : 0;
-        const closedCount = Array.isArray(question?.handBeforeDraw) ? question.handBeforeDraw.length : 0;
-        const hasDraw = Boolean(question?.draw);
-        if (meldCount === 0) {
-          return { left: 11.5, top: 79.3, width: 67.8, height: 20.7, topColor: "#06254a", bottomColor: "#02244c" };
-        }
-        const compactPanel = meldCount > 1 && closedCount + (hasDraw ? 1 : 0) <= 8;
-        return {
-          left: compactPanel ? 12.1 : 11.5,
-          top: 78,
-          width: compactPanel ? 41.4 : (hasDraw ? 54.5 : 62.5),
-          height: 20.5,
-          topColor: "#022045",
-          bottomColor: "#021d41"
-        };
+        const meldCount = Math.max(0, Array.isArray(question?.melds) ? question.melds.length : 0);
+        const preset = HAND_MASK_PRESETS_V128[Math.min(meldCount, 5)] || HAND_MASK_PRESETS_V128[5];
+        return { ...preset };
       }
 
       function rgbHexV17(rgb) {
