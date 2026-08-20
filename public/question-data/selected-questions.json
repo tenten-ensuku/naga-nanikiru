@@ -316,7 +316,8 @@
       "open": "question-images/q001.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "002",
@@ -603,7 +604,8 @@
       "open": "question-images/q002.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "003",
@@ -884,7 +886,8 @@
       "open": "question-images/q003.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "004",
@@ -1189,7 +1192,8 @@
       "open": "question-images/q004.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "005",
@@ -1470,7 +1474,8 @@
       "open": "question-images/q005.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "006",
@@ -1782,7 +1787,8 @@
       "open": "question-images/q006.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "007",
@@ -2089,7 +2095,8 @@
       "open": "question-images/q007.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "008",
@@ -2432,7 +2439,8 @@
       "open": "question-images/q008.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "009",
@@ -2732,7 +2740,8 @@
       "open": "question-images/q009.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "010",
@@ -3122,7 +3131,8 @@
       "open": "question-images/q010.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "011",
@@ -3429,7 +3439,8 @@
       "open": "question-images/q011.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "012",
@@ -3715,7 +3726,8 @@
       "open": "question-images/q012.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "013",
@@ -4014,7 +4026,8 @@
       "open": "question-images/q013.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "014",
@@ -4309,7 +4322,8 @@
       "open": "question-images/q014.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "015",
@@ -4637,7 +4651,8 @@
       "open": "question-images/q015.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "016",
@@ -4939,7 +4954,8 @@
       "open": "question-images/q016.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "017",
@@ -5220,7 +5236,8 @@
       "open": "question-images/q017.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "018",
@@ -5534,7 +5551,8 @@
       "open": "question-images/q018.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "019",
@@ -5820,7 +5838,8 @@
       "open": "question-images/q019.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "020",
@@ -6120,7 +6139,8 @@
       "open": "question-images/q020.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "021",
@@ -6417,7 +6437,8 @@
       "open": "question-images/q021.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "022",
@@ -6698,7 +6719,8 @@
       "open": "question-images/q022.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "023",
@@ -6986,7 +7008,8 @@
       "open": "question-images/q023.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "024",
@@ -7265,7 +7288,8 @@
       "open": "question-images/q024.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "025",
@@ -7551,7 +7575,8 @@
       "open": "question-images/q025.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "026",
@@ -7832,7 +7857,8 @@
       "open": "question-images/q026.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "027",
@@ -8133,7 +8159,8 @@
       "open": "question-images/q027.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "028",
@@ -8447,7 +8474,8 @@
       "open": "question-images/q028.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "029",
@@ -8735,7 +8763,8 @@
       "open": "question-images/q029.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "030",
@@ -9016,7 +9045,8 @@
       "open": "question-images/q030.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "031",
@@ -9316,7 +9346,8 @@
       "open": "question-images/q031.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "032",
@@ -9621,7 +9652,8 @@
       "open": "question-images/q032.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "033",
@@ -9938,7 +9970,8 @@
       "open": "question-images/q033.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "034",
@@ -10212,7 +10245,8 @@
       "open": "question-images/q034.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "035",
@@ -10512,7 +10546,8 @@
       "open": "question-images/q035.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "036",
@@ -10800,7 +10835,8 @@
       "open": "question-images/q036.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "037",
@@ -11081,7 +11117,8 @@
       "open": "question-images/q037.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "038",
@@ -11368,7 +11405,8 @@
       "open": "question-images/q038.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "039",
@@ -11654,7 +11692,8 @@
       "open": "question-images/q039.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "040",
@@ -11954,7 +11993,8 @@
       "open": "question-images/q040.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "041",
@@ -12240,7 +12280,8 @@
       "open": "question-images/q041.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "042",
@@ -12521,7 +12562,8 @@
       "open": "question-images/q042.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "043",
@@ -12802,7 +12844,8 @@
       "open": "question-images/q043.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "044",
@@ -13083,7 +13126,8 @@
       "open": "question-images/q044.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "045",
@@ -13364,7 +13408,8 @@
       "open": "question-images/q045.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "046",
@@ -13650,7 +13695,8 @@
       "open": "question-images/q046.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "047",
@@ -13986,7 +14032,8 @@
       "open": "question-images/q047.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "048",
@@ -14273,7 +14320,8 @@
       "open": "question-images/q048.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "049",
@@ -14566,7 +14614,8 @@
       "open": "question-images/q049.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "050",
@@ -14871,7 +14920,8 @@
       "open": "question-images/q050.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "051",
@@ -15164,7 +15214,8 @@
       "open": "question-images/q051.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "052",
@@ -15445,7 +15496,8 @@
       "open": "question-images/q052.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "053",
@@ -15726,7 +15778,8 @@
       "open": "question-images/q053.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "054",
@@ -16014,7 +16067,8 @@
       "open": "question-images/q054.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "055",
@@ -16302,7 +16356,8 @@
       "open": "question-images/q055.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "056",
@@ -16583,7 +16638,8 @@
       "open": "question-images/q056.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "057",
@@ -16895,7 +16951,8 @@
       "open": "question-images/q057.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "058",
@@ -17138,7 +17195,8 @@
       "open": "question-images/q058.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "059",
@@ -17385,7 +17443,8 @@
       "open": "question-images/q059.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "060",
@@ -17516,7 +17575,8 @@
       "open": "question-images/q060.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "061",
@@ -17774,7 +17834,8 @@
       "open": "question-images/q061.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "062",
@@ -18019,7 +18080,8 @@
       "open": "question-images/q062.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "063",
@@ -18300,7 +18362,8 @@
       "open": "question-images/q063.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "064",
@@ -18490,7 +18553,8 @@
       "open": "question-images/q064.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "065",
@@ -18880,7 +18944,8 @@
       "open": "question-images/q065.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "066",
@@ -19245,7 +19310,8 @@
       "open": "question-images/q066.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "067",
@@ -19545,7 +19611,8 @@
       "open": "question-images/q067.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "068",
@@ -19840,7 +19907,8 @@
       "open": "question-images/q068.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "069",
@@ -20037,7 +20105,8 @@
       "open": "question-images/q069.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "070",
@@ -20384,7 +20453,8 @@
       "open": "question-images/q070.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "071",
@@ -20682,7 +20752,8 @@
       "open": "question-images/q071.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "072",
@@ -21020,7 +21091,8 @@
       "open": "question-images/q072.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "073",
@@ -21327,7 +21399,8 @@
       "open": "question-images/q073.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "074",
@@ -21620,7 +21693,8 @@
       "open": "question-images/q074.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "075",
@@ -21925,7 +21999,8 @@
       "open": "question-images/q075.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "076",
@@ -22218,7 +22293,8 @@
       "open": "question-images/q076.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "077",
@@ -22562,7 +22638,8 @@
       "open": "question-images/q077.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "078",
@@ -22876,7 +22953,8 @@
       "open": "question-images/q078.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "079",
@@ -23230,7 +23308,8 @@
       "open": "question-images/q079.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "080",
@@ -23523,7 +23602,8 @@
       "open": "question-images/q080.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "081",
@@ -23821,7 +23901,8 @@
       "open": "question-images/q081.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "082",
@@ -24140,7 +24221,8 @@
       "open": "question-images/q082.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "083",
@@ -24458,7 +24540,8 @@
       "open": "question-images/q083.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "084",
@@ -24862,7 +24945,8 @@
       "open": "question-images/q084.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "085",
@@ -25265,7 +25349,8 @@
       "open": "question-images/q085.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "086",
@@ -25656,7 +25741,8 @@
       "open": "question-images/q086.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "087",
@@ -26039,7 +26125,8 @@
       "open": "question-images/q087.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "088",
@@ -26437,7 +26524,8 @@
       "open": "question-images/q088.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "089",
@@ -26814,7 +26902,8 @@
       "open": "question-images/q089.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "090",
@@ -27198,7 +27287,8 @@
       "open": "question-images/q090.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "091",
@@ -27606,7 +27696,8 @@
       "open": "question-images/q091.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "092",
@@ -28009,7 +28100,8 @@
       "open": "question-images/q092.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "093",
@@ -28411,7 +28503,8 @@
       "open": "question-images/q093.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "094",
@@ -28735,7 +28828,8 @@
       "open": "question-images/q094.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "095",
@@ -29028,7 +29122,8 @@
       "open": "question-images/q095.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "096",
@@ -29321,7 +29416,8 @@
       "open": "question-images/q096.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "097",
@@ -29652,7 +29748,8 @@
       "open": "question-images/q097.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "098",
@@ -29945,7 +30042,8 @@
       "open": "question-images/q098.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "099",
@@ -30238,7 +30336,8 @@
       "open": "question-images/q099.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "100",
@@ -30622,7 +30721,8 @@
       "open": "question-images/q100.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "101",
@@ -30807,7 +30907,8 @@
       "open": "question-images/q101.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "102",
@@ -30992,7 +31093,8 @@
       "open": "question-images/q102.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "103",
@@ -31369,7 +31471,8 @@
       "open": "question-images/q103.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "104",
@@ -31753,7 +31856,8 @@
       "open": "question-images/q104.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "105",
@@ -32149,7 +32253,8 @@
       "open": "question-images/q105.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "106",
@@ -32526,7 +32631,8 @@
       "open": "question-images/q106.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "107",
@@ -32711,7 +32817,8 @@
       "open": "question-images/q107.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "108",
@@ -33095,7 +33202,8 @@
       "open": "question-images/q108.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "109",
@@ -33505,7 +33613,8 @@
       "open": "question-images/q109.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "110",
@@ -33810,7 +33919,8 @@
       "open": "question-images/q110.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "111",
@@ -34129,7 +34239,8 @@
       "open": "question-images/q111.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "112",
@@ -34458,7 +34569,8 @@
       "open": "question-images/q112.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "113",
@@ -34803,7 +34915,8 @@
       "open": "question-images/q113.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "114",
@@ -35115,7 +35228,8 @@
       "open": "question-images/q114.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "115",
@@ -35427,7 +35541,8 @@
       "open": "question-images/q115.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "116",
@@ -35758,7 +35873,8 @@
       "open": "question-images/q116.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "117",
@@ -36051,7 +36167,8 @@
       "open": "question-images/q117.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "118",
@@ -36344,7 +36461,8 @@
       "open": "question-images/q118.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "119",
@@ -36701,7 +36819,8 @@
       "open": "question-images/q119.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "120",
@@ -36982,7 +37101,8 @@
       "open": "question-images/q120.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "121",
@@ -37275,7 +37395,8 @@
       "open": "question-images/q121.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "122",
@@ -37568,7 +37689,8 @@
       "open": "question-images/q122.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "123",
@@ -37866,7 +37988,8 @@
       "open": "question-images/q123.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "124",
@@ -38170,7 +38293,8 @@
       "open": "question-images/q124.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "125",
@@ -38468,7 +38592,8 @@
       "open": "question-images/q125.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "126",
@@ -38668,7 +38793,8 @@
       "open": "question-images/q126.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "127",
@@ -38982,7 +39108,8 @@
       "open": "question-images/q127.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "128",
@@ -39287,7 +39414,8 @@
       "open": "question-images/q128.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "129",
@@ -39585,7 +39713,8 @@
       "open": "question-images/q129.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "130",
@@ -39895,7 +40024,8 @@
       "open": "question-images/q130.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "131",
@@ -40233,7 +40363,8 @@
       "open": "question-images/q131.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "132",
@@ -40550,7 +40681,8 @@
       "open": "question-images/q132.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "133",
@@ -40850,7 +40982,8 @@
       "open": "question-images/q133.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "134",
@@ -41047,7 +41180,8 @@
       "open": "question-images/q134.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "135",
@@ -41369,7 +41503,8 @@
       "open": "question-images/q135.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "136",
@@ -41681,7 +41816,8 @@
       "open": "question-images/q136.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "137",
@@ -41993,7 +42129,8 @@
       "open": "question-images/q137.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "138",
@@ -42305,7 +42442,8 @@
       "open": "question-images/q138.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "139",
@@ -42457,7 +42595,8 @@
       "open": "question-images/q158.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "140",
@@ -42834,7 +42973,8 @@
       "open": "question-images/q140.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "141",
@@ -43230,7 +43370,8 @@
       "open": "question-images/q141.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "142",
@@ -43614,7 +43755,8 @@
       "open": "question-images/q142.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "143",
@@ -44031,7 +44173,8 @@
       "open": "question-images/q143.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "144",
@@ -44371,7 +44514,8 @@
       "open": "question-images/q144.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "145",
@@ -44690,7 +44834,8 @@
       "open": "question-images/q145.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "146",
@@ -45014,7 +45159,8 @@
       "open": "question-images/q146.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "147",
@@ -45323,7 +45469,8 @@
       "open": "question-images/q147.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "148",
@@ -45654,7 +45801,8 @@
       "open": "question-images/q148.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "149",
@@ -45959,7 +46107,8 @@
       "open": "question-images/q149.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "150",
@@ -46278,7 +46427,8 @@
       "open": "question-images/q150.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "151",
@@ -46585,7 +46735,8 @@
       "open": "question-images/q151.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "152",
@@ -46878,7 +47029,8 @@
       "open": "question-images/q152.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "153",
@@ -47173,7 +47325,8 @@
       "open": "question-images/q153.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "154",
@@ -47466,7 +47619,8 @@
       "open": "question-images/q154.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "155",
@@ -47771,7 +47925,8 @@
       "open": "question-images/q155.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "156",
@@ -48078,7 +48233,8 @@
       "open": "question-images/q156.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "157",
@@ -48411,7 +48567,8 @@
       "open": "question-images/q157.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "158",
@@ -48723,7 +48880,8 @@
       "open": "question-images/q158.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "159",
@@ -49016,7 +49174,8 @@
       "open": "question-images/q159.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "160",
@@ -49328,7 +49487,8 @@
       "open": "question-images/q160.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "161",
@@ -49647,7 +49807,8 @@
       "open": "question-images/q161.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "162",
@@ -49947,7 +50108,8 @@
       "open": "question-images/q162.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "163",
@@ -50120,7 +50282,8 @@
       "open": "question-images/q163.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "164",
@@ -50420,7 +50583,8 @@
       "open": "question-images/q164.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "165",
@@ -50727,7 +50891,8 @@
       "open": "question-images/q165.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "166",
@@ -51047,7 +51212,8 @@
       "open": "question-images/q166.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "167",
@@ -51378,7 +51544,8 @@
       "open": "question-images/q167.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "168",
@@ -51666,7 +51833,8 @@
       "open": "question-images/q168.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "169",
@@ -51978,7 +52146,8 @@
       "open": "question-images/q169.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "170",
@@ -52130,7 +52299,8 @@
       "open": "question-images/q170.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "171",
@@ -52296,7 +52466,8 @@
       "open": "question-images/q171.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "172",
@@ -52608,7 +52779,8 @@
       "open": "question-images/q172.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "173",
@@ -52784,7 +52956,8 @@
       "open": "question-images/q173.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "174",
@@ -53090,7 +53263,8 @@
       "open": "question-images/q174.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "175",
@@ -53383,7 +53557,8 @@
       "open": "question-images/q175.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "176",
@@ -53676,7 +53851,8 @@
       "open": "question-images/q176.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "177",
@@ -53969,7 +54145,8 @@
       "open": "question-images/q177.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "178",
@@ -54277,7 +54454,8 @@
       "open": "question-images/q178.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "179",
@@ -54579,7 +54757,8 @@
       "open": "question-images/q179.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "180",
@@ -54902,7 +55081,8 @@
       "open": "question-images/q180.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "181",
@@ -55054,7 +55234,8 @@
       "open": "question-images/q181.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "182",
@@ -55347,7 +55528,8 @@
       "open": "question-images/q182.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "183",
@@ -55652,7 +55834,8 @@
       "open": "question-images/q183.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "184",
@@ -55962,7 +56145,8 @@
       "open": "question-images/q184.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "185",
@@ -56269,7 +56453,8 @@
       "open": "question-images/q185.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "186",
@@ -56569,7 +56754,8 @@
       "open": "question-images/q186.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "187",
@@ -56862,7 +57048,8 @@
       "open": "question-images/q187.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "188",
@@ -57155,7 +57342,8 @@
       "open": "question-images/q188.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "189",
@@ -57453,7 +57641,8 @@
       "open": "question-images/q189.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "190",
@@ -57734,7 +57923,8 @@
       "open": "question-images/q190.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "191",
@@ -58015,7 +58205,8 @@
       "open": "question-images/q191.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "192",
@@ -58336,7 +58527,8 @@
       "open": "question-images/q192.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "193",
@@ -58500,7 +58692,8 @@
       "open": "question-images/q193.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "194",
@@ -58806,7 +58999,8 @@
       "open": "question-images/q194.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "195",
@@ -59104,7 +59298,8 @@
       "open": "question-images/q195.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "196",
@@ -59428,7 +59623,8 @@
       "open": "question-images/q196.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "197",
@@ -59728,7 +59924,8 @@
       "open": "question-images/q197.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "198",
@@ -60033,7 +60230,8 @@
       "open": "question-images/q198.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "199",
@@ -60359,7 +60557,8 @@
       "open": "question-images/q199.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "200",
@@ -60664,7 +60863,8 @@
       "open": "question-images/q200.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "201",
@@ -60835,7 +61035,8 @@
       "open": "question-images/q201.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "202",
@@ -61180,7 +61381,8 @@
       "open": "question-images/q202.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "203",
@@ -61485,7 +61687,8 @@
       "open": "question-images/q203.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "204",
@@ -61790,7 +61993,8 @@
       "open": "question-images/q204.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "205",
@@ -62133,7 +62337,8 @@
       "open": "question-images/q205.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "206",
@@ -62440,7 +62645,8 @@
       "open": "question-images/q206.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "207",
@@ -62752,7 +62958,8 @@
       "open": "question-images/q207.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "208",
@@ -63045,7 +63252,8 @@
       "open": "question-images/q208.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "209",
@@ -63343,7 +63551,8 @@
       "open": "question-images/q209.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "210",
@@ -63662,7 +63871,8 @@
       "open": "question-images/q210.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "211",
@@ -63969,7 +64179,8 @@
       "open": "question-images/q211.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "212",
@@ -64269,7 +64480,8 @@
       "open": "question-images/q212.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "213",
@@ -64441,7 +64653,8 @@
       "open": "question-images/q213.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "214",
@@ -64605,7 +64818,8 @@
       "open": "question-images/q214.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "215",
@@ -64915,7 +65129,8 @@
       "open": "question-images/q215.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "216",
@@ -65243,7 +65458,8 @@
       "open": "question-images/q216.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "217",
@@ -65543,7 +65759,8 @@
       "open": "question-images/q217.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "218",
@@ -65831,7 +66048,8 @@
       "open": "question-images/q218.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "219",
@@ -66150,7 +66368,8 @@
       "open": "question-images/q219.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "220",
@@ -66337,7 +66556,8 @@
       "open": "question-images/q220.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "221",
@@ -66650,7 +66870,8 @@
       "open": "question-images/q221.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "222",
@@ -66957,7 +67178,8 @@
       "open": "question-images/q222.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "223",
@@ -67252,7 +67474,8 @@
       "open": "question-images/q223.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "224",
@@ -67575,7 +67798,8 @@
       "open": "question-images/q224.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "225",
@@ -67894,7 +68118,8 @@
       "open": "question-images/q225.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "226",
@@ -68182,7 +68407,8 @@
       "open": "question-images/q226.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "227",
@@ -68494,7 +68720,8 @@
       "open": "question-images/q227.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   },
   {
     "id": "228",
@@ -68858,6 +69085,7 @@
       "open": "question-images/q228.webp"
     },
     "imageSource": "naga_url",
-    "imageSourceRuleVersion": "naga-url-capture-v2"
+    "imageSourceRuleVersion": "naga-url-capture-v2",
+    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
   }
 ]
