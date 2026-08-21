@@ -919,6 +919,46 @@
       background: var(--gold);
       border-color: #ffe08a;
     }
+    .menu-range-tab[data-menu-range="all"] {
+      color: #dffbfb;
+      background: #155264;
+      border-color: #4bb9bd;
+    }
+    .menu-range-tab[data-menu-range="favorites"] {
+      gap: 5px;
+      color: #ffe7a4;
+      background: #4b3a1a;
+      border-color: #b98d33;
+    }
+    .menu-range-tab[data-menu-range="archive"] {
+      gap: 5px;
+      color: #e4caff;
+      background: #3d2d54;
+      border-color: #9871bd;
+    }
+    .menu-range-tab[data-menu-range="all"].is-active {
+      color: #172215;
+      background: var(--gold);
+      border-color: #ffe08a;
+    }
+    .menu-range-tab[data-menu-range="favorites"].is-active {
+      color: #fff8df;
+      background: #8c6b22;
+      border-color: #f1c457;
+    }
+    .menu-range-tab[data-menu-range="archive"].is-active {
+      color: #fff;
+      background: #704d8f;
+      border-color: #d8baff;
+    }
+    .menu-range-tab .menu-trash-icon {
+      width: 16px;
+      height: 16px;
+    }
+    .menu-range-tab .menu-trash-icon svg {
+      width: 16px;
+      height: 16px;
+    }
     .menu-range-actions {
       gap: 8px;
     }
@@ -1534,7 +1574,6 @@
         <nav class="menu-nav" aria-label="問題集メニュー">
           <button class="menu-nav-button is-active" type="button" data-menu-view="my" title="問題集を選び、一覧から学習を始める"><span class="menu-nav-icon" aria-hidden="true">▦</span><span>問題集</span><span class="menu-nav-badge" data-menu-count="collections">0</span></button>
           <button class="menu-nav-button" type="button" data-menu-view="analysis" title="回答率・習熟度・回答時間など、自分の学習状況を見る"><span class="menu-nav-icon" aria-hidden="true">▥</span><span>成績・履歴</span></button>
-          <button class="menu-nav-button" type="button" data-menu-view="favorites" title="この問題集でお気に入りに登録した問題を見る"><span class="menu-nav-icon" aria-hidden="true">☆</span><span>お気に入り</span><span class="menu-nav-badge" data-menu-count="favorites">0</span></button>
           <button class="menu-nav-button" type="button" data-menu-view="generator" title="NAGA URLから問題を作り、保存先を選ぶ"><span class="menu-nav-icon" aria-hidden="true">＋</span><span>問題生成</span></button>
           <button class="menu-nav-button" type="button" data-menu-view="settings" title="表示名・表示方法・問題集の設定を変更する"><span class="menu-nav-icon" aria-hidden="true">⚙</span><span>設定</span></button>
           <button class="menu-nav-button" id="studentHistoryNav" type="button" data-menu-view="students" title="生徒ごとの学習進捗を見る" hidden><span class="menu-nav-icon" aria-hidden="true">◎</span><span>生徒履歴</span></button>
@@ -1791,7 +1830,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 135;
+    const APP_VERSION = 136;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -2835,7 +2874,7 @@
         { version: 129, date: "2026-08-21", publishedAt: "2026-08-21T00:41:48+09:00", title: "スレッド先頭画像の除外ルールを再確認しました", body: "問題画像として使うスレッド作成者の最初の画像1枚は、コメント欄へ重複転載しないようにしました。画像IDの照合に失敗した場合も、作成者の最初の画像へフォールバックします。後続の画像・文章・NAGA URLはこれまでどおり残します。" },
         { version: 130, date: "2026-08-21", publishedAt: "2026-08-21T01:05:00+09:00", title: "編集メンバーと問題生成先を整理しました", body: "承認済みの編集メンバーが問題の生成・インポート・編集・整理を行えるようになりました。問題生成では保存先を明示的に選べます。公開範囲・メンバー管理・完全削除は、これまでどおり所有者とアプリ管理者だけが行います。" },
         { version: 131, date: "2026-08-22", publishedAt: "2026-08-22T09:00:00+09:00", title: "お気に入りとアーカイブを問題集ごとに整理しました", body: "ログインユーザーごと・問題集ごとにお気に入りとアーカイブを分けて保存します。直近の結果が💮の問題は、問題一覧のアーカイブ欄からも移動できます。各操作に説明を表示するようにしました。" },
-        { version: APP_VERSION, date: "2026-08-22", publishedAt: "2026-08-22T15:00:00+09:00", title: "回答履歴の復元を安定させました", body: "ログイン中の自分の回答だけを問題集ごとに取得し、500件を超えても古い問題の履歴が一覧から消えないようにしました。端末側に残った古い回答も、サーバーの採点結果で補正します。" }
+        { version: APP_VERSION, date: "2026-08-22", publishedAt: "2026-08-22T15:00:00+09:00", title: "お気に入りを問題範囲タブにまとめました", body: "お気に入りは独立したメニューを使わず、問題範囲タブの「すべて」の隣から開けるようにしました。すべて・お気に入り・アーカイブを色分けし、問題範囲を続けて選びやすくしています。" }
       ];
       let commentNoticeStoreV65 = loadCommentNoticeStoreV65();
       let sharedCommentRowsV65 = [];
@@ -3144,6 +3183,7 @@
 
       function menuRangeMatchesForNotificationV65(question, rangeKey) {
         if (rangeKey === "archive") return isArchivedV109(question);
+        if (rangeKey === "favorites") return isFavoriteV16(question) && isPlayableV16(question);
         const [start, end] = String(rangeKey).split("-").map(Number);
         const number = menuQuestionNumberV60(question);
         return Number.isInteger(number) && number >= start && number <= end;
@@ -5274,8 +5314,9 @@
       function showMenuV16(view = menuViewV16) {
         const requestedView = view === "collections" ? "my" : view;
         menuViewV16 = MENU_VIEW_COPY_V16[requestedView] ? requestedView : "my";
-        if (menuViewV16 !== "archive" && menuRangeV60 === "archive") menuRangeV60 = "all";
         if (menuViewV16 === "archive") menuRangeV60 = "archive";
+        else if (menuViewV16 === "favorites") menuRangeV60 = "favorites";
+        else if (["archive", "favorites"].includes(menuRangeV60)) menuRangeV60 = "all";
         applyDesktopLayoutV70();
         document.querySelector(".page").classList.add("menu-active");
         document.getElementById("menuPanel").hidden = false;
@@ -5301,7 +5342,6 @@
         const counts = {
           collections: collectionCatalogOptionsV100().length,
           my: questionsV16.filter(question => isPlayableV16(question)).length,
-          favorites: questionsV16.filter(question => isFavoriteV16(question) && isPlayableV16(question)).length,
           archive: questionsV16.filter(question => isArchivedV109(question)).length
         };
         document.querySelectorAll("[data-menu-view]").forEach(button => {
@@ -5351,11 +5391,10 @@
       function menuRangeOptionsV60() {
         const maxNumber = questionsV16.reduce((max, question) => Math.max(max, menuQuestionNumberV60(question) || 0), 0);
         const step = menuRangeStepV120();
-        const options = [{ key: "all", label: "すべて" }];
+        const options = [{ key: "all", label: "すべて" }, { key: "favorites", label: "お気に入り" }, { key: "archive", label: "アーカイブ" }];
         for (let start = 1; start <= Math.max(maxNumber, 1); start += step) {
           options.push({ key: `${start}-${start + step - 1}`, label: `${start}–${start + step - 1}` });
         }
-        options.push({ key: "archive", label: "アーカイブ" });
         return options;
       }
 
@@ -5366,6 +5405,7 @@
 
       function menuRangeMatchesV60(question) {
         if (menuRangeV60 === "archive") return isArchivedV109(question);
+        if (menuRangeV60 === "favorites") return isFavoriteV16(question) && isPlayableV16(question);
         if (menuRangeV60 === "all") return true;
         const [start, end] = menuRangeV60.split("-").map(Number);
         const number = menuQuestionNumberV60(question);
@@ -5439,14 +5479,22 @@
           return;
         }
         const options = menuRangeOptionsV60();
-        const activeRange = menuViewV16 === "archive" ? "archive" : menuRangeV60;
+        const activeRange = menuViewV16 === "archive" ? "archive" : menuViewV16 === "favorites" ? "favorites" : menuRangeV60;
         if (!options.some(option => option.key === activeRange)) menuRangeV60 = "all";
-        tabs.innerHTML = options.map(option => { const count = commentNotificationCountForRangeV65(option.key); const tooltip = option.key === "archive" ? "アーカイブ済みの問題を表示します" : option.key === "all" ? "この問題集のすべての問題を表示します" : `${option.label}の問題を表示します`; return `<button class="menu-range-tab${option.key === activeRange ? " is-active" : ""}" type="button" role="tab" aria-selected="${option.key === activeRange}" aria-label="${option.label}・新着コメント${count}件" title="${escapeHtml(tooltip)}" data-menu-range="${option.key}">${option.label}${notificationBadgeMarkupV65(count, `${option.label}の新着コメント${count}件`, `data-menu-range-notification="${escapeHtml(option.key)}"`)}</button>`; }).join("");
+        tabs.innerHTML = options.map(option => {
+          const count = commentNotificationCountForRangeV65(option.key);
+          const tooltip = option.key === "archive" ? "アーカイブ済みの問題を表示します" : option.key === "favorites" ? "この問題集でお気に入りに登録した問題を表示します" : option.key === "all" ? "この問題集のすべての問題を表示します" : `${option.label}の問題を表示します`;
+          const labelMarkup = option.key === "favorites" ? "<span aria-hidden=\"true\">★</span><span>お気に入り</span>" : option.key === "archive" ? `${menuTrashIconV63()}<span>アーカイブ</span>` : `<span>${escapeHtml(option.label)}</span>`;
+          return `<button class="menu-range-tab${option.key === activeRange ? " is-active" : ""}" type="button" role="tab" aria-selected="${option.key === activeRange}" aria-label="${option.label}・新着コメント${count}件" title="${escapeHtml(tooltip)}" data-menu-range="${option.key}">${labelMarkup}${notificationBadgeMarkupV65(count, `${option.label}の新着コメント${count}件`, `data-menu-range-notification="${escapeHtml(option.key)}"`)}</button>`;
+        }).join("");
         tabs.querySelectorAll("[data-menu-range]").forEach(button => button.addEventListener("click", () => {
           const selectedRange = button.dataset.menuRange || "all";
           if (selectedRange === "archive") {
             menuViewV16 = "archive";
             menuRangeV60 = "archive";
+          } else if (selectedRange === "favorites") {
+            menuViewV16 = "favorites";
+            menuRangeV60 = "favorites";
           } else {
             menuViewV16 = "my";
             menuRangeV60 = selectedRange;

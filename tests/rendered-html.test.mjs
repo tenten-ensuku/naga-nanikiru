@@ -32,7 +32,7 @@ test("wires v65 learning UX, generator, Supabase bridge, metadata, and social im
     readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
     access(new URL("../public/og-v44.png", import.meta.url)),
   ]);
-  assert.match(index, /const APP_VERSION = 135/);
+  assert.match(index, /const APP_VERSION = 136/);
   assert.match(index, /function menuRangeStepV120\(\)[\s\S]*?return Math\.max\(maxNumber, questionsV16\.length\) > MENU_RENDER_THRESHOLD_V119 \? 100 : 20/);
   assert.match(index, /id="collectionDirectorySelect"/);
   assert.doesNotMatch(index, /class="collection-directory-item/);
