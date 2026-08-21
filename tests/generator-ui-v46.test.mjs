@@ -10,7 +10,7 @@ test("renders the v87 scene and half-game generator controls", async () => {
     readFile(indexUrl, "utf8"),
     readFile(generatorUrl, "utf8")
   ]);
-  assert.match(html, /const APP_VERSION = 136/);
+  assert.match(html, /const APP_VERSION = 137/);
   assert.match(html, /data-range-session="all"[^>]*>この範囲を10問解く\s*<span/);
   assert.doesNotMatch(html, /data-range-session="unanswered">未回答を10問解く/);
   assert.match(html, /range: "この範囲の10問"/);
@@ -69,7 +69,11 @@ test("renders the v87 scene and half-game generator controls", async () => {
   assert.doesNotMatch(html, /data-menu-action="trash"/);
   assert.match(html, /data-menu-action="unarchive"/);
   assert.match(html, /id="archiveQuestionButton"[^>]*>アーカイブに移す<\/button>/);
-  assert.match(html, /id="menuRangeTabs"/);
+  assert.match(html, /id="menuRangeSelect"/);
+  assert.match(html, /id="menuRangeAllButton"/);
+  assert.match(html, /id="menuFavoritesToggle"/);
+  assert.match(html, /id="menuArchiveViewButton"/);
+  assert.doesNotMatch(html, /id="menuRangeTabs"/);
   assert.match(html, /id="menuRangeHeading">問題範囲/);
   assert.match(html, /id="menuTypeFilters"/);
   assert.match(html, /data-menu-type="call"/);
@@ -88,6 +92,10 @@ test("renders the v87 scene and half-game generator controls", async () => {
   assert.match(html, /studentNav\.hidden = !canViewStudentDashboardV84\(\)/);
   assert.match(html, /所有者専用の生徒進捗画面を追加しました/);
   assert.match(html, /function menuRangeOptionsV60\(\)/);
+  assert.match(html, /const MENU_RANGE_STEP_V137 = 100/);
+  assert.match(html, /function renderMenuRangeControlsV137\(\)/);
+  assert.match(html, /function setMenuRangeV137\(rangeKey\)/);
+  assert.match(html, /function moveMenuRangeV137\(delta\)/);
   assert.match(html, /sourceQuestions\.filter\(menuRangeMatchesV60\)/);
   assert.match(html, /class="menu-brand-title">問題集<\/span><span class="menu-brand-actions">/);
   assert.match(html, /getElementById\("menuVersion"\)\.textContent = APP_VERSION/);
