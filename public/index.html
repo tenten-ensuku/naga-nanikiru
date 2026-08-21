@@ -641,6 +641,202 @@
     .menu-card-actions { display: contents; }
     .menu-card-action { min-height: 42px; padding: 5px 8px; }
 
+    /* V139: finish the problem-list surface as a quiet learning product, not an admin table. */
+    .page.menu-active .menu-content {
+      gap: 14px;
+      padding: clamp(18px, 2.6vw, 30px);
+    }
+    .page.menu-active .menu-content .menu-heading h2 {
+      font-size: clamp(28px, 3.3vw, 42px);
+      letter-spacing: -.04em;
+    }
+    .page.menu-active .menu-summary {
+      margin-top: 8px;
+      padding: 10px 0;
+      background: rgba(10, 69, 83, .46);
+      border-top-color: rgba(190, 220, 225, .2);
+      border-bottom-color: rgba(190, 220, 225, .2);
+    }
+    .page.menu-active .menu-summary-stat strong { font-size: clamp(23px, 2.8vw, 30px); }
+    .page.menu-active .collection-directory { padding-bottom: 0; }
+    .page.menu-active .collection-switcher-control { grid-template-columns: 1fr; gap: 0; }
+    .page.menu-active .collection-switcher-control select { min-height: 40px; }
+    .page.menu-active .collection-directory-selection-note { font-size: 9px; }
+    .page.menu-active .collection-space-current:not(.collection-space-access-notice) { display: none; }
+    .page.menu-active .collection-space-access-notice {
+      margin-top: 2px;
+      padding-top: 8px;
+      border-top-color: rgba(190, 220, 225, .14);
+    }
+    .page.menu-active .menu-filter-stack {
+      padding: 6px 0;
+      background: rgba(3, 23, 36, .22);
+      border-color: rgba(190, 220, 225, .16);
+      border-left-color: transparent;
+      border-right-color: transparent;
+      border-radius: 0;
+    }
+    .page.menu-active .menu-filter-row { padding: 8px 0; }
+    .page.menu-active .menu-range-row { grid-template-columns: 88px minmax(0, 1fr); gap: 12px; }
+    .page.menu-active .menu-range-heading-block { display: grid; gap: 2px; }
+    .page.menu-active .menu-filter-note { font-size: 9px; }
+    .page.menu-active .menu-range-selector {
+      grid-template-columns: 30px minmax(0, 1fr) 30px auto;
+      gap: 4px;
+      padding: 3px;
+      background: rgba(7, 28, 43, .38);
+      border: 1px solid rgba(190, 220, 225, .14);
+      border-radius: 8px;
+    }
+    .page.menu-active .menu-range-selector button,
+    .page.menu-active .menu-range-select {
+      min-height: 36px;
+      border-radius: 5px;
+      font-size: 11px;
+    }
+    .page.menu-active .menu-range-step-button {
+      padding: 2px;
+      color: #a9cbd2;
+      background: transparent;
+      border-color: transparent;
+      font-size: 20px;
+      line-height: 1;
+    }
+    .page.menu-active .menu-range-step-button:hover,
+    .page.menu-active .menu-range-step-button:focus-visible { background: rgba(22, 80, 103, .62); }
+    .page.menu-active .menu-range-all-button { padding-inline: 10px; }
+    .page.menu-active .menu-range-all-button.is-active,
+    .page.menu-active .menu-genre-tab.is-active,
+    .page.menu-active .menu-attribute-toggle.is-active,
+    .page.menu-active .menu-status-filter-option:has(input:checked) {
+      color: #dffff7;
+      background: #09675d;
+      border-color: rgba(155, 232, 216, .58);
+    }
+    .page.menu-active .menu-filter-advanced-toggle[aria-expanded="true"] {
+      color: #dffff7;
+      background: rgba(9, 103, 93, .76);
+      border-color: rgba(155, 232, 216, .58);
+    }
+    .page.menu-active .menu-archive-view-button {
+      min-width: auto;
+      padding-inline: 8px;
+      color: #9fbcc1;
+      background: transparent;
+      border-color: transparent;
+    }
+    .page.menu-active .menu-archive-view-button:hover,
+    .page.menu-active .menu-archive-view-button:focus-visible,
+    .page.menu-active .menu-archive-view-button.is-active {
+      color: #dffbfb;
+      background: rgba(22, 80, 103, .48);
+      border-color: rgba(155, 232, 216, .4);
+    }
+    .page.menu-active .menu-status-filter-option { background: #123446; }
+    .page.menu-active .menu-status-filter-option:has(input:checked) { color: #dffff7; }
+    .page.menu-active .menu-range-actions {
+      display: grid;
+      grid-template-columns: auto minmax(210px, 1fr) minmax(220px, auto);
+      align-items: center;
+      justify-content: stretch;
+      gap: 10px;
+      padding-top: 0;
+    }
+    .page.menu-active .menu-range-target {
+      color: #b9d0d4;
+      font-size: 11px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+    .page.menu-active .menu-order-control { width: 100%; }
+    .page.menu-active .menu-order-control select { flex: 1 1 auto; min-width: 0; }
+    .page.menu-active .menu-range-action.primary { width: 100%; min-width: 0; }
+    .page.menu-active .menu-list-header {
+      grid-template-columns: minmax(0, 1fr) 128px 116px 36px 36px;
+      gap: 6px;
+      padding: 0 8px 6px;
+      color: #8eacb2;
+      border-bottom-color: rgba(190, 220, 225, .16);
+      font-size: 9px;
+      letter-spacing: .04em;
+      text-transform: none;
+    }
+    .page.menu-active .menu-list-header-group {
+      grid-template-columns: minmax(0, 1fr) 128px 116px 36px 36px;
+      gap: 6px;
+    }
+    .page.menu-active .menu-card {
+      position: relative;
+      grid-template-columns: minmax(0, 1fr) 128px 116px 36px 36px;
+      gap: 6px;
+      min-height: 66px;
+      padding: 9px 8px;
+      border-color: rgba(190, 220, 225, .13);
+    }
+    .page.menu-active .menu-card::before {
+      content: "";
+      position: absolute;
+      top: 9px;
+      bottom: 9px;
+      left: 0;
+      width: 3px;
+      background: #63d6cc;
+      border-radius: 0 3px 3px 0;
+      opacity: 0;
+      transition: opacity .15s ease;
+    }
+    .page.menu-active .menu-card:hover::before,
+    .page.menu-active .menu-card:focus-within::before { opacity: 1; }
+    .page.menu-active .menu-card-title { font-size: 18px; }
+    .page.menu-active .menu-card-meta { margin-top: 4px; font-size: 10px; }
+    .page.menu-active .menu-card-row-manage { opacity: .58; border-color: transparent; }
+    .page.menu-active .menu-card:hover .menu-card-row-manage,
+    .page.menu-active .menu-card:focus-within .menu-card-row-manage { opacity: 1; }
+    .page.menu-active .menu-card-latest { gap: 3px; font-size: 17px; }
+    .page.menu-active .menu-card-latest-mark { width: 18px; height: 18px; }
+    .page.menu-active .menu-card-icon-action,
+    .page.menu-active .menu-card-icon-placeholder { width: 36px; min-height: 36px; }
+    .page.menu-active .menu-card-icon-action { color: #8faab1; font-size: 20px; opacity: .82; }
+    .page.menu-active .menu-card-icon-action:hover,
+    .page.menu-active .menu-card-icon-action:focus-visible { opacity: 1; }
+    .page.menu-active .menu-card-icon-action.is-active { color: var(--gold); }
+    .page.menu-active .menu-card-icon-action.is-archived { color: #8faab1; }
+
+    @media (max-width: 800px) {
+      .page.menu-active .menu-range-row { grid-template-columns: 1fr; gap: 6px; }
+      .page.menu-active .menu-range-heading-block { display: flex; align-items: baseline; justify-content: space-between; }
+      .page.menu-active .menu-range-selector { grid-template-columns: 30px minmax(0, 1fr) 30px auto; }
+      .page.menu-active .menu-range-actions { grid-template-columns: 1fr; gap: 8px; }
+      .page.menu-active .menu-range-target { font-size: 10px; }
+      .page.menu-active .menu-order-control { width: 100%; }
+      .page.menu-active .menu-range-action.primary { width: 100%; }
+      .page.menu-active .menu-list-header { display: none; }
+      .page.menu-active .menu-card {
+        grid-template-columns: minmax(0, 1fr) 88px 68px 36px 36px;
+        min-height: 68px;
+        padding-inline: 6px;
+      }
+      .page.menu-active .menu-card-title { font-size: 16px; }
+      .page.menu-active .menu-card-latest { font-size: 15px; }
+      .page.menu-active .menu-card-latest-mark { width: 16px; height: 16px; }
+      .page.menu-active .menu-card-icon-action,
+      .page.menu-active .menu-card-icon-placeholder { width: 34px; min-height: 34px; }
+      .page.menu-active .menu-card-icon-action { font-size: 19px; }
+    }
+
+    @media (max-width: 480px) {
+      .page.menu-active .menu-range-selector { grid-template-columns: 28px minmax(0, 1fr) 28px auto; gap: 3px; }
+      .page.menu-active .menu-range-selector button,
+      .page.menu-active .menu-range-select { min-height: 36px; font-size: 10px; }
+      .page.menu-active .menu-card {
+        grid-template-columns: minmax(0, 1fr) 72px 58px 34px 34px;
+        column-gap: 3px;
+      }
+    }
+
+    @media (min-width: 801px) {
+      .page.menu-active .menu-panel { grid-template-columns: 200px minmax(0, 1fr); }
+    }
     @media (max-width: 800px) {
       .page { width: calc(100% - 12px); padding-top: 10px; }
       .menu-panel { gap: 13px; padding: 16px 12px 22px; border-radius: 14px; }
@@ -1630,6 +1826,117 @@
       .menu-sidebar .account-status { grid-column: auto; }
       .menu-sidebar .account-strip button { width: 100%; min-width: 0; }
     }
+    /* V139 final cascade: keep the compact palette and list alignment after the legacy responsive rules. */
+    .page.menu-active .menu-range-all-button.is-active,
+    .page.menu-active .menu-genre-tab.is-active,
+    .page.menu-active .menu-attribute-toggle.is-active,
+    .page.menu-active .menu-status-filter-option:has(input:checked) {
+      color: #dffff7;
+      background: #09675d;
+      border-color: rgba(155, 232, 216, .58);
+    }
+    .page.menu-active .menu-filter-advanced-toggle[aria-expanded="true"] {
+      color: #dffff7;
+      background: rgba(9, 103, 93, .76);
+      border-color: rgba(155, 232, 216, .58);
+    }
+    .page.menu-active .menu-range-selector {
+      grid-template-columns: 30px minmax(0, 1fr) 30px auto;
+      gap: 4px;
+      padding: 3px;
+      background: rgba(7, 28, 43, .38);
+      border: 1px solid rgba(190, 220, 225, .14);
+      border-radius: 8px;
+    }
+    .page.menu-active .menu-range-selector button,
+    .page.menu-active .menu-range-select { min-height: 36px; border-radius: 5px; font-size: 11px; }
+    .page.menu-active .menu-range-step-button { padding: 2px; color: #a9cbd2; background: transparent; border-color: transparent; font-size: 20px; line-height: 1; }
+    .page.menu-active .menu-range-step-button:hover,
+    .page.menu-active .menu-range-step-button:focus-visible { background: rgba(22, 80, 103, .62); }
+    .page.menu-active .menu-archive-view-button {
+      min-width: auto;
+      padding-inline: 8px;
+      color: #9fbcc1;
+      background: transparent;
+      border-color: transparent;
+    }
+    .page.menu-active .menu-archive-view-button:hover,
+    .page.menu-active .menu-archive-view-button:focus-visible,
+    .page.menu-active .menu-archive-view-button.is-active { color: #dffbfb; background: rgba(22, 80, 103, .48); border-color: rgba(155, 232, 216, .4); }
+    .page.menu-active .menu-range-actions {
+      display: grid;
+      grid-template-columns: auto minmax(210px, 1fr) minmax(220px, auto);
+      align-items: center;
+      gap: 10px;
+      padding-top: 0;
+    }
+    .page.menu-active .menu-range-target { color: #b9d0d4; font-size: 11px; font-weight: 800; white-space: nowrap; }
+    .page.menu-active .menu-order-control { width: 100%; }
+    .page.menu-active .menu-order-control select { flex: 1 1 auto; min-width: 0; }
+    .page.menu-active .menu-range-action.primary { width: 100%; min-width: 0; }
+    .page.menu-active .menu-list-header {
+      grid-template-columns: minmax(0, 1fr) 128px 116px 36px 36px;
+      gap: 6px;
+      padding: 0 8px 6px;
+      color: #8eacb2;
+      border-bottom-color: rgba(190, 220, 225, .16);
+      font-size: 9px;
+    }
+    .page.menu-active .menu-list-header-group { grid-template-columns: minmax(0, 1fr) 128px 116px 36px 36px; gap: 6px; }
+    .page.menu-active .menu-card {
+      position: relative;
+      grid-template-columns: minmax(0, 1fr) 128px 116px 36px 36px;
+      gap: 6px;
+      min-height: 66px;
+      padding: 9px 8px;
+      border-color: rgba(190, 220, 225, .13);
+    }
+    .page.menu-active .menu-card::before { content: ""; position: absolute; top: 9px; bottom: 9px; left: 0; width: 3px; background: #63d6cc; border-radius: 0 3px 3px 0; opacity: 0; transition: opacity .15s ease; }
+    .page.menu-active .menu-card:hover::before,
+    .page.menu-active .menu-card:focus-within::before { opacity: 1; }
+    .page.menu-active .menu-card-title { font-size: 18px; }
+    .page.menu-active .menu-card-meta { margin-top: 4px; font-size: 10px; }
+    .page.menu-active .menu-card-row-manage { opacity: .58; border-color: transparent; }
+    .page.menu-active .menu-card:hover .menu-card-row-manage,
+    .page.menu-active .menu-card:focus-within .menu-card-row-manage { opacity: 1; }
+    .page.menu-active .menu-card-latest { gap: 3px; font-size: 17px; }
+    .page.menu-active .menu-card-latest-mark { width: 18px; height: 18px; }
+    .page.menu-active .menu-card-icon-action,
+    .page.menu-active .menu-card-icon-placeholder { width: 36px; min-height: 36px; }
+    .page.menu-active .menu-card-icon-action { color: #8faab1; font-size: 20px; opacity: .82; }
+    .page.menu-active .menu-card-icon-action:hover,
+    .page.menu-active .menu-card-icon-action:focus-visible { opacity: 1; }
+    .page.menu-active .menu-card-icon-action.is-active { color: var(--gold); }
+    .page.menu-active .menu-card-icon-action.is-archived { color: #8faab1; }
+    .page.menu-active .collection-switcher-control { grid-template-columns: 1fr; gap: 0; }
+    .page.menu-active .collection-space-current:not(.collection-space-access-notice) { display: none; }
+    .page.menu-active .menu-content { gap: 14px; padding: clamp(18px, 2.6vw, 30px); }
+    .page.menu-active .menu-content .menu-heading h2 { font-size: clamp(28px, 3.3vw, 42px); letter-spacing: -.04em; }
+    .page.menu-active .menu-summary { margin-top: 8px; padding: 10px 0; background: rgba(10, 69, 83, .46); border-top-color: rgba(190, 220, 225, .2); border-bottom-color: rgba(190, 220, 225, .2); }
+    .page.menu-active .menu-summary-stat strong { font-size: clamp(23px, 2.8vw, 30px); }
+    .page.menu-active .collection-directory { padding-bottom: 0; }
+    .page.menu-active .collection-space-access-notice { margin-top: 2px; padding-top: 8px; border-top-color: rgba(190, 220, 225, .14); }
+    .page.menu-active .menu-filter-stack { padding: 6px 0; background: rgba(3, 23, 36, .22); border-color: rgba(190, 220, 225, .16); border-left-color: transparent; border-right-color: transparent; border-radius: 0; }
+    .page.menu-active .menu-filter-row { padding: 8px 0; }
+    .page.menu-active .menu-range-row { grid-template-columns: 88px minmax(0, 1fr); gap: 12px; }
+    .page.menu-active .menu-range-heading-block { display: grid; gap: 2px; }
+    .page.menu-active .menu-filter-note { font-size: 9px; }
+    @media (max-width: 800px) {
+      .page.menu-active .menu-range-selector { grid-template-columns: 30px minmax(0, 1fr) 30px auto; }
+      .page.menu-active .menu-range-actions { grid-template-columns: 1fr; gap: 8px; }
+      .page.menu-active .menu-range-target { font-size: 10px; }
+      .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 88px 68px 36px 36px; min-height: 68px; padding-inline: 6px; }
+      .page.menu-active .menu-card-title { font-size: 16px; }
+      .page.menu-active .menu-card-latest { font-size: 15px; }
+      .page.menu-active .menu-card-latest-mark { width: 16px; height: 16px; }
+      .page.menu-active .menu-card-icon-action,
+      .page.menu-active .menu-card-icon-placeholder { width: 34px; min-height: 34px; }
+      .page.menu-active .menu-card-icon-action { font-size: 19px; }
+    }
+    @media (max-width: 480px) {
+      .page.menu-active .menu-range-selector { grid-template-columns: 28px minmax(0, 1fr) 28px auto; gap: 3px; }
+      .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 34px 34px; column-gap: 3px; }
+    }
   </style>
 </head>
 <body>
@@ -1690,7 +1997,7 @@
               <button class="menu-range-step-button" id="menuRangePreviousButton" type="button" aria-label="前の問題範囲" title="前の問題範囲へ移動します">‹</button>
               <label class="menu-range-select-label" for="menuRangeSelect"><span class="sr-only">問題範囲を選ぶ</span><select class="menu-range-select" id="menuRangeSelect" aria-label="問題範囲を選ぶ"><option value="">範囲を選択</option></select></label>
               <button class="menu-range-step-button" id="menuRangeNextButton" type="button" aria-label="次の問題範囲" title="次の問題範囲へ移動します">›</button>
-              <button class="menu-range-all-button is-active" id="menuRangeAllButton" type="button" aria-pressed="true" title="すべての通常問題を表示します">すべて</button>
+              <button class="menu-range-all-button is-active" id="menuRangeAllButton" type="button" aria-pressed="true" title="すべての通常問題を表示します">すべて表示</button>
             </div>
           </section>
           <section class="menu-filter-row menu-genre-row" aria-labelledby="menuGenreHeading">
@@ -1723,6 +2030,7 @@
         </div>
         <div class="menu-active-filters" id="menuActiveFilters" aria-live="polite" hidden></div>
         <div class="menu-range-actions" id="menuRangeActions" hidden>
+          <span class="menu-range-target" id="menuRangeTarget" aria-live="polite"></span>
           <label class="menu-order-control" for="menuOrderSelect" title="次の問題へ進む順序を選びます"><span>出題順</span><select id="menuOrderSelect" aria-label="出題順"><option value="sequential">順番</option><option value="reverse">逆順</option><option value="random">ランダム（解答数が少ない順）</option></select></label>
           <button class="menu-range-action primary" type="button" data-range-session="all" title="現在の範囲から10問の学習を始めます">この範囲を10問解く <span aria-hidden="true">→</span></button>
         </div>
@@ -1911,7 +2219,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 138;
+    const APP_VERSION = 139;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -3771,11 +4079,12 @@
           ? (Boolean(currentRow.can_view) || (currentSlug && Boolean(sharedCollectionV46?.can_view)) ? `${collectionVisibilityLabelV100(currentRow.visibility)}　・　問題を解けます` : currentRow.request_status === "pending" ? "承認待ちです。選択すると申請状況を確認できます" : currentRow.visibility === "request" ? "問題集名を公開中　・　閲覧申請が必要です" : "閲覧権限が必要です")
           : "問題集を選ぶと、ここに公開範囲と利用状況が表示されます。";
         const picker = rows.length
-          ? `<label class="collection-switcher-control" for="collectionDirectorySelect"><span class="collection-directory-heading" id="collectionDirectoryTitle">問題集</span><select id="collectionDirectorySelect" aria-label="問題集を選ぶ">${currentSlug ? "" : "<option value=\"\" selected disabled>問題集を選択</option>"}${options}</select></label>`
+          ? `<label class="collection-switcher-control" for="collectionDirectorySelect"><span class="sr-only" id="collectionDirectoryTitle">問題集を選ぶ</span><select id="collectionDirectorySelect" aria-label="問題集を選ぶ">${currentSlug ? "" : "<option value=\"\" selected disabled>問題集を選択</option>"}${options}</select></label>`
           : empty;
         const description = currentRow?.description || sharedCollectionV46?.description || "";
         const info = `<details class="collection-info-details"><summary>問題集情報</summary><div class="collection-info-body"><p><strong>${escapeHtml(currentTitle)}</strong></p><p>公開範囲：${escapeHtml(currentRow ? collectionVisibilityLabelV100(currentRow.visibility) : sharedCollectionV46 ? collectionVisibilityLabelV100(sharedCollectionV46.visibility) : "未選択")}</p>${description ? `<p>${escapeHtml(description)}</p>` : ""}<p>${escapeHtml(currentNote)}</p></div></details>`;
-        return `<section class="collection-directory" aria-labelledby="collectionDirectoryTitle"><div class="collection-switcher-head">${picker}<div class="collection-directory-actions">${info}${createButton}</div></div>${rows.length ? `<p class="collection-directory-selection-note">${currentSlug ? `選択中：${escapeHtml(currentTitle)}` : "問題集を選択してください"}</p>` : ""}<div class="collection-create-inline" id="collectionCreateInlinePanel" hidden><h4>自分の問題集を作る</h4><p class="collection-space-note">問題集を作成すると、自分で問題を追加・管理できます。</p>${collectionCreateFormMarkupV106("collectionCreateInline")}</div></section>`;
+         const selectionNote = rows.length && !currentSlug ? `<p class="collection-directory-selection-note">問題集を選択してください</p>` : "";
+         return `<section class="collection-directory" aria-labelledby="collectionDirectoryTitle"><div class="collection-switcher-head">${picker}<div class="collection-directory-actions">${info}${createButton}</div></div>${selectionNote}<div class="collection-create-inline" id="collectionCreateInlinePanel" hidden><h4>自分の問題集を作る</h4><p class="collection-space-note">問題集を作成すると、自分で問題を追加・管理できます。</p>${collectionCreateFormMarkupV106("collectionCreateInline")}</div></section>`;
       }
 
       function renderCollectionSpacePanelV100() {
@@ -3821,7 +4130,10 @@
           }
         }
         panel.hidden = false;
-        panel.innerHTML = `${renderCollectionDirectoryV101()}<div class="collection-space-current"><div class="collection-space-current-head"><span class="collection-space-meta">現在の利用状態</span><span class="collection-space-status${statusClass}">${escapeHtml(accessLabel)}</span></div><p class="collection-space-note">${escapeHtml(note)}</p>${accessControls}${canManage ? `<p class="collection-space-note">設定から公開範囲を変更し、閲覧申請を承認・却下できます。申請の承認時に「閲覧」または「編集」を選べます。</p>` : ""}</div>`;
+        const accessNotice = !canView
+          ? `<div class="collection-space-current collection-space-access-notice"><div class="collection-space-current-head"><span class="collection-space-meta">アクセス状態</span><span class="collection-space-status${statusClass}">${escapeHtml(accessLabel)}</span></div><p class="collection-space-note">${escapeHtml(note)}</p>${accessControls}${canManage ? `<p class="collection-space-note">設定から公開範囲を変更し、閲覧申請を承認・却下できます。申請の承認時に「閲覧」または「編集」を選べます。</p>` : ""}</div>`
+          : "";
+        panel.innerHTML = `${renderCollectionDirectoryV101()}${accessNotice}`;
         bindCollectionSpacePanelV100();
         restoreCollectionCreateDraftV114(createDraft);
       }
@@ -5437,6 +5749,8 @@
         const rangeAnswered = rangeQuestions.filter(question => latestAnswerV44(question));
         const rangeUnanswered = rangeQuestions.length - rangeAnswered.length;
         summary.innerHTML = `<div class="menu-summary-stat"><small>この範囲の問題</small><strong>${rangeQuestions.length}<em>問</em></strong></div><div class="menu-summary-stat${rangeUnanswered ? " is-alert" : ""}"><small>未回答</small><strong>${rangeUnanswered}<em>問</em></strong></div><div class="menu-summary-stat"><small>回答済み</small><strong>${rangeAnswered.length}<em>問</em></strong></div>`;
+        const rangeTarget = document.getElementById("menuRangeTarget");
+        if (rangeTarget) rangeTarget.textContent = `${rangeQuestions.length}問が対象`;
         const allPlayable = questionsV16.filter(isPlayableV16);
         const allAnswered = allPlayable.filter(question => latestAnswerV44(question)).length;
         const progress = allPlayable.length ? Math.round(allAnswered / allPlayable.length * 100) : 0;
@@ -5583,6 +5897,8 @@
         select.value = isAll ? "" : menuRangeV60;
         allButton.classList.toggle("is-active", isAll);
         allButton.setAttribute("aria-pressed", String(isAll));
+        allButton.textContent = "すべて表示";
+        allButton.title = isAll ? "すべての通常問題を表示中" : "範囲指定を解除して、すべての通常問題を表示します";
         previousButton.disabled = isAll || selectedIndex <= 0;
         nextButton.disabled = options.length === 0 || (!isAll && selectedIndex >= options.length - 1);
         favoriteButton.classList.toggle("is-active", menuFavoritesOnlyV137);
