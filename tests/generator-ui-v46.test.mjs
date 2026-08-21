@@ -10,8 +10,8 @@ test("renders the v87 scene and half-game generator controls", async () => {
     readFile(indexUrl, "utf8"),
     readFile(generatorUrl, "utf8")
   ]);
-  assert.match(html, /const APP_VERSION = 139/);
-  assert.match(html, /data-range-session="all"[^>]*>この範囲を10問解く\s*<span/);
+  assert.match(html, /const APP_VERSION = 140/);
+  assert.match(html, /data-range-session="all"[^>]*>10問解く\s*<span/);
   assert.doesNotMatch(html, /data-range-session="unanswered">未回答を10問解く/);
   assert.match(html, /range: "この範囲の10問"/);
   assert.match(html, /"range-unanswered": "未回答の10問"/);
@@ -48,7 +48,7 @@ test("renders the v87 scene and half-game generator controls", async () => {
   assert.match(html, /function menuTrashIconV63/);
   assert.match(html, /class="menu-sidebar"/);
   assert.match(html, /id="menuListHeader"/);
-  assert.match(html, /class="menu-list-header-group"><span[^>]*>問題<\/span>/);
+  assert.match(html, /class="menu-list-header"[^>]*><span[^>]*>問題<\/span>/);
   assert.match(html, /\.menu-list-header \{[\s\S]*?grid-template-columns: 1fr;[\s\S]*?gap: 0;/);
   assert.match(html, /\.menu-grid \{[\s\S]*?grid-template-columns: 1fr;[\s\S]*?gap: 0;/);
   assert.match(html, /function normalizeQuestionTitleV79\(title, number\)/);

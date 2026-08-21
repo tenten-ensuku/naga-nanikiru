@@ -1937,6 +1937,200 @@
       .page.menu-active .menu-range-selector { grid-template-columns: 28px minmax(0, 1fr) 28px auto; gap: 3px; }
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 34px 34px; column-gap: 3px; }
     }
+    /* V140: compact reference-style problem-list layout. Keep state and actions intact; reduce visual repetition. */
+    .sr-only {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      padding: 0 !important;
+      margin: -1px !important;
+      overflow: hidden !important;
+      clip: rect(0, 0, 0, 0) !important;
+      white-space: nowrap !important;
+      border: 0 !important;
+    }
+    .page.menu-active {
+      width: min(1380px, calc(100% - 12px));
+      padding-top: 6px;
+    }
+    .page.menu-active .menu-content {
+      gap: 10px;
+      padding: 14px 18px 28px;
+    }
+    .page.menu-active .menu-content .menu-heading h2 {
+      font-size: clamp(30px, 3.4vw, 42px);
+      letter-spacing: -.045em;
+    }
+    .page.menu-active .menu-summary {
+      margin-top: 5px;
+      padding: 10px 0;
+      background: rgba(10, 69, 83, .52);
+    }
+    .page.menu-active .menu-summary-stat { padding-inline: 14px; }
+    .page.menu-active .menu-summary-stat strong { font-size: clamp(24px, 2.7vw, 29px); }
+    .page.menu-active .collection-directory { gap: 0; padding: 0; }
+    .page.menu-active .collection-switcher-head { min-height: 38px; gap: 10px; }
+    .page.menu-active .collection-switcher-control { grid-template-columns: minmax(0, 1fr); gap: 0; }
+    .page.menu-active .collection-switcher-control select { min-height: 38px; }
+    .page.menu-active .collection-info-details summary,
+    .page.menu-active .collection-create-open { min-height: 38px; }
+    .page.menu-active .menu-filter-stack {
+      gap: 0;
+      padding: 7px 10px 6px;
+      background: rgba(3, 23, 36, .30);
+      border: 1px solid rgba(190, 220, 225, .18);
+      border-radius: 8px;
+    }
+    .page.menu-active .menu-filter-row {
+      padding: 7px 0;
+      border-bottom-color: rgba(190, 220, 225, .12);
+    }
+    .page.menu-active .menu-filter-note { display: none; }
+    .page.menu-active .menu-range-row {
+      grid-template-columns: 84px minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 10px;
+    }
+    .page.menu-active .menu-range-heading-block { display: block; }
+    .page.menu-active .menu-range-selector {
+      grid-template-columns: 32px minmax(0, 1fr) 32px;
+      gap: 3px;
+      padding: 0;
+      background: transparent;
+      border: 0;
+      border-radius: 0;
+    }
+    .page.menu-active .menu-range-selector button,
+    .page.menu-active .menu-range-select {
+      min-height: 36px;
+      border-radius: 5px;
+      font-size: 11px;
+    }
+    .page.menu-active .menu-range-step-button { padding: 4px 6px; font-size: 19px; }
+    .page.menu-active .menu-range-all-button { display: none; }
+    .page.menu-active .menu-range-count {
+      display: inline-flex;
+      align-items: center;
+      min-height: 36px;
+      color: #b9d0d4;
+      font-size: 11px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+    .page.menu-active .menu-genre-row {
+      grid-template-columns: 52px minmax(0, 1fr);
+      align-items: center;
+      gap: 10px;
+    }
+    .page.menu-active .menu-genre-tabs { gap: 5px; }
+    .page.menu-active .menu-genre-tab,
+    .page.menu-active .menu-filter-advanced-toggle,
+    .page.menu-active .menu-attribute-toggle,
+    .page.menu-active .menu-archive-view-button {
+      min-height: 36px;
+      padding: 7px 10px;
+      border-radius: 5px;
+      font-size: 11px;
+    }
+    .page.menu-active .menu-attribute-row { grid-template-columns: minmax(0, 1fr) auto; gap: 10px; }
+    .page.menu-active .menu-attribute-buttons { gap: 5px; }
+    .page.menu-active .menu-archive-view-button { min-width: 144px; }
+    .page.menu-active .menu-active-filters { padding-top: 6px; }
+    .page.menu-active .menu-active-filters-label { display: none; }
+    .page.menu-active .menu-active-filter-chip,
+    .page.menu-active .menu-active-filter-clear { min-height: 26px; padding: 4px 8px; }
+    .page.menu-active .menu-range-actions {
+      display: grid;
+      grid-template-columns: auto minmax(170px, 280px) minmax(170px, 1fr);
+      align-items: center;
+      gap: 10px;
+      padding-top: 2px;
+    }
+    .page.menu-active .menu-range-target { font-size: 12px; }
+    .page.menu-active .menu-order-control { width: 100%; }
+    .page.menu-active .menu-order-control select { min-height: 38px; }
+    .page.menu-active .menu-range-action.primary {
+      width: 100%;
+      min-width: 0;
+      max-width: 184px;
+      min-height: 40px;
+      justify-self: end;
+      padding-inline: 13px;
+    }
+    .page.menu-active .menu-list-header {
+      grid-template-columns: minmax(0, 1fr) 100px 120px 40px 40px;
+      gap: 6px;
+      padding: 0 8px 6px;
+      font-size: 9px;
+    }
+    .page.menu-active .menu-list-header-group {
+      grid-template-columns: minmax(0, 1fr) 100px 120px 40px 40px;
+      gap: 6px;
+    }
+    .page.menu-active .menu-grid { gap: 5px; }
+    .page.menu-active .menu-card {
+      grid-template-columns: minmax(0, 1fr) 100px 120px 40px 40px;
+      gap: 6px;
+      min-height: 50px;
+      padding: 6px 8px;
+      background: rgba(4, 24, 39, .25);
+      border: 1px solid rgba(190, 220, 225, .16);
+      border-radius: 6px;
+    }
+    .page.menu-active .menu-card-open {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      min-height: 36px;
+    }
+    .page.menu-active .menu-card-heading { display: inline-flex; align-items: center; gap: 5px; min-width: 0; }
+    .page.menu-active .menu-card-title { font-size: 18px; white-space: nowrap; }
+    .page.menu-active .menu-card-meta { margin: 0; font-size: 10px; white-space: nowrap; }
+    .page.menu-active .menu-card-status { gap: 4px; }
+    .page.menu-active .menu-card-status .menu-card-tag { padding: 4px 8px; font-size: 11px; }
+    .page.menu-active .menu-card-row-manage {
+      width: 26px;
+      min-width: 26px;
+      min-height: 26px;
+      padding: 0;
+      font-size: 0;
+      opacity: 0;
+    }
+    .page.menu-active .menu-card-row-manage::before { content: "⋯"; font-size: 17px; line-height: 1; }
+    .page.menu-active .menu-card-latest { gap: 2px; min-height: 30px; font-size: 16px; }
+    .page.menu-active .menu-card-latest-mark { width: 17px; height: 17px; }
+    .page.menu-active .menu-card-icon-action,
+    .page.menu-active .menu-card-icon-placeholder { width: 34px; min-height: 34px; }
+    .page.menu-active .menu-card-icon-action { font-size: 20px; }
+
+    @media (max-width: 800px) {
+      .page.menu-active { width: calc(100% - 12px); padding-top: 10px; }
+      .page.menu-active .menu-content { gap: 12px; padding: 16px 14px 26px; }
+      .page.menu-active .menu-range-row,
+      .page.menu-active .menu-genre-row { grid-template-columns: 1fr; gap: 6px; }
+      .page.menu-active .menu-range-heading-block { display: flex; align-items: baseline; justify-content: space-between; }
+      .page.menu-active .menu-range-selector { grid-template-columns: 30px minmax(0, 1fr) 30px; }
+      .page.menu-active .menu-range-count { display: none; }
+      .page.menu-active .menu-range-actions { grid-template-columns: 1fr; gap: 8px; }
+      .page.menu-active .menu-range-action.primary { max-width: none; justify-self: stretch; }
+      .page.menu-active .menu-attribute-row { grid-template-columns: 1fr; gap: 8px; }
+      .page.menu-active .menu-archive-view-button { width: 100%; }
+      .page.menu-active .menu-list-header { display: none; }
+      .page.menu-active .menu-card {
+        grid-template-columns: minmax(0, 1fr) 88px 68px 34px 34px;
+        min-height: 62px;
+      }
+      .page.menu-active .menu-card-open { display: grid; align-items: initial; gap: 4px; }
+      .page.menu-active .menu-card-title { font-size: 16px; }
+      .page.menu-active .menu-card-meta { margin-top: 3px; font-size: 9px; }
+      .page.menu-active .menu-card-latest { font-size: 15px; }
+    }
+    @media (max-width: 480px) {
+      .page.menu-active .menu-range-selector { grid-template-columns: 28px minmax(0, 1fr) 28px; gap: 3px; }
+      .page.menu-active .menu-range-selector button,
+      .page.menu-active .menu-range-select { min-height: 36px; font-size: 10px; }
+      .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
+    }
   </style>
 </head>
 <body>
@@ -1993,12 +2187,13 @@
               <h3 class="menu-filter-heading" id="menuRangeHeading">問題範囲</h3>
               <p class="menu-filter-note">100問ごと</p>
             </div>
-            <div class="menu-range-selector" id="menuRangeSelector">
-              <button class="menu-range-step-button" id="menuRangePreviousButton" type="button" aria-label="前の問題範囲" title="前の問題範囲へ移動します">‹</button>
-              <label class="menu-range-select-label" for="menuRangeSelect"><span class="sr-only">問題範囲を選ぶ</span><select class="menu-range-select" id="menuRangeSelect" aria-label="問題範囲を選ぶ"><option value="">範囲を選択</option></select></label>
-              <button class="menu-range-step-button" id="menuRangeNextButton" type="button" aria-label="次の問題範囲" title="次の問題範囲へ移動します">›</button>
-              <button class="menu-range-all-button is-active" id="menuRangeAllButton" type="button" aria-pressed="true" title="すべての通常問題を表示します">すべて表示</button>
-            </div>
+              <div class="menu-range-selector" id="menuRangeSelector">
+                <button class="menu-range-step-button" id="menuRangePreviousButton" type="button" aria-label="前の問題範囲" title="前の問題範囲へ移動します">‹</button>
+                <label class="menu-range-select-label" for="menuRangeSelect"><span class="sr-only">問題範囲を選ぶ</span><select class="menu-range-select" id="menuRangeSelect" aria-label="問題範囲を選ぶ"><option value="all">すべて</option></select></label>
+                <button class="menu-range-step-button" id="menuRangeNextButton" type="button" aria-label="次の問題範囲" title="次の問題範囲へ移動します">›</button>
+                <button class="menu-range-all-button is-active" id="menuRangeAllButton" type="button" aria-pressed="true" title="すべての通常問題を表示します">すべて表示</button>
+              </div>
+              <span class="menu-range-count" id="menuRangeCount" aria-live="polite"></span>
           </section>
           <section class="menu-filter-row menu-genre-row" aria-labelledby="menuGenreHeading">
             <h3 class="menu-filter-heading" id="menuGenreHeading">ジャンル</h3>
@@ -2016,7 +2211,7 @@
             </div>
             <button class="menu-archive-view-button" id="menuArchiveViewButton" type="button" title="完全正解して退避した問題を表示します">📦 アーカイブを見る</button>
           </section>
-          <div class="menu-filters menu-filters-advanced" id="menuAdvancedFilters" hidden>
+           <div class="menu-filters menu-filters-advanced" id="menuAdvancedFilters" hidden>
             <fieldset class="menu-status-filter-group">
               <legend>回答状態</legend>
               <div class="menu-status-filter-options">
@@ -2025,16 +2220,16 @@
                 <label class="menu-status-filter-option"><input type="checkbox" data-menu-status="mastered">習得済み</label>
               </div>
             </fieldset>
-            <p class="menu-status-filter-note">複数選択できます。</p>
-          </div>
-        </div>
-        <div class="menu-active-filters" id="menuActiveFilters" aria-live="polite" hidden></div>
-        <div class="menu-range-actions" id="menuRangeActions" hidden>
+             <p class="menu-status-filter-note">複数選択できます。</p>
+           </div>
+           <div class="menu-active-filters" id="menuActiveFilters" aria-live="polite" hidden></div>
+         </div>
+         <div class="menu-range-actions" id="menuRangeActions" hidden>
           <span class="menu-range-target" id="menuRangeTarget" aria-live="polite"></span>
           <label class="menu-order-control" for="menuOrderSelect" title="次の問題へ進む順序を選びます"><span>出題順</span><select id="menuOrderSelect" aria-label="出題順"><option value="sequential">順番</option><option value="reverse">逆順</option><option value="random">ランダム（解答数が少ない順）</option></select></label>
-          <button class="menu-range-action primary" type="button" data-range-session="all" title="現在の範囲から10問の学習を始めます">この範囲を10問解く <span aria-hidden="true">→</span></button>
+          <button class="menu-range-action primary" type="button" data-range-session="all" title="現在の範囲から10問の学習を始めます">10問解く <span aria-hidden="true">→</span></button>
         </div>
-        <div class="menu-list-header" id="menuListHeader" aria-hidden="true"><span class="menu-list-header-group"><span title="問題のタイトルとジャンル">問題</span><span title="現在の回答状態">ステータス</span><span title="直近5回の採点履歴">直近の結果</span><span title="この問題集でのログインユーザー個人のお気に入り">お気に入り</span><span title="直近の結果が💮の問題だけ、ここからアーカイブに移せます">アーカイブ</span></span><span class="menu-list-header-group"><span title="問題のタイトルとジャンル">問題</span><span title="現在の回答状態">ステータス</span><span title="直近5回の採点履歴">直近の結果</span><span title="この問題集でのログインユーザー個人のお気に入り">お気に入り</span><span title="直近の結果が💮の問題だけ、ここからアーカイブに移せます">アーカイブ</span></span></div>
+        <div class="menu-list-header" id="menuListHeader" aria-hidden="true"><span title="問題のタイトルとジャンル">問題</span><span title="現在の回答状態">ステータス</span><span title="直近5回の採点履歴">直近の結果</span><span title="この問題集でのログインユーザー個人のお気に入り">お気に入り</span><span title="直近の結果が💮の問題だけ、ここからアーカイブに移せます">アーカイブ</span></div>
         <div class="menu-grid" id="menuGrid"></div>
         <div class="menu-load-more" id="menuLoadMore" hidden></div>
         <div class="menu-empty" id="menuEmpty" hidden></div>
@@ -2219,7 +2414,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 139;
+    const APP_VERSION = 140;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -5751,6 +5946,8 @@
         summary.innerHTML = `<div class="menu-summary-stat"><small>この範囲の問題</small><strong>${rangeQuestions.length}<em>問</em></strong></div><div class="menu-summary-stat${rangeUnanswered ? " is-alert" : ""}"><small>未回答</small><strong>${rangeUnanswered}<em>問</em></strong></div><div class="menu-summary-stat"><small>回答済み</small><strong>${rangeAnswered.length}<em>問</em></strong></div>`;
         const rangeTarget = document.getElementById("menuRangeTarget");
         if (rangeTarget) rangeTarget.textContent = `${rangeQuestions.length}問が対象`;
+        const rangeCount = document.getElementById("menuRangeCount");
+        if (rangeCount) rangeCount.textContent = menuRangeV60 === "all" ? `全${rangeQuestions.length}問` : `${rangeQuestions.length}問`;
         const allPlayable = questionsV16.filter(isPlayableV16);
         const allAnswered = allPlayable.filter(question => latestAnswerV44(question)).length;
         const progress = allPlayable.length ? Math.round(allAnswered / allPlayable.length * 100) : 0;
@@ -5893,8 +6090,8 @@
         const options = menuNumericRangeOptionsV137();
         const selectedIndex = options.findIndex(option => option.key === menuRangeV60);
         const isAll = menuRangeV60 === "all" || selectedIndex < 0;
-        select.innerHTML = `<option value="">範囲を選択</option>${options.map(option => `<option value="${escapeHtml(option.key)}">${escapeHtml(option.label)}</option>`).join("")}`;
-        select.value = isAll ? "" : menuRangeV60;
+        select.innerHTML = `<option value="all">すべて</option>${options.map(option => `<option value="${escapeHtml(option.key)}">${escapeHtml(option.label)}</option>`).join("")}`;
+        select.value = isAll ? "all" : menuRangeV60;
         allButton.classList.toggle("is-active", isAll);
         allButton.setAttribute("aria-pressed", String(isAll));
         allButton.textContent = "すべて表示";
