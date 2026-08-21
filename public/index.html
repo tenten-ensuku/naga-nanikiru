@@ -1791,7 +1791,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 132;
+    const APP_VERSION = 134;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -2670,7 +2670,8 @@
       let collectionAccessBusyV100 = false;
       let generatorDestinationV130 = "local";
       const generatorAddedKeysV130 = new Set();
-      let remoteHistorySyncUserIdV81 = "";
+      const ANSWER_HISTORY_LIMIT_V134 = 5000;
+      let remoteHistorySyncScopeV134 = "";
       let remoteHistorySyncPromiseV81 = null;
       let importedQuestionsReadyV81 = false;
       const modelColorByNameV16 = { オメガ: "model-omega", ガンマ: "model-gamma", ニシキ: "model-nishiki", ヒバカリ: "model-hihikari", カガシ: "model-kagashi" };
@@ -2834,7 +2835,7 @@
         { version: 129, date: "2026-08-21", publishedAt: "2026-08-21T00:41:48+09:00", title: "スレッド先頭画像の除外ルールを再確認しました", body: "問題画像として使うスレッド作成者の最初の画像1枚は、コメント欄へ重複転載しないようにしました。画像IDの照合に失敗した場合も、作成者の最初の画像へフォールバックします。後続の画像・文章・NAGA URLはこれまでどおり残します。" },
         { version: 130, date: "2026-08-21", publishedAt: "2026-08-21T01:05:00+09:00", title: "編集メンバーと問題生成先を整理しました", body: "承認済みの編集メンバーが問題の生成・インポート・編集・整理を行えるようになりました。問題生成では保存先を明示的に選べます。公開範囲・メンバー管理・完全削除は、これまでどおり所有者とアプリ管理者だけが行います。" },
         { version: 131, date: "2026-08-22", publishedAt: "2026-08-22T09:00:00+09:00", title: "お気に入りとアーカイブを問題集ごとに整理しました", body: "ログインユーザーごと・問題集ごとにお気に入りとアーカイブを分けて保存します。直近の結果が💮の問題は、問題一覧のアーカイブ欄からも移動できます。各操作に説明を表示するようにしました。" },
-        { version: APP_VERSION, date: "2026-08-22", publishedAt: "2026-08-22T13:00:00+09:00", title: "副露直後の手牌表示を元の局面に合わせました", body: "副露イベント直後の打牌局面では、NAGA元画像の全幅マスクを維持し、副露面子だけを別表示するようにしました。通常の副露後局面の配置は従来どおりです。" }
+        { version: APP_VERSION, date: "2026-08-22", publishedAt: "2026-08-22T15:00:00+09:00", title: "回答履歴の復元を安定させました", body: "ログイン中の自分の回答だけを問題集ごとに取得し、500件を超えても古い問題の履歴が一覧から消えないようにしました。端末側に残った古い回答も、サーバーの採点結果で補正します。" }
       ];
       let commentNoticeStoreV65 = loadCommentNoticeStoreV65();
       let sharedCommentRowsV65 = [];
@@ -4358,7 +4359,7 @@
           const existing = userStateV16.answerHistory.find(entry => entry.attemptId === state.answerAttemptId);
           if (existing) Object.assign(existing, answer);
         }
-        userStateV16.answerHistory = userStateV16.answerHistory.slice(0, 500);
+        userStateV16.answerHistory = userStateV16.answerHistory.slice(0, ANSWER_HISTORY_LIMIT_V134);
         saveUserStateV16();
         state.sharedAttemptPromise = Promise.resolve();
         if (sharedCollectionV46 && question.serverQuestionId && window.NagaSupabase?.configured) {
@@ -5171,7 +5172,8 @@
         showMenuV16("session");
       }
 
-      function advanceQuestionV44() {
+      async function advanceQuestionV44() {
+        if (state.sharedAttemptPromise) await state.sharedAttemptPromise;
         const session = activeSessionV44();
         if (!session) {
           if (menuFilterActiveV80()) {
@@ -5490,7 +5492,7 @@
           ["リーチ判断", stats.breakdowns?.riichi],
           ["副露判断", stats.breakdowns?.call]
         ].map(([label, value]) => `<div class="analysis-breakdown"><strong>${label}</strong><span>${value?.attempts || 0}回答・悪手回避率 ${Math.round(value?.safeRate || 0)}%</span></div>`).join("");
-        return `<section class="analysis-section"><h3>学習の現在地</h3><div class="analysis-grid"><div class="stat-card"><span class="stat-label">回答数</span><span class="stat-value">${attempts}</span></div><div class="stat-card"><span class="stat-label">悪手回避率</span><span class="stat-value">${safeRate}%</span></div><div class="stat-card"><span class="stat-label">平均回答時間</span><span class="stat-value">${averageSeconds}<small>秒</small></span></div><div class="stat-card"><span class="stat-label">連続学習</span><span class="stat-value">${stats.streakDays || 0}<small>日</small></span></div></div><div class="analysis-breakdowns">${breakdowns}</div><div class="drill-actions"><button class="drill-action" type="button" data-analysis-drill="weak">×・△を10問</button><button class="drill-action secondary" type="button" data-analysis-drill="riichi">リーチ判断を10問</button><button class="drill-action secondary" type="button" data-analysis-drill="call">副露判断を10問</button><button class="drill-action secondary" type="button" data-analysis-drill="unanswered">未回答を10問</button></div><p>回答履歴はこの端末内に保存されます。別の端末とは同期されません。</p></section>`;
+        return `<section class="analysis-section"><h3>学習の現在地</h3><div class="analysis-grid"><div class="stat-card"><span class="stat-label">回答数</span><span class="stat-value">${attempts}</span></div><div class="stat-card"><span class="stat-label">悪手回避率</span><span class="stat-value">${safeRate}%</span></div><div class="stat-card"><span class="stat-label">平均回答時間</span><span class="stat-value">${averageSeconds}<small>秒</small></span></div><div class="stat-card"><span class="stat-label">連続学習</span><span class="stat-value">${stats.streakDays || 0}<small>日</small></span></div></div><div class="analysis-breakdowns">${breakdowns}</div><div class="drill-actions"><button class="drill-action" type="button" data-analysis-drill="weak">×・△を10問</button><button class="drill-action secondary" type="button" data-analysis-drill="riichi">リーチ判断を10問</button><button class="drill-action secondary" type="button" data-analysis-drill="call">副露判断を10問</button><button class="drill-action secondary" type="button" data-analysis-drill="unanswered">未回答を10問</button></div><p>未ログイン時はこの端末内に保存されます。Discordログイン中は、自分の回答履歴を問題集ごとに同期し、別端末でも復元します。</p></section>`;
       }
 
       function renderSessionResultV44() {
@@ -6300,36 +6302,56 @@
       async function hydrateRemoteAnswerHistoryV81() {
         if (!window.NagaSupabase?.configured || !supabaseSessionV46 || !importedQuestionsReadyV81 || typeof window.NagaSupabase.loadMyAttempts !== "function") return 0;
         const userId = String(supabaseSessionV46.user?.id || "");
-        if (!userId || remoteHistorySyncUserIdV81 === userId) return 0;
+        const syncScope = `${userId}::${sharedCollectionV46?.share_slug || "local"}`;
+        if (!userId || remoteHistorySyncScopeV134 === syncScope) return 0;
         if (remoteHistorySyncPromiseV81) return remoteHistorySyncPromiseV81;
         const syncPromise = (async () => {
-          const rows = await window.NagaSupabase.loadMyAttempts(500);
+          const rows = sharedCollectionV46?.share_slug && typeof window.NagaSupabase.loadMyAttemptsForCollection === "function"
+            ? await window.NagaSupabase.loadMyAttemptsForCollection(sharedCollectionV46.share_slug, ANSWER_HISTORY_LIMIT_V134)
+            : await window.NagaSupabase.loadMyAttempts(500);
           const questionByServerId = new Map(questionsV16
             .filter(question => question?.serverQuestionId)
             .map(question => [String(question.serverQuestionId), question]));
           const remoteEntries = rows.map(row => remoteAttemptToLocalV81(row, questionByServerId)).filter(Boolean);
           const localEntries = Array.isArray(userStateV16.answerHistory) ? userStateV16.answerHistory : [];
-          const seenAttemptIds = new Set(localEntries.map(entry => String(entry?.attemptId || "")).filter(Boolean));
+          const localIndexByAttemptId = new Map(localEntries
+            .map((entry, index) => [String(entry?.attemptId || ""), index])
+            .filter(([attemptId]) => attemptId));
+          const seenAttemptIds = new Set(localIndexByAttemptId.keys());
           const seenSignatures = new Set(localEntries.map(answerHistorySignatureV81));
           let added = 0;
+          let repaired = 0;
           for (const entry of remoteEntries) {
             const attemptId = String(entry.attemptId || "");
             const signature = answerHistorySignatureV81(entry);
-            if ((attemptId && seenAttemptIds.has(attemptId)) || seenSignatures.has(signature)) continue;
+            const existingIndex = attemptId ? localIndexByAttemptId.get(attemptId) : undefined;
+            if (existingIndex !== undefined) {
+              const existing = localEntries[existingIndex];
+              const merged = { ...existing, ...entry };
+              if (JSON.stringify(existing) !== JSON.stringify(merged)) {
+                localEntries[existingIndex] = merged;
+                repaired += 1;
+              }
+              continue;
+            }
+            if (seenSignatures.has(signature)) continue;
             localEntries.push(entry);
-            if (attemptId) seenAttemptIds.add(attemptId);
+            if (attemptId) {
+              seenAttemptIds.add(attemptId);
+              localIndexByAttemptId.set(attemptId, localEntries.length - 1);
+            }
             seenSignatures.add(signature);
             added += 1;
           }
-          if (added) {
+          if (added || repaired) {
             userStateV16.answerHistory = localEntries
               .sort((left, right) => new Date(right.answeredAt || 0) - new Date(left.answeredAt || 0))
-              .slice(0, 500);
+              .slice(0, ANSWER_HISTORY_LIMIT_V134);
             saveUserStateV16();
             renderMenuCardsV16();
           }
-          remoteHistorySyncUserIdV81 = userId;
-          return added;
+          remoteHistorySyncScopeV134 = syncScope;
+          return added + repaired;
         })();
         remoteHistorySyncPromiseV81 = syncPromise;
         try {
@@ -6344,7 +6366,7 @@
 
       async function refreshAccountV46(session = null) {
         supabaseSessionV46 = session;
-        if (!session) remoteHistorySyncUserIdV81 = "";
+        if (!session) remoteHistorySyncScopeV134 = "";
         window.nagaCurrentUserIdV75 = String(session?.user?.id || "");
         if (typeof renderComments === "function") renderComments();
         const status = document.getElementById("accountStatus");

@@ -101,6 +101,8 @@ test("pins Supabase dependencies and protects the NAGA proxy", async () => {
   assert.match(clientSource, /naga:autherror/);
   assert.match(clientSource, /importLocalHistory/);
   assert.match(clientSource, /async function loadMyAttempts\(limit = 500\)/);
+  assert.match(clientSource, /\.eq\("user_id", session\.user\.id\)/);
+  assert.match(clientSource, /async function loadMyAttemptsForCollection\(shareSlug: string, limit = 5000\)/);
   assert.match(clientSource, /answer_attempts/);
   assert.match(clientSource, /createSharedQuestion/);
   assert.match(clientSource, /updateSharedComment/);
@@ -154,7 +156,7 @@ test("supports private collection spaces and owner-reviewed access requests", as
   assert.match(clientSource, /loadMyCollections|loadCollectionDirectory|requestCollectionAccess|reviewCollectionAccess|revokeCollectionAccess/i);
   assert.match(clientSource, /rpc\("create_collection"/i);
   assert.match(clientSource, /rpc\("import_shared_question"/i);
-  assert.match(html, /const APP_VERSION = 132/);
+  assert.match(html, /const APP_VERSION = 134/);
   assert.match(html, /id="collectionSpacePanel"/);
   assert.doesNotMatch(html, /data-menu-view="collections"/);
   assert.match(html, /data-menu-view="my"/);
@@ -202,7 +204,7 @@ test("preassigns the verified Kakisaki Nima account as the collection owner", as
   assert.match(migration, /public\.answer_attempts/);
   assert.match(migration, /title = '垣崎にま問題集'/i);
   assert.match(migration, /set owner_id = target_user_id/i);
-  assert.match(html, /const APP_VERSION = 132/);
+  assert.match(html, /const APP_VERSION = 134/);
   assert.match(html, /垣崎にまさんを問題集オーナーに設定しました/);
 });
 
@@ -223,4 +225,21 @@ test("limits shared question lifecycle mutations to the application or collectio
   assert.match(clientSource, /transfer_collection_ownership/i);
   assert.match(html, /オーナーにする/);
   assert.match(html, /問題集の編集メンバー以上の権限が必要です/);
+});
+
+test("scopes answer-history hydration to the logged-in user and current collection", async () => {
+  const [migration, html] = await Promise.all([
+    fs.readFile(new URL("../supabase/migrations/20260822133000_answer_history_sync_v133.sql", import.meta.url), "utf8"),
+    fs.readFile(new URL("../public/index.html", import.meta.url), "utf8"),
+  ]);
+  assert.match(migration, /create or replace function public\.load_my_attempts_for_collection/i);
+  assert.match(migration, /a\.user_id = \(select auth\.uid\(\)\)/i);
+  assert.match(migration, /c\.share_slug = p_share_slug/i);
+  assert.match(migration, /security definer/i);
+  assert.match(migration, /grant execute on function public\.load_my_attempts_for_collection\(text, integer, integer\) to authenticated/i);
+  assert.match(html, /const ANSWER_HISTORY_LIMIT_V134 = 5000/);
+  assert.match(html, /loadMyAttemptsForCollection\(sharedCollectionV46\.share_slug, ANSWER_HISTORY_LIMIT_V134\)/);
+  assert.match(html, /remoteHistorySyncScopeV134/);
+  assert.match(html, /localEntries\[existingIndex\] = merged/);
+  assert.match(html, /await state\.sharedAttemptPromise/);
 });

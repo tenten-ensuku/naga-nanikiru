@@ -331,14 +331,42 @@ async function recordSharedAttempt(input: {
 }
 
 async function loadMyAttempts(limit = 500) {
+  const session = await currentSession();
+  if (!session?.user?.id) throw new Error("Discordログインが必要です。");
   const safeLimit = Math.min(500, Math.max(1, Math.floor(Number(limit) || 500)));
   const { data, error } = await requireClient()
     .from("answer_attempts")
     .select("client_attempt_id,question_id,answer,grade,elapsed_ms,answered_at")
+    .eq("user_id", session.user.id)
     .order("answered_at", { ascending: false })
     .limit(safeLimit);
   if (error) throw error;
   return data ?? [];
+}
+
+async function loadMyAttemptsForCollection(shareSlug: string, limit = 5000) {
+  const normalizedSlug = String(shareSlug ?? "").trim();
+  if (!normalizedSlug) return [];
+  const session = await currentSession();
+  if (!session?.user?.id) throw new Error("Discordログインが必要です。");
+  const safeLimit = Math.min(10000, Math.max(1, Math.floor(Number(limit) || 5000)));
+  const pageSize = 5000;
+  const rows: Array<Record<string, unknown>> = [];
+  let offset = 0;
+  while (rows.length < safeLimit) {
+    const requestLimit = Math.min(pageSize, safeLimit - rows.length);
+    const { data, error } = await requireClient().rpc("load_my_attempts_for_collection", {
+      p_share_slug: normalizedSlug,
+      p_limit: requestLimit,
+      p_offset: offset,
+    });
+    if (error) throw error;
+    const page = Array.isArray(data) ? data : [];
+    rows.push(...page);
+    if (page.length < requestLimit) break;
+    offset += page.length;
+  }
+  return rows;
 }
 
 async function getMyCapabilities() {
@@ -623,6 +651,7 @@ function buildApi() {
     deleteSharedComment,
     recordSharedAttempt,
     loadMyAttempts,
+    loadMyAttemptsForCollection,
     getMyCapabilities,
     createSharedQuestion,
     updateSharedQuestion,
