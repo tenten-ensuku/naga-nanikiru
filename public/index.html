@@ -88,7 +88,7 @@
     .menu-range-row { grid-template-columns: minmax(120px, auto) minmax(0, 1fr); align-items: center; gap: 12px; }
     .menu-range-heading-block { min-width: 0; }
     .menu-filter-note { margin: 3px 0 0; color: var(--muted); font-size: 10px; line-height: 1.35; }
-    .menu-range-selector { display: grid; grid-template-columns: auto 42px minmax(150px, 1fr) 42px; gap: 6px; align-items: center; min-width: 0; }
+    .menu-range-selector { display: grid; grid-template-columns: 42px minmax(0, 1fr) 42px auto; gap: 6px; align-items: center; min-width: 0; }
     .menu-range-selector button, .menu-range-select { min-height: 42px; box-sizing: border-box; color: #dffbfb; background: #123446; border: 1px solid rgba(190,220,225,.32); border-radius: 6px; font: inherit; font-size: 12px; font-weight: 850; }
     .menu-range-selector button { padding: 8px 12px; white-space: nowrap; }
     .menu-range-selector button:hover, .menu-range-selector button:focus-visible, .menu-range-select:focus-visible { background: #1b4b5d; border-color: rgba(155,232,216,.8); outline: 2px solid rgba(155,232,216,.18); outline-offset: 1px; }
@@ -1511,6 +1511,125 @@
       .collection-create-open { width: 100%; }
       .collection-directory-select-row { grid-template-columns: 1fr; gap: 4px; }
     }
+    /* V138: compact, quiet problem-list hierarchy. */
+    .page.menu-active .menu-panel {
+      min-height: min(760px, calc(100vh - 54px));
+      background: linear-gradient(145deg, rgba(9, 42, 58, .98), rgba(5, 24, 38, .98));
+      border-color: rgba(190, 220, 225, .24);
+      border-radius: 14px;
+      box-shadow: none;
+    }
+    .page.menu-active .menu-content {
+      gap: 18px;
+      padding: clamp(20px, 3vw, 34px);
+      background: transparent;
+    }
+    .page.menu-active .menu-content .menu-heading h2 { font-size: clamp(30px, 3.6vw, 46px); letter-spacing: -.045em; }
+    .page.menu-active .menu-summary {
+      margin-top: 11px;
+      padding: 12px 0;
+      background: rgba(10, 69, 83, .72);
+      border: 0;
+      border-top: 1px solid rgba(190, 220, 225, .26);
+      border-bottom: 1px solid rgba(190, 220, 225, .26);
+      border-radius: 0;
+    }
+    .page.menu-active .menu-summary-stat { padding-inline: 14px; }
+    .page.menu-active .menu-filter-stack {
+      gap: 0;
+      padding: 12px 14px 10px;
+      background: rgba(3, 23, 36, .42);
+      border: 1px solid rgba(190, 220, 225, .18);
+      border-radius: 9px;
+    }
+    .page.menu-active .menu-filter-row { padding: 10px 0; border-bottom: 1px solid rgba(190, 220, 225, .13); }
+    .page.menu-active .menu-filter-row:last-child { border-bottom: 0; }
+    .page.menu-active .menu-range-row { grid-template-columns: minmax(100px, .32fr) minmax(0, 1fr); align-items: center; gap: 16px; }
+    .page.menu-active .menu-range-heading-block { display: flex; align-items: baseline; gap: 8px; }
+    .page.menu-active .menu-filter-note { margin: 0; font-size: 10px; white-space: nowrap; }
+    .page.menu-active .menu-range-selector { grid-template-columns: 42px minmax(0, 1fr) 42px auto; gap: 6px; }
+    .page.menu-active .menu-range-selector button,
+    .page.menu-active .menu-range-select { min-height: 42px; }
+    .page.menu-active .menu-range-all-button { color: #d2e3e6; background: transparent; border-color: rgba(190, 220, 225, .32); }
+    .page.menu-active .menu-range-all-button.is-active { color: #172215; background: var(--gold); border-color: #ffe08a; }
+    .page.menu-active .menu-genre-row { grid-template-columns: minmax(50px, auto) minmax(0, 1fr); gap: 12px; }
+    .page.menu-active .menu-genre-tabs { gap: 6px; }
+    .page.menu-active .menu-genre-tab,
+    .page.menu-active .menu-filter-advanced-toggle,
+    .page.menu-active .menu-attribute-toggle,
+    .page.menu-active .menu-archive-view-button { min-height: 40px; padding: 8px 12px; border-radius: 5px; }
+    .page.menu-active .menu-genre-tab.is-active { color: #dffff7; background: #09675d; border-color: rgba(155, 232, 216, .58); }
+    .page.menu-active .menu-filter-advanced-toggle[aria-expanded="true"],
+    .page.menu-active .menu-attribute-toggle.is-active { color: #172215; background: #bde7e0; border-color: #d6fff5; }
+    .page.menu-active .menu-attribute-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 12px; }
+    .page.menu-active .menu-attribute-buttons { gap: 6px; }
+    .page.menu-active .menu-archive-view-button { min-width: 148px; color: #b9d0d4; background: transparent; border-color: rgba(190, 220, 225, .22); }
+    .page.menu-active .menu-archive-view-button:hover,
+    .page.menu-active .menu-archive-view-button:focus-visible { color: #eafefe; background: rgba(22, 80, 103, .52); }
+    .page.menu-active .menu-archive-view-button.is-active { color: #eafefe; background: rgba(22, 80, 103, .72); border-color: rgba(155, 232, 216, .55); }
+    .page.menu-active .menu-content .menu-filters-advanced { gap: 6px; margin-top: 2px; padding: 8px 0 2px; background: transparent; border: 0; }
+    .page.menu-active .menu-status-filter-group { gap: 6px; }
+    .page.menu-active .menu-status-filter-group legend { color: #b9d0d4; font-size: 10px; }
+    .page.menu-active .menu-status-filter-options { gap: 6px; }
+    .page.menu-active .menu-status-filter-option { min-height: 36px; padding: 7px 10px; background: #123446; border-color: rgba(190, 220, 225, .24); border-radius: 999px; font-size: 11px; }
+    .page.menu-active .menu-status-filter-note { color: #8eacb2; font-size: 9px; }
+    .menu-active-filters { display: flex; align-items: center; flex-wrap: wrap; gap: 6px 8px; min-height: 0; color: #b9d0d4; font-size: 10px; }
+    .menu-active-filters[hidden] { display: none; }
+    .menu-active-filters-label { color: #8eacb2; font-weight: 800; }
+    .menu-active-filter-list { display: flex; flex-wrap: wrap; gap: 5px; }
+    .menu-active-filter-chip,
+    .menu-active-filter-clear { min-height: 28px; padding: 4px 8px; color: #dffff7; background: rgba(9, 103, 93, .62); border: 1px solid rgba(155, 232, 216, .32); border-radius: 999px; font-size: 10px; font-weight: 800; }
+    .menu-active-filter-chip span { margin-left: 3px; color: #9be8d8; }
+    .menu-active-filter-clear { color: #a9cbd2; background: transparent; border-color: rgba(190, 220, 225, .2); }
+    .menu-active-filter-chip:hover, .menu-active-filter-chip:focus-visible,
+    .menu-active-filter-clear:hover, .menu-active-filter-clear:focus-visible { color: #fff; background: #164b5c; outline: 2px solid rgba(155, 232, 216, .18); outline-offset: 1px; }
+    .page.menu-active .menu-range-actions { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 2px; }
+    .page.menu-active .menu-range-action.primary { min-width: 224px; min-height: 44px; }
+    .page.menu-active .menu-list-header { padding: 0 12px 7px; border-bottom-color: rgba(190, 220, 225, .22); }
+    .page.menu-active .menu-card { min-height: 70px; padding: 10px 12px; background: transparent; border-color: rgba(190, 220, 225, .15); border-radius: 0; transition: background .15s ease; }
+    .page.menu-active .menu-card:hover, .page.menu-active .menu-card:focus-within { background: rgba(39, 112, 128, .2); border-color: rgba(190, 220, 225, .25); transform: none; }
+    .page.menu-active .menu-card-title { font-size: 19px; }
+    .page.menu-active .menu-card-meta { color: #b9d0d4; }
+    .page.menu-active .menu-card-icon-action.is-archived { color: #9bb0b5; }
+    .collection-space-panel { gap: 7px; padding: 0 0 2px; background: transparent; border: 0; border-radius: 0; }
+    .collection-directory { gap: 6px; padding: 2px 0 8px; }
+    .collection-switcher-head { align-items: center; gap: 10px; }
+    .collection-switcher-control { display: grid; grid-template-columns: auto minmax(180px, minmax(0, 1fr)); align-items: center; gap: 10px; min-width: 0; flex: 1 1 auto; }
+    .collection-switcher-control select { width: 100%; min-height: 42px; padding: 8px 34px 8px 11px; color: #eafefe; background: #071e2e; border: 1px solid rgba(190, 220, 225, .32); border-radius: 6px; font: inherit; font-size: 13px; font-weight: 800; }
+    .collection-switcher-control select:focus-visible { border-color: rgba(155, 232, 216, .9); outline: 2px solid rgba(155, 232, 216, .16); outline-offset: 2px; }
+    .collection-directory-actions { display: flex; align-items: center; gap: 7px; flex: 0 0 auto; }
+    .collection-info-details { position: relative; }
+    .collection-info-details summary { min-height: 38px; padding: 8px 10px; color: #b9d0d4; background: transparent; border: 1px solid rgba(190, 220, 225, .22); border-radius: 6px; cursor: pointer; font-size: 11px; font-weight: 800; list-style: none; }
+    .collection-info-details summary::-webkit-details-marker { display: none; }
+    .collection-info-details summary:hover, .collection-info-details summary:focus-visible { color: #eafefe; background: rgba(22, 80, 103, .5); outline: 2px solid rgba(155, 232, 216, .18); outline-offset: 1px; }
+    .collection-info-details[open] summary { color: #172215; background: #bde7e0; border-color: #d6fff5; }
+    .collection-info-body { position: absolute; z-index: 3; top: calc(100% + 6px); right: 0; display: grid; gap: 4px; width: min(340px, 78vw); padding: 10px 12px; color: #dffbfb; background: #071e2e; border: 1px solid rgba(155, 232, 216, .35); border-radius: 7px; box-shadow: 0 12px 30px rgba(0, 0, 0, .28); font-size: 11px; line-height: 1.5; }
+    .collection-info-body p { margin: 0; }
+    .collection-info-body p + p { color: #b9d0d4; }
+    .collection-create-open { min-height: 38px; padding: 8px 11px; color: #b9d0d4; background: transparent; border: 1px solid rgba(190, 220, 225, .22); border-radius: 6px; font-size: 11px; font-weight: 800; }
+    .collection-create-open:hover, .collection-create-open:focus-visible { color: #eafefe; background: rgba(22, 80, 103, .5); outline: 2px solid rgba(155, 232, 216, .18); outline-offset: 1px; }
+    .collection-directory-selection-note { margin: 0; color: #8eacb2; font-size: 10px; }
+    .collection-space-current { gap: 6px; padding: 8px 0 0; border-top-color: rgba(190, 220, 225, .14); }
+    .collection-space-current-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    @media (max-width: 800px) {
+      .page.menu-active .menu-content { padding: 18px 14px 26px; }
+      .page.menu-active .menu-range-row, .page.menu-active .menu-genre-row { grid-template-columns: 1fr; gap: 7px; }
+      .page.menu-active .menu-range-heading-block { justify-content: space-between; }
+      .page.menu-active .menu-range-selector { grid-template-columns: 38px minmax(0, 1fr) 38px auto; }
+      .page.menu-active .menu-attribute-row { grid-template-columns: 1fr; gap: 8px; }
+      .page.menu-active .menu-archive-view-button { width: 100%; }
+      .page.menu-active .menu-range-actions { align-items: stretch; flex-direction: column; }
+      .page.menu-active .menu-range-action.primary { width: 100%; }
+      .collection-switcher-head { align-items: stretch; flex-direction: column; }
+      .collection-switcher-control { grid-template-columns: 1fr; gap: 5px; }
+      .collection-directory-actions { width: 100%; }
+      .collection-info-details, .collection-create-open { flex: 1 1 0; }
+      .collection-info-details summary, .collection-create-open { width: 100%; text-align: center; }
+      .collection-info-body { position: static; width: auto; margin-top: 6px; }
+      .menu-sidebar .account-strip { grid-template-columns: 1fr; }
+      .menu-sidebar .account-status { grid-column: auto; }
+      .menu-sidebar .account-strip button { width: 100%; min-width: 0; }
+    }
   </style>
 </head>
 <body>
@@ -1565,13 +1684,13 @@
           <section class="menu-filter-row menu-range-row" aria-labelledby="menuRangeHeading">
             <div class="menu-range-heading-block">
               <h3 class="menu-filter-heading" id="menuRangeHeading">問題範囲</h3>
-              <p class="menu-filter-note">問題番号を100問ごとに表示します</p>
+              <p class="menu-filter-note">100問ごと</p>
             </div>
             <div class="menu-range-selector" id="menuRangeSelector">
-              <button class="menu-range-all-button is-active" id="menuRangeAllButton" type="button" aria-pressed="true" title="すべての通常問題を表示します">すべて</button>
               <button class="menu-range-step-button" id="menuRangePreviousButton" type="button" aria-label="前の問題範囲" title="前の問題範囲へ移動します">‹</button>
               <label class="menu-range-select-label" for="menuRangeSelect"><span class="sr-only">問題範囲を選ぶ</span><select class="menu-range-select" id="menuRangeSelect" aria-label="問題範囲を選ぶ"><option value="">範囲を選択</option></select></label>
               <button class="menu-range-step-button" id="menuRangeNextButton" type="button" aria-label="次の問題範囲" title="次の問題範囲へ移動します">›</button>
+              <button class="menu-range-all-button is-active" id="menuRangeAllButton" type="button" aria-pressed="true" title="すべての通常問題を表示します">すべて</button>
             </div>
           </section>
           <section class="menu-filter-row menu-genre-row" aria-labelledby="menuGenreHeading">
@@ -1582,26 +1701,27 @@
               <button class="menu-genre-tab" type="button" data-menu-type="riichi" aria-pressed="false" title="リーチ判断を含む問題だけを表示">リーチ判断</button>
               <button class="menu-genre-tab" type="button" data-menu-type="call" aria-pressed="false" title="副露判断だけを表示">副露判断</button>
             </div>
-            <button class="menu-filter-advanced-toggle" id="menuAdvancedToggle" type="button" aria-expanded="false" aria-controls="menuAdvancedFilters" title="未回答・×△あり・習得済みで絞り込む">詳細条件⌄</button>
           </section>
           <section class="menu-filter-row menu-attribute-row" aria-label="その他の絞り込み">
             <div class="menu-attribute-buttons">
               <button class="menu-attribute-toggle" id="menuFavoritesToggle" type="button" aria-pressed="false" title="お気に入りに登録した問題だけを表示します">☆ お気に入りのみ</button>
-              <button class="menu-archive-view-button" id="menuArchiveViewButton" type="button" title="完全正解して退避した問題を表示します">📦 アーカイブを見る</button>
+              <button class="menu-filter-advanced-toggle" id="menuAdvancedToggle" type="button" aria-expanded="false" aria-controls="menuAdvancedFilters" title="未回答・×△あり・習得済みで絞り込む">詳細条件</button>
             </div>
+            <button class="menu-archive-view-button" id="menuArchiveViewButton" type="button" title="完全正解して退避した問題を表示します">📦 アーカイブを見る</button>
           </section>
           <div class="menu-filters menu-filters-advanced" id="menuAdvancedFilters" hidden>
             <fieldset class="menu-status-filter-group">
-              <legend>回答状態（複数選択可）</legend>
+              <legend>回答状態</legend>
               <div class="menu-status-filter-options">
                 <label class="menu-status-filter-option"><input type="checkbox" data-menu-status="unanswered">未回答</label>
                 <label class="menu-status-filter-option"><input type="checkbox" data-menu-status="weak">×・△あり</label>
                 <label class="menu-status-filter-option"><input type="checkbox" data-menu-status="mastered">習得済み</label>
               </div>
             </fieldset>
-            <p class="menu-status-filter-note">未選択ならすべて表示。複数選択時は、いずれかの条件に当てはまる問題を表示します。</p>
+            <p class="menu-status-filter-note">複数選択できます。</p>
           </div>
         </div>
+        <div class="menu-active-filters" id="menuActiveFilters" aria-live="polite" hidden></div>
         <div class="menu-range-actions" id="menuRangeActions" hidden>
           <label class="menu-order-control" for="menuOrderSelect" title="次の問題へ進む順序を選びます"><span>出題順</span><select id="menuOrderSelect" aria-label="出題順"><option value="sequential">順番</option><option value="reverse">逆順</option><option value="random">ランダム（解答数が少ない順）</option></select></label>
           <button class="menu-range-action primary" type="button" data-range-session="all" title="現在の範囲から10問の学習を始めます">この範囲を10問解く <span aria-hidden="true">→</span></button>
@@ -1791,7 +1911,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 137;
+    const APP_VERSION = 138;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -2836,7 +2956,7 @@
         { version: 129, date: "2026-08-21", publishedAt: "2026-08-21T00:41:48+09:00", title: "スレッド先頭画像の除外ルールを再確認しました", body: "問題画像として使うスレッド作成者の最初の画像1枚は、コメント欄へ重複転載しないようにしました。画像IDの照合に失敗した場合も、作成者の最初の画像へフォールバックします。後続の画像・文章・NAGA URLはこれまでどおり残します。" },
         { version: 130, date: "2026-08-21", publishedAt: "2026-08-21T01:05:00+09:00", title: "編集メンバーと問題生成先を整理しました", body: "承認済みの編集メンバーが問題の生成・インポート・編集・整理を行えるようになりました。問題生成では保存先を明示的に選べます。公開範囲・メンバー管理・完全削除は、これまでどおり所有者とアプリ管理者だけが行います。" },
         { version: 131, date: "2026-08-22", publishedAt: "2026-08-22T09:00:00+09:00", title: "お気に入りとアーカイブを問題集ごとに整理しました", body: "ログインユーザーごと・問題集ごとにお気に入りとアーカイブを分けて保存します。直近の結果が💮の問題は、問題一覧のアーカイブ欄からも移動できます。各操作に説明を表示するようにしました。" },
-        { version: APP_VERSION, date: "2026-08-22", publishedAt: "2026-08-22T16:00:00+09:00", title: "問題範囲・お気に入り・アーカイブの表示を整理しました", body: "問題範囲を100問ごとのセレクターに整理し、お気に入りは範囲と併用できる絞り込み、アーカイブは独立した導線に変更しました。問題数が増えても選びやすくなっています。" }
+        { version: APP_VERSION, date: "2026-08-22", publishedAt: "2026-08-22T18:00:00+09:00", title: "問題一覧の表示と絞り込みを整理しました", body: "問題集の切り替えをコンパクトにし、範囲・ジャンル・回答状態・お気に入りを一つのフィルターにまとめました。アーカイブは独立した導線として、問題数が増えても選びやすい表示にしています。" }
       ];
       let commentNoticeStoreV65 = loadCommentNoticeStoreV65();
       let sharedCommentRowsV65 = [];
@@ -3633,9 +3753,6 @@
 
       function renderCollectionDirectoryV101() {
         const rows = collectionCatalogOptionsV100();
-        const intro = supabaseSessionV46
-          ? "公開・承認許可制の問題集を切り替えたり、自分の問題集を作成できます。"
-          : "公開・承認許可制の問題集名を確認できます。閲覧申請や自分の問題集の作成にはDiscordログインが必要です。";
         const currentSlug = String(sharedCollectionV46?.share_slug || "");
         const currentRow = rows.find(row => String(row.share_slug || "") === currentSlug);
         const options = rows.map(row => {
@@ -3648,15 +3765,17 @@
           return `<option value="${escapeHtml(slug)}"${current ? " selected" : ""}>${escapeHtml(title)}　（${escapeHtml(status)}）</option>`;
         }).join("");
         const empty = rows.length ? "" : `<div class="collection-directory-empty">表示できる問題集がありません。共有URLを受け取った場合は、そのURLから開いてください。</div>`;
-        const createButton = `<button class="collection-create-open" id="collectionCreateOpenButton" type="button" aria-expanded="false">＋ 自分の問題集を作る</button>`;
+        const createButton = `<button class="collection-create-open" id="collectionCreateOpenButton" type="button" aria-expanded="false">＋ 作成</button>`;
         const currentTitle = currentRow ? (currentRow.display_title || collectionDisplayNameV101(currentRow)) : sharedCollectionV46 ? collectionDisplayNameV101(sharedCollectionV46) : "未選択";
         const currentNote = currentRow
           ? (Boolean(currentRow.can_view) || (currentSlug && Boolean(sharedCollectionV46?.can_view)) ? `${collectionVisibilityLabelV100(currentRow.visibility)}　・　問題を解けます` : currentRow.request_status === "pending" ? "承認待ちです。選択すると申請状況を確認できます" : currentRow.visibility === "request" ? "問題集名を公開中　・　閲覧申請が必要です" : "閲覧権限が必要です")
           : "問題集を選ぶと、ここに公開範囲と利用状況が表示されます。";
         const picker = rows.length
-          ? `<label class="collection-directory-select-row" for="collectionDirectorySelect"><span>問題集</span><select id="collectionDirectorySelect" aria-label="問題集を選ぶ">${currentSlug ? "" : "<option value=\"\" selected disabled>問題集を選択</option>"}${options}</select></label><p class="collection-directory-selection-note">選択中：<strong>${escapeHtml(currentTitle)}</strong>　${escapeHtml(currentNote)}</p>`
+          ? `<label class="collection-switcher-control" for="collectionDirectorySelect"><span class="collection-directory-heading" id="collectionDirectoryTitle">問題集</span><select id="collectionDirectorySelect" aria-label="問題集を選ぶ">${currentSlug ? "" : "<option value=\"\" selected disabled>問題集を選択</option>"}${options}</select></label>`
           : empty;
-        return `<section class="collection-directory" aria-labelledby="collectionDirectoryTitle"><div class="collection-switcher-head"><div><h3 class="collection-directory-heading" id="collectionDirectoryTitle">問題集を選ぶ</h3><p class="collection-directory-intro">${escapeHtml(intro)}</p></div>${createButton}</div>${picker}<div class="collection-create-inline" id="collectionCreateInlinePanel" hidden><h4>自分の問題集を作る</h4><p class="collection-space-note">問題集を作成すると、自分で問題を追加・管理できます。</p>${collectionCreateFormMarkupV106("collectionCreateInline")}</div></section>`;
+        const description = currentRow?.description || sharedCollectionV46?.description || "";
+        const info = `<details class="collection-info-details"><summary>問題集情報</summary><div class="collection-info-body"><p><strong>${escapeHtml(currentTitle)}</strong></p><p>公開範囲：${escapeHtml(currentRow ? collectionVisibilityLabelV100(currentRow.visibility) : sharedCollectionV46 ? collectionVisibilityLabelV100(sharedCollectionV46.visibility) : "未選択")}</p>${description ? `<p>${escapeHtml(description)}</p>` : ""}<p>${escapeHtml(currentNote)}</p></div></details>`;
+        return `<section class="collection-directory" aria-labelledby="collectionDirectoryTitle"><div class="collection-switcher-head">${picker}<div class="collection-directory-actions">${info}${createButton}</div></div>${rows.length ? `<p class="collection-directory-selection-note">${currentSlug ? `選択中：${escapeHtml(currentTitle)}` : "問題集を選択してください"}</p>` : ""}<div class="collection-create-inline" id="collectionCreateInlinePanel" hidden><h4>自分の問題集を作る</h4><p class="collection-space-note">問題集を作成すると、自分で問題を追加・管理できます。</p>${collectionCreateFormMarkupV106("collectionCreateInline")}</div></section>`;
       }
 
       function renderCollectionSpacePanelV100() {
@@ -3702,7 +3821,7 @@
           }
         }
         panel.hidden = false;
-        panel.innerHTML = `${renderCollectionDirectoryV101()}<div class="collection-space-current"><div class="collection-space-head"><div><p class="collection-space-title">${escapeHtml(collectionDisplayNameV101(collection))}</p><p class="collection-space-meta">現在の問題集　・　公開範囲：${escapeHtml(collectionVisibilityLabelV100(collection.visibility))}</p></div><span class="collection-space-status${statusClass}">${escapeHtml(accessLabel)}</span></div><p class="collection-space-note">${escapeHtml(note)}</p>${accessControls}${canManage ? `<p class="collection-space-note">設定から公開範囲を変更し、閲覧申請を承認・却下できます。申請の承認時に「閲覧」または「編集」を選べます。</p>` : ""}</div>`;
+        panel.innerHTML = `${renderCollectionDirectoryV101()}<div class="collection-space-current"><div class="collection-space-current-head"><span class="collection-space-meta">現在の利用状態</span><span class="collection-space-status${statusClass}">${escapeHtml(accessLabel)}</span></div><p class="collection-space-note">${escapeHtml(note)}</p>${accessControls}${canManage ? `<p class="collection-space-note">設定から公開範囲を変更し、閲覧申請を承認・却下できます。申請の承認時に「閲覧」または「編集」を選べます。</p>` : ""}</div>`;
         bindCollectionSpacePanelV100();
         restoreCollectionCreateDraftV114(createDraft);
       }
@@ -5314,8 +5433,7 @@
           badge.textContent = String(counts[badge.dataset.menuCount] ?? 0);
         });
         const summary = document.getElementById("menuSummary");
-        const summaryQuestions = menuViewV16 === "archive" ? questionsV16.filter(isArchivedV109) : questionsV16.filter(isPlayableV16);
-        const rangeQuestions = summaryQuestions.filter(menuRangeMatchesV60).filter(question => !menuFavoritesOnlyV137 || isFavoriteV16(question));
+        const rangeQuestions = menuFilteredQuestionsV80();
         const rangeAnswered = rangeQuestions.filter(question => latestAnswerV44(question));
         const rangeUnanswered = rangeQuestions.length - rangeAnswered.length;
         summary.innerHTML = `<div class="menu-summary-stat"><small>この範囲の問題</small><strong>${rangeQuestions.length}<em>問</em></strong></div><div class="menu-summary-stat${rangeUnanswered ? " is-alert" : ""}"><small>未回答</small><strong>${rangeUnanswered}<em>問</em></strong></div><div class="menu-summary-stat"><small>回答済み</small><strong>${rangeAnswered.length}<em>問</em></strong></div>`;
@@ -5340,6 +5458,7 @@
         document.getElementById("menuListHeader").setAttribute("aria-hidden", String(!listView));
         renderMenuRangeControlsV137();
         renderMenuTypeFiltersV83();
+        renderMenuActiveFiltersV138();
         renderCollectionSpacePanelV100();
         renderNotificationBadgesV65();
       }
@@ -5384,7 +5503,7 @@
         if (typeof filterQuestions !== "function") return null;
         const statuses = menuStatusFiltersV92.length ? menuStatusFiltersV92 : ["all"];
         const allowedKeys = new Set();
-        const options = { questions: questionsV16, state: userStateV16, view: menuViewV16 === "archive" ? "my" : menuViewV16, query: menuSearchV44, type: menuTypeV44, now: new Date() };
+        const options = { questions: questionsV16, state: userStateV16, view: menuViewV16 === "archive" ? "all" : menuViewV16, query: menuSearchV44, type: menuTypeV44, now: new Date() };
         statuses.forEach(status => {
           const filtered = filterQuestions({ ...options, status });
           if (Array.isArray(filtered)) filtered.forEach(question => allowedKeys.add(questionKeyV16(question)));
@@ -5481,6 +5600,71 @@
           button.classList.toggle("is-active", active);
           button.setAttribute("aria-pressed", String(active));
         });
+      }
+
+      const MENU_TYPE_LABELS_V138 = {
+        discard: "打牌判断",
+        riichi: "リーチ判断",
+        call: "副露判断"
+      };
+
+      function menuActiveFilterItemsV138() {
+        const items = [];
+        if (menuViewV16 === "archive") items.push({ key: "archive", label: "アーカイブ表示中" });
+        if (menuRangeV60 !== "all") {
+          const option = menuNumericRangeOptionsV137().find(item => item.key === menuRangeV60);
+          if (option) items.push({ key: "range", label: `範囲 ${option.label}` });
+        }
+        if (menuTypeV44 !== "all") items.push({ key: "type", label: MENU_TYPE_LABELS_V138[menuTypeV44] || menuTypeV44 });
+        menuStatusFiltersV92.forEach(status => {
+          const label = { unanswered: "未回答", weak: "×・△あり", mastered: "習得済み" }[status];
+          if (label) items.push({ key: `status:${status}`, label });
+        });
+        if (menuFavoritesOnlyV137) items.push({ key: "favorites", label: "お気に入り" });
+        return items;
+      }
+
+      function renderMenuActiveFiltersV138() {
+        const panel = document.getElementById("menuActiveFilters");
+        if (!panel) return;
+        const items = menuActiveFilterItemsV138();
+        const filterView = menuViewV16 === "my" || menuViewV16 === "archive";
+        panel.hidden = !filterView || items.length === 0;
+        document.querySelectorAll("[data-menu-status]").forEach(input => {
+          input.checked = menuStatusFiltersV92.includes(input.dataset.menuStatus);
+        });
+        if (!filterView || !items.length) {
+          panel.innerHTML = "";
+          return;
+        }
+        const chips = items.map(item => `<button class="menu-active-filter-chip" type="button" data-menu-filter-clear="${escapeHtml(item.key)}" title="${escapeHtml(item.label)}の絞り込みを解除">${escapeHtml(item.label)} <span aria-hidden="true">×</span></button>`).join("");
+        panel.innerHTML = `<span class="menu-active-filters-label">絞り込み中</span><div class="menu-active-filter-list">${chips}</div>${items.length > 1 ? `<button class="menu-active-filter-clear" type="button" data-menu-filter-clear-all="true">すべて解除</button>` : ""}`;
+      }
+
+      function clearMenuFilterV138(filterKey) {
+        if (filterKey === "archive") {
+          showMenuV16("my");
+          return;
+        }
+        if (filterKey === "range") menuRangeV60 = "all";
+        if (filterKey === "type") menuTypeV44 = "all";
+        if (filterKey === "favorites") menuFavoritesOnlyV137 = false;
+        if (filterKey.startsWith("status:")) {
+          const status = filterKey.slice("status:".length);
+          menuStatusFiltersV92 = menuStatusFiltersV92.filter(value => value !== status);
+        }
+        resetMenuRenderLimitV119();
+        renderMenuCardsV16();
+      }
+
+      function clearAllMenuFiltersV138() {
+        menuRangeV60 = "all";
+        menuTypeV44 = "all";
+        menuStatusFiltersV92 = [];
+        menuFavoritesOnlyV137 = false;
+        if (menuViewV16 === "archive") menuViewV16 = "my";
+        resetMenuRenderLimitV119();
+        renderMenuCardsV16();
       }
 
       function latestAnswerV44(question) {
@@ -5676,12 +5860,7 @@
           return;
         }
         grid.style.display = "grid";
-        const filteredByHelper = menuStatusFilteredQuestionsV92();
-        const sourceQuestions = (Array.isArray(filteredByHelper) ? filteredByHelper : questionsV16).filter(question => {
-          if (menuViewV16 === "archive") return isArchivedV109(question);
-          return isPlayableV16(question);
-        });
-        const entries = sourceQuestions.filter(menuRangeMatchesV60).filter(question => !menuFavoritesOnlyV137 || isFavoriteV16(question)).map(question => ({ question, index: questionIndexByKeyV44(questionKeyV16(question)) })).filter(({ index }) => index >= 0).sort((left, right) => menuQuestionSortKeyV99(left.question) - menuQuestionSortKeyV99(right.question) || left.index - right.index);
+        const entries = menuFilteredQuestionsV80().map(question => ({ question, index: questionIndexByKeyV44(questionKeyV16(question)) })).filter(({ index }) => index >= 0).sort((left, right) => menuQuestionSortKeyV99(left.question) - menuQuestionSortKeyV99(right.question) || left.index - right.index);
         empty.hidden = entries.length > 0;
         empty.textContent = menuViewV16 === "archive" ? "アーカイブした問題はまだありません。" : menuFavoritesOnlyV137 ? "お気に入り登録した問題はまだありません。" : "出題できる問題がありません。";
         const visibleEntries = entries.length > MENU_RENDER_THRESHOLD_V119 ? entries.slice(0, menuRenderLimitV119) : entries;
@@ -6561,6 +6740,14 @@
         showMenuV16();
         document.getElementById("questionSelect").addEventListener("change", event => openQuestionV16(Number(event.target.value)));
         document.getElementById("menuGrid").addEventListener("click", handleMenuGridClickV16);
+        document.getElementById("menuActiveFilters")?.addEventListener("click", event => {
+          const clearButton = event.target.closest("[data-menu-filter-clear]");
+          if (clearButton) {
+            clearMenuFilterV138(clearButton.dataset.menuFilterClear || "");
+            return;
+          }
+          if (event.target.closest("[data-menu-filter-clear-all]")) clearAllMenuFiltersV138();
+        });
         document.getElementById("menuLoadMore")?.addEventListener("click", event => {
           if (!event.target.closest("#menuLoadMoreButton")) return;
           menuRenderLimitV119 += MENU_RENDER_BATCH_V119;

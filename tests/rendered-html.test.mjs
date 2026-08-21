@@ -32,7 +32,7 @@ test("wires v65 learning UX, generator, Supabase bridge, metadata, and social im
     readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
     access(new URL("../public/og-v44.png", import.meta.url)),
   ]);
-  assert.match(index, /const APP_VERSION = 137/);
+  assert.match(index, /const APP_VERSION = 138/);
   assert.match(index, /function menuRangeStepV120\(\)[\s\S]*?return MENU_RANGE_STEP_V137/);
   assert.match(index, /id="collectionDirectorySelect"/);
   assert.doesNotMatch(index, /class="collection-directory-item/);
@@ -43,7 +43,8 @@ test("wires v65 learning UX, generator, Supabase bridge, metadata, and social im
   assert.doesNotMatch(index, /is-pierre-theme/);
   assert.match(index, /topColor: "#06254a", bottomColor: "#02244c"/);
   assert.doesNotMatch(index, /<div class="menu-heading">\s*<p class="eyebrow">NAGA SCREENSHOT-BASED DRILL<\/p>/);
-  assert.match(index, /function menuQuestionSortKeyV99\(question\)[\s\S]*?const entries = sourceQuestions[\s\S]*?\.sort\(\(left, right\) => menuQuestionSortKeyV99\(left\.question\) - menuQuestionSortKeyV99\(right\.question\)/);
+  assert.match(index, /function menuQuestionSortKeyV99\(question\)[\s\S]*?const entries = menuFilteredQuestionsV80\(\)\.map\(question => \(\{ question, index:/);
+  assert.match(index, /\.sort\(\(left, right\) => menuQuestionSortKeyV99\(left\.question\) - menuQuestionSortKeyV99\(right\.question\)/);
   assert.match(index, /<h1>何切る？<\/h1>/);
   assert.doesNotMatch(index, /<p class="header-note">NAGAの局面を解き、復習し、弱点を育て直す実戦問題集<\/p>/);
   assert.match(index, /id="menuButton"[^>]*>メニューに戻る<\/button>/);
@@ -59,7 +60,7 @@ test("wires v65 learning UX, generator, Supabase bridge, metadata, and social im
   assert.match(index, /NAGA URLから問題生成/);
   assert.match(index, /property="og:image" content="https:\/\/tenten-ensuku\.github\.io\/naga-nanikiru\/og-v44\.png"/);
   assert.match(index, /function formatAnnouncementDateV111\(item\)/);
-  assert.match(index, /publishedAt: "2026-08-18T12:35:07\+09:00"/);
+  assert.match(index, /publishedAt: "2026-08-22T18:00:00\+09:00"/);
   assert.match(index, /formatAnnouncementDateV111\(item\)/);
   assert.match(page, /src=\{`\$\{APP_BASE_PATH\}index\.html`\}/);
   assert.match(layout, /generateMetadata/);
