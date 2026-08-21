@@ -1531,12 +1531,12 @@
       <aside class="menu-sidebar" aria-label="問題集ナビゲーション">
         <div class="menu-brand"><span class="menu-brand-tile" aria-hidden="true">中</span><span class="menu-brand-title">問題集</span><span class="menu-brand-actions"><button class="menu-notice-button" id="announcementButton" type="button" aria-label="アナウンスを開く" title="アナウンス">📢<span class="notification-badge" id="announcementBadge" hidden></span></button><button class="menu-notice-button" id="commentNotificationsButton" type="button" aria-label="コメント・追加通知を開く" title="コメント・追加通知">💬<span class="notification-badge" id="commentNotificationBadge" hidden></span></button><span class="menu-brand-version">V<span id="menuVersion"></span></span></span></div>
         <nav class="menu-nav" aria-label="問題集メニュー">
-          <button class="menu-nav-button is-active" type="button" data-menu-view="my"><span class="menu-nav-icon" aria-hidden="true">▦</span><span>問題集</span><span class="menu-nav-badge" data-menu-count="collections">0</span></button>
-          <button class="menu-nav-button" type="button" data-menu-view="analysis"><span class="menu-nav-icon" aria-hidden="true">▥</span><span>成績・履歴</span></button>
-          <button class="menu-nav-button" type="button" data-menu-view="favorites"><span class="menu-nav-icon" aria-hidden="true">☆</span><span>お気に入り</span><span class="menu-nav-badge" data-menu-count="favorites">0</span></button>
-          <button class="menu-nav-button" type="button" data-menu-view="generator"><span class="menu-nav-icon" aria-hidden="true">＋</span><span>問題生成</span></button>
-          <button class="menu-nav-button" type="button" data-menu-view="settings"><span class="menu-nav-icon" aria-hidden="true">⚙</span><span>設定</span></button>
-          <button class="menu-nav-button" id="studentHistoryNav" type="button" data-menu-view="students" hidden><span class="menu-nav-icon" aria-hidden="true">◎</span><span>生徒履歴</span></button>
+          <button class="menu-nav-button is-active" type="button" data-menu-view="my" title="問題集を選び、一覧から学習を始める"><span class="menu-nav-icon" aria-hidden="true">▦</span><span>問題集</span><span class="menu-nav-badge" data-menu-count="collections">0</span></button>
+          <button class="menu-nav-button" type="button" data-menu-view="analysis" title="回答率・習熟度・回答時間など、自分の学習状況を見る"><span class="menu-nav-icon" aria-hidden="true">▥</span><span>成績・履歴</span></button>
+          <button class="menu-nav-button" type="button" data-menu-view="favorites" title="この問題集でお気に入りに登録した問題を見る"><span class="menu-nav-icon" aria-hidden="true">☆</span><span>お気に入り</span><span class="menu-nav-badge" data-menu-count="favorites">0</span></button>
+          <button class="menu-nav-button" type="button" data-menu-view="generator" title="NAGA URLから問題を作り、保存先を選ぶ"><span class="menu-nav-icon" aria-hidden="true">＋</span><span>問題生成</span></button>
+          <button class="menu-nav-button" type="button" data-menu-view="settings" title="表示名・表示方法・問題集の設定を変更する"><span class="menu-nav-icon" aria-hidden="true">⚙</span><span>設定</span></button>
+          <button class="menu-nav-button" id="studentHistoryNav" type="button" data-menu-view="students" title="生徒ごとの学習進捗を見る" hidden><span class="menu-nav-icon" aria-hidden="true">◎</span><span>生徒履歴</span></button>
         </nav>
         <div class="menu-sidebar-progress" id="menuSidebarProgress" aria-live="polite"></div>
         <div class="account-strip" id="accountStrip">
@@ -1553,22 +1553,22 @@
         </div>
         <section class="collection-space-panel" id="collectionSpacePanel" aria-live="polite" hidden></section>
         <section class="quick-start" id="quickStart" aria-label="すぐに始める">
-        <button class="quick-start-card primary" type="button" data-session-mode="recommended">
+        <button class="quick-start-card primary" type="button" data-session-mode="recommended" title="未回答と苦手問題をバランスよく出題します">
           <span class="quick-start-kicker">DAILY DRILL</span>
           <span class="quick-start-title">おすすめ10問</span>
           <span class="quick-start-note" id="recommendedDrillNote">苦手問題と未回答を優先します</span>
         </button>
-        <button class="quick-start-card" id="resumeSessionButton" type="button" data-session-mode="resume" hidden>
+        <button class="quick-start-card" id="resumeSessionButton" type="button" data-session-mode="resume" title="中断したセッションの続きから再開します" hidden>
           <span class="quick-start-kicker">RESUME</span>
           <span class="quick-start-title">前回の続き</span>
           <span class="quick-start-note" id="resumeSessionNote"></span>
         </button>
-        <button class="quick-start-card" type="button" data-session-mode="weak">
+        <button class="quick-start-card" type="button" data-session-mode="weak" title="直近の採点が×・△の問題を優先します">
           <span class="quick-start-kicker">REVIEW</span>
           <span class="quick-start-title">苦手10問</span>
           <span class="quick-start-note">×・△を優先して復習</span>
         </button>
-        <button class="quick-start-card" type="button" data-session-mode="unanswered">
+        <button class="quick-start-card" type="button" data-session-mode="unanswered" title="まだ回答していない問題を優先します">
           <span class="quick-start-kicker">NEW</span>
           <span class="quick-start-title">未回答10問</span>
           <span class="quick-start-note">まだ解いていない問題</span>
@@ -1582,12 +1582,12 @@
           <section class="menu-filter-row menu-genre-row" aria-labelledby="menuGenreHeading">
             <h3 class="menu-filter-heading" id="menuGenreHeading">ジャンル</h3>
             <div class="menu-genre-tabs" id="menuTypeFilters" role="group" aria-labelledby="menuGenreHeading">
-              <button class="menu-genre-tab is-active" type="button" data-menu-type="all" aria-pressed="true">すべて</button>
-              <button class="menu-genre-tab" type="button" data-menu-type="discard" aria-pressed="false">打牌判断</button>
-              <button class="menu-genre-tab" type="button" data-menu-type="riichi" aria-pressed="false">リーチ判断</button>
-              <button class="menu-genre-tab" type="button" data-menu-type="call" aria-pressed="false">副露判断</button>
+              <button class="menu-genre-tab is-active" type="button" data-menu-type="all" aria-pressed="true" title="すべてのジャンルを表示">すべて</button>
+              <button class="menu-genre-tab" type="button" data-menu-type="discard" aria-pressed="false" title="打牌判断だけを表示">打牌判断</button>
+              <button class="menu-genre-tab" type="button" data-menu-type="riichi" aria-pressed="false" title="リーチ判断を含む問題だけを表示">リーチ判断</button>
+              <button class="menu-genre-tab" type="button" data-menu-type="call" aria-pressed="false" title="副露判断だけを表示">副露判断</button>
             </div>
-            <button class="menu-filter-advanced-toggle" id="menuAdvancedToggle" type="button" aria-expanded="false" aria-controls="menuAdvancedFilters">詳細条件⌄</button>
+            <button class="menu-filter-advanced-toggle" id="menuAdvancedToggle" type="button" aria-expanded="false" aria-controls="menuAdvancedFilters" title="未回答・×△あり・習得済みで絞り込む">詳細条件⌄</button>
           </section>
           <div class="menu-filters menu-filters-advanced" id="menuAdvancedFilters" hidden>
             <fieldset class="menu-status-filter-group">
@@ -1602,10 +1602,10 @@
           </div>
         </div>
         <div class="menu-range-actions" id="menuRangeActions" hidden>
-          <label class="menu-order-control" for="menuOrderSelect"><span>出題順</span><select id="menuOrderSelect" aria-label="出題順"><option value="sequential">順番</option><option value="reverse">逆順</option><option value="random">ランダム（解答数が少ない順）</option></select></label>
-          <button class="menu-range-action primary" type="button" data-range-session="all">この範囲を10問解く <span aria-hidden="true">→</span></button>
+          <label class="menu-order-control" for="menuOrderSelect" title="次の問題へ進む順序を選びます"><span>出題順</span><select id="menuOrderSelect" aria-label="出題順"><option value="sequential">順番</option><option value="reverse">逆順</option><option value="random">ランダム（解答数が少ない順）</option></select></label>
+          <button class="menu-range-action primary" type="button" data-range-session="all" title="現在の範囲から10問の学習を始めます">この範囲を10問解く <span aria-hidden="true">→</span></button>
         </div>
-        <div class="menu-list-header" id="menuListHeader" aria-hidden="true"><span class="menu-list-header-group"><span>問題</span><span>ステータス</span><span>直近の結果</span><span>お気に入り</span><span>アーカイブ</span></span><span class="menu-list-header-group"><span>問題</span><span>ステータス</span><span>直近の結果</span><span>お気に入り</span><span>アーカイブ</span></span></div>
+        <div class="menu-list-header" id="menuListHeader" aria-hidden="true"><span class="menu-list-header-group"><span title="問題のタイトルとジャンル">問題</span><span title="現在の回答状態">ステータス</span><span title="直近5回の採点履歴">直近の結果</span><span title="この問題集でのログインユーザー個人のお気に入り">お気に入り</span><span title="直近の結果が💮の問題だけ、ここからアーカイブに移せます">アーカイブ</span></span><span class="menu-list-header-group"><span title="問題のタイトルとジャンル">問題</span><span title="現在の回答状態">ステータス</span><span title="直近5回の採点履歴">直近の結果</span><span title="この問題集でのログインユーザー個人のお気に入り">お気に入り</span><span title="直近の結果が💮の問題だけ、ここからアーカイブに移せます">アーカイブ</span></span></div>
         <div class="menu-grid" id="menuGrid"></div>
         <div class="menu-load-more" id="menuLoadMore" hidden></div>
         <div class="menu-empty" id="menuEmpty" hidden></div>
@@ -1620,11 +1620,11 @@
     </header>
 
     <div class="source-bar">
-      <div class="source-url"><strong id="sceneProblemTitle">問題249</strong><a class="source-link" id="nagaSourceLink" href="#" target="_blank" rel="noopener noreferrer">局面NAGAURLに移動</a><button class="import-question-button" id="importQuestionButton" type="button" hidden>自分の問題集にインポート</button></div>
-      <label class="question-control">問題を選ぶ <select id="questionSelect" aria-label="問題を選ぶ"></select></label>
-      <label class="model-control">正誤判定基準 <select id="modelSelect" aria-label="正誤判定基準"></select></label>
-      <button class="menu-button" id="menuButton" type="button">メニューに戻る</button>
-      <button class="next-button" id="nextQuestionButton" type="button" hidden>次の問題へ</button>
+      <div class="source-url"><strong id="sceneProblemTitle">問題249</strong><a class="source-link" id="nagaSourceLink" href="#" target="_blank" rel="noopener noreferrer" title="元のNAGA局面を別タブで開きます">局面NAGAURLに移動</a><button class="import-question-button" id="importQuestionButton" type="button" title="この問題を、自分が編集できる問題集へコピーします" hidden>自分の問題集にインポート</button></div>
+      <label class="question-control" title="この問題集の別の問題を選びます">問題を選ぶ <select id="questionSelect" aria-label="問題を選ぶ"></select></label>
+      <label class="model-control" title="正誤判定に使うNAGAモデルを選びます">正誤判定基準 <select id="modelSelect" aria-label="正誤判定基準"></select></label>
+      <button class="menu-button" id="menuButton" type="button" title="問題一覧・問題集選択へ戻ります">メニューに戻る</button>
+      <button class="next-button" id="nextQuestionButton" type="button" title="現在の出題順に従って次の問題へ進みます" hidden>次の問題へ</button>
     </div>
 
     <div class="session-strip" id="sessionStrip" aria-live="polite" hidden>
@@ -1664,9 +1664,9 @@
       </div>
       <div class="answer-actions">
         <button class="next-button" id="nextQuestionBottomButton" type="button" hidden>次の問題へ</button>
-        <button class="archive-next-button" id="archiveQuestionButton" type="button" hidden>アーカイブに移す</button>
-        <button class="answer-organize-button" id="currentFavoriteButton" type="button">☆ お気に入り</button>
-        <button class="answer-organize-button" id="currentManageButton" type="button">整理</button>
+        <button class="archive-next-button" id="archiveQuestionButton" type="button" title="直近の結果が💮の問題を、この問題集のあなた専用アーカイブへ移します" hidden>アーカイブに移す</button>
+        <button class="answer-organize-button" id="currentFavoriteButton" type="button" title="この問題集でお気に入りに登録します">☆ お気に入り</button>
+        <button class="answer-organize-button" id="currentManageButton" type="button" title="この問題を整理・編集します">整理</button>
       </div>
     </section>
 
@@ -1790,7 +1790,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 130;
+    const APP_VERSION = 131;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -2692,7 +2692,7 @@
       const sourceTitleV16 = document.getElementById("sceneProblemTitle");
 
       function loadUserStateV16() {
-        const fallback = window.DrillUxV44?.migrateState?.(null) || { schemaVersion: 2, favorites: [], trashed: [], archived: [], hidden: [], answerHistory: [], snoozed: {}, studyDates: [], sessions: {}, activeSessionId: null, lastSessionResult: null, customQuestions: [], pendingGenerated: [], settings: {}, localComments: {}, questionOverrides: {}, deletionProposals: {} };
+        const fallback = window.DrillUxV44?.migrateState?.(null) || { schemaVersion: 2, favorites: [], trashed: [], archived: [], hidden: [], answerHistory: [], snoozed: {}, studyDates: [], sessions: {}, activeSessionId: null, lastSessionResult: null, customQuestions: [], pendingGenerated: [], settings: {}, localComments: {}, questionOverrides: {}, deletionProposals: {}, collectionPersonal: {}, collectionPersonalLegacyMigrated: false };
         try {
           if (window.localStorage.getItem(USER_STATE_KEY_V16) === null) {
             const legacyValue = window.localStorage.getItem(LEGACY_USER_STATE_KEY_V16);
@@ -2708,6 +2708,8 @@
           if (!["split", "single"].includes(migrated.settings.desktopLayout)) migrated.settings.desktopLayout = "split";
           migrated.questionOverrides = migrated.questionOverrides && typeof migrated.questionOverrides === "object" ? migrated.questionOverrides : {};
           migrated.deletionProposals = migrated.deletionProposals && typeof migrated.deletionProposals === "object" ? migrated.deletionProposals : {};
+          migrated.collectionPersonal = migrated.collectionPersonal && typeof migrated.collectionPersonal === "object" ? migrated.collectionPersonal : {};
+          migrated.collectionPersonalLegacyMigrated = Boolean(migrated.collectionPersonalLegacyMigrated);
           return migrated;
         } catch {
           return fallback;
@@ -2726,6 +2728,53 @@
 
       function questionKeyV16(question) {
         return String(question?.id || `number-${question?.number ?? "unknown"}`);
+      }
+
+      function personalCollectionScopeKeyV131() {
+        const userId = String(supabaseSessionV46?.user?.id || "guest");
+        const collectionKey = String(sharedCollectionV46?.share_slug || DEFAULT_COLLECTION_SLUG || "local");
+        return `${userId}::${collectionKey}`;
+      }
+
+      function personalCollectionStateV131() {
+        userStateV16.collectionPersonal ||= {};
+        const scopeKey = personalCollectionScopeKeyV131();
+        const existing = userStateV16.collectionPersonal[scopeKey] && typeof userStateV16.collectionPersonal[scopeKey] === "object"
+          ? userStateV16.collectionPersonal[scopeKey]
+          : {};
+        existing.favorites = Array.isArray(existing.favorites) ? [...new Set(existing.favorites.map(String))] : [];
+        existing.archived = Array.isArray(existing.archived) ? [...new Set(existing.archived.map(String))] : [];
+        if (!existing.initialized && questionsV16.length) {
+          const currentQuestionKeys = new Set(questionsV16.map(questionKeyV16));
+          if (!userStateV16.collectionPersonalLegacyMigrated) {
+            existing.favorites = [...new Set([...existing.favorites, ...(Array.isArray(userStateV16.favorites) ? userStateV16.favorites : [])].map(String).filter(key => currentQuestionKeys.has(key)))];
+            existing.archived = [...new Set([...existing.archived, ...(Array.isArray(userStateV16.archived) ? userStateV16.archived : [])].map(String).filter(key => currentQuestionKeys.has(key)))];
+            userStateV16.collectionPersonalLegacyMigrated = true;
+          }
+          existing.initialized = true;
+        }
+        userStateV16.collectionPersonal[scopeKey] = existing;
+        return existing;
+      }
+
+      function updatePersonalCollectionStateV131(mutator) {
+        const scoped = personalCollectionStateV131();
+        mutator(scoped);
+        scoped.favorites = [...new Set((scoped.favorites || []).map(String))];
+        scoped.archived = [...new Set((scoped.archived || []).map(String))];
+        saveUserStateV16();
+        return scoped;
+      }
+
+      function canUsePersonalCollectionStateV131() {
+        return !sharedCollectionV46 || Boolean(supabaseSessionV46);
+      }
+
+      function removePersonalQuestionMarkersV131(question) {
+        const key = questionKeyV16(question);
+        const scoped = personalCollectionStateV131();
+        scoped.favorites = scoped.favorites.filter(value => value !== key);
+        scoped.archived = scoped.archived.filter(value => value !== key);
       }
 
       const COMMENT_NOTICE_STORAGE_KEY_V65 = storageKey("comment-notices-v1");
@@ -2782,7 +2831,8 @@
         { version: 127, date: "2026-08-19", publishedAt: "2026-08-19T17:50:43+09:00", title: "コメント画像の取り込みを全問題集で再監査しました", body: "スレッド作成者がスレッド全体で最初に投稿した画像1枚と最初のNAGA URLだけを除外し、それ以外の画像・文章・後続URLを漏れなく解説へ転送するルールを、くにたそ・垣崎にま・ピエールの全問題に適用して再生成しました。" },
         { version: 128, date: "2026-08-19", publishedAt: "2026-08-19T21:47:44+09:00", title: "副露判定と局面画像のルールを統一しました", body: "副露判定の採点とみんなの回答を「鳴く／スルー」の二択に統一しました。また、くにたそ・垣崎にま・ピエールの全問題画像を、投稿画像ではなく各NAGA局面URLから青背景・伏牌状態で再生成し、副露数ごとのマスク基準を適用しました。" },
         { version: 129, date: "2026-08-21", publishedAt: "2026-08-21T00:41:48+09:00", title: "スレッド先頭画像の除外ルールを再確認しました", body: "問題画像として使うスレッド作成者の最初の画像1枚は、コメント欄へ重複転載しないようにしました。画像IDの照合に失敗した場合も、作成者の最初の画像へフォールバックします。後続の画像・文章・NAGA URLはこれまでどおり残します。" },
-        { version: APP_VERSION, date: "2026-08-21", publishedAt: "2026-08-21T01:05:00+09:00", title: "編集メンバーと問題生成先を整理しました", body: "承認済みの編集メンバーが問題の生成・インポート・編集・整理を行えるようになりました。問題生成では保存先を明示的に選べます。公開範囲・メンバー管理・完全削除は、これまでどおり所有者とアプリ管理者だけが行います。" }
+        { version: 130, date: "2026-08-21", publishedAt: "2026-08-21T01:05:00+09:00", title: "編集メンバーと問題生成先を整理しました", body: "承認済みの編集メンバーが問題の生成・インポート・編集・整理を行えるようになりました。問題生成では保存先を明示的に選べます。公開範囲・メンバー管理・完全削除は、これまでどおり所有者とアプリ管理者だけが行います。" },
+        { version: APP_VERSION, date: "2026-08-22", publishedAt: "2026-08-22T09:00:00+09:00", title: "お気に入りとアーカイブを問題集ごとに整理しました", body: "ログインユーザーごと・問題集ごとにお気に入りとアーカイブを分けて保存します。直近の結果が💮の問題は、問題一覧のアーカイブ欄からも移動できます。各操作に説明を表示するようにしました。" }
       ];
       let commentNoticeStoreV65 = loadCommentNoticeStoreV65();
       let sharedCommentRowsV65 = [];
@@ -4084,11 +4134,11 @@
       }
 
       function isArchivedV109(question) {
-        return (userStateV16.archived || []).includes(questionKeyV16(question)) && !isHiddenV16(question);
+        return personalCollectionStateV131().archived.includes(questionKeyV16(question)) && !isHiddenV16(question);
       }
 
       function isFavoriteV16(question) {
-        return userStateV16.favorites.includes(questionKeyV16(question)) && !isHiddenV16(question);
+        return personalCollectionStateV131().favorites.includes(questionKeyV16(question)) && !isHiddenV16(question);
       }
 
       function isPlayableV16(question) {
@@ -4099,8 +4149,8 @@
 
       function archiveQuestionV109(question) {
         const key = questionKeyV16(question);
-        userStateV16.archived ||= [];
-        if (!userStateV16.archived.includes(key)) userStateV16.archived.push(key);
+        const scoped = personalCollectionStateV131();
+        if (!scoped.archived.includes(key)) scoped.archived.push(key);
         userStateV16.trashed = (userStateV16.trashed || []).filter(value => value !== key);
         delete userStateV16.snoozed?.[key];
       }
@@ -4108,7 +4158,11 @@
       function canArchiveCurrentQuestionV109() {
         const question = questionsV16[currentQuestionIndexV16];
         const latest = question ? latestAnswerV44(question) : null;
-        return Boolean(state.revealed && latest?.scoreMark === "💮" && !isArchivedV109(question));
+        return Boolean(canUsePersonalCollectionStateV131() && state.revealed && latest?.scoreMark === "💮" && !isArchivedV109(question));
+      }
+
+      function canArchiveFromMenuV131(question) {
+        return Boolean(canUsePersonalCollectionStateV131() && latestAnswerV44(question)?.scoreMark === "💮" && !isArchivedV109(question));
       }
 
       function updateUserStateV16(mutator) {
@@ -5343,7 +5397,7 @@
         const options = menuRangeOptionsV60();
         const activeRange = menuViewV16 === "archive" ? "archive" : menuRangeV60;
         if (!options.some(option => option.key === activeRange)) menuRangeV60 = "all";
-        tabs.innerHTML = options.map(option => { const count = commentNotificationCountForRangeV65(option.key); return `<button class="menu-range-tab${option.key === activeRange ? " is-active" : ""}" type="button" role="tab" aria-selected="${option.key === activeRange}" aria-label="${option.label}・新着コメント${count}件" data-menu-range="${option.key}">${option.label}${notificationBadgeMarkupV65(count, `${option.label}の新着コメント${count}件`, `data-menu-range-notification="${escapeHtml(option.key)}"`)}</button>`; }).join("");
+        tabs.innerHTML = options.map(option => { const count = commentNotificationCountForRangeV65(option.key); const tooltip = option.key === "archive" ? "アーカイブ済みの問題を表示します" : option.key === "all" ? "この問題集のすべての問題を表示します" : `${option.label}の問題を表示します`; return `<button class="menu-range-tab${option.key === activeRange ? " is-active" : ""}" type="button" role="tab" aria-selected="${option.key === activeRange}" aria-label="${option.label}・新着コメント${count}件" title="${escapeHtml(tooltip)}" data-menu-range="${option.key}">${option.label}${notificationBadgeMarkupV65(count, `${option.label}の新着コメント${count}件`, `data-menu-range-notification="${escapeHtml(option.key)}"`)}</button>`; }).join("");
         tabs.querySelectorAll("[data-menu-range]").forEach(button => button.addEventListener("click", () => {
           const selectedRange = button.dataset.menuRange || "all";
           if (selectedRange === "archive") {
@@ -5578,14 +5632,16 @@
           const history = scores.length ? scores.map(entry => `<span class="menu-card-latest-mark ${menuScoreMarkClassV63(entry.scoreMark)}" title="${escapeHtml(entry.scoreLabel || scoreForQuestionV16(question, entry)?.label || "採点結果")}">${escapeHtml(entry.scoreMark)}</span>`).join("") : "—";
           const typeMetadata = questionTypeV44(question);
           const status = menuRowStatusV63(question);
-          const statusMarkup = `<span class="menu-row-status ${status.className}">${status.label}</span><button class="menu-card-row-manage" type="button" data-menu-action="manage" data-question-index="${index}">整理</button>`;
+          const statusMarkup = `<span class="menu-row-status ${status.className}" title="問題の現在の回答状態">${status.label}</span><button class="menu-card-row-manage" type="button" data-menu-action="manage" data-question-index="${index}" title="問題を整理する">整理</button>`;
           const favoriteLabel = favorite ? `問題${question.number}のお気に入りを解除` : `問題${question.number}をお気に入りに追加`;
           const commentNoticeCount = commentNotificationCountForQuestionV65(question);
           const commentNotice = notificationBadgeMarkupV65(commentNoticeCount, `問題${question.number}の新着コメント${commentNoticeCount}件`, `data-menu-question-notification="${escapeHtml(questionKeyV16(question))}"`);
           const archiveMarkup = menuViewV16 === "archive"
             ? `<button class="menu-card-icon-action is-archived" type="button" data-menu-action="unarchive" data-question-index="${index}" aria-label="問題${question.number}をアーカイブから戻す" title="アーカイブから戻す">${menuArchiveIconV109()}</button>`
+            : canArchiveFromMenuV131(question)
+            ? `<button class="menu-card-icon-action is-archived" type="button" data-menu-action="archive" data-question-index="${index}" aria-label="問題${question.number}をアーカイブに移す" title="直近の結果が💮です。問題集ごとのアーカイブに移します">${menuArchiveIconV109()}</button>`
             : `<span class="menu-card-icon-placeholder" aria-hidden="true"></span>`;
-          return `<article class="menu-card"><button class="menu-card-open" type="button" data-question-index="${index}"><span class="menu-card-heading"><span class="menu-card-title">${title}</span><span class="menu-card-notification">${commentNotice}</span></span><span class="menu-card-meta">${escapeHtml(typeMetadata)}</span></button><div class="menu-card-status">${statusMarkup}</div><span class="menu-card-latest${scores.length ? "" : " is-empty"}" aria-label="${escapeHtml(historyLabel)}">${history}</span><button class="menu-card-icon-action${favorite ? " is-active" : ""}" type="button" data-menu-action="favorite" data-question-index="${index}" aria-pressed="${favorite}" aria-label="${escapeHtml(favoriteLabel)}" title="${escapeHtml(favoriteLabel)}">${favorite ? "★" : "☆"}</button>${archiveMarkup}</article>`;
+          return `<article class="menu-card"><button class="menu-card-open" type="button" data-question-index="${index}" title="問題${question.number}を開く"><span class="menu-card-heading"><span class="menu-card-title">${title}</span><span class="menu-card-notification">${commentNotice}</span></span><span class="menu-card-meta">${escapeHtml(typeMetadata)}</span></button><div class="menu-card-status">${statusMarkup}</div><span class="menu-card-latest${scores.length ? "" : " is-empty"}" aria-label="${escapeHtml(historyLabel)}" title="${escapeHtml(historyLabel)}">${history}</span><button class="menu-card-icon-action${favorite ? " is-active" : ""}" type="button" data-menu-action="favorite" data-question-index="${index}" aria-pressed="${favorite}" aria-label="${escapeHtml(favoriteLabel)}" title="${escapeHtml(favoriteLabel)}">${favorite ? "★" : "☆"}</button>${archiveMarkup}</article>`;
         }).join("");
       }
 
@@ -5770,7 +5826,7 @@
             userStateV16.hidden = [...new Set([...userStateV16.hidden, key])];
           }
           userStateV16.trashed = userStateV16.trashed.filter(value => value !== key);
-          userStateV16.favorites = userStateV16.favorites.filter(value => value !== key);
+          removePersonalQuestionMarkersV131(question);
           delete userStateV16.snoozed[key];
           deleted = true;
         }
@@ -6105,13 +6161,23 @@
           const question = questionsV16[Number(actionButton.dataset.questionIndex)];
           if (!question) return;
           const action = actionButton.dataset.menuAction;
-          if (action === "favorite") updateUserStateV16(userState => {
+          if (action === "favorite") updatePersonalCollectionStateV131(scoped => {
             const key = questionKeyV16(question);
-            userState.favorites = userState.favorites.includes(key) ? userState.favorites.filter(value => value !== key) : [...userState.favorites, key];
+            scoped.favorites = scoped.favorites.includes(key) ? scoped.favorites.filter(value => value !== key) : [...scoped.favorites, key];
+            renderMenuCardsV16();
           });
-          if (action === "unarchive") updateUserStateV16(userState => {
+          if (action === "archive") {
+            if (!canArchiveFromMenuV131(question)) return;
+            updatePersonalCollectionStateV131(scoped => {
+              const key = questionKeyV16(question);
+              if (!scoped.archived.includes(key)) scoped.archived.push(key);
+              renderMenuCardsV16();
+            });
+          }
+          if (action === "unarchive") updatePersonalCollectionStateV131(scoped => {
             const key = questionKeyV16(question);
-            userState.archived = (userState.archived || []).filter(value => value !== key);
+            scoped.archived = scoped.archived.filter(value => value !== key);
+            renderMenuCardsV16();
           });
           if (action === "trash" && !isSharedQuestionV47(question)) updateUserStateV16(userState => {
             const key = questionKeyV16(question);
@@ -6133,7 +6199,7 @@
             if (window.confirm(`問題${question.number}をこの端末で完全に非表示にしますか？`)) updateUserStateV16(userState => {
               userState.hidden = [...new Set([...userState.hidden, key])];
               userState.trashed = userState.trashed.filter(value => value !== key);
-              userState.favorites = userState.favorites.filter(value => value !== key);
+              removePersonalQuestionMarkersV131(question);
             });
           }
           return;
@@ -6456,8 +6522,9 @@
           const question = questionsV16[currentQuestionIndexV16];
           if (!question) return;
           const key = questionKeyV16(question);
-          userStateV16.favorites = userStateV16.favorites.includes(key) ? userStateV16.favorites.filter(value => value !== key) : [...userStateV16.favorites, key];
-          saveUserStateV16();
+          updatePersonalCollectionStateV131(scoped => {
+            scoped.favorites = scoped.favorites.includes(key) ? scoped.favorites.filter(value => value !== key) : [...scoped.favorites, key];
+          });
           const active = isFavoriteV16(question);
           const button = document.getElementById("currentFavoriteButton");
           button.classList.toggle("is-active", active);
