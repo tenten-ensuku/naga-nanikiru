@@ -156,7 +156,7 @@ test("supports private collection spaces and owner-reviewed access requests", as
   assert.match(clientSource, /loadMyCollections|loadCollectionDirectory|requestCollectionAccess|reviewCollectionAccess|revokeCollectionAccess/i);
   assert.match(clientSource, /rpc\("create_collection"/i);
   assert.match(clientSource, /rpc\("import_shared_question"/i);
-  assert.match(html, /const APP_VERSION = 134/);
+  assert.match(html, /const APP_VERSION = 135/);
   assert.match(html, /id="collectionSpacePanel"/);
   assert.doesNotMatch(html, /data-menu-view="collections"/);
   assert.match(html, /data-menu-view="my"/);
@@ -204,7 +204,7 @@ test("preassigns the verified Kakisaki Nima account as the collection owner", as
   assert.match(migration, /public\.answer_attempts/);
   assert.match(migration, /title = '垣崎にま問題集'/i);
   assert.match(migration, /set owner_id = target_user_id/i);
-  assert.match(html, /const APP_VERSION = 134/);
+  assert.match(html, /const APP_VERSION = 135/);
   assert.match(html, /垣崎にまさんを問題集オーナーに設定しました/);
 });
 
@@ -237,9 +237,9 @@ test("scopes answer-history hydration to the logged-in user and current collecti
   assert.match(migration, /c\.share_slug = p_share_slug/i);
   assert.match(migration, /security definer/i);
   assert.match(migration, /grant execute on function public\.load_my_attempts_for_collection\(text, integer, integer\) to authenticated/i);
-  assert.match(html, /const ANSWER_HISTORY_LIMIT_V134 = 5000/);
-  assert.match(html, /loadMyAttemptsForCollection\(sharedCollectionV46\.share_slug, ANSWER_HISTORY_LIMIT_V134\)/);
-  assert.match(html, /remoteHistorySyncScopeV134/);
+  assert.match(html, /const ANSWER_HISTORY_LIMIT_V135 = 5000/);
+  assert.match(html, /loadMyAttemptsForCollection\(sharedCollectionV46\.share_slug, ANSWER_HISTORY_LIMIT_V135\)/);
+  assert.match(html, /remoteHistorySyncScopeV135/);
   assert.match(html, /localEntries\[existingIndex\] = merged/);
   assert.match(html, /await state\.sharedAttemptPromise/);
 });

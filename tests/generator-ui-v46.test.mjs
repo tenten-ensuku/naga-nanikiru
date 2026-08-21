@@ -10,7 +10,7 @@ test("renders the v87 scene and half-game generator controls", async () => {
     readFile(indexUrl, "utf8"),
     readFile(generatorUrl, "utf8")
   ]);
-  assert.match(html, /const APP_VERSION = 134/);
+  assert.match(html, /const APP_VERSION = 135/);
   assert.match(html, /data-range-session="all"[^>]*>この範囲を10問解く\s*<span/);
   assert.doesNotMatch(html, /data-range-session="unanswered">未回答を10問解く/);
   assert.match(html, /range: "この範囲の10問"/);
@@ -59,7 +59,7 @@ test("renders the v87 scene and half-game generator controls", async () => {
   assert.match(html, /function menuFilterActiveV80\(\)/);
   assert.match(html, /function menuFilteredQuestionsV80\(\)/);
   assert.match(html, /function hydrateRemoteAnswerHistoryV81\(\)/);
-  assert.match(html, /loadMyAttemptsForCollection\(sharedCollectionV46\.share_slug, ANSWER_HISTORY_LIMIT_V134\)/);
+  assert.match(html, /loadMyAttemptsForCollection\(sharedCollectionV46\.share_slug, ANSWER_HISTORY_LIMIT_V135\)/);
   assert.match(html, /const orderedCandidates = menuOrderV92 === "reverse"/);
   assert.match(html, /menuOrderV92 === "random"/);
   assert.match(html, /randomizeQuestionsByAnswerCountV93\(candidates\)/);

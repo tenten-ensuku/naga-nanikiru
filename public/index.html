@@ -1785,13 +1785,13 @@
   </dialog>
 
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js"></script>
+  <script src="supabase-sync-v48.js?v=135"></script>
   <script src="drill-ux-v44.js"></script>
   <script src="naga-generator-v44.js"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 134;
+    const APP_VERSION = 135;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -2670,8 +2670,8 @@
       let collectionAccessBusyV100 = false;
       let generatorDestinationV130 = "local";
       const generatorAddedKeysV130 = new Set();
-      const ANSWER_HISTORY_LIMIT_V134 = 5000;
-      let remoteHistorySyncScopeV134 = "";
+      const ANSWER_HISTORY_LIMIT_V135 = 5000;
+      let remoteHistorySyncScopeV135 = "";
       let remoteHistorySyncPromiseV81 = null;
       let importedQuestionsReadyV81 = false;
       const modelColorByNameV16 = { オメガ: "model-omega", ガンマ: "model-gamma", ニシキ: "model-nishiki", ヒバカリ: "model-hihikari", カガシ: "model-kagashi" };
@@ -4359,7 +4359,7 @@
           const existing = userStateV16.answerHistory.find(entry => entry.attemptId === state.answerAttemptId);
           if (existing) Object.assign(existing, answer);
         }
-        userStateV16.answerHistory = userStateV16.answerHistory.slice(0, ANSWER_HISTORY_LIMIT_V134);
+        userStateV16.answerHistory = userStateV16.answerHistory.slice(0, ANSWER_HISTORY_LIMIT_V135);
         saveUserStateV16();
         state.sharedAttemptPromise = Promise.resolve();
         if (sharedCollectionV46 && question.serverQuestionId && window.NagaSupabase?.configured) {
@@ -6303,11 +6303,11 @@
         if (!window.NagaSupabase?.configured || !supabaseSessionV46 || !importedQuestionsReadyV81 || typeof window.NagaSupabase.loadMyAttempts !== "function") return 0;
         const userId = String(supabaseSessionV46.user?.id || "");
         const syncScope = `${userId}::${sharedCollectionV46?.share_slug || "local"}`;
-        if (!userId || remoteHistorySyncScopeV134 === syncScope) return 0;
+        if (!userId || remoteHistorySyncScopeV135 === syncScope) return 0;
         if (remoteHistorySyncPromiseV81) return remoteHistorySyncPromiseV81;
         const syncPromise = (async () => {
           const rows = sharedCollectionV46?.share_slug && typeof window.NagaSupabase.loadMyAttemptsForCollection === "function"
-            ? await window.NagaSupabase.loadMyAttemptsForCollection(sharedCollectionV46.share_slug, ANSWER_HISTORY_LIMIT_V134)
+            ? await window.NagaSupabase.loadMyAttemptsForCollection(sharedCollectionV46.share_slug, ANSWER_HISTORY_LIMIT_V135)
             : await window.NagaSupabase.loadMyAttempts(500);
           const questionByServerId = new Map(questionsV16
             .filter(question => question?.serverQuestionId)
@@ -6346,11 +6346,11 @@
           if (added || repaired) {
             userStateV16.answerHistory = localEntries
               .sort((left, right) => new Date(right.answeredAt || 0) - new Date(left.answeredAt || 0))
-              .slice(0, ANSWER_HISTORY_LIMIT_V134);
+              .slice(0, ANSWER_HISTORY_LIMIT_V135);
             saveUserStateV16();
             renderMenuCardsV16();
           }
-          remoteHistorySyncScopeV134 = syncScope;
+          remoteHistorySyncScopeV135 = syncScope;
           return added + repaired;
         })();
         remoteHistorySyncPromiseV81 = syncPromise;
@@ -6366,7 +6366,7 @@
 
       async function refreshAccountV46(session = null) {
         supabaseSessionV46 = session;
-        if (!session) remoteHistorySyncScopeV134 = "";
+        if (!session) remoteHistorySyncScopeV135 = "";
         window.nagaCurrentUserIdV75 = String(session?.user?.id || "");
         if (typeof renderComments === "function") renderComments();
         const status = document.getElementById("accountStatus");
