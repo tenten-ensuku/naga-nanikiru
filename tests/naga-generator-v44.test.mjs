@@ -140,6 +140,41 @@ test("builds a q41-like discard candidate with percentage probabilities and raw 
   assert.match(candidate.id, /^q41report\|3\|0\|1\|discard$/);
 });
 
+test("marks the discard predicted directly from a call as an original-mask scene", async () => {
+  const api = await loadApi();
+  const rows = [Array(34).fill(0)];
+  rows[0][8] = 1000;
+  const report = {
+    reportId: "immediate-call-report",
+    naga_types: { "0": "ニシキ" },
+    player_info: { name: ["A", "B", "C", "D"] },
+    pred: [[
+      startKyoku(),
+      {
+        info: {
+          msg: {
+            type: "chi",
+            actor: 0,
+            pai: "3m",
+            consumed: ["1m", "2m"],
+            real_dahai: "9m",
+            pred_dahai: ["9m"]
+          }
+        },
+        dahai_pred: rows
+      }
+    ]]
+  };
+  const candidate = api.sceneCandidate(report, { reportId: "immediate-call-report", tw: 0, ts: 0, tv: 1 });
+  assert.equal(candidate.decisionType, "discard");
+  assert.equal(candidate.predictionType, "chi");
+  assert.equal(candidate.immediateCallDiscard, true);
+  assert.equal(candidate.handMaskMode, "original-with-meld-overlay");
+  assert.equal(candidate.melds.length, 1);
+  assert.equal(candidate.handBeforeDraw.length, 11);
+  assert.equal(candidate.actualDiscard, "man9");
+});
+
 test("marks an actual reach as a reach judgment even when model reach rates are zero", async () => {
   const api = await loadApi();
   const rows = [Array(34).fill(0), Array(34).fill(0)];

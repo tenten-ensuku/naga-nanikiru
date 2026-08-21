@@ -26,7 +26,7 @@ const DERIVED_FIELDS = [
   "probabilities", "reach", "hasRiichiJudgment", "actualReach", "callTile", "actualCall", "actualCallCode",
   "actualCallType", "actualDecision", "callOptions", "callProbabilities", "callRecommended",
   "callActionOptions", "callActionProbabilities", "callRecommendedActions", "actualCallAction",
-  "actualCallProbability", "actualCallProbabilityRaw", "melds", "reached", "sourceTv", "predictionType",
+  "actualCallProbability", "actualCallProbabilityRaw", "melds", "reached", "sourceTv", "predictionType", "immediateCallDiscard", "handMaskMode",
 ];
 
 function applyCandidate(question, candidate, spec) {

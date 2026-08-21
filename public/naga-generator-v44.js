@@ -694,6 +694,8 @@
       callRecommendedActions: null,
       actualCallAction: null,
       melds: snapshot.melds.map(cloneMeld),
+      immediateCallDiscard: false,
+      handMaskMode: null,
       comments: [],
       image: null,
       images: null,
@@ -758,6 +760,8 @@
       || candidate.actualReach;
     candidate.sourceTv = candidateTv;
     candidate.predictionType = sourceType;
+    candidate.immediateCallDiscard = Boolean(NAGA_CALL_TYPES[sourceType]);
+    candidate.handMaskMode = candidate.immediateCallDiscard ? "original-with-meld-overlay" : null;
     candidate.reached = Boolean(message.reached === true || action.reached === true || snapshot.reached);
     return candidate;
   }

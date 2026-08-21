@@ -309,8 +309,9 @@
     .scene-frame.has-self-melds .hand-row { justify-content: flex-start; }
     .hand-row { display: flex; align-items: flex-end; justify-content: center; gap: 1px; min-width: 0; }
     .closed-hand { display: flex; align-items: flex-end; gap: 1px; min-width: 0; }
-    .melds-hand { display: flex; align-items: flex-end; gap: clamp(3px, .45vw, 7px); margin-right: clamp(4px, .6vw, 10px); }
-    .meld-group { display: flex; align-items: flex-end; gap: 1px; padding: 0 2px 2px; border-bottom: 2px solid rgba(241,196,87,.72); }
+    .melds-hand { display: flex; align-items: flex-end; gap: clamp(3px, .45vw, 7px); flex: 0 0 auto; margin-right: clamp(4px, .6vw, 10px); }
+    .scene-frame.is-immediate-call-discard .melds-hand { margin-right: 0; margin-left: clamp(4px, .6vw, 10px); }
+    .meld-group { display: flex; align-items: flex-end; gap: 1px; flex: 0 0 auto; padding: 0 2px 2px; border-bottom: 2px solid rgba(241,196,87,.72); }
     .meld-tile img { display: block; width: clamp(24px, 4.1cqw, 36px); height: auto; border-radius: 2px; }
     .draw-divider { width: 1px; height: 75%; margin: 0 3px 0 4px; background: rgba(244, 198, 87, .75); }
     .riichi-layer { position: absolute; left: calc(var(--hand-mask-left, 11.5%) + var(--hand-mask-width, 67.8%) + 1.5%); top: calc(var(--hand-mask-top, 79.3%) + 6%); z-index: 5; display: flex; align-items: center; justify-content: center; pointer-events: none; }
@@ -1790,7 +1791,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 131;
+    const APP_VERSION = 132;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -2832,7 +2833,8 @@
         { version: 128, date: "2026-08-19", publishedAt: "2026-08-19T21:47:44+09:00", title: "副露判定と局面画像のルールを統一しました", body: "副露判定の採点とみんなの回答を「鳴く／スルー」の二択に統一しました。また、くにたそ・垣崎にま・ピエールの全問題画像を、投稿画像ではなく各NAGA局面URLから青背景・伏牌状態で再生成し、副露数ごとのマスク基準を適用しました。" },
         { version: 129, date: "2026-08-21", publishedAt: "2026-08-21T00:41:48+09:00", title: "スレッド先頭画像の除外ルールを再確認しました", body: "問題画像として使うスレッド作成者の最初の画像1枚は、コメント欄へ重複転載しないようにしました。画像IDの照合に失敗した場合も、作成者の最初の画像へフォールバックします。後続の画像・文章・NAGA URLはこれまでどおり残します。" },
         { version: 130, date: "2026-08-21", publishedAt: "2026-08-21T01:05:00+09:00", title: "編集メンバーと問題生成先を整理しました", body: "承認済みの編集メンバーが問題の生成・インポート・編集・整理を行えるようになりました。問題生成では保存先を明示的に選べます。公開範囲・メンバー管理・完全削除は、これまでどおり所有者とアプリ管理者だけが行います。" },
-        { version: APP_VERSION, date: "2026-08-22", publishedAt: "2026-08-22T09:00:00+09:00", title: "お気に入りとアーカイブを問題集ごとに整理しました", body: "ログインユーザーごと・問題集ごとにお気に入りとアーカイブを分けて保存します。直近の結果が💮の問題は、問題一覧のアーカイブ欄からも移動できます。各操作に説明を表示するようにしました。" }
+        { version: 131, date: "2026-08-22", publishedAt: "2026-08-22T09:00:00+09:00", title: "お気に入りとアーカイブを問題集ごとに整理しました", body: "ログインユーザーごと・問題集ごとにお気に入りとアーカイブを分けて保存します。直近の結果が💮の問題は、問題一覧のアーカイブ欄からも移動できます。各操作に説明を表示するようにしました。" },
+        { version: APP_VERSION, date: "2026-08-22", publishedAt: "2026-08-22T13:00:00+09:00", title: "副露直後の手牌表示を元の局面に合わせました", body: "副露イベント直後の打牌局面では、NAGA元画像の全幅マスクを維持し、副露面子だけを別表示するようにしました。通常の副露後局面の配置は従来どおりです。" }
       ];
       let commentNoticeStoreV65 = loadCommentNoticeStoreV65();
       let sharedCommentRowsV65 = [];
@@ -4484,15 +4486,52 @@
         });
       }
 
+      // 副露イベント自身が予測元になっている打牌だけは、NAGA元画像の
+      // 全幅マスクを維持し、副露面子をマスク上へ別レイヤーで描画する。
+      // その後の通常の副露後局面は従来どおり副露数別のコンパクト配置を使う。
+      const IMMEDIATE_CALL_TYPES_V132 = new Set(["chi", "pon", "daiminkan", "minkan", "ankan", "kakan"]);
+
+      function isImmediateCallDiscardV132(question = SCENE) {
+        return question?.decisionType === "discard"
+          && (question?.immediateCallDiscard === true
+            || question?.handMaskMode === "original-with-meld-overlay"
+            || IMMEDIATE_CALL_TYPES_V132.has(String(question?.predictionType || "")));
+      }
+
+      function meldTilesV132(meld) {
+        if (!meld || typeof meld !== "object") return [];
+        const consumed = Array.isArray(meld.consumed) ? meld.consumed.filter(Boolean) : [];
+        return meld.type === "ankan"
+          ? consumed
+          : [meld.pai, ...consumed].filter(Boolean);
+      }
+
+      function immediateMeldTileCountV132(question = SCENE) {
+        if (!isImmediateCallDiscardV132(question)) return 0;
+        return (Array.isArray(question?.melds) ? question.melds : [])
+          .reduce((total, meld) => total + meldTilesV132(meld).length, 0);
+      }
+
+      function renderImmediateMeldsV132(question = SCENE) {
+        if (!isImmediateCallDiscardV132(question)) return "";
+        return (Array.isArray(question?.melds) ? question.melds : []).map((meld, meldIndex) => {
+          const tiles = meldTilesV132(meld);
+          if (!tiles.length) return "";
+          return `<span class="meld-group" aria-label="副露${meldIndex + 1}">${tiles.map(tile => `<span class="meld-tile">${tileImage(tile)}</span>`).join("")}</span>`;
+        }).join("");
+      }
+
       function renderHandV16() {
         const closed = sortHandV20(SCENE.handBeforeDraw || []).map((tile, index) => tileButtonV16(tile, index)).join("");
         const draw = SCENE.draw ? tileButtonV16(SCENE.draw, SCENE.handBeforeDraw.length, true) : "";
+        const melds = renderImmediateMeldsV132();
+        const meldBlock = melds ? `<div class="melds-hand" aria-label="副露面子">${melds}</div>` : "";
         const riichiButton = hasReachV16() ? `<button class="riichi-button" id="riichiButton" type="button" aria-pressed="${state.riichi}" title="リーチを宣言する">${state.riichi ? "リーチ済" : "リーチ"}</button>` : "";
         const handLayer = document.getElementById("handLayer");
         sceneFrameV16.querySelector(".call-controls")?.remove();
         sceneFrameV16.querySelector(".riichi-layer")?.remove();
         sceneFrameV16.classList.toggle("is-call-decision", SCENE.decisionType === "call");
-        handLayer.innerHTML = `<div class="hand-controls"><div class="hand-row"><div class="closed-hand">${closed}</div>${draw ? `<span class="draw-divider" aria-hidden="true"></span>${draw}` : ""}</div></div>`;
+        handLayer.innerHTML = `<div class="hand-controls"><div class="hand-row"><div class="closed-hand">${closed}</div>${draw ? `<span class="draw-divider" aria-hidden="true"></span>${draw}` : ""}${meldBlock}</div></div>`;
         if (riichiButton) sceneFrameV16.insertAdjacentHTML("beforeend", `<div class="riichi-layer" aria-label="リーチ判断">${riichiButton}</div>`);
         if (SCENE.decisionType === "call") {
           const callTarget = SCENE.callTile ? `<span class="call-target-label">対象牌</span><span class="call-target-tile" title="${tileLabel(SCENE.callTile)}への副露判断" aria-label="副露対象牌 ${tileLabel(SCENE.callTile)}">${tileImage(SCENE.callTile)}</span>` : "";
@@ -4889,6 +4928,7 @@
       });
 
       function handMaskFallbackV17(question) {
+        if (isImmediateCallDiscardV132(question)) return { ...HAND_MASK_PRESETS_V128[0] };
         const meldCount = Math.max(0, Array.isArray(question?.melds) ? question.melds.length : 0);
         const preset = HAND_MASK_PRESETS_V128[Math.min(meldCount, 5)] || HAND_MASK_PRESETS_V128[5];
         return { ...preset };
@@ -5012,7 +5052,7 @@
         if (!frameWidth) return;
         const closedCount = Array.isArray(question?.handBeforeDraw) ? question.handBeforeDraw.length : 0;
         const hasDraw = Boolean(question?.draw);
-        const tileCount = closedCount + (hasDraw ? 1 : 0);
+        const tileCount = closedCount + (hasDraw ? 1 : 0) + immediateMeldTileCountV132(question);
         const maskWidthPx = frameWidth * mask.width / 100;
         const insetPx = Math.max(7, Math.min(15, frameWidth * .018));
         const dividerWidth = hasDraw ? 10 : 0;
@@ -5196,8 +5236,10 @@
         state.comments = [...(SCENE.comments || []), ...localCommentsV44].map(message => ({ ...message, attachments: [...(message.attachments || [])] }));
         state.judgeModel = Math.max(0, SCENE.models.findIndex(model => model.name === "ニシキ"));
         const hasSelfMeldsV17 = (SCENE.melds || []).length > 0;
+        const isImmediateCallDiscard = isImmediateCallDiscardV132(question);
         const handMaskV18 = handMaskFallbackV17(question);
         sceneFrameV16.classList.toggle("has-self-melds", hasSelfMeldsV17);
+        sceneFrameV16.classList.toggle("is-immediate-call-discard", isImmediateCallDiscard);
         clearHandMaskV17();
         clearHandLayoutV18();
         setHandMaskV17(handMaskV18);
@@ -5212,8 +5254,8 @@
         sceneImageV16.alt = `問題${SCENE.number}の伏牌スクリーンショット`;
         sceneImageV16.onload = () => {
           if (sceneImageV16.naturalWidth && sceneImageV16.naturalHeight) sceneFrameV16.style.aspectRatio = `${sceneImageV16.naturalWidth} / ${sceneImageV16.naturalHeight}`;
-          const detectedMaskV18 = hasSelfMeldsV17 ? detectHandMaskV17(sceneImageV16, handMaskV18) : handMaskV18;
-          if (hasSelfMeldsV17) setHandMaskV17(detectedMaskV18);
+          const detectedMaskV18 = hasSelfMeldsV17 && !isImmediateCallDiscard ? detectHandMaskV17(sceneImageV16, handMaskV18) : handMaskV18;
+          if (hasSelfMeldsV17 && !isImmediateCallDiscard) setHandMaskV17(detectedMaskV18);
           setHandLayoutV18(question, detectedMaskV18);
         };
         if (sceneImageV16.complete) sceneImageV16.onload();
