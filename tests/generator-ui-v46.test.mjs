@@ -10,7 +10,7 @@ test("renders the v87 scene and half-game generator controls", async () => {
     readFile(indexUrl, "utf8"),
     readFile(generatorUrl, "utf8")
   ]);
-  assert.match(html, /const APP_VERSION = 129/);
+  assert.match(html, /const APP_VERSION = 130/);
   assert.match(html, /data-range-session="all">この範囲を10問解く/);
   assert.doesNotMatch(html, /data-range-session="unanswered">未回答を10問解く/);
   assert.match(html, /range: "この範囲の10問"/);
@@ -52,7 +52,9 @@ test("renders the v87 scene and half-game generator controls", async () => {
   assert.match(html, /\.menu-list-header \{[\s\S]*?grid-template-columns: 1fr;[\s\S]*?gap: 0;/);
   assert.match(html, /\.menu-grid \{[\s\S]*?grid-template-columns: 1fr;[\s\S]*?gap: 0;/);
   assert.match(html, /function normalizeQuestionTitleV79\(title, number\)/);
-  assert.match(html, /title: `問題\$\{nextNumber\}`/);
+  assert.match(html, /title: nextNumber \? `問題\$\{nextNumber\}` : "生成候補"/);
+  assert.match(html, /number: nextNumber/);
+  assert.match(html, /const sameAsCurrentShared = destination\.kind === "shared"/);
   assert.match(html, /normalizeQuestionTitlesV79\(\);/);
   assert.match(html, /function menuFilterActiveV80\(\)/);
   assert.match(html, /function menuFilteredQuestionsV80\(\)/);

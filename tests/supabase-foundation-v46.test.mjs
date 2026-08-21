@@ -154,7 +154,7 @@ test("supports private collection spaces and owner-reviewed access requests", as
   assert.match(clientSource, /loadMyCollections|loadCollectionDirectory|requestCollectionAccess|reviewCollectionAccess|revokeCollectionAccess/i);
   assert.match(clientSource, /rpc\("create_collection"/i);
   assert.match(clientSource, /rpc\("import_shared_question"/i);
-  assert.match(html, /const APP_VERSION = 129/);
+  assert.match(html, /const APP_VERSION = 130/);
   assert.match(html, /id="collectionSpacePanel"/);
   assert.doesNotMatch(html, /data-menu-view="collections"/);
   assert.match(html, /data-menu-view="my"/);
@@ -202,7 +202,7 @@ test("preassigns the verified Kakisaki Nima account as the collection owner", as
   assert.match(migration, /public\.answer_attempts/);
   assert.match(migration, /title = '垣崎にま問題集'/i);
   assert.match(migration, /set owner_id = target_user_id/i);
-  assert.match(html, /const APP_VERSION = 129/);
+  assert.match(html, /const APP_VERSION = 130/);
   assert.match(html, /垣崎にまさんを問題集オーナーに設定しました/);
 });
 
@@ -222,5 +222,5 @@ test("limits shared question lifecycle mutations to the application or collectio
   assert.match(clientSource, /async function transferCollectionOwnership\(collectionId: string, userId: string\)/i);
   assert.match(clientSource, /transfer_collection_ownership/i);
   assert.match(html, /オーナーにする/);
-  assert.match(html, /共有問題集への問題追加は、アプリ所有者または問題集オーナーだけが行えます/);
+  assert.match(html, /問題集の編集メンバー以上の権限が必要です/);
 });
