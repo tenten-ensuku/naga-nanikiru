@@ -340,7 +340,7 @@
   // For the single event immediately after a call, preserve the 13 pre-call
   // positions.  The consumed tiles are represented by null slots instead of
   // being spliced out, so the tiles to their right never shift left.
-  function displayConcealedHandSlots(question) {
+  function displayConcealedHandSlots(question, sortTiles) {
     if (!question || !isImmediateCallDiscardQuestion(question)) return null;
 
     var explicit = Array.isArray(question.displayHandSlots)
@@ -350,6 +350,17 @@
       ? question.handBeforeMeld
       : null);
     if (!Array.isArray(source) || source.length !== 13) return null;
+
+    // The pre-call snapshot is replay order, not display order.  The UI
+    // passes the same sorter used by ordinary concealed-hand rendering so
+    // the holes are located after normal riichi sorting, while the original
+    // 13 logical slots are still preserved.  Explicit slots are already
+    // display-positioned and must not be sorted again.
+    if (!explicit && typeof sortTiles === "function") {
+      var sortedSource = sortTiles(source.slice());
+      if (!Array.isArray(sortedSource) || sortedSource.length !== source.length) return null;
+      source = sortedSource;
+    }
 
     var slots = source.map(function (tile) {
       return tile == null ? null : tileToAppCode(tile);

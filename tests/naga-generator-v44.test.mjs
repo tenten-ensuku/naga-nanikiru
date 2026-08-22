@@ -178,6 +178,29 @@ test("marks the discard predicted directly from a call as an original-mask scene
 
 test("preserves original slots and inserts holes for immediate pon, chi, and daiminkan", async () => {
   const api = await loadApi();
+  const tileOrder = [
+    ...Array.from({ length: 9 }, (_, index) => `man${index + 1}`),
+    ...Array.from({ length: 9 }, (_, index) => `pin${index + 1}`),
+    ...Array.from({ length: 9 }, (_, index) => `sou${index + 1}`),
+    "ji1", "ji2", "ji3", "ji4", "ji5", "ji6", "ji7"
+  ];
+  const orderMap = new Map(tileOrder.map((tile, index) => [tile, index]));
+  orderMap.set("aka1", orderMap.get("man5"));
+  orderMap.set("aka2", orderMap.get("pin5"));
+  orderMap.set("aka3", orderMap.get("sou5"));
+  const normalSort = tiles => [...tiles].sort((left, right) => (orderMap.get(left) ?? 99) - (orderMap.get(right) ?? 99));
+
+  const sortedPierrePonSlots = api.displayConcealedHandSlots({
+    decisionType: "discard",
+    predictionType: "pon",
+    handBeforeMeld: ["pin6", "man4", "man7", "man5", "pin2", "pin6", "pin6", "pin4", "man2", "pin5", "aka1", "pin7", "pin2"],
+    melds: [{ type: "pon", pai: "pin2", consumed: ["pin2", "pin2"] }]
+  }, normalSort);
+  assert.deepEqual(sortedPierrePonSlots, ["man2", "man4", "man5", "aka1", "man7", null, null, "pin4", "pin5", "pin6", "pin6", "pin6", "pin7"]);
+  assert.equal(sortedPierrePonSlots.length, 13);
+  assert.equal(sortedPierrePonSlots.filter(tile => tile == null).length, 2);
+  assert.equal(sortedPierrePonSlots.filter(Boolean).filter(tile => tile === "pin2").length, 0);
+
   const ponSlots = api.displayConcealedHandSlots({
     decisionType: "discard",
     predictionType: "pon",
