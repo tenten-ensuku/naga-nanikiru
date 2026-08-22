@@ -463,15 +463,11 @@
     .comments-heading h2 { display: none; }
     .comments-footer { display: flex; align-items: center; justify-content: flex-end; flex-wrap: wrap; gap: 7px; padding-top: 6px; border-top: 1px solid rgba(255,255,255,.1); }
     .comments-footer a { color: #9bdcff; font-size: 9px; }
-    .comments-expand-button, .comment-add-button { padding: 5px 8px; color: #e7f8ff; background: #164862; border: 1px solid rgba(113,183,255,.55); border-radius: 6px; font-size: 9px; font-weight: 800; }
+    .comment-add-button { padding: 5px 8px; color: #e7f8ff; background: #164862; border: 1px solid rgba(113,183,255,.55); border-radius: 6px; font-size: 9px; font-weight: 800; }
     .comment-add-button { color: #12211e; background: #bde7e0; border-color: #d6fff5; }
     .comment-add-button:hover { background: #d6fff5; }
-    .comments-expand-button:hover { background: #246b8a; }
     .comments-meta, .comment-sync-note { display: none; }
     .comments-scroll { display: grid; gap: 7px; max-height: min(52vh, 720px); overflow-y: auto; padding: 1px 4px 1px 0; overscroll-behavior: contain; scrollbar-color: rgba(113,183,255,.65) rgba(255,255,255,.08); }
-    .comments-panel.is-expanded { order: 3; margin-top: 8px; padding: 10px 12px; }
-    .comments-panel.is-expanded .comments-scroll { max-height: min(68vh, 680px); }
-    .comments-panel.is-expanded .comment-attachment { max-height: 260px; }
     .comment-card { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 9px; align-items: start; padding: 8px 10px; border: 1px solid rgba(255,255,255,.1); border-radius: 7px; background: rgba(0,0,0,.16); }
     .comment-group { border-left-width: 3px; }
     .comment-group.comment-author-color-0 { border-left-color: #63c9c0; }
@@ -2334,7 +2330,6 @@
       <div class="comments-footer">
         <button class="comment-add-button" id="commentAddButton" type="button" aria-expanded="false">コメント追加</button>
         <a id="threadLink" href="https://discord.com/channels/1166706544856006656/1532011607209541833" target="_blank" rel="noreferrer">Discordで開く</a>
-        <button class="comments-expand-button" id="commentsExpandButton" type="button" aria-expanded="false">コメント欄を拡大</button>
       </div>
     </section>
 
@@ -2412,7 +2407,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 152;
+    const APP_VERSION = 153;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -2453,7 +2448,7 @@
     const COMMENT_MAX_ATTACHMENTS_V68 = 4;
     const COMMENT_MAX_IMAGE_BYTES_V68 = 5 * 1024 * 1024;
     const COMMENT_IMAGE_TYPES_V68 = new Set(["image/png", "image/jpeg", "image/webp", "image/gif"]);
-    const state = { selected: null, selectedIndex: null, callDecision: null, revealed: false, answerRecorded: false, answerAttemptId: null, sharedAttemptPromise: null, questionStartedAt: Date.now(), judgeModel: 2, riichi: false, commentsExpanded: false, commentComposerOpen: false, commentEditingId: null, commentAttachments: [], comments: THREAD_MESSAGES.map(message => ({ ...message, attachments: [...message.attachments] })) };
+    const state = { selected: null, selectedIndex: null, callDecision: null, revealed: false, answerRecorded: false, answerAttemptId: null, sharedAttemptPromise: null, questionStartedAt: Date.now(), judgeModel: 2, riichi: false, commentComposerOpen: false, commentEditingId: null, commentAttachments: [], comments: THREAD_MESSAGES.map(message => ({ ...message, attachments: [...message.attachments] })) };
 
     function tileLabel(tile) {
       if (TILE_NAMES[tile]) return TILE_NAMES[tile];
@@ -3067,20 +3062,6 @@
       renderAnswer();
     }
 
-    function toggleCommentsExpanded() {
-      state.commentsExpanded = !state.commentsExpanded;
-      const page = document.querySelector(".page");
-      const panel = document.getElementById("commentsPanel");
-      const button = document.getElementById("commentsExpandButton");
-      page.classList.toggle("comments-expanded", state.commentsExpanded);
-      panel.classList.toggle("is-expanded", state.commentsExpanded);
-      button.setAttribute("aria-expanded", String(state.commentsExpanded));
-      button.textContent = state.commentsExpanded ? "コメント欄を縮小" : "コメント欄を拡大";
-      if (state.commentsExpanded) {
-        panel.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
-    }
-
     function toggleCommentComposer() {
       if (state.commentComposerOpen && state.commentEditingId) cancelCommentEditV75();
       state.commentComposerOpen = !state.commentComposerOpen;
@@ -3214,17 +3195,12 @@
       state.selectedIndex = null;
       state.revealed = false;
       state.riichi = false;
-      state.commentsExpanded = false;
       state.commentComposerOpen = false;
       state.commentEditingId = null;
       document.getElementById("commentInput").value = "";
       clearCommentDraftV68();
       syncCommentComposerV75();
-      document.querySelector(".page").classList.remove("comments-expanded");
-      document.getElementById("commentsPanel").classList.remove("is-expanded");
       document.getElementById("commentsPanel").hidden = true;
-      document.getElementById("commentsExpandButton").setAttribute("aria-expanded", "false");
-      document.getElementById("commentsExpandButton").textContent = "コメント欄を拡大";
       renderHand();
       renderAnswer();
     }
@@ -3237,7 +3213,6 @@
       document.getElementById("modelSelect").innerHTML = SCENE.models.map((model, index) => `<option value="${index}">${model.name}（正誤基準）</option>`).join("");
       document.getElementById("modelSelect").value = String(state.judgeModel);
       document.getElementById("modelSelect").addEventListener("change", event => { state.judgeModel = Number(event.target.value); renderHand(); renderAnswer(); });
-      document.getElementById("commentsExpandButton").addEventListener("click", toggleCommentsExpanded);
       document.getElementById("commentAddButton").addEventListener("click", toggleCommentComposer);
       document.getElementById("commentEditCancelButton").addEventListener("click", cancelCommentEditV75);
       document.getElementById("commentForm").addEventListener("submit", submitComment);
@@ -3293,6 +3268,7 @@
       let collectionAccessBusyV100 = false;
       let generatorDestinationV130 = "local";
       const generatorAddedKeysV130 = new Set();
+      const generatorDuplicateKeysV153 = new Set();
       const ANSWER_HISTORY_LIMIT_V135 = 5000;
       let remoteHistorySyncScopeV135 = "";
       let remoteHistorySyncPromiseV81 = null;
@@ -4519,7 +4495,7 @@
         renderCollectionAccessRequestsV100();
       }
 
-      async function refreshCollectionAccessStateV100() {
+      async function refreshCollectionAccessStateBodyV153() {
         collectionCatalogV100 = [];
         collectionAccessNotificationsV100 = [];
         if (window.NagaSupabase?.configured) {
@@ -4550,10 +4526,22 @@
           }
           await loadCollectionManagementDataV100();
         }
-        renderCollectionSpacePanelV100();
         renderImportQuestionButtonV115();
         renderNotificationBadgesV65();
         if (document.querySelector(".page")?.classList.contains("menu-active")) renderMenuCardsV16();
+        else renderCollectionSpacePanelV100();
+      }
+
+      let collectionAccessRefreshInFlightV153 = null;
+      async function refreshCollectionAccessStateV100() {
+        if (collectionAccessRefreshInFlightV153) return collectionAccessRefreshInFlightV153;
+        const refreshPromise = refreshCollectionAccessStateBodyV153();
+        collectionAccessRefreshInFlightV153 = refreshPromise;
+        try {
+          return await refreshPromise;
+        } finally {
+          if (collectionAccessRefreshInFlightV153 === refreshPromise) collectionAccessRefreshInFlightV153 = null;
+        }
       }
 
       function renderSettingsViewV67() {
@@ -4736,7 +4724,7 @@
         if (!api || !shareSlug) throw new Error("共有問題集の保存APIが未接続です。");
         if (action === "add" && typeof api.createSharedQuestion === "function") {
           const question = payload.question;
-          const id = await api.createSharedQuestion({
+          const result = await api.createSharedQuestion({
             shareSlug,
             title: question.title,
             payload: question,
@@ -4748,7 +4736,13 @@
             sceneTv: question.tv ?? null,
             decisionType: question.decisionType || "discard"
           });
-          return { id };
+          if (result && typeof result === "object") {
+            return {
+              id: result.question_id || result.id || null,
+              alreadyExists: result.already_exists === true
+            };
+          }
+          return { id: result };
         }
         if (action === "edit" && typeof api.updateSharedQuestion === "function") {
           const question = payload.question;
@@ -5592,17 +5586,12 @@
         state.sharedAttemptPromise = null;
         state.questionStartedAt = Date.now();
         state.riichi = false;
-        state.commentsExpanded = false;
         state.commentComposerOpen = false;
         state.commentEditingId = null;
         document.getElementById("commentInput").value = "";
         clearCommentDraftV68();
         syncCommentComposerV75();
-        document.querySelector(".page").classList.remove("comments-expanded");
-        document.getElementById("commentsPanel").classList.remove("is-expanded");
         document.getElementById("commentsPanel").hidden = true;
-        document.getElementById("commentsExpandButton").setAttribute("aria-expanded", "false");
-        document.getElementById("commentsExpandButton").textContent = "コメント欄を拡大";
         renderHandV16();
         renderAnswerV16();
       }
@@ -5953,7 +5942,6 @@
         state.sharedAttemptPromise = null;
         state.questionStartedAt = Date.now();
         state.riichi = false;
-        state.commentsExpanded = false;
         state.commentComposerOpen = false;
         state.commentEditingId = null;
         document.getElementById("commentInput").value = "";
@@ -6344,19 +6332,22 @@
         return generatorCandidatesV44.map((candidate, index) => {
           const destination = currentGeneratorDestinationV130();
           const destinationKey = destination.kind === "shared" ? destination.shareSlug : "local";
-          const duplicate = questionsV16.some(question => question.id === candidate.id) || generatorAddedKeysV130.has(`${candidate.id}::${destinationKey}`);
+          const sameAsCurrentShared = destination.kind === "shared" && String(destination.shareSlug) === String(sharedCollectionV46?.share_slug || "");
+          const duplicateKey = `${candidate.id}::${destinationKey}`;
+          const duplicate = ((destination.kind === "local" || sameAsCurrentShared) && questionsV16.some(question => question.id === candidate.id)) || generatorAddedKeysV130.has(duplicateKey) || generatorDuplicateKeysV153.has(duplicateKey);
           const modelMarkup = (candidate.models || []).slice(0, 3).map((model, modelIndex) => `<span class="candidate-model">${model.recommendation && candidate.decisionType !== "call" ? tileImage(model.recommendation) : ""}${escapeHtml(model.name)} ${candidate.decisionType === "call" ? escapeHtml(callActionLabelV112(questionCallActionV112(candidate, modelIndex))) : tileLabel(model.recommendation)}</span>`).join("");
           const actualCallAction = normalizeCallActionV112(candidate.actualCallAction) || (candidate.actualCall ? "call" : "pass");
           const choice = candidate.decisionType === "call" ? `副露判断・${callActionLabelV112(actualCallAction)}` : `${tileLabel(candidate.actualDiscard)}を選択`;
           const badModels = candidate.badMoveModels?.length ? ` ／ ${candidate.badMoveModels.map(escapeHtml).join("・")}が${Number(candidate.badMoveThresholdPercent || 5)}%以下` : "";
           const canAdd = canAddGeneratedQuestionV130();
           const addLabel = !canAdd ? "編集権限が必要" : destination.kind === "shared" ? `${escapeHtml(destination.label)}へ追加` : "この端末へ追加";
+          const duplicateLabel = generatorDuplicateKeysV153.has(duplicateKey) ? "既に登録済み" : "追加済み";
           const preview = candidate._imageData ? `<div class="candidate-preview"><img src="${candidate._imageData}" alt="自動取得したNAGA局面"></div>` : "";
           const captureState = candidate._captureState === "loading" ? "盤面画像を自動取得しています…" : candidate._imageData ? "盤面画像を自動取得済み" : candidate._captureError || "盤面画像はまだありません";
           const captureErrorClass = candidate._captureError && !candidate._imageData ? " is-error" : "";
           const captureLabel = candidate._imageData ? "盤面画像を再取得" : "盤面画像を自動取得";
           const addDisabled = duplicate || !canAdd;
-          return `<article class="generator-candidate${duplicate ? " is-duplicate" : ""}"><div><div class="candidate-title">${escapeHtml(candidate.playerName || `プレイヤー${Number(candidate.playerSeat ?? candidate.tw ?? 0) + 1}`)}・${choice}</div><div class="candidate-meta">${escapeHtml(candidate.title || `局${Number(candidate.ts || 0) + 1}・操作${candidate.tv}`)} ／ ${questionTypeV44(candidate)}${candidate.isBadMove ? ` ／ 悪手候補${badModels}` : ""}</div><div class="candidate-models">${modelMarkup}</div></div><div class="candidate-controls">${preview}<span class="candidate-capture-state${captureErrorClass}">${escapeHtml(captureState)}</span><button class="generator-button secondary" type="button" data-generator-capture="${index}"${candidate._captureState === "loading" ? " disabled" : ""}>${captureLabel}</button><label class="candidate-file-label">手動画像を使用<input type="file" accept="image/png,image/jpeg,image/webp" data-candidate-image="${index}" aria-label="この局面のスクリーンショット"></label><button class="generator-button${duplicate || !canAdd ? " secondary" : ""}" type="button" data-generator-add="${index}"${addDisabled ? " disabled" : ""}>${duplicate ? "追加済み" : addLabel}</button></div></article>`;
+          return `<article class="generator-candidate${duplicate ? " is-duplicate" : ""}"><div><div class="candidate-title">${escapeHtml(candidate.playerName || `プレイヤー${Number(candidate.playerSeat ?? candidate.tw ?? 0) + 1}`)}・${choice}</div><div class="candidate-meta">${escapeHtml(candidate.title || `局${Number(candidate.ts || 0) + 1}・操作${candidate.tv}`)} ／ ${questionTypeV44(candidate)}${candidate.isBadMove ? ` ／ 悪手候補${badModels}` : ""}</div><div class="candidate-models">${modelMarkup}</div></div><div class="candidate-controls">${preview}<span class="candidate-capture-state${captureErrorClass}">${escapeHtml(captureState)}</span><button class="generator-button secondary" type="button" data-generator-capture="${index}"${candidate._captureState === "loading" ? " disabled" : ""}>${captureLabel}</button><label class="candidate-file-label">手動画像を使用<input type="file" accept="image/png,image/jpeg,image/webp" data-candidate-image="${index}" aria-label="この局面のスクリーンショット"></label><button class="generator-button${duplicate || !canAdd ? " secondary" : ""}" type="button" data-generator-add="${index}"${addDisabled ? " disabled" : ""}>${duplicate ? duplicateLabel : addLabel}</button></div></article>`;
         }).join("");
       }
 
@@ -6756,6 +6747,46 @@
         status.classList.toggle("is-error", error);
       }
 
+      function showGeneratorExistingStatusV153(message, { sharedSlug = "", questionId = "", localQuestionId = "" } = {}) {
+        const status = document.getElementById("generatorStatus");
+        if (!status) return;
+        status.classList.remove("is-error");
+        const kind = sharedSlug && questionId ? "shared" : "local";
+        const attributes = kind === "shared"
+          ? `data-generator-existing="shared" data-generator-existing-collection="${escapeHtml(sharedSlug)}" data-generator-existing-question="${escapeHtml(questionId)}"`
+          : `data-generator-existing="local" data-generator-existing-local="${escapeHtml(localQuestionId)}"`;
+        status.innerHTML = `${escapeHtml(message)} <button class="generator-button secondary" type="button" ${attributes}>既存問題へ移動</button>`;
+      }
+
+      function navigateToExistingGeneratorQuestionV153(button) {
+        if (button.dataset.generatorExisting === "local") {
+          const localId = String(button.dataset.generatorExistingLocal || "");
+          const index = questionsV16.findIndex(question => String(question.id || "") === localId);
+          if (index >= 0) {
+            showMenuV16("my");
+            openQuestionV16(index);
+          }
+          return;
+        }
+        const shareSlug = String(button.dataset.generatorExistingCollection || "");
+        const questionId = String(button.dataset.generatorExistingQuestion || "");
+        if (!shareSlug || !questionId) return;
+        if (shareSlug === String(sharedCollectionV46?.share_slug || "")) {
+          const index = questionsV16.findIndex(question => String(question.serverQuestionId || "") === questionId);
+          if (index >= 0) {
+            showMenuV16("my");
+            openQuestionV16(index);
+            return;
+          }
+        }
+        const url = new URL(window.location.href);
+        url.search = "";
+        url.searchParams.set("collection", shareSlug);
+        url.searchParams.set("existing_question", questionId);
+        url.hash = "";
+        window.location.assign(url.toString());
+      }
+
       function syncGeneratorModeV46() {
         const selected = document.querySelector('input[name="generatorMode"]:checked');
         generatorModeV46 = selected?.value === "match" ? "match" : "scene";
@@ -6793,6 +6824,7 @@
         const seatChoice = document.getElementById("generatorSeat").value;
         const mode = generatorModeV46;
         generatorJobIdV51 = null;
+        generatorDuplicateKeysV153.clear();
         setGeneratorStatusV44("NAGAレポートを解析しています…");
         try {
           const spec = window.NagaGeneratorV44.parseNagaUrl(input);
@@ -6895,13 +6927,22 @@
           setGeneratorStatusV44("この保存先へ追加するには、問題集の編集メンバー以上の権限が必要です。", true);
           return;
         }
-        if (!candidate._imageData) {
-          setGeneratorStatusV44("追加する局面のスクリーンショットを選択してください。", true);
+        const destinationKey = destination.kind === "shared" ? destination.shareSlug : "local";
+        const sameAsCurrentShared = destination.kind === "shared" && String(destination.shareSlug) === String(sharedCollectionV46?.share_slug || "");
+        const duplicateKey = `${candidate.id}::${destinationKey}`;
+        const localExisting = (destination.kind === "local" || sameAsCurrentShared)
+          ? questionsV16.find(question => question.id === candidate.id)
+          : null;
+        if (localExisting || generatorAddedKeysV130.has(duplicateKey) || generatorDuplicateKeysV153.has(duplicateKey)) {
+          if (localExisting) {
+            showGeneratorExistingStatusV153("この局面は既に登録済みです。", { localQuestionId: localExisting.id });
+          } else {
+            setGeneratorStatusV44("この局面は既に登録済みです。", false);
+          }
           return;
         }
-        const destinationKey = destination.kind === "shared" ? destination.shareSlug : "local";
-        if (questionsV16.some(question => question.id === candidate.id) || generatorAddedKeysV130.has(`${candidate.id}::${destinationKey}`)) {
-          setGeneratorStatusV44("この局面はすでに追加されています。", true);
+        if (!candidate._imageData) {
+          setGeneratorStatusV44("追加する局面のスクリーンショットを選択してください。", true);
           return;
         }
         if (destination.kind === "shared") {
@@ -6912,7 +6953,6 @@
           const preview = { ...candidate, title: candidate.title || "生成した問題" };
           if (!confirmSharedImpactV47("add", preview)) return;
         }
-        const sameAsCurrentShared = destination.kind === "shared" && String(destination.shareSlug) === String(sharedCollectionV46?.share_slug || "");
         const nextNumber = destination.kind === "local" || sameAsCurrentShared
           ? Math.max(...questionsV16.map(question => Number(question.number) || 0)) + 1
           : 0;
@@ -6941,6 +6981,14 @@
           try {
             const remote = await invokeSharedMutationV47("add", { question, shareSlug: destination.shareSlug });
             question.serverQuestionId = remote?.id || remote?.question_id || null;
+            if (remote?.alreadyExists && question.serverQuestionId) {
+              generatorAddedKeysV130.add(duplicateKey);
+              generatorDuplicateKeysV153.add(duplicateKey);
+              showGeneratorExistingStatusV153("この局面は既に登録済みです。", { sharedSlug: destination.shareSlug, questionId: question.serverQuestionId });
+              document.getElementById("generatorResults").innerHTML = renderGeneratorCandidatesV44();
+              bindGeneratorCandidateInputsV44();
+              return;
+            }
             question.localGenerated = false;
             question.isShared = true;
           } catch (error) {
@@ -6988,6 +7036,11 @@
       }
 
       function handleMenuGridClickV16(event) {
+        const existingQuestionButton = event.target.closest("[data-generator-existing]");
+        if (existingQuestionButton) {
+          navigateToExistingGeneratorQuestionV153(existingQuestionButton);
+          return;
+        }
         const collectionButton = event.target.closest("[data-collection-slug]");
         if (collectionButton) {
           navigateToCollectionV106(collectionButton.dataset.collectionSlug);
@@ -7171,7 +7224,7 @@
         }
       }
 
-      async function refreshAccountV46(session = null) {
+      async function refreshAccountBodyV153(session = null) {
         supabaseSessionV46 = session;
         if (!session) remoteHistorySyncScopeV135 = "";
         window.nagaCurrentUserIdV75 = String(session?.user?.id || "");
@@ -7210,6 +7263,27 @@
         const synced = await hydrateRemoteAnswerHistoryV81();
         await refreshCollectionAccessStateV100();
         if (synced > 0) status.textContent = `${displayName}としてログイン中。回答履歴を${synced}件同期しました。`;
+      }
+
+      let accountRefreshInFlightV153 = null;
+      let lastAccountRefreshKeyV153 = "";
+      function accountRefreshKeyV153(session) {
+        return `${String(session?.user?.id || "anonymous")}::${String(sharedCollectionV46?.share_slug || "")}`;
+      }
+      async function refreshAccountV46(session = null) {
+        const refreshKey = accountRefreshKeyV153(session);
+        if (accountRefreshInFlightV153?.key === refreshKey) return accountRefreshInFlightV153.promise;
+        if (lastAccountRefreshKeyV153 === refreshKey) return;
+        const promise = (async () => {
+          await refreshAccountBodyV153(session);
+          lastAccountRefreshKeyV153 = refreshKey;
+        })();
+        accountRefreshInFlightV153 = { key: refreshKey, promise };
+        try {
+          return await promise;
+        } finally {
+          if (accountRefreshInFlightV153?.promise === promise) accountRefreshInFlightV153 = null;
+        }
       }
 
       async function initializeAccountV46() {
@@ -7344,10 +7418,19 @@
         migrateAnswerHistoryScoresV16();
         importedQuestionsReadyV81 = true;
         renderQuestionOptionsV16();
-        renderMenuCardsV16();
         if (loadedSharedCollection && questionsV16.length) await startCommentNotificationPollingV65();
         if (questionsV16.length) applyQuestionV16(questionsV16[0], 0);
         showMenuV16();
+        const requestedExistingQuestionId = new URL(window.location.href).searchParams.get("existing_question")?.trim() || "";
+        if (requestedExistingQuestionId) {
+          const existingIndex = questionsV16.findIndex(question => String(question.serverQuestionId || "") === requestedExistingQuestionId);
+          if (existingIndex >= 0) {
+            const cleanUrl = new URL(window.location.href);
+            cleanUrl.searchParams.delete("existing_question");
+            window.history.replaceState({}, "", cleanUrl.toString());
+            openQuestionV16(existingIndex);
+          }
+        }
         document.getElementById("questionSelect").addEventListener("change", event => openQuestionV16(Number(event.target.value)));
         document.getElementById("menuGrid").addEventListener("click", handleMenuGridClickV16);
         document.getElementById("menuActiveFilters")?.addEventListener("click", event => {

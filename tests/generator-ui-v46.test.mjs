@@ -10,7 +10,7 @@ test("renders the v87 scene and half-game generator controls", async () => {
     readFile(indexUrl, "utf8"),
     readFile(generatorUrl, "utf8")
   ]);
-  assert.match(html, /const APP_VERSION = 152/);
+  assert.match(html, /const APP_VERSION = 153/);
   assert.match(html, /data-range-session="all"[^>]*>10問解く\s*<span/);
   assert.doesNotMatch(html, /data-range-session="unanswered">未回答を10問解く/);
   assert.match(html, /range: "この範囲の10問"/);
