@@ -176,6 +176,36 @@ test("marks the discard predicted directly from a call as an original-mask scene
   assert.equal(candidate.actualDiscard, "man9");
 });
 
+test("records the previous meld count when generating a second-call discard question", async () => {
+  const api = await loadApi();
+  const rows = [Array(34).fill(0)];
+  rows[0][8] = 1000;
+  const entries = [
+    startKyoku([["1m", "2m", "3m", "4m", "4m", "5m", "6m", "7m", "8m", "9m", "E", "S", "W"], ["1p", "2p", "3p", "4p", "5p", "6p", "7p", "8p", "9p", "P", "F", "C", "1s"], ["2s", "3s", "4s", "5s", "6s", "7s", "8s", "9s", "1m", "2m", "3m", "4m", "5m"], ["6m", "7m", "8m", "9m", "1p", "2p", "3p", "4p", "5p", "6p", "7p", "8p", "9p"]]),
+    msg("chi", { actor: 0, pai: "3m", consumed: ["1m", "2m"] }),
+    msg("dahai", { actor: 0, pai: "3m" }),
+    msg("tsumo", { actor: 1, pai: "1p" }),
+    {
+      info: { msg: { type: "pon", actor: 0, pai: "4m", consumed: ["4m", "4m"], real_dahai: "5m", pred_dahai: ["5m"] } },
+      dahai_pred: rows
+    }
+  ];
+  const report = {
+    reportId: "second-call-report",
+    naga_types: { "0": "ニシキ" },
+    player_info: { name: ["A", "B", "C", "D"] },
+    pred: [entries]
+  };
+  const candidate = api.sceneCandidate(report, { reportId: "second-call-report", tw: 0, ts: 0, tv: 4 });
+  assert.equal(candidate.immediateCallDiscard, true);
+  assert.equal(candidate.immediateCallPreviousMeldCount, 1);
+  assert.equal(candidate.handBeforeMeld.length, 10);
+  assert.equal(candidate.handBeforeDraw.length, 8);
+  const slots = api.displayConcealedHandSlots(candidate, tiles => [...tiles]);
+  assert.equal(slots.length, 10);
+  assert.equal(slots.filter(tile => tile == null).length, 2);
+});
+
 test("preserves original slots and inserts holes for immediate pon, chi, and daiminkan", async () => {
   const api = await loadApi();
   const tileOrder = [
@@ -258,6 +288,46 @@ test("preserves original slots and inserts holes for immediate pon, chi, and dai
     melds: [{ type: "pon", pai: "pin9", consumed: ["pin9", "pin9"] }]
   });
   assert.equal(postCall, null);
+});
+
+test("uses the pre-call slot width for immediate second, third, and fourth melds", async () => {
+  const api = await loadApi();
+  const tileOrder = [
+    ...Array.from({ length: 9 }, (_, index) => `man${index + 1}`),
+    ...Array.from({ length: 9 }, (_, index) => `pin${index + 1}`),
+    ...Array.from({ length: 9 }, (_, index) => `sou${index + 1}`),
+    "ji1", "ji2", "ji3", "ji4", "ji5", "ji6", "ji7"
+  ];
+  const orderMap = new Map(tileOrder.map((tile, index) => [tile, index]));
+  const normalSort = tiles => [...tiles].sort((left, right) => (orderMap.get(left) ?? 99) - (orderMap.get(right) ?? 99));
+  const fill = tileOrder.slice(0, 13);
+
+  for (const previousMeldCount of [1, 2, 3]) {
+    const slotCount = 13 - previousMeldCount * 3;
+    const currentTile = `pin${9 - previousMeldCount}`;
+    const handBeforeMeld = fill.slice(0, slotCount);
+    handBeforeMeld[1] = currentTile;
+    handBeforeMeld[slotCount - 2] = currentTile;
+    const usedIndexes = new Set([1, slotCount - 2]);
+    const handBeforeDraw = handBeforeMeld.filter((_, index) => !usedIndexes.has(index));
+    const melds = Array.from({ length: previousMeldCount + 1 }, (_, index) => ({
+      type: "pon",
+      pai: index === previousMeldCount ? currentTile : `ji${index + 1}`,
+      consumed: index === previousMeldCount ? [currentTile, currentTile] : [`ji${index + 1}`, `ji${index + 1}`]
+    }));
+    const question = {
+      decisionType: "discard",
+      predictionType: "pon",
+      handBeforeMeld,
+      handBeforeDraw,
+      melds
+    };
+    const slots = api.displayConcealedHandSlots(question, normalSort);
+    assert.equal(api.immediateCallPreviousMeldCount(question), previousMeldCount);
+    assert.equal(slots.length, slotCount);
+    assert.equal(slots.filter(tile => tile == null).length, 2);
+    assert.equal(slots.filter(tile => tile === currentTile).length, 0);
+  }
 });
 
 test("repairs only legacy immediate-call hand duplicates and preserves red tiles", async () => {

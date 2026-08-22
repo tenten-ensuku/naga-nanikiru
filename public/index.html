@@ -2412,7 +2412,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 151;
+    const APP_VERSION = 152;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -3460,6 +3460,7 @@
         { version: 142, date: "2026-08-22", publishedAt: "2026-08-22T19:00:00+09:00", title: "保存済みコメントの欠落本文を復元しました", body: "Discordスナップショットから保存済みコメントを再構成し、URL直後の7m・5p・3sなどの牌表記や解説本文が欠落しないようにしました。今後の生成処理にも同じ転送規則を適用します。" },
         { version: 143, date: "2026-08-22", publishedAt: "2026-08-22T21:00:00+09:00", title: "副露直後の手牌表示を修正しました", body: "チー・ポン・大明槓の直後に打牌を選ぶ問題で、副露に使った自分の牌が暗手牌へ重複表示されないようにしました。表示用のコピーだけを補正し、副露後の通常問題と元の牌譜状態は変更しません。" },
         { version: 144, date: "2026-08-22", publishedAt: "2026-08-22T22:00:00+09:00", title: "副露直後のマスク範囲を副露数に合わせて固定しました", body: "副露した瞬間から、その直後の打牌が終わるまで、現在の副露数に対応した手牌マスクを使うようにしました。副露直後だけ全幅マスクへ戻る不整合をなくし、通常局面と後続局面のマスク判定は変更していません。" },
+          { version: 152, date: "2026-08-23", publishedAt: "2026-08-23T00:00:00+09:00", title: "複数副露直後の中抜き表示に対応しました", body: "2・3・4副露の直後に打牌を選ぶ問題でも、現在の副露に使った自牌だけを空白にします。マスク幅は直前の13・10・7・4スロット幅を保ち、打牌確定後は通常の副露済み表示へ戻します。" },
         { version: 151, date: "2026-08-22", publishedAt: "2026-08-22T22:30:00+09:00", title: "副露直後の中抜き表示を旧データにも適用しました", body: "副露直後の打牌問題では、副露前の13スロットを保ち、副露に使った自牌だけを空白にします。副露面子は元のNAGA局面画像を使い、打牌確定後は通常の手牌表示に戻します。" },
         { version: 150, date: "2026-08-22", publishedAt: "2026-08-22T22:07:37+09:00", title: "問題1351の副露面子を元画像表示に統一しました", body: "副露面子は元のNAGA局面画像に含まれているため、問題画面で再生成しないようにしました。問題1351では、副露前の13スロットを保った中抜き手牌だけを再構築し、副露面子は元画像の表示をそのまま使用します。" },
         { version: 149, date: "2026-08-22", publishedAt: "2026-08-22T20:40:25+09:00", title: "問題1351の副露直後レイアウトを再調整しました", body: "問題1351では、副露前の手牌を通常の理牌順に並べ、ポンに使った2pの2スロットを空欄として保持します。副露3枚は暗手牌マスク内へ混ぜず、正解画像に合わせてマスク外の副露領域へ1回だけ表示します。回答確定後は通常の副露済みレイアウトへ戻ります。" }
@@ -5623,9 +5624,29 @@
         return Math.min(meldCount, 5);
       }
 
+      function immediateCallPreviousMeldCountV152(question) {
+        const generator = globalThis.NagaGeneratorV44;
+        if (typeof generator?.immediateCallPreviousMeldCount === "function") {
+          const value = generator.immediateCallPreviousMeldCount(question);
+          if (Number.isInteger(value) && value >= 0) return value;
+        }
+        const explicit = Number(question?.immediateCallPreviousMeldCount);
+        if (Number.isInteger(explicit) && explicit >= 0) return explicit;
+        const meldCount = Math.max(0, Array.isArray(question?.melds) ? question.melds.length : 0);
+        return Math.max(0, meldCount - 1);
+      }
+
+      function handMaskMeldCountForDisplayV152(question) {
+        if (!state.revealed && isImmediateCallDiscardV132(question)) {
+          // Keep the mask width of the concealed area immediately before the
+          // current call: first=13 slots, second=10, third=7, fourth=4.
+          return Math.min(immediateCallPreviousMeldCountV152(question), 5);
+        }
+        return handMaskMeldCountV144(question);
+      }
+
       function handMaskFallbackV17(question) {
-        if (!state.revealed && isImmediateCallDiscardV132(question)) return { ...HAND_MASK_PRESETS_V128[0] };
-        const preset = HAND_MASK_PRESETS_V128[handMaskMeldCountV144(question)] || HAND_MASK_PRESETS_V128[5];
+        const preset = HAND_MASK_PRESETS_V128[handMaskMeldCountForDisplayV152(question)] || HAND_MASK_PRESETS_V128[5];
         return { ...preset };
       }
 

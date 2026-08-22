@@ -311,23 +311,47 @@
     return [tileToAppCode(meld.pai), ...consumed].filter(Boolean);
   }
 
-  function currentImmediateMeld(question) {
-    if (!isImmediateCallDiscardQuestion(question)) return null;
+  function immediateCallMeldIndex(question) {
+    if (!isImmediateCallDiscardQuestion(question)) return -1;
     var expectedType = String(question.predictionType || "");
     var melds = Array.isArray(question.melds) ? question.melds : [];
     if (!expectedType) {
       // Legacy rows have no predictionType, but their final meld is the call
       // that produced the current immediate-discard snapshot.
-      return melds.length ? melds[melds.length - 1] : null;
+      return melds.length ? melds.length - 1 : -1;
     }
     for (var index = melds.length - 1; index >= 0; index -= 1) {
       var meld = melds[index];
       var actualType = meld ? String(meld.type || "") : "";
       var isOpenKanAlias = (actualType === "minkan" || actualType === "daiminkan")
         && (expectedType === "minkan" || expectedType === "daiminkan");
-      if (meld && (actualType === expectedType || isOpenKanAlias)) return meld;
+      if (meld && (actualType === expectedType || isOpenKanAlias)) return index;
     }
-    return null;
+    return -1;
+  }
+
+  function currentImmediateMeld(question) {
+    var index = immediateCallMeldIndex(question);
+    var melds = Array.isArray(question && question.melds) ? question.melds : [];
+    return index >= 0 ? melds[index] : null;
+  }
+
+  function immediateCallPreviousMeldCount(question) {
+    if (!isImmediateCallDiscardQuestion(question)) return null;
+    var explicit = Number(question.immediateCallPreviousMeldCount);
+    if (Number.isSafeInteger(explicit) && explicit >= 0) return explicit;
+    var index = immediateCallMeldIndex(question);
+    if (index >= 0) return index;
+    var melds = Array.isArray(question.melds) ? question.melds : [];
+    return Math.max(0, melds.length - 1);
+  }
+
+  function immediateCallSlotCount(question) {
+    var previousMeldCount = immediateCallPreviousMeldCount(question);
+    if (previousMeldCount == null) return null;
+    // The pre-call concealed area is the normal area for the melds that were
+    // already open. The current call creates the holes inside that area.
+    return Math.max(1, 13 - previousMeldCount * 3);
   }
 
   function displayConcealedHand(question) {
@@ -357,15 +381,19 @@
     return removed === consumed.length ? display : source.slice();
   }
 
-  // For the single event immediately after a call, preserve the 13 pre-call
-  // positions.  The consumed tiles are represented by null slots instead of
-  // being spliced out, so the tiles to their right never shift left.
+  // For the single event immediately after a call, preserve the pre-call
+  // positions. The slot count is the ordinary concealed-hand count for the
+  // melds that were already open: 13 for the first call, then 10, 7, ... for
+  // the second, third, ... call. The consumed tiles are represented by null
+  // slots instead of being spliced out, so the tiles to their right never
+  // shift left.
   function displayConcealedHandSlots(question, sortTiles) {
     if (!question || !isImmediateCallDiscardQuestion(question)) return null;
 
     var explicit = Array.isArray(question.displayHandSlots)
       ? question.displayHandSlots
       : null;
+    var expectedSlotCount = immediateCallSlotCount(question);
     var currentMeld = currentImmediateMeld(question);
     var consumed = currentMeld && Array.isArray(currentMeld.consumed)
       ? currentMeld.consumed.map(tileToAppCode).filter(Boolean)
@@ -376,16 +404,20 @@
     if (!source && currentMeld && consumed.length && Array.isArray(question.handBeforeDraw)) {
       var postCallHand = question.handBeforeDraw;
       // Older synchronized rows kept only the remaining concealed tiles. Add
-      // the consumed self tiles to a display-only copy so sorting can recover
-      // the original 13 logical positions before replacing them with holes.
-      if (postCallHand.length === 13 - consumed.length) {
+      // the current call's consumed self tiles to a display-only copy so
+      // sorting can recover the pre-call positions before replacing them with
+      // holes. For a second/third/fourth call, the target is 10/7/4 slots,
+      // not 13 slots.
+      var targetSlotCount = expectedSlotCount || 13;
+      if (postCallHand.length === targetSlotCount - consumed.length) {
         source = postCallHand.concat(consumed);
-      } else if (postCallHand.length === 13) {
+      } else if (postCallHand.length === targetSlotCount) {
         // Some legacy rows retained the duplicate pre-call snapshot instead.
         source = postCallHand;
       }
     }
-    if (!Array.isArray(source) || source.length !== 13) return null;
+    if (!Array.isArray(source) || source.length < 1 || source.length > 13) return null;
+    if (!explicit && expectedSlotCount != null && source.length !== expectedSlotCount) return null;
 
     // The pre-call snapshot is replay order, not display order.  The UI
     // passes the same sorter used by ordinary concealed-hand rendering so
@@ -852,6 +884,7 @@
       actualCallAction: null,
       melds: snapshot.melds.map(cloneMeld),
       immediateCallDiscard: false,
+      immediateCallPreviousMeldCount: null,
       handMaskMode: null,
       comments: [],
       image: null,
@@ -921,6 +954,9 @@
     candidate.sourceTv = candidateTv;
     candidate.predictionType = sourceType;
     candidate.immediateCallDiscard = isCallDiscard;
+    candidate.immediateCallPreviousMeldCount = isCallDiscard && preCallSnapshot
+      ? preCallSnapshot.melds.length
+      : null;
     candidate.handMaskMode = candidate.immediateCallDiscard ? "original-with-meld-overlay" : null;
     candidate.reached = Boolean(message.reached === true || action.reached === true || snapshot.reached);
     return candidate;
@@ -1172,6 +1208,7 @@
     tileToNagaIndex: tileIndex,
     displayConcealedHand: displayConcealedHand,
     displayConcealedHandSlots: displayConcealedHandSlots,
+    immediateCallPreviousMeldCount: immediateCallPreviousMeldCount,
     modelNames: modelNames,
     getModelNames: modelNames,
     replayKyoku: replayKyoku,
