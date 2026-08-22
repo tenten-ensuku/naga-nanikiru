@@ -337,6 +337,57 @@
     return removed === consumed.length ? display : source.slice();
   }
 
+  // For the single event immediately after a call, preserve the 13 pre-call
+  // positions.  The consumed tiles are represented by null slots instead of
+  // being spliced out, so the tiles to their right never shift left.
+  function displayConcealedHandSlots(question) {
+    if (!question || !isImmediateCallDiscardQuestion(question)) return null;
+
+    var explicit = Array.isArray(question.displayHandSlots)
+      ? question.displayHandSlots
+      : null;
+    var source = explicit || (Array.isArray(question.handBeforeMeld)
+      ? question.handBeforeMeld
+      : null);
+    if (!Array.isArray(source) || source.length !== 13) return null;
+
+    var slots = source.map(function (tile) {
+      return tile == null ? null : tileToAppCode(tile);
+    });
+    for (var sourceIndex = 0; sourceIndex < source.length; sourceIndex += 1) {
+      if (source[sourceIndex] != null && slots[sourceIndex] == null) return null;
+    }
+
+    if (explicit) return slots;
+
+    var currentMeld = currentImmediateMeld(question);
+    var consumed = currentMeld && Array.isArray(currentMeld.consumed)
+      ? currentMeld.consumed.map(tileToAppCode).filter(Boolean)
+      : [];
+    if (!currentMeld || !consumed.length) return null;
+
+    var usedIndexes = [];
+    for (var consumedIndex = 0; consumedIndex < consumed.length; consumedIndex += 1) {
+      var consumedTile = consumed[consumedIndex];
+      var exactIndex = -1;
+      var fallbackIndex = -1;
+      for (var slotIndex = 0; slotIndex < slots.length; slotIndex += 1) {
+        if (usedIndexes.indexOf(slotIndex) >= 0 || slots[slotIndex] == null) continue;
+        if (slots[slotIndex] === consumedTile) {
+          exactIndex = slotIndex;
+          break;
+        }
+        if (fallbackIndex < 0 && sameTile(slots[slotIndex], consumedTile)) fallbackIndex = slotIndex;
+      }
+      var matchedIndex = exactIndex >= 0 ? exactIndex : fallbackIndex;
+      if (matchedIndex < 0) return null;
+      usedIndexes.push(matchedIndex);
+    }
+
+    usedIndexes.forEach(function (index) { slots[index] = null; });
+    return slots;
+  }
+
   function cloneMeld(meld) {
     return {
       type: meld.type,
@@ -741,6 +792,7 @@
       tw: seat,
       decisionType: decisionType,
       handBeforeDraw: snapshot.handBeforeDraw.slice(),
+      handBeforeMeld: null,
       draw: null,
       actualDiscard: null,
       doraMarker: snapshot.doraMarker,
@@ -786,9 +838,11 @@
     if (!Array.isArray(predictionRows) || !Array.isArray(predictions)) return null;
 
     var sourceType = message.type;
+    var isCallDiscard = Boolean(NAGA_CALL_TYPES[sourceType]);
     var snapshotTv = sourceType === "chi" || sourceType === "pon" || sourceType === "daiminkan"
       ? sourceTv + 1
       : sourceTv;
+    var preCallSnapshot = isCallDiscard ? replayKyoku(entries, sourceTv, seat) : null;
     var snapshot = replayKyoku(entries, snapshotTv, seat);
     var count = modelCountFor(report, predictionRows, predictions);
     var actualIndex = tileIndex(rawDiscard);
@@ -801,6 +855,7 @@
     // the same hand state as the candidate calculation.
     var candidate = commonCandidate(spec.reportId, seat, spec.ts, candidateTv, "discard", report, snapshot);
     candidate.handBeforeDraw = snapshot.handBeforeDraw.slice();
+    candidate.handBeforeMeld = preCallSnapshot ? preCallSnapshot.handBeforeDraw.slice() : null;
     candidate.draw = message.type === "tsumo" ? tileToAppCode(message.pai) : null;
     candidate.actualDiscard = tileToAppCode(rawDiscard);
     candidate.actualDiscardNaga = rawDiscard;
@@ -822,7 +877,7 @@
       || candidate.actualReach;
     candidate.sourceTv = candidateTv;
     candidate.predictionType = sourceType;
-    candidate.immediateCallDiscard = Boolean(NAGA_CALL_TYPES[sourceType]);
+    candidate.immediateCallDiscard = isCallDiscard;
     candidate.handMaskMode = candidate.immediateCallDiscard ? "original-with-meld-overlay" : null;
     candidate.reached = Boolean(message.reached === true || action.reached === true || snapshot.reached);
     return candidate;
@@ -1073,6 +1128,7 @@
     nagaTileIndex: tileIndex,
     tileToNagaIndex: tileIndex,
     displayConcealedHand: displayConcealedHand,
+    displayConcealedHandSlots: displayConcealedHandSlots,
     modelNames: modelNames,
     getModelNames: modelNames,
     replayKyoku: replayKyoku,

@@ -355,6 +355,8 @@
     .call-choice-button.call-no { background: linear-gradient(145deg, #503f20, #2f2818); border-color: rgba(255,210,120,.7); }
     .call-choice-button.is-selected { box-shadow: 0 0 0 2px #fff7d6, 0 3px 8px rgba(0,0,0,.3); transform: translateY(-1px); }
     .tile-wrap { position: relative; display: flex; align-items: flex-end; justify-content: center; }
+    .empty-hand-slot { flex: 0 0 var(--hand-tile-width, clamp(24px, 4.1cqw, 36px)); width: var(--hand-tile-width, clamp(24px, 4.1cqw, 36px)); height: calc(var(--hand-tile-width, clamp(24px, 4.1cqw, 36px)) * 1.363636); pointer-events: none; }
+    .empty-hand-slot-box { display: block; width: 100%; height: 100%; }
     .tile-button { position: relative; display: block; padding: 0; border: 0; background: transparent; outline: none; }
     .tile-button:hover, .tile-button:focus-visible { outline: none; }
     .tile-button.is-selected img { outline: 2px solid var(--gold); outline-offset: 2px; border-radius: 2px; }
@@ -2414,7 +2416,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 145;
+    const APP_VERSION = 147;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -3462,7 +3464,7 @@
         { version: 142, date: "2026-08-22", publishedAt: "2026-08-22T19:00:00+09:00", title: "保存済みコメントの欠落本文を復元しました", body: "Discordスナップショットから保存済みコメントを再構成し、URL直後の7m・5p・3sなどの牌表記や解説本文が欠落しないようにしました。今後の生成処理にも同じ転送規則を適用します。" },
         { version: 143, date: "2026-08-22", publishedAt: "2026-08-22T21:00:00+09:00", title: "副露直後の手牌表示を修正しました", body: "チー・ポン・大明槓の直後に打牌を選ぶ問題で、副露に使った自分の牌が暗手牌へ重複表示されないようにしました。表示用のコピーだけを補正し、副露後の通常問題と元の牌譜状態は変更しません。" },
         { version: 144, date: "2026-08-22", publishedAt: "2026-08-22T22:00:00+09:00", title: "副露直後のマスク範囲を副露数に合わせて固定しました", body: "副露した瞬間から、その直後の打牌が終わるまで、現在の副露数に対応した手牌マスクを使うようにしました。副露直後だけ全幅マスクへ戻る不整合をなくし、通常局面と後続局面のマスク判定は変更していません。" },
-        { version: APP_VERSION, date: "2026-08-22", publishedAt: "2026-08-22T23:00:00+09:00", title: "副露直後は手牌13枚用のマスクを維持します", body: "副露した直後に打牌を選ぶ問題では、副露数にかかわらず手牌13枚時のマスク幅を維持します。通常の副露後局面では、これまでどおり副露数に応じたマスクを使います。" }
+        { version: APP_VERSION, date: "2026-08-22", publishedAt: "2026-08-22T23:20:00+09:00", title: "問題1351の副露直後表示を確定しました", body: "問題1351では、副露に使った牌の元位置を空欄として保持し、残りの牌が左詰めされない表示にしました。回答確定後は通常の副露済みレイアウトへ戻ります。今回は確認用に問題1351だけへ適用しています。" }
       ];
       let commentNoticeStoreV65 = loadCommentNoticeStoreV65();
       let sharedCommentRowsV65 = [];
@@ -3598,7 +3600,8 @@
         const sourcePayload = row?.question && typeof row.question === "object" ? row.question : (row?.payload && typeof row.payload === "object" ? row.payload : {});
         const number = sourcePayload.number ?? row?.number ?? index + 1;
         const sourceUrl = sourcePayload.nagaUrl || sourcePayload.sourceUrl || row?.source_url || row?.sourceUrl || "";
-        const payload = { ...normalizeNimaKanQuestionV112({ ...sourcePayload, nagaUrl: sourcePayload.nagaUrl || sourceUrl }, number, shareSlug) };
+        let payload = { ...normalizeNimaKanQuestionV112({ ...sourcePayload, nagaUrl: sourcePayload.nagaUrl || sourceUrl }, number, shareSlug) };
+        payload = normalizePierreImmediatePonQuestionV146(payload, number, shareSlug);
         payload.image ||= payload.images?.off;
         delete payload.images;
         if (isNimaCollectionV105(shareSlug)) payload.comments = sanitizeNimaCommentsV105(payload.comments);
@@ -3671,6 +3674,31 @@
             return { ...message, content, attachments };
           })
           .filter(message => message.content || message.attachments?.length || message.embeds?.length);
+      }
+
+      function isPierreCollectionV146(shareSlug = sharedCollectionV46?.share_slug || "") {
+        const collectionTitle = String(sharedCollectionV46?.title || "");
+        return /ピエール|悪手などまとめ/.test(collectionTitle)
+          || /ピエール|悪手などまとめ/.test(String(shareSlug));
+      }
+
+      // Temporary, target-only bridge for Pierre question 1351.  The source
+      // row predates handBeforeMeld, so keep the exact pre-pon 13-slot order
+      // here until the shared row is regenerated from the NAGA URL.
+      function normalizePierreImmediatePonQuestionV146(payload, number, shareSlug) {
+        const sourceUrl = String(payload?.nagaUrl || "");
+        const isTarget = isPierreCollectionV146(shareSlug)
+          && Number(number) === 1351
+          && sourceUrl.includes("2b8c1f0fa999755513b793ca6153bf3e2fb499912e3061aa3de6cd81b7da0085");
+        if (!isTarget) return payload;
+        return {
+          ...payload,
+          decisionType: "discard",
+          predictionType: "pon",
+          immediateCallDiscard: true,
+          handMaskMode: "original-with-meld-overlay",
+          handBeforeMeld: ["pin6", "man4", "man7", "man5", "pin2", "pin6", "pin6", "pin4", "man2", "pin5", "aka1", "pin7", "pin2"]
+        };
       }
 
       function isQuestionAddedByOtherV66(row) {
@@ -5149,6 +5177,22 @@
           : [...source];
       }
 
+      function displayHandSlotsV146(question = SCENE) {
+        // Keep the original 13-slot view only while the user is choosing the
+        // discard immediately after the call.  After confirmation, the
+        // ordinary post-call layout is restored.
+        if (state.revealed) return null;
+        const generator = globalThis.NagaGeneratorV44;
+        const slots = typeof generator?.displayConcealedHandSlots === "function"
+          ? generator.displayConcealedHandSlots(question)
+          : null;
+        return Array.isArray(slots) ? slots : null;
+      }
+
+      function emptyHandSlotV146() {
+        return `<span class="tile-wrap empty-hand-slot" aria-hidden="true"><span class="empty-hand-slot-box"></span></span>`;
+      }
+
       function meldTilesV132(meld) {
         if (!meld || typeof meld !== "object") return [];
         const consumed = Array.isArray(meld.consumed) ? meld.consumed.filter(Boolean) : [];
@@ -5158,13 +5202,13 @@
       }
 
       function immediateMeldTileCountV132(question = SCENE) {
-        if (!isImmediateCallDiscardV132(question)) return 0;
+        if (state.revealed || !isImmediateCallDiscardV132(question)) return 0;
         return (Array.isArray(question?.melds) ? question.melds : [])
           .reduce((total, meld) => total + meldTilesV132(meld).length, 0);
       }
 
       function renderImmediateMeldsV132(question = SCENE) {
-        if (!isImmediateCallDiscardV132(question)) return "";
+        if (state.revealed || !isImmediateCallDiscardV132(question)) return "";
         return (Array.isArray(question?.melds) ? question.melds : []).map((meld, meldIndex) => {
           const tiles = meldTilesV132(meld);
           if (!tiles.length) return "";
@@ -5173,9 +5217,14 @@
       }
 
       function renderHandV16() {
-        const displayHand = displayConcealedHandV143(SCENE);
-        const closed = sortHandV20(displayHand).map((tile, index) => tileButtonV16(tile, index)).join("");
-        const draw = SCENE.draw ? tileButtonV16(SCENE.draw, displayHand.length, true) : "";
+        const displaySlots = displayHandSlotsV146(SCENE);
+        const displayHand = displaySlots
+          ? displaySlots.filter(Boolean)
+          : displayConcealedHandV143(SCENE);
+        const closed = displaySlots
+          ? displaySlots.map((tile, index) => tile == null ? emptyHandSlotV146() : tileButtonV16(tile, index)).join("")
+          : sortHandV20(displayHand).map((tile, index) => tileButtonV16(tile, index)).join("");
+        const draw = SCENE.draw ? tileButtonV16(SCENE.draw, displaySlots ? displaySlots.length : displayHand.length, true) : "";
         const melds = renderImmediateMeldsV132();
         const meldBlock = melds ? `<div class="melds-hand" aria-label="副露面子">${melds}</div>` : "";
         const riichiButton = hasReachV16() ? `<button class="riichi-button" id="riichiButton" type="button" aria-pressed="${state.riichi}" title="リーチを宣言する">${state.riichi ? "リーチ済" : "リーチ"}</button>` : "";
@@ -5199,6 +5248,7 @@
         document.querySelectorAll("[data-call-decision]").forEach(button => button.addEventListener("click", () => selectCallV16(button.dataset.callDecision)));
         const riichi = document.getElementById("riichiButton");
         if (riichi) riichi.addEventListener("click", toggleRiichiV16);
+        syncImmediateCallLayoutV146(SCENE);
       }
 
       function callActionOptionsV112() {
@@ -5518,9 +5568,13 @@
 
       function selectTileV16(index) {
         if (SCENE.decisionType === "call") return;
-        const tiles = [...sortHandV20(displayConcealedHandV143(SCENE)), SCENE.draw].filter(Boolean);
+        const displaySlots = displayHandSlotsV146(SCENE);
+        const tiles = displaySlots
+          ? [...displaySlots, SCENE.draw]
+          : [...sortHandV20(displayConcealedHandV143(SCENE)), SCENE.draw].filter(Boolean);
         state.selectedIndex = index;
         state.selected = tiles[index];
+        if (!state.selected) return;
         renderHandV16();
         renderAnswerV16();
       }
@@ -5585,9 +5639,18 @@
       }
 
       function handMaskFallbackV17(question) {
-        if (isImmediateCallDiscardV132(question)) return { ...HAND_MASK_PRESETS_V128[0] };
+        if (!state.revealed && isImmediateCallDiscardV132(question)) return { ...HAND_MASK_PRESETS_V128[0] };
         const preset = HAND_MASK_PRESETS_V128[handMaskMeldCountV144(question)] || HAND_MASK_PRESETS_V128[5];
         return { ...preset };
+      }
+
+      function syncImmediateCallLayoutV146(question = SCENE) {
+        if (!isImmediateCallDiscardV132(question)) return;
+        const active = !state.revealed;
+        const mask = handMaskFallbackV17(question);
+        sceneFrameV16.classList.toggle("is-immediate-call-discard", active);
+        setHandMaskV17(mask);
+        setHandLayoutV18(question, mask);
       }
 
       function rgbHexV17(rgb) {
@@ -5706,7 +5769,8 @@
         activeHandMaskV18 = mask;
         const frameWidth = sceneFrameV16.clientWidth || sceneImageV16.clientWidth;
         if (!frameWidth) return;
-        const closedCount = displayConcealedHandV143(question).length;
+        const displaySlots = displayHandSlotsV146(question);
+        const closedCount = displaySlots ? displaySlots.length : displayConcealedHandV143(question).length;
         const hasDraw = Boolean(question?.draw);
         const tileCount = closedCount + (hasDraw ? 1 : 0) + immediateMeldTileCountV132(question);
         const maskWidthPx = frameWidth * mask.width / 100;

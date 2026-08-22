@@ -171,8 +171,50 @@ test("marks the discard predicted directly from a call as an original-mask scene
   assert.equal(candidate.immediateCallDiscard, true);
   assert.equal(candidate.handMaskMode, "original-with-meld-overlay");
   assert.equal(candidate.melds.length, 1);
+  assert.equal(candidate.handBeforeMeld.length, 13);
   assert.equal(candidate.handBeforeDraw.length, 11);
   assert.equal(candidate.actualDiscard, "man9");
+});
+
+test("preserves original slots and inserts holes for immediate pon, chi, and daiminkan", async () => {
+  const api = await loadApi();
+  const ponSlots = api.displayConcealedHandSlots({
+    decisionType: "discard",
+    predictionType: "pon",
+    handBeforeMeld: ["man1", "man2", "man3", "man4", "man5", "pin9", "man6", "man7", "man8", "man9", "sou1", "sou2", "pin9"],
+    melds: [{ type: "pon", pai: "pin9", consumed: ["pin9", "pin9"] }]
+  });
+  assert.equal(ponSlots.length, 13);
+  assert.equal(ponSlots.filter(tile => tile == null).length, 2);
+  assert.deepEqual(ponSlots, ["man1", "man2", "man3", "man4", "man5", null, "man6", "man7", "man8", "man9", "sou1", "sou2", null]);
+
+  const chiSlots = api.displayConcealedHandSlots({
+    decisionType: "discard",
+    predictionType: "chi",
+    handBeforeMeld: ["man1", "man4", "man5", "man6", "pin1", "pin2", "pin3", "sou1", "sou2", "sou3", "ji1", "ji2", "ji3"],
+    melds: [{ type: "chi", pai: "man3", consumed: ["man4", "man5"] }]
+  });
+  assert.equal(chiSlots.length, 13);
+  assert.equal(chiSlots.filter(tile => tile == null).length, 2);
+  assert.deepEqual(chiSlots, ["man1", null, null, "man6", "pin1", "pin2", "pin3", "sou1", "sou2", "sou3", "ji1", "ji2", "ji3"]);
+
+  const daiminkanSlots = api.displayConcealedHandSlots({
+    decisionType: "discard",
+    predictionType: "daiminkan",
+    handBeforeMeld: ["sou9", "sou9", "sou9", "man1", "man2", "man3", "man4", "man5", "man6", "pin1", "pin2", "pin3", "ji1"],
+    melds: [{ type: "daiminkan", pai: "sou9", consumed: ["sou9", "sou9", "sou9"] }]
+  });
+  assert.equal(daiminkanSlots.length, 13);
+  assert.equal(daiminkanSlots.filter(tile => tile == null).length, 3);
+  assert.deepEqual(daiminkanSlots.slice(0, 4), [null, null, null, "man1"]);
+
+  const postCall = api.displayConcealedHandSlots({
+    decisionType: "discard",
+    predictionType: "tsumo",
+    handBeforeMeld: ponSlots,
+    melds: [{ type: "pon", pai: "pin9", consumed: ["pin9", "pin9"] }]
+  });
+  assert.equal(postCall, null);
 });
 
 test("repairs only legacy immediate-call hand duplicates and preserves red tiles", async () => {

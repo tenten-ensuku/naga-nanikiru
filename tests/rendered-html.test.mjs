@@ -32,7 +32,7 @@ test("wires v65 learning UX, generator, Supabase bridge, metadata, and social im
     readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
     access(new URL("../public/og-v44.png", import.meta.url)),
   ]);
-  assert.match(index, /const APP_VERSION = 145/);
+  assert.match(index, /const APP_VERSION = 147/);
   assert.match(index, /function menuRangeStepV120\(\)[\s\S]*?return MENU_RANGE_STEP_V137/);
   assert.match(index, /id="collectionDirectorySelect"/);
   assert.doesNotMatch(index, /class="collection-directory-item/);
@@ -60,7 +60,7 @@ test("wires v65 learning UX, generator, Supabase bridge, metadata, and social im
   assert.match(index, /NAGA URLから問題生成/);
   assert.match(index, /property="og:image" content="https:\/\/tenten-ensuku\.github\.io\/naga-nanikiru\/og-v44\.png"/);
   assert.match(index, /function formatAnnouncementDateV111\(item\)/);
-  assert.match(index, /publishedAt: "2026-08-22T18:00:00\+09:00"/);
+  assert.match(index, /publishedAt: "2026-08-22T23:20:00\+09:00"/);
   assert.match(index, /formatAnnouncementDateV111\(item\)/);
   assert.match(page, /src=\{`\$\{APP_BASE_PATH\}index\.html`\}/);
   assert.match(layout, /generateMetadata/);
