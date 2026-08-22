@@ -231,7 +231,7 @@
         "id": "1434561934203682846",
         "author": "てんてん",
         "createdAt": "2025-11-02T15:16:57.986Z",
-        "content": "物件**であることに気付けたかどうか。\n\n00物件とは0面子0両面の事。（配牌時出現率は||8||％）\n→面子手立直はかなり厳しい。",
+        "content": "**00物件**であることに気付けたかどうか。\n\n00物件とは0面子0両面の事。（配牌時出現率は||8||％）\n→面子手立直はかなり厳しい。",
         "attachments": []
       },
       {
@@ -317,7 +317,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "002",
@@ -605,7 +605,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "003",
@@ -887,7 +887,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "004",
@@ -1193,7 +1193,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "005",
@@ -1475,7 +1475,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "006",
@@ -1788,7 +1788,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "007",
@@ -2096,7 +2096,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "008",
@@ -2335,7 +2335,7 @@
         "id": "1434573539868151819",
         "author": "てんてん",
         "createdAt": "2025-11-02T16:03:04.992Z",
-        "content": "よりもドラ中の方が**6ブロック目の種**としての価値が高い。\nまた中を鳴かれた場合に6ｍが切りにくくなってしまう。",
+        "content": "6ｍよりもドラ中の方が**6ブロック目の種**としての価値が高い。\nまた中を鳴かれた場合に6ｍが切りにくくなってしまう。",
         "attachments": []
       },
       {
@@ -2440,7 +2440,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "009",
@@ -2674,7 +2674,7 @@
         "id": "1434575098622509127",
         "author": "てんてん",
         "createdAt": "2025-11-02T16:09:16.628Z",
-        "content": "ブロックVS６ブロック**",
+        "content": "**5ブロックVS６ブロック**",
         "attachments": []
       },
       {
@@ -2741,7 +2741,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "010",
@@ -3132,7 +3132,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "011",
@@ -3440,7 +3440,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "012",
@@ -3727,7 +3727,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "013",
@@ -4027,7 +4027,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "014",
@@ -4268,7 +4268,7 @@
         "id": "1435849018340151397",
         "author": "てんてん",
         "createdAt": "2025-11-06T04:31:22.757Z",
-        "content": "**00物件**である事を意識して打6ｐとした事は伺えました💯\n\nしかし、00物件で大事な事は、**立直役は付けられない**とすることのみであり、今回は**タンヤオ**があります。（00物件でのタンヤオ見落としは注意）\n\n別に和了らなくても良いような状況であれば、配牌オリ含めて打6ｐも悪くはありませんが、今回はラス目かつドラドラでかなり和了したい。→タンヤオor役牌の進行で打1ｍとします。",
+        "content": "**00物件**である事を意識して打6ｐとした事は伺えました💯 \n\nしかし、00物件で大事な事は、**立直役は付けられない**とすることのみであり、今回は**タンヤオ**があります。（00物件でのタンヤオ見落としは注意）\n\n別に和了らなくても良いような状況であれば、配牌オリ含めて打6ｐも悪くはありませんが、今回はラス目かつドラドラでかなり和了したい。→タンヤオor役牌の進行で打1ｍとします。",
         "attachments": []
       },
       {
@@ -4323,7 +4323,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "015",
@@ -4652,7 +4652,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "016",
@@ -4955,7 +4955,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "017",
@@ -5189,7 +5189,7 @@
         "id": "1435865244428931185",
         "author": "てんてん",
         "createdAt": "2025-11-06T05:35:51.358Z",
-        "content": "推奨。\n前問と同様。",
+        "content": "1ｍ推奨。\n前問と同様。",
         "attachments": []
       },
       {
@@ -5237,7 +5237,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "018",
@@ -5552,7 +5552,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "019",
@@ -5839,7 +5839,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "020",
@@ -6140,7 +6140,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "021",
@@ -6438,7 +6438,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "022",
@@ -6720,7 +6720,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "023",
@@ -7009,7 +7009,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "024",
@@ -7289,7 +7289,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "025",
@@ -7576,7 +7576,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "026",
@@ -7858,7 +7858,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "027",
@@ -8094,7 +8094,7 @@
         "id": "1436968031917183039",
         "author": "てんてん",
         "createdAt": "2025-11-09T06:37:56.384Z",
-        "content": "ブロック目は打点や手役の種、好形変化の種、安全度の種のいずれかを持つ。\n\n4ｓは何の種にもなっておらず、後手強度（押し返し易さ）の面で手牌価値を著しく下げてしまうので注意。",
+        "content": "①6ブロック目は打点や手役の種、好形変化の種、安全度の種のいずれかを持つ。\n\n4ｓは何の種にもなっておらず、後手強度（押し返し易さ）の面で手牌価値を著しく下げてしまうので注意。",
         "attachments": []
       },
       {
@@ -8160,7 +8160,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "028",
@@ -8475,7 +8475,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "029",
@@ -8764,7 +8764,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "030",
@@ -9046,7 +9046,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "031",
@@ -9347,7 +9347,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "032",
@@ -9653,7 +9653,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "033",
@@ -9971,7 +9971,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "034",
@@ -10246,7 +10246,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "035",
@@ -10547,7 +10547,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "036",
@@ -10836,7 +10836,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "037",
@@ -11118,7 +11118,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "038",
@@ -11406,7 +11406,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "039",
@@ -11693,7 +11693,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "040",
@@ -11994,7 +11994,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "041",
@@ -12281,7 +12281,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "042",
@@ -12563,7 +12563,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "043",
@@ -12845,7 +12845,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "044",
@@ -13127,7 +13127,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "045",
@@ -13409,7 +13409,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "046",
@@ -13696,7 +13696,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "047",
@@ -13942,7 +13942,7 @@
         "id": "1439946485356826635",
         "author": "てんてん",
         "createdAt": "2025-11-17T11:53:15.021Z",
-        "content": "**point**\n不要かどうかのチェック→**使えそうなツモを想定してみよう**。それでも不要なら完全に不要だということです。",
+        "content": "**point** \n不要かどうかのチェック→**使えそうなツモを想定してみよう**。それでも不要なら完全に不要だということです。",
         "attachments": []
       },
       {
@@ -14033,7 +14033,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "048",
@@ -14321,7 +14321,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "049",
@@ -14615,7 +14615,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "050",
@@ -14854,7 +14854,7 @@
         "id": "1439956759010873414",
         "author": "てんてん",
         "createdAt": "2025-11-17T12:34:04.451Z",
-        "content": "打4ｍ\n\nタンヤオ大正義の積極的実践は素晴らしい👍🏻\nが、今回は以下に抵触。",
+        "content": "打4ｍ\n\nタンヤオ大正義の積極的実践は素晴らしい👍🏻 \nが、今回は以下に抵触。",
         "attachments": []
       },
       {
@@ -14921,7 +14921,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "051",
@@ -15215,7 +15215,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "052",
@@ -15497,7 +15497,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "053",
@@ -15731,7 +15731,7 @@
         "id": "1441671215306768595",
         "author": "てんてん",
         "createdAt": "2025-11-22T06:06:42.685Z",
-        "content": "打5ｍで一致。💯 🎉\n||**00物件**||及び||**ホンイツセオリー⑪**||で染め判断。\nとても素晴らしかったです。",
+        "content": "打5ｍで一致。💯 🎉 \n||**00物件**||及び||**ホンイツセオリー⑪**||で染め判断。\nとても素晴らしかったです。",
         "attachments": []
       },
       {
@@ -15779,7 +15779,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "054",
@@ -16068,7 +16068,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "055",
@@ -16357,7 +16357,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "056",
@@ -16591,7 +16591,7 @@
         "id": "1441676807790264351",
         "author": "てんてん",
         "createdAt": "2025-11-22T06:28:56.037Z",
-        "content": "打6ｍ　一致💯 🎉\n\n3ヘッドなので6ｍ切りのロスは6ｍだけ。安牌西を残してスリムに。とても良いバランスです👍🏻",
+        "content": "打6ｍ　一致💯 🎉 \n\n3ヘッドなので6ｍ切りのロスは6ｍだけ。安牌西を残してスリムに。とても良いバランスです👍🏻",
         "attachments": []
       },
       {
@@ -16639,7 +16639,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "057",
@@ -16952,7 +16952,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "058",
@@ -17196,7 +17196,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "059",
@@ -17444,7 +17444,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "060",
@@ -17576,7 +17576,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "061",
@@ -17835,7 +17835,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "062",
@@ -18081,7 +18081,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "063",
@@ -18363,7 +18363,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "064",
@@ -18554,7 +18554,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "065",
@@ -18945,7 +18945,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "066",
@@ -19311,7 +19311,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "067",
@@ -19612,7 +19612,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "068",
@@ -19858,7 +19858,7 @@
         "id": "1447237442368442511",
         "author": "てんてん",
         "createdAt": "2025-12-07T14:44:54.632Z",
-        "content": "タンヤオ大正義||理論\n・2.8≦||弱2ブロック||＜強孤立\nいずれも打1ｓ。\n9ｐを切っているため、7ｐの価値は若干下がるが、それでも2.8孤立よりは強いです。",
+        "content": "・||タンヤオ大正義||理論\n・2.8≦||弱2ブロック||＜強孤立\nいずれも打1ｓ。\n9ｐを切っているため、7ｐの価値は若干下がるが、それでも2.8孤立よりは強いです。",
         "attachments": []
       },
       {
@@ -19908,7 +19908,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "069",
@@ -20017,7 +20017,7 @@
         "id": "1447239217955737711",
         "author": "てんてん",
         "createdAt": "2025-12-07T14:51:57.965Z",
-        "content": "素晴らしい鳴き。💯\n満貫確定しており、1ｓも残り一枚となったため、動けるタンヤオに。",
+        "content": "素晴らしい鳴き。💯 \n満貫確定しており、1ｓも残り一枚となったため、動けるタンヤオに。",
         "attachments": []
       },
       {
@@ -20106,7 +20106,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "070",
@@ -20392,7 +20392,7 @@
         "id": "1447252835388493948",
         "author": "てんてん",
         "createdAt": "2025-12-07T15:46:04.614Z",
-        "content": "スキップ牌＜＜＜＜ターツ\n。\n\nいいんです。覚えたての頃は、その形やセオリーを過大に評価したり誤って理解しちゃうのはアルアルです。\n積極的に試してみる精神が、とても良いなと思います✨\nやりすぎた場合や誤用した際には、指摘修正してもらえる環境ですから、検討期間中は特にチャレンジしてみると良いでしょう。というかめっちゃ積極的にいつもチャレンジしてくれているのが、牌譜からとても伝わってきてます💯",
+        "content": "スキップ牌＜＜＜＜ターツ\n。\n\nいいんです。覚えたての頃は、その形やセオリーを過大に評価したり誤って理解しちゃうのはアルアルです。\n積極的に試してみる精神が、とても良いなと思います✨ \nやりすぎた場合や誤用した際には、指摘修正してもらえる環境ですから、検討期間中は特にチャレンジしてみると良いでしょう。というかめっちゃ積極的にいつもチャレンジしてくれているのが、牌譜からとても伝わってきてます💯",
         "attachments": []
       },
       {
@@ -20454,7 +20454,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "071",
@@ -20705,7 +20705,7 @@
         "id": "1447260837503959203",
         "author": "てんてん",
         "createdAt": "2025-12-07T16:17:52.467Z",
-        "content": "弱2ブロック**＜3～7\n＜ペンチャン＜**カンチャン**\n\nまた、既に6ブロックあるので、4ｍ9ｍ不要。13ｐも大体払うことにはなりますが、2ｐ先着は嬉しく、安全度も4ｍ9ｍに比べたら高いですね。\n\nこんがらがった時は、**嬉しいツモで比較しましょう。**5ｍ（8ｍ）引きと2ｐ引きで比較してみれば自ずとわかるはずです。",
+        "content": "2.8＜**弱2ブロック**＜3～7\n＜ペンチャン＜**カンチャン**\n\nまた、既に6ブロックあるので、4ｍ9ｍ不要。13ｐも大体払うことにはなりますが、2ｐ先着は嬉しく、安全度も4ｍ9ｍに比べたら高いですね。\n\nこんがらがった時は、**嬉しいツモで比較しましょう。**5ｍ（8ｍ）引きと2ｐ引きで比較してみれば自ずとわかるはずです。",
         "attachments": []
       },
       {
@@ -20753,7 +20753,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "072",
@@ -20999,7 +20999,7 @@
         "id": "1447265336494657759",
         "author": "てんてん",
         "createdAt": "2025-12-07T16:35:45.110Z",
-        "content": "の**価値が無い**（打点の種になっていない）\n・カン7ｐ引き聴牌は**良形**リーチが打てる。\n\nセオリー集を見ると\n②イーシャンテンはめいいっぱいに。（下に続く）\n③リーのみ愚形に極力ならないように手組せよ。（リーノミ愚形解消の種を残せるならばリーノミ愚形になる受け入れは消して良い）\n\nとあるが、上記二点により②が優先。",
+        "content": "・3ｍの**価値が無い**（打点の種になっていない）\n・カン7ｐ引き聴牌は**良形**リーチが打てる。\n\nセオリー集を見ると\n②イーシャンテンはめいいっぱいに。（下に続く）\n③リーのみ愚形に極力ならないように手組せよ。（リーノミ愚形解消の種を残せるならばリーノミ愚形になる受け入れは消して良い）\n\nとあるが、上記二点により②が優先。",
         "attachments": []
       },
       {
@@ -21092,7 +21092,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "073",
@@ -21338,14 +21338,14 @@
         "id": "1447268524555894996",
         "author": "てんてん",
         "createdAt": "2025-12-07T16:48:25.203Z",
-        "content": "ブロック目||の愚形ターツ≦||打点や手役の種||。（ゴミ手の場合には特に。）",
+        "content": "㉛||6ブロック目||の愚形ターツ≦||打点や手役の種||。（ゴミ手の場合には特に。）",
         "attachments": []
       },
       {
         "id": "1447268621624807434",
         "author": "てんてん",
         "createdAt": "2025-12-07T16:48:48.346Z",
-        "content": "⑨字牌||対子||2組ある時は2飜役を取りこぼすな！（特に染め、トイトイは強く意識しろ！）\n⑩染め色||4ブロック||ある時ホンイツへの渡りを見落とすな！（3ブロック以下でホンイツを狙いたい時は⑪↓）\n⑪||手なりでゴミ手になりそうな配牌||時、||字牌||含めて染め色||9～10||枚あればオタ風も残してホンイツを意識。ゴミ手は遠くて高い手を目指すと攻守のバランスが取りやすい。\n\nーーーーーーー",
+        "content": "⑨字牌||対子||2組ある時は2飜役を取りこぼすな！（特に染め、トイトイは強く意識しろ！） \n⑩染め色||4ブロック||ある時ホンイツへの渡りを見落とすな！（3ブロック以下でホンイツを狙いたい時は⑪↓）\n⑪||手なりでゴミ手になりそうな配牌||時、||字牌||含めて染め色||9～10||枚あればオタ風も残してホンイツを意識。ゴミ手は遠くて高い手を目指すと攻守のバランスが取りやすい。\n\nーーーーーーー",
         "attachments": []
       },
       {
@@ -21400,7 +21400,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "074",
@@ -21694,7 +21694,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "075",
@@ -21945,7 +21945,7 @@
         "id": "1447276652580044885",
         "author": "てんてん",
         "createdAt": "2025-12-07T17:20:43.075Z",
-        "content": "タンヤオ大正義||\n・2.8＜||弱2ブロック||1334ｓ＜3～7",
+        "content": "・||タンヤオ大正義||\n・2.8＜||弱2ブロック||1334ｓ＜3～7",
         "attachments": []
       },
       {
@@ -22000,7 +22000,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "076",
@@ -22246,7 +22246,7 @@
         "id": "1447279069455712327",
         "author": "てんてん",
         "createdAt": "2025-12-07T17:30:19.303Z",
-        "content": "これは素晴らしい8ｍ切り。💯\n\n問93https://discordapp.com/channels/1166706544856006656/1434555599177126009/1447272557278527680　ではやりすぎたが今回は、\n\nホンイツセオリー\n⑪||手なりでゴミ手になりそうな配牌||時、||字牌含めて染め色9～10枚||あればオタ風も残してホンイツを意識。ゴミ手は遠くて高い手を目指すと攻守のバランスが取りやすい。\n\nに該当していること（＝8ｍにくっついてもゴミ手であること）をしっかりと認識した上で自信を持って8ｍ切りとする。",
+        "content": "これは素晴らしい8ｍ切り。💯 \n\n問93https://discordapp.com/channels/1166706544856006656/1434555599177126009/1447272557278527680　ではやりすぎたが今回は、\n\nホンイツセオリー\n⑪||手なりでゴミ手になりそうな配牌||時、||字牌含めて染め色9～10枚||あればオタ風も残してホンイツを意識。ゴミ手は遠くて高い手を目指すと攻守のバランスが取りやすい。\n\nに該当していること（＝8ｍにくっついてもゴミ手であること）をしっかりと認識した上で自信を持って8ｍ切りとする。",
         "attachments": []
       },
       {
@@ -22294,7 +22294,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "077",
@@ -22549,7 +22549,7 @@
         "id": "1447283317585215488",
         "author": "てんてん",
         "createdAt": "2025-12-07T17:47:12.136Z",
-        "content": "点（≒満貫）の両面聴牌であるが、6ｐは**親立直を含む二人に対して両無筋の危険牌**であり、残念ながら押せない。\n\n発ポンは我慢出来ていたので惜しかったですｗ　『安牌3枚に増えた』幸せを噛みしめながら、泣く泣く降り。\n\n（ダンラス目や、自身親ならばポン聴プッシュOK）",
+        "content": "7200点（≒満貫）の両面聴牌であるが、6ｐは**親立直を含む二人に対して両無筋の危険牌**であり、残念ながら押せない。\n\n発ポンは我慢出来ていたので惜しかったですｗ　『安牌3枚に増えた』幸せを噛みしめながら、泣く泣く降り。\n\n（ダンラス目や、自身親ならばポン聴プッシュOK）",
         "attachments": []
       },
       {
@@ -22582,7 +22582,7 @@
         "id": "1447490488163762197",
         "author": "てんてん",
         "createdAt": "2025-12-08T07:30:25.451Z",
-        "content": "子一人に対してのみの両無筋6ｐ→かなり押し。両面聴牌ですのでなんなら**発のみの聴牌でも**放銃率20％程度の危険牌までは押せる。\n\n親一人に対してのみの両無筋6ｐ→押し寄り。\n\n今回のように副露聴牌押し引きを考える際には、放銃率をざっくり概算（残り筋が多めか少なめかくらいでOK）し、見合うかどうか考える事になります。\n\n放銃率の計算方法は、\n両無筋456 ||140||÷残り筋\n無筋3.7 ||100||÷残り筋\n無筋2.8|| 90||÷残り筋\n無筋1.9 ||80||÷残り筋\n片筋456 ||80||÷残り筋\n\nで簡単に概算できます。\n\nhttps://oshihiki.com/\n\n振り返りの際に、コチラで検証すると大体の感覚が掴めてくるかと思いますのでお勧めです。（コチラのツール、降りきれそうかどうかは考慮されていません。対2件となると、横移動発生率が上がり安牌も増えやすくなるため、コチラのツールよりも若干降り要素は増えますが、概ね問題ありません。）",
+        "content": "子一人に対してのみの両無筋6ｐ→かなり押し。両面聴牌ですのでなんなら**発のみの聴牌でも**放銃率20％程度の危険牌までは押せる。\n\n親一人に対してのみの両無筋6ｐ→押し寄り。\n\n今回のように副露聴牌押し引きを考える際には、放銃率をざっくり概算（残り筋が多めか少なめかくらいでOK）し、見合うかどうか考える事になります。\n\n放銃率の計算方法は、\n両無筋456 ||140||÷残り筋 \n無筋3.7 ||100||÷残り筋 \n無筋2.8|| 90||÷残り筋 \n無筋1.9 ||80||÷残り筋 \n片筋456 ||80||÷残り筋 \n\nで簡単に概算できます。\n\nhttps://oshihiki.com/\n\n振り返りの際に、コチラで検証すると大体の感覚が掴めてくるかと思いますのでお勧めです。（コチラのツール、降りきれそうかどうかは考慮されていません。対2件となると、横移動発生率が上がり安牌も増えやすくなるため、コチラのツールよりも若干降り要素は増えますが、概ね問題ありません。）",
         "attachments": []
       },
       {
@@ -22639,7 +22639,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "078",
@@ -22883,7 +22883,7 @@
         "id": "1447510557581377538",
         "author": "てんてん",
         "createdAt": "2025-12-08T08:50:10.373Z",
-        "content": "ブロック目の種として中の方が優秀。\n・㉓最序盤以外は字牌と数牌どちらもいらないなら、後に切りにくくなる数牌から切れ\n\n36ｍ引いた際に、2ｍや7ｍは不要なので不要と分かる。",
+        "content": "・6ブロック目の種として中の方が優秀。\n・㉓最序盤以外は字牌と数牌どちらもいらないなら、後に切りにくくなる数牌から切れ\n\n36ｍ引いた際に、2ｍや7ｍは不要なので不要と分かる。",
         "attachments": []
       },
       {
@@ -22954,7 +22954,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "079",
@@ -23202,7 +23202,7 @@
         "id": "1447514027344531458",
         "author": "てんてん",
         "createdAt": "2025-12-08T09:03:57.629Z",
-        "content": "切れオタ風VS生牌役牌\n→比較にならない。\n\n基本的に役牌重なりが偉いブロック不足の手では、とにかく自己都合で生牌を残す。\nここで、役牌を見せると、周りも対応しやすくなってしまう。（手役候補が限定される）",
+        "content": "・1切れオタ風VS生牌役牌\n→比較にならない。\n\n基本的に役牌重なりが偉いブロック不足の手では、とにかく自己都合で生牌を残す。\nここで、役牌を見せると、周りも対応しやすくなってしまう。（手役候補が限定される）",
         "attachments": []
       },
       {
@@ -23309,7 +23309,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "080",
@@ -23555,7 +23555,7 @@
         "id": "1447521331628216380",
         "author": "てんてん",
         "createdAt": "2025-12-08T09:32:59.106Z",
-        "content": "か7ｍ。\n十分に価値のある一向聴です。",
+        "content": "5ｐか7ｍ。\n十分に価値のある一向聴です。",
         "attachments": []
       },
       {
@@ -23603,7 +23603,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "081",
@@ -23854,7 +23854,7 @@
         "id": "1447522215276056576",
         "author": "てんてん",
         "createdAt": "2025-12-08T09:36:29.784Z",
-        "content": "連シャンポンスキップ牌**（5ｍ）の扱い。\n\n→**他に雀頭候補がある場合にはゴミ**。\n\n6ｍ引いても5ｍ切ってリーチですので、5ｍが機能していません。\n\n（4巡連続で悪手近い判定となってしまった。😆 ）",
+        "content": "**連シャンポンスキップ牌**（5ｍ）の扱い。\n\n→**他に雀頭候補がある場合にはゴミ**。\n\n6ｍ引いても5ｍ切ってリーチですので、5ｍが機能していません。\n\n（4巡連続で悪手近い判定となってしまった。😆 ）",
         "attachments": []
       },
       {
@@ -23902,7 +23902,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "082",
@@ -24146,7 +24146,7 @@
         "id": "1447525172390400023",
         "author": "てんてん",
         "createdAt": "2025-12-08T09:48:14.815Z",
-        "content": "ブロック目の種の比較。打点の種を残しそう。\n発重なりは3900～8000となりトップ率大幅UP。",
+        "content": "6ブロック目の種の比較。打点の種を残しそう。\n発重なりは3900～8000となりトップ率大幅UP。",
         "attachments": []
       },
       {
@@ -24222,7 +24222,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "083",
@@ -24541,7 +24541,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "084",
@@ -24866,7 +24866,7 @@
         "id": "1449607307578310717",
         "author": "てんてん",
         "createdAt": "2025-12-14T03:41:54.528Z",
-        "content": "連シャンポンスキップ牌は、他に雀頭候補がある場合にはゴミ。\n**\n今回西は打点の種にもなっているが、西→北（安牌）でも打3ｐとすべし。",
+        "content": "**連シャンポンスキップ牌は、他に雀頭候補がある場合にはゴミ。\n**\n今回西は打点の種にもなっているが、西→北（安牌）でも打3ｐとすべし。",
         "attachments": []
       },
       {
@@ -24887,7 +24887,7 @@
         "id": "1449609481766965318",
         "author": "てんてん",
         "createdAt": "2025-12-14T03:50:32.895Z",
-        "content": "是非、用語（**連シャンポンスキップ牌**）とセットで、使い分けを覚えて頂けたらと思います👍🏻\n\n頭の有る無しで使い分け。",
+        "content": "是非、用語（**連シャンポンスキップ牌**）とセットで、使い分けを覚えて頂けたらと思います👍🏻 \n\n頭の有る無しで使い分け。",
         "attachments": []
       },
       {
@@ -24946,7 +24946,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "085",
@@ -25350,7 +25350,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "086",
@@ -25678,7 +25678,7 @@
         "id": "1449618113954844814",
         "author": "てんてん",
         "createdAt": "2025-12-14T04:24:50.969Z",
-        "content": "ブロックにするならば以下二点で68ｐ切り。\n・3468ｐはターツ同士が近いので弱くなっている。→5ｐ引いても68ｐが両面変化しない。\n・234三色\n\nまた、この手の場合には以下要素で6ブロック推奨。\n\n③リーのみ愚形に極力ならないように手組せよ。（リーノミ愚形解消の種を残せるならば||リーノミ愚形になる受け入れは消して良い||）\n→4ｓ8ｍのシャボ受けはリーノミとなる受け入れ。\n\n⑰とにかく５ブロック＞6ブロック。副露手は特に！！（**||6ブロにしないと追え無い打点や手役がある||場合には6ブロも許される。**）→今回は6ブロにすることで平和が追える。",
+        "content": "５ブロックにするならば以下二点で68ｐ切り。\n・3468ｐはターツ同士が近いので弱くなっている。→5ｐ引いても68ｐが両面変化しない。\n・234三色\n\nまた、この手の場合には以下要素で6ブロック推奨。\n\n③リーのみ愚形に極力ならないように手組せよ。（リーノミ愚形解消の種を残せるならば||リーノミ愚形になる受け入れは消して良い||）\n→4ｓ8ｍのシャボ受けはリーノミとなる受け入れ。\n\n⑰とにかく５ブロック＞6ブロック。副露手は特に！！（**||6ブロにしないと追え無い打点や手役がある||場合には6ブロも許される。**）→今回は6ブロにすることで平和が追える。",
         "attachments": []
       },
       {
@@ -25742,7 +25742,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "087",
@@ -26067,7 +26067,7 @@
         "id": "1449622019023831093",
         "author": "てんてん",
         "createdAt": "2025-12-14T04:40:22.010Z",
-        "content": "ハン→2ハン||にする為に無理はするな！（和了率が少しでも下がるならやめておけ）",
+        "content": "⑦||1ハン→2ハン||にする為に無理はするな！（和了率が少しでも下がるならやめておけ）",
         "attachments": []
       },
       {
@@ -26126,7 +26126,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "088",
@@ -26461,7 +26461,7 @@
         "id": "1449624461266522277",
         "author": "てんてん",
         "createdAt": "2025-12-14T04:50:04.286Z",
-        "content": "物件の誤用。\n**||タンヤオ||**見落とし。（00物件での||タンヤオ||見落としはアルアルなので要注意）\n\n---役牌<孤立2.8が逆転するケース----\n||**タンヤオ**||も立直も見えなそうな重たい手。（立直打てなそう＝||0面子+2愚形以上||）\n\n→今回はタンヤオがあるため、役牌切り。\n678ｓ（残11枚）でタンヤオ5ブロックが揃う。\n\nまた、ホンイツセオリー3種⑨～⑪のいずれも満たさないことを確認すべし。",
+        "content": "00物件の誤用。\n**||タンヤオ||**見落とし。（00物件での||タンヤオ||見落としはアルアルなので要注意）\n\n---役牌<孤立2.8が逆転するケース----\n||**タンヤオ**||も立直も見えなそうな重たい手。（立直打てなそう＝||0面子+2愚形以上||）\n\n→今回はタンヤオがあるため、役牌切り。\n678ｓ（残11枚）でタンヤオ5ブロックが揃う。\n\nまた、ホンイツセオリー3種⑨～⑪のいずれも満たさないことを確認すべし。",
         "attachments": []
       },
       {
@@ -26525,7 +26525,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "089",
@@ -26903,7 +26903,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "090",
@@ -27288,7 +27288,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "091",
@@ -27616,7 +27616,7 @@
         "id": "1449638912296358040",
         "author": "てんてん",
         "createdAt": "2025-12-14T05:47:29.680Z",
-        "content": "が||超強孤立（タンヤオの種）||なので、ペンチャン12ｍよりは強い。",
+        "content": "3ｓが||超強孤立（タンヤオの種）||なので、ペンチャン12ｍよりは強い。",
         "attachments": []
       },
       {
@@ -27697,7 +27697,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "092",
@@ -28101,7 +28101,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "093",
@@ -28504,7 +28504,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "094",
@@ -28750,7 +28750,7 @@
         "id": "1449656969148497953",
         "author": "てんてん",
         "createdAt": "2025-12-14T06:59:14.769Z",
-        "content": "門前手||で||3対子||の際は、||両面対子||を両面に固定。（3対子時は切った牌しかロスが出ない。→超強孤立牌や安牌を残して両面固定も有力。）\n\nのチャレンジ打牌をしたのだと思われます💯 👏🏻\n\nですが、\n55778ｐは\n6ｐ引きで6枚形を生成し、両面受けができますので、悪手判定となってしまった模様。惜しい。\n\n参考https://discord.com/channels/1166706544856006656/1180005071619096576/1180013636610175047",
+        "content": "⑥||門前手||で||3対子||の際は、||両面対子||を両面に固定。（3対子時は切った牌しかロスが出ない。→超強孤立牌や安牌を残して両面固定も有力。）\n\nのチャレンジ打牌をしたのだと思われます💯 👏🏻 \n\nですが、\n55778ｐは\n6ｐ引きで6枚形を生成し、両面受けができますので、悪手判定となってしまった模様。惜しい。\n\n参考https://discord.com/channels/1166706544856006656/1180005071619096576/1180013636610175047",
         "attachments": []
       },
       {
@@ -28829,7 +28829,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "095",
@@ -29123,7 +29123,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "096",
@@ -29417,7 +29417,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "097",
@@ -29663,7 +29663,7 @@
         "id": "1449663934431891527",
         "author": "てんてん",
         "createdAt": "2025-12-14T07:26:55.422Z",
-        "content": "引き時タンピン三色に移行できる。",
+        "content": "6ｓ引き時タンピン三色に移行できる。",
         "attachments": []
       },
       {
@@ -29749,7 +29749,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "098",
@@ -29995,7 +29995,7 @@
         "id": "1449666102115434509",
         "author": "てんてん",
         "createdAt": "2025-12-14T07:35:32.238Z",
-        "content": "役牌<孤立2.8が逆転するケース----\n||タンヤオも立直も見えなそうな重たい手。||（立直打てなそう＝||0面子+2愚形以上||）",
+        "content": "---役牌<孤立2.8が逆転するケース----\n||タンヤオも立直も見えなそうな重たい手。||（立直打てなそう＝||0面子+2愚形以上||）",
         "attachments": []
       },
       {
@@ -30043,7 +30043,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "099",
@@ -30337,7 +30337,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "100",
@@ -30722,7 +30722,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "101",
@@ -30855,7 +30855,7 @@
         "id": "1450401270287302769",
         "author": "てんてん",
         "createdAt": "2025-12-16T08:16:49.989Z",
-        "content": "愚形捌いて**、5800の**二向聴に**。\nどのみち中は面子化させなけれ厳しい手。（役バック進行の判断は、中は面子になっている想定で行ってＯＫ）\n\n1ｓポンで唯一の愚形ブロックを解消できるため和了率が大きく上がる。\n\nもし1ｓが一枚目でもポン。",
+        "content": "**愚形捌いて**、5800の**二向聴に**。\nどのみち中は面子化させなけれ厳しい手。（役バック進行の判断は、中は面子になっている想定で行ってＯＫ）\n\n1ｓポンで唯一の愚形ブロックを解消できるため和了率が大きく上がる。\n\nもし1ｓが一枚目でもポン。",
         "attachments": []
       },
       {
@@ -30908,7 +30908,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "102",
@@ -31094,7 +31094,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "103",
@@ -31472,7 +31472,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "104",
@@ -31857,7 +31857,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "105",
@@ -32254,7 +32254,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "106",
@@ -32632,7 +32632,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "107",
@@ -32765,7 +32765,7 @@
         "id": "1450413525276299314",
         "author": "てんてん",
         "createdAt": "2025-12-16T09:05:31.806Z",
-        "content": "と違い、ちゃんと愚形捌きになるので鳴き寄り。\n\n北北を捌くのは113ｍを捌くのと同義だが、どのみち良形では無いので愚形捌いて一向聴に。",
+        "content": "https://discord.com/channels/1166706544856006656/1450402052483317833/1450404733213868126　と違い、ちゃんと愚形捌きになるので鳴き寄り。\n\n北北を捌くのは113ｍを捌くのと同義だが、どのみち良形では無いので愚形捌いて一向聴に。",
         "attachments": []
       },
       {
@@ -32818,7 +32818,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "108",
@@ -33203,7 +33203,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "109",
@@ -33614,7 +33614,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "110",
@@ -33920,7 +33920,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "111",
@@ -34240,7 +34240,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "112",
@@ -34503,7 +34503,7 @@
         "id": "1452518746890567691",
         "author": "てんてん",
         "createdAt": "2025-12-22T04:30:55.752Z",
-        "content": "点該当。（和了率にも注目！）\nここからの放銃はしょうがない放銃ではなくしょうもない放銃でありギルティとなります。放銃抽選は極力受けないようにしたい所です。\n\n但し、『最悪放銃しても大体1500だろ』と云う打点と将来の安全度を精査した上での打5ｓならOKです。",
+        "content": "2点該当。（和了率にも注目！）\nここからの放銃はしょうがない放銃ではなくしょうもない放銃でありギルティとなります。放銃抽選は極力受けないようにしたい所です。\n\n但し、『最悪放銃しても大体1500だろ』と云う打点と将来の安全度を精査した上での打5ｓならOKです。",
         "attachments": []
       },
       {
@@ -34570,7 +34570,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "113",
@@ -34916,7 +34916,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "114",
@@ -35162,7 +35162,7 @@
         "id": "1453780637310783608",
         "author": "てんてん",
         "createdAt": "2025-12-25T16:05:13.873Z",
-        "content": "タンヤオ大正義理論＝一枚の19牌切って残りが全てタンヤオ牌になるならば19牌切って良し。（例外はコメント欄に記載）→4巡目打8ｐの所で打1ｐが良い。\n\n・③リーのみ愚形に極力ならないように手組せよ。（リーノミ愚形解消の種を残せるならばリーノミ愚形になる受け入れは消して良い）\n\n・【基本序列】\n強孤立牌3〜7≦ペンチャン<超強孤立牌3〜7\n→5ｐは超強孤立。（中膨れ、タンヤオ）",
+        "content": "・㉙タンヤオ大正義理論＝一枚の19牌切って残りが全てタンヤオ牌になるならば19牌切って良し。（例外はコメント欄に記載）→4巡目打8ｐの所で打1ｐが良い。\n\n・③リーのみ愚形に極力ならないように手組せよ。（リーノミ愚形解消の種を残せるならばリーノミ愚形になる受け入れは消して良い）\n\n・【基本序列】\n強孤立牌3〜7≦ペンチャン<超強孤立牌3〜7\n→5ｐは超強孤立。（中膨れ、タンヤオ）",
         "attachments": []
       },
       {
@@ -35229,7 +35229,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "115",
@@ -35475,7 +35475,7 @@
         "id": "1453782795800416438",
         "author": "てんてん",
         "createdAt": "2025-12-25T16:13:48.497Z",
-        "content": "対子で七対子に決め打ちして良いのは、面子手の価値がゴミな場合に限る。\n\n無駄に面子手を放棄しないようにしたい。\n\nちなみに6巡目4対子からの七対子成就率は||1||％程度。",
+        "content": "4対子で七対子に決め打ちして良いのは、面子手の価値がゴミな場合に限る。\n\n無駄に面子手を放棄しないようにしたい。\n\nちなみに6巡目4対子からの七対子成就率は||1||％程度。",
         "attachments": []
       },
       {
@@ -35542,7 +35542,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "116",
@@ -35788,7 +35788,7 @@
         "id": "1453790456893931665",
         "author": "てんてん",
         "createdAt": "2025-12-25T16:44:15.044Z",
-        "content": "物件\n・ホンイツセオリー⑪\n手なりでゴミ手かつ字牌含めて9～10枚\n\nかなりホンイツを意識すべき手。\nまた、14の1はオタ風同様に不要であり、**オタ風先切り効果狙いでオタ風から処理する**か、**早い立直に備えて1から切る（オタ風残し）**か、悩ましい所（AIでも割れる）だが、\n風牌を鳴かれてOKなケース（≒**自手牌価値が低いケース**）や、||**少しでもホンイツが見えるケース**||では悩まずに14の1を切ろう。",
+        "content": "・00物件\n・ホンイツセオリー⑪\n手なりでゴミ手かつ字牌含めて9～10枚\n\nかなりホンイツを意識すべき手。\nまた、14の1はオタ風同様に不要であり、**オタ風先切り効果狙いでオタ風から処理する**か、**早い立直に備えて1から切る（オタ風残し）**か、悩ましい所（AIでも割れる）だが、\n風牌を鳴かれてOKなケース（≒**自手牌価値が低いケース**）や、||**少しでもホンイツが見えるケース**||では悩まずに14の1を切ろう。",
         "attachments": []
       },
       {
@@ -35874,7 +35874,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "117",
@@ -36168,7 +36168,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "118",
@@ -36462,7 +36462,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "119",
@@ -36820,7 +36820,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "120",
@@ -37066,7 +37066,7 @@
         "id": "1454438846166077460",
         "author": "てんてん",
         "createdAt": "2025-12-27T11:40:43.093Z",
-        "content": "後ろ見解説済）\n2ｓはスキップ牌ではなく一手先フォロー牌になっていることに注意。https://docs.google.com/document/d/1_Yft7DaIuN7t5jn2P6l-1NnqzQqGtS6ZF8H7B59ozNE/edit?tab=t.0\n\n2.8＜一手先フォロー牌",
+        "content": "（後ろ見解説済）\n2ｓはスキップ牌ではなく一手先フォロー牌になっていることに注意。https://docs.google.com/document/d/1_Yft7DaIuN7t5jn2P6l-1NnqzQqGtS6ZF8H7B59ozNE/edit?tab=t.0\n\n2.8＜一手先フォロー牌",
         "attachments": []
       }
     ],
@@ -37102,7 +37102,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "121",
@@ -37396,7 +37396,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "122",
@@ -37642,7 +37642,7 @@
         "id": "1454440713818476727",
         "author": "てんてん",
         "createdAt": "2025-12-27T11:48:08.376Z",
-        "content": "と7ｓのくっつきとみると、3ｓに2ｓがくっついて14ｓ待ちになったと思うのが普通ですが、今回は2ｓ引きで**9枚形ウイング**となっており、打7ｓ（14ｓ待ち）と打3ｓ（69ｓ待ち）が選択できる珍しい形。",
+        "content": "3ｓと7ｓのくっつきとみると、3ｓに2ｓがくっついて14ｓ待ちになったと思うのが普通ですが、今回は2ｓ引きで**9枚形ウイング**となっており、打7ｓ（14ｓ待ち）と打3ｓ（69ｓ待ち）が選択できる珍しい形。",
         "attachments": []
       },
       {
@@ -37690,7 +37690,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "123",
@@ -37989,7 +37989,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "124",
@@ -38237,7 +38237,7 @@
         "id": "1454443502464270472",
         "author": "てんてん",
         "createdAt": "2025-12-27T11:59:13.241Z",
-        "content": "西の縦受けは役無しとなるため不要。6ブロック目の種（打点や手役の種、安全度の種）と取り換えたい。",
+        "content": "2ｐ、西の縦受けは役無しとなるため不要。6ブロック目の種（打点や手役の種、安全度の種）と取り換えたい。",
         "attachments": []
       },
       {
@@ -38294,7 +38294,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "125",
@@ -38593,7 +38593,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "126",
@@ -38794,7 +38794,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "127",
@@ -39044,7 +39044,7 @@
         "id": "1454459852649664644",
         "author": "てんてん",
         "createdAt": "2025-12-27T13:04:11.429Z",
-        "content": "翻→4翻は2翻UP界隈で最も価値がある為、2翻→4翻の場合には結構な遠回りが許容されます。（遠回りしてホンイツ満貫狙いとか、多々経験ありますよね。）\n\n今回は、ホンイツに比べたら遠回りせずに、2翻→満貫を狙えます。（456ｍ引きで満貫一向聴変化。）\n\n聴牌まで赤5ｍと心中します。",
+        "content": "2翻→4翻は2翻UP界隈で最も価値がある為、2翻→4翻の場合には結構な遠回りが許容されます。（遠回りしてホンイツ満貫狙いとか、多々経験ありますよね。）\n\n今回は、ホンイツに比べたら遠回りせずに、2翻→満貫を狙えます。（456ｍ引きで満貫一向聴変化。）\n\n聴牌まで赤5ｍと心中します。",
         "attachments": []
       },
       {
@@ -39109,7 +39109,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "128",
@@ -39360,7 +39360,7 @@
         "id": "1454462480649683095",
         "author": "てんてん",
         "createdAt": "2025-12-27T13:14:37.993Z",
-        "content": "の形は、||一手先フォロー牌||である。よって2.8より価値が高い。",
+        "content": "**1**2455ｓの形は、||一手先フォロー牌||である。よって2.8より価値が高い。",
         "attachments": []
       },
       {
@@ -39415,7 +39415,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "129",
@@ -39666,7 +39666,7 @@
         "id": "1455786308042756116",
         "author": "てんてん",
         "createdAt": "2025-12-31T04:55:03.039Z",
-        "content": "が唯一雀頭の愚形フォロー牌。\nニシキ基準に於いては",
+        "content": "2ｍが唯一雀頭の愚形フォロー牌。\nニシキ基準に於いては",
         "attachments": []
       },
       {
@@ -39714,7 +39714,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "130",
@@ -40025,7 +40025,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "131",
@@ -40271,7 +40271,7 @@
         "id": "1455804589847744522",
         "author": "てんてん",
         "createdAt": "2025-12-31T06:07:41.761Z",
-        "content": "ヘッド時は両面対子を両面に固定**。（ロスは切った4ｍ1枚だけ）\n\n今回は副露手なので、1ｍや4ｍポンの役牌バック聴牌も取れるようにしたいならば3ヘッドに構える必要があるが、バック聴牌には取らなそう。\n\n基本的に、ここで4ｍを切って安全度の高い牌を持った方が、後手強度（押し返しやすさ）が高く和了率も高くなります。（25ｍ待ちになった時の出やすさもＵＰ）",
+        "content": "**3ヘッド時は両面対子を両面に固定**。（ロスは切った4ｍ1枚だけ）\n\n今回は副露手なので、1ｍや4ｍポンの役牌バック聴牌も取れるようにしたいならば3ヘッドに構える必要があるが、バック聴牌には取らなそう。\n\n基本的に、ここで4ｍを切って安全度の高い牌を持った方が、後手強度（押し返しやすさ）が高く和了率も高くなります。（25ｍ待ちになった時の出やすさもＵＰ）",
         "attachments": []
       },
       {
@@ -40364,7 +40364,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "132",
@@ -40682,7 +40682,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "133",
@@ -40983,7 +40983,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "134",
@@ -41092,7 +41092,7 @@
         "id": "1455818364860629124",
         "author": "てんてん",
         "createdAt": "2025-12-31T07:02:25.980Z",
-        "content": "ポンしてしまうと、788ｐの8ｐが唯一のヘッドとなってしまう。（強両面の消失）",
+        "content": "1ｓポンしてしまうと、788ｐの8ｐが唯一のヘッドとなってしまう。（強両面の消失）",
         "attachments": []
       },
       {
@@ -41181,7 +41181,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "135",
@@ -41456,7 +41456,7 @@
         "id": "1456298143753961484",
         "author": "てんてん",
         "createdAt": "2026-01-01T14:48:54.182Z",
-        "content": "面子は面子として見るのが基本の為、6ｐはフォロー牌ではなく（超強）孤立であり、ヘッド（対子）扱いは出来ませんね。\n7ｍも同様です。\n\n誤解を招きかねない為、セオリーの方も3対子→3ヘッド　と戻しておきました✨\n\n（面子の中の対子を対子として抜き出してカウントするケースは七対子の時のみですね。）",
+        "content": "面子は面子として見るのが基本の為、6ｐはフォロー牌ではなく（超強）孤立であり、ヘッド（対子）扱いは出来ませんね。\n7ｍも同様です。\n\n誤解を招きかねない為、セオリーの方も3対子→3ヘッド　と戻しておきました✨ \n\n（面子の中の対子を対子として抜き出してカウントするケースは七対子の時のみですね。）",
         "attachments": []
       },
       {
@@ -41504,7 +41504,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "136",
@@ -41817,7 +41817,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "137",
@@ -42063,7 +42063,7 @@
         "id": "1456518865763962975",
         "author": "てんてん",
         "createdAt": "2026-01-02T05:25:58.410Z",
-        "content": "切って高め一通の12ｓ待ち。（10枚形）",
+        "content": "7ｐ切って高め一通の12ｓ待ち。（10枚形）",
         "attachments": []
       },
       {
@@ -42130,7 +42130,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "138",
@@ -42443,7 +42443,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "139",
@@ -42596,7 +42596,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "140",
@@ -42974,7 +42974,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "141",
@@ -43371,7 +43371,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "142",
@@ -43756,7 +43756,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "143",
@@ -44174,7 +44174,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "144",
@@ -44425,7 +44425,7 @@
         "id": "1456667082359046319",
         "author": "てんてん",
         "createdAt": "2026-01-02T15:14:56.000Z",
-        "content": "引きは打点減少かつ愚形聴牌になる（今回はリーノミ愚形）ので不要。4ｓは、安牌とでもさっさと入れ替えたい所。\n\nまた、9ｍは4ｍ8ｍ引きで一通の一向聴になる為、【打点や手役の種】かつ【好形変化の種】になっている事に注目。",
+        "content": "4ｓ8ｓ引きは打点減少かつ愚形聴牌になる（今回はリーノミ愚形）ので不要。4ｓは、安牌とでもさっさと入れ替えたい所。\n\nまた、9ｍは4ｍ8ｍ引きで一通の一向聴になる為、【打点や手役の種】かつ【好形変化の種】になっている事に注目。",
         "attachments": []
       },
       {
@@ -44515,7 +44515,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "145",
@@ -44835,7 +44835,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "146",
@@ -45160,7 +45160,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "147",
@@ -45470,7 +45470,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "148",
@@ -45802,7 +45802,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "149",
@@ -46108,7 +46108,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "150",
@@ -46354,7 +46354,7 @@
         "id": "1457730047950459013",
         "author": "てんてん",
         "createdAt": "2026-01-05T13:38:46.746Z",
-        "content": "タンヤオ大正義\n・5689ｓ＝弱2ブロック＜強孤立6ｐ\n\nいずれにせよ、打89ｓ\n\n他で2面子完成している為、一通にはなり得ません。",
+        "content": "・タンヤオ大正義\n・5689ｓ＝弱2ブロック＜強孤立6ｐ\n\nいずれにせよ、打89ｓ\n\n他で2面子完成している為、一通にはなり得ません。",
         "attachments": []
       },
       {
@@ -46428,7 +46428,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "151",
@@ -46674,7 +46674,7 @@
         "id": "1458109258573942816",
         "author": "てんてん",
         "createdAt": "2026-01-06T14:45:37.604Z",
-        "content": "がドラじゃなければ打6ｓで良いが、ドラですので、打9ｐか打2ｓの選択。安全度の高いフォロー牌9ｐを残す打2ｓ。（7ｐの場況も良し）\n\nまた、2ｓ切った後のソウズの形44667ｓは58ｓ引きで6枚形（1面子+フォロー牌付きターツ）となるので、ドラ6ｓを切らずに済むことも多い。https://discord.com/channels/1456446178182037567/1456996511002005535/1457735392106381467",
+        "content": "6ｓがドラじゃなければ打6ｓで良いが、ドラですので、打9ｐか打2ｓの選択。安全度の高いフォロー牌9ｐを残す打2ｓ。（7ｐの場況も良し）\n\nまた、2ｓ切った後のソウズの形44667ｓは58ｓ引きで6枚形（1面子+フォロー牌付きターツ）となるので、ドラ6ｓを切らずに済むことも多い。https://discord.com/channels/1456446178182037567/1456996511002005535/1457735392106381467",
         "attachments": []
       },
       {
@@ -46736,7 +46736,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "152",
@@ -47030,7 +47030,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "153",
@@ -47326,7 +47326,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "154",
@@ -47572,7 +47572,7 @@
         "id": "1458112383875809311",
         "author": "てんてん",
         "createdAt": "2026-01-06T14:58:02.734Z",
-        "content": "は上家の清一色や純チャンに普通に刺さり得る。\n\n⑮4567などの4連形から4か7を切る時どちらを切るか慎重に吟味しろ。",
+        "content": "8ｍは上家の清一色や純チャンに普通に刺さり得る。\n\n⑮4567などの4連形から4か7を切る時どちらを切るか慎重に吟味しろ。",
         "attachments": []
       },
       {
@@ -47620,7 +47620,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "155",
@@ -47926,7 +47926,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "156",
@@ -48170,7 +48170,7 @@
         "id": "1458115726123729149",
         "author": "てんてん",
         "createdAt": "2026-01-06T15:11:19.588Z",
-        "content": "が唯一雀頭の愚形フォロー牌。",
+        "content": "9ｓが唯一雀頭の愚形フォロー牌。",
         "attachments": []
       },
       {
@@ -48234,7 +48234,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "157",
@@ -48568,7 +48568,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "158",
@@ -48881,7 +48881,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "159",
@@ -49175,7 +49175,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "160",
@@ -49488,7 +49488,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "161",
@@ -49808,7 +49808,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "162",
@@ -50054,7 +50054,7 @@
         "id": "1460585667603206256",
         "author": "てんてん",
         "createdAt": "2026-01-13T10:45:59.526Z",
-        "content": "物件で、ホンイツセオリー⑪の見落としはギルティとなります👀",
+        "content": "00物件で、ホンイツセオリー⑪の見落としはギルティとなります👀",
         "attachments": []
       },
       {
@@ -50109,7 +50109,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "163",
@@ -50283,7 +50283,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "164",
@@ -50541,7 +50541,7 @@
         "id": "1462344441451905129",
         "author": "てんてん",
         "createdAt": "2026-01-18T07:14:43.888Z",
-        "content": "と3457\nの比較は極めて微差ですが、今回は12ｓが飛んでいる為選びやすい。",
+        "content": "3345と3457\nの比較は極めて微差ですが、今回は12ｓが飛んでいる為選びやすい。",
         "attachments": []
       },
       {
@@ -50584,7 +50584,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "165",
@@ -50830,7 +50830,7 @@
         "id": "1462345261010518037",
         "author": "てんてん",
         "createdAt": "2026-01-18T07:17:59.286Z",
-        "content": "ブロック目の種。\n打点や手役の種を残す。",
+        "content": "6ブロック目の種。\n打点や手役の種を残す。",
         "attachments": []
       },
       {
@@ -50892,7 +50892,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "166",
@@ -51213,7 +51213,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "167",
@@ -51545,7 +51545,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "168",
@@ -51834,7 +51834,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "169",
@@ -52147,7 +52147,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "170",
@@ -52300,7 +52300,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "171",
@@ -52430,7 +52430,7 @@
         "id": "1462712559802253445",
         "author": "てんてん",
         "createdAt": "2026-01-19T07:37:30.142Z",
-        "content": "一向聴なので遠くない\n②◎\n⑤今回は愚形46ｐを落とすことになるので確実に一歩早くなる。\n\nこういうのを躱し手と言いますが、躱し手をもらったらしっかりと割り切って躱し切る事も大事。\nたかが1000点とはいえ、自身が和了出来ない局の局収支平均が-1500程度なので、差し引き2500点程度の価値があります。\n和了率を大きく上昇させることで失点（放銃や他者の高打点和了）を潰す。",
+        "content": "①一向聴なので遠くない\n②◎\n⑤今回は愚形46ｐを落とすことになるので確実に一歩早くなる。\n\nこういうのを躱し手と言いますが、躱し手をもらったらしっかりと割り切って躱し切る事も大事。\nたかが1000点とはいえ、自身が和了出来ない局の局収支平均が-1500程度なので、差し引き2500点程度の価値があります。\n和了率を大きく上昇させることで失点（放銃や他者の高打点和了）を潰す。",
         "attachments": []
       }
     ],
@@ -52467,7 +52467,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "172",
@@ -52780,7 +52780,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "173",
@@ -52957,7 +52957,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "174",
@@ -53264,7 +53264,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "175",
@@ -53558,7 +53558,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "176",
@@ -53804,7 +53804,7 @@
         "id": "1462719639330230413",
         "author": "てんてん",
         "createdAt": "2026-01-19T08:05:38.033Z",
-        "content": "ブロックあるので1ｓにスキップ牌としての機能は無い。",
+        "content": "5ブロックあるので1ｓにスキップ牌としての機能は無い。",
         "attachments": []
       },
       {
@@ -53852,7 +53852,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "177",
@@ -54146,7 +54146,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "178",
@@ -54389,7 +54389,7 @@
         "id": "1462723354002718895",
         "author": "てんてん",
         "createdAt": "2026-01-19T08:20:23.680Z",
-        "content": "地獄待ちデビューおめでとうございます🎉\n天才カガシは発単騎立直をかなり推奨していますね。（立直推奨バーの見方ですが、3ｍを切るなら立直が良いと読み取れます。）\nちなみに、僕も発単騎立直します。リーノミなのが嫌ですが、終盤に付き降ろして、局収支を上げたい。降りても発は出てくるので、和了率もMAXとなります。\n\n立直推奨バーの見方はhttps://note.com/tenteninvest/n/ncf026e5734bc",
+        "content": "地獄待ちデビューおめでとうございます🎉 \n天才カガシは発単騎立直をかなり推奨していますね。（立直推奨バーの見方ですが、3ｍを切るなら立直が良いと読み取れます。）\nちなみに、僕も発単騎立直します。リーノミなのが嫌ですが、終盤に付き降ろして、局収支を上げたい。降りても発は出てくるので、和了率もMAXとなります。\n\n立直推奨バーの見方はhttps://note.com/tenteninvest/n/ncf026e5734bc",
         "attachments": []
       },
       {
@@ -54455,7 +54455,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "179",
@@ -54701,7 +54701,7 @@
         "id": "1464952114156540106",
         "author": "てんてん",
         "createdAt": "2026-01-25T11:56:41.509Z",
-        "content": "と同様。\n\n14の1はオタ風同様に不要であり、オタ風先切り効果狙いでオタ風から処理するか、早い立直に備えて1から切る（オタ風残し）か、悩ましい所（AIでも割れる）だが、\n風牌を鳴かれてOKなケース（≒自手牌価値が低いケース）や、**少しでもホンイツが見える**ケースでは悩まずに14の1を切ろう。",
+        "content": "https://discord.com/channels/1166706544856006656/1453788752617935103/1453790456893931665\nと同様。\n\n14の1はオタ風同様に不要であり、オタ風先切り効果狙いでオタ風から処理するか、早い立直に備えて1から切る（オタ風残し）か、悩ましい所（AIでも割れる）だが、\n風牌を鳴かれてOKなケース（≒自手牌価値が低いケース）や、**少しでもホンイツが見える**ケースでは悩まずに14の1を切ろう。",
         "attachments": []
       },
       {
@@ -54758,7 +54758,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "180",
@@ -55004,7 +55004,7 @@
         "id": "1464956646320246868",
         "author": "てんてん",
         "createdAt": "2026-01-25T12:14:42.061Z",
-        "content": "三色　VS　1/2一盃口\nは後者が勝ると思われる。\n\nまた、今回は清一色10枚を認識し、清一色ドンジャラも視野。\n打4ｍとすれば、次巡のピンズ引きも自然に残せる。",
+        "content": "1/4三色　VS　1/2一盃口\nは後者が勝ると思われる。\n\nまた、今回は清一色10枚を認識し、清一色ドンジャラも視野。\n打4ｍとすれば、次巡のピンズ引きも自然に残せる。",
         "attachments": []
       },
       {
@@ -55082,7 +55082,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "181",
@@ -55191,7 +55191,7 @@
         "id": "1464959218938548317",
         "author": "てんてん",
         "createdAt": "2026-01-25T12:24:55.421Z",
-        "content": "流局聴牌率上昇テクニック。**\nポン打||9ｍ||。\n**2ｍが打てないので、孤立牌2ｍを1ブロックに見立て、2ｍのくっつき一向聴に**する。東ポンしての2ｍ単騎聴牌、1～4ｍも鳴いて聴牌が取れる。頻出かつ局収支でも大きな差が出る小技。",
+        "content": "**流局聴牌率上昇テクニック。**\nポン打||9ｍ||。\n**2ｍが打てないので、孤立牌2ｍを1ブロックに見立て、2ｍのくっつき一向聴に**する。東ポンしての2ｍ単騎聴牌、1～4ｍも鳴いて聴牌が取れる。頻出かつ局収支でも大きな差が出る小技。",
         "attachments": []
       },
       {
@@ -55235,7 +55235,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "182",
@@ -55529,7 +55529,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "183",
@@ -55835,7 +55835,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "184",
@@ -56091,7 +56091,7 @@
         "id": "1464962634523611276",
         "author": "てんてん",
         "createdAt": "2026-01-25T12:38:29.760Z",
-        "content": "面子完成！』→『一向聴？』→『違う！ターツが足りないから**くっつき二向聴**！』\n\n1ｓのくっつきはゴミ。東のくっつきはとても嬉しい。",
+        "content": "『2面子完成！』→『一向聴？』→『違う！ターツが足りないから**くっつき二向聴**！』\n\n1ｓのくっつきはゴミ。東のくっつきはとても嬉しい。",
         "attachments": []
       },
       {
@@ -56146,7 +56146,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "185",
@@ -56454,7 +56454,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "186",
@@ -56755,7 +56755,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "187",
@@ -57049,7 +57049,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "188",
@@ -57343,7 +57343,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "189",
@@ -57606,7 +57606,7 @@
         "id": "1470300078030848100",
         "author": "てんてん",
         "createdAt": "2026-02-09T06:07:35.457Z",
-        "content": "ブロック目は打点や手役の種を優先。\n7ｐ引き両面生成　ＶＳ　南重なり\n圧倒的に南引きが嬉しい。",
+        "content": "6ブロック目は打点や手役の種を優先。\n7ｐ引き両面生成　ＶＳ　南重なり\n圧倒的に南引きが嬉しい。",
         "attachments": []
       }
     ],
@@ -57642,7 +57642,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "190",
@@ -57888,7 +57888,7 @@
         "id": "1470300887812673720",
         "author": "てんてん",
         "createdAt": "2026-02-09T06:10:48.524Z",
-        "content": "役牌\nダブ東＞2.8\nとなることが多い。\n7ｍ引き両面生成と、東重なり、どちらが嬉しいか比較しよう。",
+        "content": "2.8VS役牌\nダブ東＞2.8\nとなることが多い。\n7ｍ引き両面生成と、東重なり、どちらが嬉しいか比較しよう。",
         "attachments": []
       }
     ],
@@ -57924,7 +57924,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "191",
@@ -58206,7 +58206,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "192",
@@ -58528,7 +58528,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "193",
@@ -58693,7 +58693,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "194",
@@ -59000,7 +59000,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "195",
@@ -59299,7 +59299,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "196",
@@ -59624,7 +59624,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "197",
@@ -59925,7 +59925,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "198",
@@ -60231,7 +60231,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "199",
@@ -60477,7 +60477,7 @@
         "id": "1472278755928965151",
         "author": "てんてん",
         "createdAt": "2026-02-14T17:10:09.030Z",
-        "content": "の1は完全不要牌。\n安牌西を残す。",
+        "content": "14の1は完全不要牌。\n安牌西を残す。",
         "attachments": []
       },
       {
@@ -60558,7 +60558,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "200",
@@ -60809,7 +60809,7 @@
         "id": "1472280912145289268",
         "author": "てんてん",
         "createdAt": "2026-02-14T17:18:43.112Z",
-        "content": "役牌\n7ｐ引きと発重なり、明確に後者の方が嬉しいですね✨\nタンヤオ無し+立直打てなそう。",
+        "content": "2.8VS役牌\n7ｐ引きと発重なり、明確に後者の方が嬉しいですね✨\nタンヤオ無し+立直打てなそう。",
         "attachments": []
       },
       {
@@ -60864,7 +60864,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "201",
@@ -60973,7 +60973,7 @@
         "id": "1476143807744704654",
         "author": "てんてん",
         "createdAt": "2026-02-25T09:08:29.192Z",
-        "content": "七対子一向聴　VS　鳴くとトイトイ2向聴\n以下の３条件を**全て**満たすならトイトイへ。\n・鳴いて||３ハン以上||\n・鳴いた時に||残る鳴きにくい3～7のトイツは1組まで||。\n・||10||巡目まで",
+        "content": "㉖七対子一向聴　VS　鳴くとトイトイ2向聴\n以下の３条件を**全て**満たすならトイトイへ。\n・鳴いて||３ハン以上||\n・鳴いた時に||残る鳴きにくい3～7のトイツは1組まで||。\n・||10||巡目まで",
         "attachments": []
       },
       {
@@ -61036,7 +61036,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "202",
@@ -61382,7 +61382,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "203",
@@ -61626,7 +61626,7 @@
         "id": "1476149148096135322",
         "author": "てんてん",
         "createdAt": "2026-02-25T09:29:42.431Z",
-        "content": "面子4対子**は以下の基準で。\n今回はとても面子手。\n（個人的には赤使い切り固定の打4ｐが好み）",
+        "content": "**１面子4対子**は以下の基準で。\n今回はとても面子手。\n（個人的には赤使い切り固定の打4ｐが好み）",
         "attachments": []
       },
       {
@@ -61688,7 +61688,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "204",
@@ -61994,7 +61994,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "205",
@@ -62338,7 +62338,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "206",
@@ -62646,7 +62646,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "207",
@@ -62959,7 +62959,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "208",
@@ -63205,7 +63205,7 @@
         "id": "1480198717020704834",
         "author": "てんてん",
         "createdAt": "2026-03-08T13:41:14.900Z",
-        "content": "リーのみ愚形に極力ならないように手組せよ。（リーノミ愚形解消の種を残せるならばリーノミ愚形になる受け入れは消して良い）",
+        "content": "③リーのみ愚形に極力ならないように手組せよ。（リーノミ愚形解消の種を残せるならばリーノミ愚形になる受け入れは消して良い）",
         "attachments": []
       },
       {
@@ -63253,7 +63253,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "209",
@@ -63552,7 +63552,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "210",
@@ -63808,7 +63808,7 @@
         "id": "1482645292745625710",
         "author": "てんてん",
         "createdAt": "2026-03-15T07:43:04.008Z",
-        "content": "の9はゴミ。（二度受け界隈最弱）",
+        "content": "6889の9はゴミ。（二度受け界隈最弱）",
         "attachments": []
       },
       {
@@ -63872,7 +63872,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "211",
@@ -64180,7 +64180,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "212",
@@ -64426,7 +64426,7 @@
         "id": "1482648516349263923",
         "author": "てんてん",
         "createdAt": "2026-03-15T07:55:52.575Z",
-        "content": "の9はゴミ。（二度受け界隈最弱）\n\n孤立1.9と同等の強さなので、役牌よりは明確に弱い。\n但し、今回は一通手順が残るので、どちらでもOK。",
+        "content": "6889の9はゴミ。（二度受け界隈最弱）\n\n孤立1.9と同等の強さなので、役牌よりは明確に弱い。\n但し、今回は一通手順が残るので、どちらでもOK。",
         "attachments": []
       },
       {
@@ -64481,7 +64481,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "213",
@@ -64596,7 +64596,7 @@
         "id": "1482649603953397771",
         "author": "てんてん",
         "createdAt": "2026-03-15T08:00:11.880Z",
-        "content": "は30000点条件等の終了条件を正しく考慮できていないが、鉄カン。\n現状は和了しても継続してしまうが、カンすれば和了トップ。",
+        "content": "NAGAは30000点条件等の終了条件を正しく考慮できていないが、鉄カン。\n現状は和了しても継続してしまうが、カンすれば和了トップ。",
         "attachments": []
       },
       {
@@ -64654,7 +64654,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "214",
@@ -64819,7 +64819,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "215",
@@ -65130,7 +65130,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "216",
@@ -65376,7 +65376,7 @@
         "id": "1487364489186775081",
         "author": "てんてん",
         "createdAt": "2026-03-28T08:15:28.118Z",
-        "content": "門前手で3対子の際は、両面対子を両面に固定。（3ヘッド時は切った牌しかロスが出ない。→超強孤立牌や安牌を残して両面固定も有力。）\n\nVS\n\n⑰とにかく５ブロック＞6ブロック。副露手は特に！！（6ブロにしないと追え無い打点や手役がある場合には6ブロも許される。）\n\nの構図に見えたかもしれませんが、今回は4対子なので、⑥＜⑰",
+        "content": "⑥門前手で3対子の際は、両面対子を両面に固定。（3ヘッド時は切った牌しかロスが出ない。→超強孤立牌や安牌を残して両面固定も有力。）\n\nVS\n\n⑰とにかく５ブロック＞6ブロック。副露手は特に！！（6ブロにしないと追え無い打点や手役がある場合には6ブロも許される。）\n\nの構図に見えたかもしれませんが、今回は4対子なので、⑥＜⑰",
         "attachments": []
       },
       {
@@ -65459,7 +65459,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "217",
@@ -65705,7 +65705,7 @@
         "id": "1487366800621572106",
         "author": "てんてん",
         "createdAt": "2026-03-28T08:24:39.207Z",
-        "content": "の方がドラ東よりも打点の種として優秀。\n\n8ｍ引き4枚はタンヤオ平和三色の最大4翻ＵＰ。\n5ｍ7ｍ引きでも手牌価値大幅ＵＰ。",
+        "content": "7ｍの方がドラ東よりも打点の種として優秀。\n\n8ｍ引き4枚はタンヤオ平和三色の最大4翻ＵＰ。\n5ｍ7ｍ引きでも手牌価値大幅ＵＰ。",
         "attachments": []
       },
       {
@@ -65760,7 +65760,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "218",
@@ -66049,7 +66049,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "219",
@@ -66369,7 +66369,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "220",
@@ -66557,7 +66557,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "221",
@@ -66800,7 +66800,7 @@
         "id": "1512414866378330192",
         "author": "てんてん",
         "createdAt": "2026-06-05T11:16:43.454Z",
-        "content": "対子の一向聴**ですので、打6ｍのロスは6ｍのみ。\n\n**３ヘッドは両面対子を両面に固定**\n\n6ｍの受け入れロスによる和了率低下よりも、6ｍ先切りによる後手強度ＵＰや待ちの強化に伴う和了率上昇の方が大きいと見ます。\n\n6ｍより少しでも安全な牌ならば交換しておくのがお勧めです。（なんなら前巡の2ｓとすら交換しても良いくらい。3ｓ引き嬉しい点と、2ｓを関連牌と思わすことができるメリットあり。）",
+        "content": "**３対子の一向聴**ですので、打6ｍのロスは6ｍのみ。\n\n**３ヘッドは両面対子を両面に固定**\n\n6ｍの受け入れロスによる和了率低下よりも、6ｍ先切りによる後手強度ＵＰや待ちの強化に伴う和了率上昇の方が大きいと見ます。\n\n6ｍより少しでも安全な牌ならば交換しておくのがお勧めです。（なんなら前巡の2ｓとすら交換しても良いくらい。3ｓ引き嬉しい点と、2ｓを関連牌と思わすことができるメリットあり。）",
         "attachments": []
       },
       {
@@ -66871,7 +66871,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "222",
@@ -67117,7 +67117,7 @@
         "id": "1513422255344848926",
         "author": "てんてん",
         "createdAt": "2026-06-08T05:59:43.700Z",
-        "content": "対子１面子。\n両面が豊富でかなり面子手寄りと見ます。",
+        "content": "４対子１面子。\n両面が豊富でかなり面子手寄りと見ます。",
         "attachments": []
       },
       {
@@ -67179,7 +67179,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "223",
@@ -67475,7 +67475,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "224",
@@ -67720,7 +67720,7 @@
         "id": "1513468669609639969",
         "author": "てんてん",
         "createdAt": "2026-06-08T09:04:09.723Z",
-        "content": "チー材は劣化するがポン材に劣化無し。\n\n聴牌率、和了率に明確な差があります。",
+        "content": "■チー材は劣化するがポン材に劣化無し。\n\n聴牌率、和了率に明確な差があります。",
         "attachments": []
       },
       {
@@ -67799,7 +67799,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "225",
@@ -68119,7 +68119,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "226",
@@ -68408,7 +68408,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "227",
@@ -68659,7 +68659,7 @@
         "id": "1522267864462131411",
         "author": "てんてん",
         "createdAt": "2026-07-02T15:49:01.257Z",
-        "content": "が弱2ブロックで1ｍの価値無し。\n\nおそらくホンイツ4ブロックを意識して頂いたものだと思われますが、今回は赤5ｐだけでホンイツと同様の2翻ですので、赤5ｐ使いの方が早くて（簡単）打点も出る。\nもしも1ｍや2ｍがドラだった場合には、**染めで満貫となる**ので、染めを強く意識した13ｓ払いが有力で好み。",
+        "content": "1244mが弱2ブロックで1ｍの価値無し。\n\nおそらくホンイツ4ブロックを意識して頂いたものだと思われますが、今回は赤5ｐだけでホンイツと同様の2翻ですので、赤5ｐ使いの方が早くて（簡単）打点も出る。\nもしも1ｍや2ｍがドラだった場合には、**染めで満貫となる**ので、染めを強く意識した13ｓ払いが有力で好み。",
         "attachments": []
       },
       {
@@ -68721,7 +68721,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   },
   {
     "id": "228",
@@ -68972,7 +68972,7 @@
         "id": "1522882045619994734",
         "author": "てんてん",
         "createdAt": "2026-07-04T08:29:33.456Z",
-        "content": "ヘッドレス2型一向聴に取らない3パターンの②に該当。",
+        "content": "# ヘッドレス2型一向聴に取らない3パターンの②に該当。",
         "attachments": []
       },
       {
@@ -69029,7 +69029,7 @@
         "id": "1522885914844463114",
         "author": "てんてん",
         "createdAt": "2026-07-04T08:44:55.951Z",
-        "content": "今回の画像引用元はhttps://docs.google.com/document/d/1eLvRIePIbduCcXKTtZ_A4j2kuTrChOcMEuMQ6ReMrmA/edit?tab=t.0#heading=h.iydzngionyy3\nになります✨\n\n『あ、これヘッドレス2型を3面張含みのヘッドレス1型にするパターンじゃね？』と思える様になるといいですね👍🏻\n\nこれに関しては基礎講義ドキュメントでしか触れていないので、定期的に読んでおくといいでしょう。（自分で3パターン言えると完璧）\n\nNAGAは、暗刻ヘッドレス2型に取りがちなんですが、その理由はNAGAが参考にしていたプレイヤー達が令和の新常識を知らなかった事が理由です。\n\n平成雀士は、殆ど暗刻ヘッドレス2型にとっていましたのでね。\n\nhttps://www.youtube.com/watch?v=KpTcyaVE32U&t=633s\n5年前のこの動画の影響で、今では1型に取った方が（超微差）有利ということが常識となりました。",
+        "content": "今回の画像引用元はhttps://docs.google.com/document/d/1eLvRIePIbduCcXKTtZ_A4j2kuTrChOcMEuMQ6ReMrmA/edit?tab=t.0#heading=h.iydzngionyy3\nになります✨ \n\n『あ、これヘッドレス2型を3面張含みのヘッドレス1型にするパターンじゃね？』と思える様になるといいですね👍🏻 \n\nこれに関しては基礎講義ドキュメントでしか触れていないので、定期的に読んでおくといいでしょう。（自分で3パターン言えると完璧）\n\nNAGAは、暗刻ヘッドレス2型に取りがちなんですが、その理由はNAGAが参考にしていたプレイヤー達が令和の新常識を知らなかった事が理由です。\n\n平成雀士は、殆ど暗刻ヘッドレス2型にとっていましたのでね。\n\nhttps://www.youtube.com/watch?v=KpTcyaVE32U&t=633s\n5年前のこの動画の影響で、今では1型に取った方が（超微差）有利ということが常識となりました。",
         "attachments": [],
         "embeds": [
           {
@@ -69086,6 +69086,6 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v5-first-starter-author-image-exact-or-fallback"
+    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
   }
 ]
