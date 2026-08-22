@@ -34,7 +34,7 @@ test("requires explicit confirmation before revealing or recording an answer", a
 
 test("records answer timing and exposes the synchronized drill version", async () => {
   const html = await source();
-  assert.match(html, /const APP_VERSION = 149;/);
+  assert.match(html, /const APP_VERSION = 150;/);
   assert.match(html, /const MODEL_PRIORITY = \["ニシキ", "ヒバカリ", "カガシ", "ガンマ", "オメガ"\];/);
   assert.match(html, /const HAND_BAR_MODEL_NAMES = \["ニシキ", "ヒバカリ", "カガシ"\];/);
   assert.match(html, /const topCallModelIndices = priorityIndicesV16\(3\);/);
@@ -78,6 +78,10 @@ test("detects self-meld hand masks from dark-blue panels and image-bottom panels
   assert.match(html, /displaySlots\.map\(\(tile, index\) => tile == null \? emptyHandSlotV146\(\) : tileButtonV16\(tile, index\)\)/);
   assert.match(html, /sortHandV20\(displayHand\)/);
   assert.match(html, /const closedCount = displaySlots \? displaySlots\.length : displayConcealedHandV143\(question\)\.length/);
+  assert.match(html, /const tileCount = closedCount \+ \(hasDraw \? 1 : 0\);/);
+  assert.doesNotMatch(html, /immediate-meld-layer/);
+  assert.doesNotMatch(html, /renderImmediateMeldsV132/);
+  assert.doesNotMatch(html, /immediateMeldTileCountV132/);
   assert.match(html, /function handMaskMeldCountV144\(question\)/);
   const maskFallbackBody = functionBody(html, "handMaskFallbackV17", "rgbHexV17");
   assert.match(maskFallbackBody, /if \(!state\.revealed && isImmediateCallDiscardV132\(question\)\) return \{ \.\.\.HAND_MASK_PRESETS_V128\[0\] \};/);
