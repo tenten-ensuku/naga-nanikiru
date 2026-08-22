@@ -2407,7 +2407,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 153;
+    const APP_VERSION = 154;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -7432,7 +7432,7 @@
           }
         }
         document.getElementById("questionSelect").addEventListener("change", event => openQuestionV16(Number(event.target.value)));
-        document.getElementById("menuGrid").addEventListener("click", handleMenuGridClickV16);
+        document.getElementById("menuPanel").addEventListener("click", handleMenuGridClickV16);
         document.getElementById("menuActiveFilters")?.addEventListener("click", event => {
           const clearButton = event.target.closest("[data-menu-filter-clear]");
           if (clearButton) {
