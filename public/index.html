@@ -2414,7 +2414,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 142;
+    const APP_VERSION = 143;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -3459,7 +3459,8 @@
         { version: 129, date: "2026-08-21", publishedAt: "2026-08-21T00:41:48+09:00", title: "スレッド先頭画像の除外ルールを再確認しました", body: "問題画像として使うスレッド作成者の最初の画像1枚は、コメント欄へ重複転載しないようにしました。画像IDの照合に失敗した場合も、作成者の最初の画像へフォールバックします。後続の画像・文章・NAGA URLはこれまでどおり残します。" },
         { version: 130, date: "2026-08-21", publishedAt: "2026-08-21T01:05:00+09:00", title: "編集メンバーと問題生成先を整理しました", body: "承認済みの編集メンバーが問題の生成・インポート・編集・整理を行えるようになりました。問題生成では保存先を明示的に選べます。公開範囲・メンバー管理・完全削除は、これまでどおり所有者とアプリ管理者だけが行います。" },
         { version: 131, date: "2026-08-22", publishedAt: "2026-08-22T09:00:00+09:00", title: "お気に入りとアーカイブを問題集ごとに整理しました", body: "ログインユーザーごと・問題集ごとにお気に入りとアーカイブを分けて保存します。直近の結果が💮の問題は、問題一覧のアーカイブ欄からも移動できます。各操作に説明を表示するようにしました。" },
-        { version: APP_VERSION, date: "2026-08-22", publishedAt: "2026-08-22T19:00:00+09:00", title: "保存済みコメントの欠落本文を復元しました", body: "Discordスナップショットから保存済みコメントを再構成し、URL直後の7m・5p・3sなどの牌表記や解説本文が欠落しないようにしました。今後の生成処理にも同じ転送規則を適用します。" }
+        { version: 142, date: "2026-08-22", publishedAt: "2026-08-22T19:00:00+09:00", title: "保存済みコメントの欠落本文を復元しました", body: "Discordスナップショットから保存済みコメントを再構成し、URL直後の7m・5p・3sなどの牌表記や解説本文が欠落しないようにしました。今後の生成処理にも同じ転送規則を適用します。" },
+        { version: APP_VERSION, date: "2026-08-22", publishedAt: "2026-08-22T21:00:00+09:00", title: "副露直後の手牌表示を修正しました", body: "チー・ポン・大明槓の直後に打牌を選ぶ問題で、副露に使った自分の牌が暗手牌へ重複表示されないようにしました。表示用のコピーだけを補正し、副露後の通常問題と元の牌譜状態は変更しません。" }
       ];
       let commentNoticeStoreV65 = loadCommentNoticeStoreV65();
       let sharedCommentRowsV65 = [];
@@ -5134,6 +5135,18 @@
             || IMMEDIATE_CALL_TYPES_V132.has(String(question?.predictionType || "")));
       }
 
+      // Keep the canonical replay hand untouched.  The generator repairs
+      // legacy snapshots only when their length proves that the current
+      // call's own tiles are duplicated; ordinary post-call questions pass
+      // through unchanged.
+      function displayConcealedHandV143(question = SCENE) {
+        const source = Array.isArray(question?.handBeforeDraw) ? question.handBeforeDraw : [];
+        const generator = globalThis.NagaGeneratorV44;
+        return typeof generator?.displayConcealedHand === "function"
+          ? generator.displayConcealedHand(question)
+          : [...source];
+      }
+
       function meldTilesV132(meld) {
         if (!meld || typeof meld !== "object") return [];
         const consumed = Array.isArray(meld.consumed) ? meld.consumed.filter(Boolean) : [];
@@ -5158,8 +5171,9 @@
       }
 
       function renderHandV16() {
-        const closed = sortHandV20(SCENE.handBeforeDraw || []).map((tile, index) => tileButtonV16(tile, index)).join("");
-        const draw = SCENE.draw ? tileButtonV16(SCENE.draw, SCENE.handBeforeDraw.length, true) : "";
+        const displayHand = displayConcealedHandV143(SCENE);
+        const closed = sortHandV20(displayHand).map((tile, index) => tileButtonV16(tile, index)).join("");
+        const draw = SCENE.draw ? tileButtonV16(SCENE.draw, displayHand.length, true) : "";
         const melds = renderImmediateMeldsV132();
         const meldBlock = melds ? `<div class="melds-hand" aria-label="副露面子">${melds}</div>` : "";
         const riichiButton = hasReachV16() ? `<button class="riichi-button" id="riichiButton" type="button" aria-pressed="${state.riichi}" title="リーチを宣言する">${state.riichi ? "リーチ済" : "リーチ"}</button>` : "";
@@ -5502,7 +5516,7 @@
 
       function selectTileV16(index) {
         if (SCENE.decisionType === "call") return;
-        const tiles = [...sortHandV20(SCENE.handBeforeDraw || []), SCENE.draw].filter(Boolean);
+        const tiles = [...sortHandV20(displayConcealedHandV143(SCENE)), SCENE.draw].filter(Boolean);
         state.selectedIndex = index;
         state.selected = tiles[index];
         renderHandV16();
@@ -5686,7 +5700,7 @@
         activeHandMaskV18 = mask;
         const frameWidth = sceneFrameV16.clientWidth || sceneImageV16.clientWidth;
         if (!frameWidth) return;
-        const closedCount = Array.isArray(question?.handBeforeDraw) ? question.handBeforeDraw.length : 0;
+        const closedCount = displayConcealedHandV143(question).length;
         const hasDraw = Boolean(question?.draw);
         const tileCount = closedCount + (hasDraw ? 1 : 0) + immediateMeldTileCountV132(question);
         const maskWidthPx = frameWidth * mask.width / 100;

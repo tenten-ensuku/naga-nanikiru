@@ -175,6 +175,61 @@ test("marks the discard predicted directly from a call as an original-mask scene
   assert.equal(candidate.actualDiscard, "man9");
 });
 
+test("repairs only legacy immediate-call hand duplicates and preserves red tiles", async () => {
+  const api = await loadApi();
+  const duplicatePon = {
+    decisionType: "discard",
+    predictionType: "pon",
+    handBeforeDraw: ["pin2", "pin2", "pin2", "man1", "man2", "man3", "man4", "man5", "man6", "man7", "man8", "sou1", "sou2"],
+    melds: [{ type: "pon", pai: "pin2", consumed: ["pin2", "pin2"] }]
+  };
+  const repairedPon = api.displayConcealedHand(duplicatePon);
+  assert.equal(repairedPon.length, 11);
+  assert.equal(repairedPon.filter(tile => tile === "pin2").length, 1);
+  assert.equal(duplicatePon.handBeforeDraw.length, 13);
+
+  const canonicalPon = {
+    ...duplicatePon,
+    handBeforeDraw: repairedPon
+  };
+  assert.deepEqual(api.displayConcealedHand(canonicalPon), repairedPon);
+
+  const duplicateChiWithRed = {
+    decisionType: "discard",
+    predictionType: "chi",
+    handBeforeDraw: ["pin4", "aka2", "pin5", "man1", "man2", "man3", "man4", "man5", "man6", "sou1", "sou2", "sou3", "ji1"],
+    melds: [{ type: "chi", pai: "pin3", consumed: ["pin4", "aka2"] }]
+  };
+  const repairedChi = api.displayConcealedHand(duplicateChiWithRed);
+  assert.equal(repairedChi.length, 11);
+  assert.equal(repairedChi.includes("aka2"), false);
+  assert.equal(repairedChi.filter(tile => tile === "pin4").length, 0);
+  assert.equal(repairedChi.includes("pin5"), true);
+
+  const duplicateDaiminkan = {
+    decisionType: "discard",
+    predictionType: "daiminkan",
+    handBeforeDraw: ["sou9", "sou9", "sou9", "man1", "man2", "man3", "man4", "man5", "man6", "pin1", "pin2", "pin3", "ji1"],
+    melds: [{ type: "daiminkan", pai: "sou9", consumed: ["sou9", "sou9", "sou9"] }]
+  };
+  assert.equal(api.displayConcealedHand(duplicateDaiminkan).length, 10);
+
+  const duplicateMinkanAlias = {
+    ...duplicateDaiminkan,
+    predictionType: "minkan",
+    melds: [{ type: "daiminkan", pai: "sou9", consumed: ["sou9", "sou9", "sou9"] }]
+  };
+  assert.equal(api.displayConcealedHand(duplicateMinkanAlias).length, 10);
+
+  const postCallQuestion = {
+    decisionType: "discard",
+    predictionType: "tsumo",
+    handBeforeDraw: duplicatePon.handBeforeDraw,
+    melds: duplicatePon.melds
+  };
+  assert.equal(api.displayConcealedHand(postCallQuestion).length, 13);
+});
+
 test("marks an actual reach as a reach judgment even when model reach rates are zero", async () => {
   const api = await loadApi();
   const rows = [Array(34).fill(0), Array(34).fill(0)];

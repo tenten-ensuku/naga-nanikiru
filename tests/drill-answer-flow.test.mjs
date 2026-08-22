@@ -34,7 +34,7 @@ test("requires explicit confirmation before revealing or recording an answer", a
 
 test("records answer timing and exposes the synchronized drill version", async () => {
   const html = await source();
-  assert.match(html, /const APP_VERSION = 142;/);
+  assert.match(html, /const APP_VERSION = 143;/);
   assert.match(html, /const MODEL_PRIORITY = \["ニシキ", "ヒバカリ", "カガシ", "ガンマ", "オメガ"\];/);
   assert.match(html, /const HAND_BAR_MODEL_NAMES = \["ニシキ", "ヒバカリ", "カガシ"\];/);
   assert.match(html, /const topCallModelIndices = priorityIndicesV16\(3\);/);
@@ -71,6 +71,11 @@ test("detects self-meld hand masks from dark-blue panels and image-bottom panels
   assert.match(body, /if \(top >= 0 && bottom < 0\) bottom = height - 1/);
   assert.match(html, /const IMMEDIATE_CALL_TYPES_V132 = new Set\(\["chi", "pon", "daiminkan", "minkan", "ankan", "kakan"\]\)/);
   assert.match(html, /function isImmediateCallDiscardV132\(/);
+  assert.match(html, /function displayConcealedHandV143\(/);
+  assert.match(html, /generator\.displayConcealedHand\(question\)/);
+  assert.match(html, /const displayHand = displayConcealedHandV143\(SCENE\)/);
+  assert.match(html, /sortHandV20\(displayConcealedHandV143\(SCENE\)\)/);
+  assert.match(html, /const closedCount = displayConcealedHandV143\(question\)\.length/);
   assert.match(html, /if \(isImmediateCallDiscardV132\(question\)\) return \{ \.\.\.HAND_MASK_PRESETS_V128\[0\] \};/);
   assert.match(html, /sceneFrameV16\.classList\.toggle\("is-immediate-call-discard", isImmediateCallDiscard\)/);
   assert.match(html, /hasSelfMeldsV17 && !isImmediateCallDiscard \? detectHandMaskV17/);

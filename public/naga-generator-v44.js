@@ -275,6 +275,68 @@
     return false;
   }
 
+  // A legacy question can contain the two/three tiles used by the current
+  // call in handBeforeDraw even though the same tiles are also represented in
+  // the latest meld.  Keep this repair display-only and apply it only when
+  // the question itself is the discard immediately following that call.
+  function isImmediateCallDiscardQuestion(question) {
+    if (!question || question.decisionType !== "discard") return false;
+    var predictionType = String(question.predictionType || "");
+    return question.immediateCallDiscard === true
+      || question.handMaskMode === "original-with-meld-overlay"
+      || Boolean(NAGA_CALL_TYPES[predictionType]);
+  }
+
+  function meldDisplayTiles(meld) {
+    if (!meld || typeof meld !== "object") return [];
+    var consumed = Array.isArray(meld.consumed)
+      ? meld.consumed.map(tileToAppCode).filter(Boolean)
+      : [];
+    if (meld.type === "ankan") return consumed;
+    return [tileToAppCode(meld.pai), ...consumed].filter(Boolean);
+  }
+
+  function currentImmediateMeld(question) {
+    if (!isImmediateCallDiscardQuestion(question)) return null;
+    var expectedType = String(question.predictionType || "");
+    var melds = Array.isArray(question.melds) ? question.melds : [];
+    for (var index = melds.length - 1; index >= 0; index -= 1) {
+      var meld = melds[index];
+      var actualType = meld ? String(meld.type || "") : "";
+      var isOpenKanAlias = (actualType === "minkan" || actualType === "daiminkan")
+        && (expectedType === "minkan" || expectedType === "daiminkan");
+      if (meld && (actualType === expectedType || isOpenKanAlias)) return meld;
+    }
+    return null;
+  }
+
+  function displayConcealedHand(question) {
+    var source = Array.isArray(question && question.handBeforeDraw)
+      ? question.handBeforeDraw.map(tileToAppCode).filter(Boolean)
+      : [];
+    var currentMeld = currentImmediateMeld(question);
+    var consumed = currentMeld && Array.isArray(currentMeld.consumed)
+      ? currentMeld.consumed.map(tileToAppCode).filter(Boolean)
+      : [];
+    if (!currentMeld || !consumed.length) return source.slice();
+
+    // After a call and before its discard, the physical hand consists of 14
+    // tiles including all meld tiles.  If the saved hand is exactly larger by
+    // the current meld's own consumed tiles, it is the old pre-call duplicate
+    // representation.  A canonical replay snapshot already has the expected
+    // count and is returned untouched.
+    var totalMeldTiles = (Array.isArray(question.melds) ? question.melds : [])
+      .reduce(function (total, meld) { return total + meldDisplayTiles(meld).length; }, 0);
+    var expectedClosedCount = Math.max(0, 14 - totalMeldTiles);
+    if (source.length !== expectedClosedCount + consumed.length) return source.slice();
+
+    var display = source.slice();
+    var removed = consumed.reduce(function (count, tile) {
+      return count + (removeTile(display, tile) ? 1 : 0);
+    }, 0);
+    return removed === consumed.length ? display : source.slice();
+  }
+
   function cloneMeld(meld) {
     return {
       type: meld.type,
@@ -1010,6 +1072,7 @@
     tileIndex: tileIndex,
     nagaTileIndex: tileIndex,
     tileToNagaIndex: tileIndex,
+    displayConcealedHand: displayConcealedHand,
     modelNames: modelNames,
     getModelNames: modelNames,
     replayKyoku: replayKyoku,
