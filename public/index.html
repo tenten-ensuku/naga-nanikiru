@@ -2414,7 +2414,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 143;
+    const APP_VERSION = 144;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -3460,7 +3460,8 @@
         { version: 130, date: "2026-08-21", publishedAt: "2026-08-21T01:05:00+09:00", title: "編集メンバーと問題生成先を整理しました", body: "承認済みの編集メンバーが問題の生成・インポート・編集・整理を行えるようになりました。問題生成では保存先を明示的に選べます。公開範囲・メンバー管理・完全削除は、これまでどおり所有者とアプリ管理者だけが行います。" },
         { version: 131, date: "2026-08-22", publishedAt: "2026-08-22T09:00:00+09:00", title: "お気に入りとアーカイブを問題集ごとに整理しました", body: "ログインユーザーごと・問題集ごとにお気に入りとアーカイブを分けて保存します。直近の結果が💮の問題は、問題一覧のアーカイブ欄からも移動できます。各操作に説明を表示するようにしました。" },
         { version: 142, date: "2026-08-22", publishedAt: "2026-08-22T19:00:00+09:00", title: "保存済みコメントの欠落本文を復元しました", body: "Discordスナップショットから保存済みコメントを再構成し、URL直後の7m・5p・3sなどの牌表記や解説本文が欠落しないようにしました。今後の生成処理にも同じ転送規則を適用します。" },
-        { version: APP_VERSION, date: "2026-08-22", publishedAt: "2026-08-22T21:00:00+09:00", title: "副露直後の手牌表示を修正しました", body: "チー・ポン・大明槓の直後に打牌を選ぶ問題で、副露に使った自分の牌が暗手牌へ重複表示されないようにしました。表示用のコピーだけを補正し、副露後の通常問題と元の牌譜状態は変更しません。" }
+        { version: 143, date: "2026-08-22", publishedAt: "2026-08-22T21:00:00+09:00", title: "副露直後の手牌表示を修正しました", body: "チー・ポン・大明槓の直後に打牌を選ぶ問題で、副露に使った自分の牌が暗手牌へ重複表示されないようにしました。表示用のコピーだけを補正し、副露後の通常問題と元の牌譜状態は変更しません。" },
+        { version: APP_VERSION, date: "2026-08-22", publishedAt: "2026-08-22T22:00:00+09:00", title: "副露直後のマスク範囲を副露数に合わせて固定しました", body: "副露した瞬間から、その直後の打牌が終わるまで、現在の副露数に対応した手牌マスクを使うようにしました。副露直後だけ全幅マスクへ戻る不整合をなくし、通常局面と後続局面のマスク判定は変更していません。" }
       ];
       let commentNoticeStoreV65 = loadCommentNoticeStoreV65();
       let sharedCommentRowsV65 = [];
@@ -5123,9 +5124,9 @@
         });
       }
 
-      // 副露イベント自身が予測元になっている打牌だけは、NAGA元画像の
-      // 全幅マスクを維持し、副露面子をマスク上へ別レイヤーで描画する。
-      // その後の通常の副露後局面は従来どおり副露数別のコンパクト配置を使う。
+      // 副露イベント自身が予測元になっている打牌でも、現在の副露数に
+      // 対応するマスク範囲を使う。問題画面の再描画やリサイズで副露数が
+      // 変わることはないため、副露直後から打牌確定まで同じ範囲を維持する。
       const IMMEDIATE_CALL_TYPES_V132 = new Set(["chi", "pon", "daiminkan", "minkan", "ankan", "kakan"]);
 
       function isImmediateCallDiscardV132(question = SCENE) {
@@ -5577,10 +5578,13 @@
         5: { left: 12.1, top: 78.0, width: 22.5, height: 20.5, topColor: "#022045", bottomColor: "#021d41" }
       });
 
-      function handMaskFallbackV17(question) {
-        if (isImmediateCallDiscardV132(question)) return { ...HAND_MASK_PRESETS_V128[0] };
+      function handMaskMeldCountV144(question) {
         const meldCount = Math.max(0, Array.isArray(question?.melds) ? question.melds.length : 0);
-        const preset = HAND_MASK_PRESETS_V128[Math.min(meldCount, 5)] || HAND_MASK_PRESETS_V128[5];
+        return Math.min(meldCount, 5);
+      }
+
+      function handMaskFallbackV17(question) {
+        const preset = HAND_MASK_PRESETS_V128[handMaskMeldCountV144(question)] || HAND_MASK_PRESETS_V128[5];
         return { ...preset };
       }
 
