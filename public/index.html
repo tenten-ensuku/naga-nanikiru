@@ -2414,7 +2414,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 140;
+    const APP_VERSION = 141;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -3459,7 +3459,7 @@
         { version: 129, date: "2026-08-21", publishedAt: "2026-08-21T00:41:48+09:00", title: "スレッド先頭画像の除外ルールを再確認しました", body: "問題画像として使うスレッド作成者の最初の画像1枚は、コメント欄へ重複転載しないようにしました。画像IDの照合に失敗した場合も、作成者の最初の画像へフォールバックします。後続の画像・文章・NAGA URLはこれまでどおり残します。" },
         { version: 130, date: "2026-08-21", publishedAt: "2026-08-21T01:05:00+09:00", title: "編集メンバーと問題生成先を整理しました", body: "承認済みの編集メンバーが問題の生成・インポート・編集・整理を行えるようになりました。問題生成では保存先を明示的に選べます。公開範囲・メンバー管理・完全削除は、これまでどおり所有者とアプリ管理者だけが行います。" },
         { version: 131, date: "2026-08-22", publishedAt: "2026-08-22T09:00:00+09:00", title: "お気に入りとアーカイブを問題集ごとに整理しました", body: "ログインユーザーごと・問題集ごとにお気に入りとアーカイブを分けて保存します。直近の結果が💮の問題は、問題一覧のアーカイブ欄からも移動できます。各操作に説明を表示するようにしました。" },
-        { version: APP_VERSION, date: "2026-08-22", publishedAt: "2026-08-22T18:00:00+09:00", title: "問題一覧の表示と絞り込みを整理しました", body: "問題集の切り替えをコンパクトにし、範囲・ジャンル・回答状態・お気に入りを一つのフィルターにまとめました。アーカイブは独立した導線として、問題数が増えても選びやすい表示にしています。" }
+        { version: APP_VERSION, date: "2026-08-22", publishedAt: "2026-08-22T19:00:00+09:00", title: "コメント先頭のURL除去を修正しました", body: "最初のHTTP(S) URLだけをURLトークンとして除去し、URL直後の5p・3sなどの牌表記や解説本文を保持するようにしました。後続URLはこれまでどおり残ります。" }
       ];
       let commentNoticeStoreV65 = loadCommentNoticeStoreV65();
       let sharedCommentRowsV65 = [];
@@ -3635,21 +3635,28 @@
         return /垣崎にま|にま問題集/.test(collectionTitle) || /垣崎にま|にま問題集/.test(String(shareSlug));
       }
 
+      function removeFirstHttpUrlV141(content) {
+        const source = String(content ?? "");
+        const match = /https?:\/\/[^\s]+/i.exec(source);
+        if (!match) return source;
+        const before = source.slice(0, match.index);
+        const after = source.slice(match.index + match[0].length);
+        const bodyAfter = after.replace(/^\s+/, "");
+        const bodyBefore = bodyAfter ? before : before.replace(/\s+$/, "");
+        return bodyBefore + bodyAfter;
+      }
+
       function sanitizeNimaCommentsV105(comments) {
-        let firstNagaUrlDropped = false;
+        let firstHttpUrlDropped = false;
         let sceneImageCount = 0;
-        const nagaUrlPattern = /https?:\/\/naga\.dmv\.nico\/[^\s<>"']+/gi;
         return (Array.isArray(comments) ? comments : [])
           .map(message => {
-            const content = String(message?.content || "")
-              .replace(nagaUrlPattern, url => {
-                if (firstNagaUrlDropped) return url;
-                firstNagaUrlDropped = true;
-                return "";
-              })
-              .replace(/[ \t]+\n/g, "\n")
-              .replace(/\n{3,}/g, "\n\n")
-              .trim();
+            let content = String(message?.content || "");
+            if (!firstHttpUrlDropped && /https?:\/\/[^\s]+/i.test(content)) {
+              firstHttpUrlDropped = true;
+              content = removeFirstHttpUrlV141(content);
+            }
+            content = content.replace(/\n{3,}/g, "\n\n");
             const attachments = (Array.isArray(message?.attachments) ? message.attachments : []).filter(attachment => {
               const src = String(attachment?.src || "");
               const contentType = String(attachment?.contentType || "");

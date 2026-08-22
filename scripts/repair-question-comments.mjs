@@ -16,14 +16,10 @@ const defaultSnapshotPath = path.resolve(projectRoot, "../../outputs/naga-thread
  * intentionally left untouched.
  */
 export function stripLeadingUrls(text) {
-  let result = String(text ?? "").replace(/^\uFEFF/, "");
-  while (true) {
-    const before = result;
-    result = result
-      .replace(/^\s*https?:\/\/[^\s]+(?:\s+|$)/i, "")
-      .replace(/^\s+/, "");
-    if (result === before) return result;
-  }
+  const result = String(text ?? "").replace(/^\uFEFF/, "");
+  const match = /^(https?:\/\/[^\s]+)/i.exec(result);
+  if (!match) return result;
+  return result.slice(match[0].length).replace(/^\s+/, "");
 }
 
 function buildSourceMessageMap(snapshot) {

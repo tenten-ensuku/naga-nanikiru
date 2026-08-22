@@ -32,7 +32,7 @@ test("wires v65 learning UX, generator, Supabase bridge, metadata, and social im
     readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
     access(new URL("../public/og-v44.png", import.meta.url)),
   ]);
-  assert.match(index, /const APP_VERSION = 140/);
+  assert.match(index, /const APP_VERSION = 141/);
   assert.match(index, /function menuRangeStepV120\(\)[\s\S]*?return MENU_RANGE_STEP_V137/);
   assert.match(index, /id="collectionDirectorySelect"/);
   assert.doesNotMatch(index, /class="collection-directory-item/);
