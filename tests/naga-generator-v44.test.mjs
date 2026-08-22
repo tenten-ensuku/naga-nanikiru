@@ -231,6 +231,26 @@ test("preserves original slots and inserts holes for immediate pon, chi, and dai
   assert.equal(daiminkanSlots.filter(tile => tile == null).length, 3);
   assert.deepEqual(daiminkanSlots.slice(0, 4), [null, null, null, "man1"]);
 
+  const legacyPostCallPon = {
+    decisionType: "discard",
+    actualDiscard: "sou3",
+    // Old synchronized rows omitted handBeforeMeld and kept only the
+    // 11 concealed tiles remaining after the pon.
+    handBeforeDraw: ["man1", "man2", "man3", "man4", "man5", "man6", "man7", "man8", "man9", "sou1", "sou2"],
+    melds: [{ type: "pon", pai: "pin9", consumed: ["pin9", "pin9"] }]
+  };
+  const legacySlots = api.displayConcealedHandSlots(legacyPostCallPon, normalSort);
+  assert.equal(legacySlots.length, 13);
+  assert.equal(legacySlots.filter(tile => tile == null).length, 2);
+  assert.deepEqual(legacySlots, [
+    "man1", "man2", "man3", "man4", "man5", "man6", "man7", "man8", "man9",
+    null, null, "sou1", "sou2"
+  ]);
+  assert.equal(legacyPostCallPon.handBeforeDraw.length, 11);
+
+  const laterDrawAfterPon = { ...legacyPostCallPon, draw: "sou3" };
+  assert.equal(api.displayConcealedHandSlots(laterDrawAfterPon, normalSort), null);
+
   const postCall = api.displayConcealedHandSlots({
     decisionType: "discard",
     predictionType: "tsumo",

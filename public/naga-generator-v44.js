@@ -282,9 +282,24 @@
   function isImmediateCallDiscardQuestion(question) {
     if (!question || question.decisionType !== "discard") return false;
     var predictionType = String(question.predictionType || "");
+    var melds = Array.isArray(question.melds) ? question.melds : [];
+    var handBeforeDraw = Array.isArray(question.handBeforeDraw) ? question.handBeforeDraw : [];
+    var hasNoDraw = question.draw == null || question.draw === ""
+      || (Array.isArray(question.draw) && question.draw.length === 0);
+    // Legacy shared rows did not persist predictionType/immediateCallDiscard.
+    // A discard with an existing meld, no draw, and a shortened concealed hand
+    // is the discard immediately following that call.  Do not infer this from
+    // meld count alone: later drawn discards have a draw tile and must use the
+    // ordinary layout.
+    var isLegacyImmediate = melds.length > 0
+      && hasNoDraw
+      && handBeforeDraw.length > 0
+      && handBeforeDraw.length < 13
+      && question.actualDiscard != null;
     return question.immediateCallDiscard === true
       || question.handMaskMode === "original-with-meld-overlay"
-      || Boolean(NAGA_CALL_TYPES[predictionType]);
+      || Boolean(NAGA_CALL_TYPES[predictionType])
+      || isLegacyImmediate;
   }
 
   function meldDisplayTiles(meld) {
@@ -300,6 +315,11 @@
     if (!isImmediateCallDiscardQuestion(question)) return null;
     var expectedType = String(question.predictionType || "");
     var melds = Array.isArray(question.melds) ? question.melds : [];
+    if (!expectedType) {
+      // Legacy rows have no predictionType, but their final meld is the call
+      // that produced the current immediate-discard snapshot.
+      return melds.length ? melds[melds.length - 1] : null;
+    }
     for (var index = melds.length - 1; index >= 0; index -= 1) {
       var meld = melds[index];
       var actualType = meld ? String(meld.type || "") : "";
@@ -346,9 +366,25 @@
     var explicit = Array.isArray(question.displayHandSlots)
       ? question.displayHandSlots
       : null;
+    var currentMeld = currentImmediateMeld(question);
+    var consumed = currentMeld && Array.isArray(currentMeld.consumed)
+      ? currentMeld.consumed.map(tileToAppCode).filter(Boolean)
+      : [];
     var source = explicit || (Array.isArray(question.handBeforeMeld)
       ? question.handBeforeMeld
       : null);
+    if (!source && currentMeld && consumed.length && Array.isArray(question.handBeforeDraw)) {
+      var postCallHand = question.handBeforeDraw;
+      // Older synchronized rows kept only the remaining concealed tiles. Add
+      // the consumed self tiles to a display-only copy so sorting can recover
+      // the original 13 logical positions before replacing them with holes.
+      if (postCallHand.length === 13 - consumed.length) {
+        source = postCallHand.concat(consumed);
+      } else if (postCallHand.length === 13) {
+        // Some legacy rows retained the duplicate pre-call snapshot instead.
+        source = postCallHand;
+      }
+    }
     if (!Array.isArray(source) || source.length !== 13) return null;
 
     // The pre-call snapshot is replay order, not display order.  The UI
@@ -371,10 +407,6 @@
 
     if (explicit) return slots;
 
-    var currentMeld = currentImmediateMeld(question);
-    var consumed = currentMeld && Array.isArray(currentMeld.consumed)
-      ? currentMeld.consumed.map(tileToAppCode).filter(Boolean)
-      : [];
     if (!currentMeld || !consumed.length) return null;
 
     var usedIndexes = [];
