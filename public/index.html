@@ -322,6 +322,8 @@
     .scene-frame.is-immediate-call-discard .melds-hand { margin-right: 0; margin-left: clamp(4px, .6vw, 10px); }
     .meld-group { display: flex; align-items: flex-end; gap: 1px; flex: 0 0 auto; padding: 0 2px 2px; border-bottom: 2px solid rgba(241,196,87,.72); }
     .meld-tile img { display: block; width: clamp(24px, 4.1cqw, 36px); height: auto; border-radius: 2px; }
+    .immediate-meld-layer { position: absolute; left: 83.5%; top: 91.5%; z-index: 4; display: flex; align-items: flex-end; pointer-events: none; }
+    .immediate-meld-layer .melds-hand { margin: 0; }
     .draw-divider { width: 1px; height: 75%; margin: 0 3px 0 4px; background: rgba(244, 198, 87, .75); }
     .riichi-layer { position: absolute; left: calc(var(--hand-mask-left, 11.5%) + var(--hand-mask-width, 67.8%) + 1.5%); top: calc(var(--hand-mask-top, 79.3%) + 6%); z-index: 5; display: flex; align-items: center; justify-content: center; pointer-events: none; }
     .riichi-layer .riichi-button { pointer-events: auto; }
@@ -2416,7 +2418,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 148;
+    const APP_VERSION = 149;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -3464,7 +3466,7 @@
         { version: 142, date: "2026-08-22", publishedAt: "2026-08-22T19:00:00+09:00", title: "保存済みコメントの欠落本文を復元しました", body: "Discordスナップショットから保存済みコメントを再構成し、URL直後の7m・5p・3sなどの牌表記や解説本文が欠落しないようにしました。今後の生成処理にも同じ転送規則を適用します。" },
         { version: 143, date: "2026-08-22", publishedAt: "2026-08-22T21:00:00+09:00", title: "副露直後の手牌表示を修正しました", body: "チー・ポン・大明槓の直後に打牌を選ぶ問題で、副露に使った自分の牌が暗手牌へ重複表示されないようにしました。表示用のコピーだけを補正し、副露後の通常問題と元の牌譜状態は変更しません。" },
         { version: 144, date: "2026-08-22", publishedAt: "2026-08-22T22:00:00+09:00", title: "副露直後のマスク範囲を副露数に合わせて固定しました", body: "副露した瞬間から、その直後の打牌が終わるまで、現在の副露数に対応した手牌マスクを使うようにしました。副露直後だけ全幅マスクへ戻る不整合をなくし、通常局面と後続局面のマスク判定は変更していません。" },
-        { version: APP_VERSION, date: "2026-08-22", publishedAt: "2026-08-22T20:40:25+09:00", title: "問題1351の副露直後の理牌表示を修正しました", body: "問題1351では、副露前の手牌を通常の理牌順に並べてから、ポンに使った2pの2スロットだけを空欄にしました。残りの牌は左詰めせず、副露牌は暗手牌へ重複表示しません。回答確定後は通常の副露済みレイアウトへ戻ります。" }
+        { version: APP_VERSION, date: "2026-08-22", publishedAt: "2026-08-22T20:40:25+09:00", title: "問題1351の副露直後レイアウトを再調整しました", body: "問題1351では、副露前の手牌を通常の理牌順に並べ、ポンに使った2pの2スロットを空欄として保持します。副露3枚は暗手牌マスク内へ混ぜず、正解画像に合わせてマスク外の副露領域へ1回だけ表示します。回答確定後は通常の副露済みレイアウトへ戻ります。" }
       ];
       let commentNoticeStoreV65 = loadCommentNoticeStoreV65();
       let sharedCommentRowsV65 = [];
@@ -3697,6 +3699,7 @@
           predictionType: "pon",
           immediateCallDiscard: true,
           handMaskMode: "original-with-meld-overlay",
+          immediateCallLayout: "external-meld",
           handBeforeMeld: ["pin6", "man4", "man7", "man5", "pin2", "pin6", "pin6", "pin4", "man2", "pin5", "aka1", "pin7", "pin2"]
         };
       }
@@ -5226,13 +5229,18 @@
           : sortHandV20(displayHand).map((tile, index) => tileButtonV16(tile, index)).join("");
         const draw = SCENE.draw ? tileButtonV16(SCENE.draw, displaySlots ? displaySlots.length : displayHand.length, true) : "";
         const melds = renderImmediateMeldsV132();
-        const meldBlock = melds ? `<div class="melds-hand" aria-label="副露面子">${melds}</div>` : "";
+        const externalMelds = SCENE.immediateCallLayout === "external-meld";
+        const meldBlock = melds && !externalMelds ? `<div class="melds-hand" aria-label="副露面子">${melds}</div>` : "";
+        const externalMeldBlock = melds && externalMelds ? `<div class="immediate-meld-layer" aria-label="副露面子"><div class="melds-hand">${melds}</div></div>` : "";
         const riichiButton = hasReachV16() ? `<button class="riichi-button" id="riichiButton" type="button" aria-pressed="${state.riichi}" title="リーチを宣言する">${state.riichi ? "リーチ済" : "リーチ"}</button>` : "";
         const handLayer = document.getElementById("handLayer");
         sceneFrameV16.querySelector(".call-controls")?.remove();
         sceneFrameV16.querySelector(".riichi-layer")?.remove();
+        sceneFrameV16.querySelector(".immediate-meld-layer")?.remove();
         sceneFrameV16.classList.toggle("is-call-decision", SCENE.decisionType === "call");
+        sceneFrameV16.classList.toggle("has-external-immediate-melds", externalMelds && Boolean(melds));
         handLayer.innerHTML = `<div class="hand-controls"><div class="hand-row"><div class="closed-hand">${closed}</div>${draw ? `<span class="draw-divider" aria-hidden="true"></span>${draw}` : ""}${meldBlock}</div></div>`;
+        if (externalMeldBlock) sceneFrameV16.insertAdjacentHTML("beforeend", externalMeldBlock);
         if (riichiButton) sceneFrameV16.insertAdjacentHTML("beforeend", `<div class="riichi-layer" aria-label="リーチ判断">${riichiButton}</div>`);
         if (SCENE.decisionType === "call") {
           const callTarget = SCENE.callTile ? `<span class="call-target-label">対象牌</span><span class="call-target-tile" title="${tileLabel(SCENE.callTile)}への副露判断" aria-label="副露対象牌 ${tileLabel(SCENE.callTile)}">${tileImage(SCENE.callTile)}</span>` : "";
@@ -5772,7 +5780,8 @@
         const displaySlots = displayHandSlotsV146(question);
         const closedCount = displaySlots ? displaySlots.length : displayConcealedHandV143(question).length;
         const hasDraw = Boolean(question?.draw);
-        const tileCount = closedCount + (hasDraw ? 1 : 0) + immediateMeldTileCountV132(question);
+        const hasExternalMelds = question?.immediateCallLayout === "external-meld";
+        const tileCount = closedCount + (hasDraw ? 1 : 0) + (hasExternalMelds ? 0 : immediateMeldTileCountV132(question));
         const maskWidthPx = frameWidth * mask.width / 100;
         const insetPx = Math.max(7, Math.min(15, frameWidth * .018));
         const dividerWidth = hasDraw ? 10 : 0;

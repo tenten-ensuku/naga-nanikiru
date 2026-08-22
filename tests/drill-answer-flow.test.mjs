@@ -34,7 +34,7 @@ test("requires explicit confirmation before revealing or recording an answer", a
 
 test("records answer timing and exposes the synchronized drill version", async () => {
   const html = await source();
-  assert.match(html, /const APP_VERSION = 145;/);
+  assert.match(html, /const APP_VERSION = 149;/);
   assert.match(html, /const MODEL_PRIORITY = \["ニシキ", "ヒバカリ", "カガシ", "ガンマ", "オメガ"\];/);
   assert.match(html, /const HAND_BAR_MODEL_NAMES = \["ニシキ", "ヒバカリ", "カガシ"\];/);
   assert.match(html, /const topCallModelIndices = priorityIndicesV16\(3\);/);
@@ -73,12 +73,14 @@ test("detects self-meld hand masks from dark-blue panels and image-bottom panels
   assert.match(html, /function isImmediateCallDiscardV132\(/);
   assert.match(html, /function displayConcealedHandV143\(/);
   assert.match(html, /generator\.displayConcealedHand\(question\)/);
-  assert.match(html, /const displayHand = displayConcealedHandV143\(SCENE\)/);
-  assert.match(html, /sortHandV20\(displayConcealedHandV143\(SCENE\)\)/);
-  assert.match(html, /const closedCount = displayConcealedHandV143\(question\)\.length/);
+  assert.match(html, /const displaySlots = displayHandSlotsV146\(SCENE\)/);
+  assert.match(html, /displaySlots\.filter\(Boolean\)/);
+  assert.match(html, /displaySlots\.map\(\(tile, index\) => tile == null \? emptyHandSlotV146\(\) : tileButtonV16\(tile, index\)\)/);
+  assert.match(html, /sortHandV20\(displayHand\)/);
+  assert.match(html, /const closedCount = displaySlots \? displaySlots\.length : displayConcealedHandV143\(question\)\.length/);
   assert.match(html, /function handMaskMeldCountV144\(question\)/);
   const maskFallbackBody = functionBody(html, "handMaskFallbackV17", "rgbHexV17");
-  assert.match(maskFallbackBody, /if \(isImmediateCallDiscardV132\(question\)\) return \{ \.\.\.HAND_MASK_PRESETS_V128\[0\] \};/);
+  assert.match(maskFallbackBody, /if \(!state\.revealed && isImmediateCallDiscardV132\(question\)\) return \{ \.\.\.HAND_MASK_PRESETS_V128\[0\] \};/);
   assert.match(maskFallbackBody, /HAND_MASK_PRESETS_V128\[handMaskMeldCountV144\(question\)\]/);
   assert.match(html, /0: \{ left: 11\.5, top: 79\.3, width: 67\.8, height: 20\.7/);
   assert.match(html, /const handMaskV18 = handMaskFallbackV17\(question\);/);
