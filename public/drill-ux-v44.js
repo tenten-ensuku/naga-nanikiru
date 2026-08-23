@@ -3,7 +3,7 @@
 
   var STORAGE_KEY = "naga-nanikiru-user-state-v1";
   var DAY_MS = 24 * 60 * 60 * 1000;
-  var SCORE_MARKS = ["×", "△", "〇", "💮"];
+  var SCORE_MARKS = ["×", "△", "〇", "◎"];
 
   function isRecord(value) {
     return value !== null && typeof value === "object" && !Array.isArray(value);
@@ -309,7 +309,7 @@
     if (raw === undefined || raw === null) {
       return "";
     }
-    var value = String(raw);
+    var value = String(raw).replace(/💮/g, "◎");
     for (var index = 0; index < SCORE_MARKS.length; index += 1) {
       if (value.indexOf(SCORE_MARKS[index]) >= 0) {
         return SCORE_MARKS[index];
@@ -416,7 +416,7 @@
     var requiredCount = Number.isFinite(count) ? Math.max(1, Math.floor(count)) : 2;
     var answers = recentAnswers(source, key, requiredCount);
     return answers.length >= requiredCount && answers.every(function (entry) {
-      return answerMark(entry) === "💮";
+      return answerMark(entry) === "◎";
     });
   }
 
@@ -568,7 +568,7 @@
   }
 
   function emptyScoreCounts() {
-    return { "×": 0, "△": 0, "〇": 0, "💮": 0 };
+    return { "×": 0, "△": 0, "〇": 0, "◎": 0 };
   }
 
   function scoreRates(counts, denominator) {
@@ -613,7 +613,7 @@
       rates: rates,
       scoreRates: rates,
       safeRate: entries.length
-        ? ((scoreCounts["💮"] || 0) + (scoreCounts["〇"] || 0)) / entries.length * 100
+        ? ((scoreCounts["◎"] || 0) + (scoreCounts["〇"] || 0)) / entries.length * 100
         : 0
     };
   }

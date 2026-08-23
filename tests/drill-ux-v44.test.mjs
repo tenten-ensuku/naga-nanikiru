@@ -7,7 +7,8 @@ const moduleUrl = new URL("../public/drill-ux-v44.js", import.meta.url);
 const MARK_X = "\u00d7";
 const MARK_TRIANGLE = "\u25b3";
 const MARK_CIRCLE = "\u3007";
-const MARK_MASTERED = "\ud83d\udcae";
+const MARK_MASTERED = "\u25ce";
+const LEGACY_MARK_MASTERED = "\ud83d\udcae";
 
 async function loadApi(storage) {
   const source = await readFile(moduleUrl, "utf8");
@@ -129,7 +130,7 @@ test("returns latest history, analytics math, streak, and type breakdowns", asyn
       { questionKey: "discard", scoreMark: MARK_X, responseTimeMs: 1000, answeredAt: "2026-08-01T00:00:00Z" },
       { questionKey: "discard", scoreMark: MARK_CIRCLE, responseTimeMs: 2000, answeredAt: "2026-08-02T00:00:00Z" },
       { questionKey: "call", scoreMark: MARK_TRIANGLE, responseTimeMs: 3000, answeredAt: "2026-08-02T00:00:00Z" },
-      { questionKey: "riichi", scoreMark: MARK_MASTERED, responseTimeMs: 4000, answeredAt: "2026-08-03T00:00:00Z" }
+      { questionKey: "riichi", scoreMark: LEGACY_MARK_MASTERED, responseTimeMs: 4000, answeredAt: "2026-08-03T00:00:00Z" }
     ]
   };
   const latest = api.latestAnswerMap(state);

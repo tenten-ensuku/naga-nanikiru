@@ -10,13 +10,18 @@ test("renders the v87 scene and half-game generator controls", async () => {
     readFile(indexUrl, "utf8"),
     readFile(generatorUrl, "utf8")
   ]);
-  assert.match(html, /const APP_VERSION = 158/);
+  assert.match(html, /const APP_VERSION = 159/);
   assert.match(html, /function captureGeneratorFormDraftV157\(\)/);
   assert.match(html, /destination: document\.getElementById\("generatorDestinationSelect"\)\?\.value \|\| generatorDestinationV130 \|\| ""/);
   assert.match(html, /function restoreGeneratorFormDraftV157\(draft\)/);
   assert.match(html, /generatorDestinationExplicitV157 = true/);
-  assert.match(html, /const generatorDraft = menuViewV16 === "generator" \? captureGeneratorFormDraftV157\(\) : null;/);
-  assert.match(html, /bindGeneratorV44\(\);\s*restoreGeneratorFormDraftV157\(generatorDraft\);/);
+  assert.match(html, /let generatorFormDraftV157 = \(\(\) => \{/);
+  assert.match(html, /sessionStorage\.getItem\(GENERATOR_DRAFT_KEY_V159\)/);
+  assert.match(html, /function persistGeneratorFormDraftV157\(\)/);
+  assert.match(html, /if \(menuViewV16 === "generator"\) persistGeneratorFormDraftV157\(\);/);
+  assert.match(html, /bindGeneratorV44\(\);\s*restoreGeneratorFormDraftV157\(generatorFormDraftV157\);/);
+  assert.match(html, /generatorForm\?\.addEventListener\("input", persistGeneratorFormDraftV157\)/);
+  assert.match(html, /generatorForm\?\.addEventListener\("change", persistGeneratorFormDraftV157\)/);
   assert.match(html, /const storedIsValid = stored === "local" \|\| rows\.some/);
   assert.match(html, /const defaultValue = generatorDestinationExplicitV157/);
   assert.match(html, /data-range-session="all"[^>]*>10問解く\s*<span/);

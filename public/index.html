@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=58">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=58">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=58">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=159">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=159">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=159">
   <title>NAGA局面ドリル｜何切る復習問題集</title>
   <meta name="description" content="NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリ。">
   <meta name="theme-color" content="#06131e">
@@ -2138,14 +2138,16 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
+  <link rel="stylesheet" href="ux-v159.css?v=159">
 </head>
 <body>
   <main class="page">
     <section class="menu-panel" id="menuPanel" aria-labelledby="menuTitle">
       <aside class="menu-sidebar" aria-label="問題集ナビゲーション">
-        <div class="menu-brand"><span class="menu-brand-tile" aria-hidden="true">中</span><span class="menu-brand-title">問題集</span><span class="menu-brand-actions"><button class="menu-notice-button" id="announcementButton" type="button" aria-label="アナウンスを開く" title="アナウンス">📢<span class="notification-badge" id="announcementBadge" hidden></span></button><button class="menu-notice-button" id="commentNotificationsButton" type="button" aria-label="コメント・追加通知を開く" title="コメント・追加通知">💬<span class="notification-badge" id="commentNotificationBadge" hidden></span></button><span class="menu-brand-version">V<span id="menuVersion"></span></span></span></div>
+        <div class="menu-brand"><span class="menu-brand-tile" aria-hidden="true">中</span><span class="menu-brand-title">問題集</span><span class="menu-brand-actions"><button class="menu-notice-button" id="announcementButton" type="button" aria-label="アナウンスを開く" title="アプリの更新情報を見る"><span class="menu-notice-label">更新</span><span class="notification-badge" id="announcementBadge" hidden></span></button><button class="menu-notice-button" id="commentNotificationsButton" type="button" aria-label="コメント・追加通知を開く" title="コメントと問題追加の通知を見る"><span class="menu-notice-label">通知</span><span class="notification-badge" id="commentNotificationBadge" hidden></span></button><span class="menu-brand-version">V<span id="menuVersion"></span></span></span></div>
         <nav class="menu-nav" aria-label="問題集メニュー">
-          <button class="menu-nav-button is-active" type="button" data-menu-view="my" title="問題集を選び、一覧から学習を始める"><span class="menu-nav-icon" aria-hidden="true">▦</span><span>問題集</span><span class="menu-nav-badge" data-menu-count="collections">0</span></button>
+          <button class="menu-nav-button is-active" type="button" data-menu-view="today" title="今日の10問を始める"><span class="menu-nav-icon" aria-hidden="true">10</span><span>今日の10問</span></button>
+          <button class="menu-nav-button" type="button" data-menu-view="my" title="問題集を選び、一覧から学習を始める"><span class="menu-nav-icon" aria-hidden="true">▦</span><span>問題一覧</span><span class="menu-nav-badge" data-menu-count="collections">0</span></button>
           <button class="menu-nav-button" type="button" data-menu-view="analysis" title="回答率・習熟度・回答時間など、自分の学習状況を見る"><span class="menu-nav-icon" aria-hidden="true">▥</span><span>成績・履歴</span></button>
           <button class="menu-nav-button" type="button" data-menu-view="generator" title="NAGA URLから問題を作り、保存先を選ぶ"><span class="menu-nav-icon" aria-hidden="true">＋</span><span>問題生成</span></button>
           <button class="menu-nav-button" type="button" data-menu-view="settings" title="表示名・表示方法・問題集の設定を変更する"><span class="menu-nav-icon" aria-hidden="true">⚙</span><span>設定</span></button>
@@ -2156,7 +2158,6 @@
           <span class="account-status" id="accountStatus">回答履歴はこの端末だけに保存されています。</span>
           <button class="primary" id="discordAuthButton" type="button">Discordでログイン</button>
           <button id="importHistoryButton" type="button" hidden>この端末の履歴を取り込む</button>
-          <button id="copyShareUrlButton" type="button" hidden>共有URLをコピー</button>
         </div>
       </aside>
       <div class="menu-content">
@@ -2167,8 +2168,8 @@
         <section class="collection-space-panel" id="collectionSpacePanel" aria-live="polite" hidden></section>
         <section class="quick-start" id="quickStart" aria-label="すぐに始める">
         <button class="quick-start-card primary" type="button" data-session-mode="recommended" title="未回答と苦手問題をバランスよく出題します">
-          <span class="quick-start-kicker">DAILY DRILL</span>
-          <span class="quick-start-title">おすすめ10問</span>
+          <span class="quick-start-kicker">TODAY'S SESSION</span>
+          <span class="quick-start-title">今日の10問</span>
           <span class="quick-start-note" id="recommendedDrillNote">苦手問題と未回答を優先します</span>
         </button>
         <button class="quick-start-card" id="resumeSessionButton" type="button" data-session-mode="resume" title="中断したセッションの続きから再開します" hidden>
@@ -2235,7 +2236,7 @@
           <label class="menu-order-control" for="menuOrderSelect" title="次の問題へ進む順序を選びます"><span>出題順</span><select id="menuOrderSelect" aria-label="出題順"><option value="sequential">順番</option><option value="reverse">逆順</option><option value="random">ランダム（解答数が少ない順）</option></select></label>
           <button class="menu-range-action primary" type="button" data-range-session="all" title="現在の範囲から10問の学習を始めます">10問解く <span aria-hidden="true">→</span></button>
         </div>
-        <div class="menu-list-header" id="menuListHeader" aria-hidden="true"><span title="問題のタイトルとジャンル">問題</span><span title="現在の回答状態">ステータス</span><span title="直近5回の採点履歴">直近の結果</span><span title="この問題集でのログインユーザー個人のお気に入り">お気に入り</span><span title="直近の結果が💮の問題だけ、ここからアーカイブに移せます">アーカイブ</span></div>
+        <div class="menu-list-header" id="menuListHeader" aria-hidden="true"><span title="問題のタイトルとジャンル">問題</span><span title="現在の回答状態">状態</span><span title="直近5回の採点履歴">最近の成績</span><span title="この問題集でのログインユーザー個人のお気に入り">お気に入り</span><span title="直近の結果が◎の問題だけ、ここからアーカイブに移せます">アーカイブ</span></div>
         <div class="menu-grid" id="menuGrid"></div>
         <div class="menu-load-more" id="menuLoadMore" hidden></div>
         <div class="menu-empty" id="menuEmpty" hidden></div>
@@ -2243,8 +2244,8 @@
     </section>
     <header class="header">
       <div>
-        <p class="eyebrow">NAGA SCREENSHOT-BASED DRILL</p>
-        <h1>何切る？</h1>
+        <p class="eyebrow" id="questionBreadcrumb">問題集 › 今日の10問</p>
+        <h1 id="questionPageTitle">何切る？</h1>
       </div>
       <div class="version" id="versionLabel"></div>
     </header>
@@ -2294,7 +2295,7 @@
       </div>
       <div class="answer-actions">
         <button class="next-button" id="nextQuestionBottomButton" type="button" hidden>次の問題へ</button>
-        <button class="archive-next-button" id="archiveQuestionButton" type="button" title="直近の結果が💮の問題を、この問題集のあなた専用アーカイブへ移します" hidden>アーカイブに移す</button>
+        <button class="archive-next-button" id="archiveQuestionButton" type="button" title="直近の結果が◎の問題を、この問題集のあなた専用アーカイブへ移します" hidden>アーカイブに移す</button>
         <button class="answer-organize-button" id="currentFavoriteButton" type="button" title="この問題集でお気に入りに登録します">☆ お気に入り</button>
         <button class="answer-organize-button" id="currentManageButton" type="button" title="この問題を整理・編集します">整理</button>
       </div>
@@ -2419,7 +2420,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 158;
+    const APP_VERSION = 159;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -2494,6 +2495,14 @@
       return callBinaryKindV128(action) === "pass" ? "スルー" : "鳴く";
     }
 
+    function normalizeScoreMarkV159(value) {
+      return String(value || "").replaceAll("💮", "◎");
+    }
+
+    function isPerfectScoreMarkV159(value) {
+      return normalizeScoreMarkV159(value) === "◎";
+    }
+
     function questionCallActionV112(question, index) {
       const explicit = normalizeCallActionV112(question?.callRecommendedActions?.[index])
         || normalizeCallActionV112(question?.models?.[index]?.callAction);
@@ -2557,7 +2566,7 @@
         .map(index => SCENE.models[index].name);
       const modelMatch = matchingModelNames.length ? `◎ ${matchingModelNames.join("・")}と一致！！` : "";
       if (judgeFirstRecommendation && state.riichi === judgeRiichi) {
-        return { className: "score-first", mark: "💮", label: "第一推奨と一致", modelMatch };
+        return { className: "score-first", mark: "◎", label: "第一推奨と一致", modelMatch };
       }
       const probabilities = SCENE.models.map((model, index) => SCENE.probabilities[state.selected]?.[index] ?? 0);
       const badCount = probabilities.filter(value => value <= 5).length;
@@ -3218,7 +3227,7 @@
     }
 
     function init() {
-      document.getElementById("versionLabel").textContent = `SCREENSHOT BASE v${APP_VERSION}`;
+      document.getElementById("versionLabel").textContent = `V${APP_VERSION}`;
       document.getElementById("versionSmall").textContent = APP_VERSION;
       document.getElementById("menuVersion").textContent = APP_VERSION;
       document.getElementById("nagaSourceLink").href = NAGA_URL;
@@ -3252,7 +3261,7 @@
       };
       let questionsV16 = [baseQuestionV16];
       let currentQuestionIndexV16 = 0;
-      let menuViewV16 = "my";
+      let menuViewV16 = "today";
       let menuSearchV44 = "";
       let menuStatusFiltersV92 = [];
       let menuTypeV44 = "all";
@@ -3270,6 +3279,16 @@
       let generatorSpecV44 = null;
       let generatorModeV46 = "scene";
       let generatorJobIdV51 = null;
+      let generatorStageV159 = 1;
+      let generatorBusyV159 = false;
+      const GENERATOR_DRAFT_KEY_V159 = "naga-nanikiru-generator-draft-v159";
+      let generatorFormDraftV157 = (() => {
+        try {
+          return JSON.parse(sessionStorage.getItem(GENERATOR_DRAFT_KEY_V159) || "null");
+        } catch {
+          return null;
+        }
+      })();
       const generatorSelectedCandidatesV158 = new Set();
       let generatorPreviewBatchBusyV158 = false;
       function captureGeneratorFormDraftV157() {
@@ -3289,6 +3308,7 @@
 
       function restoreGeneratorFormDraftV157(draft) {
         if (!draft) return;
+        generatorFormDraftV157 = { ...draft };
         const destinationSelect = document.getElementById("generatorDestinationSelect");
         const destination = String(draft.destination || "");
         if (destinationSelect && destination && [...destinationSelect.options].some(option => option.value === destination)) {
@@ -3311,6 +3331,19 @@
         const customSettings = document.getElementById("generatorCustomSettings");
         if (customSettings) customSettings.open = draft.customSettingsOpen;
       }
+
+      function persistGeneratorFormDraftV157() {
+        const draft = captureGeneratorFormDraftV157();
+        if (draft) {
+          generatorFormDraftV157 = draft;
+          try {
+            sessionStorage.setItem(GENERATOR_DRAFT_KEY_V159, JSON.stringify(draft));
+          } catch {
+            // Session storage is an enhancement only; the in-memory draft remains authoritative.
+          }
+        }
+        return generatorFormDraftV157;
+      }
       let supabaseSessionV46 = null;
       let authPendingV46 = false;
       let sharedCollectionV46 = null;
@@ -3332,7 +3365,8 @@
       const LEGACY_USER_STATE_KEY_V16 = "naga-nanikiru-user-state-v1";
       const MENU_VIEW_COPY_V16 = {
         collections: { title: "問題集" },
-        my: { title: "問題集" },
+        today: { title: "今日の学習" },
+        my: { title: "問題一覧" },
         archive: { title: "アーカイブ" },
         generator: { title: "問題生成" },
         settings: { title: "設定" },
@@ -3456,7 +3490,7 @@
         { version: 88, date: "2026-08-15", title: "問題158を副露判断の局面に差し替えました", body: "指定されたNAGA局面URLから、1pへのポン判断として問題158を更新しました。" },
         { version: 89, date: "2026-08-15", title: "赤牌記法を牌画像に変換するようにしました", body: "44r5sのような表記を、4索・4索・赤5索の牌画像として表示します。" },
         { version: 90, date: "2026-08-15", title: "共有問題集の問題158を指定局面へ修正しました", body: "くにたそチェック側にも、tv=24の副露判断・1p対象牌として反映しました。" },
-        { version: 91, date: "2026-08-15", title: "学習進捗に習熟度を追加しました", body: "回答率に加えて、直近2回が連続で💮になった問題の割合を習熟度として表示します。×・△ありは直近3回の回答履歴を見て判定します。" },
+        { version: 91, date: "2026-08-15", title: "学習進捗に習熟度を追加しました", body: "回答率に加えて、直近2回が連続で◎になった問題の割合を習熟度として表示します。×・△ありは直近3回の回答履歴を見て判定します。" },
         { version: 92, date: "2026-08-16", title: "出題順と詳細条件を選びやすくしました", body: "順番・逆順・未回答優先ランダムを選べるようにし、回答状態は複数のチェックボックスで絞り込めるようにしました。" },
         { version: 93, date: "2026-08-16", title: "ランダム出題を解答数の少ない順にしました", body: "ランダム出題では、これまでの解答回数が少ない問題を優先し、同じ解答回数の問題はランダムに並べます。" },
         { version: 94, date: "2026-08-16", title: "ランダム出題の優先基準を表示しました", body: "出題順の選択肢に、ランダム出題が解答数の少ない順であることを明記しました。" },
@@ -3471,7 +3505,7 @@
         { version: 104, date: "2026-08-17", title: "コメントを投稿者本人だけ編集できるようにしました", body: "共有コメントは投稿者本人にだけ「編集」ボタンを表示し、保存時にも本人確認を行います。" },
         { version: 107, date: "2026-08-17", title: "問題の追加・削除を問題集オーナーに限定しました", body: "問題の追加・整理・完全削除は、アプリ所有者または問題集オーナーだけが行えるようになりました。問題集管理画面から、承認済みメンバーへオーナーを引き継ぐこともできます。" },
         { version: 108, date: "2026-08-17", title: "垣崎にまさんを問題集オーナーに設定しました", body: "既存のDiscordログイン履歴を確認し、垣崎にまさんのアカウントを垣崎にま問題集のオーナーに設定しました。" },
-        { version: 109, date: "2026-08-17", title: "💮正解した問題をアーカイブできるようにしました", body: "共有問題そのものは削除せず、自分の学習一覧からだけ整理できます。問題範囲タブの右端にあるアーカイブから、いつでも確認・復帰できます。" },
+        { version: 109, date: "2026-08-17", title: "◎正解した問題をアーカイブできるようにしました", body: "共有問題そのものは削除せず、自分の学習一覧からだけ整理できます。問題範囲タブの右端にあるアーカイブから、いつでも確認・復帰できます。" },
         { version: 110, date: "2026-08-17", title: "みんなの回答数と得票率を表示するようにしました", body: "解答後に、問題ごとの回答数と選択肢別の得票率を確認できます。同じ人の繰り返し回答も、1回につき1票として集計します。" },
         { version: 111, date: "2026-08-18", title: "問題集の公開範囲を3種類に整理しました", body: "新しく作る問題集は、プライベート・承認許可制・全体公開から選べます。既存の共有問題集はそのまま利用できます。" },
         { version: 114, date: "2026-08-18", publishedAt: "2026-08-18T00:12:00+09:00", title: "問題集作成時の認証状態を安定させました", body: "ログイン直後に問題集を作成した際も、入力内容を保ったまま処理できるようにしました。" },
@@ -3486,7 +3520,7 @@
         { version: 128, date: "2026-08-19", publishedAt: "2026-08-19T21:47:44+09:00", title: "副露判定と局面画像のルールを統一しました", body: "副露判定の採点とみんなの回答を「鳴く／スルー」の二択に統一しました。また、くにたそ・垣崎にま・ピエールの全問題画像を、投稿画像ではなく各NAGA局面URLから青背景・伏牌状態で再生成し、副露数ごとのマスク基準を適用しました。" },
         { version: 129, date: "2026-08-21", publishedAt: "2026-08-21T00:41:48+09:00", title: "スレッド先頭画像の除外ルールを再確認しました", body: "問題画像として使うスレッド作成者の最初の画像1枚は、コメント欄へ重複転載しないようにしました。画像IDの照合に失敗した場合も、作成者の最初の画像へフォールバックします。後続の画像・文章・NAGA URLはこれまでどおり残します。" },
         { version: 130, date: "2026-08-21", publishedAt: "2026-08-21T01:05:00+09:00", title: "編集メンバーと問題生成先を整理しました", body: "承認済みの編集メンバーが問題の生成・インポート・編集・整理を行えるようになりました。問題生成では保存先を明示的に選べます。公開範囲・メンバー管理・完全削除は、これまでどおり所有者とアプリ管理者だけが行います。" },
-        { version: 131, date: "2026-08-22", publishedAt: "2026-08-22T09:00:00+09:00", title: "お気に入りとアーカイブを問題集ごとに整理しました", body: "ログインユーザーごと・問題集ごとにお気に入りとアーカイブを分けて保存します。直近の結果が💮の問題は、問題一覧のアーカイブ欄からも移動できます。各操作に説明を表示するようにしました。" },
+        { version: 131, date: "2026-08-22", publishedAt: "2026-08-22T09:00:00+09:00", title: "お気に入りとアーカイブを問題集ごとに整理しました", body: "ログインユーザーごと・問題集ごとにお気に入りとアーカイブを分けて保存します。直近の結果が◎の問題は、問題一覧のアーカイブ欄からも移動できます。各操作に説明を表示するようにしました。" },
         { version: 142, date: "2026-08-22", publishedAt: "2026-08-22T19:00:00+09:00", title: "保存済みコメントの欠落本文を復元しました", body: "Discordスナップショットから保存済みコメントを再構成し、URL直後の7m・5p・3sなどの牌表記や解説本文が欠落しないようにしました。今後の生成処理にも同じ転送規則を適用します。" },
         { version: 143, date: "2026-08-22", publishedAt: "2026-08-22T21:00:00+09:00", title: "副露直後の手牌表示を修正しました", body: "チー・ポン・大明槓の直後に打牌を選ぶ問題で、副露に使った自分の牌が暗手牌へ重複表示されないようにしました。表示用のコピーだけを補正し、副露後の通常問題と元の牌譜状態は変更しません。" },
         { version: 144, date: "2026-08-22", publishedAt: "2026-08-22T22:00:00+09:00", title: "副露直後のマスク範囲を副露数に合わせて固定しました", body: "副露した瞬間から、その直後の打牌が終わるまで、現在の副露数に対応した手牌マスクを使うようにしました。副露直後だけ全幅マスクへ戻る不整合をなくし、通常局面と後続局面のマスク判定は変更していません。" },
@@ -4922,11 +4956,11 @@
       function canArchiveCurrentQuestionV109() {
         const question = questionsV16[currentQuestionIndexV16];
         const latest = question ? latestAnswerV44(question) : null;
-        return Boolean(canUsePersonalCollectionStateV131() && state.revealed && latest?.scoreMark === "💮" && !isArchivedV109(question));
+        return Boolean(canUsePersonalCollectionStateV131() && state.revealed && isPerfectScoreMarkV159(latest?.scoreMark) && !isArchivedV109(question));
       }
 
       function canArchiveFromMenuV131(question) {
-        return Boolean(canUsePersonalCollectionStateV131() && latestAnswerV44(question)?.scoreMark === "💮" && !isArchivedV109(question));
+        return Boolean(canUsePersonalCollectionStateV131() && isPerfectScoreMarkV159(latestAnswerV44(question)?.scoreMark) && !isArchivedV109(question));
       }
 
       function updateUserStateV16(mutator) {
@@ -5146,7 +5180,8 @@
         return userStateV16.answerHistory
           .filter(entry => entry.questionKey === questionKeyV16(question) && entry.scoreMark)
           .sort((left, right) => new Date(right.answeredAt) - new Date(left.answeredAt))
-          .slice(0, 5);
+          .slice(0, 5)
+          .map(entry => ({ ...entry, scoreMark: normalizeScoreMarkV159(entry.scoreMark) }));
       }
 
       function scoreForQuestionV16(question, entry) {
@@ -5159,7 +5194,7 @@
           const modelNames = models.filter((model, index) => callBinaryKindV128(questionCallActionV112(question, index)) === selectedKind).map(model => model.name);
           const modelMatch = modelNames.length ? `◎ ${modelNames.join("・")}と一致！！` : "";
           const targetKind = callBinaryKindV128(questionCallActionV112(question, judgeIndex));
-          if (selectedKind === targetKind) return { mark: "💮", label: "第一推奨と一致", modelMatch };
+          if (selectedKind === targetKind) return { mark: "◎", label: "第一推奨と一致", modelMatch };
           if (modelNames.length) return { mark: "△", label: "他モデルの第一推奨と一致", modelMatch };
           return { mark: "×", label: "全モデルと不一致", modelMatch };
         }
@@ -5169,7 +5204,7 @@
         const hasReach = question.decisionType === "discard" && (question.hasRiichiJudgment === true || Array.isArray(question.reach) && question.reach.some(value => Number(value) > 0));
         const judgeRecommendation = models[judgeIndex]?.recommendation;
         const judgeRiichi = hasReach && (question.reach?.[judgeIndex] || 0) >= 5000;
-        if (entry.selected === judgeRecommendation && (!hasReach || Boolean(entry.riichi) === judgeRiichi)) return { mark: "💮", label: "第一推奨と一致", modelMatch };
+        if (entry.selected === judgeRecommendation && (!hasReach || Boolean(entry.riichi) === judgeRiichi)) return { mark: "◎", label: "第一推奨と一致", modelMatch };
         const probabilities = models.map((model, index) => question.probabilities?.[entry.selected]?.[index] ?? 0);
         const badCount = probabilities.filter(value => value <= 5).length;
         if (badCount === 0) return { mark: "〇", label: "全モデル悪手（推奨率5％以下）回避", modelMatch };
@@ -5391,7 +5426,7 @@
           const modelNames = SCENE.models.filter((model, index) => callBinaryKindV128(callActionRecommendationV112(index)) === selectedKind).map(model => model.name);
           const modelMatch = modelNames.length ? `◎ ${modelNames.join("・")}と一致！！` : "";
           const first = selectedKind === callBinaryKindV128(callActionRecommendationV112(state.judgeModel));
-          if (first) return { className: "score-first", mark: "💮", label: "第一推奨と一致", modelMatch };
+          if (first) return { className: "score-first", mark: "◎", label: "第一推奨と一致", modelMatch };
           if (modelNames.length) return { className: "score-partial", mark: "△", label: "他モデルの第一推奨と一致", modelMatch };
           return { className: "score-bad", mark: "×", label: "全モデルと不一致", modelMatch };
         }
@@ -5399,7 +5434,7 @@
         const modelNames = SCENE.models.filter(model => model.recommendation === state.selected).map(model => model.name);
         const modelMatch = modelNames.length ? `◎ ${modelNames.join("・")}と一致！！` : "";
         const first = judge?.recommendation === state.selected && (!hasReachV16() || state.riichi === recommendedRiichiV16(state.judgeModel));
-        if (first) return { className: "score-first", mark: "💮", label: "第一推奨と一致", modelMatch };
+        if (first) return { className: "score-first", mark: "◎", label: "第一推奨と一致", modelMatch };
         const probabilities = SCENE.models.map((model, index) => SCENE.probabilities?.[state.selected]?.[index] ?? 0);
         const badCount = probabilities.filter(value => value <= 5).length;
         if (badCount === 0) return { className: "score-safe", mark: "〇", label: "全モデル悪手（推奨率5％以下）回避", modelMatch };
@@ -6047,6 +6082,14 @@
         state.commentComposerOpen = false;
         state.commentEditingId = null;
         document.getElementById("commentInput").value = "";
+        const breadcrumb = document.getElementById("questionBreadcrumb");
+        const pageTitle = document.getElementById("questionPageTitle");
+        if (breadcrumb) {
+          const session = activeSessionV44();
+          const location = session ? sessionModeLabelV44(session.mode) : "問題一覧";
+          breadcrumb.textContent = `問題集 › ${collectionDisplayNameV101()} › ${location}`;
+        }
+        if (pageTitle) pageTitle.textContent = `問題${question.number}　${questionTypeV44(question)}`;
         clearCommentDraftV68();
         syncCommentComposerV75();
         const localCommentsV44 = userStateV16.localComments?.[questionKeyV16(question)] || [];
@@ -6087,6 +6130,7 @@
       }
 
       function showMenuV16(view = menuViewV16) {
+        if (menuViewV16 === "generator") persistGeneratorFormDraftV157();
         const requestedView = view === "collections" || view === "favorites" ? "my" : view;
         if (view === "favorites") menuFavoritesOnlyV137 = true;
         menuViewV16 = MENU_VIEW_COPY_V16[requestedView] ? requestedView : "my";
@@ -6123,14 +6167,18 @@
           button.classList.toggle("is-active", active);
           button.setAttribute("aria-pressed", String(active));
         });
+        const menuPanel = document.getElementById("menuPanel");
+        if (menuPanel) menuPanel.dataset.view = menuViewV16;
         document.querySelectorAll("[data-menu-count]").forEach(badge => {
           badge.textContent = String(counts[badge.dataset.menuCount] ?? 0);
         });
         const summary = document.getElementById("menuSummary");
+        const listView = ["my", "archive"].includes(menuViewV16);
         const rangeQuestions = menuFilteredQuestionsV80();
         const rangeAnswered = rangeQuestions.filter(question => latestAnswerV44(question));
         const rangeUnanswered = rangeQuestions.length - rangeAnswered.length;
         summary.innerHTML = `<div class="menu-summary-stat"><small>この範囲の問題</small><strong>${rangeQuestions.length}<em>問</em></strong></div><div class="menu-summary-stat${rangeUnanswered ? " is-alert" : ""}"><small>未回答</small><strong>${rangeUnanswered}<em>問</em></strong></div><div class="menu-summary-stat"><small>回答済み</small><strong>${rangeAnswered.length}<em>問</em></strong></div>`;
+        summary.hidden = !listView;
         const rangeTarget = document.getElementById("menuRangeTarget");
         if (rangeTarget) rangeTarget.textContent = `${rangeQuestions.length}問が対象`;
         const rangeCount = document.getElementById("menuRangeCount");
@@ -6140,7 +6188,7 @@
         const progress = allPlayable.length ? Math.round(allAnswered / allPlayable.length * 100) : 0;
         const masteredCount = allPlayable.filter(question => window.DrillUxV44?.isMasteredByRecentAnswers?.(userStateV16, questionKeyV16(question), 2)).length;
         const mastery = allPlayable.length ? Math.round(masteredCount / allPlayable.length * 100) : 0;
-        document.getElementById("menuSidebarProgress").innerHTML = `<span class="menu-sidebar-progress-title">学習の進捗</span><div class="menu-progress-metric"><div class="menu-progress-metric-head"><span class="menu-progress-metric-label">回答率</span><strong class="menu-progress-metric-value">${progress}%</strong></div><span class="menu-progress-metric-note">${allAnswered} / ${allPlayable.length}問を回答済み</span><span class="menu-sidebar-progress-track" aria-hidden="true"><span class="menu-sidebar-progress-fill" style="width:${progress}%"></span></span></div><div class="menu-progress-metric menu-progress-mastery"><div class="menu-progress-metric-head"><span class="menu-progress-metric-label">習熟度</span><strong class="menu-progress-metric-value">${mastery}%</strong></div><span class="menu-progress-metric-note">${masteredCount} / ${allPlayable.length}問が習熟（直近2回連続💮）</span><span class="menu-sidebar-progress-track" aria-hidden="true"><span class="menu-sidebar-progress-fill is-mastery" style="width:${mastery}%"></span></span></div>`;
+        document.getElementById("menuSidebarProgress").innerHTML = `<span class="menu-sidebar-progress-title">学習の進捗</span><div class="menu-progress-metric"><div class="menu-progress-metric-head"><span class="menu-progress-metric-label">回答率</span><strong class="menu-progress-metric-value">${progress}%</strong></div><span class="menu-progress-metric-note">${allAnswered} / ${allPlayable.length}問を回答済み</span><span class="menu-sidebar-progress-track" aria-hidden="true"><span class="menu-sidebar-progress-fill" style="width:${progress}%"></span></span></div><div class="menu-progress-metric menu-progress-mastery"><div class="menu-progress-metric-head"><span class="menu-progress-metric-label">習熟度</span><strong class="menu-progress-metric-value">${mastery}%</strong></div><span class="menu-progress-metric-note">${masteredCount} / ${allPlayable.length}問が習熟（直近2回連続◎）</span><span class="menu-sidebar-progress-track" aria-hidden="true"><span class="menu-sidebar-progress-fill is-mastery" style="width:${mastery}%"></span></span></div>`;
         const copy = MENU_VIEW_COPY_V16[menuViewV16];
         document.getElementById("menuTitle").textContent = copy.title;
         const resume = activeSessionV44();
@@ -6148,9 +6196,8 @@
         resumeButton.hidden = !resume;
         if (resume) document.getElementById("resumeSessionNote").textContent = `${Number(resume.cursor || 0) + 1} / ${resume.questionKeys.length} から再開`;
         document.getElementById("recommendedDrillNote").textContent = "苦手問題と未回答をバランスよく出題";
-        document.getElementById("quickStart").hidden = ["collections", "generator", "analysis", "students", "session", "settings", "archive"].includes(menuViewV16);
+        document.getElementById("quickStart").hidden = true;
         document.getElementById("menuFilters").hidden = !["my", "archive"].includes(menuViewV16);
-        const listView = ["my", "archive"].includes(menuViewV16);
         document.getElementById("menuRangeActions").hidden = menuViewV16 !== "my";
         document.getElementById("menuListHeader").hidden = !listView;
         document.getElementById("menuListHeader").setAttribute("aria-hidden", String(!listView));
@@ -6388,7 +6435,7 @@
         const stats = window.DrillUxV44?.analytics?.({ questions: questionsV16, state: userStateV16, now: new Date() }) || {};
         const attempts = stats.totalAttempts ?? userStateV16.answerHistory.length;
         const averageSeconds = attempts ? ((stats.averageResponseTimeMs ?? 0) / 1000).toFixed(1) : "0.0";
-        const safeCount = (stats.scoreCounts?.["💮"] || 0) + (stats.scoreCounts?.["〇"] || 0);
+        const safeCount = (stats.scoreCounts?.["◎"] || 0) + (stats.scoreCounts?.["〇"] || 0);
         const safeRate = attempts ? Math.round(safeCount / attempts * 100) : 0;
         const breakdowns = [
           ["打牌判断", stats.breakdowns?.discard],
@@ -6402,13 +6449,17 @@
         const result = userStateV16.lastSessionResult;
         if (!result) return `<div class="menu-placeholder"><strong>まだ終了したセッションがありません</strong>「おすすめ10問」から学習を始めてください。</div>`;
         const rows = result.results || [];
-        const counts = rows.reduce((map, row) => ({ ...map, [row.scoreMark]: (map[row.scoreMark] || 0) + 1 }), {});
+        const counts = rows.reduce((map, row) => {
+          const mark = normalizeScoreMarkV159(row.scoreMark);
+          map[mark] = (map[mark] || 0) + 1;
+          return map;
+        }, {});
         const average = rows.length ? (rows.reduce((sum, row) => sum + Number(row.responseTimeMs || 0), 0) / rows.length / 1000).toFixed(1) : "0.0";
-        const weak = rows.filter(row => ["×", "△"].includes(row.scoreMark)).length;
+        const weak = rows.filter(row => ["×", "△"].includes(normalizeScoreMarkV159(row.scoreMark))).length;
         const unansweredMode = result.mode === "unanswered" || result.mode === "range-unanswered";
         const nextTenAction = result.mode === "range-unanswered" ? "range-unanswered" : "unanswered";
         const nextTenLabel = unansweredMode ? "次の10問へ" : "新しい10問";
-        return `<section class="session-result"><h3>${sessionModeLabelV44(result.mode)} 完了</h3><div class="dashboard-grid"><div class="stat-card"><span class="stat-label">回答</span><span class="stat-value">${rows.length}</span></div><div class="stat-card"><span class="stat-label">💮・〇</span><span class="stat-value">${(counts["💮"] || 0) + (counts["〇"] || 0)}</span></div><div class="stat-card"><span class="stat-label">△・×</span><span class="stat-value">${weak}</span></div><div class="stat-card"><span class="stat-label">平均時間</span><span class="stat-value">${average}<small>秒</small></span></div></div><p>💮 ${counts["💮"] || 0}　〇 ${counts["〇"] || 0}　△ ${counts["△"] || 0}　× ${counts["×"] || 0}</p><div class="session-result-actions">${weak ? `<button class="drill-action" type="button" data-result-action="retry-weak">間違えた${weak}問をもう一度</button>` : ""}<button class="drill-action secondary" type="button" data-result-action="${nextTenAction}">${nextTenLabel}</button><button class="drill-action secondary" type="button" data-result-action="menu">${escapeHtml(collectionDisplayNameV101())}へ</button></div></section>`;
+        return `<section class="session-result"><h3>${sessionModeLabelV44(result.mode)} 完了</h3><div class="dashboard-grid"><div class="stat-card"><span class="stat-label">回答</span><span class="stat-value">${rows.length}</span></div><div class="stat-card"><span class="stat-label">◎・〇</span><span class="stat-value">${(counts["◎"] || 0) + (counts["〇"] || 0)}</span></div><div class="stat-card"><span class="stat-label">△・×</span><span class="stat-value">${weak}</span></div><div class="stat-card"><span class="stat-label">平均時間</span><span class="stat-value">${average}<small>秒</small></span></div></div><p>◎ ${counts["◎"] || 0}　〇 ${counts["〇"] || 0}　△ ${counts["△"] || 0}　× ${counts["×"] || 0}</p><div class="session-result-actions">${weak ? `<button class="drill-action" type="button" data-result-action="retry-weak">間違えた${weak}問をもう一度</button>` : ""}<button class="drill-action secondary" type="button" data-result-action="${nextTenAction}">${nextTenLabel}</button><button class="drill-action secondary" type="button" data-result-action="menu">${escapeHtml(collectionDisplayNameV101())}へ</button></div></section>`;
       }
 
       function generatorSeatOptionsV46() {
@@ -6419,6 +6470,25 @@
         return `<option value="auto">URLのtwを使用</option><option value="0">プレイヤー1</option><option value="1">プレイヤー2</option><option value="2">プレイヤー3</option><option value="3">プレイヤー4</option>`;
       }
 
+      function generatorProgressMarkupV159() {
+        const steps = ["URLを入力", "解析", "候補を確認", "追加完了"];
+        return `<ol class="generator-progress" aria-label="問題生成の進捗">${steps.map((label, index) => {
+          const step = index + 1;
+          const stateClass = step < generatorStageV159 ? " is-complete" : step === generatorStageV159 ? " is-current" : "";
+          return `<li class="generator-progress-step${stateClass}" data-generator-stage="${step}"${step === generatorStageV159 ? ' aria-current="step"' : ""}><span>${step}</span><strong>${label}</strong></li>`;
+        }).join("")}</ol>`;
+      }
+
+      function setGeneratorStageV159(stage, busy = false) {
+        generatorStageV159 = Math.max(1, Math.min(4, Number(stage) || 1));
+        generatorBusyV159 = Boolean(busy);
+        const panel = document.querySelector(".generator-panel");
+        if (panel) panel.setAttribute("aria-busy", String(generatorBusyV159));
+        const progress = document.querySelector(".generator-progress");
+        if (!progress) return;
+        progress.outerHTML = generatorProgressMarkupV159();
+      }
+
       function renderGeneratorViewV44() {
         const sceneMode = generatorModeV46 === "scene";
         generatorDestinationOptionsV130();
@@ -6426,7 +6496,7 @@
         const destinationNote = destination.kind === "shared"
           ? `共有問題集「${escapeHtml(destination.label)}」へ保存します。追加内容は利用者全員に反映され、問題番号は保存先で自動採番されます。`
           : "この端末だけに保存します。共有問題集へ追加する場合は、上の保存先を切り替えてください。";
-        return `<section class="generator-panel"><h3>NAGA URLから問題生成</h3><p>局面URLまたは半荘URLを解析し、候補を確認して問題集へ追加します。盤面プレビューは任意で、画像を取得していない候補も追加できます。</p>${renderGeneratorDestinationV130()}<form class="generator-form generator-form-v46" id="generatorForm"><fieldset class="generator-mode-field"><legend>入力種類</legend><label><input type="radio" name="generatorMode" value="scene"${sceneMode ? " checked" : ""}> 局面URL（1問）</label><label><input type="radio" name="generatorMode" value="match"${sceneMode ? "" : " checked"}> 半荘URL（候補を一括抽出）</label></fieldset><label class="generator-url-field">NAGA URL<input id="generatorUrl" type="url" required inputmode="url" placeholder="https://naga.dmv.nico/htmls/..."></label><label id="generatorSeatLabel">対象プレイヤー<select id="generatorSeat">${generatorSeatOptionsV46()}</select></label><button class="generator-button" type="submit">${sceneMode ? "1問を生成" : "候補を抽出"}</button><details class="generator-custom-settings" id="generatorCustomSettings"${sceneMode ? " hidden" : ""}><summary>抽出条件をカスタム設定</summary><div class="generator-settings-grid"><label>悪手閾値（%）<input id="generatorThreshold" type="number" min="0.1" max="50" step="0.1" value="5"></label><label>対象判断<select id="generatorDecisionType"><option value="all">すべて</option><option value="discard">打牌</option><option value="call">副露</option><option value="reach">リーチ</option></select></label><label>モデル条件<select id="generatorModelMode"><option value="any">いずれかのモデルで悪手</option><option value="all">全モデルで悪手</option></select></label><label>最大抽出数<input id="generatorMaxCandidates" type="number" min="1" max="500" step="1" value="100"></label></div><p class="generator-settings-note">悪手は選択した打牌・副露の実際の選択率が閾値以下の候補です。リーチはリーチ判断を含む局面だけを対象にします。</p></details></form><div class="generator-status" id="generatorStatus" aria-live="polite"></div><div class="generator-results" id="generatorResults">${renderGeneratorCandidatesV44()}</div><p>${destinationNote}</p></section>`;
+        return `<section class="generator-panel" aria-busy="${generatorBusyV159}"><div class="generator-heading"><div><p class="generator-kicker">QUESTION BUILDER</p><h3>NAGA URLから問題生成</h3><p>URLを解析し、候補を確認してから追加します。盤面プレビューは順番に自動取得できます。</p></div></div>${generatorProgressMarkupV159()}<div class="generator-setup">${renderGeneratorDestinationV130()}<form class="generator-form generator-form-v46" id="generatorForm"><fieldset class="generator-mode-field"><legend>入力種類</legend><label><input type="radio" name="generatorMode" value="scene"${sceneMode ? " checked" : ""}> 局面URL（1問）</label><label><input type="radio" name="generatorMode" value="match"${sceneMode ? "" : " checked"}> 半荘URL（候補を一括抽出）</label></fieldset><label class="generator-url-field">NAGA URL<input id="generatorUrl" type="url" required inputmode="url" autocomplete="off" placeholder="https://naga.dmv.nico/htmls/..."></label><label id="generatorSeatLabel">対象プレイヤー<select id="generatorSeat">${generatorSeatOptionsV46()}</select></label><button class="generator-button" type="submit">${sceneMode ? "1問を生成" : "候補を抽出"}</button><details class="generator-custom-settings" id="generatorCustomSettings"${sceneMode ? " hidden" : ""}><summary>抽出条件をカスタム設定</summary><div class="generator-settings-grid"><label>悪手閾値（%）<input id="generatorThreshold" type="number" min="0.1" max="50" step="0.1" value="5"></label><label>対象判断<select id="generatorDecisionType"><option value="all">すべて</option><option value="discard">打牌</option><option value="call">副露</option><option value="reach">リーチ</option></select></label><label>モデル条件<select id="generatorModelMode"><option value="any">いずれかのモデルで悪手</option><option value="all">全モデルで悪手</option></select></label><label>最大抽出数<input id="generatorMaxCandidates" type="number" min="1" max="500" step="1" value="100"></label></div><p class="generator-settings-note">悪手は選択した打牌・副露の実際の選択率が閾値以下の候補です。リーチ判断を含む局面も対象にできます。</p></details></form><p class="generator-destination-note">${destinationNote}</p></div><div class="generator-status" id="generatorStatus" aria-live="polite"></div><div class="generator-results" id="generatorResults">${renderGeneratorCandidatesV44()}</div></section>`;
       }
 
       function generatorCandidateChoiceMarkupV158(candidate) {
@@ -6452,7 +6522,7 @@
         const canAdd = canAddGeneratedQuestionV130();
         const selectedCount = [...generatorSelectedCandidatesV158].filter(index => generatorCandidatesV44[index]).length;
         const hasBatch = generatorCandidatesV44.length > 1;
-        const previewButton = hasBatch ? `<button class="generator-button secondary" type="button" data-generator-capture-all${generatorPreviewBatchBusyV158 ? " disabled" : ""}>${generatorPreviewBatchBusyV158 ? "プレビューを取得中…" : "プレビューを順番に取得"}</button>` : "";
+        const previewButton = hasBatch ? `<button class="generator-button secondary" type="button" data-generator-capture-all${generatorPreviewBatchBusyV158 ? " disabled" : ""}>${generatorPreviewBatchBusyV158 ? "プレビューを読込中…" : "プレビューを読み込む"}</button>` : "";
         const addButton = `<button class="generator-button" type="button" data-generator-add-selected${selectedCount === 0 || !canAdd ? " disabled" : ""}>選択した${selectedCount}問を追加</button>`;
         return `<div class="generator-results-toolbar"><span><strong>${generatorCandidatesV44.length}件</strong>の候補</span><div class="generator-results-actions">${previewButton}${addButton}</div></div>`;
       }
@@ -6507,7 +6577,7 @@
         if (hasRecentWeak) {
           return { label: "苦手", className: "is-review" };
         }
-        if (["💮", "〇"].includes(latestMark)) {
+        if (["◎", "〇"].includes(normalizeScoreMarkV159(latestMark))) {
           return { label: "正解", className: "is-correct" };
         }
         if (latest) return { label: "回答済み", className: "is-answered" };
@@ -6515,7 +6585,7 @@
       }
 
       function menuScoreMarkClassV63(mark) {
-        if (mark === "💮") return "is-excellent";
+        if (isPerfectScoreMarkV159(mark)) return "is-excellent";
         if (mark === "〇") return "is-safe";
         if (mark === "△") return "is-review";
         if (mark === "×") return "is-miss";
@@ -6547,22 +6617,58 @@
         panel.innerHTML = `<button class="menu-load-more-button" type="button" id="menuLoadMoreButton">さらに${nextCount}問を表示（${visible} / ${total}問）</button>`;
       }
 
+      function renderTodayViewV159() {
+        const playable = questionsV16.filter(isPlayableV16);
+        const unanswered = playable.filter(question => !latestAnswerV44(question));
+        const weak = playable.filter(question => window.DrillUxV44?.hasWeakInRecentAnswers?.(userStateV16, questionKeyV16(question), 3));
+        const mastered = playable.filter(question => window.DrillUxV44?.isMasteredByRecentAnswers?.(userStateV16, questionKeyV16(question), 2));
+        const favoriteCount = playable.filter(isFavoriteV16).length;
+        const session = activeSessionV44();
+        const sessionTotal = Number(session?.questionKeys?.length || 10);
+        const sessionCurrent = session ? Math.min(sessionTotal, Number(session.cursor || 0) + 1) : 0;
+        const sessionPercent = sessionTotal ? Math.round(sessionCurrent / sessionTotal * 100) : 0;
+        const collectionName = collectionDisplayNameV101();
+        const seen = new Set();
+        const recent = (userStateV16.answerHistory || [])
+          .slice()
+          .sort((left, right) => Date.parse(right.answeredAt || "") - Date.parse(left.answeredAt || ""))
+          .map(entry => ({ entry, index: questionIndexByKeyV44(entry.questionKey) }))
+          .filter(({ index }) => index >= 0 && !seen.has(index) && seen.add(index))
+          .slice(0, 4);
+        const startLabel = session ? "続きから再開" : "今日の10問を始める";
+        const startMode = session ? "resume" : "recommended";
+        const recentMarkup = recent.length
+          ? recent.map(({ entry, index }) => {
+              const question = questionsV16[index];
+              const mark = normalizeScoreMarkV159(entry.scoreMark) || "—";
+              return `<button class="today-recent-row" type="button" data-question-index="${index}"><span><strong>${escapeHtml(question.title || `問題${question.number}`)}</strong><small>${escapeHtml(questionTypeV44(question))}</small></span><span class="today-recent-mark ${menuScoreMarkClassV63(mark)}" aria-label="直近の結果 ${escapeHtml(mark)}">${escapeHtml(mark)}</span><span class="today-recent-arrow" aria-hidden="true">›</span></button>`;
+            }).join("")
+          : `<p class="today-empty-note">最初の問題を解くと、ここに最近の成績が表示されます。</p>`;
+        return `<section class="today-dashboard" aria-labelledby="todayDashboardTitle"><div class="today-breadcrumb"><span>${escapeHtml(collectionName)}</span><span aria-hidden="true">›</span><strong>今日の学習</strong></div><section class="today-hero"><div class="today-hero-copy"><p class="today-kicker">TODAY'S SESSION</p><h3 id="todayDashboardTitle">今日の10問</h3><p>未回答を優先しながら、苦手な局面も自然に混ぜて出題します。</p><button class="today-primary-action" type="button" data-today-session="${startMode}">${startLabel}<span aria-hidden="true">→</span></button></div><div class="today-session-progress" aria-label="今日のセッション進捗 ${sessionCurrent}/${sessionTotal}"><span>今日の進捗</span><strong>${sessionCurrent}<small> / ${sessionTotal}</small></strong><span class="today-progress-track" aria-hidden="true"><span style="width:${sessionPercent}%"></span></span></div></section><div class="today-metric-grid"><button class="today-metric-card is-new" type="button" data-today-session="unanswered"><span>まだ解いていない</span><strong>${unanswered.length}<small>問</small></strong><small>未回答を優先して学習</small></button><button class="today-metric-card is-review" type="button" data-today-session="weak"><span>もう一度考えたい</span><strong>${weak.length}<small>問</small></strong><small>直近3回に×・△あり</small></button><button class="today-metric-card is-mastered" type="button" data-menu-jump="analysis"><span>身についた</span><strong>${mastered.length}<small>問</small></strong><small>直近2回連続で◎</small></button><button class="today-metric-card is-favorite" type="button" data-menu-jump="favorites"><span>お気に入り</span><strong>${favoriteCount}<small>問</small></strong><small>あとで見返す問題</small></button></div><section class="today-recent"><div class="today-section-heading"><div><p class="today-kicker">RECENT</p><h3>最近解いた問題</h3></div><button type="button" data-menu-jump="my">問題一覧へ</button></div><div class="today-recent-list">${recentMarkup}</div></section></section>`;
+      }
+
       function renderMenuCardsV16() {
         const grid = document.getElementById("menuGrid");
         const empty = document.getElementById("menuEmpty");
         const loadMore = document.getElementById("menuLoadMore");
-        const generatorDraft = menuViewV16 === "generator" ? captureGeneratorFormDraftV157() : null;
+        if (menuViewV16 === "generator") persistGeneratorFormDraftV157();
         if (loadMore) {
           loadMore.hidden = true;
           loadMore.innerHTML = "";
         }
         renderMenuNavigationV16();
+        if (menuViewV16 === "today") {
+          grid.innerHTML = renderTodayViewV159();
+          grid.style.display = "block";
+          empty.hidden = true;
+          return;
+        }
         if (menuViewV16 === "generator") {
           grid.innerHTML = renderGeneratorViewV44();
           grid.style.display = "block";
           empty.hidden = true;
           bindGeneratorV44();
-          restoreGeneratorFormDraftV157(generatorDraft);
+          restoreGeneratorFormDraftV157(generatorFormDraftV157);
           return;
         }
         if (menuViewV16 === "analysis") {
@@ -6612,7 +6718,7 @@
           const archiveMarkup = menuViewV16 === "archive"
             ? `<button class="menu-card-icon-action is-archived" type="button" data-menu-action="unarchive" data-question-index="${index}" aria-label="問題${question.number}をアーカイブから戻す" title="アーカイブから戻す">${menuArchiveIconV109()}</button>`
             : canArchiveFromMenuV131(question)
-            ? `<button class="menu-card-icon-action is-archived" type="button" data-menu-action="archive" data-question-index="${index}" aria-label="問題${question.number}をアーカイブに移す" title="直近の結果が💮です。問題集ごとのアーカイブに移します">${menuArchiveIconV109()}</button>`
+            ? `<button class="menu-card-icon-action is-archived" type="button" data-menu-action="archive" data-question-index="${index}" aria-label="問題${question.number}をアーカイブに移す" title="直近の結果が◎です。問題集ごとのアーカイブに移します">${menuArchiveIconV109()}</button>`
             : `<span class="menu-card-icon-placeholder" aria-hidden="true"></span>`;
           return `<article class="menu-card"><button class="menu-card-open" type="button" data-question-index="${index}" title="問題${question.number}を開く"><span class="menu-card-heading"><span class="menu-card-title">${title}</span><span class="menu-card-notification">${commentNotice}</span></span><span class="menu-card-meta">${escapeHtml(typeMetadata)}</span></button><div class="menu-card-status">${statusMarkup}</div><span class="menu-card-latest${scores.length ? "" : " is-empty"}" aria-label="${escapeHtml(historyLabel)}" title="${escapeHtml(historyLabel)}">${history}</span><button class="menu-card-icon-action${favorite ? " is-active" : ""}" type="button" data-menu-action="favorite" data-question-index="${index}" aria-pressed="${favorite}" aria-label="${escapeHtml(favoriteLabel)}" title="${escapeHtml(favoriteLabel)}">${favorite ? "★" : "☆"}</button>${archiveMarkup}</article>`;
         }).join("");
@@ -6835,11 +6941,13 @@
       async function captureGeneratorCandidateV51(index) {
         const candidate = generatorCandidatesV44[index];
         if (!candidate) return false;
+        setGeneratorStageV159(3, true);
         if (!window.NagaSupabase?.configured || !generatorJobIdV51 || typeof window.NagaSupabase.captureNagaScene !== "function") {
           candidate._captureState = "error";
           candidate._captureError = "自動プレビュー取得は未設定です。画像なしでも追加できます。";
           document.getElementById("generatorResults").innerHTML = renderGeneratorCandidatesV44();
           bindGeneratorCandidateInputsV44();
+          setGeneratorStageV159(3, false);
           return false;
         }
         candidate._captureState = "loading";
@@ -6868,6 +6976,7 @@
         } finally {
           document.getElementById("generatorResults").innerHTML = renderGeneratorCandidatesV44();
           bindGeneratorCandidateInputsV44();
+          setGeneratorStageV159(3, false);
         }
       }
 
@@ -6957,6 +7066,7 @@
         generatorJobIdV51 = null;
         generatorSelectedCandidatesV158.clear();
         generatorDuplicateKeysV153.clear();
+        setGeneratorStageV159(2, true);
         setGeneratorStatusV44("NAGAレポートを解析しています…");
         try {
           const spec = window.NagaGeneratorV44.parseNagaUrl(input);
@@ -7008,6 +7118,7 @@
               generatorCandidatesV44 = [];
               setGeneratorStatusV44("解析しました。player_info.nameから対象プレイヤーを選び、もう一度「候補を抽出」を押してください。");
               document.getElementById("generatorResults").innerHTML = "";
+              setGeneratorStageV159(2, false);
               return;
             }
             const extraction = generatorExtractionOptionsV46();
@@ -7019,6 +7130,7 @@
           setGeneratorStatusV44(generatorCandidatesV44.length ? `${generatorCandidatesV44.length}件の候補を抽出しました。${ignoredSceneNote}` : `条件に一致する局面はありませんでした。${ignoredSceneNote}`);
           document.getElementById("generatorResults").innerHTML = renderGeneratorCandidatesV44();
           bindGeneratorCandidateInputsV44();
+          setGeneratorStageV159(generatorCandidatesV44.length ? 3 : 2, false);
         } catch (error) {
           generatorCandidatesV44 = [];
           generatorSelectedCandidatesV158.clear();
@@ -7026,6 +7138,7 @@
           setGeneratorStatusV44(error.message || "解析に失敗しました。", true);
           const results = document.getElementById("generatorResults");
           if (results) results.innerHTML = "";
+          setGeneratorStageV159(1, false);
         }
       }
 
@@ -7049,6 +7162,7 @@
       async function captureGeneratorCandidatesSequentiallyV158() {
         if (generatorPreviewBatchBusyV158 || generatorCandidatesV44.length < 2) return;
         generatorPreviewBatchBusyV158 = true;
+        setGeneratorStageV159(3, true);
         const indexes = generatorCandidatesV44.map((candidate, index) => candidate?._imageData ? null : index).filter(index => index != null);
         const total = indexes.length;
         const results = document.getElementById("generatorResults");
@@ -7059,6 +7173,7 @@
         if (!total) {
           generatorPreviewBatchBusyV158 = false;
           setGeneratorStatusV44("すべての候補でプレビュー取得済みです。");
+          setGeneratorStageV159(3, false);
           return;
         }
         let completed = 0;
@@ -7074,6 +7189,7 @@
           bindGeneratorCandidateInputsV44();
         }
         setGeneratorStatusV44(`プレビュー取得が完了しました。${completed}件を確認できます。`);
+        setGeneratorStageV159(3, false);
       }
 
       async function addSelectedGeneratorQuestionsV158() {
@@ -7110,6 +7226,7 @@
           bindGeneratorCandidateInputsV44();
         }
         setGeneratorStatusV44(added ? `${added}件を「${destination.label}」へ追加しました。` : "選択した候補は追加されませんでした。", added === 0);
+        setGeneratorStageV159(added ? 4 : 3, false);
       }
 
       async function addGeneratedQuestionV44(index, { skipConfirm = false, suppressRender = false } = {}) {
@@ -7205,6 +7322,7 @@
         setGeneratorStatusV44(destination.kind === "shared"
           ? `「${destination.label}」へ追加しました。問題番号は移行先で自動採番されます。`
           : `${question.title}をこの端末へ追加しました。`);
+        setGeneratorStageV159(4, false);
         if (!suppressRender) {
           document.getElementById("generatorResults").innerHTML = renderGeneratorCandidatesV44();
           bindGeneratorCandidateInputsV44();
@@ -7213,7 +7331,10 @@
       }
 
       function bindGeneratorV44() {
-        document.getElementById("generatorForm")?.addEventListener("submit", analyzeGeneratorUrlV44);
+        const generatorForm = document.getElementById("generatorForm");
+        generatorForm?.addEventListener("submit", analyzeGeneratorUrlV44);
+        generatorForm?.addEventListener("input", persistGeneratorFormDraftV157);
+        generatorForm?.addEventListener("change", persistGeneratorFormDraftV157);
         document.querySelectorAll('input[name="generatorMode"]').forEach(input => input.addEventListener("change", syncGeneratorModeV46));
         document.getElementById("generatorDestinationSelect")?.addEventListener("change", event => {
           generatorDestinationV130 = String(event.currentTarget.value || "local");
@@ -7231,6 +7352,22 @@
       }
 
       function handleMenuGridClickV16(event) {
+        const todaySessionButton = event.target.closest("[data-today-session]");
+        if (todaySessionButton) {
+          startSessionV44(todaySessionButton.dataset.todaySession || "recommended");
+          return;
+        }
+        const menuJumpButton = event.target.closest("[data-menu-jump]");
+        if (menuJumpButton) {
+          const target = String(menuJumpButton.dataset.menuJump || "my");
+          if (target === "favorites") {
+            menuFavoritesOnlyV137 = true;
+            showMenuV16("my");
+          } else {
+            showMenuV16(target);
+          }
+          return;
+        }
         const existingQuestionButton = event.target.closest("[data-generator-existing]");
         if (existingQuestionButton) {
           navigateToExistingGeneratorQuestionV153(existingQuestionButton);
@@ -7330,9 +7467,9 @@
       function remoteAttemptToLocalV81(row, questionByServerId) {
         const questionId = String(row?.question_id || "");
         const question = questionByServerId.get(questionId);
-        const grade = String(row?.grade || "");
+        const grade = normalizeScoreMarkV159(row?.grade);
         const answeredDate = new Date(String(row?.answered_at || ""));
-        if (!question || !["💮", "◎", "〇", "△", "×"].includes(grade) || !Number.isFinite(answeredDate.getTime())) return null;
+        if (!question || !["◎", "〇", "△", "×"].includes(grade) || !Number.isFinite(answeredDate.getTime())) return null;
         const answer = row?.answer && typeof row.answer === "object" && !Array.isArray(row.answer) ? row.answer : {};
         const elapsedMs = row?.elapsed_ms == null ? null : Number(row.elapsed_ms);
         return {
@@ -7427,14 +7564,12 @@
         const status = document.getElementById("accountStatus");
         const authButton = document.getElementById("discordAuthButton");
         const importButton = document.getElementById("importHistoryButton");
-        const shareButton = document.getElementById("copyShareUrlButton");
         const studentNav = document.getElementById("studentHistoryNav");
         if (!window.NagaSupabase?.configured) {
           status.textContent = "回答履歴はこの端末だけに保存されています。Supabase接続後に同期できます。";
           authButton.textContent = "ログイン準備中";
           authButton.disabled = true;
           importButton.hidden = true;
-          shareButton.hidden = !sharedCollectionV46;
           studentNav.hidden = true;
           await refreshCollectionAccessStateV100();
           return;
@@ -7444,7 +7579,6 @@
           status.textContent = "未ログイン：回答履歴はこの端末だけに保存されます。";
           authButton.textContent = "Discordでログイン";
           importButton.hidden = true;
-          shareButton.hidden = !sharedCollectionV46;
           studentNav.hidden = true;
           await refreshCollectionAccessStateV100();
           return;
@@ -7453,7 +7587,6 @@
         status.textContent = `${displayName}としてログイン中。履歴は他の利用者と混ざりません。`;
         authButton.textContent = "ログアウト";
         importButton.hidden = false;
-        shareButton.hidden = !sharedCollectionV46;
         studentNav.hidden = !canViewStudentDashboardV84();
         const synced = await hydrateRemoteAnswerHistoryV81();
         await refreshCollectionAccessStateV100();
@@ -7513,14 +7646,6 @@
           } finally {
             button.disabled = false;
           }
-        });
-        document.getElementById("copyShareUrlButton").addEventListener("click", async () => {
-          if (!sharedCollectionV46) return;
-          const url = new URL(window.location.href);
-          url.search = "";
-          url.searchParams.set("collection", sharedCollectionV46.share_slug);
-          await navigator.clipboard.writeText(url.toString());
-          document.getElementById("copyShareUrlButton").textContent = "コピーしました";
         });
         window.addEventListener("naga:authchange", event => refreshAccountV46(event.detail?.session || null));
         window.addEventListener("naga:autherror", event => {

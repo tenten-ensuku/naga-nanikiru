@@ -32,7 +32,7 @@ test("wires v65 learning UX, generator, Supabase bridge, metadata, and social im
     readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
     access(new URL("../public/og-v44.png", import.meta.url)),
   ]);
-  assert.match(index, /const APP_VERSION = 158/);
+  assert.match(index, /const APP_VERSION = 159/);
   assert.match(index, /function menuRangeStepV120\(\)[\s\S]*?return MENU_RANGE_STEP_V137/);
   assert.match(index, /id="collectionDirectorySelect"/);
   assert.doesNotMatch(index, /class="collection-directory-item/);
@@ -45,7 +45,7 @@ test("wires v65 learning UX, generator, Supabase bridge, metadata, and social im
   assert.doesNotMatch(index, /<div class="menu-heading">\s*<p class="eyebrow">NAGA SCREENSHOT-BASED DRILL<\/p>/);
   assert.match(index, /function menuQuestionSortKeyV99\(question\)[\s\S]*?const entries = menuFilteredQuestionsV80\(\)\.map\(question => \(\{ question, index:/);
   assert.match(index, /\.sort\(\(left, right\) => menuQuestionSortKeyV99\(left\.question\) - menuQuestionSortKeyV99\(right\.question\)/);
-  assert.match(index, /<h1>何切る？<\/h1>/);
+  assert.match(index, /<h1 id="questionPageTitle">何切る？<\/h1>/);
   assert.doesNotMatch(index, /<p class="header-note">NAGAの局面を解き、復習し、弱点を育て直す実戦問題集<\/p>/);
   assert.match(index, /id="menuButton"[^>]*>メニューに戻る<\/button>/);
   assert.match(index, /const typeMetadata = questionTypeV44\(question\);/);
