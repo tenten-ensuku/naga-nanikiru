@@ -2407,7 +2407,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 155;
+    const APP_VERSION = 156;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -3258,6 +3258,37 @@
       let generatorSpecV44 = null;
       let generatorModeV46 = "scene";
       let generatorJobIdV51 = null;
+      function captureGeneratorFormDraftV156() {
+        const input = document.getElementById("generatorUrl");
+        if (!input) return null;
+        return {
+          url: input.value,
+          seat: document.getElementById("generatorSeat")?.value || "",
+          threshold: document.getElementById("generatorThreshold")?.value || "5",
+          decisionType: document.getElementById("generatorDecisionType")?.value || "all",
+          modelMode: document.getElementById("generatorModelMode")?.value || "any",
+          maxCandidates: document.getElementById("generatorMaxCandidates")?.value || "100",
+          customSettingsOpen: Boolean(document.getElementById("generatorCustomSettings")?.open)
+        };
+      }
+
+      function restoreGeneratorFormDraftV156(draft) {
+        if (!draft) return;
+        const input = document.getElementById("generatorUrl");
+        if (input) input.value = draft.url || "";
+        const seat = document.getElementById("generatorSeat");
+        if (seat && [...seat.options].some(option => option.value === draft.seat)) seat.value = draft.seat;
+        const threshold = document.getElementById("generatorThreshold");
+        if (threshold) threshold.value = draft.threshold;
+        const decisionType = document.getElementById("generatorDecisionType");
+        if (decisionType && [...decisionType.options].some(option => option.value === draft.decisionType)) decisionType.value = draft.decisionType;
+        const modelMode = document.getElementById("generatorModelMode");
+        if (modelMode && [...modelMode.options].some(option => option.value === draft.modelMode)) modelMode.value = draft.modelMode;
+        const maxCandidates = document.getElementById("generatorMaxCandidates");
+        if (maxCandidates) maxCandidates.value = draft.maxCandidates;
+        const customSettings = document.getElementById("generatorCustomSettings");
+        if (customSettings) customSettings.open = draft.customSettingsOpen;
+      }
       let supabaseSessionV46 = null;
       let authPendingV46 = false;
       let sharedCollectionV46 = null;
@@ -6467,6 +6498,7 @@
         const grid = document.getElementById("menuGrid");
         const empty = document.getElementById("menuEmpty");
         const loadMore = document.getElementById("menuLoadMore");
+        const generatorDraft = menuViewV16 === "generator" ? captureGeneratorFormDraftV156() : null;
         if (loadMore) {
           loadMore.hidden = true;
           loadMore.innerHTML = "";
@@ -6477,6 +6509,7 @@
           grid.style.display = "block";
           empty.hidden = true;
           bindGeneratorV44();
+          restoreGeneratorFormDraftV156(generatorDraft);
           return;
         }
         if (menuViewV16 === "analysis") {

@@ -10,7 +10,11 @@ test("renders the v87 scene and half-game generator controls", async () => {
     readFile(indexUrl, "utf8"),
     readFile(generatorUrl, "utf8")
   ]);
-  assert.match(html, /const APP_VERSION = 155/);
+  assert.match(html, /const APP_VERSION = 156/);
+  assert.match(html, /function captureGeneratorFormDraftV156\(\)/);
+  assert.match(html, /function restoreGeneratorFormDraftV156\(draft\)/);
+  assert.match(html, /const generatorDraft = menuViewV16 === "generator" \? captureGeneratorFormDraftV156\(\) : null;/);
+  assert.match(html, /bindGeneratorV44\(\);\s*restoreGeneratorFormDraftV156\(generatorDraft\);/);
   assert.match(html, /data-range-session="all"[^>]*>10問解く\s*<span/);
   assert.doesNotMatch(html, /data-range-session="unanswered">未回答を10問解く/);
   assert.match(html, /range: "この範囲の10問"/);
