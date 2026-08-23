@@ -2407,7 +2407,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 154;
+    const APP_VERSION = 155;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -3501,6 +3501,51 @@
         return value.replace(/^追加問題(?=\d|$)/, "問題");
       }
 
+      function finiteQuestionNumberV154(value) {
+        const number = Number(value);
+        return Number.isSafeInteger(number) && number >= 1 ? number : null;
+      }
+
+      function nextQuestionNumberV154(questions) {
+        const numbers = (Array.isArray(questions) ? questions : [])
+          .map(question => finiteQuestionNumberV154(question?.number))
+          .filter(number => number !== null);
+        const maximum = numbers.reduce((current, number) => Math.max(current, number), 0);
+        return maximum < Number.MAX_SAFE_INTEGER ? maximum + 1 : 1;
+      }
+
+      function repairInvalidCustomQuestionNumbersV154() {
+        const customQuestions = Array.isArray(userStateV16.customQuestions) ? userStateV16.customQuestions : [];
+        if (!customQuestions.length) return;
+        const customIds = new Set(customQuestions.map(question => String(question?.id || "")));
+        const usedNumbers = new Set(questionsV16
+          .filter(question => !customIds.has(String(question?.id || "")))
+          .map(question => finiteQuestionNumberV154(question?.number))
+          .filter(number => number !== null));
+        customQuestions.forEach(question => {
+          const number = finiteQuestionNumberV154(question?.number);
+          if (number !== null) usedNumbers.add(number);
+        });
+        let next = Math.max(0, ...usedNumbers) + 1;
+        let changed = false;
+        const repaired = customQuestions.map(question => {
+          const number = finiteQuestionNumberV154(question?.number);
+          if (number !== null) return question;
+          while (usedNumbers.has(next)) next += 1;
+          usedNumbers.add(next);
+          changed = true;
+          const title = /(?:Infinity|NaN)/.test(String(question?.title || "")) || !question?.title
+            ? `問題${next}`
+            : question.title;
+          return { ...question, number: next, title };
+        });
+        if (!changed) return;
+        userStateV16.customQuestions = repaired;
+        const repairedById = new Map(repaired.map(question => [String(question?.id || ""), question]));
+        questionsV16 = questionsV16.map(question => repairedById.get(String(question?.id || "")) || question);
+        saveUserStateV16();
+      }
+
       function normalizeQuestionTitlesV79() {
         const normalize = question => {
           if (!question || typeof question !== "object") return question;
@@ -3573,7 +3618,7 @@
 
       function normalizeSharedQuestionV66(row, index = 0, shareSlug = sharedCollectionV46?.share_slug || "") {
         const sourcePayload = row?.question && typeof row.question === "object" ? row.question : (row?.payload && typeof row.payload === "object" ? row.payload : {});
-        const number = sourcePayload.number ?? row?.number ?? index + 1;
+        const number = finiteQuestionNumberV154(sourcePayload.number ?? row?.number) ?? index + 1;
         const sourceUrl = sourcePayload.nagaUrl || sourcePayload.sourceUrl || row?.source_url || row?.sourceUrl || "";
         let payload = { ...normalizeNimaKanQuestionV112({ ...sourcePayload, nagaUrl: sourcePayload.nagaUrl || sourceUrl }, number, shareSlug) };
         payload = normalizePierreImmediatePonQuestionV146(payload, number, shareSlug);
@@ -6954,7 +6999,7 @@
           if (!confirmSharedImpactV47("add", preview)) return;
         }
         const nextNumber = destination.kind === "local" || sameAsCurrentShared
-          ? Math.max(...questionsV16.map(question => Number(question.number) || 0)) + 1
+          ? nextQuestionNumberV154(questionsV16)
           : 0;
         const now = new Date().toISOString();
         const creatorId = supabaseSessionV46?.user?.id || null;
@@ -7413,6 +7458,7 @@
             })));
           }
         }
+        repairInvalidCustomQuestionNumbersV154();
         applyQuestionOverridesV47();
         normalizeQuestionTitlesV79();
         migrateAnswerHistoryScoresV16();
