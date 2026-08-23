@@ -2407,7 +2407,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 156;
+    const APP_VERSION = 157;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -3258,11 +3258,12 @@
       let generatorSpecV44 = null;
       let generatorModeV46 = "scene";
       let generatorJobIdV51 = null;
-      function captureGeneratorFormDraftV156() {
+      function captureGeneratorFormDraftV157() {
         const input = document.getElementById("generatorUrl");
         if (!input) return null;
         return {
           url: input.value,
+          destination: document.getElementById("generatorDestinationSelect")?.value || generatorDestinationV130 || "",
           seat: document.getElementById("generatorSeat")?.value || "",
           threshold: document.getElementById("generatorThreshold")?.value || "5",
           decisionType: document.getElementById("generatorDecisionType")?.value || "all",
@@ -3272,8 +3273,15 @@
         };
       }
 
-      function restoreGeneratorFormDraftV156(draft) {
+      function restoreGeneratorFormDraftV157(draft) {
         if (!draft) return;
+        const destinationSelect = document.getElementById("generatorDestinationSelect");
+        const destination = String(draft.destination || "");
+        if (destinationSelect && destination && [...destinationSelect.options].some(option => option.value === destination)) {
+          generatorDestinationV130 = destination;
+          generatorDestinationExplicitV157 = true;
+          destinationSelect.value = destination;
+        }
         const input = document.getElementById("generatorUrl");
         if (input) input.value = draft.url || "";
         const seat = document.getElementById("generatorSeat");
@@ -3297,7 +3305,8 @@
       let collectionAccessMembersV100 = [];
       let collectionAccessNotificationsV100 = [];
       let collectionAccessBusyV100 = false;
-      let generatorDestinationV130 = "local";
+      let generatorDestinationV130 = "";
+      let generatorDestinationExplicitV157 = false;
       const generatorAddedKeysV130 = new Set();
       const generatorDuplicateKeysV153 = new Set();
       const ANSWER_HISTORY_LIMIT_V135 = 5000;
@@ -4168,7 +4177,10 @@
         const currentSlug = String(sharedCollectionV46?.share_slug || "");
         const stored = String(generatorDestinationV130 || "");
         const currentIsEditable = currentSlug && (sharedCollectionV46?.can_edit || sharedCollectionV46?.can_manage);
-        const defaultValue = currentIsEditable ? currentSlug : (rows.some(row => String(row.share_slug || "") === stored) ? stored : "local");
+        const storedIsValid = stored === "local" || rows.some(row => String(row.share_slug || "") === stored);
+        const defaultValue = generatorDestinationExplicitV157
+          ? (storedIsValid ? stored : currentIsEditable ? currentSlug : "local")
+          : (currentIsEditable ? currentSlug : storedIsValid ? stored : "local");
         generatorDestinationV130 = defaultValue;
         return `<option value="local"${defaultValue === "local" ? " selected" : ""}>この端末だけに保存</option>${rows.map(row => {
           const slug = String(row.share_slug || "");
@@ -6498,7 +6510,7 @@
         const grid = document.getElementById("menuGrid");
         const empty = document.getElementById("menuEmpty");
         const loadMore = document.getElementById("menuLoadMore");
-        const generatorDraft = menuViewV16 === "generator" ? captureGeneratorFormDraftV156() : null;
+        const generatorDraft = menuViewV16 === "generator" ? captureGeneratorFormDraftV157() : null;
         if (loadMore) {
           loadMore.hidden = true;
           loadMore.innerHTML = "";
@@ -6509,7 +6521,7 @@
           grid.style.display = "block";
           empty.hidden = true;
           bindGeneratorV44();
-          restoreGeneratorFormDraftV156(generatorDraft);
+          restoreGeneratorFormDraftV157(generatorDraft);
           return;
         }
         if (menuViewV16 === "analysis") {
@@ -7101,6 +7113,7 @@
         document.querySelectorAll('input[name="generatorMode"]').forEach(input => input.addEventListener("change", syncGeneratorModeV46));
         document.getElementById("generatorDestinationSelect")?.addEventListener("change", event => {
           generatorDestinationV130 = String(event.currentTarget.value || "local");
+          generatorDestinationExplicitV157 = true;
           const results = document.getElementById("generatorResults");
           if (results) {
             results.innerHTML = renderGeneratorCandidatesV44();
