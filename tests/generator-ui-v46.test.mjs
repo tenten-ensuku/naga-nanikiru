@@ -10,7 +10,7 @@ test("renders the v87 scene and half-game generator controls", async () => {
     readFile(indexUrl, "utf8"),
     readFile(generatorUrl, "utf8")
   ]);
-  assert.match(html, /const APP_VERSION = 157/);
+  assert.match(html, /const APP_VERSION = 158/);
   assert.match(html, /function captureGeneratorFormDraftV157\(\)/);
   assert.match(html, /destination: document\.getElementById\("generatorDestinationSelect"\)\?\.value \|\| generatorDestinationV130 \|\| ""/);
   assert.match(html, /function restoreGeneratorFormDraftV157\(draft\)/);
@@ -107,7 +107,7 @@ test("renders the v87 scene and half-game generator controls", async () => {
   assert.match(html, /sourceQuestions\.filter\(menuRangeMatchesV60\)/);
   assert.match(html, /class="menu-brand-title">問題集<\/span><span class="menu-brand-actions">/);
   assert.match(html, /getElementById\("menuVersion"\)\.textContent = APP_VERSION/);
-  assert.match(html, /width: min\(850px, 100%\)/);
+  assert.match(html, /width: min\(320px, 100%\)/);
   assert.match(html, /aspect-ratio: 14 \/ 13/);
   assert.match(html, /name="generatorMode"/);
   assert.match(html, /value="scene"/);
@@ -137,8 +137,21 @@ test("renders the v87 scene and half-game generator controls", async () => {
   assert.match(html, /extractBadMoves\(report, seat, \{ \.\.\.extraction, reportId: spec\.reportId \}\)/);
   assert.match(html, /captureGeneratorCandidateV51/);
   assert.match(html, /data-generator-capture/);
+  assert.match(html, /generatorSelectedCandidatesV158/);
+  assert.match(html, /data-generator-select/);
+  assert.match(html, /data-generator-add-selected/);
+  assert.match(html, /function addSelectedGeneratorQuestionsV158\(\)/);
+  assert.match(html, /function captureGeneratorCandidatesSequentiallyV158\(\)/);
+  assert.match(html, /data-generator-capture-all/);
   assert.match(html, /captureNagaScene/);
   assert.match(html, /問題候補が完成しました/);
+  assert.doesNotMatch(html, /candidate-file-label/);
+  assert.doesNotMatch(html, /data-candidate-image/);
+  assert.doesNotMatch(html, /手動画像を使用/);
+  assert.doesNotMatch(html, /手動でスクリーンショットを指定/);
+  assert.doesNotMatch(html, /if \(!candidate\._imageData\)/);
+  assert.match(html, /image: candidate\._imageData \|\| null/);
+  assert.match(html, /needsScreenshot: !candidate\._imageData/);
   assert.doesNotMatch(html, /id="surroundingsToggle"/);
   assert.doesNotMatch(html, /SCENE_IMAGES/);
   assert.doesNotMatch(html, /images: \{ off: candidate\._imageData, open: candidate\._imageData \}/);
