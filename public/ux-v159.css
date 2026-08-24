@@ -2114,3 +2114,39 @@ button:disabled {
     animation-iteration-count: 1 !important;
   }
 }
+
+/* V160: keep the result glyphs, but remove the decorative outer rings. */
+.page.menu-active .menu-card-latest-mark,
+.page.menu-active .today-recent-mark {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.page.menu-active .menu-card-latest-mark {
+  font-size: 18px;
+}
+
+.page.menu-active .today-recent-mark {
+  font-size: 22px;
+}
+
+@media (max-width: 800px) {
+  .page.menu-active .menu-card-latest-mark {
+    font-size: 16px;
+  }
+
+  .page.menu-active .today-recent-mark {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .page.menu-active .menu-card-latest-mark {
+    font-size: 15px;
+  }
+
+  .page.menu-active .today-recent-mark {
+    font-size: 18px;
+  }
+}
