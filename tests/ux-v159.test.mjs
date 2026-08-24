@@ -13,9 +13,9 @@ test("V161 exposes the daily-learning shell and synchronized release assets", as
     readFile(identityUrl, "utf8"),
   ]);
 
-  assert.match(html, /const APP_VERSION = 162;/);
-  assert.match(identity, /APP_VERSION = 162/);
-  assert.match(html, /ux-v159\.css\?v=162/);
+  assert.match(html, /const APP_VERSION = 163;/);
+  assert.match(identity, /APP_VERSION = 163/);
+  assert.match(html, /ux-v159\.css\?v=163/);
   assert.match(html, /data-menu-view="today"/);
   assert.match(html, /今日の10問/);
   assert.match(html, /function renderTodayViewV159\(/);
@@ -78,20 +78,20 @@ test("V161 keeps the archive action stable after saving", async () => {
   assert.match(css, /V161: archive feedback stays in the action column/);
 });
 
-test("V162 provides the verified basic-sequence collection presentation", async () => {
+test("V163 keeps the basic-sequence collection in the South-seat viewpoint", async () => {
   const html = await readFile(indexUrl, "utf8");
   const builder = await readFile(new URL("../scripts/build-basic-sequence-source.mjs", import.meta.url), "utf8");
   const importer = await readFile(new URL("../scripts/import-basic-sequence.mjs", import.meta.url), "utf8");
-  assert.match(html, /id="tablePlayerNamesOverlay"/);
-  assert.match(html, /function isBasicSequenceCollectionV162\(/);
-  assert.match(html, /function renderTablePlayerNamesV162\(/);
+  assert.doesNotMatch(html, /tablePlayerNamesOverlay|table-player-name-replacement/);
+  assert.match(html, /function isBasicSequenceCollectionV163\(/);
+  assert.match(html, /function syncBasicSequenceThemeV163\(/);
   assert.match(html, /is-basic-sequence-collection/);
   assert.match(builder, /const REPORT_ID = "27ade94f05bb9ee180ccfaadb3ec85e45553cc8c7709913fb4a385b476351cdev2_2"/);
+  assert.match(builder, /const VIEWER_TW = 1/);
+  assert.match(builder, /rawPlayerSeat: RAW_PLAYER_SEAT/);
   assert.match(builder, /if \(questions\.length !== 89\)/);
   assert.match(builder, /actualDiscard !== question\.models\?\.\[0\]\?\.recommendation/);
-  for (const name of ["アンチョビ", "ター子", "順子さん"]) {
-    assert.match(builder, new RegExp(name));
-    assert.match(importer, new RegExp(name));
-  }
+  assert.doesNotMatch(builder, /tablePlayerNames|アンチョビ|ター子|順子さん/);
+  assert.doesNotMatch(importer, /tablePlayerNames|アンチョビ|ター子|順子さん/);
   assert.match(importer, /title: "基本序列問題集"/);
 });

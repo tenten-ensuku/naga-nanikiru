@@ -3,7 +3,8 @@
 /**
  * Build the 89-question "基本序列問題集" manifest from one NAGA report.
  *
- * The report's viewer tw=0 maps to the raw report player at seat 1 (「私」).
+ * The report's viewer tw=1 places the raw report player at seat 1 (「私」)
+ * in the fixed South-seat viewpoint used by the drill.
  * The generator is evaluated in an isolated VM because naga-generator-v44.js
  * is a browser-oriented UMD script.
  */
@@ -13,7 +14,7 @@ import path from "node:path";
 import vm from "node:vm";
 
 const REPORT_ID = "27ade94f05bb9ee180ccfaadb3ec85e45553cc8c7709913fb4a385b476351cdev2_2";
-const VIEWER_TW = 0;
+const VIEWER_TW = 1;
 const RAW_PLAYER_SEAT = 1;
 const REPORT_URL = `https://naga.dmv.nico/reports/${REPORT_ID}.json`;
 const OUT_PATH = path.resolve(process.argv[2] || "outputs/basic-sequence-generated/manifest.json");
@@ -53,12 +54,7 @@ function cloneCandidate(candidate, number) {
     needsScreenshot: true,
     imageSource: "naga_url",
     imageSourceRuleVersion: "naga-url-capture-v2",
-    collectionKey: "basic-sequence",
-    tablePlayerNames: {
-      shimocha: "アンチョビ",
-      toimen: "ター子",
-      kamicha: "順子さん"
-    }
+    collectionKey: "basic-sequence"
   };
 }
 
@@ -88,8 +84,7 @@ async function main() {
       title: "基本序列問題集",
       description: "NAGAの第一推奨を選び、基本序列を確認する必須問題集。",
       visibility: "private",
-      theme: "luxury-gray",
-      tablePlayerNames: { shimocha: "アンチョビ", toimen: "ター子", kamicha: "順子さん" }
+      theme: "luxury-gray"
     },
     source: { reportId: REPORT_ID, viewerTw: VIEWER_TW, rawPlayerSeat: RAW_PLAYER_SEAT, reportUrl: REPORT_URL },
     questions

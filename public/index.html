@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=162">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=162">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=162">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=163">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=163">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=163">
   <title>NAGA局面ドリル｜何切る復習問題集</title>
   <meta name="description" content="NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリ。">
   <meta name="theme-color" content="#06131e">
@@ -297,13 +297,6 @@
     .scene-card { padding: 8px; background: rgba(7, 28, 43, .92); border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow); }
     .scene-frame { position: relative; width: 100%; max-width: 860px; margin: 0 auto; overflow: hidden; background: #033b76; aspect-ratio: 584 / 543; container-type: inline-size; }
     .scene-image { display: block; width: 100%; height: 100%; object-fit: fill; user-select: none; pointer-events: none; }
-    .table-player-names-overlay { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
-    .table-player-names-overlay[hidden] { display: none; }
-    .table-player-name-replacement { position: absolute; display: flex; align-items: center; justify-content: center; box-sizing: border-box; overflow: hidden; padding: 2px 4px; color: #f5f7fa; background: #033b76; border: 1px solid rgba(5, 33, 67, .7); border-radius: 3px; font-size: clamp(9px, 1.8cqw, 16px); font-weight: 850; line-height: 1.05; text-align: center; text-shadow: 0 1px 2px rgba(0,0,0,.45); white-space: nowrap; }
-    .table-player-name-replacement.is-vertical { writing-mode: vertical-rl; text-orientation: upright; }
-    .table-player-name-replacement--shimocha { left: 17%; top: 68%; width: 22%; height: 13%; }
-    .table-player-name-replacement--toimen { left: 73%; top: 8%; width: 17%; height: 16%; }
-    .table-player-name-replacement--kamicha { left: 7%; top: 13%; width: 18%; height: 16%; }
     .page.is-basic-sequence-collection #menuTitle,
     .page.is-basic-sequence-collection .collection-space-title,
     .page.is-basic-sequence-collection .collection-directory-heading { color: #e0e3e8; text-shadow: 0 1px 0 rgba(255,255,255,.16), 0 2px 8px rgba(0,0,0,.32); }
@@ -2155,7 +2148,7 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=162">
+  <link rel="stylesheet" href="ux-v159.css?v=163">
 </head>
 <body>
   <main class="page">
@@ -2284,7 +2277,6 @@
     <section class="scene-card" aria-label="NAGA局面スクリーンショット">
       <div class="scene-frame">
         <img class="scene-image" id="sceneImage" src="question-images/q249.webp" alt="指定NAGA局面の伏牌スクリーンショット">
-        <div class="table-player-names-overlay" id="tablePlayerNamesOverlay" hidden aria-hidden="true"></div>
         <div class="hand-mask" aria-hidden="true"></div>
         <div class="hand-layer" id="handLayer" aria-label="選択できる自分の手牌"></div>
       </div>
@@ -2438,7 +2430,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 162;
+    const APP_VERSION = 163;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -3548,7 +3540,7 @@
         { version: 150, date: "2026-08-22", publishedAt: "2026-08-22T22:07:37+09:00", title: "問題1351の副露面子を元画像表示に統一しました", body: "副露面子は元のNAGA局面画像に含まれているため、問題画面で再生成しないようにしました。問題1351では、副露前の13スロットを保った中抜き手牌だけを再構築し、副露面子は元画像の表示をそのまま使用します。" },
         { version: 149, date: "2026-08-22", publishedAt: "2026-08-22T20:40:25+09:00", title: "問題1351の副露直後レイアウトを再調整しました", body: "問題1351では、副露前の手牌を通常の理牌順に並べ、ポンに使った2pの2スロットを空欄として保持します。副露3枚は暗手牌マスク内へ混ぜず、正解画像に合わせてマスク外の副露領域へ1回だけ表示します。回答確定後は通常の副露済みレイアウトへ戻ります。" },
         { version: 161, date: "2026-08-24", publishedAt: "2026-08-24T00:00:00+09:00", title: "アーカイブ後の操作位置を固定しました", body: "アーカイブに移した直後も、次の問題へ進むボタンが同じ位置に残るようにしました。保存中は二重操作を防ぎ、保存完了後はアーカイブ済みと表示します。" },
-        { version: 162, date: "2026-08-25", publishedAt: "2026-08-25T00:00:00+09:00", title: "基本序列問題集を追加しました", body: "NAGAの第一推奨を確認する89問の基本序列問題集を追加しました。問題集名は高級感のあるグレーで表示し、卓上の対戦相手名をアンチョビ・ター子・順子さんに統一しています。" }
+        { version: 163, date: "2026-08-25", publishedAt: "2026-08-25T00:00:00+09:00", title: "基本序列問題集の視点を修正しました", body: "基本序列問題集を「私」＝南家の視点で表示し、卓上の他者名は元のNAGA表示をそのまま使用するようにしました。" }
       ];
       let commentNoticeStoreV65 = loadCommentNoticeStoreV65();
       let sharedCommentRowsV65 = [];
@@ -6169,8 +6161,7 @@
         const hasSelfMeldsV17 = (SCENE.melds || []).length > 0;
         const isImmediateCallDiscard = isImmediateCallDiscardV132(question);
         const handMaskV18 = handMaskFallbackV17(question);
-        syncBasicSequenceThemeV162(question);
-        renderTablePlayerNamesV162(question);
+        syncBasicSequenceThemeV163(question);
         sceneFrameV16.classList.toggle("has-self-melds", hasSelfMeldsV17);
         sceneFrameV16.classList.toggle("is-immediate-call-discard", isImmediateCallDiscard);
         clearHandMaskV17();
@@ -6228,7 +6219,7 @@
         applyQuestionV16(question, index);
       }
 
-      function isBasicSequenceCollectionV162(collection = sharedCollectionV46, question = null) {
+      function isBasicSequenceCollectionV163(collection = sharedCollectionV46, question = null) {
         const slug = String(collection?.share_slug || collection?.shareSlug || question?.sharedCollectionSlug || "");
         const title = String(collection?.title || collection?.display_title || question?.collectionTitle || "");
         return slug === "3a0a3802df4d41f4bf596eaa"
@@ -6237,37 +6228,14 @@
           || String(question?.collectionKey || "") === "basic-sequence";
       }
 
-      function syncBasicSequenceThemeV162(question = null) {
+      function syncBasicSequenceThemeV163(question = null) {
         const page = document.querySelector(".page");
         if (!page) return;
-        page.classList.toggle("is-basic-sequence-collection", isBasicSequenceCollectionV162(sharedCollectionV46, question));
-      }
-
-      function renderTablePlayerNamesV162(question = SCENE) {
-        const overlay = document.getElementById("tablePlayerNamesOverlay");
-        if (!overlay) return;
-        const isBasicSequence = isBasicSequenceCollectionV162(sharedCollectionV46, question);
-        overlay.hidden = !isBasicSequence;
-        overlay.setAttribute("aria-hidden", String(!isBasicSequence));
-        if (!isBasicSequence) {
-          overlay.innerHTML = "";
-          return;
-        }
-        const names = {
-          shimocha: "アンチョビ",
-          toimen: "ター子",
-          kamicha: "順子さん",
-          ...(question?.tablePlayerNames || {})
-        };
-        overlay.innerHTML = [
-          ["shimocha", names.shimocha, ""],
-          ["toimen", names.toimen, "is-vertical"],
-          ["kamicha", names.kamicha, "is-vertical"]
-        ].map(([seat, name, orientation]) => `<span class="table-player-name-replacement table-player-name-replacement--${seat} ${orientation}" aria-label="${escapeHtml(name)}">${escapeHtml(name)}</span>`).join("");
+        page.classList.toggle("is-basic-sequence-collection", isBasicSequenceCollectionV163(sharedCollectionV46, question));
       }
 
       function renderMenuNavigationV16() {
-        syncBasicSequenceThemeV162();
+        syncBasicSequenceThemeV163();
         const analytics = window.DrillUxV44?.analytics?.({ questions: questionsV16, state: userStateV16, now: new Date() }) || {};
         const counts = {
           collections: collectionCatalogOptionsV100().length,

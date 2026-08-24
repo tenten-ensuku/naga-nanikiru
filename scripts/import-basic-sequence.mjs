@@ -78,11 +78,6 @@ function payloadForQuestion(question, imageUrl) {
   payload.imageOff = imageUrl;
   payload.imageOpen = imageUrl;
   payload.collectionKey = "basic-sequence";
-  payload.tablePlayerNames = {
-    shimocha: "アンチョビ",
-    toimen: "ター子",
-    kamicha: "順子さん",
-  };
   return payload;
 }
 
