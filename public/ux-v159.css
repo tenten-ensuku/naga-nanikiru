@@ -2150,3 +2150,25 @@ button:disabled {
     font-size: 18px;
   }
 }
+
+/* V161: archive feedback stays in the action column so the next button never shifts. */
+.page:not(.menu-active) .archive-next-button[data-archive-state="saving"] {
+  color: #fff7d6;
+  background: rgba(97, 64, 135, .48);
+  border-color: rgba(210, 178, 255, .62);
+  opacity: .86;
+}
+
+.page:not(.menu-active) .archive-next-button[data-archive-state="archived"] {
+  color: #bde7e0;
+  background: rgba(22, 80, 103, .42);
+  border-color: rgba(155, 232, 216, .42);
+  opacity: 1;
+}
+
+.page:not(.menu-active) .archive-next-button[data-archive-state="error"] {
+  color: #ffd5d8;
+  background: rgba(120, 45, 59, .56);
+  border-color: rgba(255, 135, 144, .72);
+  opacity: 1;
+}

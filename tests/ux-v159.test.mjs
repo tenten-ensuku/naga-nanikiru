@@ -6,16 +6,16 @@ const indexUrl = new URL("../public/index.html", import.meta.url);
 const cssUrl = new URL("../public/ux-v159.css", import.meta.url);
 const identityUrl = new URL("../app/lib/appIdentity.ts", import.meta.url);
 
-test("V160 exposes the daily-learning shell and synchronized release assets", async () => {
+test("V161 exposes the daily-learning shell and synchronized release assets", async () => {
   const [html, css, identity] = await Promise.all([
     readFile(indexUrl, "utf8"),
     readFile(cssUrl, "utf8"),
     readFile(identityUrl, "utf8"),
   ]);
 
-  assert.match(html, /const APP_VERSION = 160;/);
-  assert.match(identity, /APP_VERSION = 160/);
-  assert.match(html, /ux-v159\.css\?v=160/);
+  assert.match(html, /const APP_VERSION = 161;/);
+  assert.match(identity, /APP_VERSION = 161/);
+  assert.match(html, /ux-v159\.css\?v=161/);
   assert.match(html, /data-menu-view="today"/);
   assert.match(html, /今日の10問/);
   assert.match(html, /function renderTodayViewV159\(/);
@@ -25,7 +25,7 @@ test("V160 exposes the daily-learning shell and synchronized release assets", as
   assert.doesNotMatch(css, /gradient\s*\(/i);
 });
 
-test("V160 keeps account actions compact and removes the obsolete share-copy control", async () => {
+test("V161 keeps account actions compact and removes the obsolete share-copy control", async () => {
   const html = await readFile(indexUrl, "utf8");
   assert.doesNotMatch(html, /id="copyShareUrlButton"/);
   assert.doesNotMatch(html, /copyShareUrlButton/);
@@ -33,7 +33,7 @@ test("V160 keeps account actions compact and removes the obsolete share-copy con
   assert.match(html, /id="discordAuthButton"/);
 });
 
-test("V160 keeps generator input and destination in a persistent staged workflow", async () => {
+test("V161 keeps generator input and destination in a persistent staged workflow", async () => {
   const html = await readFile(indexUrl, "utf8");
   assert.match(html, /const GENERATOR_DRAFT_KEY_V159 = "naga-nanikiru-generator-draft-v159";/);
   assert.match(html, /sessionStorage\.getItem\(GENERATOR_DRAFT_KEY_V159\)/);
@@ -49,7 +49,7 @@ test("V160 keeps generator input and destination in a persistent staged workflow
   assert.doesNotMatch(generatorView, /type="file"/);
 });
 
-test("V160 displays the canonical perfect mark while accepting legacy history", async () => {
+test("V161 displays the canonical perfect mark while accepting legacy history", async () => {
   const html = await readFile(indexUrl, "utf8");
   assert.match(html, /function normalizeScoreMarkV159\(value\)/);
   assert.match(html, /replaceAll\("💮", "◎"\)/);
@@ -57,10 +57,23 @@ test("V160 displays the canonical perfect mark while accepting legacy history", 
   assert.match(html, /直近2回連続で◎/);
 });
 
-test("V160 removes decorative outer rings while preserving result glyph styling", async () => {
+test("V161 removes decorative outer rings while preserving result glyph styling", async () => {
   const css = await readFile(cssUrl, "utf8");
   assert.match(css, /V160: keep the result glyphs, but remove the decorative outer rings/);
   assert.match(css, /\.page\.menu-active \.menu-card-latest-mark,\s*\.page\.menu-active \.today-recent-mark \{[\s\S]*?border: 0;[\s\S]*?border-radius: 0;/);
   assert.match(css, /\.page\.menu-active \.menu-card-latest-mark\.is-excellent\s*\{[\s\S]*#ffcf5b/);
   assert.match(css, /\.page\.menu-active \.menu-card-latest-mark\.is-miss\s*\{[\s\S]*var\(--ux-coral\)/);
+});
+
+test("V161 keeps the archive action stable after saving", async () => {
+  const html = await readFile(indexUrl, "utf8");
+  const css = await readFile(cssUrl, "utf8");
+  const archiveFlow = html.match(/function archiveCurrentQuestionV110\(\)[\s\S]*?\n      function applyQuestionV16\(/)?.[0] || "";
+  assert.match(html, /let archiveActionStateV161 = \{ questionKey: "", phase: "idle" \};/);
+  assert.match(html, /archiveButton\.textContent = actionState === "saving"[\s\S]*?"アーカイブ済み"/);
+  assert.match(archiveFlow, /archiveActionStateV161 = \{ questionKey, phase: "saving" \};/);
+  assert.match(archiveFlow, /archiveActionStateV161 = \{ questionKey, phase: "archived" \};/);
+  assert.doesNotMatch(archiveFlow, /renderQuestionOptionsV16\(\);/);
+  assert.doesNotMatch(archiveFlow, /renderMenuCardsV16\(\);/);
+  assert.match(css, /V161: archive feedback stays in the action column/);
 });

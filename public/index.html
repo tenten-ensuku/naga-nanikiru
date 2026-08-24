@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=159">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=159">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=159">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=161">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=161">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=161">
   <title>NAGA局面ドリル｜何切る復習問題集</title>
   <meta name="description" content="NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリ。">
   <meta name="theme-color" content="#06131e">
@@ -464,6 +464,9 @@
     .next-button:hover { background: #2e8da4; }
     .archive-next-button { min-width: 118px; padding: 9px 11px; color: #f5edff; background: rgba(97,64,135,.62); border: 1px solid rgba(210,178,255,.82); border-radius: 8px; font-size: 11px; font-weight: 800; }
     .archive-next-button:hover, .archive-next-button:focus-visible { color: #fff; background: #7550a0; outline: 2px solid rgba(210,178,255,.3); outline-offset: 1px; }
+    .archive-next-button[data-archive-state="saving"] { cursor: wait; }
+    .archive-next-button[data-archive-state="archived"] { color: #bde7e0; background: rgba(22,80,103,.42); border-color: rgba(155,232,216,.42); cursor: default; }
+    .archive-next-button[data-archive-state="error"] { color: #ffd5d8; background: rgba(120,45,59,.56); border-color: rgba(255,135,144,.72); }
     .answer-organize-button { min-width: 118px; padding: 7px 9px; color: #dffbfb; background: rgba(0,0,0,.18); border: 1px solid rgba(255,255,255,.15); border-radius: 7px; font-size: 9px; font-weight: 800; }
     .answer-organize-button:hover, .answer-organize-button:focus-visible { background: #164862; border-color: rgba(113,183,255,.6); outline: none; }
     .answer-organize-button.is-active { color: #18241c; background: var(--gold); border-color: #ffdb7d; }
@@ -2138,7 +2141,7 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=160">
+  <link rel="stylesheet" href="ux-v159.css?v=161">
 </head>
 <body>
   <main class="page">
@@ -2420,7 +2423,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 160;
+    const APP_VERSION = 161;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -2462,6 +2465,7 @@
     const COMMENT_MAX_IMAGE_BYTES_V68 = 5 * 1024 * 1024;
     const COMMENT_IMAGE_TYPES_V68 = new Set(["image/png", "image/jpeg", "image/webp", "image/gif"]);
     const state = { selected: null, selectedIndex: null, callDecision: null, revealed: false, answerRecorded: false, answerAttemptId: null, sharedAttemptPromise: null, questionStartedAt: Date.now(), judgeModel: 2, riichi: false, commentComposerOpen: false, commentEditingId: null, commentAttachments: [], comments: THREAD_MESSAGES.map(message => ({ ...message, attachments: [...message.attachments] })) };
+    let archiveActionStateV161 = { questionKey: "", phase: "idle" };
 
     function tileLabel(tile) {
       if (TILE_NAMES[tile]) return TILE_NAMES[tile];
@@ -3527,7 +3531,8 @@
           { version: 152, date: "2026-08-23", publishedAt: "2026-08-23T00:00:00+09:00", title: "複数副露直後の中抜き表示に対応しました", body: "2・3・4副露の直後に打牌を選ぶ問題でも、現在の副露に使った自牌だけを空白にします。マスク幅は直前の13・10・7・4スロット幅を保ち、打牌確定後は通常の副露済み表示へ戻します。" },
         { version: 151, date: "2026-08-22", publishedAt: "2026-08-22T22:30:00+09:00", title: "副露直後の中抜き表示を旧データにも適用しました", body: "副露直後の打牌問題では、副露前の13スロットを保ち、副露に使った自牌だけを空白にします。副露面子は元のNAGA局面画像を使い、打牌確定後は通常の手牌表示に戻します。" },
         { version: 150, date: "2026-08-22", publishedAt: "2026-08-22T22:07:37+09:00", title: "問題1351の副露面子を元画像表示に統一しました", body: "副露面子は元のNAGA局面画像に含まれているため、問題画面で再生成しないようにしました。問題1351では、副露前の13スロットを保った中抜き手牌だけを再構築し、副露面子は元画像の表示をそのまま使用します。" },
-        { version: 149, date: "2026-08-22", publishedAt: "2026-08-22T20:40:25+09:00", title: "問題1351の副露直後レイアウトを再調整しました", body: "問題1351では、副露前の手牌を通常の理牌順に並べ、ポンに使った2pの2スロットを空欄として保持します。副露3枚は暗手牌マスク内へ混ぜず、正解画像に合わせてマスク外の副露領域へ1回だけ表示します。回答確定後は通常の副露済みレイアウトへ戻ります。" }
+        { version: 149, date: "2026-08-22", publishedAt: "2026-08-22T20:40:25+09:00", title: "問題1351の副露直後レイアウトを再調整しました", body: "問題1351では、副露前の手牌を通常の理牌順に並べ、ポンに使った2pの2スロットを空欄として保持します。副露3枚は暗手牌マスク内へ混ぜず、正解画像に合わせてマスク外の副露領域へ1回だけ表示します。回答確定後は通常の副露済みレイアウトへ戻ります。" },
+        { version: 161, date: "2026-08-24", publishedAt: "2026-08-24T00:00:00+09:00", title: "アーカイブ後の操作位置を固定しました", body: "アーカイブに移した直後も、次の問題へ進むボタンが同じ位置に残るようにしました。保存中は二重操作を防ぎ、保存完了後はアーカイブ済みと表示します。" }
       ];
       let commentNoticeStoreV65 = loadCommentNoticeStoreV65();
       let sharedCommentRowsV65 = [];
@@ -5607,7 +5612,30 @@
           });
         };
         const setArchiveButtonState = () => {
-          if (archiveButton) archiveButton.hidden = !canArchiveCurrentQuestionV109();
+          if (!archiveButton) return;
+          const question = questionsV16[currentQuestionIndexV16];
+          const questionKey = question ? questionKeyV16(question) : "";
+          const actionState = archiveActionStateV161.questionKey === questionKey ? archiveActionStateV161.phase : "idle";
+          const keepActionSlot = ["saving", "archived", "error"].includes(actionState);
+          const canArchive = canArchiveCurrentQuestionV109();
+          archiveButton.hidden = !(canArchive || keepActionSlot);
+          archiveButton.disabled = actionState === "saving" || actionState === "archived";
+          archiveButton.dataset.archiveState = actionState;
+          archiveButton.setAttribute("aria-busy", String(actionState === "saving"));
+          archiveButton.textContent = actionState === "saving"
+            ? "保存中…"
+            : actionState === "archived"
+            ? "アーカイブ済み"
+            : actionState === "error"
+            ? "再試行"
+            : "アーカイブに移す";
+          archiveButton.title = actionState === "archived"
+            ? "この問題はアーカイブ済みです。次の問題へ進めます"
+            : actionState === "saving"
+            ? "アーカイブ状態を保存しています"
+            : actionState === "error"
+            ? "保存に失敗しました。もう一度お試しください"
+            : "直近の結果が◎の問題を、この問題集のあなた専用アーカイブへ移します";
         };
         renderAnswerConfirmationV41();
         if (!state.revealed) {
@@ -6059,10 +6087,36 @@
       function archiveCurrentQuestionV110() {
         const question = questionsV16[currentQuestionIndexV16];
         if (!question || !canArchiveCurrentQuestionV109()) return;
+        const questionKey = questionKeyV16(question);
+        if (archiveActionStateV161.questionKey === questionKey && ["saving", "archived"].includes(archiveActionStateV161.phase)) return;
+        const scoped = personalCollectionStateV131();
+        const previousArchived = [...scoped.archived];
+        const previousTrashed = [...(userStateV16.trashed || [])];
+        const previousSnoozed = userStateV16.snoozed?.[questionKey];
+        archiveActionStateV161 = { questionKey, phase: "saving" };
+        const button = document.getElementById("archiveQuestionButton");
+        if (button) {
+          button.hidden = false;
+          button.disabled = true;
+          button.dataset.archiveState = "saving";
+          button.setAttribute("aria-busy", "true");
+          button.textContent = "保存中…";
+        }
         archiveQuestionV109(question);
-        saveUserStateV16();
-        renderQuestionOptionsV16();
-        renderMenuCardsV16();
+        if (!saveUserStateV16()) {
+          scoped.archived = previousArchived;
+          userStateV16.trashed = previousTrashed;
+          if (previousSnoozed === undefined) {
+            delete userStateV16.snoozed?.[questionKey];
+          } else {
+            userStateV16.snoozed ||= {};
+            userStateV16.snoozed[questionKey] = previousSnoozed;
+          }
+          archiveActionStateV161 = { questionKey, phase: "error" };
+          renderAnswerV16();
+          return;
+        }
+        archiveActionStateV161 = { questionKey, phase: "archived" };
         renderAnswerV16();
       }
 
@@ -6070,6 +6124,7 @@
         currentQuestionIndexV16 = index >= 0 ? index : 0;
         for (const key of Object.keys(SCENE)) delete SCENE[key];
         Object.assign(SCENE, question);
+        archiveActionStateV161 = { questionKey: questionKeyV16(question), phase: "idle" };
         state.selected = null;
         state.selectedIndex = null;
         state.callDecision = null;
