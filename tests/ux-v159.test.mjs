@@ -6,16 +6,16 @@ const indexUrl = new URL("../public/index.html", import.meta.url);
 const cssUrl = new URL("../public/ux-v159.css", import.meta.url);
 const identityUrl = new URL("../app/lib/appIdentity.ts", import.meta.url);
 
-test("V165 exposes the daily-learning shell and synchronized release assets", async () => {
+test("V166 exposes the daily-learning shell and synchronized release assets", async () => {
   const [html, css, identity] = await Promise.all([
     readFile(indexUrl, "utf8"),
     readFile(cssUrl, "utf8"),
     readFile(identityUrl, "utf8"),
   ]);
 
-  assert.match(html, /const APP_VERSION = 165;/);
-  assert.match(identity, /APP_VERSION = 165/);
-  assert.match(html, /ux-v159\.css\?v=165/);
+  assert.match(html, /const APP_VERSION = 166;/);
+  assert.match(identity, /APP_VERSION = 166/);
+  assert.match(html, /ux-v159\.css\?v=166/);
   assert.match(html, /data-menu-view="today"/);
   assert.match(html, /今日の10問/);
   assert.match(html, /function renderTodayViewV159\(/);
@@ -120,4 +120,15 @@ test("V165 keeps the active collection visible and opens a dedicated chooser", a
   assert.match(css, /linear-gradient\(145deg, #5a3b22/);
   assert.match(css, /\.collection-choice-grid/);
   assert.match(css, /position: sticky;[\s\S]*?\.page\.menu-active \.mobile-collection-context|\.page\.menu-active \.mobile-collection-context[\s\S]*?position: sticky;/);
+});
+
+test("V166 puts basic sequence first, recommends sequential order, and shows ten recent questions", async () => {
+  const html = await readFile(indexUrl, "utf8");
+  assert.match(html, /function sortCollectionRowsV166\(rows\)/);
+  assert.match(html, /const leftBasic = isBasicSequenceCollectionV163\(left\) \? 0 : 1/);
+  assert.match(html, /const sequentialOption = menuOrderSelect\?\.querySelector\('option\[value="sequential"\]'\)/);
+  assert.match(html, /sequentialOption\.textContent = isBasicSequence \? "順番（推奨）" : "順番"/);
+  assert.match(html, /const sequentialCandidates = isBasicSequenceCollectionV163\(\)/);
+  const todayView = html.match(/function renderTodayViewV159\([\s\S]*?function renderMenuCardsV16\(/)?.[0] || "";
+  assert.match(todayView, /\.slice\(0, 10\)/);
 });

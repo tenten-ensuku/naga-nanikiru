@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=165">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=165">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=165">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=166">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=166">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=166">
   <title>NAGA局面ドリル｜何切る復習問題集</title>
   <meta name="description" content="NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリ。">
   <meta name="theme-color" content="#06131e">
@@ -2152,7 +2152,7 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=165">
+  <link rel="stylesheet" href="ux-v159.css?v=166">
 </head>
 <body>
   <main class="page">
@@ -2445,7 +2445,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 165;
+    const APP_VERSION = 166;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -3560,7 +3560,8 @@
         { version: 161, date: "2026-08-24", publishedAt: "2026-08-24T00:00:00+09:00", title: "アーカイブ後の操作位置を固定しました", body: "アーカイブに移した直後も、次の問題へ進むボタンが同じ位置に残るようにしました。保存中は二重操作を防ぎ、保存完了後はアーカイブ済みと表示します。" },
         { version: 163, date: "2026-08-25", publishedAt: "2026-08-25T00:00:00+09:00", title: "基本序列問題集の視点を修正しました", body: "基本序列問題集を「私」＝南家の視点で表示し、卓上の他者名は元のNAGA表示をそのまま使用するようにしました。" },
         { version: 164, date: "2026-08-26", publishedAt: "2026-08-26T00:00:00+09:00", title: "公開範囲の対象問題集を明示しました", body: "設定画面の公開範囲に、現在どの問題集へ適用される設定かを常時表示するようにしました。" },
-        { version: 165, date: "2026-08-26", publishedAt: "2026-08-26T12:00:00+09:00", title: "問題集を選ぶ導線を新しくしました", body: "選択中の問題集をPCのサイドバーとスマホ上部へ常時表示し、ブラウンゴールドのボタンから問題集を切り替えられるようにしました。URL指定を優先し、最後に正常に開いた問題集は次回も保持します。" }
+        { version: 165, date: "2026-08-26", publishedAt: "2026-08-26T12:00:00+09:00", title: "問題集を選ぶ導線を新しくしました", body: "選択中の問題集をPCのサイドバーとスマホ上部へ常時表示し、ブラウンゴールドのボタンから問題集を切り替えられるようにしました。URL指定を優先し、最後に正常に開いた問題集は次回も保持します。" },
+        { version: 166, date: "2026-08-26", publishedAt: "2026-08-26T13:00:00+09:00", title: "基本序列の順番出題と最近の10問に対応しました", body: "基本序列問題集を問題集選択画面の先頭に配置し、ストーリーに沿った順番出題を推奨する表示にしました。今日の学習画面では最近解いた問題を最大10問表示します。" }
       ];
       let commentNoticeStoreV65 = loadCommentNoticeStoreV65();
       let sharedCommentRowsV65 = [];
@@ -4482,7 +4483,7 @@
       }
 
       function renderCollectionDirectoryV101() {
-        const rows = collectionCatalogOptionsV100();
+        const rows = sortCollectionRowsV166(collectionCatalogOptionsV100());
         const currentSlug = String(sharedCollectionV46?.share_slug || "");
         const currentRow = rows.find(row => String(row.share_slug || "") === currentSlug);
         const options = rows.map(row => {
@@ -4520,12 +4521,7 @@
       }
 
       function renderCollectionChooserV165() {
-        const rows = collectionCatalogOptionsV100().sort((left, right) => {
-          const currentSlug = String(sharedCollectionV46?.share_slug || "");
-          const leftCurrent = String(left.share_slug || "") === currentSlug ? 0 : 1;
-          const rightCurrent = String(right.share_slug || "") === currentSlug ? 0 : 1;
-          return leftCurrent - rightCurrent || String(left.display_title || "").localeCompare(String(right.display_title || ""), "ja");
-        });
+        const rows = sortCollectionRowsV166(collectionCatalogOptionsV100());
         const cards = rows.map(row => {
           const slug = String(row.share_slug || "");
           const current = slug === String(sharedCollectionV46?.share_slug || "");
@@ -6135,11 +6131,14 @@
       function startRangeSessionV61(mode) {
         const unansweredOnly = mode === "unanswered";
         const candidates = menuFilteredQuestionsV80().filter(question => isPlayableV16(question) && (!unansweredOnly || !latestAnswerV44(question)));
+        const sequentialCandidates = isBasicSequenceCollectionV163()
+          ? [...candidates].sort((left, right) => menuQuestionSortKeyV99(left) - menuQuestionSortKeyV99(right) || questionIndexByKeyV44(questionKeyV16(left)) - questionIndexByKeyV44(questionKeyV16(right)))
+          : candidates;
         const orderedCandidates = menuOrderV92 === "reverse"
-          ? [...candidates].reverse()
+          ? [...sequentialCandidates].reverse()
           : menuOrderV92 === "random"
           ? randomizeQuestionsByAnswerCountV93(candidates)
-          : candidates;
+          : sequentialCandidates;
         startSessionV44(unansweredOnly ? "range-unanswered" : "range", orderedCandidates);
       }
 
@@ -6369,6 +6368,14 @@
         const mastery = allPlayable.length ? Math.round(masteredCount / allPlayable.length * 100) : 0;
         document.getElementById("menuSidebarProgress").innerHTML = `<span class="menu-sidebar-progress-title">学習の進捗</span><div class="menu-progress-metric"><div class="menu-progress-metric-head"><span class="menu-progress-metric-label">回答率</span><strong class="menu-progress-metric-value">${progress}%</strong></div><span class="menu-progress-metric-note">${allAnswered} / ${allPlayable.length}問を回答済み</span><span class="menu-sidebar-progress-track" aria-hidden="true"><span class="menu-sidebar-progress-fill" style="width:${progress}%"></span></span></div><div class="menu-progress-metric menu-progress-mastery"><div class="menu-progress-metric-head"><span class="menu-progress-metric-label">習熟度</span><strong class="menu-progress-metric-value">${mastery}%</strong></div><span class="menu-progress-metric-note">${masteredCount} / ${allPlayable.length}問が習熟（直近2回連続◎）</span><span class="menu-sidebar-progress-track" aria-hidden="true"><span class="menu-sidebar-progress-fill is-mastery" style="width:${mastery}%"></span></span></div>`;
         const copy = MENU_VIEW_COPY_V16[menuViewV16];
+        const menuOrderSelect = document.getElementById("menuOrderSelect");
+        const isBasicSequence = isBasicSequenceCollectionV163();
+        const sequentialOption = menuOrderSelect?.querySelector('option[value="sequential"]');
+        if (sequentialOption) sequentialOption.textContent = isBasicSequence ? "順番（推奨）" : "順番";
+        if (menuOrderSelect) {
+          menuOrderSelect.value = menuOrderV92;
+          menuOrderSelect.title = isBasicSequence ? "基本序列問題集はストーリーに沿った順番出題を推奨します" : "次の問題へ進む順序を選びます";
+        }
         document.getElementById("menuTitle").textContent = copy.title;
         const resume = activeSessionV44();
         const resumeButton = document.getElementById("resumeSessionButton");
@@ -6416,6 +6423,18 @@
       function menuQuestionSortKeyV99(question) {
         const number = menuQuestionNumberV60(question);
         return number === null ? Number.POSITIVE_INFINITY : number;
+      }
+
+      function sortCollectionRowsV166(rows) {
+        return [...(rows || [])].sort((left, right) => {
+          const leftBasic = isBasicSequenceCollectionV163(left) ? 0 : 1;
+          const rightBasic = isBasicSequenceCollectionV163(right) ? 0 : 1;
+          const leftCurrent = String(left?.share_slug || "") === String(sharedCollectionV46?.share_slug || "") ? 0 : 1;
+          const rightCurrent = String(right?.share_slug || "") === String(sharedCollectionV46?.share_slug || "") ? 0 : 1;
+          return leftBasic - rightBasic
+            || leftCurrent - rightCurrent
+            || String(left?.display_title || collectionDisplayNameV101(left)).localeCompare(String(right?.display_title || collectionDisplayNameV101(right)), "ja");
+        });
       }
 
       function menuFilterActiveV80() {
@@ -6813,7 +6832,7 @@
           .sort((left, right) => Date.parse(right.answeredAt || "") - Date.parse(left.answeredAt || ""))
           .map(entry => ({ entry, index: questionIndexByKeyV44(entry.questionKey) }))
           .filter(({ index }) => index >= 0 && !seen.has(index) && seen.add(index))
-          .slice(0, 4);
+          .slice(0, 10);
         const startLabel = session ? "続きから再開" : "今日の10問を始める";
         const startMode = session ? "resume" : "recommended";
         const recentMarkup = recent.length
