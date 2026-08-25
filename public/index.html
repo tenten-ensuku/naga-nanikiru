@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=163">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=163">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=163">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=164">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=164">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=164">
   <title>NAGA局面ドリル｜何切る復習問題集</title>
   <meta name="description" content="NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリ。">
   <meta name="theme-color" content="#06131e">
@@ -1691,6 +1691,10 @@
     .collection-access-request textarea:focus { border-color: rgba(155, 232, 216, .8); outline: 2px solid rgba(155, 232, 216, .16); }
     .collection-access-request[hidden] { display: none; }
     .collection-management { display: grid; gap: 10px; }
+    .collection-management-context { display: flex; align-items: center; flex-wrap: wrap; gap: 5px 10px; min-width: 0; padding: 9px 11px; color: #dffbfb; background: rgba(12, 66, 82, .46); border-left: 3px solid var(--gold); border-radius: 7px; }
+    .collection-management-context-label { color: #a9c2cc; font-size: 10px; font-weight: 800; }
+    .collection-management-context strong { min-width: 0; color: #fff7d6; font-size: 14px; font-weight: 950; overflow-wrap: anywhere; }
+    .collection-management-context-visibility { color: #bde7e0; font-size: 10px; font-weight: 800; }
     .collection-management h4 { margin: 0; color: #fff7d6; font-size: 15px; }
     .collection-access-list { display: grid; gap: 6px; }
     .collection-access-row { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 7px; align-items: center; padding: 8px 10px; color: #dffbfb; background: rgba(0,0,0,.17); border: 1px solid rgba(255,255,255,.1); border-radius: 7px; font-size: 11px; }
@@ -2148,7 +2152,7 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=163">
+  <link rel="stylesheet" href="ux-v159.css?v=164">
 </head>
 <body>
   <main class="page">
@@ -2430,7 +2434,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 163;
+    const APP_VERSION = 164;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -3540,7 +3544,8 @@
         { version: 150, date: "2026-08-22", publishedAt: "2026-08-22T22:07:37+09:00", title: "問題1351の副露面子を元画像表示に統一しました", body: "副露面子は元のNAGA局面画像に含まれているため、問題画面で再生成しないようにしました。問題1351では、副露前の13スロットを保った中抜き手牌だけを再構築し、副露面子は元画像の表示をそのまま使用します。" },
         { version: 149, date: "2026-08-22", publishedAt: "2026-08-22T20:40:25+09:00", title: "問題1351の副露直後レイアウトを再調整しました", body: "問題1351では、副露前の手牌を通常の理牌順に並べ、ポンに使った2pの2スロットを空欄として保持します。副露3枚は暗手牌マスク内へ混ぜず、正解画像に合わせてマスク外の副露領域へ1回だけ表示します。回答確定後は通常の副露済みレイアウトへ戻ります。" },
         { version: 161, date: "2026-08-24", publishedAt: "2026-08-24T00:00:00+09:00", title: "アーカイブ後の操作位置を固定しました", body: "アーカイブに移した直後も、次の問題へ進むボタンが同じ位置に残るようにしました。保存中は二重操作を防ぎ、保存完了後はアーカイブ済みと表示します。" },
-        { version: 163, date: "2026-08-25", publishedAt: "2026-08-25T00:00:00+09:00", title: "基本序列問題集の視点を修正しました", body: "基本序列問題集を「私」＝南家の視点で表示し、卓上の他者名は元のNAGA表示をそのまま使用するようにしました。" }
+        { version: 163, date: "2026-08-25", publishedAt: "2026-08-25T00:00:00+09:00", title: "基本序列問題集の視点を修正しました", body: "基本序列問題集を「私」＝南家の視点で表示し、卓上の他者名は元のNAGA表示をそのまま使用するようにしました。" },
+        { version: 164, date: "2026-08-26", publishedAt: "2026-08-26T00:00:00+09:00", title: "公開範囲の対象問題集を明示しました", body: "設定画面の公開範囲に、現在どの問題集へ適用される設定かを常時表示するようにしました。" }
       ];
       let commentNoticeStoreV65 = loadCommentNoticeStoreV65();
       let sharedCommentRowsV65 = [];
@@ -4336,7 +4341,7 @@
       }
 
       function collectionCreateFormMarkupV106(prefix = "collectionCreate") {
-        return `<form class="settings-form collection-create-form" id="${prefix}Form"><label for="${prefix}Title">問題集名<input id="${prefix}Title" maxlength="80" required placeholder="例：ピエール問題集"></label><label for="${prefix}Description">説明（任意）<textarea id="${prefix}Description" maxlength="500" rows="3" placeholder="この問題集の説明"></textarea></label><label for="${prefix}Visibility">公開範囲<select id="${prefix}Visibility"><option value="private" selected>プライベート（自分だけ）</option><option value="request">承認許可制（許可した人だけ）</option><option value="public">全体公開（誰でも閲覧）</option></select></label><p class="settings-form-note">初期値は必ずプライベートです。承認許可制では問題集名だけ公開され、申請が承認されるまで問題は表示されません。</p><div class="settings-form-actions"><button class="primary" type="submit">問題集を作成</button><span class="settings-form-status" id="${prefix}Status" aria-live="polite"></span></div></form>`;
+        return `<form class="settings-form collection-create-form" id="${prefix}Form"><label for="${prefix}Title">問題集名<input id="${prefix}Title" maxlength="80" required placeholder="例：ピエール問題集"></label><label for="${prefix}Description">説明（任意）<textarea id="${prefix}Description" maxlength="500" rows="3" placeholder="この問題集の説明"></textarea></label><label for="${prefix}Visibility">作成する問題集の公開範囲<select id="${prefix}Visibility"><option value="private" selected>プライベート（自分だけ）</option><option value="request">承認許可制（許可した人だけ）</option><option value="public">全体公開（誰でも閲覧）</option></select></label><p class="settings-form-note">初期値は必ずプライベートです。承認許可制では問題集名だけ公開され、申請が承認されるまで問題は表示されません。</p><div class="settings-form-actions"><button class="primary" type="submit">問題集を作成</button><span class="settings-form-status" id="${prefix}Status" aria-live="polite"></span></div></form>`;
       }
 
       function navigateToCollectionV106(slug) {
@@ -4552,9 +4557,12 @@
         const collection = sharedCollectionV46;
         const canManage = Boolean(collection?.can_manage) || isCollectionManagerV47();
         const currentVisibility = ["private", "request", "public"].includes(collection?.visibility) ? collection.visibility : collection?.visibility === "unlisted" ? "public" : "private";
+        const collectionTitle = collectionDisplayNameV101(collection);
+        const collectionVisibility = collectionVisibilityLabelV100(collection?.visibility);
+        const collectionContext = `<div class="collection-management-context" aria-label="公開範囲の対象問題集"><span class="collection-management-context-label">対象の問題集</span><strong>${escapeHtml(collectionTitle)}</strong><span class="collection-management-context-visibility">${escapeHtml(collectionVisibility)}</span></div>`;
         const management = collection ? (canManage
-          ? `<div class="settings-divider" role="presentation"></div><div class="collection-management"><h3>この問題集スペースの管理</h3><p>メンバー管理・公開範囲・完全削除は、アプリ所有者またはこの問題集のオーナーだけが行えます。編集メンバーは、問題の追加・インポート・編集・整理を担当できます。</p><form class="settings-form" id="collectionVisibilityForm"><label for="collectionVisibilitySelect">公開範囲<select id="collectionVisibilitySelect"><option value="private"${currentVisibility === "private" ? " selected" : ""}>プライベート（所有者・管理者のみ）</option><option value="request"${currentVisibility === "request" ? " selected" : ""}>承認許可制（承認した利用者のみ）</option><option value="public"${currentVisibility === "public" ? " selected" : ""}>全体公開（誰でも閲覧可能）</option></select></label><div class="settings-form-actions"><button class="primary" type="submit">公開範囲を保存</button><span class="settings-form-status" id="collectionVisibilityStatus" aria-live="polite"></span></div></form><h4>閲覧申請</h4><div class="collection-access-list" id="collectionAccessRequests"><span class="collection-access-empty">読み込み中…</span></div><h4>現在のメンバー</h4><p class="collection-space-note">申請を承認するときに「閲覧」または「編集」を選べます。編集メンバーは問題の生成・インポート・編集・整理ができ、公開範囲やメンバー管理は行えません。</p><div class="collection-access-list" id="collectionAccessMembers"><span class="collection-access-empty">読み込み中…</span></div></div>`
-          : `<div class="settings-divider" role="presentation"></div><div class="collection-management"><h3>問題集スペース</h3><p>現在の公開範囲：${escapeHtml(collectionVisibilityLabelV100(collection.visibility))}。公開範囲の変更と申請の承認は所有者・管理者のみ行えます。</p></div>`)
+          ? `<div class="settings-divider" role="presentation"></div><div class="collection-management"><h3>この問題集スペースの管理</h3>${collectionContext}<p>メンバー管理・公開範囲・完全削除は、アプリ所有者またはこの問題集のオーナーだけが行えます。編集メンバーは、問題の追加・インポート・編集・整理を担当できます。</p><form class="settings-form" id="collectionVisibilityForm"><label for="collectionVisibilitySelect">公開範囲<select id="collectionVisibilitySelect"><option value="private"${currentVisibility === "private" ? " selected" : ""}>プライベート（所有者・管理者のみ）</option><option value="request"${currentVisibility === "request" ? " selected" : ""}>承認許可制（承認した利用者のみ）</option><option value="public"${currentVisibility === "public" ? " selected" : ""}>全体公開（誰でも閲覧可能）</option></select></label><div class="settings-form-actions"><button class="primary" type="submit">公開範囲を保存</button><span class="settings-form-status" id="collectionVisibilityStatus" aria-live="polite"></span></div></form><h4>閲覧申請</h4><div class="collection-access-list" id="collectionAccessRequests"><span class="collection-access-empty">読み込み中…</span></div><h4>現在のメンバー</h4><p class="collection-space-note">申請を承認するときに「閲覧」または「編集」を選べます。編集メンバーは問題の生成・インポート・編集・整理ができ、公開範囲やメンバー管理は行えません。</p><div class="collection-access-list" id="collectionAccessMembers"><span class="collection-access-empty">読み込み中…</span></div></div>`
+          : `<div class="settings-divider" role="presentation"></div><div class="collection-management"><h3>問題集スペース</h3>${collectionContext}<p>現在の公開範囲：${escapeHtml(collectionVisibility)}。公開範囲の変更と申請の承認は所有者・管理者のみ行えます。</p></div>`)
           : "";
         const create = supabaseSessionV46 ? `<div class="settings-divider" role="presentation"></div><div class="collection-management"><h3>新しい問題集スペースを作る</h3><p>新しく作る問題集は、最初は必ずプライベートです。作成時に公開範囲を選べます。</p>${collectionCreateFormMarkupV106("collectionCreate")}</div>` : "";
         return `${management}${create}`;

@@ -13,9 +13,9 @@ test("V161 exposes the daily-learning shell and synchronized release assets", as
     readFile(identityUrl, "utf8"),
   ]);
 
-  assert.match(html, /const APP_VERSION = 163;/);
-  assert.match(identity, /APP_VERSION = 163/);
-  assert.match(html, /ux-v159\.css\?v=163/);
+  assert.match(html, /const APP_VERSION = 164;/);
+  assert.match(identity, /APP_VERSION = 164/);
+  assert.match(html, /ux-v159\.css\?v=164/);
   assert.match(html, /data-menu-view="today"/);
   assert.match(html, /今日の10問/);
   assert.match(html, /function renderTodayViewV159\(/);
@@ -94,4 +94,13 @@ test("V163 keeps the basic-sequence collection in the South-seat viewpoint", asy
   assert.doesNotMatch(builder, /tablePlayerNames|アンチョビ|ター子|順子さん/);
   assert.doesNotMatch(importer, /tablePlayerNames|アンチョビ|ター子|順子さん/);
   assert.match(importer, /title: "基本序列問題集"/);
+});
+
+test("V164 makes the collection targeted by visibility settings explicit", async () => {
+  const html = await readFile(indexUrl, "utf8");
+  assert.match(html, /collection-management-context/);
+  assert.match(html, /対象の問題集/);
+  assert.match(html, /collectionDisplayNameV101\(collection\)/);
+  assert.match(html, /aria-label="公開範囲の対象問題集"/);
+  assert.match(html, /作成する問題集の公開範囲/);
 });
