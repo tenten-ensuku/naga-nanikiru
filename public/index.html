@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=169">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=169">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=169">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=170">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=170">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=170">
   <title>NAGA局面ドリル｜何切る復習問題集</title>
   <meta name="description" content="NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリ。">
   <meta name="theme-color" content="#06131e">
@@ -2152,7 +2152,7 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=169">
+  <link rel="stylesheet" href="ux-v159.css?v=170">
 </head>
 <body>
   <main class="page">
@@ -2439,13 +2439,13 @@
   </dialog>
 
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=135"></script>
+  <script src="supabase-sync-v48.js?v=170"></script>
   <script src="drill-ux-v44.js"></script>
   <script src="naga-generator-v44.js"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 169;
+    const APP_VERSION = 170;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -3286,6 +3286,8 @@
         hasRiichiJudgment: true
       };
       let questionsV16 = [baseQuestionV16];
+      let sharedQuestionDetailsDeferredV170 = false;
+      const sharedQuestionDetailPromisesV170 = new Map();
       let currentQuestionIndexV16 = 0;
       let menuViewV16 = "today";
       let menuSearchV44 = "";
@@ -3562,6 +3564,7 @@
         { version: 164, date: "2026-08-26", publishedAt: "2026-08-26T00:00:00+09:00", title: "公開範囲の対象問題集を明示しました", body: "設定画面の公開範囲に、現在どの問題集へ適用される設定かを常時表示するようにしました。" },
         { version: 165, date: "2026-08-26", publishedAt: "2026-08-26T12:00:00+09:00", title: "問題集を選ぶ導線を新しくしました", body: "選択中の問題集をPCのサイドバーとスマホ上部へ常時表示し、ブラウンゴールドのボタンから問題集を切り替えられるようにしました。URL指定を優先し、最後に正常に開いた問題集は次回も保持します。" },
         { version: 169, date: "2026-08-26", publishedAt: "2026-08-26T16:00:00+09:00", title: "整理ボタンの表示場所を見直しました", body: "問題一覧から整理ボタンを外し、問題を解いて回答結果を確認した後だけ、問題画面から整理・編集できるようにしました。" },
+        { version: 170, date: "2026-08-26", publishedAt: "2026-08-26T17:00:00+09:00", title: "大規模問題集の初期表示を軽くしました", body: "問題集の切り替え時は一覧用の軽量データだけを先に読み込み、盤面・手牌・解説は問題を開いた時に取得するようにしました。" },
         { version: 168, date: "2026-08-26", publishedAt: "2026-08-26T15:00:00+09:00", title: "今日の10問を続きから再開できるようにしました", body: "問題集をまたいだ古いセッションで再開ボタンが反応しない問題を修正し、問題集ごとのセッション判定と旧問題キーの復元に対応しました。" },
         { version: 167, date: "2026-08-26", publishedAt: "2026-08-26T14:00:00+09:00", title: "問題集選択画面を刷新しました", body: "問題集カードを見やすい3列レイアウトに整え、基本序列問題集を格式高いシルバーで表示します。" },
         { version: 166, date: "2026-08-26", publishedAt: "2026-08-26T13:00:00+09:00", title: "基本序列の順番出題と最近の10問に対応しました", body: "基本序列問題集を問題集選択画面の先頭に配置し、ストーリーに沿った順番出題を推奨する表示にしました。今日の学習画面では最近解いた問題を最大10問表示します。" }
@@ -3742,8 +3745,18 @@
       }
 
       function normalizeSharedQuestionV66(row, index = 0, shareSlug = sharedCollectionV46?.share_slug || "") {
+        const isNormalizedRow = Boolean(
+          row?.question && typeof row.question === "object"
+          && Object.prototype.hasOwnProperty.call(row.question, "__sharedDetailLoaded")
+        );
+        const hasFullPayload = isNormalizedRow
+          ? row.question.__sharedDetailLoaded === true
+          : Boolean(
+            (row?.question && typeof row.question === "object")
+            || (row?.payload && typeof row.payload === "object")
+          );
         const sourcePayload = row?.question && typeof row.question === "object" ? row.question : (row?.payload && typeof row.payload === "object" ? row.payload : {});
-        const number = finiteQuestionNumberV154(sourcePayload.number ?? row?.number) ?? index + 1;
+        const number = finiteQuestionNumberV154(sourcePayload.number ?? row?.question_number ?? row?.number) ?? index + 1;
         const sourceUrl = sourcePayload.nagaUrl || sourcePayload.sourceUrl || row?.source_url || row?.sourceUrl || "";
         let payload = { ...normalizeNimaKanQuestionV112({ ...sourcePayload, nagaUrl: sourcePayload.nagaUrl || sourceUrl }, number, shareSlug) };
         payload = normalizePierreImmediatePonQuestionV146(payload, number, shareSlug);
@@ -3762,13 +3775,15 @@
           legacyKey: row?.legacy_key || payload.legacyKey,
           number,
           title,
-          hasRiichiJudgment: payload.decisionType !== "call" && (payload.hasRiichiJudgment === true || Array.isArray(payload.reach) && payload.reach.some(value => Number(value) > 0)),
+          decisionType: payload.decisionType || row?.decision_type || "discard",
+          hasRiichiJudgment: payload.decisionType !== "call" && (payload.hasRiichiJudgment === true || row?.has_riichi_judgment === true || Array.isArray(payload.reach) && payload.reach.some(value => Number(value) > 0)),
           sharedCollectionSlug: shareSlug,
           visibility: "unlisted",
           createdById,
           createdByName,
           updatedById: row?.updated_by || row?.last_updated_by || payload.updatedById || payload.updated_by || null,
-          updatedByName: row?.updated_by_name || row?.last_updated_by_name || payload.updatedByName || payload.lastUpdatedByName || null
+          updatedByName: row?.updated_by_name || row?.last_updated_by_name || payload.updatedByName || payload.lastUpdatedByName || null,
+          __sharedDetailLoaded: hasFullPayload
         };
         return {
           id,
@@ -4162,7 +4177,6 @@
         if (commentPollTimerV65) window.clearInterval(commentPollTimerV65);
         if (questionPollTimerV66) window.clearInterval(questionPollTimerV66);
         const isLargeCollectionV119 = questionsV16.length > MENU_RENDER_THRESHOLD_V119;
-        await refreshSharedCommentNotificationsV65();
         commentPollTimerV65 = window.setInterval(() => { void refreshSharedCommentNotificationsV65(); }, isLargeCollectionV119 ? 120000 : 30000);
         if (!isLargeCollectionV119) questionPollTimerV66 = window.setInterval(() => { void refreshSharedQuestionNotificationsV66(); }, 60000);
         if (!commentVisibilityHandlerBoundV65) {
@@ -4174,6 +4188,8 @@
           });
           commentVisibilityHandlerBoundV65 = true;
         }
+        // 問題集の初期表示をコメント通知の取得でブロックしない。
+        void refreshSharedCommentNotificationsV65();
       }
 
       function currentUserDisplayNameV47() {
@@ -6351,7 +6367,25 @@
         renderMenuCardsV16();
       }
 
-      function openQuestionV16(index, { preserveSession = false } = {}) {
+      async function openQuestionV16(index, { preserveSession = false } = {}) {
+        const requestedQuestion = questionsV16[index];
+        if (!requestedQuestion) return;
+        const menuPanel = document.getElementById("menuPanel");
+        const menuWasVisible = Boolean(menuPanel && !menuPanel.hidden);
+        const sceneCard = document.querySelector(".scene-card");
+        if (sharedQuestionDetailsDeferredV170 && !requestedQuestion.__sharedDetailLoaded) {
+          if (menuWasVisible) menuPanel.setAttribute("aria-busy", "true");
+          if (!menuWasVisible) sceneCard?.setAttribute("aria-busy", "true");
+          try {
+            await ensureSharedQuestionDetailV170(requestedQuestion, index);
+          } catch (error) {
+            window.alert(error?.message || "問題を読み込めませんでした。通信状態を確認してください。");
+            return;
+          } finally {
+            menuPanel?.removeAttribute("aria-busy");
+            sceneCard?.removeAttribute("aria-busy");
+          }
+        }
         const question = questionsV16[index];
         if (!question) return;
         if (!preserveSession && userStateV16.activeSessionId) {
@@ -7928,6 +7962,8 @@
         if (!window.NagaSupabase?.configured) throw new Error("共有問題集を開くためのSupabase接続が未設定です。");
         const result = await window.NagaSupabase.loadSharedCollection(shareSlug);
         sharedCollectionV46 = { ...result.collection, share_slug: shareSlug };
+        sharedQuestionDetailsDeferredV170 = result.detailsDeferred === true;
+        sharedQuestionDetailPromisesV170.clear();
         collectionLoadErrorV165 = "";
         rememberCollectionSlugV165(shareSlug);
         const normalizedQuestions = (result.questions || []).map((row, index) => normalizeSharedQuestionV66(row, index, shareSlug)).filter(Boolean);
@@ -7935,6 +7971,27 @@
         adoptSharedQuestionRowsV66(normalizedQuestions);
         document.title = `${sharedCollectionV46.title}｜NAGA局面ドリル`;
         return true;
+      }
+
+      async function ensureSharedQuestionDetailV170(question, index) {
+        if (!question || !sharedQuestionDetailsDeferredV170 || question.__sharedDetailLoaded || !sharedCollectionV46?.share_slug) return question;
+        const questionId = String(question.serverQuestionId || question.id || "");
+        if (!questionId || typeof window.NagaSupabase?.loadSharedQuestionDetail !== "function") return question;
+        const existing = sharedQuestionDetailPromisesV170.get(questionId);
+        if (existing) return existing;
+        const promise = window.NagaSupabase.loadSharedQuestionDetail(sharedCollectionV46.share_slug, questionId)
+          .then(row => {
+            const normalized = normalizeSharedQuestionV66(row, index, sharedCollectionV46.share_slug);
+            if (!normalized?.question) throw new Error("問題の内容を読み込めませんでした。");
+            const merged = { ...question, ...normalized.question, __sharedDetailLoaded: true };
+            questionsV16[index] = merged;
+            const noticeIndex = sharedQuestionRowsV66.findIndex(item => item.id === questionId);
+            if (noticeIndex >= 0) sharedQuestionRowsV66[noticeIndex] = { ...sharedQuestionRowsV66[noticeIndex], ...normalized, question: merged };
+            return merged;
+          })
+          .finally(() => sharedQuestionDetailPromisesV170.delete(questionId));
+        sharedQuestionDetailPromisesV170.set(questionId, promise);
+        return promise;
       }
 
       async function hydrateSharedCommentsV46(question) {
@@ -8007,9 +8064,8 @@
         importedQuestionsReadyV81 = true;
         if (!loadedSharedCollection && window.NagaSupabase?.configured) menuViewV16 = "collections";
         renderQuestionOptionsV16();
-        if (loadedSharedCollection && questionsV16.length) await startCommentNotificationPollingV65();
-        if (questionsV16.length) applyQuestionV16(questionsV16[0], 0);
         showMenuV16();
+        if (loadedSharedCollection && questionsV16.length) void startCommentNotificationPollingV65();
         const requestedExistingQuestionId = new URL(window.location.href).searchParams.get("existing_question")?.trim() || "";
         if (requestedExistingQuestionId) {
           const existingIndex = questionsV16.findIndex(question => String(question.serverQuestionId || "") === requestedExistingQuestionId);

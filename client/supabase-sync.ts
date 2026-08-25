@@ -139,6 +139,22 @@ async function loadSharedCollection(shareSlug: string) {
   const [collection, questions] = await Promise.all([
     supabase.rpc("get_shared_collection", { p_share_slug: shareSlug }).maybeSingle(),
     (async () => {
+      const pageSize = 500;
+      const allQuestions: unknown[] = [];
+      for (let offset = 0; ; offset += pageSize) {
+        const page = await supabase.rpc("get_shared_question_index", {
+          p_share_slug: shareSlug,
+          p_offset: offset,
+          p_limit: pageSize,
+        });
+        if (page.error) throw page.error;
+        const rows = page.data ?? [];
+        allQuestions.push(...rows);
+        if (rows.length < pageSize) return { rows: allQuestions, detailsDeferred: true };
+      }
+    })().catch(async (error) => {
+      // 旧公開版のDBに軽量RPCがまだない場合だけ従来処理へ戻す。
+      if (!String(error?.message || error).toLowerCase().includes("get_shared_question_index")) throw error;
       const pageSize = 1000;
       const allQuestions: unknown[] = [];
       for (let offset = 0; ; offset += pageSize) {
@@ -150,13 +166,25 @@ async function loadSharedCollection(shareSlug: string) {
         if (page.error) throw page.error;
         const rows = page.data ?? [];
         allQuestions.push(...rows);
-        if (rows.length < pageSize) return allQuestions;
+        if (rows.length < pageSize) return { rows: allQuestions, detailsDeferred: false };
       }
-    })(),
+    }),
   ]);
   if (collection.error) throw collection.error;
   if (!collection.data) throw new Error("指定された問題集が見つかりません。");
-  return { collection: collection.data, questions };
+  return { collection: collection.data, questions: questions.rows, detailsDeferred: questions.detailsDeferred };
+}
+
+async function loadSharedQuestionDetail(shareSlug: string, questionId: string) {
+  const normalizedSlug = String(shareSlug ?? "").trim();
+  const normalizedQuestionId = String(questionId ?? "").trim();
+  if (!normalizedSlug || !normalizedQuestionId) throw new Error("問題を特定できませんでした。");
+  const { data, error } = await requireClient().rpc("get_shared_question_detail", {
+    p_share_slug: normalizedSlug,
+    p_question_id: normalizedQuestionId,
+  });
+  if (error) throw error;
+  return Array.isArray(data) ? data[0] ?? null : data ?? null;
 }
 
 async function loadMyCollections() {
@@ -631,6 +659,7 @@ function buildApi() {
     signOut,
     updateProfileDisplayName,
     loadSharedCollection,
+    loadSharedQuestionDetail,
     loadMyCollections,
     loadCollectionDirectory,
     requestCollectionAccess,
