@@ -6,16 +6,16 @@ const indexUrl = new URL("../public/index.html", import.meta.url);
 const cssUrl = new URL("../public/ux-v159.css", import.meta.url);
 const identityUrl = new URL("../app/lib/appIdentity.ts", import.meta.url);
 
-test("V166 exposes the daily-learning shell and synchronized release assets", async () => {
+test("V167 exposes the daily-learning shell and synchronized release assets", async () => {
   const [html, css, identity] = await Promise.all([
     readFile(indexUrl, "utf8"),
     readFile(cssUrl, "utf8"),
     readFile(identityUrl, "utf8"),
   ]);
 
-  assert.match(html, /const APP_VERSION = 166;/);
-  assert.match(identity, /APP_VERSION = 166/);
-  assert.match(html, /ux-v159\.css\?v=166/);
+  assert.match(html, /const APP_VERSION = 167;/);
+  assert.match(identity, /APP_VERSION = 167/);
+  assert.match(html, /ux-v159\.css\?v=167/);
   assert.match(html, /data-menu-view="today"/);
   assert.match(html, /今日の10問/);
   assert.match(html, /function renderTodayViewV159\(/);
@@ -131,4 +131,16 @@ test("V166 puts basic sequence first, recommends sequential order, and shows ten
   assert.match(html, /const sequentialCandidates = isBasicSequenceCollectionV163\(\)/);
   const todayView = html.match(/function renderTodayViewV159\([\s\S]*?function renderMenuCardsV16\(/)?.[0] || "";
   assert.match(todayView, /\.slice\(0, 10\)/);
+});
+
+test("V167 styles the collection chooser as a three-column library with a silver basic-sequence card", async () => {
+  const [html, css] = await Promise.all([readFile(indexUrl, "utf8"), readFile(cssUrl, "utf8")]);
+  assert.match(html, /function collectionChooserCardClassV167\(row, current\)/);
+  assert.match(html, /collectionChooserCardClassV167\(row, current\)/);
+  assert.match(html, /isBasicSequenceCollectionV163\(row\)/);
+  assert.match(css, /V167: present the collection chooser as a calm library/);
+  assert.match(css, /\.page\.menu-active:has\(\.collection-chooser\) \.menu-heading/);
+  assert.match(css, /\.page\.menu-active \.collection-choice-grid\s*\{[\s\S]*?grid-template-columns: repeat\(3, minmax\(0, 1fr\)\)/);
+  assert.match(css, /\.page\.menu-active \.collection-choice-card\.is-basic-sequence\s*\{[\s\S]*?linear-gradient/);
+  assert.match(css, /\.page\.menu-active \.collection-choice-card\.is-basic-sequence \.collection-choice-card-meta/);
 });

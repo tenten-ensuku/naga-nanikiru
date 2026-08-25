@@ -2556,3 +2556,202 @@ button:disabled {
   border-color: rgba(255, 135, 144, .72);
   opacity: 1;
 }
+
+/* V167: present the collection chooser as a calm library, with a silver basic-sequence card. */
+.page.menu-active:has(.collection-chooser) .menu-heading {
+  display: none;
+}
+
+.page.menu-active:has(.collection-chooser) .menu-content {
+  padding-top: clamp(26px, 4vw, 48px);
+}
+
+.page.menu-active .collection-chooser {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.page.menu-active .collection-chooser-header {
+  align-items: end;
+  margin-bottom: clamp(18px, 2.5vw, 26px);
+}
+
+.page.menu-active .collection-chooser-header h3 {
+  color: var(--ux-ivory);
+  font-family: "Yu Mincho", "Hiragino Mincho ProN", "Noto Serif JP", serif;
+  font-size: clamp(27px, 3vw, 36px);
+  font-weight: 700;
+  letter-spacing: .035em;
+  line-height: 1.18;
+}
+
+.page.menu-active .collection-chooser-header p:not(.collection-chooser-kicker) {
+  max-width: 58em;
+  color: rgba(220, 232, 235, .7);
+  font-size: 11px;
+  line-height: 1.55;
+}
+
+.page.menu-active .collection-chooser-create {
+  min-height: 42px;
+  padding: 0 18px;
+  border: 1px solid rgba(183, 137, 67, .9);
+  border-radius: 8px;
+  background: rgba(7, 19, 29, .58);
+  color: var(--ux-brown-gold-light);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: .04em;
+  white-space: nowrap;
+}
+
+.page.menu-active .collection-chooser-create:hover,
+.page.menu-active .collection-chooser-create:focus-visible {
+  border-color: #f0cf91;
+  background: rgba(86, 57, 29, .45);
+  color: #fff1c9;
+}
+
+.page.menu-active .collection-choice-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px 16px;
+}
+
+.page.menu-active .collection-choice-card {
+  position: relative;
+  min-height: 142px;
+  padding: 14px 16px;
+  overflow: hidden;
+  border-color: rgba(183, 137, 67, .62);
+  border-radius: 10px;
+  background: linear-gradient(145deg, #102d39 0%, #0a202c 72%, #081923 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .035), 0 5px 14px rgba(0, 0, 0, .12);
+}
+
+.page.menu-active .collection-choice-card::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 42px;
+  height: 42px;
+  border-top: 1px solid rgba(225, 188, 116, .42);
+  border-right: 1px solid rgba(225, 188, 116, .42);
+  clip-path: polygon(100% 0, 100% 100%, 0 0);
+  content: "";
+  pointer-events: none;
+}
+
+.page.menu-active .collection-choice-card:hover,
+.page.menu-active .collection-choice-card:focus-visible {
+  border-color: rgba(240, 207, 145, .94);
+  background: linear-gradient(145deg, #163c4a 0%, #0e2b38 72%, #0a202c 100%);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, .22);
+  transform: translateY(-1px);
+}
+
+.page.menu-active .collection-choice-card:not(.is-basic-sequence).is-current {
+  border-color: rgba(225, 188, 116, .98);
+  background: linear-gradient(145deg, #4b321f 0%, #2b211b 62%, #152630 100%);
+  box-shadow: inset 3px 0 0 var(--ux-brown-gold-light), 0 10px 24px rgba(0, 0, 0, .24);
+}
+
+.page.menu-active .collection-choice-card.is-basic-sequence {
+  border-color: rgba(235, 241, 245, .92);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, .72), transparent 28%),
+    linear-gradient(145deg, #f0f3f5 0%, #b8c0c6 42%, #737e87 70%, #3a4650 100%);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, .66),
+    0 11px 26px rgba(0, 0, 0, .32),
+    inset 0 1px 0 rgba(255, 255, 255, .9),
+    inset 0 -12px 22px rgba(22, 32, 40, .22);
+  color: #18242d;
+}
+
+.page.menu-active .collection-choice-card.is-basic-sequence::after {
+  border-color: rgba(255, 255, 255, .72);
+}
+
+.page.menu-active .collection-choice-card.is-basic-sequence:hover,
+.page.menu-active .collection-choice-card.is-basic-sequence:focus-visible {
+  border-color: #fff;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, .86), transparent 30%),
+    linear-gradient(145deg, #f7f9fa 0%, #c7cdd1 42%, #818b93 70%, #44515a 100%);
+}
+
+.page.menu-active .collection-choice-card.is-basic-sequence .collection-choice-card-kicker {
+  color: #24323c;
+}
+
+.page.menu-active .collection-choice-card.is-basic-sequence strong {
+  color: #17232c;
+}
+
+.page.menu-active .collection-choice-card strong {
+  max-width: 100%;
+  overflow: hidden;
+  font-family: "Yu Mincho", "Hiragino Mincho ProN", "Noto Serif JP", serif;
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1.32;
+  text-overflow: ellipsis;
+  white-space: normal;
+}
+
+.page.menu-active .collection-choice-card-description {
+  min-height: 36px;
+  color: rgba(221, 232, 235, .72);
+}
+
+.page.menu-active .collection-choice-card.is-basic-sequence .collection-choice-card-description {
+  color: rgba(32, 45, 54, .78);
+}
+
+.page.menu-active .collection-choice-card-meta {
+  min-height: 22px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(225, 188, 116, .18);
+  color: rgba(220, 232, 235, .72);
+}
+
+.page.menu-active .collection-choice-card.is-basic-sequence .collection-choice-card-meta {
+  border-top-color: rgba(32, 45, 54, .26);
+  color: rgba(29, 42, 51, .78);
+}
+
+.page.menu-active .collection-choice-card.is-basic-sequence .collection-choice-card-meta span {
+  color: #3d4a53;
+}
+
+@media (max-width: 1100px) and (min-width: 801px) {
+  .page.menu-active .collection-choice-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 800px) {
+  .page.menu-active:has(.collection-chooser) .menu-content {
+    padding-top: 22px;
+  }
+
+  .page.menu-active .collection-chooser-header {
+    align-items: start;
+    gap: 14px;
+  }
+
+  .page.menu-active .collection-chooser-create {
+    justify-self: start;
+  }
+
+  .page.menu-active .collection-choice-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .page.menu-active .collection-choice-card {
+    min-height: 128px;
+  }
+}

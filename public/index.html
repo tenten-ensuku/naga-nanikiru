@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=166">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=166">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=166">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=167">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=167">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=167">
   <title>NAGA局面ドリル｜何切る復習問題集</title>
   <meta name="description" content="NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリ。">
   <meta name="theme-color" content="#06131e">
@@ -2152,7 +2152,7 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=166">
+  <link rel="stylesheet" href="ux-v159.css?v=167">
 </head>
 <body>
   <main class="page">
@@ -2445,7 +2445,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 166;
+    const APP_VERSION = 167;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -3561,6 +3561,7 @@
         { version: 163, date: "2026-08-25", publishedAt: "2026-08-25T00:00:00+09:00", title: "基本序列問題集の視点を修正しました", body: "基本序列問題集を「私」＝南家の視点で表示し、卓上の他者名は元のNAGA表示をそのまま使用するようにしました。" },
         { version: 164, date: "2026-08-26", publishedAt: "2026-08-26T00:00:00+09:00", title: "公開範囲の対象問題集を明示しました", body: "設定画面の公開範囲に、現在どの問題集へ適用される設定かを常時表示するようにしました。" },
         { version: 165, date: "2026-08-26", publishedAt: "2026-08-26T12:00:00+09:00", title: "問題集を選ぶ導線を新しくしました", body: "選択中の問題集をPCのサイドバーとスマホ上部へ常時表示し、ブラウンゴールドのボタンから問題集を切り替えられるようにしました。URL指定を優先し、最後に正常に開いた問題集は次回も保持します。" },
+        { version: 167, date: "2026-08-26", publishedAt: "2026-08-26T14:00:00+09:00", title: "問題集選択画面を刷新しました", body: "問題集カードを見やすい3列レイアウトに整え、基本序列問題集を格式高いシルバーで表示します。" },
         { version: 166, date: "2026-08-26", publishedAt: "2026-08-26T13:00:00+09:00", title: "基本序列の順番出題と最近の10問に対応しました", body: "基本序列問題集を問題集選択画面の先頭に配置し、ストーリーに沿った順番出題を推奨する表示にしました。今日の学習画面では最近解いた問題を最大10問表示します。" }
       ];
       let commentNoticeStoreV65 = loadCommentNoticeStoreV65();
@@ -4520,6 +4521,13 @@
         return row?.visibility === "request" ? "閲覧申請が必要" : collectionVisibilityLabelV100(row?.visibility);
       }
 
+      function collectionChooserCardClassV167(row, current) {
+        const classes = ["collection-choice-card"];
+        if (current) classes.push("is-current");
+        if (isBasicSequenceCollectionV163(row)) classes.push("is-basic-sequence");
+        return classes.join(" ");
+      }
+
       function renderCollectionChooserV165() {
         const rows = sortCollectionRowsV166(collectionCatalogOptionsV100());
         const cards = rows.map(row => {
@@ -4529,7 +4537,7 @@
           const hasExplicitRole = Boolean(row.member_role) || Boolean(row.can_edit) || Boolean(row.can_manage) || (supabaseSessionV46?.user?.id && String(row.owner_id || "") === String(supabaseSessionV46.user.id));
           const role = hasExplicitRole ? collectionRoleLabelV130(row) : collectionVisibilityLabelV100(row.visibility);
           const description = String(row.description || "").trim();
-          return `<button class="collection-choice-card${current ? " is-current" : ""}" type="button" data-collection-slug="${escapeHtml(slug)}" aria-pressed="${current}"><span class="collection-choice-card-kicker">${escapeHtml(status)}</span><strong>${escapeHtml(row.display_title || collectionDisplayNameV101(row))}</strong>${description ? `<span class="collection-choice-card-description">${escapeHtml(description)}</span>` : ""}<span class="collection-choice-card-meta">${escapeHtml(role || collectionVisibilityLabelV100(row.visibility))}<span aria-hidden="true">›</span></span></button>`;
+          return `<button class="${collectionChooserCardClassV167(row, current)}" type="button" data-collection-slug="${escapeHtml(slug)}" aria-pressed="${current}"><span class="collection-choice-card-kicker">${escapeHtml(status)}</span><strong>${escapeHtml(row.display_title || collectionDisplayNameV101(row))}</strong>${description ? `<span class="collection-choice-card-description">${escapeHtml(description)}</span>` : ""}<span class="collection-choice-card-meta">${escapeHtml(role || collectionVisibilityLabelV100(row.visibility))}<span aria-hidden="true">›</span></span></button>`;
         }).join("");
         const empty = `<div class="collection-chooser-empty"><strong>選べる問題集を読み込んでいます</strong><span>一覧が表示されない場合は、Discordログイン後にもう一度お試しください。</span></div>`;
         const errorNotice = collectionLoadErrorV165 ? `<div class="collection-chooser-error" role="alert"><strong>この問題集を開けませんでした</strong><span>${escapeHtml(collectionLoadErrorV165)}</span><small>下の一覧から、開き直す問題集を選んでください。</small></div>` : "";
