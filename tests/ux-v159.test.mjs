@@ -6,23 +6,23 @@ const indexUrl = new URL("../public/index.html", import.meta.url);
 const cssUrl = new URL("../public/ux-v159.css", import.meta.url);
 const identityUrl = new URL("../app/lib/appIdentity.ts", import.meta.url);
 
-test("V161 exposes the daily-learning shell and synchronized release assets", async () => {
+test("V165 exposes the daily-learning shell and synchronized release assets", async () => {
   const [html, css, identity] = await Promise.all([
     readFile(indexUrl, "utf8"),
     readFile(cssUrl, "utf8"),
     readFile(identityUrl, "utf8"),
   ]);
 
-  assert.match(html, /const APP_VERSION = 164;/);
-  assert.match(identity, /APP_VERSION = 164/);
-  assert.match(html, /ux-v159\.css\?v=164/);
+  assert.match(html, /const APP_VERSION = 165;/);
+  assert.match(identity, /APP_VERSION = 165/);
+  assert.match(html, /ux-v159\.css\?v=165/);
   assert.match(html, /data-menu-view="today"/);
   assert.match(html, /今日の10問/);
   assert.match(html, /function renderTodayViewV159\(/);
   assert.match(html, /data-today-session="\$\{startMode\}"/);
   assert.match(css, /\.today-dashboard/);
   assert.match(css, /\.today-primary-action/);
-  assert.doesNotMatch(css, /gradient\s*\(/i);
+  assert.match(css, /--ux-brown-gold: #b78943/);
 });
 
 test("V161 keeps account actions compact and removes the obsolete share-copy control", async () => {
@@ -103,4 +103,21 @@ test("V164 makes the collection targeted by visibility settings explicit", async
   assert.match(html, /collectionDisplayNameV101\(collection\)/);
   assert.match(html, /aria-label="公開範囲の対象問題集"/);
   assert.match(html, /作成する問題集の公開範囲/);
+});
+
+test("V165 keeps the active collection visible and opens a dedicated chooser", async () => {
+  const [html, css] = await Promise.all([readFile(indexUrl, "utf8"), readFile(cssUrl, "utf8")]);
+  assert.match(html, /data-open-collection-chooser/);
+  assert.match(html, /data-active-collection-name/);
+  assert.match(html, /class="mobile-collection-context"/);
+  assert.match(html, /function renderActiveCollectionContextV165\(/);
+  assert.match(html, /function renderCollectionChooserV165\(/);
+  assert.match(html, /ACTIVE_COLLECTION_KEY_V165 = storageKey\("active-collection-v1"\)/);
+  assert.match(html, /return collectionSlugFromUrlV165\(\) \|\| rememberedCollectionSlugV165\(\)/);
+  assert.match(html, /rememberCollectionSlugV165\(shareSlug\)/);
+  assert.match(html, /menuViewV16 = "collections"/);
+  assert.match(css, /\.active-collection-button/);
+  assert.match(css, /linear-gradient\(145deg, #5a3b22/);
+  assert.match(css, /\.collection-choice-grid/);
+  assert.match(css, /position: sticky;[\s\S]*?\.page\.menu-active \.mobile-collection-context|\.page\.menu-active \.mobile-collection-context[\s\S]*?position: sticky;/);
 });

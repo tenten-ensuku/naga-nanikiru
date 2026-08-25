@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=164">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=164">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=164">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=165">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=165">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=165">
   <title>NAGA局面ドリル｜何切る復習問題集</title>
   <meta name="description" content="NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリ。">
   <meta name="theme-color" content="#06131e">
@@ -2152,16 +2152,22 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=164">
+  <link rel="stylesheet" href="ux-v159.css?v=165">
 </head>
 <body>
   <main class="page">
     <section class="menu-panel" id="menuPanel" aria-labelledby="menuTitle">
       <aside class="menu-sidebar" aria-label="問題集ナビゲーション">
         <div class="menu-brand"><span class="menu-brand-tile" aria-hidden="true">中</span><span class="menu-brand-title">問題集</span><span class="menu-brand-actions"><button class="menu-notice-button" id="announcementButton" type="button" aria-label="アナウンスを開く" title="アプリの更新情報を見る"><span class="menu-notice-label">更新</span><span class="notification-badge" id="announcementBadge" hidden></span></button><button class="menu-notice-button" id="commentNotificationsButton" type="button" aria-label="コメント・追加通知を開く" title="コメントと問題追加の通知を見る"><span class="menu-notice-label">通知</span><span class="notification-badge" id="commentNotificationBadge" hidden></span></button><span class="menu-brand-version">V<span id="menuVersion"></span></span></span></div>
+        <button class="active-collection-button" type="button" data-open-collection-chooser aria-label="現在の問題集を確認・変更する">
+          <span class="active-collection-label">選択中の問題集</span>
+          <strong data-active-collection-name>問題集を選ぶ</strong>
+          <span class="active-collection-status" data-active-collection-status>未選択</span>
+          <span class="active-collection-arrow" aria-hidden="true">›</span>
+        </button>
         <nav class="menu-nav" aria-label="問題集メニュー">
           <button class="menu-nav-button is-active" type="button" data-menu-view="today" title="今日の10問を始める"><span class="menu-nav-icon" aria-hidden="true">10</span><span>今日の10問</span></button>
-          <button class="menu-nav-button" type="button" data-menu-view="my" title="問題集を選び、一覧から学習を始める"><span class="menu-nav-icon" aria-hidden="true">▦</span><span>問題一覧</span><span class="menu-nav-badge" data-menu-count="collections">0</span></button>
+          <button class="menu-nav-button" type="button" data-menu-view="my" title="選択中の問題集の一覧から学習を始める"><span class="menu-nav-icon" aria-hidden="true">▦</span><span>問題一覧</span><span class="menu-nav-badge" data-menu-count="my">0</span></button>
           <button class="menu-nav-button" type="button" data-menu-view="analysis" title="回答率・習熟度・回答時間など、自分の学習状況を見る"><span class="menu-nav-icon" aria-hidden="true">▥</span><span>成績・履歴</span></button>
           <button class="menu-nav-button" type="button" data-menu-view="generator" title="NAGA URLから問題を作り、保存先を選ぶ"><span class="menu-nav-icon" aria-hidden="true">＋</span><span>問題生成</span></button>
           <button class="menu-nav-button" type="button" data-menu-view="settings" title="表示名・表示方法・問題集の設定を変更する"><span class="menu-nav-icon" aria-hidden="true">⚙</span><span>設定</span></button>
@@ -2175,6 +2181,11 @@
         </div>
       </aside>
       <div class="menu-content">
+        <button class="mobile-collection-context" type="button" data-open-collection-chooser aria-label="現在の問題集を確認・変更する">
+          <span><small>選択中の問題集</small><strong data-active-collection-name>問題集を選ぶ</strong></span>
+          <span class="mobile-collection-context-status" data-active-collection-status>未選択</span>
+          <span aria-hidden="true">›</span>
+        </button>
         <div class="menu-heading">
           <h2 id="menuTitle">問題一覧</h2>
           <div class="menu-summary" id="menuSummary" aria-live="polite"></div>
@@ -2434,7 +2445,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 164;
+    const APP_VERSION = 165;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -3378,8 +3389,11 @@
       const modelColorByNameV16 = { オメガ: "model-omega", ガンマ: "model-gamma", ニシキ: "model-nishiki", ヒバカリ: "model-hihikari", カガシ: "model-kagashi" };
       const USER_STATE_KEY_V16 = storageKey("user-state-v1");
       const LEGACY_USER_STATE_KEY_V16 = "naga-nanikiru-user-state-v1";
+      const ACTIVE_COLLECTION_KEY_V165 = storageKey("active-collection-v1");
+      let collectionNavigationPendingV165 = false;
+      let collectionLoadErrorV165 = "";
       const MENU_VIEW_COPY_V16 = {
-        collections: { title: "問題集" },
+        collections: { title: "問題集を選ぶ" },
         today: { title: "今日の学習" },
         my: { title: "問題一覧" },
         archive: { title: "アーカイブ" },
@@ -3545,7 +3559,8 @@
         { version: 149, date: "2026-08-22", publishedAt: "2026-08-22T20:40:25+09:00", title: "問題1351の副露直後レイアウトを再調整しました", body: "問題1351では、副露前の手牌を通常の理牌順に並べ、ポンに使った2pの2スロットを空欄として保持します。副露3枚は暗手牌マスク内へ混ぜず、正解画像に合わせてマスク外の副露領域へ1回だけ表示します。回答確定後は通常の副露済みレイアウトへ戻ります。" },
         { version: 161, date: "2026-08-24", publishedAt: "2026-08-24T00:00:00+09:00", title: "アーカイブ後の操作位置を固定しました", body: "アーカイブに移した直後も、次の問題へ進むボタンが同じ位置に残るようにしました。保存中は二重操作を防ぎ、保存完了後はアーカイブ済みと表示します。" },
         { version: 163, date: "2026-08-25", publishedAt: "2026-08-25T00:00:00+09:00", title: "基本序列問題集の視点を修正しました", body: "基本序列問題集を「私」＝南家の視点で表示し、卓上の他者名は元のNAGA表示をそのまま使用するようにしました。" },
-        { version: 164, date: "2026-08-26", publishedAt: "2026-08-26T00:00:00+09:00", title: "公開範囲の対象問題集を明示しました", body: "設定画面の公開範囲に、現在どの問題集へ適用される設定かを常時表示するようにしました。" }
+        { version: 164, date: "2026-08-26", publishedAt: "2026-08-26T00:00:00+09:00", title: "公開範囲の対象問題集を明示しました", body: "設定画面の公開範囲に、現在どの問題集へ適用される設定かを常時表示するようにしました。" },
+        { version: 165, date: "2026-08-26", publishedAt: "2026-08-26T12:00:00+09:00", title: "問題集を選ぶ導線を新しくしました", body: "選択中の問題集をPCのサイドバーとスマホ上部へ常時表示し、ブラウンゴールドのボタンから問題集を切り替えられるようにしました。URL指定を優先し、最後に正常に開いた問題集は次回も保持します。" }
       ];
       let commentNoticeStoreV65 = loadCommentNoticeStoreV65();
       let sharedCommentRowsV65 = [];
@@ -4196,6 +4211,49 @@
         return rows.filter(row => row?.share_slug && row?.title).map(row => ({ ...row, display_title: collectionDisplayNameV101(row) }));
       }
 
+      function collectionSlugFromUrlV165() {
+        return new URL(window.location.href).searchParams.get("collection")?.trim() || "";
+      }
+
+      function rememberedCollectionSlugV165() {
+        try {
+          return String(window.localStorage.getItem(ACTIVE_COLLECTION_KEY_V165) || "").trim();
+        } catch {
+          return "";
+        }
+      }
+
+      function selectedCollectionSlugV165() {
+        return collectionSlugFromUrlV165() || rememberedCollectionSlugV165();
+      }
+
+      function rememberCollectionSlugV165(slug) {
+        const value = String(slug || "").trim();
+        try {
+          if (value) window.localStorage.setItem(ACTIVE_COLLECTION_KEY_V165, value);
+          else window.localStorage.removeItem(ACTIVE_COLLECTION_KEY_V165);
+        } catch {}
+      }
+
+      function activeCollectionStatusV165(collection = sharedCollectionV46) {
+        if (!collection) return "未選択";
+        if (Boolean(collection.can_manage) || Boolean(collection.can_edit)) return "編集できます";
+        if (Boolean(collection.can_view)) return "学習できます";
+        if (String(collection.request_status || "") === "pending") return "承認待ち";
+        return collectionVisibilityLabelV100(collection.visibility);
+      }
+
+      function renderActiveCollectionContextV165() {
+        const title = sharedCollectionV46 ? collectionDisplayNameV101(sharedCollectionV46) : "問題集を選ぶ";
+        const status = activeCollectionStatusV165(sharedCollectionV46);
+        document.querySelectorAll("[data-active-collection-name]").forEach(node => { node.textContent = title; });
+        document.querySelectorAll("[data-active-collection-status]").forEach(node => { node.textContent = status; });
+        document.querySelectorAll("[data-open-collection-chooser]").forEach(button => {
+          button.classList.toggle("is-unselected", !sharedCollectionV46);
+          button.setAttribute("aria-label", sharedCollectionV46 ? `${title}を選択中。問題集を確認・変更する` : "学習する問題集を選ぶ");
+        });
+      }
+
       function editableCollectionOptionsV130({ excludeCurrent = false } = {}) {
         const userId = String(supabaseSessionV46?.user?.id || "");
         const currentSlug = String(sharedCollectionV46?.share_slug || "");
@@ -4346,7 +4404,12 @@
 
       function navigateToCollectionV106(slug) {
         const value = String(slug || "").trim();
-        if (!value) return;
+        if (!value || collectionNavigationPendingV165) return;
+        collectionNavigationPendingV165 = true;
+        document.querySelector(".page")?.classList.add("is-collection-switching");
+        document.querySelectorAll("[data-active-collection-status]").forEach(node => { node.textContent = "切り替え中…"; });
+        document.querySelectorAll("[data-collection-slug]").forEach(button => { button.disabled = true; });
+        rememberCollectionSlugV165(value);
         const url = new URL(window.location.href);
         url.searchParams.set("collection", value);
         url.hash = "";
@@ -4404,10 +4467,7 @@
             const created = await window.NagaSupabase.createCollection({ title, description, visibility });
             const shareSlug = String(created?.share_slug || "").trim();
             if (!shareSlug) throw new Error("問題集は作成されましたが、問題集URLを取得できませんでした。問題集一覧から開き直してください。");
-            const url = new URL(window.location.href);
-            url.searchParams.set("collection", shareSlug);
-            url.hash = "";
-            window.location.assign(url.toString());
+            navigateToCollectionV106(shareSlug);
           } catch (error) {
             status.classList.add("is-error");
             const rawMessage = String(error?.message || "");
@@ -4449,15 +4509,43 @@
          return `<section class="collection-directory" aria-labelledby="collectionDirectoryTitle"><div class="collection-switcher-head">${picker}<div class="collection-directory-actions">${info}${createButton}</div></div>${selectionNote}<div class="collection-create-inline" id="collectionCreateInlinePanel" hidden><h4>自分の問題集を作る</h4><p class="collection-space-note">問題集を作成すると、自分で問題を追加・管理できます。</p>${collectionCreateFormMarkupV106("collectionCreateInline")}</div></section>`;
       }
 
+      function collectionChooserStatusV165(row) {
+        const slug = String(row?.share_slug || "");
+        if (slug && slug === String(sharedCollectionV46?.share_slug || "")) return "現在選択中";
+        if (Boolean(row?.can_manage)) return "管理できます";
+        if (Boolean(row?.can_edit)) return "編集できます";
+        if (Boolean(row?.can_view)) return "学習できます";
+        if (String(row?.request_status || "") === "pending") return "閲覧申請中";
+        return row?.visibility === "request" ? "閲覧申請が必要" : collectionVisibilityLabelV100(row?.visibility);
+      }
+
+      function renderCollectionChooserV165() {
+        const rows = collectionCatalogOptionsV100().sort((left, right) => {
+          const currentSlug = String(sharedCollectionV46?.share_slug || "");
+          const leftCurrent = String(left.share_slug || "") === currentSlug ? 0 : 1;
+          const rightCurrent = String(right.share_slug || "") === currentSlug ? 0 : 1;
+          return leftCurrent - rightCurrent || String(left.display_title || "").localeCompare(String(right.display_title || ""), "ja");
+        });
+        const cards = rows.map(row => {
+          const slug = String(row.share_slug || "");
+          const current = slug === String(sharedCollectionV46?.share_slug || "");
+          const status = collectionChooserStatusV165(row);
+          const hasExplicitRole = Boolean(row.member_role) || Boolean(row.can_edit) || Boolean(row.can_manage) || (supabaseSessionV46?.user?.id && String(row.owner_id || "") === String(supabaseSessionV46.user.id));
+          const role = hasExplicitRole ? collectionRoleLabelV130(row) : collectionVisibilityLabelV100(row.visibility);
+          const description = String(row.description || "").trim();
+          return `<button class="collection-choice-card${current ? " is-current" : ""}" type="button" data-collection-slug="${escapeHtml(slug)}" aria-pressed="${current}"><span class="collection-choice-card-kicker">${escapeHtml(status)}</span><strong>${escapeHtml(row.display_title || collectionDisplayNameV101(row))}</strong>${description ? `<span class="collection-choice-card-description">${escapeHtml(description)}</span>` : ""}<span class="collection-choice-card-meta">${escapeHtml(role || collectionVisibilityLabelV100(row.visibility))}<span aria-hidden="true">›</span></span></button>`;
+        }).join("");
+        const empty = `<div class="collection-chooser-empty"><strong>選べる問題集を読み込んでいます</strong><span>一覧が表示されない場合は、Discordログイン後にもう一度お試しください。</span></div>`;
+        const errorNotice = collectionLoadErrorV165 ? `<div class="collection-chooser-error" role="alert"><strong>この問題集を開けませんでした</strong><span>${escapeHtml(collectionLoadErrorV165)}</span><small>下の一覧から、開き直す問題集を選んでください。</small></div>` : "";
+        return `<section class="collection-chooser" aria-labelledby="collectionChooserHeading"><header class="collection-chooser-header"><div><p class="collection-chooser-kicker">COLLECTION LIBRARY</p><h3 id="collectionChooserHeading">学習する問題集を選択</h3><p>選んだ問題集は次回も保持されます。共有URLから開いた場合は、その問題集を優先します。</p></div><button class="collection-chooser-create" type="button" data-menu-jump="settings">＋ 新しい問題集</button></header>${errorNotice}<div class="collection-choice-grid">${cards || empty}</div></section>`;
+      }
+
       function renderCollectionSpacePanelV100() {
         const panel = document.getElementById("collectionSpacePanel");
-        if (!panel || menuViewV16 !== "my") {
-          if (panel) {
-            panel.hidden = true;
-            panel.innerHTML = "";
-          }
-          return;
-        }
+        if (!panel) return;
+        panel.hidden = true;
+        panel.innerHTML = "";
+        if (menuViewV16 !== "my" || !sharedCollectionV46 || Boolean(sharedCollectionV46.can_view)) return;
         const createDraft = captureCollectionCreateDraftV114();
         const collection = sharedCollectionV46;
         if (!collection) {
@@ -4495,7 +4583,7 @@
         const accessNotice = !canView
           ? `<div class="collection-space-current collection-space-access-notice"><div class="collection-space-current-head"><span class="collection-space-meta">アクセス状態</span><span class="collection-space-status${statusClass}">${escapeHtml(accessLabel)}</span></div><p class="collection-space-note">${escapeHtml(note)}</p>${accessControls}${canManage ? `<p class="collection-space-note">設定から公開範囲を変更し、閲覧申請を承認・却下できます。申請の承認時に「閲覧」または「編集」を選べます。</p>` : ""}</div>`
           : "";
-        panel.innerHTML = `${renderCollectionDirectoryV101()}${accessNotice}`;
+        panel.innerHTML = accessNotice;
         bindCollectionSpacePanelV100();
         restoreCollectionCreateDraftV114(createDraft);
       }
@@ -6203,9 +6291,11 @@
 
       function showMenuV16(view = menuViewV16) {
         if (menuViewV16 === "generator") persistGeneratorFormDraftV157();
-        const requestedView = view === "collections" || view === "favorites" ? "my" : view;
+        const requestedView = view === "favorites" ? "my" : view;
         if (view === "favorites") menuFavoritesOnlyV137 = true;
-        menuViewV16 = MENU_VIEW_COPY_V16[requestedView] ? requestedView : "my";
+        const needsCollection = ["today", "my", "archive", "analysis"].includes(requestedView);
+        const effectiveView = needsCollection && !sharedCollectionV46 && window.NagaSupabase?.configured ? "collections" : requestedView;
+        menuViewV16 = MENU_VIEW_COPY_V16[effectiveView] ? effectiveView : "my";
         if (!menuRangeOptionsV60().some(option => option.key === menuRangeV60)) menuRangeV60 = "all";
         applyDesktopLayoutV70();
         document.querySelector(".page").classList.add("menu-active");
@@ -6244,6 +6334,7 @@
 
       function renderMenuNavigationV16() {
         syncBasicSequenceThemeV163();
+        renderActiveCollectionContextV165();
         const analytics = window.DrillUxV44?.analytics?.({ questions: questionsV16, state: userStateV16, now: new Date() }) || {};
         const counts = {
           collections: collectionCatalogOptionsV100().length,
@@ -6745,6 +6836,12 @@
           loadMore.innerHTML = "";
         }
         renderMenuNavigationV16();
+        if (menuViewV16 === "collections") {
+          grid.innerHTML = renderCollectionChooserV165();
+          grid.style.display = "block";
+          empty.hidden = true;
+          return;
+        }
         if (menuViewV16 === "today") {
           grid.innerHTML = renderTodayViewV159();
           grid.style.display = "block";
@@ -7440,6 +7537,11 @@
       }
 
       function handleMenuGridClickV16(event) {
+        const collectionChooserButton = event.target.closest("[data-open-collection-chooser]");
+        if (collectionChooserButton) {
+          showMenuV16("collections");
+          return;
+        }
         const todaySessionButton = event.target.closest("[data-today-session]");
         if (todaySessionButton) {
           startSessionV44(todaySessionButton.dataset.todaySession || "recommended");
@@ -7463,7 +7565,9 @@
         }
         const collectionButton = event.target.closest("[data-collection-slug]");
         if (collectionButton) {
-          navigateToCollectionV106(collectionButton.dataset.collectionSlug);
+          const slug = String(collectionButton.dataset.collectionSlug || "");
+          if (slug && slug === String(sharedCollectionV46?.share_slug || "")) showMenuV16("my");
+          else navigateToCollectionV106(slug);
           return;
         }
         const analysisButton = event.target.closest("[data-analysis-drill]");
@@ -7751,11 +7855,13 @@
       }
 
       async function loadSharedCollectionV46() {
-        const shareSlug = new URL(window.location.href).searchParams.get("collection")?.trim() || DEFAULT_COLLECTION_SLUG;
+        const shareSlug = selectedCollectionSlugV165();
         if (!shareSlug) return false;
         if (!window.NagaSupabase?.configured) throw new Error("共有問題集を開くためのSupabase接続が未設定です。");
         const result = await window.NagaSupabase.loadSharedCollection(shareSlug);
         sharedCollectionV46 = { ...result.collection, share_slug: shareSlug };
+        collectionLoadErrorV165 = "";
+        rememberCollectionSlugV165(shareSlug);
         const normalizedQuestions = (result.questions || []).map((row, index) => normalizeSharedQuestionV66(row, index, shareSlug)).filter(Boolean);
         questionsV16 = normalizedQuestions.map(row => row.question);
         adoptSharedQuestionRowsV66(normalizedQuestions);
@@ -7793,10 +7899,13 @@
 
       async function initImportedQuestionsV16() {
         let loadedSharedCollection = false;
-        const requestedCollectionSlug = new URL(window.location.href).searchParams.get("collection")?.trim() || "";
+        const requestedCollectionSlug = collectionSlugFromUrlV165();
+        const selectedCollectionSlug = selectedCollectionSlugV165();
+        const shouldChooseCollection = Boolean(window.NagaSupabase?.configured) && !selectedCollectionSlug;
+        if (shouldChooseCollection) questionsV16 = [];
         try {
           loadedSharedCollection = await loadSharedCollectionV46();
-          if (!loadedSharedCollection && !requestedCollectionSlug) {
+          if (!loadedSharedCollection && !selectedCollectionSlug && !window.NagaSupabase?.configured) {
             const response = await fetch("question-data/selected-questions.json", { cache: "no-store" });
             if (!response.ok) throw new Error(`question data ${response.status}`);
             const imported = await response.json();
@@ -7808,10 +7917,12 @@
           }
         } catch (error) {
           console.warn("問題の読み込みに失敗しました", error);
-          document.getElementById("accountStatus").textContent = error?.message || "問題集を読み込めませんでした。";
+          collectionLoadErrorV165 = error?.message || "問題集を読み込めませんでした。";
+          document.getElementById("accountStatus").textContent = collectionLoadErrorV165;
+          if (!requestedCollectionSlug && rememberedCollectionSlugV165()) rememberCollectionSlugV165("");
         }
         if (!loadedSharedCollection) {
-          if (requestedCollectionSlug) {
+          if (selectedCollectionSlug || window.NagaSupabase?.configured) {
             questionsV16 = [];
           } else {
             questionsV16 = questionsV16.concat((userStateV16.customQuestions || []).filter(question => question?.id && question?.image).map(question => ({
@@ -7826,6 +7937,7 @@
         normalizeQuestionTitlesV79();
         migrateAnswerHistoryScoresV16();
         importedQuestionsReadyV81 = true;
+        if (!loadedSharedCollection && window.NagaSupabase?.configured) menuViewV16 = "collections";
         renderQuestionOptionsV16();
         if (loadedSharedCollection && questionsV16.length) await startCommentNotificationPollingV65();
         if (questionsV16.length) applyQuestionV16(questionsV16[0], 0);
