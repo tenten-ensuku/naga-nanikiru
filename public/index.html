@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=168">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=168">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=168">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=169">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=169">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=169">
   <title>NAGA局面ドリル｜何切る復習問題集</title>
   <meta name="description" content="NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリ。">
   <meta name="theme-color" content="#06131e">
@@ -2152,7 +2152,7 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=168">
+  <link rel="stylesheet" href="ux-v159.css?v=169">
 </head>
 <body>
   <main class="page">
@@ -2445,7 +2445,7 @@
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 168;
+    const APP_VERSION = 169;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -3561,6 +3561,7 @@
         { version: 163, date: "2026-08-25", publishedAt: "2026-08-25T00:00:00+09:00", title: "基本序列問題集の視点を修正しました", body: "基本序列問題集を「私」＝南家の視点で表示し、卓上の他者名は元のNAGA表示をそのまま使用するようにしました。" },
         { version: 164, date: "2026-08-26", publishedAt: "2026-08-26T00:00:00+09:00", title: "公開範囲の対象問題集を明示しました", body: "設定画面の公開範囲に、現在どの問題集へ適用される設定かを常時表示するようにしました。" },
         { version: 165, date: "2026-08-26", publishedAt: "2026-08-26T12:00:00+09:00", title: "問題集を選ぶ導線を新しくしました", body: "選択中の問題集をPCのサイドバーとスマホ上部へ常時表示し、ブラウンゴールドのボタンから問題集を切り替えられるようにしました。URL指定を優先し、最後に正常に開いた問題集は次回も保持します。" },
+        { version: 169, date: "2026-08-26", publishedAt: "2026-08-26T16:00:00+09:00", title: "整理ボタンの表示場所を見直しました", body: "問題一覧から整理ボタンを外し、問題を解いて回答結果を確認した後だけ、問題画面から整理・編集できるようにしました。" },
         { version: 168, date: "2026-08-26", publishedAt: "2026-08-26T15:00:00+09:00", title: "今日の10問を続きから再開できるようにしました", body: "問題集をまたいだ古いセッションで再開ボタンが反応しない問題を修正し、問題集ごとのセッション判定と旧問題キーの復元に対応しました。" },
         { version: 167, date: "2026-08-26", publishedAt: "2026-08-26T14:00:00+09:00", title: "問題集選択画面を刷新しました", body: "問題集カードを見やすい3列レイアウトに整え、基本序列問題集を格式高いシルバーで表示します。" },
         { version: 166, date: "2026-08-26", publishedAt: "2026-08-26T13:00:00+09:00", title: "基本序列の順番出題と最近の10問に対応しました", body: "基本序列問題集を問題集選択画面の先頭に配置し、ストーリーに沿った順番出題を推奨する表示にしました。今日の学習画面では最近解いた問題を最大10問表示します。" }
@@ -6963,7 +6964,7 @@
           const history = scores.length ? scores.map(entry => `<span class="menu-card-latest-mark ${menuScoreMarkClassV63(entry.scoreMark)}" title="${escapeHtml(entry.scoreLabel || scoreForQuestionV16(question, entry)?.label || "採点結果")}">${escapeHtml(entry.scoreMark)}</span>`).join("") : "—";
           const typeMetadata = questionTypeV44(question);
           const status = menuRowStatusV63(question);
-          const statusMarkup = `<span class="menu-row-status ${status.className}" title="問題の現在の回答状態">${status.label}</span><button class="menu-card-row-manage" type="button" data-menu-action="manage" data-question-index="${index}" title="問題を整理する">整理</button>`;
+          const statusMarkup = `<span class="menu-row-status ${status.className}" title="問題の現在の回答状態">${status.label}</span>`;
           const favoriteLabel = favorite ? `問題${question.number}のお気に入りを解除` : `問題${question.number}をお気に入りに追加`;
           const commentNoticeCount = commentNotificationCountForQuestionV65(question);
           const commentNotice = notificationBadgeMarkupV65(commentNoticeCount, `問題${question.number}の新着コメント${commentNoticeCount}件`, `data-menu-question-notification="${escapeHtml(questionKeyV16(question))}"`);

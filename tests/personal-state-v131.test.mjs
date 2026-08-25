@@ -6,7 +6,7 @@ const htmlUrl = new URL("../public/index.html", import.meta.url);
 
 test("V131 scopes personal archive and favorite state by user and collection", async () => {
   const html = await readFile(htmlUrl, "utf8");
-  assert.match(html, /const APP_VERSION = 168/);
+  assert.match(html, /const APP_VERSION = 169/);
   assert.match(html, /function personalCollectionScopeKeyV131\(/);
   assert.match(html, /supabaseSessionV46\?\.user\?\.id/);
   assert.match(html, /sharedCollectionV46\?\.share_slug/);
@@ -39,7 +39,7 @@ test("V138 separates range selection from favorite and archive filters", async (
   assert.doesNotMatch(html, /menu-range-tab/);
   assert.doesNotMatch(html, /data-menu-range=/);
   assert.match(html, /title="直近の結果が◎の問題だけ、ここからアーカイブに移せます"/);
-  assert.match(html, /title="問題を整理する"/);
+  assert.doesNotMatch(html, /data-menu-action="manage"/);
   assert.match(html, /id="menuActiveFilters"/);
   assert.match(html, /function renderMenuActiveFiltersV138\(\)/);
   assert.match(html, /function clearMenuFilterV138\(filterKey\)/);

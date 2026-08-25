@@ -13,9 +13,9 @@ test("V168 exposes the daily-learning shell and synchronized release assets", as
     readFile(identityUrl, "utf8"),
   ]);
 
-  assert.match(html, /const APP_VERSION = 168;/);
-  assert.match(identity, /APP_VERSION = 168/);
-  assert.match(html, /ux-v159\.css\?v=168/);
+  assert.match(html, /const APP_VERSION = 169;/);
+  assert.match(identity, /APP_VERSION = 169/);
+  assert.match(html, /ux-v159\.css\?v=169/);
   assert.match(html, /data-menu-view="today"/);
   assert.match(html, /今日の10問/);
   assert.match(html, /function renderTodayViewV159\(/);
@@ -158,4 +158,16 @@ test("V168 scopes today's resume session to the collection and repairs legacy qu
   assert.match(resumeBody, /sessionQuestionIndexV167\(key\)/);
   assert.match(resumeBody, /current\.questionKeys = \[\.\.\.new Set\(resolvedEntries\.map/);
   assert.match(resumeBody, /openQuestionV16\(questionIndexByKeyV44\(target\.key\), \{ preserveSession: true \}\)/);
+});
+
+test("V169 keeps question organization on the answered-question screen only", async () => {
+  const html = await readFile(indexUrl, "utf8");
+  const menuRender = html.match(/function renderMenuCardsV16\(\)[\s\S]*?\n      function openQuestionManageV44/)?.[0] || "";
+  assert.doesNotMatch(menuRender, /menu-card-row-manage/);
+  assert.doesNotMatch(menuRender, /data-menu-action="manage"/);
+  const answerStrip = html.match(/<section class="answer-strip"[\s\S]*?<\/section>/)?.[0] || "";
+  assert.match(answerStrip, /id="currentManageButton"/);
+  const answerRender = html.match(/function renderAnswerV16\(\)[\s\S]*?\n      function selectCallV16/)?.[0] || "";
+  assert.match(answerRender, /if \(!state\.revealed\)/);
+  assert.match(answerRender, /answerStrip\.hidden = true/);
 });
