@@ -6,16 +6,16 @@ const indexUrl = new URL("../public/index.html", import.meta.url);
 const cssUrl = new URL("../public/ux-v159.css", import.meta.url);
 const identityUrl = new URL("../app/lib/appIdentity.ts", import.meta.url);
 
-test("V167 exposes the daily-learning shell and synchronized release assets", async () => {
+test("V168 exposes the daily-learning shell and synchronized release assets", async () => {
   const [html, css, identity] = await Promise.all([
     readFile(indexUrl, "utf8"),
     readFile(cssUrl, "utf8"),
     readFile(identityUrl, "utf8"),
   ]);
 
-  assert.match(html, /const APP_VERSION = 167;/);
-  assert.match(identity, /APP_VERSION = 167/);
-  assert.match(html, /ux-v159\.css\?v=167/);
+  assert.match(html, /const APP_VERSION = 168;/);
+  assert.match(identity, /APP_VERSION = 168/);
+  assert.match(html, /ux-v159\.css\?v=168/);
   assert.match(html, /data-menu-view="today"/);
   assert.match(html, /今日の10問/);
   assert.match(html, /function renderTodayViewV159\(/);
@@ -143,4 +143,19 @@ test("V167 styles the collection chooser as a three-column library with a silver
   assert.match(css, /\.page\.menu-active \.collection-choice-grid\s*\{[\s\S]*?grid-template-columns: repeat\(3, minmax\(0, 1fr\)\)/);
   assert.match(css, /\.page\.menu-active \.collection-choice-card\.is-basic-sequence\s*\{[\s\S]*?linear-gradient/);
   assert.match(css, /\.page\.menu-active \.collection-choice-card\.is-basic-sequence \.collection-choice-card-meta/);
+});
+
+test("V168 scopes today's resume session to the collection and repairs legacy question keys", async () => {
+  const html = await readFile(indexUrl, "utf8");
+  assert.match(html, /function currentCollectionScopeKeyV167\(\)/);
+  assert.match(html, /return String\(selectedCollectionSlugV165\(\) \|\| sharedCollectionV46\?\.share_slug/);
+  assert.match(html, /function sessionQuestionIndexV167\(key\)/);
+  assert.match(html, /function sessionBelongsToCurrentCollectionV167\(session\)/);
+  assert.match(html, /session\.collectionSlug = currentCollectionScopeKeyV167\(\);/);
+
+  const resumeBody = html.match(/function startSessionV44\(mode, explicitQuestions = null\) \{[\s\S]*?\n      \}/)?.[0] || "";
+  assert.match(resumeBody, /if \(mode === "resume"\)/);
+  assert.match(resumeBody, /sessionQuestionIndexV167\(key\)/);
+  assert.match(resumeBody, /current\.questionKeys = \[\.\.\.new Set\(resolvedEntries\.map/);
+  assert.match(resumeBody, /openQuestionV16\(questionIndexByKeyV44\(target\.key\), \{ preserveSession: true \}\)/);
 });
