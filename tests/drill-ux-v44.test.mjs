@@ -201,7 +201,7 @@ test("returns latest history, analytics math, streak, and type breakdowns", asyn
   assert.equal(result.rates[MARK_CIRCLE], 0.25);
   assert.equal(result.streakDays, 4);
   assert.equal(Object.prototype.hasOwnProperty.call(result, "dueCount"), false);
-  assert.equal(result.masteredCount, 0);
+  assert.equal(result.masteredCount, 2);
   assert.equal(result.breakdowns.discard.totalAttempts, 2);
   assert.equal(result.breakdowns.call.totalAttempts, 1);
   assert.equal(result.breakdowns.riichi.totalAttempts, 1);
@@ -233,10 +233,12 @@ test("defines weak questions by the latest answer being exactly X", async () => 
   assert.equal(api.hasWeakInRecentAnswers(state, "latest-weak"), true);
   assert.equal(api.hasWeakInRecentAnswers(state, "latest-triangle"), false);
   assert.equal(api.hasWeakInRecentAnswers(state, "old-x-now-good"), false);
-  assert.equal(api.isMasteredByRecentAnswers(state, "one-mastered"), false);
+  assert.equal(api.isMasteredByRecentAnswers(state, "one-mastered"), true);
+  assert.equal(api.isMasteredByRecentAnswers(state, "old-x-now-good"), true);
   assert.equal(api.isMasteredByRecentAnswers(state, "mastered"), true);
+  assert.equal(api.isMasteredByRecentAnswers(state, "latest-triangle"), false);
   assert.deepEqual(hostValue(api.filterQuestions({ questions, state, status: "weak" }).map(api.questionKey)), ["latest-weak"]);
-  assert.equal(api.analytics({ questions, state, now: NOW }).masteredCount, 1);
+  assert.equal(api.analytics({ questions, state, now: NOW }).masteredCount, 3);
 });
 
 test("filters stably by view, query, status, and question type", async () => {
@@ -260,6 +262,7 @@ test("filters stably by view, query, status, and question type", async () => {
   assert.deepEqual(hostValue(api.filterQuestions({ questions, state, view: "favorites" }).map(api.questionKey)), ["002"]);
   assert.deepEqual(hostValue(api.filterQuestions({ questions, state, view: "trash" }).map(api.questionKey)), ["004"]);
   assert.deepEqual(hostValue(api.filterQuestions({ questions, state, status: "weak" }).map(api.questionKey)), ["001"]);
+  assert.deepEqual(hostValue(api.filterQuestions({ questions, state, status: "mastered" }).map(api.questionKey)), ["002", "003"]);
   assert.deepEqual(hostValue(api.filterQuestions({ questions, state, status: "unanswered" }).map(api.questionKey)), []);
   assert.deepEqual(hostValue(api.filterQuestions({ questions, state, type: "riichi" }).map(api.questionKey)), ["003"]);
   assert.deepEqual(hostValue(api.filterQuestions({ questions, state, type: "call" }).map(api.questionKey)), ["002"]);

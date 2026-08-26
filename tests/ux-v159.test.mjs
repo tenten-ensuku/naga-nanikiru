@@ -13,9 +13,9 @@ test("V168 exposes the daily-learning shell and synchronized release assets", as
     readFile(identityUrl, "utf8"),
   ]);
 
-  assert.match(html, /const APP_VERSION = 171;/);
-  assert.match(identity, /APP_VERSION = 171/);
-  assert.match(html, /ux-v159\.css\?v=171/);
+  assert.match(html, /const APP_VERSION = 172;/);
+  assert.match(identity, /APP_VERSION = 172/);
+  assert.match(html, /ux-v159\.css\?v=172/);
   assert.match(html, /data-menu-view="today"/);
   assert.match(html, /今日の10問/);
   assert.match(html, /function renderTodayViewV159\(/);
@@ -51,10 +51,12 @@ test("V161 keeps generator input and destination in a persistent staged workflow
 
 test("V161 displays the canonical perfect mark while accepting legacy history", async () => {
   const html = await readFile(indexUrl, "utf8");
+  const todayView = html.match(/function renderTodayViewV159\([\s\S]*?\n      function renderMenuCardsV16\(/)?.[0] || "";
   assert.match(html, /function normalizeScoreMarkV159\(value\)/);
   assert.match(html, /replaceAll\("💮", "◎"\)/);
   assert.match(html, /return normalizeScoreMarkV159\(value\) === "◎"/);
-  assert.match(html, /直近2回連続で◎/);
+  assert.match(todayView, /最新1回が〇以上/);
+  assert.doesNotMatch(todayView, /直近2回連続で◎/);
 });
 
 test("V161 removes decorative outer rings while preserving result glyph styling", async () => {

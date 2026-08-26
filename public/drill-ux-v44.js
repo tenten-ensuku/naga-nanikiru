@@ -414,13 +414,25 @@
     return Boolean(latest) && isWeakMark(answerMark(latest));
   }
 
-  function isMasteredByRecentAnswers(source, key, required) {
-    var count = Number(required);
-    var requiredCount = Number.isFinite(count) ? Math.max(1, Math.floor(count)) : 2;
-    var answers = recentAnswers(source, key, requiredCount);
-    return answers.length >= requiredCount && answers.every(function (entry) {
-      return answerMark(entry) === "◎";
-    });
+  function isMasteredByRecentAnswers(source, key) {
+    // 習熟は「最新1回の回答が〇以上」で判定する。
+    // 旧版が渡していた第3引数は互換性のため無視し、全画面で同じ定義を使う。
+    var latest = recentAnswers(source, key, 1)[0];
+    var mark = latest ? answerMark(latest) : "";
+    return mark === "〇" || mark === "◎";
+  }
+
+  function learningMilestoneTransitions(previous, current) {
+    var before = isRecord(previous) ? previous : {};
+    var after = isRecord(current) ? current : {};
+    var beforeTotal = Number(before.total) || 0;
+    var beforeMastered = Number(before.mastered) || 0;
+    var afterTotal = Number(after.total) || 0;
+    var afterMastered = Number(after.mastered) || 0;
+    return {
+      lap: Number(before.unanswered) > 0 && Number(after.unanswered) === 0 && afterTotal > 0,
+      mastery: beforeTotal > 0 && beforeMastered < beforeTotal && afterTotal > 0 && afterMastered === afterTotal
+    };
   }
 
   function positiveValue(value) {
@@ -716,7 +728,7 @@
       if (!key || masteredSeen[key]) {
         return;
       }
-      if (isMasteredByRecentAnswers(state, key, 2)) {
+      if (isMasteredByRecentAnswers(state, key)) {
         masteredSeen[key] = true;
         masteredCount += 1;
       }
@@ -765,7 +777,7 @@
       return hasWeakInRecentAnswers(state, key);
     }
     if (value === "mastered") {
-      return isMasteredByRecentAnswers(state, key, 2);
+      return isMasteredByRecentAnswers(state, key);
     }
     if (value === "snoozed") {
       return isSnoozed(state, key, now);
@@ -908,6 +920,7 @@
     recentAnswers: recentAnswers,
     hasWeakInRecentAnswers: hasWeakInRecentAnswers,
     isMasteredByRecentAnswers: isMasteredByRecentAnswers,
+    learningMilestoneTransitions: learningMilestoneTransitions,
     buildQueue: buildQueue,
     createSession: createSession,
     analytics: analytics,

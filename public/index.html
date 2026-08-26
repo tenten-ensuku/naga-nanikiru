@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=171">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=171">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=171">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=172">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=172">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=172">
   <title>NAGA局面ドリル｜何切る復習問題集</title>
   <meta name="description" content="NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリ。">
   <meta name="theme-color" content="#06131e">
@@ -2152,7 +2152,7 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=171">
+  <link rel="stylesheet" href="ux-v159.css?v=172">
 </head>
 <body>
   <main class="page">
@@ -2419,6 +2419,16 @@
     </div>
   </dialog>
 
+  <dialog class="learning-celebration-dialog" id="learningCelebrationDialog" aria-labelledby="learningCelebrationTitle">
+    <div class="learning-celebration-inner">
+      <span class="learning-celebration-symbol" id="learningCelebrationSymbol" aria-hidden="true">◎</span>
+      <p class="learning-celebration-kicker">LEARNING MILESTONE</p>
+      <h3 id="learningCelebrationTitle">1周達成おめでとう！</h3>
+      <p id="learningCelebrationMessage"></p>
+      <button class="learning-celebration-close" id="learningCelebrationClose" type="button">学習を続ける</button>
+    </div>
+  </dialog>
+
   <dialog class="comment-notification-dialog" id="commentNotificationDialog" aria-labelledby="commentNotificationDialogTitle">
     <div class="notice-dialog-inner">
       <div class="notice-dialog-heading"><h3 id="commentNotificationDialogTitle">コメント・追加通知</h3><button class="notice-dialog-close" id="commentNotificationDialogClose" type="button">閉じる</button></div>
@@ -2439,13 +2449,13 @@
   </dialog>
 
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=171"></script>
+  <script src="supabase-sync-v48.js?v=172"></script>
   <script src="drill-ux-v44.js"></script>
   <script src="naga-generator-v44.js"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 171;
+    const APP_VERSION = 172;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -3297,6 +3307,8 @@
       let menuFavoritesOnlyV137 = false;
       let menuAdvancedFiltersOpenV83 = false;
       let menuOrderV92 = "sequential";
+      let learningMilestoneSnapshotV172 = null;
+      let learningMilestoneShownV172 = { scopeKey: "", lap: false, mastery: false };
       const MENU_RANGE_STEP_V137 = 100;
       const MENU_RENDER_THRESHOLD_V119 = 300;
       const MENU_RENDER_BATCH_V119 = 100;
@@ -3566,6 +3578,7 @@
         { version: 169, date: "2026-08-26", publishedAt: "2026-08-26T16:00:00+09:00", title: "整理ボタンの表示場所を見直しました", body: "問題一覧から整理ボタンを外し、問題を解いて回答結果を確認した後だけ、問題画面から整理・編集できるようにしました。" },
         { version: 170, date: "2026-08-26", publishedAt: "2026-08-26T17:00:00+09:00", title: "大規模問題集の初期表示を軽くしました", body: "問題集の切り替え時は一覧用の軽量データだけを先に読み込み、盤面・手牌・解説は問題を開いた時に取得するようにしました。" },
         { version: 171, date: "2026-08-26", publishedAt: "2026-08-26T18:00:00+09:00", title: "今日の10問の配分と苦手判定を見直しました", body: "未回答がある間は未回答8問と直近の回答が×の問題を最大2問出題し、苦手は直近の回答が×の問題だけとして扱うようにしました。" },
+        { version: 172, date: "2026-08-26", publishedAt: "2026-08-26T19:00:00+09:00", title: "一周達成と完全習得を祝うようにしました", body: "未回答がなくなったときは一周達成、最新1回の回答が〇以上で全問がそろったときは習熟度100％として祝福します。今日の10問に対象がないときは、達成をたたえる表示に切り替わります。" },
         { version: 168, date: "2026-08-26", publishedAt: "2026-08-26T15:00:00+09:00", title: "今日の10問を続きから再開できるようにしました", body: "問題集をまたいだ古いセッションで再開ボタンが反応しない問題を修正し、問題集ごとのセッション判定と旧問題キーの復元に対応しました。" },
         { version: 167, date: "2026-08-26", publishedAt: "2026-08-26T14:00:00+09:00", title: "問題集選択画面を刷新しました", body: "問題集カードを見やすい3列レイアウトに整え、基本序列問題集を格式高いシルバーで表示します。" },
         { version: 166, date: "2026-08-26", publishedAt: "2026-08-26T13:00:00+09:00", title: "基本序列の順番出題と最近の10問に対応しました", body: "基本序列問題集を問題集選択画面の先頭に配置し、ストーリーに沿った順番出題を推奨する表示にしました。今日の学習画面では最近解いた問題を最大10問表示します。" }
@@ -5234,6 +5247,91 @@
         return String(selectedCollectionSlugV165() || sharedCollectionV46?.share_slug || DEFAULT_COLLECTION_SLUG || "local");
       }
 
+      function learningMetricsV172() {
+        const playable = questionsV16.filter(isPlayableV16);
+        const mastered = playable.filter(question => window.DrillUxV44?.isMasteredByRecentAnswers?.(userStateV16, questionKeyV16(question)));
+        const unanswered = playable.filter(question => !latestAnswerV44(question));
+        return {
+          scopeKey: currentCollectionScopeKeyV167(),
+          total: playable.length,
+          unanswered: unanswered.length,
+          mastered: mastered.length,
+          masteryComplete: playable.length > 0 && mastered.length === playable.length
+        };
+      }
+
+      function syncLearningMilestoneSnapshotV172() {
+        const current = learningMetricsV172();
+        const previous = learningMilestoneSnapshotV172;
+        if (!previous || previous.scopeKey !== current.scopeKey || previous.total !== current.total) {
+          learningMilestoneSnapshotV172 = current;
+          learningMilestoneShownV172 = { scopeKey: current.scopeKey, lap: false, mastery: false };
+          return { current, previous: null };
+        }
+        learningMilestoneSnapshotV172 = current;
+        return { current, previous };
+      }
+
+      function todayQueueCandidatesV172() {
+        const queue = window.DrillUxV44?.buildQueue?.({ questions: questionsV16, state: userStateV16, mode: "today", limit: 10, now: new Date() });
+        return (Array.isArray(queue) ? queue : []).filter(question => question && isPlayableV16(question)).slice(0, 10);
+      }
+
+      function showLearningCelebrationV172({ lap = false, mastery = false } = {}) {
+        const dialog = document.getElementById("learningCelebrationDialog");
+        if (!dialog) return;
+        const title = document.getElementById("learningCelebrationTitle");
+        const message = document.getElementById("learningCelebrationMessage");
+        const symbol = document.getElementById("learningCelebrationSymbol");
+        const both = lap && mastery;
+        if (title) title.textContent = both ? "1周達成 ＆ 完全習得！" : mastery ? "完全習得おめでとう！" : "1周達成おめでとう！";
+        if (message) message.textContent = both
+          ? "未回答をなくし、すべての問題を習熟しました。見事な学びの積み重ねです。"
+          : mastery
+          ? "すべての問題で、最新の回答が〇以上になりました。習熟度100％です。"
+          : "未回答の問題がなくなりました。この問題集を一周した証です。";
+        if (symbol) symbol.textContent = mastery ? "✦" : "◎";
+        dialog.classList.toggle("is-mastery", mastery);
+        if (dialog.open) dialog.close();
+        if (typeof dialog.showModal === "function") dialog.showModal();
+        else dialog.setAttribute("open", "");
+      }
+
+      function evaluateLearningMilestonesV172(announce = false) {
+        const { current, previous } = syncLearningMilestoneSnapshotV172();
+        if (!previous) return;
+        if (current.unanswered > 0) learningMilestoneShownV172.lap = false;
+        if (!current.masteryComplete) learningMilestoneShownV172.mastery = false;
+        const transitions = window.DrillUxV44?.learningMilestoneTransitions?.(previous, current) || {};
+        const lap = Boolean(transitions.lap) && !learningMilestoneShownV172.lap;
+        const mastery = Boolean(transitions.mastery) && !learningMilestoneShownV172.mastery;
+        if (!announce || (!lap && !mastery)) return;
+        learningMilestoneShownV172 = { ...learningMilestoneShownV172, lap: learningMilestoneShownV172.lap || lap, mastery: learningMilestoneShownV172.mastery || mastery };
+        showLearningCelebrationV172({ lap, mastery });
+      }
+
+      function syncTodayQuickStartV172(metrics = learningMetricsV172()) {
+        const button = document.querySelector('#quickStart [data-session-mode="recommended"]');
+        const note = document.getElementById("recommendedDrillNote");
+        if (!button) return;
+        const hasResume = Boolean(activeSessionV44());
+        const noCandidates = !hasResume && todayQueueCandidatesV172().length === 0;
+        const achievement = metrics.masteryComplete || metrics.total > 0 && metrics.unanswered === 0;
+        const message = metrics.masteryComplete
+          ? "習熟度100％達成。完全習得おめでとうございます！"
+          : metrics.total > 0 && metrics.unanswered === 0
+          ? "一周達成！今日の10問はお休み中です。"
+          : metrics.total === 0
+          ? "この問題集に出題できる問題がありません。"
+          : "未回答8問＋直近×2問を基本に出題";
+        button.disabled = noCandidates;
+        button.classList.toggle("is-complete", noCandidates && achievement);
+        button.classList.toggle("is-unavailable", noCandidates && !achievement);
+        button.setAttribute("aria-disabled", String(noCandidates));
+        button.title = noCandidates ? message : "未回答8問と直近の回答が×の問題を最大2問出題します";
+        if (note) note.textContent = message;
+      }
+
       function sessionQuestionIndexV167(key) {
         const raw = String(key ?? "").trim();
         if (!raw) return -1;
@@ -5313,6 +5411,7 @@
         }
         userStateV16.answerHistory = userStateV16.answerHistory.slice(0, ANSWER_HISTORY_LIMIT_V135);
         saveUserStateV16();
+        window.setTimeout(() => evaluateLearningMilestonesV172(true), 0);
         state.sharedAttemptPromise = Promise.resolve();
         if (sharedCollectionV46 && question.serverQuestionId && window.NagaSupabase?.configured) {
           state.sharedAttemptPromise = window.NagaSupabase.currentSession().then(session => {
@@ -6174,6 +6273,10 @@
         const built = unansweredOnly ? requested.filter(question => isPlayableV16(question) && !latestAnswerV44(question)) : requested;
         const questionKeys = normalizedQueueKeysV44(built).slice(0, 10);
         if (!questionKeys.length) {
+          if (mode === "today" || mode === "recommended") {
+            showMenuV16("today");
+            return;
+          }
           window.alert("この条件で出題できる問題がありません。別のメニューをお試しください。");
           return;
         }
@@ -6418,6 +6521,8 @@
       function renderMenuNavigationV16() {
         syncBasicSequenceThemeV163();
         renderActiveCollectionContextV165();
+        const learningMetrics = syncLearningMilestoneSnapshotV172().current;
+        syncTodayQuickStartV172(learningMetrics);
         const analytics = window.DrillUxV44?.analytics?.({ questions: questionsV16, state: userStateV16, now: new Date() }) || {};
         const counts = {
           collections: collectionCatalogOptionsV100().length,
@@ -6448,9 +6553,9 @@
         const allPlayable = questionsV16.filter(isPlayableV16);
         const allAnswered = allPlayable.filter(question => latestAnswerV44(question)).length;
         const progress = allPlayable.length ? Math.round(allAnswered / allPlayable.length * 100) : 0;
-        const masteredCount = allPlayable.filter(question => window.DrillUxV44?.isMasteredByRecentAnswers?.(userStateV16, questionKeyV16(question), 2)).length;
+        const masteredCount = learningMetrics.mastered;
         const mastery = allPlayable.length ? Math.round(masteredCount / allPlayable.length * 100) : 0;
-        document.getElementById("menuSidebarProgress").innerHTML = `<span class="menu-sidebar-progress-title">学習の進捗</span><div class="menu-progress-metric"><div class="menu-progress-metric-head"><span class="menu-progress-metric-label">回答率</span><strong class="menu-progress-metric-value">${progress}%</strong></div><span class="menu-progress-metric-note">${allAnswered} / ${allPlayable.length}問を回答済み</span><span class="menu-sidebar-progress-track" aria-hidden="true"><span class="menu-sidebar-progress-fill" style="width:${progress}%"></span></span></div><div class="menu-progress-metric menu-progress-mastery"><div class="menu-progress-metric-head"><span class="menu-progress-metric-label">習熟度</span><strong class="menu-progress-metric-value">${mastery}%</strong></div><span class="menu-progress-metric-note">${masteredCount} / ${allPlayable.length}問が習熟（直近2回連続◎）</span><span class="menu-sidebar-progress-track" aria-hidden="true"><span class="menu-sidebar-progress-fill is-mastery" style="width:${mastery}%"></span></span></div>`;
+        document.getElementById("menuSidebarProgress").innerHTML = `<span class="menu-sidebar-progress-title">学習の進捗</span><div class="menu-progress-metric"><div class="menu-progress-metric-head"><span class="menu-progress-metric-label">回答率</span><strong class="menu-progress-metric-value">${progress}%</strong></div><span class="menu-progress-metric-note">${allAnswered} / ${allPlayable.length}問を回答済み</span><span class="menu-sidebar-progress-track" aria-hidden="true"><span class="menu-sidebar-progress-fill" style="width:${progress}%"></span></span></div><div class="menu-progress-metric menu-progress-mastery"><div class="menu-progress-metric-head"><span class="menu-progress-metric-label">習熟度</span><strong class="menu-progress-metric-value">${mastery}%</strong></div><span class="menu-progress-metric-note">${masteredCount} / ${allPlayable.length}問が習熟（直近1回が〇以上）</span><span class="menu-sidebar-progress-track" aria-hidden="true"><span class="menu-sidebar-progress-fill is-mastery" style="width:${mastery}%"></span></span></div>`;
         const copy = MENU_VIEW_COPY_V16[menuViewV16];
         const menuOrderSelect = document.getElementById("menuOrderSelect");
         const isBasicSequence = isBasicSequenceCollectionV163();
@@ -6465,7 +6570,7 @@
         const resumeButton = document.getElementById("resumeSessionButton");
         resumeButton.hidden = !resume;
         if (resume) document.getElementById("resumeSessionNote").textContent = `${Number(resume.cursor || 0) + 1} / ${resume.questionKeys.length} から再開`;
-        document.getElementById("recommendedDrillNote").textContent = "未回答8問＋直近×2問を基本に出題";
+        syncTodayQuickStartV172(learningMetrics);
         document.getElementById("quickStart").hidden = true;
         document.getElementById("menuFilters").hidden = !["my", "archive"].includes(menuViewV16);
         document.getElementById("menuRangeActions").hidden = menuViewV16 !== "my";
@@ -6900,12 +7005,16 @@
       }
 
       function renderTodayViewV159() {
+        const metrics = learningMetricsV172();
         const playable = questionsV16.filter(isPlayableV16);
         const unanswered = playable.filter(question => !latestAnswerV44(question));
         const weak = playable.filter(question => window.DrillUxV44?.hasWeakInRecentAnswers?.(userStateV16, questionKeyV16(question)));
-        const mastered = playable.filter(question => window.DrillUxV44?.isMasteredByRecentAnswers?.(userStateV16, questionKeyV16(question), 2));
+        const masteredCount = metrics.mastered;
         const favoriteCount = playable.filter(isFavoriteV16).length;
         const session = activeSessionV44();
+        const todayCandidates = todayQueueCandidatesV172();
+        const todayUnavailable = !session && todayCandidates.length === 0;
+        const todayAchievement = metrics.masteryComplete || metrics.total > 0 && metrics.unanswered === 0;
         const sessionTotal = Number(session?.questionKeys?.length || 10);
         const sessionCurrent = session ? Math.min(sessionTotal, Number(session.cursor || 0) + 1) : 0;
         const sessionPercent = sessionTotal ? Math.round(sessionCurrent / sessionTotal * 100) : 0;
@@ -6926,7 +7035,17 @@
               return `<button class="today-recent-row" type="button" data-question-index="${index}"><span><strong>${escapeHtml(question.title || `問題${question.number}`)}</strong><small>${escapeHtml(questionTypeV44(question))}</small></span><span class="today-recent-mark ${menuScoreMarkClassV63(mark)}" aria-label="直近の結果 ${escapeHtml(mark)}">${escapeHtml(mark)}</span><span class="today-recent-arrow" aria-hidden="true">›</span></button>`;
             }).join("")
           : `<p class="today-empty-note">最初の問題を解くと、ここに最近の成績が表示されます。</p>`;
-        return `<section class="today-dashboard" aria-labelledby="todayDashboardTitle"><div class="today-breadcrumb"><span>${escapeHtml(collectionName)}</span><span aria-hidden="true">›</span><strong>今日の学習</strong></div><section class="today-hero"><div class="today-hero-copy"><p class="today-kicker">TODAY'S SESSION</p><h3 id="todayDashboardTitle">今日の10問</h3><p>未回答8問＋直近の回答が×の問題2問を基本に出題します。</p><button class="today-primary-action" type="button" data-today-session="${startMode}">${startLabel}<span aria-hidden="true">→</span></button></div><div class="today-session-progress" aria-label="今日のセッション進捗 ${sessionCurrent}/${sessionTotal}"><span>今日の進捗</span><strong>${sessionCurrent}<small> / ${sessionTotal}</small></strong><span class="today-progress-track" aria-hidden="true"><span style="width:${sessionPercent}%"></span></span></div></section><div class="today-metric-grid"><button class="today-metric-card is-new" type="button" data-today-session="unanswered"><span>まだ解いていない</span><strong>${unanswered.length}<small>問</small></strong><small>未回答を優先して学習</small></button><button class="today-metric-card is-review" type="button" data-today-session="weak"><span>もう一度考えたい</span><strong>${weak.length}<small>問</small></strong><small>直近の回答が×</small></button><button class="today-metric-card is-mastered" type="button" data-menu-jump="analysis"><span>身についた</span><strong>${mastered.length}<small>問</small></strong><small>直近2回連続で◎</small></button><button class="today-metric-card is-favorite" type="button" data-menu-jump="favorites"><span>お気に入り</span><strong>${favoriteCount}<small>問</small></strong><small>あとで見返す問題</small></button></div><section class="today-recent"><div class="today-section-heading"><div><p class="today-kicker">RECENT</p><h3>最近解いた問題</h3></div><button type="button" data-menu-jump="my">問題一覧へ</button></div><div class="today-recent-list">${recentMarkup}</div></section></section>`;
+        const todayDescription = todayUnavailable
+          ? metrics.masteryComplete
+          ? "習熟度100％を達成しました。完全習得おめでとうございます！今日の10問はお休み中です。"
+          : metrics.total > 0 && metrics.unanswered === 0
+          ? "未回答も直近×もありません。見事にこの問題集を一周しました！今日の10問はお休み中です。"
+          : "この問題集に現在出題できる問題がありません。問題を追加すると、今日の10問を始められます。"
+          : "未回答8問＋直近の回答が×の問題2問を基本に出題します。";
+        const primaryAction = todayUnavailable
+          ? `<button class="today-primary-action ${todayAchievement ? "is-complete" : "is-unavailable"}" type="button" disabled aria-disabled="true" title="学習対象がないため、今日の10問はお休み中です">${metrics.masteryComplete ? "完全習得済み" : metrics.total > 0 && metrics.unanswered === 0 ? "一周達成済み" : "準備中"}<span aria-hidden="true">✦</span></button>`
+          : `<button class="today-primary-action" type="button" data-today-session="${startMode}">${startLabel}<span aria-hidden="true">→</span></button>`;
+        return `<section class="today-dashboard" aria-labelledby="todayDashboardTitle"><div class="today-breadcrumb"><span>${escapeHtml(collectionName)}</span><span aria-hidden="true">›</span><strong>今日の学習</strong></div><section class="today-hero${todayUnavailable ? todayAchievement ? " is-complete" : " is-unavailable" : ""}"><div class="today-hero-copy"><p class="today-kicker">TODAY'S SESSION</p><h3 id="todayDashboardTitle">今日の10問</h3><p>${todayDescription}</p>${primaryAction}</div><div class="today-session-progress" aria-label="今日のセッション進捗 ${sessionCurrent}/${sessionTotal}"><span>今日の進捗</span><strong>${sessionCurrent}<small> / ${sessionTotal}</small></strong><span class="today-progress-track" aria-hidden="true"><span style="width:${sessionPercent}%"></span></span></div></section><div class="today-metric-grid"><button class="today-metric-card is-new" type="button" data-today-session="unanswered"><span>まだ解いていない</span><strong>${unanswered.length}<small>問</small></strong><small>未回答を優先して学習</small></button><button class="today-metric-card is-review" type="button" data-today-session="weak"><span>もう一度考えたい</span><strong>${weak.length}<small>問</small></strong><small>直近の回答が×</small></button><button class="today-metric-card is-mastered" type="button" data-menu-jump="analysis"><span>身についた</span><strong>${masteredCount}<small>問</small></strong><small>最新1回が〇以上</small></button><button class="today-metric-card is-favorite" type="button" data-menu-jump="favorites"><span>お気に入り</span><strong>${favoriteCount}<small>問</small></strong><small>あとで見返す問題</small></button></div><section class="today-recent"><div class="today-section-heading"><div><p class="today-kicker">RECENT</p><h3>最近解いた問題</h3></div><button type="button" data-menu-jump="my">問題一覧へ</button></div><div class="today-recent-list">${recentMarkup}</div></section></section>`;
       }
 
       function renderMenuCardsV16() {
@@ -8157,6 +8276,7 @@
         document.getElementById("announcementButton").addEventListener("click", openAnnouncementDialogV65);
         document.getElementById("commentNotificationsButton").addEventListener("click", openCommentNotificationDialogV65);
         document.getElementById("announcementDialogClose").addEventListener("click", () => document.getElementById("announcementDialog").close());
+        document.getElementById("learningCelebrationClose").addEventListener("click", () => document.getElementById("learningCelebrationDialog").close());
         document.getElementById("commentNotificationDialogClose").addEventListener("click", () => document.getElementById("commentNotificationDialog").close());
         document.getElementById("commentNotificationDialogDone").addEventListener("click", () => document.getElementById("commentNotificationDialog").close());
         document.getElementById("markAllCommentsReadButton").addEventListener("click", markAllCommentsReadV65);

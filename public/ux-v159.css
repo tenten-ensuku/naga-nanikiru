@@ -909,6 +909,153 @@ button:disabled {
   gap: 18px;
 }
 
+/* V172: celebrate a completed learning loop without leaving the daily card playable. */
+.page.menu-active .today-hero.is-complete {
+  border-color: rgba(98, 214, 198, .48);
+  background: linear-gradient(145deg, #123f4b, #0d2b3a 72%);
+}
+
+.page.menu-active .today-hero.is-unavailable {
+  border-color: rgba(88, 168, 216, .35);
+  background: linear-gradient(145deg, #102f3f, #0b2533 72%);
+}
+
+.page.menu-active .today-primary-action.is-complete,
+.page.menu-active .today-primary-action.is-complete:hover {
+  color: #eafff8;
+  background: linear-gradient(145deg, #197184, #125064);
+  border-color: rgba(98, 214, 198, .7);
+  box-shadow: 0 8px 22px rgba(24, 129, 139, .22);
+  cursor: default;
+  opacity: 1;
+  transform: none;
+}
+
+.page.menu-active .today-primary-action.is-unavailable,
+.page.menu-active .today-primary-action.is-unavailable:hover {
+  color: #bbd3dc;
+  background: #173a4a;
+  border-color: rgba(88, 168, 216, .42);
+  box-shadow: none;
+  cursor: default;
+  opacity: .9;
+  transform: none;
+}
+
+.page.menu-active .quick-start-card.primary.is-complete,
+.page.menu-active .quick-start-card.primary.is-complete:hover {
+  color: #eafff8;
+  background: linear-gradient(145deg, #197184, #125064);
+  border-color: rgba(98, 214, 198, .7);
+  box-shadow: 0 8px 22px rgba(24, 129, 139, .2);
+  cursor: default;
+  opacity: 1;
+  transform: none;
+}
+
+.page.menu-active .quick-start-card.primary.is-unavailable,
+.page.menu-active .quick-start-card.primary.is-unavailable:hover {
+  color: #bbd3dc;
+  background: #173a4a;
+  border-color: rgba(88, 168, 216, .42);
+  box-shadow: none;
+  cursor: default;
+  opacity: .9;
+  transform: none;
+}
+
+.learning-celebration-dialog {
+  width: min(92vw, 460px);
+  padding: 0;
+  color: var(--ux-text);
+  background: radial-gradient(circle at 50% 0%, #174c5a, #071c2b 68%);
+  border: 1px solid rgba(98, 214, 198, .62);
+  border-radius: 20px;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, .48), 0 0 0 1px rgba(242, 195, 79, .12);
+}
+
+.learning-celebration-dialog::backdrop {
+  background: rgba(2, 10, 17, .82);
+}
+
+.learning-celebration-inner {
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  padding: 32px 28px 28px;
+  text-align: center;
+}
+
+.learning-celebration-dialog[open] .learning-celebration-inner {
+  animation: learningCelebrationPopV172 360ms cubic-bezier(.22, 1, .36, 1) both;
+}
+
+.learning-celebration-symbol {
+  display: grid;
+  place-items: center;
+  width: 68px;
+  height: 68px;
+  color: var(--ux-gold);
+  background: rgba(242, 195, 79, .12);
+  border: 1px solid rgba(242, 195, 79, .64);
+  border-radius: 50%;
+  font-size: 32px;
+  font-weight: 900;
+  box-shadow: 0 0 0 8px rgba(242, 195, 79, .05), 0 0 34px rgba(242, 195, 79, .18);
+}
+
+.learning-celebration-dialog.is-mastery .learning-celebration-symbol {
+  color: #f5dc8a;
+  background: rgba(98, 214, 198, .14);
+  border-color: rgba(98, 214, 198, .72);
+  box-shadow: 0 0 0 8px rgba(98, 214, 198, .06), 0 0 34px rgba(98, 214, 198, .2);
+}
+
+.learning-celebration-kicker {
+  margin: 2px 0 0;
+  color: var(--ux-gold);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: .2em;
+}
+
+.learning-celebration-inner h3 {
+  margin: 0;
+  color: #fff;
+  font-size: clamp(24px, 5vw, 34px);
+  line-height: 1.25;
+}
+
+.learning-celebration-inner > p:not(.learning-celebration-kicker) {
+  margin: 0;
+  color: #c7e0e5;
+  font-size: 13px;
+  line-height: 1.75;
+}
+
+.learning-celebration-close {
+  min-width: 160px;
+  min-height: 44px;
+  margin-top: 8px;
+  padding: 0 18px;
+  color: #172029;
+  background: var(--ux-gold);
+  border: 1px solid #ffe7a0;
+  border-radius: var(--ux-radius-sm);
+  font-weight: 900;
+  box-shadow: 0 8px 20px rgba(242, 195, 79, .18);
+}
+
+.learning-celebration-close:hover,
+.learning-celebration-close:focus-visible {
+  background: var(--ux-gold-strong);
+}
+
+@keyframes learningCelebrationPopV172 {
+  from { opacity: 0; transform: translateY(12px) scale(.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
 .page.menu-active .today-session-progress {
   display: grid;
   align-content: center;
