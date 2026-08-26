@@ -407,18 +407,25 @@
     });
   }
 
+  function latestAnswerMark(source, key) {
+    var latest = recentAnswers(source, key, 1)[0];
+    return latest ? answerMark(latest) : "";
+  }
+
+  function hasLatestAnswerMark(source, key, mark) {
+    return latestAnswerMark(source, key) === mark;
+  }
+
   function hasWeakInRecentAnswers(source, key) {
     // 「もう一度考えたい」は、履歴の中で最も新しい回答だけを判定する。
     // 過去の×・△や、最新の△を現在の苦手として残さない。
-    var latest = recentAnswers(source, key, 1)[0];
-    return Boolean(latest) && isWeakMark(answerMark(latest));
+    return isWeakMark(latestAnswerMark(source, key));
   }
 
   function isMasteredByRecentAnswers(source, key) {
     // 習熟は「最新1回の回答が〇以上」で判定する。
     // 旧版が渡していた第3引数は互換性のため無視し、全画面で同じ定義を使う。
-    var latest = recentAnswers(source, key, 1)[0];
-    var mark = latest ? answerMark(latest) : "";
+    var mark = latestAnswerMark(source, key);
     return mark === "〇" || mark === "◎";
   }
 
@@ -776,6 +783,18 @@
     if (value === "weak") {
       return hasWeakInRecentAnswers(state, key);
     }
+    if (value === "latest-x") {
+      return hasLatestAnswerMark(state, key, "×");
+    }
+    if (value === "latest-triangle") {
+      return hasLatestAnswerMark(state, key, "△");
+    }
+    if (value === "latest-circle") {
+      return hasLatestAnswerMark(state, key, "〇");
+    }
+    if (value === "latest-double-circle") {
+      return hasLatestAnswerMark(state, key, "◎");
+    }
     if (value === "mastered") {
       return isMasteredByRecentAnswers(state, key);
     }
@@ -918,6 +937,8 @@
     historyForQuestion: history,
     answerHistory: historyArray,
     recentAnswers: recentAnswers,
+    latestAnswerMark: latestAnswerMark,
+    hasLatestAnswerMark: hasLatestAnswerMark,
     hasWeakInRecentAnswers: hasWeakInRecentAnswers,
     isMasteredByRecentAnswers: isMasteredByRecentAnswers,
     learningMilestoneTransitions: learningMilestoneTransitions,

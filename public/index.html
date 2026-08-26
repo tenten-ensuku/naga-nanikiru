@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=174">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=174">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=174">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=178">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=178">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=178">
   <title>NAGA局面ドリル｜何切る復習問題集</title>
   <meta name="description" content="NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリ。">
   <meta name="theme-color" content="#06131e">
@@ -2152,7 +2152,7 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=174">
+  <link rel="stylesheet" href="ux-v159.css?v=178">
 </head>
 <body>
   <main class="page">
@@ -2215,20 +2215,27 @@
         </section>
         <div class="menu-filter-stack" id="menuFilters">
           <section class="menu-filter-row menu-range-row" aria-labelledby="menuRangeHeading">
-            <div class="menu-range-heading-block">
-              <h3 class="menu-filter-heading" id="menuRangeHeading">問題範囲</h3>
-              <p class="menu-filter-note">100問ごと</p>
+            <div class="menu-filter-heading-block menu-range-heading-block">
+              <h3 class="menu-filter-heading" id="menuRangeHeading"><span class="menu-filter-heading-icon" aria-hidden="true">☰</span><span>問題範囲</span></h3>
+              <p class="menu-filter-note">問題の範囲を選択</p>
             </div>
-              <div class="menu-range-selector" id="menuRangeSelector">
-                <button class="menu-range-step-button" id="menuRangePreviousButton" type="button" aria-label="前の問題範囲" title="前の問題範囲へ移動します">‹</button>
-                <label class="menu-range-select-label" for="menuRangeSelect"><span class="sr-only">問題範囲を選ぶ</span><select class="menu-range-select" id="menuRangeSelect" aria-label="問題範囲を選ぶ"><option value="all">すべて</option></select></label>
-                <button class="menu-range-step-button" id="menuRangeNextButton" type="button" aria-label="次の問題範囲" title="次の問題範囲へ移動します">›</button>
-                <button class="menu-range-all-button is-active" id="menuRangeAllButton" type="button" aria-pressed="true" title="すべての通常問題を表示します">すべて表示</button>
-              </div>
-              <span class="menu-range-count" id="menuRangeCount" aria-live="polite"></span>
+            <div class="menu-range-selector" id="menuRangeSelector">
+              <button class="menu-range-step-button" id="menuRangePreviousButton" type="button" aria-label="前の問題範囲" title="前の問題範囲へ移動します">‹</button>
+              <label class="menu-range-select-label" for="menuRangeSelect"><span class="sr-only">問題範囲を選ぶ</span><select class="menu-range-select" id="menuRangeSelect" aria-label="問題範囲を選ぶ"><option value="all">すべて</option></select></label>
+              <button class="menu-range-step-button" id="menuRangeNextButton" type="button" aria-label="次の問題範囲" title="次の問題範囲へ移動します">›</button>
+              <button class="menu-range-all-button is-active" id="menuRangeAllButton" type="button" aria-pressed="true" title="すべての通常問題を表示します">すべて表示</button>
+            </div>
+            <span class="menu-range-count" id="menuRangeCount" aria-live="polite"></span>
+            <div class="menu-range-inline-actions" role="group" aria-label="問題集の表示操作">
+              <button class="menu-attribute-toggle" id="menuFavoritesToggle" type="button" aria-pressed="false" title="お気に入りに登録した問題だけを表示します">☆ お気に入りのみ</button>
+              <button class="menu-archive-view-button" id="menuArchiveViewButton" type="button" title="完全正解して退避した問題を表示します"><span class="menu-archive-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M4 7.5h16v12H4zM3 4h18v3.5H3zM9 12h6"></path></svg></span><span>アーカイブを見る</span></button>
+            </div>
           </section>
           <section class="menu-filter-row menu-genre-row" aria-labelledby="menuGenreHeading">
-            <h3 class="menu-filter-heading" id="menuGenreHeading">ジャンル</h3>
+            <div class="menu-filter-heading-block">
+              <h3 class="menu-filter-heading" id="menuGenreHeading"><span class="menu-filter-heading-icon" aria-hidden="true">◇</span><span>ジャンル</span></h3>
+              <p class="menu-filter-note">問題のジャンルを選択</p>
+            </div>
             <div class="menu-genre-tabs" id="menuTypeFilters" role="group" aria-labelledby="menuGenreHeading">
               <button class="menu-genre-tab is-active" type="button" data-menu-type="all" aria-pressed="true" title="すべてのジャンルを表示">すべて</button>
               <button class="menu-genre-tab" type="button" data-menu-type="discard" aria-pressed="false" title="打牌判断だけを表示">打牌判断</button>
@@ -2236,26 +2243,19 @@
               <button class="menu-genre-tab" type="button" data-menu-type="call" aria-pressed="false" title="副露判断だけを表示">副露判断</button>
             </div>
           </section>
-          <section class="menu-filter-row menu-attribute-row" aria-labelledby="menuAttributeHeading">
-            <h3 class="menu-filter-heading" id="menuAttributeHeading">フィルター操作</h3>
-            <div class="menu-attribute-buttons">
-              <button class="menu-attribute-toggle" id="menuFavoritesToggle" type="button" aria-pressed="false" title="お気に入りに登録した問題だけを表示します">☆ お気に入りのみ</button>
-              <button class="menu-filter-advanced-toggle" id="menuAdvancedToggle" type="button" aria-expanded="false" aria-controls="menuAdvancedFilters" title="未回答・×△あり・習得済みで絞り込む">詳細条件</button>
-            </div>
-            <button class="menu-archive-view-button" id="menuArchiveViewButton" type="button" title="完全正解して退避した問題を表示します"><span class="menu-archive-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M4 7.5h16v12H4zM3 4h18v3.5H3zM9 12h6"></path></svg></span><span>アーカイブを見る</span></button>
-          </section>
-           <div class="menu-filters menu-filters-advanced" id="menuAdvancedFilters" hidden>
+          <div class="menu-filters menu-filters-advanced menu-status-row" id="menuAdvancedFilters">
             <fieldset class="menu-status-filter-group">
-              <legend>回答状態</legend>
+              <legend><span class="menu-status-heading-line"><span class="menu-filter-heading-icon" aria-hidden="true">▽</span><span>フィルター</span></span><small>複数選択できます</small><span class="sr-only">回答状態</span></legend>
               <div class="menu-status-filter-options">
-                <label class="menu-status-filter-option"><input type="checkbox" data-menu-status="unanswered">未回答</label>
-                <label class="menu-status-filter-option"><input type="checkbox" data-menu-status="weak">直近×あり</label>
-                <label class="menu-status-filter-option"><input type="checkbox" data-menu-status="mastered">習得済み</label>
+                <label class="menu-status-filter-option is-status-unanswered"><input type="checkbox" data-menu-status="unanswered"><span class="menu-status-filter-label">未回答</span></label>
+                <label class="menu-status-filter-option is-status-x"><input type="checkbox" data-menu-status="latest-x"><span class="menu-status-filter-label">直近 <span class="menu-status-filter-mark is-miss">×</span></span></label>
+                <label class="menu-status-filter-option is-status-triangle"><input type="checkbox" data-menu-status="latest-triangle"><span class="menu-status-filter-label">直近 <span class="menu-status-filter-mark is-review">△</span></span></label>
+                <label class="menu-status-filter-option is-status-circle"><input type="checkbox" data-menu-status="latest-circle"><span class="menu-status-filter-label">直近 <span class="menu-status-filter-mark is-safe">〇</span></span></label>
+                <label class="menu-status-filter-option is-status-double-circle"><input type="checkbox" data-menu-status="latest-double-circle"><span class="menu-status-filter-label">直近 <span class="menu-status-filter-mark is-excellent">◎</span></span></label>
               </div>
             </fieldset>
-             <p class="menu-status-filter-note">複数選択できます。</p>
-           </div>
-           <div class="menu-active-filters" id="menuActiveFilters" aria-live="polite" hidden></div>
+          </div>
+          <div class="menu-active-filters" id="menuActiveFilters" aria-live="polite" hidden></div>
          </div>
          <div class="menu-range-actions" id="menuRangeActions" hidden>
           <span class="menu-range-target" id="menuRangeTarget" aria-live="polite"></span>
@@ -2450,13 +2450,13 @@
   </dialog>
 
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=174"></script>
-  <script src="drill-ux-v44.js"></script>
+  <script src="supabase-sync-v48.js?v=178"></script>
+  <script src="drill-ux-v44.js?v=178"></script>
   <script src="naga-generator-v44.js"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 174;
+    const APP_VERSION = 178;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -3299,6 +3299,19 @@
       let questionsV16 = [baseQuestionV16];
       let sharedQuestionDetailsDeferredV170 = false;
       const sharedQuestionDetailPromisesV170 = new Map();
+      const SHARED_QUESTION_PAGE_SIZE_V177 = 100;
+      let sharedQuestionPagingV177 = {
+        shareSlug: "",
+        totalCount: null,
+        hasMore: false,
+        allLoaded: false,
+        loading: false,
+        error: "",
+        generation: 0,
+        pages: new Map(),
+        requests: new Map(),
+        allRequest: null
+      };
       let currentQuestionIndexV16 = 0;
       let menuViewV16 = "today";
       let menuSearchV44 = "";
@@ -3306,7 +3319,7 @@
       let menuTypeV44 = "all";
       let menuRangeV60 = "all";
       let menuFavoritesOnlyV137 = false;
-      let menuAdvancedFiltersOpenV83 = false;
+      let menuRangeRequestV178 = 0;
       let menuOrderV92 = "sequential";
       let learningMilestoneSnapshotV172 = null;
       let learningMilestoneShownV172 = { scopeKey: "", lap: false, mastery: false };
@@ -3400,6 +3413,7 @@
       const ANSWER_HISTORY_LIMIT_V135 = 5000;
       let remoteHistorySyncScopeV135 = "";
       let remoteHistorySyncPromiseV81 = null;
+      let sharedSessionStartPendingV177 = false;
       let importedQuestionsReadyV81 = false;
       const modelColorByNameV16 = { オメガ: "model-omega", ガンマ: "model-gamma", ニシキ: "model-nishiki", ヒバカリ: "model-hihikari", カガシ: "model-kagashi" };
       const USER_STATE_KEY_V16 = storageKey("user-state-v1");
@@ -3468,6 +3482,14 @@
         return `${userId}::${collectionKey}`;
       }
 
+      function shouldDeferCollectionPersonalLegacyMigrationV178() {
+        return Boolean(
+          sharedCollectionV46?.share_slug
+          && sharedQuestionPagingV177.shareSlug === String(sharedCollectionV46.share_slug)
+          && !sharedQuestionPagingV177.allLoaded
+        );
+      }
+
       function personalCollectionStateV131() {
         userStateV16.collectionPersonal ||= {};
         const scopeKey = personalCollectionScopeKeyV131();
@@ -3476,7 +3498,9 @@
           : {};
         existing.favorites = Array.isArray(existing.favorites) ? [...new Set(existing.favorites.map(String))] : [];
         existing.archived = Array.isArray(existing.archived) ? [...new Set(existing.archived.map(String))] : [];
-        if (!existing.initialized && questionsV16.length) {
+        // 共有問題集は最初の100問だけ先に入るため、全件がそろうまで旧形式の
+        // お気に入り・アーカイブを現在ページだけで確定させない。
+        if (!existing.initialized && questionsV16.length && !shouldDeferCollectionPersonalLegacyMigrationV178()) {
           const currentQuestionKeys = new Set(questionsV16.map(questionKeyV16));
           if (!userStateV16.collectionPersonalLegacyMigrated) {
             existing.favorites = [...new Set([...existing.favorites, ...(Array.isArray(userStateV16.favorites) ? userStateV16.favorites : [])].map(String).filter(key => currentQuestionKeys.has(key)))];
@@ -3580,6 +3604,9 @@
         { version: 170, date: "2026-08-26", publishedAt: "2026-08-26T17:00:00+09:00", title: "大規模問題集の初期表示を軽くしました", body: "問題集の切り替え時は一覧用の軽量データだけを先に読み込み、盤面・手牌・解説は問題を開いた時に取得するようにしました。" },
         { version: 171, date: "2026-08-26", publishedAt: "2026-08-26T18:00:00+09:00", title: "今日の10問の配分と苦手判定を見直しました", body: "未回答がある間は未回答8問と直近の回答が×の問題を最大2問出題し、苦手は直近の回答が×の問題だけとして扱うようにしました。" },
         { version: 172, date: "2026-08-26", publishedAt: "2026-08-26T19:00:00+09:00", title: "一周達成と完全習得を祝うようにしました", body: "未回答がなくなったときは一周達成、最新1回の回答が〇以上で全問がそろったときは習熟度100％として祝福します。今日の10問に対象がないときは、達成をたたえる表示に切り替わります。" },
+        { version: 176, date: "2026-08-26", publishedAt: "2026-08-26T21:00:00+09:00", title: "問題一覧のフィルターを見やすく整理しました", body: "問題範囲・ジャンル・フィルターを3段に整理し、直近の評価記号を問題一覧と同じ色で表示するようにしました。" },
+        { version: 178, date: "2026-08-26", publishedAt: "2026-08-26T23:00:00+09:00", title: "大規模問題集の範囲切り替えを安定させました", body: "範囲の読み込みが重なったときに古い結果で表示を上書きしないようにし、取得に失敗した場合は元の範囲へ安全に戻します。100問目以降のお気に入り・アーカイブも初回読み込みで失わないようにしました。" },
+        { version: 175, date: "2026-08-26", publishedAt: "2026-08-26T20:00:00+09:00", title: "回答状態を直近の評価ごとに絞り込めるようにしました", body: "問題一覧の回答状態を、未回答・直近×・直近△・直近〇・直近◎の5種類から複数選択できるようにしました。直近の回答だけを基準に、復習したい問題を正確に絞り込めます。" },
         { version: 168, date: "2026-08-26", publishedAt: "2026-08-26T15:00:00+09:00", title: "今日の10問を続きから再開できるようにしました", body: "問題集をまたいだ古いセッションで再開ボタンが反応しない問題を修正し、問題集ごとのセッション判定と旧問題キーの復元に対応しました。" },
         { version: 167, date: "2026-08-26", publishedAt: "2026-08-26T14:00:00+09:00", title: "問題集選択画面を刷新しました", body: "問題集カードを見やすい3列レイアウトに整え、基本序列問題集を格式高いシルバーで表示します。" },
         { version: 166, date: "2026-08-26", publishedAt: "2026-08-26T13:00:00+09:00", title: "基本序列の順番出題と最近の10問に対応しました", body: "基本序列問題集を問題集選択画面の先頭に配置し、ストーリーに沿った順番出題を推奨する表示にしました。今日の学習画面では最近解いた問題を最大10問表示します。" }
@@ -3906,7 +3933,9 @@
             known.add(row.id);
           }
           bucket.knownIds = [...known];
-          bucket.unreadIds = [...new Set(bucket.unreadIds)].filter(id => currentIds.has(id));
+          bucket.unreadIds = shouldDeferCollectionPersonalLegacyMigrationV178()
+            ? [...new Set(bucket.unreadIds)]
+            : [...new Set(bucket.unreadIds)].filter(id => currentIds.has(id));
         }
         sharedQuestionRowsV66 = normalized;
         saveQuestionNoticeStoreV66();
@@ -4177,9 +4206,36 @@
         if (!sharedCollectionV46 || !window.NagaSupabase?.configured || questionRefreshBusyV66) return;
         questionRefreshBusyV66 = true;
         try {
-          const result = await window.NagaSupabase.loadSharedCollection(sharedCollectionV46.share_slug);
-          const normalized = adoptSharedQuestionRowsV66(result.questions || []);
-          mergeSharedQuestionsV66(normalized);
+          const loader = typeof window.NagaSupabase.loadSharedQuestionPage === "function"
+            ? window.NagaSupabase.loadSharedQuestionPage
+            : (slug, options) => window.NagaSupabase.loadSharedCollection(slug, options);
+          const result = await loader(sharedCollectionV46.share_slug, { offset: 0, limit: SHARED_QUESTION_PAGE_SIZE_V177 });
+          const normalized = normalizeSharedQuestionPageV177(
+            Array.isArray(result?.rows) ? result.rows : result?.questions,
+            0,
+            sharedCollectionV46.share_slug
+          );
+          if (sharedQuestionPagingIsCurrentV177()) {
+            sharedQuestionPagingV177.pages.set(0, {
+              rows: normalized,
+              questions: normalized.map(row => row.question),
+              hasMore: result?.hasMore === true || (result?.hasMore == null && normalized.length >= SHARED_QUESTION_PAGE_SIZE_V177)
+            });
+            const totalValue = Number(result?.totalCount);
+            if (Number.isFinite(totalValue)) sharedQuestionPagingV177.totalCount = Math.max(0, Math.floor(totalValue));
+            if (sharedQuestionPagingV177.allLoaded) {
+              replaceQuestionsKeepingCurrentV177([...sharedQuestionPagingV177.pages.entries()]
+                .sort(([left], [right]) => left - right)
+                .flatMap(([, page]) => page.questions));
+              applyQuestionOverridesV47();
+              normalizeQuestionTitlesV79();
+              renderQuestionOptionsV16();
+            } else if (menuRangeV60 === sharedQuestionRangeKeyV177(0)) {
+              installSharedQuestionPageV177(0);
+            }
+          }
+          rememberSharedQuestionRowsV177(normalized, { markNew: true });
+          if (document.querySelector(".page")?.classList.contains("menu-active")) renderMenuCardsV16();
         } catch (error) {
           console.warn("共有問題の追加通知を更新できませんでした", error);
         } finally {
@@ -4191,14 +4247,15 @@
         if (!sharedCollectionV46 || !window.NagaSupabase?.configured) return;
         if (commentPollTimerV65) window.clearInterval(commentPollTimerV65);
         if (questionPollTimerV66) window.clearInterval(questionPollTimerV66);
-        const isLargeCollectionV119 = questionsV16.length > MENU_RENDER_THRESHOLD_V119;
+        const knownQuestionTotal = sharedQuestionKnownTotalV177();
+        const isLargeCollectionV119 = (knownQuestionTotal ?? questionsV16.length) > MENU_RENDER_THRESHOLD_V119;
         commentPollTimerV65 = window.setInterval(() => { void refreshSharedCommentNotificationsV65(); }, isLargeCollectionV119 ? 120000 : 30000);
         if (!isLargeCollectionV119) questionPollTimerV66 = window.setInterval(() => { void refreshSharedQuestionNotificationsV66(); }, 60000);
         if (!commentVisibilityHandlerBoundV65) {
           document.addEventListener("visibilitychange", () => {
             if (document.visibilityState === "visible") {
               void refreshSharedCommentNotificationsV65();
-              if (questionsV16.length <= MENU_RENDER_THRESHOLD_V119) void refreshSharedQuestionNotificationsV66();
+              if ((sharedQuestionKnownTotalV177() ?? questionsV16.length) <= MENU_RENDER_THRESHOLD_V119) void refreshSharedQuestionNotificationsV66();
             }
           });
           commentVisibilityHandlerBoundV65 = true;
@@ -4437,7 +4494,70 @@
         return `<form class="settings-form collection-create-form" id="${prefix}Form"><label for="${prefix}Title">問題集名<input id="${prefix}Title" maxlength="80" required placeholder="例：ピエール問題集"></label><label for="${prefix}Description">説明（任意）<textarea id="${prefix}Description" maxlength="500" rows="3" placeholder="この問題集の説明"></textarea></label><label for="${prefix}Visibility">作成する問題集の公開範囲<select id="${prefix}Visibility"><option value="private" selected>プライベート（自分だけ）</option><option value="request">承認許可制（許可した人だけ）</option><option value="public">全体公開（誰でも閲覧）</option></select></label><p class="settings-form-note">初期値は必ずプライベートです。承認許可制では問題集名だけ公開され、申請が承認されるまで問題は表示されません。</p><div class="settings-form-actions"><button class="primary" type="submit">問題集を作成</button><span class="settings-form-status" id="${prefix}Status" aria-live="polite"></span></div></form>`;
       }
 
-      function navigateToCollectionV106(slug) {
+      async function switchCollectionInPlaceV177(value, previousView, previousUrl, previousState) {
+        const previousCollection = previousState.collection;
+        const previousCollectionSlug = String(previousCollection?.share_slug || "").trim();
+        // 旧問題集の範囲取得が遅れて返ってきても、新しい問題集へ上書きさせない。
+        menuRangeRequestV178 += 1;
+        const previousQuestions = previousState.questions;
+        const previousRows = previousState.rows;
+        const previousPaging = previousState.paging;
+        const previousDeferred = previousState.detailsDeferred;
+        const previousReady = previousState.ready;
+        if (commentPollTimerV65) window.clearInterval(commentPollTimerV65);
+        if (questionPollTimerV66) window.clearInterval(questionPollTimerV66);
+        commentPollTimerV65 = null;
+        questionPollTimerV66 = null;
+        sharedCollectionV46 = null;
+        questionsV16 = [];
+        sharedQuestionRowsV66 = [];
+        sharedQuestionDetailsDeferredV170 = false;
+        sharedQuestionDetailPromisesV170.clear();
+        remoteHistorySyncScopeV135 = "";
+        importedQuestionsReadyV81 = false;
+        collectionLoadErrorV165 = "";
+        resetSharedQuestionPagingV177("", null);
+        renderQuestionOptionsV16();
+        showMenuV16("collections");
+        try {
+          const loaded = await loadSharedCollectionV46();
+          if (!loaded) throw new Error("問題集を読み込めませんでした。");
+          repairInvalidCustomQuestionNumbersV154();
+          applyQuestionOverridesV47();
+          normalizeQuestionTitlesV79();
+          migrateAnswerHistoryScoresV16();
+          importedQuestionsReadyV81 = true;
+          menuViewV16 = previousView === "collections" ? "today" : MENU_VIEW_COPY_V16[previousView] ? previousView : "today";
+          renderQuestionOptionsV16();
+          showMenuV16(menuViewV16);
+          if (questionsV16.length) void startCommentNotificationPollingV65();
+          void refreshCollectionAccessStateV100().catch(error => console.warn("問題集の権限情報を更新できませんでした", error));
+          void refreshAccountV46(supabaseSessionV46);
+        } catch (error) {
+          sharedCollectionV46 = previousCollection;
+          questionsV16 = previousQuestions;
+          sharedQuestionRowsV66 = previousRows;
+          sharedQuestionDetailsDeferredV170 = previousDeferred;
+          importedQuestionsReadyV81 = previousReady;
+          sharedQuestionPagingV177 = {
+            ...previousPaging,
+            generation: previousPaging.generation + 1,
+            loading: false,
+            error: error?.message || "問題集を読み込めませんでした。",
+            pages: new Map(previousPaging.pages),
+            requests: new Map(),
+            allRequest: null
+          };
+          rememberCollectionSlugV165(previousCollectionSlug);
+          window.history.replaceState({}, "", previousUrl);
+          collectionLoadErrorV165 = error?.message || "問題集を読み込めませんでした。";
+          document.getElementById("accountStatus").textContent = collectionLoadErrorV165;
+          renderQuestionOptionsV16();
+          showMenuV16(previousView);
+        }
+      }
+
+      function navigateToCollectionV106(slug, { historyMode = "push" } = {}) {
         const value = String(slug || "").trim();
         if (!value || collectionNavigationPendingV165) return;
         collectionNavigationPendingV165 = true;
@@ -4445,10 +4565,30 @@
         document.querySelectorAll("[data-active-collection-status]").forEach(node => { node.textContent = "切り替え中…"; });
         document.querySelectorAll("[data-collection-slug]").forEach(button => { button.disabled = true; });
         rememberCollectionSlugV165(value);
+        const previousView = menuViewV16;
+        const previousState = {
+          collection: sharedCollectionV46,
+          questions: questionsV16,
+          rows: sharedQuestionRowsV66,
+          paging: sharedQuestionPagingV177,
+          detailsDeferred: sharedQuestionDetailsDeferredV170,
+          ready: importedQuestionsReadyV81
+        };
+        const previousUrlObject = new URL(window.location.href);
+        const previousCollectionSlug = String(previousState.collection?.share_slug || "").trim();
+        if (previousCollectionSlug) previousUrlObject.searchParams.set("collection", previousCollectionSlug);
+        else previousUrlObject.searchParams.delete("collection");
+        const previousUrl = previousUrlObject.toString();
         const url = new URL(window.location.href);
         url.searchParams.set("collection", value);
         url.hash = "";
-        window.location.assign(url.toString());
+        if (historyMode === "push") window.history.pushState({}, "", url.toString());
+        if (historyMode === "replace") window.history.replaceState({}, "", url.toString());
+        void switchCollectionInPlaceV177(value, previousView, previousUrl, previousState).finally(() => {
+          collectionNavigationPendingV165 = false;
+          document.querySelector(".page")?.classList.remove("is-collection-switching");
+          document.querySelectorAll("[data-collection-slug]").forEach(button => { button.disabled = false; });
+        });
       }
 
       function captureCollectionCreateDraftV114() {
@@ -5316,20 +5456,23 @@
         const note = document.getElementById("recommendedDrillNote");
         if (!button) return;
         const hasResume = Boolean(activeSessionV44());
-        const noCandidates = !hasResume && todayQueueCandidatesV172().length === 0;
+        const sharedIndexLoading = sharedQuestionPagingIsCurrentV177() && !sharedQuestionPagingV177.allLoaded;
+        const noCandidates = !sharedIndexLoading && !hasResume && todayQueueCandidatesV172().length === 0;
         const achievement = metrics.masteryComplete || metrics.total > 0 && metrics.unanswered === 0;
-        const message = metrics.masteryComplete
+        const message = sharedIndexLoading
+          ? "問題集を準備しています…"
+          : metrics.masteryComplete
           ? "習熟度100％達成。完全習得おめでとうございます！"
           : metrics.total > 0 && metrics.unanswered === 0
           ? "一周達成！今日の10問はお休み中です。"
           : metrics.total === 0
           ? "この問題集に出題できる問題がありません。"
           : "未回答8問＋直近×2問を基本に出題";
-        button.disabled = noCandidates;
-        button.classList.toggle("is-complete", noCandidates && achievement);
-        button.classList.toggle("is-unavailable", noCandidates && !achievement);
-        button.setAttribute("aria-disabled", String(noCandidates));
-        button.title = noCandidates ? message : "未回答8問と直近の回答が×の問題を最大2問出題します";
+        button.disabled = sharedIndexLoading || noCandidates;
+        button.classList.toggle("is-complete", !sharedIndexLoading && noCandidates && achievement);
+        button.classList.toggle("is-unavailable", sharedIndexLoading || noCandidates && !achievement);
+        button.setAttribute("aria-disabled", String(sharedIndexLoading || noCandidates));
+        button.title = sharedIndexLoading || noCandidates ? message : "未回答8問と直近の回答が×の問題を最大2問出題します";
         if (note) note.textContent = message;
       }
 
@@ -6248,7 +6391,36 @@
         return [...new Set((items || []).map(item => typeof item === "string" ? item : questionKeyV16(item)).filter(key => questionIndexByKeyV44(key) >= 0))];
       }
 
-      function startSessionV44(mode, explicitQuestions = null) {
+      function startSessionV44(mode, explicitQuestions = null, { skipSharedPreparation = false } = {}) {
+        const needsCompleteSharedIndex = !skipSharedPreparation
+          && sharedQuestionPagingIsCurrentV177()
+          && !sharedQuestionPagingV177.allLoaded
+          && (!explicitQuestions || menuRangeV60 === "all");
+        if (needsCompleteSharedIndex) {
+          if (sharedSessionStartPendingV177) return;
+          sharedSessionStartPendingV177 = true;
+          document.getElementById("menuPanel")?.setAttribute("aria-busy", "true");
+          void ensureSharedQuestionIndexAllV177()
+            .then(ready => {
+              if (ready) {
+                if (mode === "range" || mode === "range-unanswered") {
+                  // 「すべて」表示中の範囲出題は、初期100問から作った候補を
+                  // 再利用せず、全件取得後の現在フィルターから作り直す。
+                  startRangeSessionV61(mode === "range-unanswered" ? "unanswered" : "all");
+                } else {
+                  const rebuiltQuestions = explicitQuestions && menuRangeV60 !== "all" ? explicitQuestions : null;
+                  startSessionV44(mode, rebuiltQuestions, { skipSharedPreparation: true });
+                }
+              } else {
+                showMenuV16(mode === "today" || mode === "recommended" ? "today" : menuViewV16);
+              }
+            })
+            .finally(() => {
+              sharedSessionStartPendingV177 = false;
+              document.getElementById("menuPanel")?.removeAttribute("aria-busy");
+            });
+          return;
+        }
         if (mode === "resume") {
           const current = activeSessionV44();
           if (!current) return;
@@ -6475,6 +6647,7 @@
       async function openQuestionV16(index, { preserveSession = false } = {}) {
         const requestedQuestion = questionsV16[index];
         if (!requestedQuestion) return;
+        const requestedKey = questionKeyV16(requestedQuestion);
         const menuPanel = document.getElementById("menuPanel");
         const menuWasVisible = Boolean(menuPanel && !menuPanel.hidden);
         const sceneCard = document.querySelector(".scene-card");
@@ -6491,6 +6664,9 @@
             sceneCard?.removeAttribute("aria-busy");
           }
         }
+        const resolvedIndex = questionsV16.findIndex(question => questionKeyV16(question) === requestedKey);
+        if (resolvedIndex < 0) return;
+        index = resolvedIndex;
         const question = questionsV16[index];
         if (!question) return;
         if (!preserveSession && userStateV16.activeSessionId) {
@@ -6545,12 +6721,18 @@
         const rangeQuestions = menuFilteredQuestionsV80();
         const rangeAnswered = rangeQuestions.filter(question => latestAnswerV44(question));
         const rangeUnanswered = rangeQuestions.length - rangeAnswered.length;
-        summary.innerHTML = `<div class="menu-summary-stat"><small>この範囲の問題</small><strong>${rangeQuestions.length}<em>問</em></strong></div><div class="menu-summary-stat${rangeUnanswered ? " is-alert" : ""}"><small>未回答</small><strong>${rangeUnanswered}<em>問</em></strong></div><div class="menu-summary-stat"><small>回答済み</small><strong>${rangeAnswered.length}<em>問</em></strong></div>`;
+        const sharedTotal = sharedQuestionKnownTotalV177();
+        const partialAll = menuRangeV60 === "all"
+          && sharedTotal !== null
+          && !sharedQuestionPagingV177.allLoaded
+          && sharedTotal > rangeQuestions.length;
+        const visibleSummary = partialAll ? `${rangeQuestions.length} / ${sharedTotal}` : String(rangeQuestions.length);
+        summary.innerHTML = `<div class="menu-summary-stat"><small>この範囲の問題</small><strong>${visibleSummary}<em>問</em></strong></div><div class="menu-summary-stat${rangeUnanswered ? " is-alert" : ""}"><small>未回答</small><strong>${rangeUnanswered}<em>問</em></strong></div><div class="menu-summary-stat"><small>回答済み</small><strong>${rangeAnswered.length}<em>問</em></strong></div>`;
         summary.hidden = !listView;
         const rangeTarget = document.getElementById("menuRangeTarget");
-        if (rangeTarget) rangeTarget.textContent = `${rangeQuestions.length}問が対象`;
+        if (rangeTarget) rangeTarget.textContent = partialAll ? `先頭${rangeQuestions.length}問を表示中（全${sharedTotal}問）` : `${rangeQuestions.length}問が対象`;
         const rangeCount = document.getElementById("menuRangeCount");
-        if (rangeCount) rangeCount.textContent = menuRangeV60 === "all" ? `全${rangeQuestions.length}問` : `${rangeQuestions.length}問`;
+        if (rangeCount) rangeCount.textContent = partialAll ? `全${sharedTotal}問` : menuRangeV60 === "all" ? `全${rangeQuestions.length}問` : `${rangeQuestions.length}問`;
         const allPlayable = questionsV16.filter(isPlayableV16);
         const allAnswered = allPlayable.filter(question => latestAnswerV44(question)).length;
         const progress = allPlayable.length ? Math.round(allAnswered / allPlayable.length * 100) : 0;
@@ -6582,6 +6764,7 @@
         renderMenuActiveFiltersV138();
         renderCollectionSpacePanelV100();
         renderNotificationBadgesV65();
+        scheduleSharedQuestionIndexPreparationV177();
       }
 
       function menuQuestionNumberV60(question) {
@@ -6590,8 +6773,13 @@
       }
 
       function menuRangeOptionsV60() {
-        const maxNumber = questionsV16.reduce((max, question) => Math.max(max, menuQuestionNumberV60(question) || 0), 0);
         const step = menuRangeStepV120();
+        const knownMaxNumber = questionsV16.reduce((max, question) => Math.max(max, menuQuestionNumberV60(question) || 0), 0);
+        const total = sharedQuestionKnownTotalV177();
+        const cachedPageCount = sharedQuestionPagingIsCurrentV177() ? sharedQuestionPagingV177.pages.size : 0;
+        const pagingHasMore = sharedQuestionPagingIsCurrentV177() && sharedQuestionPagingV177.hasMore && !sharedQuestionPagingV177.allLoaded;
+        const pageBoundary = pagingHasMore ? (cachedPageCount + 1) * step : 0;
+        const maxNumber = Math.max(knownMaxNumber, total || 0, pageBoundary);
         const options = [{ key: "all", label: "すべて" }];
         for (let start = 1; start <= Math.max(maxNumber, 1); start += step) {
           options.push({ key: `${start}-${start + step - 1}`, label: `${start}–${start + step - 1}` });
@@ -6601,6 +6789,19 @@
 
       function menuRangeStepV120() {
         return MENU_RANGE_STEP_V137;
+      }
+
+      function sharedQuestionPagingIsCurrentV177() {
+        return Boolean(
+          sharedCollectionV46?.share_slug
+          && sharedQuestionPagingV177.shareSlug === String(sharedCollectionV46.share_slug)
+        );
+      }
+
+      function sharedQuestionKnownTotalV177() {
+        if (!sharedQuestionPagingIsCurrentV177()) return null;
+        const total = Number(sharedQuestionPagingV177.totalCount);
+        return Number.isFinite(total) ? Math.max(0, Math.floor(total)) : null;
       }
 
       function menuRangeMatchesV60(question) {
@@ -6683,10 +6884,49 @@
         return menuRangeOptionsV60().filter(option => option.key !== "all");
       }
 
-      function setMenuRangeV137(rangeKey) {
+      async function setMenuRangeV137(rangeKey) {
         const options = menuNumericRangeOptionsV137();
-        menuRangeV60 = rangeKey === "all" || !options.some(option => option.key === rangeKey) ? "all" : rangeKey;
+        const nextRange = rangeKey === "all" || !options.some(option => option.key === rangeKey) ? "all" : rangeKey;
+        const previousRange = menuRangeV60;
+        const previousQuestions = [...questionsV16];
+        const previousQuestionIndex = currentQuestionIndexV16;
+        const requestId = ++menuRangeRequestV178;
+        menuRangeV60 = nextRange;
         resetMenuRenderLimitV119();
+        try {
+          if (sharedQuestionPagingIsCurrentV177() && !sharedQuestionPagingV177.allLoaded) {
+            const needsAll = nextRange === "all";
+            const pageIndex = sharedQuestionPageIndexV177(nextRange);
+            const cached = sharedQuestionPagingV177.pages.has(pageIndex);
+            if (needsAll || !cached) {
+              questionsV16 = [];
+              renderMenuCardsV16();
+              const loaded = needsAll
+                ? await ensureSharedQuestionIndexAllV177()
+                : Boolean(await ensureSharedQuestionPageV177(pageIndex, { install: false, render: false }));
+              if (requestId !== menuRangeRequestV178) return;
+              if (loaded && !needsAll && menuRangeV60 === nextRange) installSharedQuestionPageV177(pageIndex);
+              if (!loaded) throw new Error(sharedQuestionPagingV177.error || "問題範囲を読み込めませんでした。");
+            } else if (requestId === menuRangeRequestV178) {
+              installSharedQuestionPageV177(pageIndex);
+            }
+          } else if (sharedQuestionPagingIsCurrentV177() && nextRange === "all" && sharedQuestionPagingV177.allLoaded) {
+            replaceQuestionsKeepingCurrentV177([...sharedQuestionPagingV177.pages.entries()]
+              .sort(([left], [right]) => left - right)
+              .flatMap(([, page]) => page.questions));
+            applyQuestionOverridesV47();
+            normalizeQuestionTitlesV79();
+            renderQuestionOptionsV16();
+          }
+        } catch (error) {
+          if (requestId !== menuRangeRequestV178) return;
+          menuRangeV60 = previousRange;
+          questionsV16 = previousQuestions;
+          currentQuestionIndexV16 = previousQuestionIndex;
+          renderQuestionOptionsV16();
+          sharedQuestionPagingV177.error = error?.message || "問題範囲を読み込めませんでした。";
+        }
+        if (requestId !== menuRangeRequestV178) return;
         renderMenuCardsV16();
       }
 
@@ -6695,10 +6935,10 @@
         const selectedIndex = options.findIndex(option => option.key === menuRangeV60);
         const nextIndex = menuRangeV60 === "all" ? (delta > 0 ? 0 : -1) : selectedIndex + delta;
         if (nextIndex < 0) {
-          setMenuRangeV137("all");
+          void setMenuRangeV137("all");
           return;
         }
-        if (options[nextIndex]) setMenuRangeV137(options[nextIndex].key);
+        if (options[nextIndex]) void setMenuRangeV137(options[nextIndex].key);
       }
 
       function renderMenuRangeControlsV137() {
@@ -6752,7 +6992,7 @@
         }
         if (menuTypeV44 !== "all") items.push({ key: "type", label: MENU_TYPE_LABELS_V138[menuTypeV44] || menuTypeV44 });
         menuStatusFiltersV92.forEach(status => {
-          const label = { unanswered: "未回答", weak: "直近×あり", mastered: "習得済み" }[status];
+          const label = { unanswered: "未回答", "latest-x": "直近×", "latest-triangle": "直近△", "latest-circle": "直近〇", "latest-double-circle": "直近◎" }[status];
           if (label) items.push({ key: `status:${status}`, label });
         });
         if (menuFavoritesOnlyV137) items.push({ key: "favorites", label: "お気に入り" });
@@ -7014,7 +7254,8 @@
         const favoriteCount = playable.filter(isFavoriteV16).length;
         const session = activeSessionV44();
         const todayCandidates = todayQueueCandidatesV172();
-        const todayUnavailable = !session && todayCandidates.length === 0;
+        const sharedIndexLoading = sharedQuestionPagingIsCurrentV177() && !sharedQuestionPagingV177.allLoaded;
+        const todayUnavailable = !sharedIndexLoading && !session && todayCandidates.length === 0;
         const todayAchievement = metrics.masteryComplete || metrics.total > 0 && metrics.unanswered === 0;
         const sessionTotal = Number(session?.questionKeys?.length || 10);
         const sessionCurrent = session ? Math.min(sessionTotal, Number(session.cursor || 0) + 1) : 0;
@@ -7036,14 +7277,18 @@
               return `<button class="today-recent-row" type="button" data-question-index="${index}"><span><strong>${escapeHtml(question.title || `問題${question.number}`)}</strong><small>${escapeHtml(questionTypeV44(question))}</small></span><span class="today-recent-mark ${menuScoreMarkClassV63(mark)}" aria-label="直近の結果 ${escapeHtml(mark)}">${escapeHtml(mark)}</span><span class="today-recent-arrow" aria-hidden="true">›</span></button>`;
             }).join("")
           : `<p class="today-empty-note">最初の問題を解くと、ここに最近の成績が表示されます。</p>`;
-        const todayDescription = todayUnavailable
+        const todayDescription = sharedIndexLoading
+          ? "この問題集の問題を準備しています。もう少しだけお待ちください。"
+          : todayUnavailable
           ? metrics.masteryComplete
           ? "習熟度100％を達成しました。完全習得おめでとうございます！今日の10問はお休み中です。"
           : metrics.total > 0 && metrics.unanswered === 0
           ? "未回答も直近×もありません。見事にこの問題集を一周しました！今日の10問はお休み中です。"
           : "この問題集に現在出題できる問題がありません。問題を追加すると、今日の10問を始められます。"
           : "未回答8問＋直近の回答が×の問題2問を基本に出題します。";
-        const primaryAction = todayUnavailable
+        const primaryAction = sharedIndexLoading
+          ? `<button class="today-primary-action is-unavailable" type="button" disabled aria-disabled="true" title="問題集の問題を準備しています">準備中…<span aria-hidden="true">◌</span></button>`
+          : todayUnavailable
           ? `<button class="today-primary-action ${todayAchievement ? "is-complete" : "is-unavailable"}" type="button" disabled aria-disabled="true" title="学習対象がないため、今日の10問はお休み中です">${metrics.masteryComplete ? "完全習得済み" : metrics.total > 0 && metrics.unanswered === 0 ? "一周達成済み" : "準備中"}<span aria-hidden="true">✦</span></button>`
           : `<button class="today-primary-action" type="button" data-today-session="${startMode}">${startLabel}<span aria-hidden="true">→</span></button>`;
         return `<section class="today-dashboard" aria-labelledby="todayDashboardTitle"><div class="today-breadcrumb"><span>${escapeHtml(collectionName)}</span><span aria-hidden="true">›</span><strong>今日の学習</strong></div><section class="today-hero${todayUnavailable ? todayAchievement ? " is-complete" : " is-unavailable" : ""}"><div class="today-hero-copy"><p class="today-kicker">TODAY'S SESSION</p><h3 id="todayDashboardTitle">今日の10問</h3><p>${todayDescription}</p>${primaryAction}</div><div class="today-session-progress" aria-label="今日のセッション進捗 ${sessionCurrent}/${sessionTotal}"><span>今日の進捗</span><strong>${sessionCurrent}<small> / ${sessionTotal}</small></strong><span class="today-progress-track" aria-hidden="true"><span style="width:${sessionPercent}%"></span></span></div></section><div class="today-metric-grid"><button class="today-metric-card is-new" type="button" data-today-session="unanswered"><span>まだ解いていない</span><strong>${unanswered.length}<small>問</small></strong><small>未回答を優先して学習</small></button><button class="today-metric-card is-review" type="button" data-today-session="weak"><span>もう一度考えたい</span><strong>${weak.length}<small>問</small></strong><small>直近の回答が×</small></button><button class="today-metric-card is-mastered" type="button" data-menu-jump="analysis"><span>身についた</span><strong>${masteredCount}<small>問</small></strong><small>最新1回が〇以上</small></button><button class="today-metric-card is-favorite" type="button" data-menu-jump="favorites"><span>お気に入り</span><strong>${favoriteCount}<small>問</small></strong><small>あとで見返す問題</small></button></div><section class="today-recent"><div class="today-section-heading"><div><p class="today-kicker">RECENT</p><h3>最近解いた問題</h3></div><button type="button" data-menu-jump="my">問題一覧へ</button></div><div class="today-recent-list">${recentMarkup}</div></section></section>`;
@@ -7106,6 +7351,12 @@
           return;
         }
         grid.style.display = "grid";
+        const isPagedSharedList = sharedQuestionPagingIsCurrentV177() && ["my", "archive"].includes(menuViewV16);
+        if (isPagedSharedList && !questionsV16.length && (sharedQuestionPagingV177.loading || sharedQuestionPagingV177.allRequest || sharedQuestionPagingV177.error)) {
+          empty.hidden = true;
+          grid.innerHTML = `<div class="menu-placeholder" role="status"><strong>${sharedQuestionPagingV177.error ? "問題範囲を読み込めませんでした" : "問題範囲を読み込んでいます"}</strong>${escapeHtml(sharedQuestionPagingV177.error || "100問単位で必要な問題だけを準備しています。")}</div>`;
+          return;
+        }
         const entries = menuFilteredQuestionsV80().map(question => ({ question, index: questionIndexByKeyV44(questionKeyV16(question)) })).filter(({ index }) => index >= 0).sort((left, right) => menuQuestionSortKeyV99(left.question) - menuQuestionSortKeyV99(right.question) || left.index - right.index);
         empty.hidden = entries.length > 0;
         empty.textContent = menuViewV16 === "archive" ? "アーカイブした問題はまだありません。" : menuFavoritesOnlyV137 ? "お気に入り登録した問題はまだありません。" : "出題できる問題がありません。";
@@ -7879,7 +8130,7 @@
         ]);
       }
 
-      function remoteAttemptToLocalV81(row, questionByServerId) {
+      function remoteAttemptToLocalV81(row, questionByServerId, collectionSlug = sharedCollectionV46?.share_slug || null) {
         const questionId = String(row?.question_id || "");
         const question = questionByServerId.get(questionId);
         const grade = normalizeScoreMarkV159(row?.grade);
@@ -7890,7 +8141,7 @@
         return {
           questionKey: questionKeyV16(question),
           serverQuestionId: question.serverQuestionId || question.id,
-          shareSlug: sharedCollectionV46?.share_slug || null,
+          shareSlug: collectionSlug || null,
           number: question.number,
           startedAt: answeredDate.toISOString(),
           answeredAt: answeredDate.toISOString(),
@@ -7909,17 +8160,24 @@
       async function hydrateRemoteAnswerHistoryV81() {
         if (!window.NagaSupabase?.configured || !supabaseSessionV46 || !importedQuestionsReadyV81 || typeof window.NagaSupabase.loadMyAttempts !== "function") return 0;
         const userId = String(supabaseSessionV46.user?.id || "");
-        const syncScope = `${userId}::${sharedCollectionV46?.share_slug || "local"}`;
+        const collectionSlug = String(sharedCollectionV46?.share_slug || "");
+        const pagingGeneration = sharedQuestionPagingV177.generation;
+        if (collectionSlug && sharedQuestionPagingIsCurrentV177() && !sharedQuestionPagingV177.allLoaded) {
+          void ensureSharedQuestionIndexAllV177();
+          return 0;
+        }
+        const syncScope = `${userId}::${collectionSlug || "local"}`;
         if (!userId || remoteHistorySyncScopeV135 === syncScope) return 0;
         if (remoteHistorySyncPromiseV81) return remoteHistorySyncPromiseV81;
         const syncPromise = (async () => {
-          const rows = sharedCollectionV46?.share_slug && typeof window.NagaSupabase.loadMyAttemptsForCollection === "function"
-            ? await window.NagaSupabase.loadMyAttemptsForCollection(sharedCollectionV46.share_slug, ANSWER_HISTORY_LIMIT_V135)
+          const rows = collectionSlug && typeof window.NagaSupabase.loadMyAttemptsForCollection === "function"
+            ? await window.NagaSupabase.loadMyAttemptsForCollection(collectionSlug, ANSWER_HISTORY_LIMIT_V135)
             : await window.NagaSupabase.loadMyAttempts(500);
+          if (pagingGeneration !== sharedQuestionPagingV177.generation || collectionSlug !== String(sharedCollectionV46?.share_slug || "")) return 0;
           const questionByServerId = new Map(questionsV16
             .filter(question => question?.serverQuestionId)
             .map(question => [String(question.serverQuestionId), question]));
-          const remoteEntries = rows.map(row => remoteAttemptToLocalV81(row, questionByServerId)).filter(Boolean);
+          const remoteEntries = rows.map(row => remoteAttemptToLocalV81(row, questionByServerId, collectionSlug)).filter(Boolean);
           const localEntries = Array.isArray(userStateV16.answerHistory) ? userStateV16.answerHistory : [];
           const localIndexByAttemptId = new Map(localEntries
             .map((entry, index) => [String(entry?.attemptId || ""), index])
@@ -8077,19 +8335,208 @@
         await refreshAccountV46(initialSession);
       }
 
+      function sharedQuestionPageIndexV177(rangeKey = menuRangeV60) {
+        if (rangeKey === "all") return 0;
+        const start = Number(String(rangeKey || "").split("-")[0]);
+        return Number.isInteger(start) && start > 0 ? Math.floor((start - 1) / SHARED_QUESTION_PAGE_SIZE_V177) : 0;
+      }
+
+      function sharedQuestionRangeKeyV177(pageIndex) {
+        const start = Math.max(0, Number(pageIndex) || 0) * SHARED_QUESTION_PAGE_SIZE_V177 + 1;
+        return `${start}-${start + SHARED_QUESTION_PAGE_SIZE_V177 - 1}`;
+      }
+
+      function normalizeSharedQuestionPageV177(rows, offset, shareSlug) {
+        return (Array.isArray(rows) ? rows : []).map((row, index) => {
+          const normalizedRow = normalizeSharedQuestionV66(row, offset + index, shareSlug);
+          if (!normalizedRow?.question) return null;
+          return {
+            ...normalizedRow,
+            question: {
+              ...normalizedRow.question,
+              title: normalizeQuestionTitleV79(normalizedRow.question.title, normalizedRow.question.number)
+            }
+          };
+        }).filter(Boolean);
+      }
+
+      function replaceQuestionsKeepingCurrentV177(nextQuestions) {
+        const currentKey = questionsV16[currentQuestionIndexV16] ? questionKeyV16(questionsV16[currentQuestionIndexV16]) : "";
+        questionsV16 = Array.isArray(nextQuestions) ? nextQuestions : [];
+        const nextIndex = currentKey ? questionsV16.findIndex(question => questionKeyV16(question) === currentKey) : -1;
+        currentQuestionIndexV16 = nextIndex >= 0 ? nextIndex : Math.min(currentQuestionIndexV16, Math.max(questionsV16.length - 1, 0));
+      }
+
+      function rememberSharedQuestionRowsV177(normalizedRows, { markNew = false } = {}) {
+        const rowsById = new Map(sharedQuestionRowsV66.map(row => [String(row?.id || ""), row]));
+        const bucket = questionNoticeBucketV66();
+        const known = new Set(bucket.knownIds);
+        (Array.isArray(normalizedRows) ? normalizedRows : []).forEach(row => {
+          const id = String(row?.id || "");
+          if (!id) return;
+          if (markNew && bucket.initialized && !known.has(id) && isQuestionAddedByOtherV66(row)) bucket.unreadIds.push(id);
+          known.add(id);
+          rowsById.set(id, row);
+        });
+        if (bucket.initialized) {
+          bucket.knownIds = [...known];
+          bucket.unreadIds = [...new Set(bucket.unreadIds)].filter(id => rowsById.has(id));
+          saveQuestionNoticeStoreV66();
+        }
+        sharedQuestionRowsV66 = [...rowsById.values()];
+        renderNotificationBadgesV65();
+      }
+
+      function installSharedQuestionPageV177(pageIndex) {
+        const page = sharedQuestionPagingV177.pages.get(pageIndex);
+        if (!page) return false;
+        replaceQuestionsKeepingCurrentV177(page.questions);
+        applyQuestionOverridesV47();
+        normalizeQuestionTitlesV79();
+        renderQuestionOptionsV16();
+        return true;
+      }
+
+      function resetSharedQuestionPagingV177(shareSlug, result = null) {
+        const rows = Array.isArray(result?.questions) ? result.questions : [];
+        const hasMore = result?.hasMore === true || (result?.hasMore == null && rows.length >= SHARED_QUESTION_PAGE_SIZE_V177);
+        const totalValue = Number(result?.totalCount);
+        sharedQuestionPagingV177 = {
+          shareSlug: String(shareSlug || ""),
+          totalCount: Number.isFinite(totalValue) ? Math.max(0, Math.floor(totalValue)) : null,
+          hasMore,
+          allLoaded: !hasMore,
+          loading: false,
+          error: "",
+          generation: sharedQuestionPagingV177.generation + 1,
+          pages: new Map(),
+          requests: new Map(),
+          allRequest: null
+        };
+      }
+
+      async function ensureSharedQuestionPageV177(pageIndex, { install = true, render = true } = {}) {
+        const state = sharedQuestionPagingV177;
+        const safePageIndex = Math.max(0, Math.floor(Number(pageIndex) || 0));
+        if (!state.shareSlug || !window.NagaSupabase?.configured) return null;
+        const cached = state.pages.get(safePageIndex);
+        if (cached) {
+          if (install) installSharedQuestionPageV177(safePageIndex);
+          return cached;
+        }
+        const existing = state.requests.get(safePageIndex);
+        if (existing) {
+          const page = await existing;
+          if (install && page) installSharedQuestionPageV177(safePageIndex);
+          return page;
+        }
+        const generation = state.generation;
+        const offset = safePageIndex * SHARED_QUESTION_PAGE_SIZE_V177;
+        state.loading = true;
+        state.error = "";
+        if (render && !questionsV16.length) renderMenuCardsV16();
+        const request = (async () => {
+          const loader = typeof window.NagaSupabase.loadSharedQuestionPage === "function"
+            ? window.NagaSupabase.loadSharedQuestionPage
+            : (slug, options) => window.NagaSupabase.loadSharedCollection(slug, options);
+          const result = await loader(state.shareSlug, { offset, limit: SHARED_QUESTION_PAGE_SIZE_V177 });
+          if (generation !== sharedQuestionPagingV177.generation) return null;
+          const rows = Array.isArray(result?.rows) ? result.rows : (Array.isArray(result?.questions) ? result.questions : []);
+          const normalizedRows = normalizeSharedQuestionPageV177(rows, offset, state.shareSlug);
+          const totalValue = Number(result?.totalCount);
+          if (Number.isFinite(totalValue)) sharedQuestionPagingV177.totalCount = Math.max(0, Math.floor(totalValue));
+          if (result?.detailsDeferred === false) sharedQuestionDetailsDeferredV170 = false;
+          const hasMore = result?.hasMore === true || (result?.hasMore == null && rows.length >= SHARED_QUESTION_PAGE_SIZE_V177);
+          const page = { rows: normalizedRows, questions: normalizedRows.map(row => row.question), hasMore };
+          sharedQuestionPagingV177.pages.set(safePageIndex, page);
+          sharedQuestionPagingV177.hasMore = hasMore;
+          rememberSharedQuestionRowsV177(normalizedRows);
+          if (!hasMore && safePageIndex === 0) sharedQuestionPagingV177.allLoaded = true;
+          if (install) installSharedQuestionPageV177(safePageIndex);
+          if (render) renderMenuCardsV16();
+          return page;
+        })().catch(error => {
+          if (generation === sharedQuestionPagingV177.generation) sharedQuestionPagingV177.error = error?.message || "問題範囲を読み込めませんでした。";
+          throw error;
+        }).finally(() => {
+          if (sharedQuestionPagingV177.requests.get(safePageIndex) === request) sharedQuestionPagingV177.requests.delete(safePageIndex);
+          if (generation === sharedQuestionPagingV177.generation) {
+            sharedQuestionPagingV177.loading = sharedQuestionPagingV177.requests.size > 0 || Boolean(sharedQuestionPagingV177.allRequest);
+          }
+        });
+        state.requests.set(safePageIndex, request);
+        return request;
+      }
+
+      async function ensureSharedQuestionIndexAllV177() {
+        const state = sharedQuestionPagingV177;
+        if (!state.shareSlug) return false;
+        if (state.allLoaded) return true;
+        if (state.allRequest) return state.allRequest;
+        const generation = state.generation;
+        state.allRequest = (async () => {
+          let pageIndex = 0;
+          while (generation === sharedQuestionPagingV177.generation) {
+            const page = await ensureSharedQuestionPageV177(pageIndex, { install: false, render: false });
+            if (!page) break;
+            const total = sharedQuestionPagingV177.totalCount;
+            const hasNext = total === null ? page.hasMore : (pageIndex + 1) * SHARED_QUESTION_PAGE_SIZE_V177 < total;
+            if (!hasNext) break;
+            pageIndex += 1;
+          }
+          if (generation !== sharedQuestionPagingV177.generation) return false;
+          const allQuestions = [...sharedQuestionPagingV177.pages.entries()]
+            .sort(([left], [right]) => left - right)
+            .flatMap(([, page]) => page.questions);
+          sharedQuestionPagingV177.allLoaded = true;
+          sharedQuestionPagingV177.hasMore = false;
+          replaceQuestionsKeepingCurrentV177(allQuestions);
+          applyQuestionOverridesV47();
+          normalizeQuestionTitlesV79();
+          renderQuestionOptionsV16();
+          if (document.querySelector(".page")?.classList.contains("menu-active")) renderMenuCardsV16();
+          if (supabaseSessionV46) void hydrateRemoteAnswerHistoryV81();
+          return true;
+        })().catch(error => {
+          if (generation === sharedQuestionPagingV177.generation) {
+            sharedQuestionPagingV177.error = error?.message || "問題一覧を読み込めませんでした。";
+            if (document.querySelector(".page")?.classList.contains("menu-active")) renderMenuCardsV16();
+          }
+          return false;
+        }).finally(() => {
+          if (generation === sharedQuestionPagingV177.generation) sharedQuestionPagingV177.allRequest = null;
+        });
+        return state.allRequest;
+      }
+
+      function scheduleSharedQuestionIndexPreparationV177() {
+        if (!sharedQuestionPagingV177.shareSlug || sharedQuestionPagingV177.allLoaded) return;
+        const needsAll = menuViewV16 === "today" || menuViewV16 === "archive" || (menuViewV16 === "my" && menuRangeV60 === "all");
+        if (needsAll) void ensureSharedQuestionIndexAllV177();
+      }
+
       async function loadSharedCollectionV46() {
         const shareSlug = selectedCollectionSlugV165();
         if (!shareSlug) return false;
         if (!window.NagaSupabase?.configured) throw new Error("共有問題集を開くためのSupabase接続が未設定です。");
-        const result = await window.NagaSupabase.loadSharedCollection(shareSlug);
+        const result = await window.NagaSupabase.loadSharedCollection(shareSlug, { offset: 0, limit: SHARED_QUESTION_PAGE_SIZE_V177 });
         sharedCollectionV46 = { ...result.collection, share_slug: shareSlug };
         sharedQuestionDetailsDeferredV170 = result.detailsDeferred === true;
         sharedQuestionDetailPromisesV170.clear();
         collectionLoadErrorV165 = "";
         rememberCollectionSlugV165(shareSlug);
-        const normalizedQuestions = (result.questions || []).map((row, index) => normalizeSharedQuestionV66(row, index, shareSlug)).filter(Boolean);
-        questionsV16 = normalizedQuestions.map(row => row.question);
-        adoptSharedQuestionRowsV66(normalizedQuestions);
+        resetSharedQuestionPagingV177(shareSlug, result);
+        const normalizedQuestions = adoptSharedQuestionRowsV66(result.questions || []);
+        sharedQuestionPagingV177.pages.set(0, {
+          rows: normalizedQuestions,
+          questions: normalizedQuestions.map(row => row.question),
+          hasMore: result.hasMore === true || (result.hasMore == null && normalizedQuestions.length >= SHARED_QUESTION_PAGE_SIZE_V177)
+        });
+        sharedQuestionPagingV177.hasMore = sharedQuestionPagingV177.pages.get(0).hasMore;
+        sharedQuestionPagingV177.allLoaded = !sharedQuestionPagingV177.hasMore;
+        replaceQuestionsKeepingCurrentV177(normalizedQuestions.map(row => row.question));
+        if (sharedQuestionPagingV177.totalCount === null && !sharedQuestionPagingV177.hasMore) sharedQuestionPagingV177.totalCount = normalizedQuestions.length;
+        menuRangeV60 = sharedQuestionPagingV177.totalCount > SHARED_QUESTION_PAGE_SIZE_V177 ? sharedQuestionRangeKeyV177(0) : "all";
         document.title = `${sharedCollectionV46.title}｜NAGA局面ドリル`;
         return true;
       }
@@ -8100,12 +8547,23 @@
         if (!questionId || typeof window.NagaSupabase?.loadSharedQuestionDetail !== "function") return question;
         const existing = sharedQuestionDetailPromisesV170.get(questionId);
         if (existing) return existing;
-        const promise = window.NagaSupabase.loadSharedQuestionDetail(sharedCollectionV46.share_slug, questionId)
+        const shareSlug = String(sharedCollectionV46.share_slug);
+        const pagingGeneration = sharedQuestionPagingV177.generation;
+        const questionKey = questionKeyV16(question);
+        const promise = window.NagaSupabase.loadSharedQuestionDetail(shareSlug, questionId)
           .then(row => {
-            const normalized = normalizeSharedQuestionV66(row, index, sharedCollectionV46.share_slug);
+            if (shareSlug !== String(sharedCollectionV46?.share_slug || "") || pagingGeneration !== sharedQuestionPagingV177.generation) return question;
+            const normalized = normalizeSharedQuestionV66(row, index, shareSlug);
             if (!normalized?.question) throw new Error("問題の内容を読み込めませんでした。");
             const merged = { ...question, ...normalized.question, __sharedDetailLoaded: true };
-            questionsV16[index] = merged;
+            const currentIndex = questionsV16.findIndex(candidate => questionKeyV16(candidate) === questionKey);
+            if (currentIndex >= 0) questionsV16[currentIndex] = merged;
+            for (const page of sharedQuestionPagingV177.pages.values()) {
+              const pageIndex = page.questions.findIndex(candidate => questionKeyV16(candidate) === questionKey);
+              if (pageIndex < 0) continue;
+              page.questions[pageIndex] = merged;
+              page.rows[pageIndex] = { ...page.rows[pageIndex], question: merged, title: merged.title, number: merged.number };
+            }
             const noticeIndex = sharedQuestionRowsV66.findIndex(item => item.id === questionId);
             if (noticeIndex >= 0) sharedQuestionRowsV66[noticeIndex] = { ...sharedQuestionRowsV66[noticeIndex], ...normalized, question: merged };
             return merged;
@@ -8234,18 +8692,11 @@
           resetMenuRenderLimitV119();
           renderMenuCardsV16();
         }));
-        document.getElementById("menuAdvancedToggle").addEventListener("click", () => {
-          menuAdvancedFiltersOpenV83 = !menuAdvancedFiltersOpenV83;
-          const toggle = document.getElementById("menuAdvancedToggle");
-          const panel = document.getElementById("menuAdvancedFilters");
-          toggle.setAttribute("aria-expanded", String(menuAdvancedFiltersOpenV83));
-          panel.hidden = !menuAdvancedFiltersOpenV83;
-        });
         document.getElementById("menuButton").addEventListener("click", () => showMenuV16("my"));
-        document.getElementById("menuRangeAllButton").addEventListener("click", () => setMenuRangeV137("all"));
+        document.getElementById("menuRangeAllButton").addEventListener("click", () => { void setMenuRangeV137("all"); });
         document.getElementById("menuRangePreviousButton").addEventListener("click", () => moveMenuRangeV137(-1));
         document.getElementById("menuRangeNextButton").addEventListener("click", () => moveMenuRangeV137(1));
-        document.getElementById("menuRangeSelect").addEventListener("change", event => setMenuRangeV137(event.target.value || "all"));
+        document.getElementById("menuRangeSelect").addEventListener("change", event => { void setMenuRangeV137(event.target.value || "all"); });
         document.getElementById("menuFavoritesToggle").addEventListener("click", () => {
           menuFavoritesOnlyV137 = !menuFavoritesOnlyV137;
           resetMenuRenderLimitV119();
@@ -8282,6 +8733,11 @@
         document.getElementById("commentNotificationDialogDone").addEventListener("click", () => document.getElementById("commentNotificationDialog").close());
         document.getElementById("markAllCommentsReadButton").addEventListener("click", markAllCommentsReadV65);
         window.addEventListener("resize", applyDesktopLayoutV70, { passive: true });
+        window.addEventListener("popstate", () => {
+          const nextSlug = collectionSlugFromUrlV165();
+          const currentSlug = String(sharedCollectionV46?.share_slug || "");
+          if (nextSlug && nextSlug !== currentSlug) navigateToCollectionV106(nextSlug, { historyMode: "none" });
+        });
         applyDesktopLayoutV70();
         document.getElementById("commentNotificationList").addEventListener("click", event => {
           const button = event.target.closest("[data-community-notification-question]");

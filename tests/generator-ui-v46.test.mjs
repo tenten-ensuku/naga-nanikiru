@@ -10,7 +10,7 @@ test("renders the v87 scene and half-game generator controls", async () => {
     readFile(indexUrl, "utf8"),
     readFile(generatorUrl, "utf8")
   ]);
-  assert.match(html, /const APP_VERSION = 174/);
+  assert.match(html, /const APP_VERSION = 178/);
   assert.match(html, /function captureGeneratorFormDraftV157\(\)/);
   assert.match(html, /destination: document\.getElementById\("generatorDestinationSelect"\)\?\.value \|\| generatorDestinationV130 \|\| ""/);
   assert.match(html, /function restoreGeneratorFormDraftV157\(draft\)/);
@@ -72,7 +72,7 @@ test("renders the v87 scene and half-game generator controls", async () => {
   assert.match(html, /function menuFilterActiveV80\(\)/);
   assert.match(html, /function menuFilteredQuestionsV80\(\)/);
   assert.match(html, /function hydrateRemoteAnswerHistoryV81\(\)/);
-  assert.match(html, /loadMyAttemptsForCollection\(sharedCollectionV46\.share_slug, ANSWER_HISTORY_LIMIT_V135\)/);
+  assert.match(html, /loadMyAttemptsForCollection\(collectionSlug, ANSWER_HISTORY_LIMIT_V135\)/);
   assert.match(html, /const orderedCandidates = menuOrderV92 === "reverse"/);
   assert.match(html, /menuOrderV92 === "random"/);
   assert.match(html, /randomizeQuestionsByAnswerCountV93\(candidates\)/);
@@ -87,16 +87,19 @@ test("renders the v87 scene and half-game generator controls", async () => {
   assert.match(html, /id="menuFavoritesToggle"/);
   assert.match(html, /id="menuArchiveViewButton"/);
   assert.doesNotMatch(html, /id="menuRangeTabs"/);
-  assert.match(html, /id="menuRangeHeading">問題範囲/);
+  assert.match(html, /id="menuRangeHeading">[\s\S]*問題範囲/);
   assert.match(html, /id="menuTypeFilters"/);
   assert.match(html, /data-menu-type="call"/);
-  assert.match(html, /id="menuAdvancedToggle"/);
   assert.match(html, /id="menuAdvancedFilters"/);
-  assert.match(html, /<legend>回答状態<\/legend>/);
+  assert.match(html, /<legend>.*フィルター.*複数選択できます.*回答状態.*<\/legend>/s);
   assert.doesNotMatch(html, /data-menu-status="due"/);
   assert.match(html, /data-menu-status="unanswered"/);
-  assert.match(html, /data-menu-status="weak"/);
-  assert.match(html, /data-menu-status="mastered"/);
+  assert.match(html, /data-menu-status="latest-x"><span class="menu-status-filter-label">直近 <span class="menu-status-filter-mark is-miss">×/);
+  assert.match(html, /data-menu-status="latest-triangle"><span class="menu-status-filter-label">直近 <span class="menu-status-filter-mark is-review">△/);
+  assert.match(html, /data-menu-status="latest-circle"><span class="menu-status-filter-label">直近 <span class="menu-status-filter-mark is-safe">〇/);
+  assert.match(html, /data-menu-status="latest-double-circle"><span class="menu-status-filter-label">直近 <span class="menu-status-filter-mark is-excellent">◎/);
+  assert.doesNotMatch(html, /data-menu-status="weak"/);
+  assert.doesNotMatch(html, /data-menu-status="mastered"/);
   assert.doesNotMatch(html, /id="menuStatusFilter"/);
   assert.match(html, /function renderMenuTypeFiltersV83\(\)/);
   assert.doesNotMatch(html, /id="menuSearch"/);

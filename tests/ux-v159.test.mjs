@@ -13,9 +13,9 @@ test("V168 exposes the daily-learning shell and synchronized release assets", as
     readFile(identityUrl, "utf8"),
   ]);
 
-  assert.match(html, /const APP_VERSION = 174;/);
-  assert.match(identity, /APP_VERSION = 174/);
-  assert.match(html, /ux-v159\.css\?v=174/);
+  assert.match(html, /const APP_VERSION = 178;/);
+  assert.match(identity, /APP_VERSION = 178/);
+  assert.match(html, /ux-v159\.css\?v=178/);
   assert.match(html, /data-menu-view="today"/);
   assert.match(html, /今日の10問/);
   assert.match(html, /function renderTodayViewV159\(/);
@@ -89,14 +89,16 @@ test("V173 uses the archive-tray icon in the archive-view control", async () => 
   assert.match(css, /\.menu-archive-view-button \.menu-archive-icon svg[\s\S]*stroke: currentColor/);
 });
 
-test("V174 aligns filter operations and status controls into labeled rows", async () => {
+test("V176 presents range, genre, and answer-state filters in one scan-friendly panel", async () => {
   const [html, css] = await Promise.all([readFile(indexUrl, "utf8"), readFile(cssUrl, "utf8")]);
-  assert.match(html, /<section class="menu-filter-row menu-attribute-row" aria-labelledby="menuAttributeHeading">[\s\S]*<h3 class="menu-filter-heading" id="menuAttributeHeading">フィルター操作<\/h3>[\s\S]*class="menu-attribute-buttons"[\s\S]*id="menuArchiveViewButton"/);
-  assert.match(css, /V174: align the menu filters as one labeled control panel/);
-  assert.match(css, /\.page\.menu-active \.menu-filter-row \{[\s\S]*grid-template-columns: var\(--menu-filter-label-width\) minmax\(0, 1fr\) auto;[\s\S]*column-gap: 18px/);
-  assert.match(css, /\.page\.menu-active \.menu-attribute-buttons \{[\s\S]*grid-column: 2;[\s\S]*align-items: center/);
-  assert.match(css, /\.page\.menu-active \.menu-archive-view-button \{[\s\S]*grid-column: 3;[\s\S]*justify-self: end/);
+  assert.match(html, /class="menu-filter-heading-icon"[\s\S]*問題範囲/);
+  assert.match(html, /class="menu-range-inline-actions"[\s\S]*id="menuFavoritesToggle"[\s\S]*id="menuArchiveViewButton"/);
+  assert.match(html, /class="menu-filters menu-filters-advanced menu-status-row"[^>]*id="menuAdvancedFilters"/);
+  assert.doesNotMatch(html, /id="menuAdvancedToggle"/);
+  assert.match(css, /V176: present range, genre, and answer-state filters as one scan-friendly panel/);
+  assert.match(css, /\.page\.menu-active \.menu-range-inline-actions \{[\s\S]*grid-column: 4;[\s\S]*display: flex/);
   assert.match(css, /\.page\.menu-active \.menu-status-filter-group \{[\s\S]*grid-template-columns: var\(--menu-filter-label-width\) minmax\(0, 1fr\);/);
+  assert.match(css, /\.menu-status-filter-mark\.is-miss \{ color: var\(--ux-coral\); \}/);
 });
 
 test("V163 keeps the basic-sequence collection in the South-seat viewpoint", async () => {
@@ -174,7 +176,7 @@ test("V168 scopes today's resume session to the collection and repairs legacy qu
   assert.match(html, /function sessionBelongsToCurrentCollectionV167\(session\)/);
   assert.match(html, /session\.collectionSlug = currentCollectionScopeKeyV167\(\);/);
 
-  const resumeBody = html.match(/function startSessionV44\(mode, explicitQuestions = null\) \{[\s\S]*?\n      \}/)?.[0] || "";
+  const resumeBody = html.match(/function startSessionV44\(mode, explicitQuestions = null[\s\S]*?function startRangeSessionV61/)?.[0] || "";
   assert.match(resumeBody, /if \(mode === "resume"\)/);
   assert.match(resumeBody, /sessionQuestionIndexV167\(key\)/);
   assert.match(resumeBody, /current\.questionKeys = \[\.\.\.new Set\(resolvedEntries\.map/);

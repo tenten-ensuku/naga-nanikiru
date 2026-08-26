@@ -134,45 +134,106 @@ async function updateProfileDisplayName(displayName: string) {
   return String(data?.display_name || normalized);
 }
 
-async function loadSharedCollection(shareSlug: string) {
+type SharedQuestionPageOptions = {
+  offset?: number;
+  limit?: number;
+};
+
+type SharedQuestionPage = {
+  rows: unknown[];
+  detailsDeferred: boolean;
+  hasMore: boolean;
+  totalCount: number | null;
+  offset: number;
+  limit: number;
+};
+
+function isMissingRpc(error: unknown, functionName: string) {
+  const message = String((error as { message?: unknown })?.message || error || "").toLowerCase();
+  const normalizedName = functionName.toLowerCase();
+  return message.includes(normalizedName)
+    && /(does not exist|not found|could not find|schema cache|undefined)/i.test(message);
+}
+
+function normalizePageNumber(value: unknown, fallback: number, maximum: number) {
+  const parsed = Number(value);
+  if (!Number.isFinite(parsed)) return fallback;
+  return Math.min(maximum, Math.max(0, Math.floor(parsed)));
+}
+
+async function loadSharedQuestionIndexPage(shareSlug: string, options: SharedQuestionPageOptions = {}): Promise<SharedQuestionPage> {
+  const supabase = requireClient();
+  const offset = normalizePageNumber(options.offset, 0, Number.MAX_SAFE_INTEGER);
+  const limit = Math.min(100, Math.max(1, Math.floor(Number(options.limit) || 100)));
+  const params = { p_share_slug: shareSlug, p_offset: offset, p_limit: limit };
+
+  // 最新DBでは一覧専用RPCから総件数も同時に受け取り、100件単位の範囲を確定する。
+  const indexedPage = await supabase.rpc("get_shared_question_index_page", params);
+  if (!indexedPage.error) {
+    const rows = Array.isArray(indexedPage.data) ? indexedPage.data : [];
+    const firstTotal = rows[0] && typeof rows[0] === "object" ? Number((rows[0] as Record<string, unknown>).total_count) : NaN;
+    const totalCount = Number.isFinite(firstTotal) ? Math.max(0, Math.floor(firstTotal)) : null;
+    return {
+      rows,
+      detailsDeferred: true,
+      hasMore: totalCount === null ? rows.length === limit : offset + rows.length < totalCount,
+      totalCount,
+      offset,
+      limit,
+    };
+  }
+  if (!isMissingRpc(indexedPage.error, "get_shared_question_index_page")) throw indexedPage.error;
+
+  // 直近の公開版DBには、総件数なしの軽量インデックスRPCが存在する。
+  const legacyIndexPage = await supabase.rpc("get_shared_question_index", params);
+  if (!legacyIndexPage.error) {
+    const rows = Array.isArray(legacyIndexPage.data) ? legacyIndexPage.data : [];
+    return {
+      rows,
+      detailsDeferred: true,
+      hasMore: rows.length === limit,
+      totalCount: null,
+      offset,
+      limit,
+    };
+  }
+  if (!isMissingRpc(legacyIndexPage.error, "get_shared_question_index")) throw legacyIndexPage.error;
+
+  // 古い公開版DBへの互換経路。ページ単位で取得するため、旧版でも全件待ちは発生させない。
+  const fallbackPage = await supabase.rpc("get_shared_questions_page", params);
+  if (fallbackPage.error) throw fallbackPage.error;
+  const rows = Array.isArray(fallbackPage.data) ? fallbackPage.data : [];
+  return {
+    rows,
+    detailsDeferred: false,
+    hasMore: rows.length === limit,
+    totalCount: null,
+    offset,
+    limit,
+  };
+}
+
+async function loadSharedCollection(shareSlug: string, options: SharedQuestionPageOptions = {}) {
   const supabase = requireClient();
   const [collection, questions] = await Promise.all([
     supabase.rpc("get_shared_collection", { p_share_slug: shareSlug }).maybeSingle(),
-    (async () => {
-      const pageSize = 500;
-      const allQuestions: unknown[] = [];
-      for (let offset = 0; ; offset += pageSize) {
-        const page = await supabase.rpc("get_shared_question_index", {
-          p_share_slug: shareSlug,
-          p_offset: offset,
-          p_limit: pageSize,
-        });
-        if (page.error) throw page.error;
-        const rows = page.data ?? [];
-        allQuestions.push(...rows);
-        if (rows.length < pageSize) return { rows: allQuestions, detailsDeferred: true };
-      }
-    })().catch(async (error) => {
-      // 旧公開版のDBに軽量RPCがまだない場合だけ従来処理へ戻す。
-      if (!String(error?.message || error).toLowerCase().includes("get_shared_question_index")) throw error;
-      const pageSize = 1000;
-      const allQuestions: unknown[] = [];
-      for (let offset = 0; ; offset += pageSize) {
-        const page = await supabase.rpc("get_shared_questions_page", {
-          p_share_slug: shareSlug,
-          p_offset: offset,
-          p_limit: pageSize,
-        });
-        if (page.error) throw page.error;
-        const rows = page.data ?? [];
-        allQuestions.push(...rows);
-        if (rows.length < pageSize) return { rows: allQuestions, detailsDeferred: false };
-      }
-    }),
+    loadSharedQuestionIndexPage(shareSlug, options),
   ]);
   if (collection.error) throw collection.error;
   if (!collection.data) throw new Error("指定された問題集が見つかりません。");
-  return { collection: collection.data, questions: questions.rows, detailsDeferred: questions.detailsDeferred };
+  return {
+    collection: collection.data,
+    questions: questions.rows,
+    detailsDeferred: questions.detailsDeferred,
+    hasMore: questions.hasMore,
+    totalCount: questions.totalCount,
+    pageOffset: questions.offset,
+    pageSize: questions.limit,
+  };
+}
+
+async function loadSharedQuestionPage(shareSlug: string, options: SharedQuestionPageOptions = {}) {
+  return loadSharedQuestionIndexPage(shareSlug, options);
 }
 
 async function loadSharedQuestionDetail(shareSlug: string, questionId: string) {
@@ -659,6 +720,7 @@ function buildApi() {
     signOut,
     updateProfileDisplayName,
     loadSharedCollection,
+    loadSharedQuestionPage,
     loadSharedQuestionDetail,
     loadMyCollections,
     loadCollectionDirectory,

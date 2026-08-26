@@ -241,6 +241,43 @@ test("defines weak questions by the latest answer being exactly X", async () => 
   assert.equal(api.analytics({ questions, state, now: NOW }).masteredCount, 3);
 });
 
+test("filters by each exact latest answer mark without treating adjacent marks as the same", async () => {
+  const api = await loadApi();
+  const questions = [
+    { id: "unanswered", decisionType: "discard" },
+    { id: "latest-x", decisionType: "discard" },
+    { id: "latest-triangle", decisionType: "discard" },
+    { id: "latest-circle", decisionType: "discard" },
+    { id: "latest-excellent", decisionType: "discard" },
+    { id: "old-x-now-circle", decisionType: "discard" },
+    { id: "old-circle-now-excellent", decisionType: "discard" },
+    { id: "legacy-excellent", decisionType: "discard" }
+  ];
+  const state = {
+    answerHistory: [
+      { questionKey: "latest-x", scoreMark: MARK_X, answeredAt: "2026-08-03T00:00:00Z" },
+      { questionKey: "latest-triangle", scoreMark: MARK_TRIANGLE, answeredAt: "2026-08-03T00:01:00Z" },
+      { questionKey: "latest-circle", scoreMark: MARK_CIRCLE, answeredAt: "2026-08-03T00:02:00Z" },
+      { questionKey: "latest-excellent", scoreMark: MARK_MASTERED, answeredAt: "2026-08-03T00:03:00Z" },
+      { questionKey: "old-x-now-circle", scoreMark: MARK_X, answeredAt: "2026-08-03T00:04:00Z" },
+      { questionKey: "old-x-now-circle", scoreMark: MARK_CIRCLE, answeredAt: "2026-08-03T00:05:00Z" },
+      { questionKey: "old-circle-now-excellent", scoreMark: MARK_CIRCLE, answeredAt: "2026-08-03T00:06:00Z" },
+      { questionKey: "old-circle-now-excellent", scoreMark: MARK_MASTERED, answeredAt: "2026-08-03T00:07:00Z" },
+      { questionKey: "legacy-excellent", scoreMark: LEGACY_MARK_MASTERED, answeredAt: "2026-08-03T00:08:00Z" }
+    ]
+  };
+  assert.equal(api.latestAnswerMark(state, "latest-x"), MARK_X);
+  assert.equal(api.latestAnswerMark(state, "latest-triangle"), MARK_TRIANGLE);
+  assert.equal(api.latestAnswerMark(state, "latest-circle"), MARK_CIRCLE);
+  assert.equal(api.latestAnswerMark(state, "latest-excellent"), MARK_MASTERED);
+  assert.equal(api.latestAnswerMark(state, "legacy-excellent"), MARK_MASTERED);
+  assert.deepEqual(hostValue(api.filterQuestions({ questions, state, status: "unanswered" }).map(api.questionKey)), ["unanswered"]);
+  assert.deepEqual(hostValue(api.filterQuestions({ questions, state, status: "latest-x" }).map(api.questionKey)), ["latest-x"]);
+  assert.deepEqual(hostValue(api.filterQuestions({ questions, state, status: "latest-triangle" }).map(api.questionKey)), ["latest-triangle"]);
+  assert.deepEqual(hostValue(api.filterQuestions({ questions, state, status: "latest-circle" }).map(api.questionKey)), ["latest-circle", "old-x-now-circle"]);
+  assert.deepEqual(hostValue(api.filterQuestions({ questions, state, status: "latest-double-circle" }).map(api.questionKey)), ["latest-excellent", "old-circle-now-excellent", "legacy-excellent"]);
+});
+
 test("filters stably by view, query, status, and question type", async () => {
   const api = await loadApi();
   const questions = [

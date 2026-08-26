@@ -6,7 +6,7 @@ const htmlUrl = new URL("../public/index.html", import.meta.url);
 
 test("V131 scopes personal archive and favorite state by user and collection", async () => {
   const html = await readFile(htmlUrl, "utf8");
-  assert.match(html, /const APP_VERSION = 174/);
+  assert.match(html, /const APP_VERSION = 178/);
   assert.match(html, /function personalCollectionScopeKeyV131\(/);
   assert.match(html, /supabaseSessionV46\?\.user\?\.id/);
   assert.match(html, /sharedCollectionV46\?\.share_slug/);
@@ -61,6 +61,6 @@ test("V138 compacts the collection context without removing existing controls", 
   assert.match(html, /id="collectionDirectorySelect"/);
   assert.match(html, /id="collectionCreateOpenButton"/);
   assert.doesNotMatch(html, /id="menuViewNote"/);
-  assert.match(html, /<legend>回答状態<\/legend>/);
+  assert.match(html, /<fieldset class="menu-status-filter-group">[\s\S]*<span class="sr-only">回答状態<\/span>[\s\S]*<\/fieldset>/);
   assert.doesNotMatch(html, /回答状態（複数選択可）/);
 });
