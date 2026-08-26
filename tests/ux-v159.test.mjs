@@ -13,9 +13,9 @@ test("V168 exposes the daily-learning shell and synchronized release assets", as
     readFile(identityUrl, "utf8"),
   ]);
 
-  assert.match(html, /const APP_VERSION = 178;/);
-  assert.match(identity, /APP_VERSION = 178/);
-  assert.match(html, /ux-v159\.css\?v=178/);
+  assert.match(html, /const APP_VERSION = 179;/);
+  assert.match(identity, /APP_VERSION = 179/);
+  assert.match(html, /ux-v159\.css\?v=179/);
   assert.match(html, /data-menu-view="today"/);
   assert.match(html, /今日の10問/);
   assert.match(html, /function renderTodayViewV159\(/);

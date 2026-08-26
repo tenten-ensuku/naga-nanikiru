@@ -317,7 +317,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "002",
@@ -605,7 +605,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "003",
@@ -887,7 +887,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "004",
@@ -1193,7 +1193,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "005",
@@ -1475,7 +1475,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "006",
@@ -1788,7 +1788,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "007",
@@ -2096,7 +2096,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "008",
@@ -2440,7 +2440,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "009",
@@ -2741,7 +2741,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "010",
@@ -3132,7 +3132,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "011",
@@ -3440,7 +3440,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "012",
@@ -3727,7 +3727,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "013",
@@ -4027,7 +4027,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "014",
@@ -4323,7 +4323,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "015",
@@ -4652,7 +4652,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "016",
@@ -4955,7 +4955,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "017",
@@ -5237,7 +5237,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "018",
@@ -5552,7 +5552,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "019",
@@ -5839,7 +5839,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "020",
@@ -6140,7 +6140,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "021",
@@ -6438,7 +6438,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "022",
@@ -6720,7 +6720,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "023",
@@ -7009,7 +7009,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "024",
@@ -7289,7 +7289,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "025",
@@ -7576,7 +7576,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "026",
@@ -7858,7 +7858,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "027",
@@ -8160,7 +8160,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "028",
@@ -8475,7 +8475,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "029",
@@ -8764,7 +8764,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "030",
@@ -9046,7 +9046,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "031",
@@ -9347,7 +9347,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "032",
@@ -9653,7 +9653,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "033",
@@ -9971,7 +9971,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "034",
@@ -10246,7 +10246,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "035",
@@ -10547,7 +10547,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "036",
@@ -10836,7 +10836,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "037",
@@ -11118,7 +11118,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "038",
@@ -11406,7 +11406,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "039",
@@ -11693,7 +11693,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "040",
@@ -11994,7 +11994,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "041",
@@ -12281,7 +12281,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "042",
@@ -12563,7 +12563,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "043",
@@ -12845,7 +12845,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "044",
@@ -13127,7 +13127,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "045",
@@ -13409,7 +13409,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "046",
@@ -13696,7 +13696,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "047",
@@ -14033,7 +14033,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "048",
@@ -14321,7 +14321,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "049",
@@ -14615,7 +14615,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "050",
@@ -14921,7 +14921,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "051",
@@ -15215,7 +15215,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "052",
@@ -15497,7 +15497,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "053",
@@ -15779,7 +15779,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "054",
@@ -16068,7 +16068,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "055",
@@ -16357,7 +16357,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "056",
@@ -16639,7 +16639,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "057",
@@ -16952,7 +16952,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "058",
@@ -17196,7 +17196,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "059",
@@ -17444,7 +17444,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "060",
@@ -17576,7 +17576,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "061",
@@ -17835,7 +17835,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "062",
@@ -18081,7 +18081,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "063",
@@ -18363,7 +18363,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "064",
@@ -18554,7 +18554,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "065",
@@ -18945,7 +18945,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "066",
@@ -19311,7 +19311,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "067",
@@ -19612,7 +19612,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "068",
@@ -19908,7 +19908,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "069",
@@ -20106,7 +20106,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "070",
@@ -20454,7 +20454,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "071",
@@ -20753,7 +20753,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "072",
@@ -21092,7 +21092,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "073",
@@ -21400,7 +21400,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "074",
@@ -21694,7 +21694,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "075",
@@ -22000,7 +22000,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "076",
@@ -22294,7 +22294,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "077",
@@ -22639,7 +22639,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "078",
@@ -22954,7 +22954,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "079",
@@ -23309,7 +23309,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "080",
@@ -23603,7 +23603,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "081",
@@ -23902,7 +23902,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "082",
@@ -24222,7 +24222,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "083",
@@ -24541,7 +24541,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "084",
@@ -24946,7 +24946,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "085",
@@ -25350,7 +25350,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "086",
@@ -25742,7 +25742,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "087",
@@ -26126,7 +26126,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "088",
@@ -26525,7 +26525,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "089",
@@ -26903,7 +26903,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "090",
@@ -27288,7 +27288,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "091",
@@ -27697,7 +27697,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "092",
@@ -28101,7 +28101,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "093",
@@ -28504,7 +28504,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "094",
@@ -28829,7 +28829,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "095",
@@ -29123,7 +29123,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "096",
@@ -29417,7 +29417,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "097",
@@ -29749,7 +29749,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "098",
@@ -30043,7 +30043,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "099",
@@ -30337,7 +30337,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "100",
@@ -30722,7 +30722,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "101",
@@ -30908,7 +30908,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "102",
@@ -31094,7 +31094,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "103",
@@ -31472,7 +31472,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "104",
@@ -31857,7 +31857,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "105",
@@ -32254,7 +32254,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "106",
@@ -32632,7 +32632,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "107",
@@ -32818,7 +32818,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "108",
@@ -33203,7 +33203,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "109",
@@ -33614,7 +33614,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "110",
@@ -33920,7 +33920,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "111",
@@ -34240,7 +34240,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "112",
@@ -34570,7 +34570,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "113",
@@ -34916,7 +34916,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "114",
@@ -35229,7 +35229,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "115",
@@ -35542,7 +35542,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "116",
@@ -35874,7 +35874,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "117",
@@ -36168,7 +36168,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "118",
@@ -36462,7 +36462,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "119",
@@ -36820,7 +36820,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "120",
@@ -37102,7 +37102,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "121",
@@ -37396,7 +37396,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "122",
@@ -37690,7 +37690,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "123",
@@ -37989,7 +37989,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "124",
@@ -38294,7 +38294,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "125",
@@ -38593,7 +38593,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "126",
@@ -38794,7 +38794,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "127",
@@ -39109,7 +39109,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "128",
@@ -39415,7 +39415,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "129",
@@ -39714,7 +39714,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "130",
@@ -40025,7 +40025,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "131",
@@ -40364,7 +40364,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "132",
@@ -40682,7 +40682,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "133",
@@ -40983,7 +40983,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "134",
@@ -41181,7 +41181,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "135",
@@ -41504,7 +41504,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "136",
@@ -41817,7 +41817,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "137",
@@ -42130,7 +42130,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "138",
@@ -42443,7 +42443,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "139",
@@ -42596,7 +42596,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "140",
@@ -42974,7 +42974,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "141",
@@ -43371,7 +43371,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "142",
@@ -43756,7 +43756,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "143",
@@ -44174,7 +44174,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "144",
@@ -44515,7 +44515,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "145",
@@ -44835,7 +44835,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "146",
@@ -45160,7 +45160,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "147",
@@ -45470,7 +45470,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "148",
@@ -45802,7 +45802,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "149",
@@ -46108,7 +46108,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "150",
@@ -46428,7 +46428,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "151",
@@ -46736,7 +46736,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "152",
@@ -47030,7 +47030,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "153",
@@ -47326,7 +47326,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "154",
@@ -47620,7 +47620,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "155",
@@ -47926,7 +47926,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "156",
@@ -48234,7 +48234,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "157",
@@ -48568,7 +48568,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "158",
@@ -48881,7 +48881,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "159",
@@ -49175,7 +49175,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "160",
@@ -49488,7 +49488,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "161",
@@ -49808,7 +49808,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "162",
@@ -50109,7 +50109,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "163",
@@ -50283,7 +50283,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "164",
@@ -50584,7 +50584,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "165",
@@ -50892,7 +50892,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "166",
@@ -51213,7 +51213,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "167",
@@ -51545,7 +51545,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "168",
@@ -51834,7 +51834,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "169",
@@ -52147,7 +52147,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "170",
@@ -52300,7 +52300,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "171",
@@ -52467,7 +52467,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "172",
@@ -52780,7 +52780,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "173",
@@ -52957,7 +52957,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "174",
@@ -53264,7 +53264,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "175",
@@ -53558,7 +53558,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "176",
@@ -53852,7 +53852,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "177",
@@ -54146,7 +54146,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "178",
@@ -54455,7 +54455,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "179",
@@ -54758,7 +54758,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "180",
@@ -55082,7 +55082,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "181",
@@ -55235,7 +55235,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "182",
@@ -55529,7 +55529,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "183",
@@ -55835,7 +55835,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "184",
@@ -56146,7 +56146,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "185",
@@ -56454,7 +56454,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "186",
@@ -56755,7 +56755,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "187",
@@ -57049,7 +57049,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "188",
@@ -57343,7 +57343,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "189",
@@ -57642,7 +57642,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "190",
@@ -57924,7 +57924,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "191",
@@ -58206,7 +58206,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "192",
@@ -58528,7 +58528,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "193",
@@ -58693,7 +58693,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "194",
@@ -59000,7 +59000,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "195",
@@ -59299,7 +59299,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "196",
@@ -59624,7 +59624,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "197",
@@ -59925,7 +59925,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "198",
@@ -60231,7 +60231,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "199",
@@ -60558,7 +60558,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "200",
@@ -60864,7 +60864,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "201",
@@ -61036,7 +61036,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "202",
@@ -61382,7 +61382,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "203",
@@ -61688,7 +61688,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "204",
@@ -61994,7 +61994,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "205",
@@ -62338,7 +62338,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "206",
@@ -62646,7 +62646,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "207",
@@ -62959,7 +62959,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "208",
@@ -63253,7 +63253,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "209",
@@ -63552,7 +63552,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "210",
@@ -63872,7 +63872,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "211",
@@ -64180,7 +64180,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "212",
@@ -64481,7 +64481,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "213",
@@ -64654,7 +64654,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "214",
@@ -64819,7 +64819,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "215",
@@ -65130,7 +65130,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "216",
@@ -65459,7 +65459,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "217",
@@ -65760,7 +65760,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "218",
@@ -66049,7 +66049,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "219",
@@ -66369,7 +66369,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "220",
@@ -66557,7 +66557,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "221",
@@ -66871,7 +66871,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "222",
@@ -67179,7 +67179,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "223",
@@ -67475,7 +67475,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "224",
@@ -67799,7 +67799,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "225",
@@ -68119,7 +68119,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "226",
@@ -68408,7 +68408,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "227",
@@ -68721,7 +68721,7 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   },
   {
     "id": "228",
@@ -69086,6 +69086,6 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v6-first-http-url-token-preserve-body"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
   }
 ]

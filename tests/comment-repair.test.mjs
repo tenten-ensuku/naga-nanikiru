@@ -60,3 +60,17 @@ test("Nima display cleanup removes the two scene images and only the first NAGA 
   assert.match(result[1].content, /report_id=second/);
   assert.equal(result[1].attachments[0].src, "question-images/comments/later.webp");
 });
+
+test("現行の作成者限定転送済みコメントは画面側でURLや画像を再削除しない", async () => {
+  const { sanitizeNimaCommentsV105 } = await nimaCommentSanitizer();
+  const result = sanitizeNimaCommentsV105([
+    {
+      author: "てんてん",
+      content: "確認用 https://docs.example.test/lesson/95",
+      attachments: [{ src: "question-images/comments/tenten.webp" }],
+    },
+  ], "v7-starter-author-first-naga-url");
+  assert.equal(result.length, 1);
+  assert.match(result[0].content, /https:\/\/docs\.example\.test\/lesson\/95/);
+  assert.equal(result[0].attachments.length, 1);
+});

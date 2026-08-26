@@ -5,7 +5,7 @@ import test from "node:test";
 const htmlUrl = new URL("../public/index.html", import.meta.url);
 const clientUrl = new URL("../client/supabase-sync.ts", import.meta.url);
 const migrationUrl = new URL("../supabase/migrations/20260825222328_shared_question_index_detail_loading.sql", import.meta.url);
-const pagingMigrationUrl = new URL("../supabase/migrations/20260826100718_shared_question_index_page_100.sql", import.meta.url);
+const pagingMigrationUrl = new URL("../supabase/migrations/20260826110711_shared_question_index_page_100.sql", import.meta.url);
 
 test("V170 は問題集切り替え時に軽量インデックスだけを読み込む", async () => {
   const [html, client, migration, pagingMigration] = await Promise.all([
@@ -15,7 +15,7 @@ test("V170 は問題集切り替え時に軽量インデックスだけを読み
     readFile(pagingMigrationUrl, "utf8"),
   ]);
 
-  assert.match(html, /const APP_VERSION = 178;/);
+  assert.match(html, /const APP_VERSION = 179;/);
   assert.match(html, /sharedQuestionDetailsDeferredV170/);
   assert.match(html, /ensureSharedQuestionDetailV170/);
   assert.match(html, /SHARED_QUESTION_PAGE_SIZE_V177 = 100/);

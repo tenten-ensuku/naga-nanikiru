@@ -56,7 +56,7 @@ test("V172 renders an honest disabled today card and the celebration dialog", as
   const html = await readFile(htmlUrl, "utf8");
   const todayView = html.match(/function renderTodayViewV159\([\s\S]*?\n      function renderMenuCardsV16\(/)?.[0] || "";
 
-  assert.match(html, /const APP_VERSION = 178;/);
+  assert.match(html, /const APP_VERSION = 179;/);
   assert.match(html, /id="learningCelebrationDialog"/);
   assert.match(html, /1周達成おめでとう！/);
   assert.match(html, /完全習得おめでとう！/);

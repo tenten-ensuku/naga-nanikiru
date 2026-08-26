@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=178">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=178">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=178">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=179">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=179">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=179">
   <title>NAGA局面ドリル｜何切る復習問題集</title>
   <meta name="description" content="NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリ。">
   <meta name="theme-color" content="#06131e">
@@ -2152,7 +2152,7 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=178">
+  <link rel="stylesheet" href="ux-v159.css?v=179">
 </head>
 <body>
   <main class="page">
@@ -2450,13 +2450,13 @@
   </dialog>
 
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=178"></script>
-  <script src="drill-ux-v44.js?v=178"></script>
+  <script src="supabase-sync-v48.js?v=179"></script>
+  <script src="drill-ux-v44.js?v=179"></script>
   <script src="naga-generator-v44.js"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 178;
+    const APP_VERSION = 179;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -3804,7 +3804,9 @@
         payload = normalizePierreImmediatePonQuestionV146(payload, number, shareSlug);
         payload.image ||= payload.images?.off;
         delete payload.images;
-        if (isNimaCollectionV105(shareSlug)) payload.comments = sanitizeNimaCommentsV105(payload.comments);
+        if (isNimaCollectionV105(shareSlug)) {
+          payload.comments = sanitizeNimaCommentsV105(payload.comments, payload.commentTransferRuleVersion);
+        }
         const id = String(row?.id || row?.question_id || payload.serverQuestionId || "");
         if (!id) return null;
         const title = normalizeQuestionTitleV79(row?.title || payload.title, number);
@@ -3854,10 +3856,24 @@
         return bodyBefore + bodyAfter;
       }
 
-      function sanitizeNimaCommentsV105(comments) {
+      function sanitizeNimaCommentsV105(comments, transferRuleVersion = "") {
+        const hasAuthorScopedTransferRule = String(transferRuleVersion || "").startsWith("v7-starter-author-first-naga-url");
+        const sourceComments = Array.isArray(comments) ? comments : [];
+        if (hasAuthorScopedTransferRule) {
+          // 現行の生成・修復処理で既に、スレッド作成者の最初の画像と
+          // 最初のNAGA URLだけを除外済み。ここで再度URLや画像を消すと、
+          // てんてん等の後続投稿まで欠落するため、本文の整形だけ行う。
+          return sourceComments
+            .map(message => ({
+              ...message,
+              content: String(message?.content || "").replace(/\n{3,}/g, "\n\n"),
+              attachments: Array.isArray(message?.attachments) ? message.attachments : [],
+            }))
+            .filter(message => message.content || message.attachments?.length || message.embeds?.length);
+        }
         let firstHttpUrlDropped = false;
         let sceneImageCount = 0;
-        return (Array.isArray(comments) ? comments : [])
+        return sourceComments
           .map(message => {
             let content = String(message?.content || "");
             if (!firstHttpUrlDropped && /https?:\/\/[^\s]+/i.test(content)) {
