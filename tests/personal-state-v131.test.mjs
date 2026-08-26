@@ -6,7 +6,7 @@ const htmlUrl = new URL("../public/index.html", import.meta.url);
 
 test("V131 scopes personal archive and favorite state by user and collection", async () => {
   const html = await readFile(htmlUrl, "utf8");
-  assert.match(html, /const APP_VERSION = 172/);
+  assert.match(html, /const APP_VERSION = 174/);
   assert.match(html, /function personalCollectionScopeKeyV131\(/);
   assert.match(html, /supabaseSessionV46\?\.user\?\.id/);
   assert.match(html, /sharedCollectionV46\?\.share_slug/);
@@ -50,7 +50,7 @@ test("V138 keeps archive as an independent view while range remains numeric", as
   assert.match(html, /const options = \[\{ key: "all", label: "すべて" \}\]/);
   assert.match(html, /function menuNumericRangeOptionsV137\(\)/);
   assert.match(html, /function renderMenuRangeControlsV137\(\)/);
-  assert.match(html, /archiveButton\.textContent = archiveActive \? "問題一覧に戻る" : "📦 アーカイブを見る"/);
+  assert.match(html, /archiveButton\.innerHTML = archiveActive \? "問題一覧に戻る" : `\$\{menuArchiveIconV109\(\)\}<span>アーカイブを見る<\/span>`/);
   assert.match(html, /menuViewV16 === "archive"/);
 });
 

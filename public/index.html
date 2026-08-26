@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=172">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=172">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=172">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=174">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=174">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=174">
   <title>NAGA局面ドリル｜何切る復習問題集</title>
   <meta name="description" content="NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリ。">
   <meta name="theme-color" content="#06131e">
@@ -2152,7 +2152,7 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=172">
+  <link rel="stylesheet" href="ux-v159.css?v=174">
 </head>
 <body>
   <main class="page">
@@ -2236,12 +2236,13 @@
               <button class="menu-genre-tab" type="button" data-menu-type="call" aria-pressed="false" title="副露判断だけを表示">副露判断</button>
             </div>
           </section>
-          <section class="menu-filter-row menu-attribute-row" aria-label="その他の絞り込み">
+          <section class="menu-filter-row menu-attribute-row" aria-labelledby="menuAttributeHeading">
+            <h3 class="menu-filter-heading" id="menuAttributeHeading">フィルター操作</h3>
             <div class="menu-attribute-buttons">
               <button class="menu-attribute-toggle" id="menuFavoritesToggle" type="button" aria-pressed="false" title="お気に入りに登録した問題だけを表示します">☆ お気に入りのみ</button>
               <button class="menu-filter-advanced-toggle" id="menuAdvancedToggle" type="button" aria-expanded="false" aria-controls="menuAdvancedFilters" title="未回答・×△あり・習得済みで絞り込む">詳細条件</button>
             </div>
-            <button class="menu-archive-view-button" id="menuArchiveViewButton" type="button" title="完全正解して退避した問題を表示します">📦 アーカイブを見る</button>
+            <button class="menu-archive-view-button" id="menuArchiveViewButton" type="button" title="完全正解して退避した問題を表示します"><span class="menu-archive-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M4 7.5h16v12H4zM3 4h18v3.5H3zM9 12h6"></path></svg></span><span>アーカイブを見る</span></button>
           </section>
            <div class="menu-filters menu-filters-advanced" id="menuAdvancedFilters" hidden>
             <fieldset class="menu-status-filter-group">
@@ -2449,13 +2450,13 @@
   </dialog>
 
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=172"></script>
+  <script src="supabase-sync-v48.js?v=174"></script>
   <script src="drill-ux-v44.js"></script>
   <script src="naga-generator-v44.js"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 172;
+    const APP_VERSION = 174;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -6724,7 +6725,7 @@
         favoriteButton.textContent = menuFavoritesOnlyV137 ? "★ お気に入りのみ" : "☆ お気に入りのみ";
         const archiveActive = menuViewV16 === "archive";
         archiveButton.classList.toggle("is-active", archiveActive);
-        archiveButton.textContent = archiveActive ? "問題一覧に戻る" : "📦 アーカイブを見る";
+        archiveButton.innerHTML = archiveActive ? "問題一覧に戻る" : `${menuArchiveIconV109()}<span>アーカイブを見る</span>`;
         archiveButton.title = archiveActive ? "通常の問題一覧へ戻ります" : "完全正解して退避した問題を表示します";
       }
 

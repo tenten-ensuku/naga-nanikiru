@@ -13,9 +13,9 @@ test("V168 exposes the daily-learning shell and synchronized release assets", as
     readFile(identityUrl, "utf8"),
   ]);
 
-  assert.match(html, /const APP_VERSION = 172;/);
-  assert.match(identity, /APP_VERSION = 172/);
-  assert.match(html, /ux-v159\.css\?v=172/);
+  assert.match(html, /const APP_VERSION = 174;/);
+  assert.match(identity, /APP_VERSION = 174/);
+  assert.match(html, /ux-v159\.css\?v=174/);
   assert.match(html, /data-menu-view="today"/);
   assert.match(html, /今日の10問/);
   assert.match(html, /function renderTodayViewV159\(/);
@@ -78,6 +78,25 @@ test("V161 keeps the archive action stable after saving", async () => {
   assert.doesNotMatch(archiveFlow, /renderQuestionOptionsV16\(\);/);
   assert.doesNotMatch(archiveFlow, /renderMenuCardsV16\(\);/);
   assert.match(css, /V161: archive feedback stays in the action column/);
+});
+
+test("V173 uses the archive-tray icon in the archive-view control", async () => {
+  const [html, css] = await Promise.all([readFile(indexUrl, "utf8"), readFile(cssUrl, "utf8")]);
+  assert.match(html, /id="menuArchiveViewButton"[^>]*>[\s\S]*class="menu-archive-icon"[\s\S]*<svg[^>]*>[\s\S]*<path d="M4 7\.5h16v12H4zM3 4h18v3\.5H3zM9 12h6"/);
+  assert.doesNotMatch(html, /📦 アーカイブを見る/);
+  assert.match(html, /archiveButton\.innerHTML = archiveActive \? "問題一覧に戻る" : `\$\{menuArchiveIconV109\(\)\}<span>アーカイブを見る<\/span>`/);
+  assert.match(css, /V173: use the quiet archive-tray icon consistently/);
+  assert.match(css, /\.menu-archive-view-button \.menu-archive-icon svg[\s\S]*stroke: currentColor/);
+});
+
+test("V174 aligns filter operations and status controls into labeled rows", async () => {
+  const [html, css] = await Promise.all([readFile(indexUrl, "utf8"), readFile(cssUrl, "utf8")]);
+  assert.match(html, /<section class="menu-filter-row menu-attribute-row" aria-labelledby="menuAttributeHeading">[\s\S]*<h3 class="menu-filter-heading" id="menuAttributeHeading">フィルター操作<\/h3>[\s\S]*class="menu-attribute-buttons"[\s\S]*id="menuArchiveViewButton"/);
+  assert.match(css, /V174: align the menu filters as one labeled control panel/);
+  assert.match(css, /\.page\.menu-active \.menu-filter-row \{[\s\S]*grid-template-columns: var\(--menu-filter-label-width\) minmax\(0, 1fr\) auto;[\s\S]*column-gap: 18px/);
+  assert.match(css, /\.page\.menu-active \.menu-attribute-buttons \{[\s\S]*grid-column: 2;[\s\S]*align-items: center/);
+  assert.match(css, /\.page\.menu-active \.menu-archive-view-button \{[\s\S]*grid-column: 3;[\s\S]*justify-self: end/);
+  assert.match(css, /\.page\.menu-active \.menu-status-filter-group \{[\s\S]*grid-template-columns: var\(--menu-filter-label-width\) minmax\(0, 1fr\);/);
 });
 
 test("V163 keeps the basic-sequence collection in the South-seat viewpoint", async () => {

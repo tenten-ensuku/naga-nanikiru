@@ -13,7 +13,7 @@ test("V170 は問題集切り替え時に軽量インデックスだけを読み
     readFile(migrationUrl, "utf8"),
   ]);
 
-  assert.match(html, /const APP_VERSION = 172;/);
+  assert.match(html, /const APP_VERSION = 174;/);
   assert.match(html, /sharedQuestionDetailsDeferredV170/);
   assert.match(html, /ensureSharedQuestionDetailV170/);
   assert.match(html, /void startCommentNotificationPollingV65\(\)/);
