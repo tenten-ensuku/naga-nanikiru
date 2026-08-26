@@ -4,6 +4,8 @@
   var STORAGE_KEY = "naga-nanikiru-user-state-v1";
   var DAY_MS = 24 * 60 * 60 * 1000;
   var SCORE_MARKS = ["×", "△", "〇", "◎"];
+  var TODAY_UNANSWERED_TARGET = 8;
+  var TODAY_WEAK_TARGET = 2;
 
   function isRecord(value) {
     return value !== null && typeof value === "object" && !Array.isArray(value);
@@ -389,7 +391,7 @@
   }
 
   function isWeakMark(mark) {
-    return mark === "×" || mark === "△";
+    return mark === "×";
   }
 
   // Answer history is stored oldest-first internally.  Learning decisions
@@ -405,10 +407,11 @@
     });
   }
 
-  function hasWeakInRecentAnswers(source, key, limit) {
-    return recentAnswers(source, key, limit === undefined ? 3 : limit).some(function (entry) {
-      return isWeakMark(answerMark(entry));
-    });
+  function hasWeakInRecentAnswers(source, key) {
+    // 「もう一度考えたい」は、履歴の中で最も新しい回答だけを判定する。
+    // 過去の×・△や、最新の△を現在の苦手として残さない。
+    var latest = recentAnswers(source, key, 1)[0];
+    return Boolean(latest) && isWeakMark(answerMark(latest));
   }
 
   function isMasteredByRecentAnswers(source, key, required) {
@@ -503,7 +506,7 @@
       seen[key] = true;
       var latestEntry = latest[key];
       var unanswered = !latestEntry;
-      var weak = hasWeakInRecentAnswers(state, key, 3);
+      var weak = hasWeakInRecentAnswers(state, key);
       var type = questionType(question);
       var favorite = hasKey(state.favorites, key);
       var matches = true;
@@ -540,6 +543,29 @@
 
     var numericLimit = Number(settings.limit);
     var limit = Number.isFinite(numericLimit) ? Math.max(0, Math.floor(numericLimit)) : candidates.length;
+    if (mode === "today" || mode === "recommended") {
+      var unansweredCandidates = candidates.filter(function (item) {
+        return item.unanswered;
+      });
+      var weakCandidates = candidates.filter(function (item) {
+        return item.weak;
+      });
+      var selected = [];
+      if (unansweredCandidates.length > 0) {
+        var unansweredTarget = Math.min(TODAY_UNANSWERED_TARGET, limit, unansweredCandidates.length);
+        var weakTarget = Math.min(TODAY_WEAK_TARGET, Math.max(0, limit - unansweredTarget), weakCandidates.length);
+        selected = unansweredCandidates.slice(0, unansweredTarget).concat(weakCandidates.slice(0, weakTarget));
+        if (selected.length < limit) {
+          selected = selected.concat(unansweredCandidates.slice(unansweredTarget), weakCandidates.slice(weakTarget));
+        }
+      } else {
+        // 未回答がなくなったら、直近の回答が×の問題だけを復習する。
+        selected = weakCandidates;
+      }
+      return selected.slice(0, limit).map(function (item) {
+        return item.question;
+      });
+    }
     return candidates.slice(0, limit).map(function (item) {
       return item.question;
     });
@@ -736,7 +762,7 @@
       return Boolean(entry);
     }
     if (value === "weak") {
-      return hasWeakInRecentAnswers(state, key, 3);
+      return hasWeakInRecentAnswers(state, key);
     }
     if (value === "mastered") {
       return isMasteredByRecentAnswers(state, key, 2);

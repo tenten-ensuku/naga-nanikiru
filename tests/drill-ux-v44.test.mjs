@@ -89,7 +89,7 @@ test("recognizes expired, active, and forever snoozes", async () => {
   assert.equal(api.isPlayable({ ...state }, { id: "open" }, NOW), true);
 });
 
-test("builds a deterministic queue with weak and unanswered priority", async () => {
+test("builds today's queue with unanswered questions before latest-X reviews", async () => {
   const api = await loadApi();
   const questions = [
     { id: "future", decisionType: "discard" },
@@ -103,18 +103,75 @@ test("builds a deterministic queue with weak and unanswered priority", async () 
   const state = {
     answerHistory: [
       { questionKey: "future", scoreMark: MARK_MASTERED, answeredAt: "2026-07-01T00:00:00Z" },
-      { questionKey: "weak", scoreMark: MARK_TRIANGLE, answeredAt: "2026-08-02T00:00:00Z" },
+      { questionKey: "weak", scoreMark: MARK_X, answeredAt: "2026-08-02T00:00:00Z" },
       { questionKey: "riichi", scoreMark: MARK_CIRCLE, answeredAt: "2026-08-02T00:00:00Z" },
       { questionKey: "call", scoreMark: MARK_CIRCLE, answeredAt: "2026-08-02T00:00:00Z" }
     ],
   };
-  assert.deepEqual(hostValue(api.buildQueue({ questions, state, mode: "recommended", now: NOW }).map(api.questionKey)), ["weak", "new", "due"]);
-  assert.deepEqual(hostValue(api.buildQueue({ questions, state, mode: "recommended", limit: 2, now: NOW }).map(api.questionKey)), ["weak", "new"]);
+  assert.deepEqual(hostValue(api.buildQueue({ questions, state, mode: "recommended", now: NOW }).map(api.questionKey)), ["new", "due", "weak"]);
+  assert.deepEqual(hostValue(api.buildQueue({ questions, state, mode: "recommended", limit: 2, now: NOW }).map(api.questionKey)), ["new", "due"]);
   assert.deepEqual(hostValue(api.buildQueue({ questions, state, mode: "unanswered", now: NOW }).map(api.questionKey)), ["new", "due"]);
   assert.deepEqual(hostValue(api.buildQueue({ questions, state, mode: "weak", now: NOW }).map(api.questionKey)), ["weak"]);
   assert.deepEqual(hostValue(api.buildQueue({ questions, state, mode: "riichi", now: NOW }).map(api.questionKey)), ["riichi"]);
   assert.deepEqual(hostValue(api.buildQueue({ questions, state, mode: "call", now: NOW }).map(api.questionKey)), ["call"]);
   assert.deepEqual(hostValue(api.buildQueue({ questions, state: { ...state, favorites: ["future", "new"] }, mode: "favorites", now: NOW }).map(api.questionKey)), ["new", "future"]);
+});
+
+test("uses an eight-unanswered plus two latest-X composition for ten-question sessions", async () => {
+  const api = await loadApi();
+  const questions = [
+    ...Array.from({ length: 9 }, (_, index) => ({ id: `new-${index + 1}`, decisionType: "discard" })),
+    { id: "weak-1", decisionType: "discard" },
+    { id: "weak-2", decisionType: "discard" },
+    { id: "weak-3", decisionType: "discard" },
+    { id: "triangle", decisionType: "discard" },
+    { id: "old-x-now-good", decisionType: "discard" }
+  ];
+  const state = {
+    answerHistory: [
+      { questionKey: "weak-1", scoreMark: MARK_X, answeredAt: "2026-08-01T00:00:00Z" },
+      { questionKey: "weak-2", scoreMark: MARK_X, answeredAt: "2026-08-01T00:01:00Z" },
+      { questionKey: "weak-3", scoreMark: MARK_X, answeredAt: "2026-08-01T00:02:00Z" },
+      { questionKey: "triangle", scoreMark: MARK_X, answeredAt: "2026-08-01T00:03:00Z" },
+      { questionKey: "triangle", scoreMark: MARK_TRIANGLE, answeredAt: "2026-08-02T00:03:00Z" },
+      { questionKey: "old-x-now-good", scoreMark: MARK_X, answeredAt: "2026-08-01T00:04:00Z" },
+      { questionKey: "old-x-now-good", scoreMark: MARK_CIRCLE, answeredAt: "2026-08-02T00:04:00Z" }
+    ]
+  };
+  assert.deepEqual(
+    hostValue(api.buildQueue({ questions, state, mode: "today", limit: 10, now: NOW }).map(api.questionKey)),
+    ["new-1", "new-2", "new-3", "new-4", "new-5", "new-6", "new-7", "new-8", "weak-1", "weak-2"]
+  );
+  assert.deepEqual(
+    hostValue(api.buildQueue({ questions, state, mode: "recommended", limit: 10, now: NOW }).map(api.questionKey)),
+    ["new-1", "new-2", "new-3", "new-4", "new-5", "new-6", "new-7", "new-8", "weak-1", "weak-2"]
+  );
+  assert.deepEqual(hostValue(api.buildQueue({ questions, state, mode: "weak", limit: 10, now: NOW }).map(api.questionKey)), ["weak-1", "weak-2", "weak-3"]);
+});
+
+test("fills today's queue gracefully when one side of the composition is short", async () => {
+  const api = await loadApi();
+  const questions = [
+    { id: "only-new", decisionType: "discard" },
+    ...Array.from({ length: 12 }, (_, index) => ({ id: `weak-${index + 1}`, decisionType: "discard" }))
+  ];
+  const state = {
+    answerHistory: Array.from({ length: 12 }, (_, index) => ({
+      questionKey: `weak-${index + 1}`,
+      scoreMark: MARK_X,
+      answeredAt: `2026-08-01T00:${String(index).padStart(2, "0")}:00Z`
+    }))
+  };
+  assert.deepEqual(
+    hostValue(api.buildQueue({ questions, state, mode: "today", limit: 10, now: NOW }).map(api.questionKey)),
+    ["only-new", "weak-1", "weak-2", "weak-3", "weak-4", "weak-5", "weak-6", "weak-7", "weak-8", "weak-9"]
+  );
+
+  const noUnanswered = questions.slice(1);
+  assert.deepEqual(
+    hostValue(api.buildQueue({ questions: noUnanswered, state, mode: "today", limit: 10, now: NOW }).map(api.questionKey)),
+    ["weak-1", "weak-2", "weak-3", "weak-4", "weak-5", "weak-6", "weak-7", "weak-8", "weak-9", "weak-10"]
+  );
 });
 
 test("returns latest history, analytics math, streak, and type breakdowns", async () => {
@@ -150,34 +207,35 @@ test("returns latest history, analytics math, streak, and type breakdowns", asyn
   assert.equal(result.breakdowns.riichi.totalAttempts, 1);
 });
 
-test("uses the recent history window for weak filters and mastery", async () => {
+test("defines weak questions by the latest answer being exactly X", async () => {
   const api = await loadApi();
   const questions = [
-    { id: "recent-weak", decisionType: "discard" },
+    { id: "latest-weak", decisionType: "discard" },
+    { id: "latest-triangle", decisionType: "discard" },
+    { id: "old-x-now-good", decisionType: "discard" },
     { id: "one-mastered", decisionType: "discard" },
-    { id: "mastered", decisionType: "discard" },
-    { id: "old-weak", decisionType: "discard" }
+    { id: "mastered", decisionType: "discard" }
   ];
   const state = {
     answerHistory: [
-      { questionKey: "recent-weak", scoreMark: MARK_TRIANGLE, answeredAt: "2026-08-01T00:00:00Z" },
-      { questionKey: "recent-weak", scoreMark: MARK_CIRCLE, answeredAt: "2026-08-02T00:00:00Z" },
-      { questionKey: "recent-weak", scoreMark: MARK_MASTERED, answeredAt: "2026-08-03T00:00:00Z" },
+      { questionKey: "latest-weak", scoreMark: MARK_CIRCLE, answeredAt: "2026-08-01T00:00:00Z" },
+      { questionKey: "latest-weak", scoreMark: MARK_X, answeredAt: "2026-08-02T00:00:00Z" },
+      { questionKey: "latest-triangle", scoreMark: MARK_X, answeredAt: "2026-08-01T00:01:00Z" },
+      { questionKey: "latest-triangle", scoreMark: MARK_TRIANGLE, answeredAt: "2026-08-02T00:01:00Z" },
+      { questionKey: "old-x-now-good", scoreMark: MARK_X, answeredAt: "2026-08-01T00:02:00Z" },
+      { questionKey: "old-x-now-good", scoreMark: MARK_CIRCLE, answeredAt: "2026-08-02T00:02:00Z" },
       { questionKey: "one-mastered", scoreMark: MARK_MASTERED, answeredAt: "2026-08-03T00:00:00Z" },
       { questionKey: "mastered", scoreMark: MARK_MASTERED, answeredAt: "2026-08-02T00:00:00Z" },
-      { questionKey: "mastered", scoreMark: MARK_MASTERED, answeredAt: "2026-08-03T00:00:00Z" },
-      { questionKey: "old-weak", scoreMark: MARK_TRIANGLE, answeredAt: "2026-07-30T00:00:00Z" },
-      { questionKey: "old-weak", scoreMark: MARK_CIRCLE, answeredAt: "2026-08-01T00:00:00Z" },
-      { questionKey: "old-weak", scoreMark: MARK_CIRCLE, answeredAt: "2026-08-02T00:00:00Z" },
-      { questionKey: "old-weak", scoreMark: MARK_MASTERED, answeredAt: "2026-08-03T00:00:00Z" }
+      { questionKey: "mastered", scoreMark: MARK_MASTERED, answeredAt: "2026-08-03T00:00:00Z" }
     ]
   };
-  assert.deepEqual(hostValue(api.recentAnswers(state, "recent-weak", 3).map(entry => entry.scoreMark)), [MARK_MASTERED, MARK_CIRCLE, MARK_TRIANGLE]);
-  assert.equal(api.hasWeakInRecentAnswers(state, "recent-weak"), true);
-  assert.equal(api.hasWeakInRecentAnswers(state, "old-weak"), false);
+  assert.deepEqual(hostValue(api.recentAnswers(state, "latest-weak", 2).map(entry => entry.scoreMark)), [MARK_X, MARK_CIRCLE]);
+  assert.equal(api.hasWeakInRecentAnswers(state, "latest-weak"), true);
+  assert.equal(api.hasWeakInRecentAnswers(state, "latest-triangle"), false);
+  assert.equal(api.hasWeakInRecentAnswers(state, "old-x-now-good"), false);
   assert.equal(api.isMasteredByRecentAnswers(state, "one-mastered"), false);
   assert.equal(api.isMasteredByRecentAnswers(state, "mastered"), true);
-  assert.deepEqual(hostValue(api.filterQuestions({ questions, state, status: "weak" }).map(api.questionKey)), ["recent-weak"]);
+  assert.deepEqual(hostValue(api.filterQuestions({ questions, state, status: "weak" }).map(api.questionKey)), ["latest-weak"]);
   assert.equal(api.analytics({ questions, state, now: NOW }).masteredCount, 1);
 });
 
@@ -193,7 +251,7 @@ test("filters stably by view, query, status, and question type", async () => {
     favorites: ["002"],
     trashed: ["004"],
     answerHistory: [
-      { questionKey: "001", scoreMark: MARK_TRIANGLE, answeredAt: NOW },
+      { questionKey: "001", scoreMark: MARK_X, answeredAt: NOW },
       { questionKey: "002", scoreMark: MARK_MASTERED, answeredAt: NOW },
       { questionKey: "003", scoreMark: MARK_CIRCLE, answeredAt: NOW }
     ]
