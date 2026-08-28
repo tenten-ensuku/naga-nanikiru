@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=184">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=184">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=184">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=185">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=185">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=185">
   <title>NAGA局面ドリル｜何切る復習問題集</title>
   <meta name="description" content="NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリ。">
   <meta name="theme-color" content="#06131e">
@@ -2152,7 +2152,7 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=184">
+  <link rel="stylesheet" href="ux-v159.css?v=185">
 </head>
 <body>
   <main class="page">
@@ -2428,13 +2428,13 @@
   </dialog>
 
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=184"></script>
-  <script src="drill-ux-v44.js?v=184"></script>
+  <script src="supabase-sync-v48.js?v=185"></script>
+  <script src="drill-ux-v44.js?v=185"></script>
   <script src="naga-generator-v44.js"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 184;
+    const APP_VERSION = 185;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -3589,7 +3589,7 @@
         { version: 172, date: "2026-08-26", publishedAt: "2026-08-26T19:00:00+09:00", title: "一周達成と完全習得を祝うようにしました", body: "未回答がなくなったときは一周達成、最新1回の回答が〇以上で全問がそろったときは習熟度100％として祝福します。今日の10問に対象がないときは、達成をたたえる表示に切り替わります。" },
         { version: 176, date: "2026-08-26", publishedAt: "2026-08-26T21:00:00+09:00", title: "問題一覧のフィルターを見やすく整理しました", body: "問題範囲・ジャンル・フィルターを3段に整理し、直近の評価記号を問題一覧と同じ色で表示するようにしました。" },
         { version: 178, date: "2026-08-26", publishedAt: "2026-08-26T23:00:00+09:00", title: "大規模問題集の範囲切り替えを安定させました", body: "範囲の読み込みが重なったときに古い結果で表示を上書きしないようにし、取得に失敗した場合は元の範囲へ安全に戻します。100問目以降のお気に入り・アーカイブも初回読み込みで失わないようにしました。" },
-        { version: 184, date: "2026-08-29", publishedAt: "2026-08-29T13:00:00+09:00", title: "巻管理と学習集計を整理しました", body: "アーカイブ済みの問題も全問題数と習熟度へ反映し、200問単位の巻追加に対応しました。問題一覧ではジャンルと直近履歴を一列で確認できます。" },
+        { version: 185, date: "2026-08-29", publishedAt: "2026-08-29T13:00:00+09:00", title: "巻管理と学習集計を整理しました", body: "アーカイブ済みの問題も全問題数と習熟度へ反映し、200問単位の巻追加に対応しました。問題一覧ではジャンルと直近履歴を一列で確認できます。" },
         { version: 182, date: "2026-08-29", publishedAt: "2026-08-29T12:00:00+09:00", title: "ピエール問題集の巻をカードから選べるようにしました", body: "ピエール問題集を選ぶと、そのカードの直後に1巻〜9巻の選択肢が展開されます。選択の起点を明確にし、巻選択まで迷わないようにしました。" },
         { version: 175, date: "2026-08-26", publishedAt: "2026-08-26T20:00:00+09:00", title: "回答状態を直近の評価ごとに絞り込めるようにしました", body: "問題一覧の回答状態を、未回答・直近×・直近△・直近〇・直近◎の5種類から複数選択できるようにしました。直近の回答だけを基準に、復習したい問題を正確に絞り込めます。" },
         { version: 168, date: "2026-08-26", publishedAt: "2026-08-26T15:00:00+09:00", title: "今日の10問を続きから再開できるようにしました", body: "問題集をまたいだ古いセッションで再開ボタンが反応しない問題を修正し、問題集ごとのセッション判定と旧問題キーの復元に対応しました。" },
@@ -7346,6 +7346,15 @@
         const learningQuestions = learningScopeQuestionsV184();
         const answeredCount = learningQuestions.filter(isAnsweredForLearningV184).length;
         const favoriteCount = learningQuestions.filter(isFavoriteV16).length;
+        const knownTotal = sharedQuestionKnownTotalV177();
+        const summaryPending = knownTotal !== null
+          && !sharedQuestionPagingV177.allLoaded
+          && knownTotal > learningQuestions.length;
+        const displayedTotal = summaryPending ? knownTotal : metrics.total;
+        const displayedAnswered = summaryPending ? "…" : answeredCount;
+        const displayedUnanswered = summaryPending ? "…" : metrics.unanswered;
+        const displayedMastered = summaryPending ? "…" : metrics.mastered;
+        const displayedFavorites = summaryPending ? "…" : favoriteCount;
         const session = activeSessionV44();
         const sessionTotal = Number(session?.questionKeys?.length || 0);
         const sessionCurrent = session ? Math.min(sessionTotal, Number(session.cursor || 0) + 1) : 0;
@@ -7369,7 +7378,7 @@
           ? `<button class="today-primary-action" type="button" data-today-session="resume">前回の続きから再開<span aria-hidden="true">→</span></button>`
           : `<button class="today-primary-action" type="button" data-menu-jump="my">問題一覧から学習を始める<span aria-hidden="true">→</span></button>`;
         const scopeNote = collectionName ? `${collectionName}の直近回答を新しい順に表示しています。` : "選択中の問題集の直近回答を表示しています。";
-        return `<section class="today-dashboard recent-history-dashboard" aria-labelledby="todayDashboardTitle"><div class="today-breadcrumb"><span>${escapeHtml(collectionName)}</span><span aria-hidden="true">›</span><strong>回答履歴</strong></div><section class="today-hero"><div class="today-hero-copy"><p class="today-kicker">RECENT ANSWERS</p><h3 id="todayDashboardTitle">最近の回答履歴</h3><p>${escapeHtml(scopeNote)}</p>${resumeMarkup}</div><div class="today-session-progress recent-history-summary" aria-label="この巻の学習状況"><span>この巻の回答率</span><strong>${answeredCount}<small> / ${metrics.total}問</small></strong><span class="today-progress-track" aria-hidden="true"><span style="width:${metrics.total ? Math.round(answeredCount / metrics.total * 100) : 0}%"></span></span></div></section><div class="today-metric-grid"><button class="today-metric-card is-new" type="button" data-menu-jump="my"><span>未回答</span><strong>${metrics.unanswered}<small>問</small></strong><small>問題一覧から続ける</small></button><button class="today-metric-card is-mastered" type="button" data-menu-jump="analysis"><span>習熟済み</span><strong>${metrics.mastered}<small>問</small></strong><small>最新1回が〇以上</small></button><button class="today-metric-card is-favorite" type="button" data-menu-jump="favorites"><span>お気に入り</span><strong>${favoriteCount}<small>問</small></strong><small>あとで見返す問題</small></button><button class="today-metric-card is-review" type="button" data-menu-jump="my"><span>全問題</span><strong>${metrics.total}<small>問</small></strong><small>この巻の問題一覧</small></button></div><section class="today-recent"><div class="today-section-heading"><div><p class="today-kicker">LATEST 10</p><h3>直近の回答 10件</h3></div><button type="button" data-menu-jump="my">問題一覧へ</button></div><div class="today-recent-list">${recentMarkup}</div></section></section>`;
+        return `<section class="today-dashboard recent-history-dashboard" aria-labelledby="todayDashboardTitle"><div class="today-breadcrumb"><span>${escapeHtml(collectionName)}</span><span aria-hidden="true">›</span><strong>回答履歴</strong></div><section class="today-hero"><div class="today-hero-copy"><p class="today-kicker">RECENT ANSWERS</p><h3 id="todayDashboardTitle">最近の回答履歴</h3><p>${escapeHtml(scopeNote)}</p>${resumeMarkup}</div><div class="today-session-progress recent-history-summary" aria-label="この巻の学習状況"><span>この巻の回答率</span><strong>${displayedAnswered}<small> / ${displayedTotal}問</small></strong><span class="today-progress-track" aria-hidden="true"><span style="width:${displayedAnswered === "…" ? 0 : displayedTotal ? Math.round(answeredCount / displayedTotal * 100) : 0}%"></span></span></div></section><div class="today-metric-grid"><button class="today-metric-card is-new" type="button" data-menu-jump="my"><span>未回答</span><strong>${displayedUnanswered}<small>問</small></strong><small>問題一覧から続ける</small></button><button class="today-metric-card is-mastered" type="button" data-menu-jump="analysis"><span>習熟済み</span><strong>${displayedMastered}<small>問</small></strong><small>最新1回が〇以上またはアーカイブ</small></button><button class="today-metric-card is-favorite" type="button" data-menu-jump="favorites"><span>お気に入り</span><strong>${displayedFavorites}<small>問</small></strong><small>あとで見返す問題</small></button><button class="today-metric-card is-review" type="button" data-menu-jump="my"><span>全問題</span><strong>${displayedTotal}<small>問</small></strong><small>この巻の問題一覧</small></button></div><section class="today-recent"><div class="today-section-heading"><div><p class="today-kicker">LATEST 10</p><h3>直近の回答 10件</h3></div><button type="button" data-menu-jump="my">問題一覧へ</button></div><div class="today-recent-list">${recentMarkup}</div></section></section>`;
       }
 
       // 旧セッションや外部リンクとの互換性を保つため、内部名だけ残す。
@@ -8612,7 +8621,10 @@
 
       function scheduleSharedQuestionIndexPreparationV177() {
         if (!sharedQuestionPagingV177.shareSlug || sharedQuestionPagingV177.allLoaded) return;
-        const needsAll = menuViewV16 === "archive" || (menuViewV16 === "my" && menuRangeV60 === "all");
+        const knownTotal = sharedQuestionKnownTotalV177();
+        const needsAll = menuViewV16 === "archive"
+          || (menuViewV16 === "my" && menuRangeV60 === "all")
+          || (menuViewV16 === "today" && Number.isFinite(knownTotal) && knownTotal <= 200);
         if (needsAll) void ensureSharedQuestionIndexAllV177();
       }
 

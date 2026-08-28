@@ -44,6 +44,8 @@ test("V184 keeps archive-inclusive totals and genre in the compact question row"
   assert.match(html, /const rangeLearningQuestions = menuLearningSummaryQuestionsV184\(\)/);
   assert.match(html, /isAnsweredForLearningV184/);
   assert.match(html, /masteredKeys: personalCollectionStateV131\(\)\.archived/);
+  assert.match(html, /const displayedTotal = summaryPending \? knownTotal : metrics\.total/);
+  assert.match(html, /menuViewV16 === "today" && Number\.isFinite\(knownTotal\) && knownTotal <= 200/);
   assert.match(html, /menu-card-heading"><span class="menu-card-title">\$\{title\}<\/span><span class="menu-card-meta">\$\{escapeHtml\(typeMetadata\)\}<\/span>/);
   assert.match(css, /V184: keep the question genre beside the bold number/);
   assert.match(css, /\.page\.menu-active \.menu-card-meta \{[\s\S]*?font-weight: 500/);
