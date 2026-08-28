@@ -15,7 +15,7 @@ test("V170 は問題集切り替え時に軽量インデックスだけを読み
     readFile(pagingMigrationUrl, "utf8"),
   ]);
 
-  assert.match(html, /const APP_VERSION = 179;/);
+  assert.match(html, /const APP_VERSION = 180;/);
   assert.match(html, /sharedQuestionDetailsDeferredV170/);
   assert.match(html, /ensureSharedQuestionDetailV170/);
   assert.match(html, /SHARED_QUESTION_PAGE_SIZE_V177 = 100/);
@@ -26,6 +26,9 @@ test("V170 は問題集切り替え時に軽量インデックスだけを読み
   assert.match(html, /shouldDeferCollectionPersonalLegacyMigrationV178/);
   assert.match(html, /startRangeSessionV61\(mode === "range-unanswered" \? "unanswered" : "all"\)/);
   assert.match(html, /sharedQuestionPagingV177\.loading = sharedQuestionPagingV177\.requests\.size > 0/);
+  assert.match(html, /isSeriesParentCollectionV180\(sharedCollectionV46\)/);
+  assert.match(html, /if \(isSeriesParentCollectionV180\(sharedCollectionV46\)\) return 0;/);
+  assert.match(client, /collection\.data\.is_series_parent === true/);
   assert.match(html, /history\.pushState/);
   assert.match(html, /void startCommentNotificationPollingV65\(\)/);
   assert.doesNotMatch(html, /if \(loadedSharedCollection && questionsV16\.length\) await startCommentNotificationPollingV65\(\)/);

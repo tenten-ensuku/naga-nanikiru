@@ -6,20 +6,22 @@ const indexUrl = new URL("../public/index.html", import.meta.url);
 const cssUrl = new URL("../public/ux-v159.css", import.meta.url);
 const identityUrl = new URL("../app/lib/appIdentity.ts", import.meta.url);
 
-test("V168 exposes the daily-learning shell and synchronized release assets", async () => {
+test("V180 exposes the recent-history shell and synchronized release assets", async () => {
   const [html, css, identity] = await Promise.all([
     readFile(indexUrl, "utf8"),
     readFile(cssUrl, "utf8"),
     readFile(identityUrl, "utf8"),
   ]);
 
-  assert.match(html, /const APP_VERSION = 179;/);
-  assert.match(identity, /APP_VERSION = 179/);
-  assert.match(html, /ux-v159\.css\?v=179/);
+  assert.match(html, /const APP_VERSION = 180;/);
+  assert.match(identity, /APP_VERSION = 180/);
+  assert.match(html, /ux-v159\.css\?v=180/);
   assert.match(html, /data-menu-view="today"/);
-  assert.match(html, /今日の10問/);
+  assert.match(html, /最近の履歴/);
+  assert.doesNotMatch(html, /<span class="quick-start-title">今日の10問/);
+  assert.match(html, /function renderRecentHistoryViewV180\(/);
   assert.match(html, /function renderTodayViewV159\(/);
-  assert.match(html, /data-today-session="\$\{startMode\}"/);
+  assert.match(html, /data-today-session="resume"/);
   assert.match(css, /\.today-dashboard/);
   assert.match(css, /\.today-primary-action/);
   assert.match(css, /--ux-brown-gold: #b78943/);
@@ -51,7 +53,7 @@ test("V161 keeps generator input and destination in a persistent staged workflow
 
 test("V161 displays the canonical perfect mark while accepting legacy history", async () => {
   const html = await readFile(indexUrl, "utf8");
-  const todayView = html.match(/function renderTodayViewV159\([\s\S]*?\n      function renderMenuCardsV16\(/)?.[0] || "";
+  const todayView = html.match(/function renderRecentHistoryViewV180\([\s\S]*?\n      function renderTodayViewV159\(/)?.[0] || "";
   assert.match(html, /function normalizeScoreMarkV159\(value\)/);
   assert.match(html, /replaceAll\("💮", "◎"\)/);
   assert.match(html, /return normalizeScoreMarkV159\(value\) === "◎"/);
@@ -145,15 +147,15 @@ test("V165 keeps the active collection visible and opens a dedicated chooser", a
   assert.match(css, /position: sticky;[\s\S]*?\.page\.menu-active \.mobile-collection-context|\.page\.menu-active \.mobile-collection-context[\s\S]*?position: sticky;/);
 });
 
-test("V166 puts basic sequence first, recommends sequential order, and shows ten recent questions", async () => {
+test("V166 puts basic sequence first, recommends sequential order, and shows ten recent answers", async () => {
   const html = await readFile(indexUrl, "utf8");
   assert.match(html, /function sortCollectionRowsV166\(rows\)/);
   assert.match(html, /const leftBasic = isBasicSequenceCollectionV163\(left\) \? 0 : 1/);
   assert.match(html, /const sequentialOption = menuOrderSelect\?\.querySelector\('option\[value="sequential"\]'\)/);
   assert.match(html, /sequentialOption\.textContent = isBasicSequence \? "順番（推奨）" : "順番"/);
   assert.match(html, /const sequentialCandidates = isBasicSequenceCollectionV163\(\)/);
-  const todayView = html.match(/function renderTodayViewV159\([\s\S]*?function renderMenuCardsV16\(/)?.[0] || "";
-  assert.match(todayView, /\.slice\(0, 10\)/);
+  const recentView = html.match(/function renderRecentHistoryViewV180\([\s\S]*?function renderTodayViewV159\(/)?.[0] || "";
+  assert.match(recentView, /\.slice\(0, 10\)/);
 });
 
 test("V167 styles the collection chooser as a three-column library with a silver basic-sequence card", async () => {

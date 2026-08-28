@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=179">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=179">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=179">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=180">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=180">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=180">
   <title>NAGA局面ドリル｜何切る復習問題集</title>
   <meta name="description" content="NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリ。">
   <meta name="theme-color" content="#06131e">
@@ -2152,7 +2152,7 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=179">
+  <link rel="stylesheet" href="ux-v159.css?v=180">
 </head>
 <body>
   <main class="page">
@@ -2166,7 +2166,7 @@
           <span class="active-collection-arrow" aria-hidden="true">›</span>
         </button>
         <nav class="menu-nav" aria-label="問題集メニュー">
-          <button class="menu-nav-button is-active" type="button" data-menu-view="today" title="今日の10問を始める"><span class="menu-nav-icon" aria-hidden="true">10</span><span>今日の10問</span></button>
+          <button class="menu-nav-button is-active" type="button" data-menu-view="today" title="選択中の問題集の最近の回答履歴を見る"><span class="menu-nav-icon" aria-hidden="true">↺</span><span>最近の履歴</span></button>
           <button class="menu-nav-button" type="button" data-menu-view="my" title="選択中の問題集の一覧から学習を始める"><span class="menu-nav-icon" aria-hidden="true">▦</span><span>問題一覧</span><span class="menu-nav-badge" data-menu-count="my">0</span></button>
           <button class="menu-nav-button" type="button" data-menu-view="analysis" title="回答率・習熟度・回答時間など、自分の学習状況を見る"><span class="menu-nav-icon" aria-hidden="true">▥</span><span>成績・履歴</span></button>
           <button class="menu-nav-button" type="button" data-menu-view="generator" title="NAGA URLから問題を作り、保存先を選ぶ"><span class="menu-nav-icon" aria-hidden="true">＋</span><span>問題生成</span></button>
@@ -2191,28 +2191,6 @@
           <div class="menu-summary" id="menuSummary" aria-live="polite"></div>
         </div>
         <section class="collection-space-panel" id="collectionSpacePanel" aria-live="polite" hidden></section>
-        <section class="quick-start" id="quickStart" aria-label="すぐに始める">
-        <button class="quick-start-card primary" type="button" data-session-mode="recommended" title="未回答8問と直近の回答が×の問題を最大2問出題します">
-          <span class="quick-start-kicker">TODAY'S SESSION</span>
-          <span class="quick-start-title">今日の10問</span>
-          <span class="quick-start-note" id="recommendedDrillNote">未回答8問＋直近×2問を基本に出題</span>
-        </button>
-        <button class="quick-start-card" id="resumeSessionButton" type="button" data-session-mode="resume" title="中断したセッションの続きから再開します" hidden>
-          <span class="quick-start-kicker">RESUME</span>
-          <span class="quick-start-title">前回の続き</span>
-          <span class="quick-start-note" id="resumeSessionNote"></span>
-        </button>
-        <button class="quick-start-card" type="button" data-session-mode="weak" title="直近の回答が×の問題を優先します">
-          <span class="quick-start-kicker">REVIEW</span>
-          <span class="quick-start-title">苦手10問</span>
-          <span class="quick-start-note">直近×を優先して復習</span>
-        </button>
-        <button class="quick-start-card" type="button" data-session-mode="unanswered" title="まだ回答していない問題を優先します">
-          <span class="quick-start-kicker">NEW</span>
-          <span class="quick-start-title">未回答10問</span>
-          <span class="quick-start-note">まだ解いていない問題</span>
-        </button>
-        </section>
         <div class="menu-filter-stack" id="menuFilters">
           <section class="menu-filter-row menu-range-row" aria-labelledby="menuRangeHeading">
             <div class="menu-filter-heading-block menu-range-heading-block">
@@ -2270,7 +2248,7 @@
     </section>
     <header class="header">
       <div>
-        <p class="eyebrow" id="questionBreadcrumb">問題集 › 今日の10問</p>
+        <p class="eyebrow" id="questionBreadcrumb">問題集 › 最近の回答履歴</p>
         <h1 id="questionPageTitle">何切る？</h1>
       </div>
       <div class="version" id="versionLabel"></div>
@@ -2450,13 +2428,13 @@
   </dialog>
 
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=179"></script>
-  <script src="drill-ux-v44.js?v=179"></script>
+  <script src="supabase-sync-v48.js?v=180"></script>
+  <script src="drill-ux-v44.js?v=180"></script>
   <script src="naga-generator-v44.js"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 179;
+    const APP_VERSION = 180;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -3402,6 +3380,10 @@
       let authPendingV46 = false;
       let sharedCollectionV46 = null;
       let collectionCatalogV100 = [];
+      let collectionVolumesV180 = [];
+      let collectionVolumeProgressV180 = [];
+      let collectionVolumesLoadingV180 = false;
+      let collectionVolumesErrorV180 = "";
       let collectionAccessRequestsV100 = [];
       let collectionAccessMembersV100 = [];
       let collectionAccessNotificationsV100 = [];
@@ -3423,7 +3405,7 @@
       let collectionLoadErrorV165 = "";
       const MENU_VIEW_COPY_V16 = {
         collections: { title: "問題集を選ぶ" },
-        today: { title: "今日の学習" },
+        today: { title: "最近の回答履歴" },
         my: { title: "問題一覧" },
         archive: { title: "アーカイブ" },
         generator: { title: "問題生成" },
@@ -3478,7 +3460,8 @@
 
       function personalCollectionScopeKeyV131() {
         const userId = String(supabaseSessionV46?.user?.id || "guest");
-        const collectionKey = String(sharedCollectionV46?.share_slug || DEFAULT_COLLECTION_SLUG || "local");
+        // ピエールの巻は問題IDを共有するため、お気に入り・アーカイブも全巻共通にする。
+        const collectionKey = String(sharedCollectionV46?.series_parent_slug || sharedCollectionV46?.share_slug || DEFAULT_COLLECTION_SLUG || "local");
         return `${userId}::${collectionKey}`;
       }
 
@@ -3606,6 +3589,7 @@
         { version: 172, date: "2026-08-26", publishedAt: "2026-08-26T19:00:00+09:00", title: "一周達成と完全習得を祝うようにしました", body: "未回答がなくなったときは一周達成、最新1回の回答が〇以上で全問がそろったときは習熟度100％として祝福します。今日の10問に対象がないときは、達成をたたえる表示に切り替わります。" },
         { version: 176, date: "2026-08-26", publishedAt: "2026-08-26T21:00:00+09:00", title: "問題一覧のフィルターを見やすく整理しました", body: "問題範囲・ジャンル・フィルターを3段に整理し、直近の評価記号を問題一覧と同じ色で表示するようにしました。" },
         { version: 178, date: "2026-08-26", publishedAt: "2026-08-26T23:00:00+09:00", title: "大規模問題集の範囲切り替えを安定させました", body: "範囲の読み込みが重なったときに古い結果で表示を上書きしないようにし、取得に失敗した場合は元の範囲へ安全に戻します。100問目以降のお気に入り・アーカイブも初回読み込みで失わないようにしました。" },
+        { version: 180, date: "2026-08-29", publishedAt: "2026-08-29T12:00:00+09:00", title: "ピエール問題集を9巻に分けて軽くしました", body: "ピエール問題集を問題IDを変えずに9巻へ分け、巻を選んでから必要な問題だけ読み込むようにしました。巻ごとの回答済み数・習熟度と、選択中の巻の直近回答履歴を確認できます。" },
         { version: 175, date: "2026-08-26", publishedAt: "2026-08-26T20:00:00+09:00", title: "回答状態を直近の評価ごとに絞り込めるようにしました", body: "問題一覧の回答状態を、未回答・直近×・直近△・直近〇・直近◎の5種類から複数選択できるようにしました。直近の回答だけを基準に、復習したい問題を正確に絞り込めます。" },
         { version: 168, date: "2026-08-26", publishedAt: "2026-08-26T15:00:00+09:00", title: "今日の10問を続きから再開できるようにしました", body: "問題集をまたいだ古いセッションで再開ボタンが反応しない問題を修正し、問題集ごとのセッション判定と旧問題キーの復元に対応しました。" },
         { version: 167, date: "2026-08-26", publishedAt: "2026-08-26T14:00:00+09:00", title: "問題集選択画面を刷新しました", body: "問題集カードを見やすい3列レイアウトに整え、基本序列問題集を格式高いシルバーで表示します。" },
@@ -4301,6 +4285,15 @@
         })[String(value || "")] || "非公開";
       }
 
+      function isSeriesParentCollectionV180(collection = sharedCollectionV46) {
+        return Boolean(collection?.is_series_parent)
+          || Boolean(collection?.series_key && !collection?.series_parent_id && Number(collection?.volume_count) > 0);
+      }
+
+      function collectionSeriesRootSlugV180(collection = sharedCollectionV46) {
+        return String(collection?.series_parent_slug || (isSeriesParentCollectionV180(collection) ? collection?.share_slug : "") || "").trim();
+      }
+
       function collectionDisplayNameV101(collection = sharedCollectionV46) {
         const title = String(collection?.title || "").trim();
         if (String(collection?.share_slug || "") === DEFAULT_COLLECTION_SLUG || /くにたそ|クニタソ/i.test(title)) return "くにたそ問題集";
@@ -4417,7 +4410,8 @@
         return `<option value="local"${defaultValue === "local" ? " selected" : ""}>この端末だけに保存</option>${rows.map(row => {
           const slug = String(row.share_slug || "");
           const role = row.can_manage ? "所有者" : "編集可";
-          return `<option value="${escapeHtml(slug)}"${slug === defaultValue ? " selected" : ""}>${escapeHtml(row.display_title || collectionDisplayNameV101(row))}（${role}）</option>`;
+          const seriesNote = isSeriesParentCollectionV180(row) ? "・番号に応じて巻へ保存" : "";
+          return `<option value="${escapeHtml(slug)}"${slug === defaultValue ? " selected" : ""}>${escapeHtml(row.display_title || collectionDisplayNameV101(row))}（${role}${seriesNote}）</option>`;
         }).join("")}`;
       }
 
@@ -4519,6 +4513,10 @@
         const previousRows = previousState.rows;
         const previousPaging = previousState.paging;
         const previousDeferred = previousState.detailsDeferred;
+        const previousVolumes = previousState.volumes;
+        const previousVolumeProgress = previousState.volumeProgress;
+        const previousVolumesLoading = previousState.volumesLoading;
+        const previousVolumesError = previousState.volumesError;
         const previousReady = previousState.ready;
         if (commentPollTimerV65) window.clearInterval(commentPollTimerV65);
         if (questionPollTimerV66) window.clearInterval(questionPollTimerV66);
@@ -4532,6 +4530,10 @@
         remoteHistorySyncScopeV135 = "";
         importedQuestionsReadyV81 = false;
         collectionLoadErrorV165 = "";
+        collectionVolumesV180 = [];
+        collectionVolumeProgressV180 = [];
+        collectionVolumesLoadingV180 = false;
+        collectionVolumesErrorV180 = "";
         resetSharedQuestionPagingV177("", null);
         renderQuestionOptionsV16();
         showMenuV16("collections");
@@ -4554,6 +4556,10 @@
           questionsV16 = previousQuestions;
           sharedQuestionRowsV66 = previousRows;
           sharedQuestionDetailsDeferredV170 = previousDeferred;
+          collectionVolumesV180 = previousVolumes;
+          collectionVolumeProgressV180 = previousVolumeProgress;
+          collectionVolumesLoadingV180 = previousVolumesLoading;
+          collectionVolumesErrorV180 = previousVolumesError;
           importedQuestionsReadyV81 = previousReady;
           sharedQuestionPagingV177 = {
             ...previousPaging,
@@ -4588,6 +4594,10 @@
           rows: sharedQuestionRowsV66,
           paging: sharedQuestionPagingV177,
           detailsDeferred: sharedQuestionDetailsDeferredV170,
+          volumes: collectionVolumesV180,
+          volumeProgress: collectionVolumeProgressV180,
+          volumesLoading: collectionVolumesLoadingV180,
+          volumesError: collectionVolumesErrorV180,
           ready: importedQuestionsReadyV81
         };
         const previousUrlObject = new URL(window.location.href);
@@ -4714,7 +4724,38 @@
         const classes = ["collection-choice-card"];
         if (current) classes.push("is-current");
         if (isBasicSequenceCollectionV163(row)) classes.push("is-basic-sequence");
+        if (isSeriesParentCollectionV180(row)) classes.push("is-series-parent");
         return classes.join(" ");
+      }
+
+      function volumeProgressMetricsV180(volume) {
+        const progress = collectionVolumeProgressV180.find(item => Number(item?.volume_number) === Number(volume?.volume_number)) || {};
+        const questionCount = Math.max(0, Number(volume?.question_count ?? progress?.question_count ?? 0));
+        const answeredCount = Math.min(questionCount, Math.max(0, Number(progress?.answered_count || 0)));
+        const masteredCount = Math.min(answeredCount, Math.max(0, Number(progress?.mastered_count || 0)));
+        const mastery = questionCount ? Math.round(masteredCount / questionCount * 100) : 0;
+        return { questionCount, answeredCount, masteredCount, mastery };
+      }
+
+      function renderCollectionVolumeChooserV180() {
+        if (!isSeriesParentCollectionV180()) return "";
+        if (collectionVolumesLoadingV180) {
+          return `<section class="collection-volume-picker is-loading" aria-labelledby="collectionVolumeHeading"><div class="collection-volume-picker-head"><p class="collection-chooser-kicker">PIERRE COLLECTION</p><h4 id="collectionVolumeHeading">巻を選択</h4></div><p class="collection-volume-status">巻情報を読み込んでいます…</p></section>`;
+        }
+        if (collectionVolumesErrorV180) {
+          return `<section class="collection-volume-picker is-error" aria-labelledby="collectionVolumeHeading"><div class="collection-volume-picker-head"><p class="collection-chooser-kicker">PIERRE COLLECTION</p><h4 id="collectionVolumeHeading">巻を選択</h4></div><p class="collection-volume-status">${escapeHtml(collectionVolumesErrorV180)}</p></section>`;
+        }
+        const cards = collectionVolumesV180.map(volume => {
+          const metrics = volumeProgressMetricsV180(volume);
+          const number = Number(volume?.volume_number);
+          const start = Number(volume?.volume_start);
+          const end = Number(volume?.volume_end);
+          const title = String(volume?.title || `ピエール問題集 第${number}巻`);
+          const range = Number.isInteger(start) && Number.isInteger(end) ? `問題${start}–${end}` : "問題範囲を準備中";
+          return `<button class="collection-volume-card" type="button" data-collection-slug="${escapeHtml(String(volume?.share_slug || ""))}" data-volume-number="${Number.isInteger(number) ? number : ""}" aria-label="${escapeHtml(title)} ${escapeHtml(range)}を開く"><span class="collection-volume-number">${Number.isInteger(number) ? `第${number}巻` : "巻"}</span><strong>${escapeHtml(range)}</strong><span class="collection-volume-count">${metrics.questionCount}問</span><span class="collection-volume-progress">回答済み ${metrics.answeredCount} / ${metrics.questionCount}　・　習熟度 ${metrics.mastery}%</span><span class="collection-volume-arrow" aria-hidden="true">›</span></button>`;
+        }).join("");
+        const empty = `<p class="collection-volume-status">選択できる巻がありません。問題集の設定を確認してください。</p>`;
+        return `<section class="collection-volume-picker" aria-labelledby="collectionVolumeHeading"><div class="collection-volume-picker-head"><div><p class="collection-chooser-kicker">PIERRE COLLECTION / VOLUME</p><h4 id="collectionVolumeHeading">ピエール問題集の巻を選択</h4><p>巻を選ぶと、その巻の問題・回答履歴・習熟度だけを表示します。問題IDは全巻でそのまま引き継がれます。</p></div><span class="collection-volume-total">全${collectionVolumesV180.length}巻</span></div><div class="collection-volume-grid">${cards || empty}</div></section>`;
       }
 
       function renderCollectionChooserV165() {
@@ -4730,7 +4771,8 @@
         }).join("");
         const empty = `<div class="collection-chooser-empty"><strong>選べる問題集を読み込んでいます</strong><span>一覧が表示されない場合は、Discordログイン後にもう一度お試しください。</span></div>`;
         const errorNotice = collectionLoadErrorV165 ? `<div class="collection-chooser-error" role="alert"><strong>この問題集を開けませんでした</strong><span>${escapeHtml(collectionLoadErrorV165)}</span><small>下の一覧から、開き直す問題集を選んでください。</small></div>` : "";
-        return `<section class="collection-chooser" aria-labelledby="collectionChooserHeading"><header class="collection-chooser-header"><div><p class="collection-chooser-kicker">COLLECTION LIBRARY</p><h3 id="collectionChooserHeading">学習する問題集を選択</h3><p>選んだ問題集は次回も保持されます。共有URLから開いた場合は、その問題集を優先します。</p></div><button class="collection-chooser-create" type="button" data-menu-jump="settings">＋ 新しい問題集</button></header>${errorNotice}<div class="collection-choice-grid">${cards || empty}</div></section>`;
+        const volumePicker = renderCollectionVolumeChooserV180();
+        return `<section class="collection-chooser" aria-labelledby="collectionChooserHeading"><header class="collection-chooser-header"><div><p class="collection-chooser-kicker">COLLECTION LIBRARY</p><h3 id="collectionChooserHeading">学習する問題集を選択</h3><p>選んだ問題集は次回も保持されます。共有URLから開いた場合は、その問題集を優先します。</p></div><button class="collection-chooser-create" type="button" data-menu-jump="settings">＋ 新しい問題集</button></header>${errorNotice}${volumePicker}<div class="collection-choice-grid">${cards || empty}</div></section>`;
       }
 
       function renderCollectionSpacePanelV100() {
@@ -6651,7 +6693,7 @@
         const requestedView = view === "favorites" ? "my" : view;
         if (view === "favorites") menuFavoritesOnlyV137 = true;
         const needsCollection = ["today", "my", "archive", "analysis"].includes(requestedView);
-        const effectiveView = needsCollection && !sharedCollectionV46 && window.NagaSupabase?.configured ? "collections" : requestedView;
+        const effectiveView = needsCollection && (!sharedCollectionV46 || isSeriesParentCollectionV180(sharedCollectionV46)) && window.NagaSupabase?.configured ? "collections" : requestedView;
         menuViewV16 = MENU_VIEW_COPY_V16[effectiveView] ? effectiveView : "my";
         if (!menuRangeOptionsV60().some(option => option.key === menuRangeV60)) menuRangeV60 = "all";
         applyDesktopLayoutV70();
@@ -6715,7 +6757,6 @@
         syncBasicSequenceThemeV163();
         renderActiveCollectionContextV165();
         const learningMetrics = syncLearningMilestoneSnapshotV172().current;
-        syncTodayQuickStartV172(learningMetrics);
         const analytics = window.DrillUxV44?.analytics?.({ questions: questionsV16, state: userStateV16, now: new Date() }) || {};
         const counts = {
           collections: collectionCatalogOptionsV100().length,
@@ -6767,10 +6808,10 @@
         document.getElementById("menuTitle").textContent = copy.title;
         const resume = activeSessionV44();
         const resumeButton = document.getElementById("resumeSessionButton");
-        resumeButton.hidden = !resume;
-        if (resume) document.getElementById("resumeSessionNote").textContent = `${Number(resume.cursor || 0) + 1} / ${resume.questionKeys.length} から再開`;
-        syncTodayQuickStartV172(learningMetrics);
-        document.getElementById("quickStart").hidden = true;
+        if (resumeButton) {
+          resumeButton.hidden = !resume;
+          if (resume) document.getElementById("resumeSessionNote").textContent = `${Number(resume.cursor || 0) + 1} / ${resume.questionKeys.length} から再開`;
+        }
         document.getElementById("menuFilters").hidden = !["my", "archive"].includes(menuViewV16);
         document.getElementById("menuRangeActions").hidden = menuViewV16 !== "my";
         document.getElementById("menuListHeader").hidden = !listView;
@@ -7261,19 +7302,13 @@
         panel.innerHTML = `<button class="menu-load-more-button" type="button" id="menuLoadMoreButton">さらに${nextCount}問を表示（${visible} / ${total}問）</button>`;
       }
 
-      function renderTodayViewV159() {
+      function renderRecentHistoryViewV180() {
         const metrics = learningMetricsV172();
         const playable = questionsV16.filter(isPlayableV16);
-        const unanswered = playable.filter(question => !latestAnswerV44(question));
-        const weak = playable.filter(question => window.DrillUxV44?.hasWeakInRecentAnswers?.(userStateV16, questionKeyV16(question)));
-        const masteredCount = metrics.mastered;
+        const answeredCount = playable.filter(question => latestAnswerV44(question)).length;
         const favoriteCount = playable.filter(isFavoriteV16).length;
         const session = activeSessionV44();
-        const todayCandidates = todayQueueCandidatesV172();
-        const sharedIndexLoading = sharedQuestionPagingIsCurrentV177() && !sharedQuestionPagingV177.allLoaded;
-        const todayUnavailable = !sharedIndexLoading && !session && todayCandidates.length === 0;
-        const todayAchievement = metrics.masteryComplete || metrics.total > 0 && metrics.unanswered === 0;
-        const sessionTotal = Number(session?.questionKeys?.length || 10);
+        const sessionTotal = Number(session?.questionKeys?.length || 0);
         const sessionCurrent = session ? Math.min(sessionTotal, Number(session.cursor || 0) + 1) : 0;
         const sessionPercent = sessionTotal ? Math.round(sessionCurrent / sessionTotal * 100) : 0;
         const collectionName = collectionDisplayNameV101();
@@ -7284,30 +7319,23 @@
           .map(entry => ({ entry, index: questionIndexByKeyV44(entry.questionKey) }))
           .filter(({ index }) => index >= 0 && !seen.has(index) && seen.add(index))
           .slice(0, 10);
-        const startLabel = session ? "続きから再開" : "今日の10問を始める";
-        const startMode = session ? "resume" : "recommended";
         const recentMarkup = recent.length
           ? recent.map(({ entry, index }) => {
               const question = questionsV16[index];
               const mark = normalizeScoreMarkV159(entry.scoreMark) || "—";
               return `<button class="today-recent-row" type="button" data-question-index="${index}"><span><strong>${escapeHtml(question.title || `問題${question.number}`)}</strong><small>${escapeHtml(questionTypeV44(question))}</small></span><span class="today-recent-mark ${menuScoreMarkClassV63(mark)}" aria-label="直近の結果 ${escapeHtml(mark)}">${escapeHtml(mark)}</span><span class="today-recent-arrow" aria-hidden="true">›</span></button>`;
             }).join("")
-          : `<p class="today-empty-note">最初の問題を解くと、ここに最近の成績が表示されます。</p>`;
-        const todayDescription = sharedIndexLoading
-          ? "この問題集の問題を準備しています。もう少しだけお待ちください。"
-          : todayUnavailable
-          ? metrics.masteryComplete
-          ? "習熟度100％を達成しました。完全習得おめでとうございます！今日の10問はお休み中です。"
-          : metrics.total > 0 && metrics.unanswered === 0
-          ? "未回答も直近×もありません。見事にこの問題集を一周しました！今日の10問はお休み中です。"
-          : "この問題集に現在出題できる問題がありません。問題を追加すると、今日の10問を始められます。"
-          : "未回答8問＋直近の回答が×の問題2問を基本に出題します。";
-        const primaryAction = sharedIndexLoading
-          ? `<button class="today-primary-action is-unavailable" type="button" disabled aria-disabled="true" title="問題集の問題を準備しています">準備中…<span aria-hidden="true">◌</span></button>`
-          : todayUnavailable
-          ? `<button class="today-primary-action ${todayAchievement ? "is-complete" : "is-unavailable"}" type="button" disabled aria-disabled="true" title="学習対象がないため、今日の10問はお休み中です">${metrics.masteryComplete ? "完全習得済み" : metrics.total > 0 && metrics.unanswered === 0 ? "一周達成済み" : "準備中"}<span aria-hidden="true">✦</span></button>`
-          : `<button class="today-primary-action" type="button" data-today-session="${startMode}">${startLabel}<span aria-hidden="true">→</span></button>`;
-        return `<section class="today-dashboard" aria-labelledby="todayDashboardTitle"><div class="today-breadcrumb"><span>${escapeHtml(collectionName)}</span><span aria-hidden="true">›</span><strong>今日の学習</strong></div><section class="today-hero${todayUnavailable ? todayAchievement ? " is-complete" : " is-unavailable" : ""}"><div class="today-hero-copy"><p class="today-kicker">TODAY'S SESSION</p><h3 id="todayDashboardTitle">今日の10問</h3><p>${todayDescription}</p>${primaryAction}</div><div class="today-session-progress" aria-label="今日のセッション進捗 ${sessionCurrent}/${sessionTotal}"><span>今日の進捗</span><strong>${sessionCurrent}<small> / ${sessionTotal}</small></strong><span class="today-progress-track" aria-hidden="true"><span style="width:${sessionPercent}%"></span></span></div></section><div class="today-metric-grid"><button class="today-metric-card is-new" type="button" data-today-session="unanswered"><span>まだ解いていない</span><strong>${unanswered.length}<small>問</small></strong><small>未回答を優先して学習</small></button><button class="today-metric-card is-review" type="button" data-today-session="weak"><span>もう一度考えたい</span><strong>${weak.length}<small>問</small></strong><small>直近の回答が×</small></button><button class="today-metric-card is-mastered" type="button" data-menu-jump="analysis"><span>身についた</span><strong>${masteredCount}<small>問</small></strong><small>最新1回が〇以上</small></button><button class="today-metric-card is-favorite" type="button" data-menu-jump="favorites"><span>お気に入り</span><strong>${favoriteCount}<small>問</small></strong><small>あとで見返す問題</small></button></div><section class="today-recent"><div class="today-section-heading"><div><p class="today-kicker">RECENT</p><h3>最近解いた問題</h3></div><button type="button" data-menu-jump="my">問題一覧へ</button></div><div class="today-recent-list">${recentMarkup}</div></section></section>`;
+          : `<p class="today-empty-note">この巻の問題を解くと、ここに最近の回答履歴が表示されます。</p>`;
+        const resumeMarkup = session
+          ? `<button class="today-primary-action" type="button" data-today-session="resume">前回の続きから再開<span aria-hidden="true">→</span></button>`
+          : `<button class="today-primary-action" type="button" data-menu-jump="my">問題一覧から学習を始める<span aria-hidden="true">→</span></button>`;
+        const scopeNote = collectionName ? `${collectionName}の直近回答を新しい順に表示しています。` : "選択中の問題集の直近回答を表示しています。";
+        return `<section class="today-dashboard recent-history-dashboard" aria-labelledby="todayDashboardTitle"><div class="today-breadcrumb"><span>${escapeHtml(collectionName)}</span><span aria-hidden="true">›</span><strong>回答履歴</strong></div><section class="today-hero"><div class="today-hero-copy"><p class="today-kicker">RECENT ANSWERS</p><h3 id="todayDashboardTitle">最近の回答履歴</h3><p>${escapeHtml(scopeNote)}</p>${resumeMarkup}</div><div class="today-session-progress recent-history-summary" aria-label="この巻の学習状況"><span>この巻の回答率</span><strong>${answeredCount}<small> / ${metrics.total}問</small></strong><span class="today-progress-track" aria-hidden="true"><span style="width:${metrics.total ? Math.round(answeredCount / metrics.total * 100) : 0}%"></span></span></div></section><div class="today-metric-grid"><button class="today-metric-card is-new" type="button" data-menu-jump="my"><span>未回答</span><strong>${metrics.unanswered}<small>問</small></strong><small>問題一覧から続ける</small></button><button class="today-metric-card is-mastered" type="button" data-menu-jump="analysis"><span>習熟済み</span><strong>${metrics.mastered}<small>問</small></strong><small>最新1回が〇以上</small></button><button class="today-metric-card is-favorite" type="button" data-menu-jump="favorites"><span>お気に入り</span><strong>${favoriteCount}<small>問</small></strong><small>あとで見返す問題</small></button><button class="today-metric-card is-review" type="button" data-menu-jump="my"><span>全問題</span><strong>${metrics.total}<small>問</small></strong><small>この巻の問題一覧</small></button></div><section class="today-recent"><div class="today-section-heading"><div><p class="today-kicker">LATEST 10</p><h3>直近の回答 10件</h3></div><button type="button" data-menu-jump="my">問題一覧へ</button></div><div class="today-recent-list">${recentMarkup}</div></section></section>`;
+      }
+
+      // 旧セッションや外部リンクとの互換性を保つため、内部名だけ残す。
+      function renderTodayViewV159() {
+        return renderRecentHistoryViewV180();
       }
 
       function renderMenuCardsV16() {
@@ -8056,7 +8084,7 @@
         const collectionButton = event.target.closest("[data-collection-slug]");
         if (collectionButton) {
           const slug = String(collectionButton.dataset.collectionSlug || "");
-          if (slug && slug === String(sharedCollectionV46?.share_slug || "")) showMenuV16("my");
+          if (slug && slug === String(sharedCollectionV46?.share_slug || "")) showMenuV16(isSeriesParentCollectionV180(sharedCollectionV46) ? "collections" : "my");
           else navigateToCollectionV106(slug);
           return;
         }
@@ -8175,6 +8203,7 @@
 
       async function hydrateRemoteAnswerHistoryV81() {
         if (!window.NagaSupabase?.configured || !supabaseSessionV46 || !importedQuestionsReadyV81 || typeof window.NagaSupabase.loadMyAttempts !== "function") return 0;
+        if (isSeriesParentCollectionV180(sharedCollectionV46)) return 0;
         const userId = String(supabaseSessionV46.user?.id || "");
         const collectionSlug = String(sharedCollectionV46?.share_slug || "");
         const pagingGeneration = sharedQuestionPagingV177.generation;
@@ -8527,7 +8556,7 @@
 
       function scheduleSharedQuestionIndexPreparationV177() {
         if (!sharedQuestionPagingV177.shareSlug || sharedQuestionPagingV177.allLoaded) return;
-        const needsAll = menuViewV16 === "today" || menuViewV16 === "archive" || (menuViewV16 === "my" && menuRangeV60 === "all");
+        const needsAll = menuViewV16 === "archive" || (menuViewV16 === "my" && menuRangeV60 === "all");
         if (needsAll) void ensureSharedQuestionIndexAllV177();
       }
 
@@ -8540,6 +8569,9 @@
         sharedQuestionDetailsDeferredV170 = result.detailsDeferred === true;
         sharedQuestionDetailPromisesV170.clear();
         collectionLoadErrorV165 = "";
+        collectionVolumesV180 = [];
+        collectionVolumeProgressV180 = [];
+        collectionVolumesErrorV180 = "";
         rememberCollectionSlugV165(shareSlug);
         resetSharedQuestionPagingV177(shareSlug, result);
         const normalizedQuestions = adoptSharedQuestionRowsV66(result.questions || []);
@@ -8553,6 +8585,21 @@
         replaceQuestionsKeepingCurrentV177(normalizedQuestions.map(row => row.question));
         if (sharedQuestionPagingV177.totalCount === null && !sharedQuestionPagingV177.hasMore) sharedQuestionPagingV177.totalCount = normalizedQuestions.length;
         menuRangeV60 = sharedQuestionPagingV177.totalCount > SHARED_QUESTION_PAGE_SIZE_V177 ? sharedQuestionRangeKeyV177(0) : "all";
+        if (isSeriesParentCollectionV180(sharedCollectionV46)) {
+          collectionVolumesLoadingV180 = true;
+          try {
+            const [volumes, progress] = await Promise.all([
+              window.NagaSupabase.loadCollectionVolumes(shareSlug),
+              window.NagaSupabase.loadCollectionVolumeProgress(shareSlug)
+            ]);
+            collectionVolumesV180 = Array.isArray(volumes) ? volumes : [];
+            collectionVolumeProgressV180 = Array.isArray(progress) ? progress : [];
+          } catch (error) {
+            collectionVolumesErrorV180 = error?.message || "巻情報を読み込めませんでした。";
+          } finally {
+            collectionVolumesLoadingV180 = false;
+          }
+        }
         document.title = `${sharedCollectionV46.title}｜NAGA局面ドリル`;
         return true;
       }
@@ -8687,7 +8734,7 @@
           renderMenuCardsV16();
         });
         document.querySelectorAll("[data-menu-view]").forEach(button => button.addEventListener("click", () => showMenuV16(button.dataset.menuView)));
-        document.getElementById("quickStart").addEventListener("click", event => {
+        document.getElementById("quickStart")?.addEventListener("click", event => {
           const button = event.target.closest("[data-session-mode]");
           if (button) startSessionV44(button.dataset.sessionMode);
         });

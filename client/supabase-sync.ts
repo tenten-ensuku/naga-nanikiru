@@ -215,12 +215,22 @@ async function loadSharedQuestionIndexPage(shareSlug: string, options: SharedQue
 
 async function loadSharedCollection(shareSlug: string, options: SharedQuestionPageOptions = {}) {
   const supabase = requireClient();
-  const [collection, questions] = await Promise.all([
-    supabase.rpc("get_shared_collection", { p_share_slug: shareSlug }).maybeSingle(),
-    loadSharedQuestionIndexPage(shareSlug, options),
-  ]);
+  const collection = await supabase.rpc("get_shared_collection", { p_share_slug: shareSlug }).maybeSingle();
   if (collection.error) throw collection.error;
   if (!collection.data) throw new Error("指定された問題集が見つかりません。");
+  // シリーズ親は巻選択の入口。問題本体の取得を行わず、最初の画面を軽くする。
+  if (collection.data.is_series_parent === true) {
+    return {
+      collection: collection.data,
+      questions: [],
+      detailsDeferred: true,
+      hasMore: false,
+      totalCount: 0,
+      pageOffset: 0,
+      pageSize: 0,
+    };
+  }
+  const questions = await loadSharedQuestionIndexPage(shareSlug, options);
   return {
     collection: collection.data,
     questions: questions.rows,
@@ -230,6 +240,22 @@ async function loadSharedCollection(shareSlug: string, options: SharedQuestionPa
     pageOffset: questions.offset,
     pageSize: questions.limit,
   };
+}
+
+async function loadCollectionVolumes(shareSlug: string) {
+  const { data, error } = await requireClient().rpc("get_collection_volumes", {
+    p_share_slug: String(shareSlug ?? "").trim(),
+  });
+  if (error) throw error;
+  return data ?? [];
+}
+
+async function loadCollectionVolumeProgress(shareSlug: string) {
+  const { data, error } = await requireClient().rpc("get_collection_volume_progress", {
+    p_share_slug: String(shareSlug ?? "").trim(),
+  });
+  if (error) throw error;
+  return data ?? [];
 }
 
 async function loadSharedQuestionPage(shareSlug: string, options: SharedQuestionPageOptions = {}) {
@@ -722,6 +748,8 @@ function buildApi() {
     loadSharedCollection,
     loadSharedQuestionPage,
     loadSharedQuestionDetail,
+    loadCollectionVolumes,
+    loadCollectionVolumeProgress,
     loadMyCollections,
     loadCollectionDirectory,
     requestCollectionAccess,

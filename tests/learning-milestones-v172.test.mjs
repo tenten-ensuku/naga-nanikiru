@@ -52,20 +52,20 @@ test("V172 milestone transitions only fire when a collection crosses the complet
   )), { lap: false, mastery: false });
 });
 
-test("V172 renders an honest disabled today card and the celebration dialog", async () => {
+test("V180 renders recent history while keeping the celebration dialog", async () => {
   const html = await readFile(htmlUrl, "utf8");
-  const todayView = html.match(/function renderTodayViewV159\([\s\S]*?\n      function renderMenuCardsV16\(/)?.[0] || "";
+  const recentView = html.match(/function renderRecentHistoryViewV180\([\s\S]*?\n      function renderTodayViewV159\(/)?.[0] || "";
 
-  assert.match(html, /const APP_VERSION = 179;/);
+  assert.match(html, /const APP_VERSION = 180;/);
   assert.match(html, /id="learningCelebrationDialog"/);
   assert.match(html, /1周達成おめでとう！/);
   assert.match(html, /完全習得おめでとう！/);
   assert.match(html, /evaluateLearningMilestonesV172\(true\)/);
   assert.match(html, /learningMilestoneTransitions/);
-  assert.match(html, /disabled aria-disabled="true"/);
-  assert.match(html, /今日の10問はお休み中です/);
   assert.match(html, /最新1回が〇以上/);
-  assert.match(todayView, /todayQueueCandidatesV172\(\)/);
-  assert.match(todayView, /todayUnavailable/);
-  assert.doesNotMatch(todayView, /直近2回連続で◎/);
+  assert.match(recentView, /recent-history-dashboard/);
+  assert.match(recentView, /直近の回答 10件/);
+  assert.doesNotMatch(recentView, /todayQueueCandidatesV172\(\)/);
+  assert.doesNotMatch(recentView, /今日の10問/);
+  assert.doesNotMatch(recentView, /直近2回連続で◎/);
 });
