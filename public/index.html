@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=183">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=183">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=183">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=184">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=184">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=184">
   <title>NAGA局面ドリル｜何切る復習問題集</title>
   <meta name="description" content="NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリ。">
   <meta name="theme-color" content="#06131e">
@@ -2152,7 +2152,7 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=183">
+  <link rel="stylesheet" href="ux-v159.css?v=184">
 </head>
 <body>
   <main class="page">
@@ -2428,13 +2428,13 @@
   </dialog>
 
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=183"></script>
-  <script src="drill-ux-v44.js?v=183"></script>
+  <script src="supabase-sync-v48.js?v=184"></script>
+  <script src="drill-ux-v44.js?v=184"></script>
   <script src="naga-generator-v44.js"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 183;
+    const APP_VERSION = 184;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -3589,7 +3589,7 @@
         { version: 172, date: "2026-08-26", publishedAt: "2026-08-26T19:00:00+09:00", title: "一周達成と完全習得を祝うようにしました", body: "未回答がなくなったときは一周達成、最新1回の回答が〇以上で全問がそろったときは習熟度100％として祝福します。今日の10問に対象がないときは、達成をたたえる表示に切り替わります。" },
         { version: 176, date: "2026-08-26", publishedAt: "2026-08-26T21:00:00+09:00", title: "問題一覧のフィルターを見やすく整理しました", body: "問題範囲・ジャンル・フィルターを3段に整理し、直近の評価記号を問題一覧と同じ色で表示するようにしました。" },
         { version: 178, date: "2026-08-26", publishedAt: "2026-08-26T23:00:00+09:00", title: "大規模問題集の範囲切り替えを安定させました", body: "範囲の読み込みが重なったときに古い結果で表示を上書きしないようにし、取得に失敗した場合は元の範囲へ安全に戻します。100問目以降のお気に入り・アーカイブも初回読み込みで失わないようにしました。" },
-        { version: 183, date: "2026-08-29", publishedAt: "2026-08-29T13:00:00+09:00", title: "問題一覧をスマホで1行表示にしました", body: "直近5回の履歴記号をすべて表示し、重複していた状態ラベルを外して、問題名・履歴・お気に入り・アーカイブを1行で確認できるようにしました。" },
+        { version: 184, date: "2026-08-29", publishedAt: "2026-08-29T13:00:00+09:00", title: "巻管理と学習集計を整理しました", body: "アーカイブ済みの問題も全問題数と習熟度へ反映し、200問単位の巻追加に対応しました。問題一覧ではジャンルと直近履歴を一列で確認できます。" },
         { version: 182, date: "2026-08-29", publishedAt: "2026-08-29T12:00:00+09:00", title: "ピエール問題集の巻をカードから選べるようにしました", body: "ピエール問題集を選ぶと、そのカードの直後に1巻〜9巻の選択肢が展開されます。選択の起点を明確にし、巻選択まで迷わないようにしました。" },
         { version: 175, date: "2026-08-26", publishedAt: "2026-08-26T20:00:00+09:00", title: "回答状態を直近の評価ごとに絞り込めるようにしました", body: "問題一覧の回答状態を、未回答・直近×・直近△・直近〇・直近◎の5種類から複数選択できるようにしました。直近の回答だけを基準に、復習したい問題を正確に絞り込めます。" },
         { version: 168, date: "2026-08-26", publishedAt: "2026-08-26T15:00:00+09:00", title: "今日の10問を続きから再開できるようにしました", body: "問題集をまたいだ古いセッションで再開ボタンが反応しない問題を修正し、問題集ごとのセッション判定と旧問題キーの復元に対応しました。" },
@@ -4740,23 +4740,24 @@
 
       function renderCollectionVolumeChooserV180() {
         if (!isSeriesParentCollectionV180()) return "";
+        const seriesTitle = String(sharedCollectionV46?.series_title || sharedCollectionV46?.title || "問題集").trim() || "問題集";
         if (collectionVolumesLoadingV180) {
-          return `<section class="collection-volume-picker is-loading" aria-labelledby="collectionVolumeHeading"><div class="collection-volume-picker-head"><p class="collection-chooser-kicker">PIERRE COLLECTION</p><h4 id="collectionVolumeHeading">巻を選択</h4></div><p class="collection-volume-status">巻情報を読み込んでいます…</p></section>`;
+          return `<section class="collection-volume-picker is-loading" aria-labelledby="collectionVolumeHeading"><div class="collection-volume-picker-head"><p class="collection-chooser-kicker">COLLECTION / VOLUME</p><h4 id="collectionVolumeHeading">${escapeHtml(seriesTitle)}の巻を選択</h4></div><p class="collection-volume-status">巻情報を読み込んでいます…</p></section>`;
         }
         if (collectionVolumesErrorV180) {
-          return `<section class="collection-volume-picker is-error" aria-labelledby="collectionVolumeHeading"><div class="collection-volume-picker-head"><p class="collection-chooser-kicker">PIERRE COLLECTION</p><h4 id="collectionVolumeHeading">巻を選択</h4></div><p class="collection-volume-status">${escapeHtml(collectionVolumesErrorV180)}</p></section>`;
+          return `<section class="collection-volume-picker is-error" aria-labelledby="collectionVolumeHeading"><div class="collection-volume-picker-head"><p class="collection-chooser-kicker">COLLECTION / VOLUME</p><h4 id="collectionVolumeHeading">${escapeHtml(seriesTitle)}の巻を選択</h4></div><p class="collection-volume-status">${escapeHtml(collectionVolumesErrorV180)}</p></section>`;
         }
         const cards = collectionVolumesV180.map(volume => {
           const metrics = volumeProgressMetricsV180(volume);
           const number = Number(volume?.volume_number);
           const start = Number(volume?.volume_start);
           const end = Number(volume?.volume_end);
-          const title = String(volume?.title || `ピエール問題集 第${number}巻`);
+          const title = String(volume?.title || `${seriesTitle} 第${number}巻`);
           const range = Number.isInteger(start) && Number.isInteger(end) ? `問題${start}–${end}` : "問題範囲を準備中";
           return `<button class="collection-volume-card" type="button" data-collection-slug="${escapeHtml(String(volume?.share_slug || ""))}" data-volume-number="${Number.isInteger(number) ? number : ""}" aria-label="${escapeHtml(title)} ${escapeHtml(range)}を開く"><span class="collection-volume-number">${Number.isInteger(number) ? `第${number}巻` : "巻"}</span><strong>${escapeHtml(range)}</strong><span class="collection-volume-count">${metrics.questionCount}問</span><span class="collection-volume-progress">回答済み ${metrics.answeredCount} / ${metrics.questionCount}　・　習熟度 ${metrics.mastery}%</span><span class="collection-volume-arrow" aria-hidden="true">›</span></button>`;
         }).join("");
         const empty = `<p class="collection-volume-status">選択できる巻がありません。問題集の設定を確認してください。</p>`;
-        return `<section class="collection-volume-picker" aria-labelledby="collectionVolumeHeading"><div class="collection-volume-picker-head"><div><p class="collection-chooser-kicker">PIERRE COLLECTION / VOLUME</p><h4 id="collectionVolumeHeading">ピエール問題集の巻を選択</h4><p>巻を選ぶと、その巻の問題・回答履歴・習熟度だけを表示します。問題IDは全巻でそのまま引き継がれます。</p></div><span class="collection-volume-total">全${collectionVolumesV180.length}巻</span></div><div class="collection-volume-grid">${cards || empty}</div></section>`;
+        return `<section class="collection-volume-picker" aria-labelledby="collectionVolumeHeading"><div class="collection-volume-picker-head"><div><p class="collection-chooser-kicker">COLLECTION / VOLUME</p><h4 id="collectionVolumeHeading">${escapeHtml(seriesTitle)}の巻を選択</h4><p>巻を選ぶと、その巻の問題・回答履歴・習熟度だけを表示します。問題IDは全巻でそのまま引き継がれます。</p></div><span class="collection-volume-total">全${collectionVolumesV180.length}巻</span></div><div class="collection-volume-grid">${cards || empty}</div></section>`;
       }
 
       function renderCollectionChooserV165() {
@@ -5223,7 +5224,13 @@
           if (result && typeof result === "object") {
             return {
               id: result.question_id || result.id || null,
-              alreadyExists: result.already_exists === true
+              alreadyExists: result.already_exists === true,
+              capacityReached: result.capacity_reached === true || result.requires_volume_confirmation === true,
+              nextVolume: Number.isInteger(Number(result.next_volume)) ? Number(result.next_volume) : null,
+              parentShareSlug: result.parent_share_slug || null,
+              collectionTitle: result.collection_title || null,
+              questionCount: Number.isFinite(Number(result.question_count)) ? Number(result.question_count) : null,
+              volumeNumber: Number.isInteger(Number(result.volume_number)) ? Number(result.volume_number) : null
             };
           }
           return { id: result };
@@ -5291,6 +5298,24 @@
         const key = questionKeyV16(question);
         const snoozed = window.DrillUxV44?.isSnoozed?.(userStateV16, key, new Date()) || false;
         return !isHiddenV16(question) && !isTrashedV16(question) && !isArchivedV109(question) && !snoozed;
+      }
+
+      // アーカイブは出題対象から外れるが、問題集の総数と習熟判定からは外さない。
+      function isLearningScopeQuestionV184(question) {
+        return !isHiddenV16(question) && !isTrashedV16(question);
+      }
+
+      function learningScopeQuestionsV184(source = questionsV16) {
+        return (Array.isArray(source) ? source : []).filter(isLearningScopeQuestionV184);
+      }
+
+      function isMasteredForLearningV184(question) {
+        return isArchivedV109(question)
+          || Boolean(window.DrillUxV44?.isMasteredByRecentAnswers?.(userStateV16, questionKeyV16(question)));
+      }
+
+      function isAnsweredForLearningV184(question) {
+        return isArchivedV109(question) || Boolean(latestAnswerV44(question));
       }
 
       function archiveQuestionV109(question) {
@@ -5451,15 +5476,15 @@
       }
 
       function learningMetricsV172() {
-        const playable = questionsV16.filter(isPlayableV16);
-        const mastered = playable.filter(question => window.DrillUxV44?.isMasteredByRecentAnswers?.(userStateV16, questionKeyV16(question)));
-        const unanswered = playable.filter(question => !latestAnswerV44(question));
+        const learningQuestions = learningScopeQuestionsV184();
+        const mastered = learningQuestions.filter(isMasteredForLearningV184);
+        const unanswered = learningQuestions.filter(question => !isAnsweredForLearningV184(question));
         return {
           scopeKey: currentCollectionScopeKeyV167(),
-          total: playable.length,
+          total: learningQuestions.length,
           unanswered: unanswered.length,
           mastered: mastered.length,
-          masteryComplete: playable.length > 0 && mastered.length === playable.length
+          masteryComplete: learningQuestions.length > 0 && mastered.length === learningQuestions.length
         };
       }
 
@@ -5476,7 +5501,7 @@
       }
 
       function todayQueueCandidatesV172() {
-        const queue = window.DrillUxV44?.buildQueue?.({ questions: questionsV16, state: userStateV16, mode: "today", limit: 10, now: new Date() });
+        const queue = window.DrillUxV44?.buildQueue?.({ questions: questionsV16, state: userStateV16, archivedKeys: personalCollectionStateV131().archived, mode: "today", limit: 10, now: new Date() });
         return (Array.isArray(queue) ? queue : []).filter(question => question && isPlayableV16(question)).slice(0, 10);
       }
 
@@ -6504,7 +6529,7 @@
           return;
         }
         const unansweredOnly = mode === "unanswered" || mode === "range-unanswered";
-        const requested = explicitQuestions || window.DrillUxV44?.buildQueue?.({ questions: questionsV16, state: userStateV16, mode, limit: 10, now: new Date() }) || questionsV16.filter(isPlayableV16).slice(0, 10);
+        const requested = explicitQuestions || window.DrillUxV44?.buildQueue?.({ questions: questionsV16, state: userStateV16, archivedKeys: personalCollectionStateV131().archived, mode, limit: 10, now: new Date() }) || questionsV16.filter(isPlayableV16).slice(0, 10);
         const built = unansweredOnly ? requested.filter(question => isPlayableV16(question) && !latestAnswerV44(question)) : requested;
         const questionKeys = normalizedQueueKeysV44(built).slice(0, 10);
         if (!questionKeys.length) {
@@ -6761,10 +6786,11 @@
         syncBasicSequenceThemeV163();
         renderActiveCollectionContextV165();
         const learningMetrics = syncLearningMilestoneSnapshotV172().current;
-        const analytics = window.DrillUxV44?.analytics?.({ questions: questionsV16, state: userStateV16, now: new Date() }) || {};
+        const analytics = window.DrillUxV44?.analytics?.({ questions: questionsV16, state: userStateV16, masteredKeys: personalCollectionStateV131().archived, now: new Date() }) || {};
+        const learningQuestions = learningScopeQuestionsV184();
         const counts = {
           collections: collectionCatalogOptionsV100().length,
-          my: questionsV16.filter(question => isPlayableV16(question)).length,
+          my: learningQuestions.length,
           archive: questionsV16.filter(question => isArchivedV109(question)).length
         };
         document.querySelectorAll("[data-menu-view]").forEach(button => {
@@ -6779,27 +6805,27 @@
         });
         const summary = document.getElementById("menuSummary");
         const listView = ["my", "archive"].includes(menuViewV16);
-        const rangeQuestions = menuFilteredQuestionsV80();
-        const rangeAnswered = rangeQuestions.filter(question => latestAnswerV44(question));
-        const rangeUnanswered = rangeQuestions.length - rangeAnswered.length;
+        const rangeLearningQuestions = menuLearningSummaryQuestionsV184();
+        const rangeAnswered = rangeLearningQuestions.filter(isAnsweredForLearningV184);
+        const rangeUnanswered = rangeLearningQuestions.filter(question => !isAnsweredForLearningV184(question)).length;
         const sharedTotal = sharedQuestionKnownTotalV177();
         const partialAll = menuRangeV60 === "all"
           && sharedTotal !== null
           && !sharedQuestionPagingV177.allLoaded
-          && sharedTotal > rangeQuestions.length;
-        const visibleSummary = partialAll ? `${rangeQuestions.length} / ${sharedTotal}` : String(rangeQuestions.length);
+          && sharedTotal > rangeLearningQuestions.length;
+        const visibleSummary = partialAll ? `${rangeLearningQuestions.length} / ${sharedTotal}` : String(rangeLearningQuestions.length);
         summary.innerHTML = `<div class="menu-summary-stat"><small>この範囲の問題</small><strong>${visibleSummary}<em>問</em></strong></div><div class="menu-summary-stat${rangeUnanswered ? " is-alert" : ""}"><small>未回答</small><strong>${rangeUnanswered}<em>問</em></strong></div><div class="menu-summary-stat"><small>回答済み</small><strong>${rangeAnswered.length}<em>問</em></strong></div>`;
         summary.hidden = !listView;
         const rangeTarget = document.getElementById("menuRangeTarget");
-        if (rangeTarget) rangeTarget.textContent = partialAll ? `先頭${rangeQuestions.length}問を表示中（全${sharedTotal}問）` : `${rangeQuestions.length}問が対象`;
+        if (rangeTarget) rangeTarget.textContent = partialAll ? `先頭${rangeLearningQuestions.length}問を表示中（全${sharedTotal}問）` : `${rangeLearningQuestions.length}問が対象`;
         const rangeCount = document.getElementById("menuRangeCount");
-        if (rangeCount) rangeCount.textContent = partialAll ? `全${sharedTotal}問` : menuRangeV60 === "all" ? `全${rangeQuestions.length}問` : `${rangeQuestions.length}問`;
-        const allPlayable = questionsV16.filter(isPlayableV16);
-        const allAnswered = allPlayable.filter(question => latestAnswerV44(question)).length;
-        const progress = allPlayable.length ? Math.round(allAnswered / allPlayable.length * 100) : 0;
+        if (rangeCount) rangeCount.textContent = partialAll ? `全${sharedTotal}問` : menuRangeV60 === "all" ? `全${rangeLearningQuestions.length}問` : `${rangeLearningQuestions.length}問`;
+        const allLearningQuestions = learningScopeQuestionsV184();
+        const allAnswered = allLearningQuestions.filter(isAnsweredForLearningV184).length;
+        const progress = allLearningQuestions.length ? Math.round(allAnswered / allLearningQuestions.length * 100) : 0;
         const masteredCount = learningMetrics.mastered;
-        const mastery = allPlayable.length ? Math.round(masteredCount / allPlayable.length * 100) : 0;
-        document.getElementById("menuSidebarProgress").innerHTML = `<span class="menu-sidebar-progress-title">学習の進捗</span><div class="menu-progress-metric"><div class="menu-progress-metric-head"><span class="menu-progress-metric-label">回答率</span><strong class="menu-progress-metric-value">${progress}%</strong></div><span class="menu-progress-metric-note">${allAnswered} / ${allPlayable.length}問を回答済み</span><span class="menu-sidebar-progress-track" aria-hidden="true"><span class="menu-sidebar-progress-fill" style="width:${progress}%"></span></span></div><div class="menu-progress-metric menu-progress-mastery"><div class="menu-progress-metric-head"><span class="menu-progress-metric-label">習熟度</span><strong class="menu-progress-metric-value">${mastery}%</strong></div><span class="menu-progress-metric-note">${masteredCount} / ${allPlayable.length}問が習熟（直近1回が〇以上）</span><span class="menu-sidebar-progress-track" aria-hidden="true"><span class="menu-sidebar-progress-fill is-mastery" style="width:${mastery}%"></span></span></div>`;
+        const mastery = allLearningQuestions.length ? Math.round(masteredCount / allLearningQuestions.length * 100) : 0;
+        document.getElementById("menuSidebarProgress").innerHTML = `<span class="menu-sidebar-progress-title">学習の進捗</span><div class="menu-progress-metric"><div class="menu-progress-metric-head"><span class="menu-progress-metric-label">回答率</span><strong class="menu-progress-metric-value">${progress}%</strong></div><span class="menu-progress-metric-note">${allAnswered} / ${allLearningQuestions.length}問を回答済み</span><span class="menu-sidebar-progress-track" aria-hidden="true"><span class="menu-sidebar-progress-fill" style="width:${progress}%"></span></span></div><div class="menu-progress-metric menu-progress-mastery"><div class="menu-progress-metric-head"><span class="menu-progress-metric-label">習熟度</span><strong class="menu-progress-metric-value">${mastery}%</strong></div><span class="menu-progress-metric-note">${masteredCount} / ${allLearningQuestions.length}問が習熟（直近1回が〇以上またはアーカイブ）</span><span class="menu-sidebar-progress-track" aria-hidden="true"><span class="menu-sidebar-progress-fill is-mastery" style="width:${mastery}%"></span></span></div>`;
         const copy = MENU_VIEW_COPY_V16[menuViewV16];
         const menuOrderSelect = document.getElementById("menuOrderSelect");
         const isBasicSequence = isBasicSequenceCollectionV163();
@@ -6898,12 +6924,21 @@
         if (typeof filterQuestions !== "function") return null;
         const statuses = menuStatusFiltersV92.length ? menuStatusFiltersV92 : ["all"];
         const allowedKeys = new Set();
-        const options = { questions: questionsV16, state: userStateV16, view: menuViewV16 === "archive" ? "all" : menuViewV16, query: menuSearchV44, type: menuTypeV44, now: new Date() };
+        const options = { questions: questionsV16, state: userStateV16, masteredKeys: personalCollectionStateV131().archived, view: ["my", "archive"].includes(menuViewV16) ? "all" : menuViewV16, query: menuSearchV44, type: menuTypeV44, now: new Date() };
         statuses.forEach(status => {
           const filtered = filterQuestions({ ...options, status });
           if (Array.isArray(filtered)) filtered.forEach(question => allowedKeys.add(questionKeyV16(question)));
         });
         return questionsV16.filter(question => allowedKeys.has(questionKeyV16(question)));
+      }
+
+      function menuLearningSummaryQuestionsV184() {
+        const filteredByHelper = menuStatusFilteredQuestionsV92();
+        const sourceQuestions = (Array.isArray(filteredByHelper) ? filteredByHelper : questionsV16).filter(isLearningScopeQuestionV184);
+        return sourceQuestions
+          .filter(menuRangeMatchesV60)
+          .filter(question => menuViewV16 !== "archive" || isArchivedV109(question))
+          .filter(question => !menuFavoritesOnlyV137 || isFavoriteV16(question));
       }
 
       function menuFilteredQuestionsV80() {
@@ -7121,7 +7156,7 @@
       }
 
       function renderAnalysisViewV44() {
-        const stats = window.DrillUxV44?.analytics?.({ questions: questionsV16, state: userStateV16, now: new Date() }) || {};
+        const stats = window.DrillUxV44?.analytics?.({ questions: questionsV16, state: userStateV16, masteredKeys: personalCollectionStateV131().archived, now: new Date() }) || {};
         const attempts = stats.totalAttempts ?? userStateV16.answerHistory.length;
         const averageSeconds = attempts ? ((stats.averageResponseTimeMs ?? 0) / 1000).toFixed(1) : "0.0";
         const safeCount = (stats.scoreCounts?.["◎"] || 0) + (stats.scoreCounts?.["〇"] || 0);
@@ -7308,9 +7343,9 @@
 
       function renderRecentHistoryViewV180() {
         const metrics = learningMetricsV172();
-        const playable = questionsV16.filter(isPlayableV16);
-        const answeredCount = playable.filter(question => latestAnswerV44(question)).length;
-        const favoriteCount = playable.filter(isFavoriteV16).length;
+        const learningQuestions = learningScopeQuestionsV184();
+        const answeredCount = learningQuestions.filter(isAnsweredForLearningV184).length;
+        const favoriteCount = learningQuestions.filter(isFavoriteV16).length;
         const session = activeSessionV44();
         const sessionTotal = Number(session?.questionKeys?.length || 0);
         const sessionCurrent = session ? Math.min(sessionTotal, Number(session.cursor || 0) + 1) : 0;
@@ -7425,7 +7460,7 @@
             : canArchiveFromMenuV131(question)
             ? `<button class="menu-card-icon-action is-archived" type="button" data-menu-action="archive" data-question-index="${index}" aria-label="問題${question.number}をアーカイブに移す" title="直近の結果が◎です。問題集ごとのアーカイブに移します">${menuArchiveIconV109()}</button>`
             : `<span class="menu-card-icon-placeholder" aria-hidden="true"></span>`;
-          return `<article class="menu-card"><button class="menu-card-open" type="button" data-question-index="${index}" title="問題${question.number}（${escapeHtml(typeMetadata)}）を開く"><span class="menu-card-heading"><span class="menu-card-title">${title}</span><span class="menu-card-notification">${commentNotice}</span></span><span class="menu-card-meta">${escapeHtml(typeMetadata)}</span></button><span class="menu-card-latest${scores.length ? "" : " is-empty"}" aria-label="${escapeHtml(historyLabel)}" title="${escapeHtml(historyLabel)}">${history}</span><button class="menu-card-icon-action${favorite ? " is-active" : ""}" type="button" data-menu-action="favorite" data-question-index="${index}" aria-pressed="${favorite}" aria-label="${escapeHtml(favoriteLabel)}" title="${escapeHtml(favoriteLabel)}">${favorite ? "★" : "☆"}</button>${archiveMarkup}</article>`;
+          return `<article class="menu-card"><button class="menu-card-open" type="button" data-question-index="${index}" title="問題${question.number}（${escapeHtml(typeMetadata)}）を開く"><span class="menu-card-heading"><span class="menu-card-title">${title}</span><span class="menu-card-meta">${escapeHtml(typeMetadata)}</span><span class="menu-card-notification">${commentNotice}</span></span></button><span class="menu-card-latest${scores.length ? "" : " is-empty"}" aria-label="${escapeHtml(historyLabel)}" title="${escapeHtml(historyLabel)}">${history}</span><button class="menu-card-icon-action${favorite ? " is-active" : ""}" type="button" data-menu-action="favorite" data-question-index="${index}" aria-pressed="${favorite}" aria-label="${escapeHtml(favoriteLabel)}" title="${escapeHtml(favoriteLabel)}">${favorite ? "★" : "☆"}</button>${archiveMarkup}</article>`;
         }).join("");
       }
 
@@ -7989,8 +8024,27 @@
           visibility: destination.kind === "shared" ? "unlisted" : "private"
         };
         if (destination.kind === "shared") {
+          let remote;
           try {
-            const remote = await invokeSharedMutationV47("add", { question, shareSlug: destination.shareSlug });
+            remote = await invokeSharedMutationV47("add", { question, shareSlug: destination.shareSlug });
+            if (remote?.capacityReached) {
+              const nextVolume = Number.isInteger(remote.nextVolume) && remote.nextVolume > 0 ? remote.nextVolume : 2;
+              const parentShareSlug = String(remote.parentShareSlug || destination.row?.series_parent_slug || destination.shareSlug || "");
+              const collectionLabel = String(remote.collectionTitle || destination.label || "この問題集");
+              const questionCount = Number.isFinite(remote.questionCount) ? `（現在${remote.questionCount}問）` : "";
+              const message = `問題集の上限に達しました。${nextVolume}巻を作成し、そちらに追加しますか？\n${collectionLabel}${questionCount}`;
+              if (!window.confirm(message)) {
+                setGeneratorStatusV44(`${collectionLabel}への追加を見送りました。`, false);
+                return false;
+              }
+              if (!parentShareSlug || typeof window.NagaSupabase?.createCollectionVolume !== "function") {
+                throw new Error("次の巻を作成する保存APIが未接続です。ページを再読み込みしてお試しください。");
+              }
+              setGeneratorStatusV44(`${nextVolume}巻を準備して、問題を追加しています…`);
+              await window.NagaSupabase.createCollectionVolume(parentShareSlug, nextVolume);
+              remote = await invokeSharedMutationV47("add", { question, shareSlug: parentShareSlug });
+              if (remote?.capacityReached) throw new Error("次の巻を作成しましたが、問題の追加先を確定できませんでした。問題集を開き直してお試しください。");
+            }
             question.serverQuestionId = remote?.id || remote?.question_id || null;
             if (remote?.alreadyExists && question.serverQuestionId) {
               generatorAddedKeysV130.add(duplicateKey);

@@ -515,7 +515,16 @@ async function createSharedQuestion(input: {
     p_decision_type: input.decisionType ?? "discard",
   });
   if (error) throw error;
-  return data as string;
+  return data as unknown;
+}
+
+async function createCollectionVolume(shareSlug: string, volumeNumber: number | null = null) {
+  const { data, error } = await requireClient().rpc("create_collection_volume", {
+    p_share_slug: shareSlug,
+    p_volume_number: volumeNumber,
+  });
+  if (error) throw error;
+  return data as unknown;
 }
 
 async function updateSharedQuestion(questionId: string, title: string, payload: Record<string, unknown>) {
@@ -773,6 +782,7 @@ function buildApi() {
     loadMyAttemptsForCollection,
     getMyCapabilities,
     createSharedQuestion,
+    createCollectionVolume,
     updateSharedQuestion,
     trashSharedQuestion,
     restoreSharedQuestion,

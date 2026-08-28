@@ -513,13 +513,14 @@
     var state = migrateState(settings.state);
     var mode = normalizedMode(settings.mode);
     var now = settings.now;
+    var archivedKeys = settings.archivedKeys;
     var latest = latestAnswerMap(state);
     var seen = Object.create(null);
     var candidates = [];
 
     questions.forEach(function (question, index) {
       var key = questionKey(question);
-      if (!key || seen[key] || !isPlayable(state, question, now)) {
+      if (!key || seen[key] || hasKey(archivedKeys, key) || !isPlayable(state, question, now)) {
         return;
       }
       seen[key] = true;
@@ -707,6 +708,7 @@
     var questions = Array.isArray(settings.questions) ? settings.questions : [];
     var state = migrateState(settings.state);
     var entries = historyArray(state).slice();
+    var masteredKeys = settings.masteredKeys;
     var summary = summarizeAnswers(entries);
     var questionMap = Object.create(null);
     questions.forEach(function (question) {
@@ -735,7 +737,7 @@
       if (!key || masteredSeen[key]) {
         return;
       }
-      if (isMasteredByRecentAnswers(state, key)) {
+      if (hasKey(masteredKeys, key) || isMasteredByRecentAnswers(state, key)) {
         masteredSeen[key] = true;
         masteredCount += 1;
       }
@@ -767,7 +769,7 @@
     }).map(String);
   }
 
-  function statusMatches(status, state, question, latest, now) {
+  function statusMatches(status, state, question, latest, now, masteredKeys) {
     var value = String(status || "all").toLowerCase();
     var key = questionKey(question);
     var entry = latest[key];
@@ -796,7 +798,7 @@
       return hasLatestAnswerMark(state, key, "◎");
     }
     if (value === "mastered") {
-      return isMasteredByRecentAnswers(state, key);
+      return hasKey(masteredKeys, key) || isMasteredByRecentAnswers(state, key);
     }
     if (value === "snoozed") {
       return isSnoozed(state, key, now);
@@ -848,7 +850,7 @@
       if (!viewMatches(settings.view, state, question, latest, settings.now)) {
         return false;
       }
-      if (!statusMatches(settings.status, state, question, latest, settings.now)) {
+      if (!statusMatches(settings.status, state, question, latest, settings.now, settings.masteredKeys)) {
         return false;
       }
       if (type !== "all" && type !== "any" && questionType(question) !== type) {
