@@ -5,15 +5,17 @@ import test from "node:test";
 const htmlUrl = new URL("../public/index.html", import.meta.url);
 const clientUrl = new URL("../client/supabase-sync.ts", import.meta.url);
 const migrationUrl = new URL("../supabase/migrations/20260828170511_pierre_collection_volumes_v180.sql", import.meta.url);
+const accessContractMigrationUrl = new URL("../supabase/migrations/20260828174157_pierre_collection_access_contract_v181.sql", import.meta.url);
 
 test("V180 defines the Pierre volume boundaries without changing question IDs", async () => {
-  const [html, client, migration] = await Promise.all([
+  const [html, client, migration, accessContractMigration] = await Promise.all([
     readFile(htmlUrl, "utf8"),
     readFile(clientUrl, "utf8"),
     readFile(migrationUrl, "utf8"),
+    readFile(accessContractMigrationUrl, "utf8"),
   ]);
 
-  assert.match(html, /const APP_VERSION = 180;/);
+  assert.match(html, /const APP_VERSION = 181;/);
   assert.match(migration, /\(1, 1, 200\)/);
   assert.match(migration, /\(2, 201, 400\)/);
   assert.match(migration, /\(3, 401, 600\)/);
@@ -30,6 +32,9 @@ test("V180 defines the Pierre volume boundaries without changing question IDs", 
   assert.match(migration, /get_collection_volumes/);
   assert.match(migration, /get_collection_volume_progress/);
   assert.match(migration, /series_parent_id is null/);
+  assert.match(accessContractMigration, /can_view boolean/);
+  assert.match(accessContractMigration, /owner_name text/);
+  assert.match(accessContractMigration, /private\.can_access_collection\(c\.id\)/);
   assert.match(client, /is_series_parent === true/);
   assert.match(client, /loadCollectionVolumes/);
   assert.match(client, /loadCollectionVolumeProgress/);
@@ -48,6 +53,7 @@ test("V180 uses the parent as a lightweight entry point and scopes personal mark
   assert.match(html, /Number\(volume\?\.volume_start\)/);
   assert.match(html, /Number\(volume\?\.volume_end\)/);
   assert.match(html, /sharedCollectionV46\?\.series_parent_slug \|\| sharedCollectionV46\?\.share_slug/);
+  assert.match(html, /sharedCollectionV46\?\.series_parent_id\s*\n?\s*\? "all"/);
   assert.match(recentView, /直近の回答 10件/);
   assert.doesNotMatch(recentView, /todayQueueCandidatesV172\(\)/);
   assert.doesNotMatch(recentView, /今日の10問/);
