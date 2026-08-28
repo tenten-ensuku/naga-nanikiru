@@ -2446,10 +2446,6 @@ button:disabled {
     font-size: 9px;
   }
 
-  .page.menu-active .menu-card-latest-mark:nth-child(n + 4) {
-    display: none;
-  }
-
   .page.menu-active .candidate-choice-row {
     grid-template-columns: repeat(4, minmax(42px, 1fr));
   }
@@ -3783,5 +3779,140 @@ button:disabled {
     flex: 1 1 126px;
     justify-content: center;
     padding-inline: 10px;
+  }
+}
+
+/* V183: keep question rows scannable by putting the title, five latest marks, and actions on one line. */
+.page.menu-active .menu-list-header,
+.page.menu-active .menu-card {
+  grid-template-columns: minmax(220px, 1fr) minmax(120px, 190px) 58px 58px;
+  grid-template-rows: none;
+  grid-template-areas: none;
+  column-gap: 12px;
+}
+
+.page.menu-active .menu-list-header {
+  min-height: 38px;
+}
+
+.page.menu-active .menu-card {
+  min-height: 62px;
+  padding: 7px 16px;
+}
+
+.page.menu-active .menu-card-status {
+  display: none;
+}
+
+.page.menu-active .menu-card-latest-mark {
+  display: inline-grid;
+}
+
+@media (max-width: 1100px) {
+  .page.menu-active .menu-list-header,
+  .page.menu-active .menu-card {
+    grid-template-columns: minmax(180px, 1fr) minmax(110px, 155px) 48px 48px;
+    column-gap: 8px;
+  }
+}
+
+@media (max-width: 800px) {
+  .page.menu-active .menu-card {
+    grid-template-columns: minmax(0, 1fr) max-content 38px 38px;
+    min-height: 56px;
+    padding: 5px;
+    column-gap: 4px;
+  }
+
+  .page.menu-active .menu-card-open {
+    display: flex;
+    align-items: center;
+    min-height: 36px;
+    padding: 0;
+    grid-area: auto;
+  }
+
+  .page.menu-active .menu-card-heading {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    min-width: 0;
+  }
+
+  .page.menu-active .menu-card-title {
+    overflow: hidden;
+    font-size: 15px;
+    line-height: 1.1;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .page.menu-active .menu-card-meta {
+    display: none;
+  }
+
+  .page.menu-active .menu-card-latest {
+    min-height: 36px;
+    gap: 0;
+    justify-content: flex-end;
+    overflow: visible;
+    font-size: 18px;
+    grid-area: auto;
+  }
+
+  .page.menu-active .menu-card-latest-mark {
+    display: inline-grid;
+    width: 18px;
+    height: 28px;
+    font-size: 18px;
+  }
+
+  .page.menu-active .menu-card-icon-action,
+  .page.menu-active .menu-card-icon-placeholder {
+    width: 36px;
+    min-height: 36px;
+    grid-area: auto;
+  }
+
+  .page.menu-active .menu-card-icon-action {
+    font-size: 21px;
+  }
+}
+
+@media (max-width: 480px) {
+  .page.menu-active .menu-card {
+    grid-template-columns: minmax(0, 1fr) max-content 34px 34px;
+    min-height: 54px;
+    padding: 4px;
+    column-gap: 3px;
+  }
+
+  .page.menu-active .menu-card-open {
+    min-height: 34px;
+  }
+
+  .page.menu-active .menu-card-title {
+    font-size: 14px;
+  }
+
+  .page.menu-active .menu-card-latest {
+    min-height: 34px;
+    font-size: 17px;
+  }
+
+  .page.menu-active .menu-card-latest-mark {
+    width: 16px;
+    height: 24px;
+    font-size: 17px;
+  }
+
+  .page.menu-active .menu-card-icon-action,
+  .page.menu-active .menu-card-icon-placeholder {
+    width: 34px;
+    min-height: 34px;
+  }
+
+  .page.menu-active .menu-card-icon-action {
+    font-size: 19px;
   }
 }

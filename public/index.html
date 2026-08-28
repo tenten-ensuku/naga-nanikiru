@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=182">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=182">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=182">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=183">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=183">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=183">
   <title>NAGA局面ドリル｜何切る復習問題集</title>
   <meta name="description" content="NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリ。">
   <meta name="theme-color" content="#06131e">
@@ -2152,7 +2152,7 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=182">
+  <link rel="stylesheet" href="ux-v159.css?v=183">
 </head>
 <body>
   <main class="page">
@@ -2240,7 +2240,7 @@
           <label class="menu-order-control" for="menuOrderSelect" title="次の問題へ進む順序を選びます"><span>出題順</span><select id="menuOrderSelect" aria-label="出題順"><option value="sequential">順番</option><option value="reverse">逆順</option><option value="random">ランダム（解答数が少ない順）</option></select></label>
           <button class="menu-range-action primary" type="button" data-range-session="all" title="現在の範囲から10問の学習を始めます">10問解く <span aria-hidden="true">→</span></button>
         </div>
-        <div class="menu-list-header" id="menuListHeader" aria-hidden="true"><span title="問題のタイトルとジャンル">問題</span><span title="現在の回答状態">状態</span><span title="直近5回の採点履歴">最近の成績</span><span title="この問題集でのログインユーザー個人のお気に入り">お気に入り</span><span title="直近の結果が◎の問題だけ、ここからアーカイブに移せます">アーカイブ</span></div>
+        <div class="menu-list-header" id="menuListHeader" aria-hidden="true"><span title="問題のタイトル">問題</span><span title="直近5回の採点履歴">最近の成績</span><span title="この問題集でのログインユーザー個人のお気に入り">お気に入り</span><span title="直近の結果が◎の問題だけ、ここからアーカイブに移せます">アーカイブ</span></div>
         <div class="menu-grid" id="menuGrid"></div>
         <div class="menu-load-more" id="menuLoadMore" hidden></div>
         <div class="menu-empty" id="menuEmpty" hidden></div>
@@ -2428,13 +2428,13 @@
   </dialog>
 
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=182"></script>
-  <script src="drill-ux-v44.js?v=182"></script>
+  <script src="supabase-sync-v48.js?v=183"></script>
+  <script src="drill-ux-v44.js?v=183"></script>
   <script src="naga-generator-v44.js"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 182;
+    const APP_VERSION = 183;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -3589,6 +3589,7 @@
         { version: 172, date: "2026-08-26", publishedAt: "2026-08-26T19:00:00+09:00", title: "一周達成と完全習得を祝うようにしました", body: "未回答がなくなったときは一周達成、最新1回の回答が〇以上で全問がそろったときは習熟度100％として祝福します。今日の10問に対象がないときは、達成をたたえる表示に切り替わります。" },
         { version: 176, date: "2026-08-26", publishedAt: "2026-08-26T21:00:00+09:00", title: "問題一覧のフィルターを見やすく整理しました", body: "問題範囲・ジャンル・フィルターを3段に整理し、直近の評価記号を問題一覧と同じ色で表示するようにしました。" },
         { version: 178, date: "2026-08-26", publishedAt: "2026-08-26T23:00:00+09:00", title: "大規模問題集の範囲切り替えを安定させました", body: "範囲の読み込みが重なったときに古い結果で表示を上書きしないようにし、取得に失敗した場合は元の範囲へ安全に戻します。100問目以降のお気に入り・アーカイブも初回読み込みで失わないようにしました。" },
+        { version: 183, date: "2026-08-29", publishedAt: "2026-08-29T13:00:00+09:00", title: "問題一覧をスマホで1行表示にしました", body: "直近5回の履歴記号をすべて表示し、重複していた状態ラベルを外して、問題名・履歴・お気に入り・アーカイブを1行で確認できるようにしました。" },
         { version: 182, date: "2026-08-29", publishedAt: "2026-08-29T12:00:00+09:00", title: "ピエール問題集の巻をカードから選べるようにしました", body: "ピエール問題集を選ぶと、そのカードの直後に1巻〜9巻の選択肢が展開されます。選択の起点を明確にし、巻選択まで迷わないようにしました。" },
         { version: 175, date: "2026-08-26", publishedAt: "2026-08-26T20:00:00+09:00", title: "回答状態を直近の評価ごとに絞り込めるようにしました", body: "問題一覧の回答状態を、未回答・直近×・直近△・直近〇・直近◎の5種類から複数選択できるようにしました。直近の回答だけを基準に、復習したい問題を正確に絞り込めます。" },
         { version: 168, date: "2026-08-26", publishedAt: "2026-08-26T15:00:00+09:00", title: "今日の10問を続きから再開できるようにしました", body: "問題集をまたいだ古いセッションで再開ボタンが反応しない問題を修正し、問題集ごとのセッション判定と旧問題キーの復元に対応しました。" },
@@ -7416,8 +7417,6 @@
           const historyLabel = scores.length ? `直近${scores.length}回の採点履歴：${scores.map(entry => `${entry.scoreMark} ${entry.scoreLabel || scoreForQuestionV16(question, entry)?.label || "採点結果"}`).join("、")}` : "採点履歴はまだありません";
           const history = scores.length ? scores.map(entry => `<span class="menu-card-latest-mark ${menuScoreMarkClassV63(entry.scoreMark)}" title="${escapeHtml(entry.scoreLabel || scoreForQuestionV16(question, entry)?.label || "採点結果")}">${escapeHtml(entry.scoreMark)}</span>`).join("") : "—";
           const typeMetadata = questionTypeV44(question);
-          const status = menuRowStatusV63(question);
-          const statusMarkup = `<span class="menu-row-status ${status.className}" title="問題の現在の回答状態">${status.label}</span>`;
           const favoriteLabel = favorite ? `問題${question.number}のお気に入りを解除` : `問題${question.number}をお気に入りに追加`;
           const commentNoticeCount = commentNotificationCountForQuestionV65(question);
           const commentNotice = notificationBadgeMarkupV65(commentNoticeCount, `問題${question.number}の新着コメント${commentNoticeCount}件`, `data-menu-question-notification="${escapeHtml(questionKeyV16(question))}"`);
@@ -7426,7 +7425,7 @@
             : canArchiveFromMenuV131(question)
             ? `<button class="menu-card-icon-action is-archived" type="button" data-menu-action="archive" data-question-index="${index}" aria-label="問題${question.number}をアーカイブに移す" title="直近の結果が◎です。問題集ごとのアーカイブに移します">${menuArchiveIconV109()}</button>`
             : `<span class="menu-card-icon-placeholder" aria-hidden="true"></span>`;
-          return `<article class="menu-card"><button class="menu-card-open" type="button" data-question-index="${index}" title="問題${question.number}を開く"><span class="menu-card-heading"><span class="menu-card-title">${title}</span><span class="menu-card-notification">${commentNotice}</span></span><span class="menu-card-meta">${escapeHtml(typeMetadata)}</span></button><div class="menu-card-status">${statusMarkup}</div><span class="menu-card-latest${scores.length ? "" : " is-empty"}" aria-label="${escapeHtml(historyLabel)}" title="${escapeHtml(historyLabel)}">${history}</span><button class="menu-card-icon-action${favorite ? " is-active" : ""}" type="button" data-menu-action="favorite" data-question-index="${index}" aria-pressed="${favorite}" aria-label="${escapeHtml(favoriteLabel)}" title="${escapeHtml(favoriteLabel)}">${favorite ? "★" : "☆"}</button>${archiveMarkup}</article>`;
+          return `<article class="menu-card"><button class="menu-card-open" type="button" data-question-index="${index}" title="問題${question.number}（${escapeHtml(typeMetadata)}）を開く"><span class="menu-card-heading"><span class="menu-card-title">${title}</span><span class="menu-card-notification">${commentNotice}</span></span><span class="menu-card-meta">${escapeHtml(typeMetadata)}</span></button><span class="menu-card-latest${scores.length ? "" : " is-empty"}" aria-label="${escapeHtml(historyLabel)}" title="${escapeHtml(historyLabel)}">${history}</span><button class="menu-card-icon-action${favorite ? " is-active" : ""}" type="button" data-menu-action="favorite" data-question-index="${index}" aria-pressed="${favorite}" aria-label="${escapeHtml(favoriteLabel)}" title="${escapeHtml(favoriteLabel)}">${favorite ? "★" : "☆"}</button>${archiveMarkup}</article>`;
         }).join("");
       }
 

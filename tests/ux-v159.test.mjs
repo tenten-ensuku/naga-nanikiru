@@ -13,9 +13,9 @@ test("V180 exposes the recent-history shell and synchronized release assets", as
     readFile(identityUrl, "utf8"),
   ]);
 
-  assert.match(html, /const APP_VERSION = 182;/);
-  assert.match(identity, /APP_VERSION = 182/);
-  assert.match(html, /ux-v159\.css\?v=182/);
+  assert.match(html, /const APP_VERSION = 183;/);
+  assert.match(identity, /APP_VERSION = 183/);
+  assert.match(html, /ux-v159\.css\?v=183/);
   assert.match(html, /data-menu-view="today"/);
   assert.match(html, /最近の履歴/);
   assert.doesNotMatch(html, /<span class="quick-start-title">今日の10問/);
@@ -195,4 +195,17 @@ test("V169 keeps question organization on the answered-question screen only", as
   const answerRender = html.match(/function renderAnswerV16\(\)[\s\S]*?\n      function selectCallV16/)?.[0] || "";
   assert.match(answerRender, /if \(!state\.revealed\)/);
   assert.match(answerRender, /answerStrip\.hidden = true/);
+});
+
+test("V183 keeps five latest marks and makes question rows one line", async () => {
+  const [html, css] = await Promise.all([readFile(indexUrl, "utf8"), readFile(cssUrl, "utf8")]);
+  const menuRender = html.match(/function renderMenuCardsV16\(\)[\s\S]*?\n      function openQuestionManageV44/)?.[0] || "";
+  const menuHeader = html.match(/<div class="menu-list-header"[\s\S]*?<\/div>/)?.[0] || "";
+  assert.doesNotMatch(menuHeader, />状態</);
+  assert.doesNotMatch(menuRender, /menu-card-status/);
+  assert.match(menuRender, /recentScoresV16\(question\)/);
+  assert.match(menuRender, /menu-card-latest-mark/);
+  assert.match(css, /V183: keep question rows scannable/);
+  assert.match(css, /grid-template-columns: minmax\(0, 1fr\) max-content 34px 34px/);
+  assert.doesNotMatch(css, /menu-card-latest-mark:nth-child\(n \+ 4\)[\s\S]*?display:\s*none/);
 });
