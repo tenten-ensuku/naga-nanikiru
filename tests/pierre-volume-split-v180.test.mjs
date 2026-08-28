@@ -15,7 +15,7 @@ test("V180 defines the Pierre volume boundaries without changing question IDs", 
     readFile(accessContractMigrationUrl, "utf8"),
   ]);
 
-  assert.match(html, /const APP_VERSION = 181;/);
+  assert.match(html, /const APP_VERSION = 182;/);
   assert.match(migration, /\(1, 1, 200\)/);
   assert.match(migration, /\(2, 201, 400\)/);
   assert.match(migration, /\(3, 401, 600\)/);
@@ -54,6 +54,9 @@ test("V180 uses the parent as a lightweight entry point and scopes personal mark
   assert.match(html, /Number\(volume\?\.volume_end\)/);
   assert.match(html, /sharedCollectionV46\?\.series_parent_slug \|\| sharedCollectionV46\?\.share_slug/);
   assert.match(html, /sharedCollectionV46\?\.series_parent_id\s*\n?\s*\? "all"/);
+  assert.match(html, /collection-choice-card-expansion/);
+  assert.match(html, /current && isSeriesParentCollectionV180\(row\)/);
+  assert.doesNotMatch(html, /const volumePicker = renderCollectionVolumeChooserV180\(\)/);
   assert.match(recentView, /直近の回答 10件/);
   assert.doesNotMatch(recentView, /todayQueueCandidatesV172\(\)/);
   assert.doesNotMatch(recentView, /今日の10問/);
