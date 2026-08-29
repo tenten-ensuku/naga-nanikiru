@@ -5,6 +5,7 @@ import test from "node:test";
 const indexUrl = new URL("../public/index.html", import.meta.url);
 const cssUrl = new URL("../public/ux-v159.css", import.meta.url);
 const identityUrl = new URL("../app/lib/appIdentity.ts", import.meta.url);
+const kanMigrationUrl = new URL("../supabase/migrations/20260829230033_repair_kan_in_question_1603_v200.sql", import.meta.url);
 
 test("V180 exposes the recent-history shell and synchronized release assets", async () => {
   const [html, css, identity] = await Promise.all([
@@ -13,9 +14,9 @@ test("V180 exposes the recent-history shell and synchronized release assets", as
     readFile(identityUrl, "utf8"),
   ]);
 
-  assert.match(html, /const APP_VERSION = 199;/);
-  assert.match(identity, /APP_VERSION = 199/);
-  assert.match(html, /ux-v159\.css\?v=199/);
+  assert.match(html, /const APP_VERSION = 200;/);
+  assert.match(identity, /APP_VERSION = 200/);
+  assert.match(html, /ux-v159\.css\?v=200/);
   assert.match(html, /\.comment-form textarea \{ display: block; width: 100%; min-width: 0;/);
   assert.match(html, /data-menu-view="today"/);
   assert.match(html, /<span>学習する<\/span>/);
@@ -270,4 +271,15 @@ test("V199 keeps comment submission independent from the later app scope", async
   assert.match(submitSource, /Promise\.resolve\(persistence\)/);
   assert.match(html, /window\.nagaCurrentUserDisplayNameV75 = session \? currentUserDisplayNameV47\(\) : "";/);
   assert.match(html, /window\.nagaCurrentUserAvatarUrlV198 = normalizeCommentAvatarUrlV196\(session\?\.user\?\.user_metadata\?\.avatar_url\);/);
+});
+
+test("V200 repairs the stored daiminkan payload by stable NAGA scene coordinates", async () => {
+  const migration = await readFile(kanMigrationUrl, "utf8");
+  assert.match(migration, /source_report_id = 'f839fbe953e327b32422e1d16c523aa49bef1083780d2a8005282f74451e977bv2_2'/);
+  assert.match(migration, /scene_tw = 2/);
+  assert.match(migration, /scene_ts = 7/);
+  assert.match(migration, /scene_tv = 81/);
+  assert.match(migration, /'type', 'daiminkan'/);
+  assert.match(migration, /'pai', 'ji5'/);
+  assert.match(migration, /jsonb_array_length\(payload -> 'handBeforeDraw'\) = 7/);
 });

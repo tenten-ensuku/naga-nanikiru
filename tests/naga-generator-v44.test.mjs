@@ -557,6 +557,28 @@ test("replays draw, discard, calls, and kan melds while ignoring nested p_msg", 
   assert.equal(afterKan.melds[1].consumed.length, 4);
 });
 
+test("removes daiminkan tiles from the concealed hand during replay", async () => {
+  const api = await loadApi();
+  const entries = [
+    startKyoku([
+      ["P", "P", "P", "1m", "2m", "3m", "4m", "5m", "6m", "7m", "8m", "9m", "E"],
+      ["1p", "2p", "3p", "4p", "5p", "6p", "7p", "8p", "9p", "P", "F", "C", "1s"],
+      ["2s", "3s", "4s", "5s", "6s", "7s", "8s", "9s", "1m", "2m", "3m", "4m", "5m"],
+      ["6m", "7m", "8m", "9m", "1p", "2p", "3p", "4p", "5p", "6p", "7p", "8p", "9p"]
+    ]),
+    msg("dahai", { actor: 1, pai: "P" }),
+    msg("daiminkan", { actor: 0, pai: "P", consumed: ["P", "P", "P"] }),
+    msg("tsumo", { actor: 0, pai: "2m" })
+  ];
+
+  const snapshot = api.replayKyoku(entries, 3, 0);
+  assert.equal(snapshot.hand.filter(tile => tile === "ji5").length, 0);
+  assert.equal(snapshot.melds.length, 1);
+  assert.equal(snapshot.melds[0].type, "daiminkan");
+  assert.equal(snapshot.melds[0].pai, "ji5");
+  assert.deepEqual(Array.from(snapshot.melds[0].consumed), ["ji5", "ji5", "ji5"]);
+});
+
 test("extracts bad discards and calls at exactly 5 percent, filters actors and reached moves", async () => {
   const api = await loadApi();
   const zeroRows = () => [Array(34).fill(0)];
