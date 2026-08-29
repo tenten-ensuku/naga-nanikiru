@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=188">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=188">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=188">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=189">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=189">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=189">
   <title>NAGA局面ドリル｜何切る復習問題集</title>
   <meta name="description" content="NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリ。">
   <meta name="theme-color" content="#06131e">
@@ -2152,7 +2152,7 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=188">
+  <link rel="stylesheet" href="ux-v159.css?v=189">
 </head>
 <body class="auth-gate-open">
   <main class="page" inert aria-hidden="true">
@@ -2437,13 +2437,13 @@
   </dialog>
 
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=188"></script>
-  <script src="drill-ux-v44.js?v=188"></script>
+  <script src="supabase-sync-v48.js?v=189"></script>
+  <script src="drill-ux-v44.js?v=189"></script>
   <script src="naga-generator-v44.js"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 188;
+    const APP_VERSION = 189;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -3308,9 +3308,10 @@
       let menuFavoritesOnlyV137 = false;
       let menuRangeRequestV178 = 0;
       let menuOrderV92 = "sequential";
-      let learningOrderV188 = "sequential";
-      let learningGenreV188 = "all";
-      let learningSessionPendingV188 = false;
+      let learningOrderV189 = "sequential";
+      let learningGenresV189 = new Set(["discard", "riichi", "call"]);
+      let learningHistoryFiltersV189 = new Set(["unanswered", "×", "△", "〇", "◎"]);
+      let learningSessionPendingV189 = false;
       let learningMilestoneSnapshotV172 = null;
       let learningMilestoneShownV172 = { scopeKey: "", lap: false, mastery: false };
       const MENU_RANGE_STEP_V137 = 100;
@@ -3603,6 +3604,7 @@
         { version: 172, date: "2026-08-26", publishedAt: "2026-08-26T19:00:00+09:00", title: "一周達成と完全習得を祝うようにしました", body: "未回答がなくなったときは一周達成、最新1回の回答が〇以上で全問がそろったときは習熟度100％として祝福します。今日の10問に対象がないときは、達成をたたえる表示に切り替わります。" },
         { version: 176, date: "2026-08-26", publishedAt: "2026-08-26T21:00:00+09:00", title: "問題一覧のフィルターを見やすく整理しました", body: "問題範囲・ジャンル・フィルターを3段に整理し、直近の評価記号を問題一覧と同じ色で表示するようにしました。" },
         { version: 178, date: "2026-08-26", publishedAt: "2026-08-26T23:00:00+09:00", title: "大規模問題集の範囲切り替えを安定させました", body: "範囲の読み込みが重なったときに古い結果で表示を上書きしないようにし、取得に失敗した場合は元の範囲へ安全に戻します。100問目以降のお気に入り・アーカイブも初回読み込みで失わないようにしました。" },
+        { version: 189, date: "2026-08-30", title: "全問学習のカスタム設定を見直しました", body: "全問を解くときだけ、出題順・ジャンル・直近履歴をチェックボックスで組み合わせて選べるようになりました。未回答を解く・苦手克服は、これまでどおり固定の学習順で進みます。" },
         { version: 188, date: "2026-08-30", title: "学習の入口を3つに整理しました", body: "未回答を解く・苦手克服・全問を解く、の3つからすぐに学習を始められるようになりました。お気に入り・アーカイブ・問題一覧・直近解答履歴は学習画面のタブから確認でき、出題順とジャンルもカスタム設定で選べます。" },
         { version: 187, date: "2026-08-29", title: "ログインして安全に学習できるようにしました", body: "学習を始める前にDiscordログインを必須にし、携帯・パソコン間で回答履歴を安全に同期できるようにしました。端末内の履歴を取り込むボタンは廃止し、URLから開いた問題もログイン後にそのまま再開できます。" },
         { version: 186, date: "2026-08-29", publishedAt: "2026-08-29T14:00:00+09:00", title: "問題集を選びやすくしました", body: "問題集選択画面に全巻数を表示し、問題集を選んだ後はすぐに問題一覧へ移動できるようにしました。ナビゲーションも学習の入口から順に整理しています。" },
@@ -7377,18 +7379,35 @@
         panel.innerHTML = `<button class="menu-load-more-button" type="button" id="menuLoadMoreButton">さらに${nextCount}問を表示（${visible} / ${total}問）</button>`;
       }
 
-      const LEARNING_GENRE_LABELS_V188 = { all: "すべて", discard: "打牌判断", riichi: "リーチ判断", call: "副露判断" };
-      const LEARNING_ORDER_LABELS_V188 = { sequential: "順番", reverse: "逆順", random: "ランダム（解答数が少ない順）" };
+      const LEARNING_GENRE_LABELS_V189 = Object.freeze({ discard: "打牌判断", riichi: "リーチ判断", call: "副露判断" });
+      const LEARNING_GENRE_ORDER_V189 = ["discard", "riichi", "call"];
+      const LEARNING_ORDER_LABELS_V189 = Object.freeze({ sequential: "順番", random: "ランダム" });
+      const LEARNING_HISTORY_LABELS_V189 = Object.freeze({ unanswered: "未回答", "×": "×", "△": "△", "〇": "〇", "◎": "◎" });
+      const LEARNING_HISTORY_ORDER_V189 = ["unanswered", "×", "△", "〇", "◎"];
 
-      function learningQuestionMatchesGenreV188(question) {
-        if (learningGenreV188 === "all") return true;
+      function learningQuestionGenreKeyV189(question) {
         const type = questionTypeV44(question);
-        return learningGenreV188 === "discard" && type === "打牌判断"
-          || learningGenreV188 === "riichi" && type === "リーチ判断"
-          || learningGenreV188 === "call" && type === "副露判断";
+        if (type === "打牌判断") return "discard";
+        if (type === "リーチ判断") return "riichi";
+        if (type === "副露判断") return "call";
+        return "";
       }
 
-      function learningLatestAnswersV188() {
+      function learningQuestionMatchesGenreV189(question) {
+        return learningGenresV189.has(learningQuestionGenreKeyV189(question));
+      }
+
+      function learningQuestionHistoryKeyV189(question, latestAnswers) {
+        const latest = latestAnswers.get(questionKeyV16(question));
+        if (!latest) return "unanswered";
+        return normalizeScoreMarkV159(latest.scoreMark) || "unanswered";
+      }
+
+      function learningQuestionMatchesHistoryV189(question, latestAnswers) {
+        return learningHistoryFiltersV189.has(learningQuestionHistoryKeyV189(question, latestAnswers));
+      }
+
+      function learningLatestAnswersV189() {
         const latest = new Map();
         for (const entry of userStateV16.answerHistory || []) {
           const key = String(entry?.questionKey || "");
@@ -7400,54 +7419,62 @@
         return new Map([...latest].map(([key, value]) => [key, value.entry]));
       }
 
-      function learningWeakQuestionsV188(latestAnswers = learningLatestAnswersV188()) {
+      function learningWeakQuestionsV189(latestAnswers = learningLatestAnswersV189()) {
         return learningScopeQuestionsV184().filter(question => {
           const mark = normalizeScoreMarkV159(latestAnswers.get(questionKeyV16(question))?.scoreMark);
           return isPlayableV16(question) && ["×", "△"].includes(mark);
         });
       }
 
-      function learningCandidatesV188(mode, { ordered = true, latestAnswers = null } = {}) {
-        const answerMap = latestAnswers || learningLatestAnswersV188();
+      function learningCandidatesV189(mode, { ordered = true, latestAnswers = null } = {}) {
+        const answerMap = latestAnswers || learningLatestAnswersV189();
         const playable = learningScopeQuestionsV184().filter(isPlayableV16);
         const source = mode === "unanswered"
           ? playable.filter(question => !answerMap.has(questionKeyV16(question)))
           : mode === "weak"
-          ? learningWeakQuestionsV188(answerMap)
-          : playable;
-        const filtered = source.filter(learningQuestionMatchesGenreV188);
+          ? learningWeakQuestionsV189(answerMap)
+          : playable.filter(question => learningQuestionMatchesGenreV189(question) && learningQuestionMatchesHistoryV189(question, answerMap));
+        const filtered = source;
         if (!ordered) return filtered;
         const sequential = [...filtered].sort((left, right) => menuQuestionSortKeyV99(left) - menuQuestionSortKeyV99(right) || questionIndexByKeyV44(questionKeyV16(left)) - questionIndexByKeyV44(questionKeyV16(right)));
-        if (learningOrderV188 === "reverse") return sequential.reverse();
-        if (learningOrderV188 === "random") return randomizeQuestionsByAnswerCountV93(sequential);
+        // カスタム設定は「全問を解く」だけに適用し、未回答・苦手の導線は固定する。
+        if (mode === "all" && learningOrderV189 === "random") return randomizeQuestionsByAnswerCountV93(sequential);
         return sequential;
       }
 
-      function learningSettingsSummaryV188() {
-        const order = LEARNING_ORDER_LABELS_V188[learningOrderV188] || LEARNING_ORDER_LABELS_V188.sequential;
-        const genre = LEARNING_GENRE_LABELS_V188[learningGenreV188] || LEARNING_GENRE_LABELS_V188.all;
-        return `${order}・${genre}`;
+      function learningSettingsSummaryV189() {
+        const order = LEARNING_ORDER_LABELS_V189[learningOrderV189] || LEARNING_ORDER_LABELS_V189.sequential;
+        const genres = LEARNING_GENRE_ORDER_V189.filter(key => learningGenresV189.has(key)).map(key => LEARNING_GENRE_LABELS_V189[key]);
+        const history = LEARNING_HISTORY_ORDER_V189.filter(key => learningHistoryFiltersV189.has(key)).map(key => LEARNING_HISTORY_LABELS_V189[key]);
+        const genreLabel = genres.length === LEARNING_GENRE_ORDER_V189.length ? "全ジャンル" : genres.join("・") || "未選択";
+        const historyLabel = history.length === LEARNING_HISTORY_ORDER_V189.length ? "全履歴" : history.join("・") || "未選択";
+        return `全問のみ・${order}・${genreLabel}・${historyLabel}`;
       }
 
-      function syncLearningSettingsUiV188() {
-        const order = document.querySelector('[data-learning-setting="order"]');
-        const genre = document.querySelector('[data-learning-setting="genre"]');
+      function syncLearningSettingsUiV189() {
+        document.querySelectorAll('[data-learning-setting="order"]').forEach(control => {
+          control.checked = control.dataset.learningValue === learningOrderV189;
+        });
+        document.querySelectorAll('[data-learning-setting="genre"]').forEach(control => {
+          control.checked = learningGenresV189.has(control.dataset.learningValue);
+        });
+        document.querySelectorAll('[data-learning-setting="history"]').forEach(control => {
+          control.checked = learningHistoryFiltersV189.has(control.dataset.learningValue);
+        });
         const summary = document.querySelector("[data-learning-settings-summary]");
-        if (order) order.value = learningOrderV188;
-        if (genre) genre.value = learningGenreV188;
-        if (summary) summary.textContent = learningSettingsSummaryV188();
+        if (summary) summary.textContent = learningSettingsSummaryV189();
       }
 
-      function syncLearningActionCountsV188() {
+      function syncLearningActionCountsV189() {
         const knownTotal = sharedQuestionKnownTotalV177();
         const summaryPending = knownTotal !== null
           && !sharedQuestionPagingV177.allLoaded
           && knownTotal > learningScopeQuestionsV184().length;
         if (summaryPending) return;
-        const latestAnswers = learningLatestAnswersV188();
+        const latestAnswers = learningLatestAnswersV189();
         for (const button of document.querySelectorAll("[data-learning-action]")) {
           const mode = button.dataset.learningAction || "all";
-          const count = learningCandidatesV188(mode, { ordered: false, latestAnswers }).length;
+          const count = learningCandidatesV189(mode, { ordered: false, latestAnswers }).length;
           const countElement = button.querySelector(".learning-action-count");
           if (countElement) countElement.innerHTML = `${count}<small>問</small>`;
           button.disabled = count === 0;
@@ -7455,36 +7482,50 @@
         }
       }
 
-      function handleLearningSettingsChangeV188(event) {
+      function handleLearningSettingsChangeV189(event) {
         const control = event.target.closest("[data-learning-setting]");
-        if (!control) return;
-        if (control.dataset.learningSetting === "order" && ["sequential", "reverse", "random"].includes(control.value)) learningOrderV188 = control.value;
-        if (control.dataset.learningSetting === "genre" && Object.prototype.hasOwnProperty.call(LEARNING_GENRE_LABELS_V188, control.value)) learningGenreV188 = control.value;
-        syncLearningSettingsUiV188();
-        syncLearningActionCountsV188();
+        if (!control || control.type !== "checkbox") return;
+        const setting = control.dataset.learningSetting;
+        const value = control.dataset.learningValue;
+        if (setting === "order" && Object.prototype.hasOwnProperty.call(LEARNING_ORDER_LABELS_V189, value)) {
+          if (control.checked) learningOrderV189 = value;
+          else control.checked = true;
+        }
+        if (setting === "genre" && Object.prototype.hasOwnProperty.call(LEARNING_GENRE_LABELS_V189, value)) {
+          if (control.checked) learningGenresV189.add(value);
+          else learningGenresV189.delete(value);
+          if (!learningGenresV189.size) learningGenresV189.add(value);
+        }
+        if (setting === "history" && Object.prototype.hasOwnProperty.call(LEARNING_HISTORY_LABELS_V189, value)) {
+          if (control.checked) learningHistoryFiltersV189.add(value);
+          else learningHistoryFiltersV189.delete(value);
+          if (!learningHistoryFiltersV189.size) learningHistoryFiltersV189.add(value);
+        }
+        syncLearningSettingsUiV189();
+        syncLearningActionCountsV189();
       }
 
-      function startLearningSessionV188(mode, { skipSharedPreparation = false } = {}) {
+      function startLearningSessionV189(mode, { skipSharedPreparation = false } = {}) {
         if (!requireLoginForPlayV187()) return;
         const needsCompleteSharedIndex = !skipSharedPreparation
           && sharedQuestionPagingIsCurrentV177()
           && !sharedQuestionPagingV177.allLoaded;
         if (needsCompleteSharedIndex) {
-          if (learningSessionPendingV188) return;
-          learningSessionPendingV188 = true;
+          if (learningSessionPendingV189) return;
+          learningSessionPendingV189 = true;
           document.getElementById("menuPanel")?.setAttribute("aria-busy", "true");
           void ensureSharedQuestionIndexAllV177()
             .then(ready => {
-              if (ready) startLearningSessionV188(mode, { skipSharedPreparation: true });
+              if (ready) startLearningSessionV189(mode, { skipSharedPreparation: true });
               else renderMenuCardsV16();
             })
             .finally(() => {
-              learningSessionPendingV188 = false;
+              learningSessionPendingV189 = false;
               document.getElementById("menuPanel")?.removeAttribute("aria-busy");
             });
           return;
         }
-        const candidates = learningCandidatesV188(mode);
+        const candidates = learningCandidatesV189(mode);
         if (!candidates.length) {
           window.alert(mode === "weak" ? "直近×・△の問題はありません。まずは未回答問題を解いてみましょう。" : "この条件で出題できる問題がありません。カスタム設定を確認してください。");
           return;
@@ -7503,10 +7544,10 @@
           && knownTotal > learningQuestions.length;
         const displayedTotal = summaryPending ? knownTotal : metrics.total;
         const displayedAnswered = summaryPending ? "…" : answeredCount;
-        const latestAnswers = summaryPending ? null : learningLatestAnswersV188();
-        const displayedUnanswered = summaryPending ? "…" : learningCandidatesV188("unanswered", { ordered: false, latestAnswers }).length;
-        const displayedWeak = summaryPending ? "…" : learningCandidatesV188("weak", { ordered: false, latestAnswers }).length;
-        const displayedAll = summaryPending ? "…" : learningCandidatesV188("all", { ordered: false, latestAnswers }).length;
+        const latestAnswers = summaryPending ? null : learningLatestAnswersV189();
+        const displayedUnanswered = summaryPending ? "…" : learningCandidatesV189("unanswered", { ordered: false, latestAnswers }).length;
+        const displayedWeak = summaryPending ? "…" : learningCandidatesV189("weak", { ordered: false, latestAnswers }).length;
+        const displayedAll = summaryPending ? "…" : learningCandidatesV189("all", { ordered: false, latestAnswers }).length;
         const displayedFavorites = summaryPending ? "…" : favoriteCount;
         const session = activeSessionV44();
         const sessionTotal = Number(session?.questionKeys?.length || 0);
@@ -7542,7 +7583,7 @@
         const flowNote = displayedUnanswered === "0"
           ? "未回答を終えたら、直近×・△の復習へ進みます。"
           : "まず未回答を一通り解き、その後に苦手問題を復習します。";
-        return `<section class="learning-dashboard today-dashboard" aria-labelledby="learningDashboardTitle"><div class="learning-breadcrumb"><span>${escapeHtml(collectionLabel)}</span><span aria-hidden="true">›</span><strong>学習する</strong></div><nav class="learning-tabs" aria-label="問題集の確認"><button type="button" data-menu-jump="favorites"><span class="learning-tab-icon" aria-hidden="true">☆</span><span>お気に入り</span><span class="learning-tab-count">${displayedFavorites}</span></button><button type="button" data-menu-jump="archive"><span class="learning-tab-icon" aria-hidden="true">${menuArchiveIconV109()}</span><span>アーカイブ</span></button><button type="button" data-menu-jump="my"><span class="learning-tab-icon" aria-hidden="true">▦</span><span>問題一覧</span><span class="learning-tab-count">${displayedTotal}</span></button><button type="button" class="is-active" data-menu-jump="today" aria-current="page"><span class="learning-tab-icon" aria-hidden="true">↺</span><span>直近解答履歴</span></button></nav><section class="learning-hero"><div class="learning-hero-copy"><p class="today-kicker">LEARNING PATH</p><h3 id="learningDashboardTitle">学習する</h3><p>${escapeHtml(flowNote)}</p><div class="learning-path-note"><span><b>1</b> 未回答を解く</span><span aria-hidden="true">→</span><span><b>2</b> 苦手克服</span></div></div><div class="learning-progress" aria-label="${escapeHtml(collectionLabel)}の学習進捗"><span>回答済み</span><strong>${displayedAnswered}<small> / ${displayedTotal}問</small></strong><span class="learning-progress-track" aria-hidden="true"><span style="width:${displayedAnswered === "…" ? 0 : displayedTotal ? Math.round(answeredCount / displayedTotal * 100) : 0}%"></span></span><small>未回答 ${displayedUnanswered}問</small></div></section>${resumeMarkup}<section class="learning-action-grid" aria-label="学習を始める"><button class="learning-action-card is-primary" type="button" data-learning-action="unanswered"${actionDisabled(Number(displayedUnanswered))}><span class="learning-action-step">STEP 1</span><strong>未回答を解く</strong><span class="learning-action-count">${displayedUnanswered}<small>問</small></span><small>未回答問題を一通り進める</small><span class="learning-action-link">すぐ始める <span aria-hidden="true">→</span></span></button><button class="learning-action-card is-weak" type="button" data-learning-action="weak"${actionDisabled(Number(displayedWeak))}><span class="learning-action-step">STEP 2</span><strong>苦手克服</strong><span class="learning-action-count">${displayedWeak}<small>問</small></span><small>直近×・△を中心に復習</small><span class="learning-action-link">復習を始める <span aria-hidden="true">→</span></span></button><button class="learning-action-card is-all" type="button" data-learning-action="all"${actionDisabled(Number(displayedAll))}><span class="learning-action-step">自由に学ぶ</span><strong>全問を解く</strong><span class="learning-action-count">${displayedAll}<small>問</small></span><small>この巻の問題を順番に学習</small><span class="learning-action-link">学習を始める <span aria-hidden="true">→</span></span></button></section><details class="learning-custom-settings" id="learningCustomSettings"><summary><span><span class="learning-settings-icon" aria-hidden="true">⚙</span>カスタム設定</span><span data-learning-settings-summary>${escapeHtml(learningSettingsSummaryV188())}</span></summary><div class="learning-custom-settings-body"><label><span>出題順</span><select data-learning-setting="order" aria-label="学習の出題順"><option value="sequential"${learningOrderV188 === "sequential" ? " selected" : ""}>${isBasicSequence ? "順番（推奨）" : "順番"}</option><option value="reverse"${learningOrderV188 === "reverse" ? " selected" : ""}>逆順</option><option value="random"${learningOrderV188 === "random" ? " selected" : ""}>ランダム（解答数が少ない順）</option></select></label><label><span>ジャンル</span><select data-learning-setting="genre" aria-label="学習するジャンル"><option value="all"${learningGenreV188 === "all" ? " selected" : ""}>すべて</option><option value="discard"${learningGenreV188 === "discard" ? " selected" : ""}>打牌判断</option><option value="riichi"${learningGenreV188 === "riichi" ? " selected" : ""}>リーチ判断</option><option value="call"${learningGenreV188 === "call" ? " selected" : ""}>副露判断</option></select></label><p>この設定は上の3つの学習ボタンに適用されます。</p></div></details><section class="today-recent learning-recent-section"><div class="today-section-heading"><div><p class="today-kicker">RECENT ANSWERS</p><h3>直近解答履歴</h3></div><button type="button" data-menu-jump="my">問題一覧を見る <span aria-hidden="true">→</span></button></div><div class="today-recent-list">${recentMarkup}</div></section></section>`;
+        return `<section class="learning-dashboard today-dashboard" aria-labelledby="learningDashboardTitle"><div class="learning-breadcrumb"><span>${escapeHtml(collectionLabel)}</span><span aria-hidden="true">›</span><strong>学習する</strong></div><nav class="learning-tabs" aria-label="問題集の確認"><button type="button" data-menu-jump="favorites"><span class="learning-tab-icon" aria-hidden="true">☆</span><span>お気に入り</span><span class="learning-tab-count">${displayedFavorites}</span></button><button type="button" data-menu-jump="archive"><span class="learning-tab-icon" aria-hidden="true">${menuArchiveIconV109()}</span><span>アーカイブ</span></button><button type="button" data-menu-jump="my"><span class="learning-tab-icon" aria-hidden="true">▦</span><span>問題一覧</span><span class="learning-tab-count">${displayedTotal}</span></button><button type="button" class="is-active" data-menu-jump="today" aria-current="page"><span class="learning-tab-icon" aria-hidden="true">↺</span><span>直近解答履歴</span></button></nav><section class="learning-hero"><div class="learning-hero-copy"><p class="today-kicker">LEARNING PATH</p><h3 id="learningDashboardTitle">学習する</h3><p>${escapeHtml(flowNote)}</p><div class="learning-path-note"><span><b>1</b> 未回答を解く</span><span aria-hidden="true">→</span><span><b>2</b> 苦手克服</span></div></div><div class="learning-progress" aria-label="${escapeHtml(collectionLabel)}の学習進捗"><span>回答済み</span><strong>${displayedAnswered}<small> / ${displayedTotal}問</small></strong><span class="learning-progress-track" aria-hidden="true"><span style="width:${displayedAnswered === "…" ? 0 : displayedTotal ? Math.round(answeredCount / displayedTotal * 100) : 0}%"></span></span><small>未回答 ${displayedUnanswered}問</small></div></section>${resumeMarkup}<section class="learning-action-grid" aria-label="学習を始める"><button class="learning-action-card is-primary" type="button" data-learning-action="unanswered"${actionDisabled(Number(displayedUnanswered))}><span class="learning-action-step">STEP 1</span><strong>未回答を解く</strong><span class="learning-action-count">${displayedUnanswered}<small>問</small></span><small>未回答問題を一通り進める</small><span class="learning-action-link">すぐ始める <span aria-hidden="true">→</span></span></button><button class="learning-action-card is-weak" type="button" data-learning-action="weak"${actionDisabled(Number(displayedWeak))}><span class="learning-action-step">STEP 2</span><strong>苦手克服</strong><span class="learning-action-count">${displayedWeak}<small>問</small></span><small>直近×・△を中心に復習</small><span class="learning-action-link">復習を始める <span aria-hidden="true">→</span></span></button><button class="learning-action-card is-all" type="button" data-learning-action="all"${actionDisabled(Number(displayedAll))}><span class="learning-action-step">自由に学ぶ</span><strong>全問を解く</strong><span class="learning-action-count">${displayedAll}<small>問</small></span><small>カスタム設定を適用して学習</small><span class="learning-action-link">学習を始める <span aria-hidden="true">→</span></span></button></section><details class="learning-custom-settings" id="learningCustomSettings"><summary><span><span class="learning-settings-icon" aria-hidden="true">⚙</span>カスタム設定</span><span data-learning-settings-summary>${escapeHtml(learningSettingsSummaryV189())}</span></summary><div class="learning-custom-settings-body"><fieldset class="learning-setting-group"><legend>出題順 <small>1つ選択</small></legend><div class="learning-check-grid learning-check-grid-order"><label class="learning-check"><input type="checkbox" data-learning-setting="order" data-learning-value="sequential"${learningOrderV189 === "sequential" ? " checked" : ""}><span>順番${isBasicSequence ? "（推奨）" : ""}</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="order" data-learning-value="random"${learningOrderV189 === "random" ? " checked" : ""}><span>ランダム</span></label></div></fieldset><fieldset class="learning-setting-group"><legend>ジャンル <small>複数選択可</small></legend><div class="learning-check-grid"><label class="learning-check"><input type="checkbox" data-learning-setting="genre" data-learning-value="discard"${learningGenresV189.has("discard") ? " checked" : ""}><span>打牌判断</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="genre" data-learning-value="riichi"${learningGenresV189.has("riichi") ? " checked" : ""}><span>リーチ判断</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="genre" data-learning-value="call"${learningGenresV189.has("call") ? " checked" : ""}><span>副露判断</span></label></div></fieldset><fieldset class="learning-setting-group"><legend>直近履歴 <small>複数選択可</small></legend><div class="learning-check-grid learning-check-grid-history"><label class="learning-check"><input type="checkbox" data-learning-setting="history" data-learning-value="unanswered"${learningHistoryFiltersV189.has("unanswered") ? " checked" : ""}><span>未回答</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="history" data-learning-value="×"${learningHistoryFiltersV189.has("×") ? " checked" : ""}><span class="learning-status-mark is-miss">×</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="history" data-learning-value="△"${learningHistoryFiltersV189.has("△") ? " checked" : ""}><span class="learning-status-mark is-review">△</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="history" data-learning-value="〇"${learningHistoryFiltersV189.has("〇") ? " checked" : ""}><span class="learning-status-mark is-safe">〇</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="history" data-learning-value="◎"${learningHistoryFiltersV189.has("◎") ? " checked" : ""}><span class="learning-status-mark is-excellent">◎</span></label></div></fieldset><p>この設定は「全問を解く」にのみ適用されます。未回答を解く・苦手克服は固定ルールです。</p></div></details><section class="today-recent learning-recent-section"><div class="today-section-heading"><div><p class="today-kicker">RECENT ANSWERS</p><h3>直近解答履歴</h3></div><button type="button" data-menu-jump="my">問題一覧を見る <span aria-hidden="true">→</span></button></div><div class="today-recent-list">${recentMarkup}</div></section></section>`;
       }
 
       // 旧セッションや外部リンクとの互換性を保つため、内部名だけ残す。
@@ -8296,13 +8337,7 @@
         }
         const learningActionButton = event.target.closest("[data-learning-action]");
         if (learningActionButton) {
-          startLearningSessionV188(learningActionButton.dataset.learningAction || "all");
-          return;
-        }
-        const learningGenreButton = event.target.closest("[data-learning-setting=\"genre\"]");
-        if (learningGenreButton) {
-          if (Object.prototype.hasOwnProperty.call(LEARNING_GENRE_LABELS_V188, learningGenreButton.value)) learningGenreV188 = learningGenreButton.value;
-          syncLearningSettingsUiV188();
+          startLearningSessionV189(learningActionButton.dataset.learningAction || "all");
           return;
         }
         const menuJumpButton = event.target.closest("[data-menu-jump]");
@@ -8338,7 +8373,7 @@
           if (action === "today") return startSessionV44("today");
           if (action === "unanswered") return startSessionV44("unanswered");
           if (action === "range-unanswered") return startRangeSessionV61("unanswered");
-          if (action === "weak" || action === "all") return startLearningSessionV188(action);
+          if (action === "weak" || action === "all") return startLearningSessionV189(action);
           if (action === "retry-weak") {
             const keys = (userStateV16.lastSessionResult?.results || []).filter(row => ["×", "△"].includes(row.scoreMark)).map(row => row.questionKey);
             return startSessionV44("weak", keys.map(key => questionsV16[questionIndexByKeyV44(key)]).filter(Boolean));
@@ -9065,7 +9100,7 @@
         }
         document.getElementById("questionSelect").addEventListener("change", event => openQuestionV16(Number(event.target.value)));
         document.getElementById("menuPanel").addEventListener("click", handleMenuGridClickV16);
-        document.getElementById("menuPanel").addEventListener("change", handleLearningSettingsChangeV188);
+        document.getElementById("menuPanel").addEventListener("change", handleLearningSettingsChangeV189);
         document.getElementById("menuActiveFilters")?.addEventListener("click", event => {
           const clearButton = event.target.closest("[data-menu-filter-clear]");
           if (clearButton) {

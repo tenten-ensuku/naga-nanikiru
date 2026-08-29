@@ -7,7 +7,7 @@ const cssUrl = new URL("../public/ux-v159.css", import.meta.url);
 const identityUrl = new URL("../app/lib/appIdentity.ts", import.meta.url);
 const packageUrl = new URL("../package.json", import.meta.url);
 
-test("V188 makes learning the action-first home for the selected collection", async () => {
+test("V189 makes all-question custom settings checkbox-based", async () => {
   const [html, css, identity, packageSource] = await Promise.all([
     readFile(indexUrl, "utf8"),
     readFile(cssUrl, "utf8"),
@@ -15,10 +15,10 @@ test("V188 makes learning the action-first home for the selected collection", as
     readFile(packageUrl, "utf8")
   ]);
 
-  assert.match(html, /const APP_VERSION = 188;/);
-  assert.match(identity, /APP_VERSION = 188/);
+  assert.match(html, /const APP_VERSION = 189;/);
+  assert.match(identity, /APP_VERSION = 189/);
   for (const asset of ["ux-v159\\.css", "supabase-sync-v48\\.js", "drill-ux-v44\\.js"]) {
-    assert.match(html, new RegExp(`${asset}\\?v=188`));
+    assert.match(html, new RegExp(`${asset}\\?v=189`));
   }
 
   const sidebar = html.match(/<nav class="menu-nav"[\s\S]*?<\/nav>/)?.[0] || "";
@@ -33,22 +33,37 @@ test("V188 makes learning the action-first home for the selected collection", as
   for (const tab of ["favorites", "archive", "my", "today"]) {
     assert.match(learningView, new RegExp(`data-menu-jump="${tab}"`));
   }
-  assert.match(learningView, /details class="learning-custom-settings"/);
-  assert.match(learningView, /data-learning-setting="order"/);
-  assert.match(learningView, /data-learning-setting="genre"/);
+  const customSettings = learningView.match(/<details class="learning-custom-settings"[\s\S]*?<\/details>/)?.[0] || "";
+  assert.ok(customSettings, "custom settings details should be rendered");
+  assert.equal((customSettings.match(/type="checkbox" data-learning-setting="order"/g) || []).length, 2);
+  assert.equal((customSettings.match(/type="checkbox" data-learning-setting="genre"/g) || []).length, 3);
+  assert.equal((customSettings.match(/type="checkbox" data-learning-setting="history"/g) || []).length, 5);
+  assert.doesNotMatch(customSettings, /<select[^>]*data-learning-setting/);
+  assert.match(customSettings, /data-learning-value="sequential"/);
+  assert.match(customSettings, /data-learning-value="random"/);
+  assert.doesNotMatch(customSettings, /data-learning-value="reverse"/);
+  assert.match(customSettings, /複数選択可/);
+  assert.match(customSettings, /この設定は「全問を解く」にのみ適用されます/);
   assert.match(learningView, /直近×・△/);
 
-  assert.match(html, /function learningWeakQuestionsV188\([^)]*\)/);
+  assert.match(html, /function learningWeakQuestionsV189\([^)]*\)/);
   assert.match(html, /\["×", "△"\]\.includes\(mark\)/);
-  assert.match(html, /function startLearningSessionV188\(/);
+  assert.match(html, /function startLearningSessionV189\(/);
   assert.match(html, /startSessionV44\(mode, candidates, \{ skipSharedPreparation: true \}\)/);
-  assert.match(html, /function handleLearningSettingsChangeV188\(/);
+  assert.match(html, /function handleLearningSettingsChangeV189\(/);
+  assert.match(html, /learningOrderV189/);
+  assert.match(html, /learningGenresV189/);
+  assert.match(html, /learningHistoryFiltersV189/);
+  assert.match(html, /mode === "all" && learningOrderV189 === "random"/);
+  assert.match(html, /カスタム設定は「全問を解く」だけに適用し/);
   assert.match(html, /action === "weak" \|\| action === "all"/);
 
-  assert.match(css, /V188: make learning the single, action-first home/);
+  assert.match(css, /V189: checkbox-based custom filters/);
   assert.match(css, /\.learning-tabs/);
   assert.match(css, /\.learning-action-grid/);
   assert.match(css, /\.learning-custom-settings/);
+  assert.match(css, /\.learning-check input:checked/);
+  assert.ok(css.indexOf("/* V189: checkbox-based custom filters") > css.indexOf(".learning-custom-settings-body select"), "V189 checkbox styles should come after legacy select styles");
 
   const scripts = JSON.parse(packageSource).scripts;
   assert.match(scripts["test:drill"], /tests\/learning-home-v188\.test\.mjs/);

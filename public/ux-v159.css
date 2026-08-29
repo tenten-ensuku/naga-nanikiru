@@ -4698,3 +4698,137 @@ body.auth-gate-open {
     font-size: 15px;
   }
 }
+
+/* V189: checkbox-based custom filters apply only to the all-question action. */
+.page.menu-active .learning-custom-settings-body {
+  grid-template-columns: minmax(130px, .8fr) minmax(190px, 1fr) minmax(250px, 1.35fr);
+  align-items: start;
+  gap: 10px;
+}
+
+.page.menu-active .learning-setting-group {
+  min-width: 0;
+  margin: 0;
+  padding: 10px;
+  border: 1px solid rgba(40, 81, 99, .8);
+  border-radius: var(--ux-radius-sm);
+  background: rgba(8, 34, 46, .6);
+}
+
+.page.menu-active .learning-setting-group legend {
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+  width: auto;
+  padding: 0 4px;
+  color: #d7ecef;
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.page.menu-active .learning-setting-group legend small {
+  color: #7fabb7;
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.page.menu-active .learning-check-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.page.menu-active .learning-check {
+  display: inline-flex !important;
+  grid-template-columns: none !important;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 6px !important;
+  min-height: 36px;
+  min-width: 0;
+  padding: 6px 9px;
+  border: 1px solid rgba(40, 81, 99, .9);
+  border-radius: 8px;
+  background: rgba(5, 25, 37, .72);
+  color: #bad1d7;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 800;
+  transition: border-color .16s ease, background .16s ease, color .16s ease;
+}
+
+.page.menu-active .learning-check:hover {
+  border-color: rgba(98, 214, 198, .58);
+  color: #efffff;
+}
+
+.page.menu-active .learning-check input {
+  appearance: none;
+  flex: 0 0 auto;
+  width: 17px;
+  height: 17px;
+  margin: 0;
+  border: 1px solid #71929c;
+  border-radius: 4px;
+  background: #071c29;
+  cursor: pointer;
+}
+
+.page.menu-active .learning-check input:checked {
+  border-color: var(--ux-mint);
+  background: var(--ux-mint);
+  box-shadow: 0 0 0 3px rgba(98, 214, 198, .1);
+}
+
+.page.menu-active .learning-check input:checked::after {
+  content: "✓";
+  display: grid;
+  place-items: center;
+  height: 100%;
+  color: #09232d;
+  font-size: 12px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.page.menu-active .learning-check input:focus-visible {
+  outline: 2px solid var(--ux-gold);
+  outline-offset: 2px;
+}
+
+.page.menu-active .learning-check > span {
+  white-space: nowrap;
+}
+
+.page.menu-active .learning-check-grid-history .learning-check {
+  min-width: 43px;
+  justify-content: center;
+  padding-inline: 8px;
+}
+
+.page.menu-active .learning-status-mark {
+  font-size: 16px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.page.menu-active .learning-status-mark.is-excellent { color: var(--ux-gold); }
+.page.menu-active .learning-status-mark.is-safe { color: var(--ux-mint); }
+.page.menu-active .learning-status-mark.is-review { color: var(--ux-review); }
+.page.menu-active .learning-status-mark.is-miss { color: var(--ux-coral); }
+
+.page.menu-active .learning-custom-settings-body > p {
+  grid-column: 1 / -1;
+  margin: 0 2px;
+}
+
+@media (max-width: 800px) {
+  .page.menu-active .learning-custom-settings-body {
+    grid-template-columns: 1fr;
+  }
+
+  .page.menu-active .learning-custom-settings-body > p {
+    grid-column: auto;
+  }
+}
