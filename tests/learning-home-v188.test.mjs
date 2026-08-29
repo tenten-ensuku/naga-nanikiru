@@ -7,7 +7,7 @@ const cssUrl = new URL("../public/ux-v159.css", import.meta.url);
 const identityUrl = new URL("../app/lib/appIdentity.ts", import.meta.url);
 const packageUrl = new URL("../package.json", import.meta.url);
 
-test("V193 starts learning after collection selection and clarifies the header", async () => {
+test("V194 starts learning after collection selection and clarifies the learning actions", async () => {
   const [html, css, identity, packageSource] = await Promise.all([
     readFile(indexUrl, "utf8"),
     readFile(cssUrl, "utf8"),
@@ -15,10 +15,10 @@ test("V193 starts learning after collection selection and clarifies the header",
     readFile(packageUrl, "utf8")
   ]);
 
-  assert.match(html, /const APP_VERSION = 193;/);
-  assert.match(identity, /APP_VERSION = 193/);
+  assert.match(html, /const APP_VERSION = 194;/);
+  assert.match(identity, /APP_VERSION = 194/);
   for (const asset of ["ux-v159\\.css", "supabase-sync-v48\\.js", "drill-ux-v44\\.js"]) {
-    assert.match(html, new RegExp(`${asset}\\?v=193`));
+    assert.match(html, new RegExp(`${asset}\\?v=194`));
   }
   assert.match(html, /問題集を変更する/);
   assert.doesNotMatch(html, /class="active-collection-label"/);
@@ -36,7 +36,7 @@ test("V193 starts learning after collection selection and clarifies the header",
 
   const learningView = html.match(/function renderRecentHistoryViewV180\([\s\S]*?\n      \/\/ 旧セッション/)?.[0] || "";
   for (const action of ["unanswered", "weak", "all"]) {
-    assert.match(learningView, new RegExp(`data-learning-action="${action}"`));
+    assert.match(html, new RegExp(`renderLearningActionButtonV194\\(\\{ mode: "${action}"`));
   }
   assert.match(learningView, /data-menu-jump="my"[\s\S]*data-menu-jump="favorites"[\s\S]*data-menu-jump="archive"/);
   assert.doesNotMatch(learningView, /data-menu-jump="today"/);
@@ -80,6 +80,15 @@ test("V193 starts learning after collection selection and clarifies the header",
   assert.match(css, /\.learning-check input:checked/);
   assert.match(css, /V191: keep the list shortcuts visible after entering the problem list/);
   assert.match(css, /V193: clarify the app header and give the current collection more room/);
+  assert.match(css, /V194: make the three learning entry points feel like clear, premium actions/);
+  assert.match(css, /V194: recent rows now expose personal organization without nesting buttons/);
+  assert.match(html, /function renderLearningActionButtonV194\(/);
+  assert.match(html, /プレイ/);
+  assert.match(learningView, /data-menu-action="favorite"/);
+  assert.match(learningView, /data-menu-action="archive"/);
+  assert.match(learningView, /aria-label="問題\$\{escapeHtml\(String\(question\.number\)\)\}の整理"/);
+  assert.match(html, /publishedAt: "2026-08-30T03:43:03\+09:00"/);
+  assert.match(html, /function formatAnnouncementDateV111\(/);
   assert.ok(css.indexOf("/* V189: checkbox-based custom filters") > css.indexOf(".learning-custom-settings-body select"), "V189 checkbox styles should come after legacy select styles");
 
   const scripts = JSON.parse(packageSource).scripts;

@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=193">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=193">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=193">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=194">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=194">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=194">
   <title>NAGA局面ドリル｜何切る復習問題集</title>
   <meta name="description" content="NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリ。">
   <meta name="theme-color" content="#06131e">
@@ -2152,7 +2152,7 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=193">
+  <link rel="stylesheet" href="ux-v159.css?v=194">
 </head>
 <body class="auth-gate-open">
   <main class="page" inert aria-hidden="true">
@@ -2436,13 +2436,13 @@
   </dialog>
 
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=193"></script>
-  <script src="drill-ux-v44.js?v=193"></script>
+  <script src="supabase-sync-v48.js?v=194"></script>
+  <script src="drill-ux-v44.js?v=194"></script>
   <script src="naga-generator-v44.js"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 193;
+    const APP_VERSION = 194;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -3534,6 +3534,7 @@
       const QUESTION_NOTICE_STORAGE_KEY_V66 = storageKey("question-notices-v1");
       const ANNOUNCEMENT_SEEN_STORAGE_KEY_V65 = storageKey("announcement-seen-v1");
       const APP_ANNOUNCEMENTS_V66 = [
+        { version: 194, date: "2026-08-30", publishedAt: "2026-08-30T03:43:03+09:00", title: "学習ボタンと直近履歴を使いやすくしました", body: "未回答・苦手克服・全問をプレイできる入口を押しやすいボタンに整え、直近回答履歴からお気に入りとアーカイブを操作できるようにしました。アナウンスには更新日時を表示します。" },
         { version: 66, date: "2026-08-14", title: "コメント・問題追加通知を追加しました", body: "新しいコメントに加えて、他の利用者が共有問題集へ追加した問題も通知一覧で確認できるようになりました。" },
         { version: 67, date: "2026-08-14", title: "作成者表示名の設定を追加しました", body: "設定から1〜5文字の表示名を登録できます。コメントや問題作成時の作成者名に使用されます。" },
         { version: 69, date: "2026-08-14", title: "コメントの書式と画像添付に対応しました", body: "太字・伏せ字・色・デカ文字、画像の貼り付けとドラッグ＆ドロップに対応しました。" },
@@ -3603,13 +3604,13 @@
         { version: 172, date: "2026-08-26", publishedAt: "2026-08-26T19:00:00+09:00", title: "一周達成と完全習得を祝うようにしました", body: "未回答がなくなったときは一周達成、最新1回の回答が〇以上で全問がそろったときは習熟度100％として祝福します。今日の10問に対象がないときは、達成をたたえる表示に切り替わります。" },
         { version: 176, date: "2026-08-26", publishedAt: "2026-08-26T21:00:00+09:00", title: "問題一覧のフィルターを見やすく整理しました", body: "問題範囲・ジャンル・フィルターを3段に整理し、直近の評価記号を問題一覧と同じ色で表示するようにしました。" },
         { version: 178, date: "2026-08-26", publishedAt: "2026-08-26T23:00:00+09:00", title: "大規模問題集の範囲切り替えを安定させました", body: "範囲の読み込みが重なったときに古い結果で表示を上書きしないようにし、取得に失敗した場合は元の範囲へ安全に戻します。100問目以降のお気に入り・アーカイブも初回読み込みで失わないようにしました。" },
-        { version: 193, date: "2026-08-30", title: "問題集の選択後に学習を始めやすくしました", body: "問題集や巻を選ぶと学習する画面へ移動し、ヘッダーの更新情報・通知と現在の問題集を見分けやすく整理しました。" },
-        { version: 192, date: "2026-08-30", title: "問題集を変更しやすくしました", body: "選択中の問題集から問題集を変更できることを分かりやすくし、問題集選択画面の補足表示を整理しました。" },
-        { version: 191, date: "2026-08-30", title: "問題一覧の導線を整えました", body: "問題一覧・お気に入り・アーカイブを各画面の上部から切り替えられるようにし、問題一覧では表示範囲やフィルターを省いて問題へ集中できるようにしました。" },
-        { version: 190, date: "2026-08-30", title: "学習画面をコンパクトに整理しました", body: "進捗は学習するの見出し横に集約し、未回答・苦手克服・全問学習の3つからすぐに始められるようにしました。問題一覧・お気に入り・アーカイブは上部タブから確認でき、カスタム設定は全問を解くにだけ表示されます。" },
-        { version: 189, date: "2026-08-30", title: "全問学習のカスタム設定を見直しました", body: "全問を解くときだけ、出題順・ジャンル・直近履歴をチェックボックスで組み合わせて選べるようになりました。未回答を解く・苦手克服は、これまでどおり固定の学習順で進みます。" },
-        { version: 188, date: "2026-08-30", title: "学習の入口を3つに整理しました", body: "未回答を解く・苦手克服・全問を解く、の3つからすぐに学習を始められるようになりました。お気に入り・アーカイブ・問題一覧・直近解答履歴は学習画面のタブから確認でき、出題順とジャンルもカスタム設定で選べます。" },
-        { version: 187, date: "2026-08-29", title: "ログインして安全に学習できるようにしました", body: "学習を始める前にDiscordログインを必須にし、携帯・パソコン間で回答履歴を安全に同期できるようにしました。端末内の履歴を取り込むボタンは廃止し、URLから開いた問題もログイン後にそのまま再開できます。" },
+        { version: 193, date: "2026-08-30", publishedAt: "2026-08-30T03:03:38+09:00", title: "問題集の選択後に学習を始めやすくしました", body: "問題集や巻を選ぶと学習する画面へ移動し、ヘッダーの更新情報・通知と現在の問題集を見分けやすく整理しました。" },
+        { version: 192, date: "2026-08-30", publishedAt: "2026-08-30T02:52:02+09:00", title: "問題集を変更しやすくしました", body: "選択中の問題集から問題集を変更できることを分かりやすくし、問題集選択画面の補足表示を整理しました。" },
+        { version: 191, date: "2026-08-30", publishedAt: "2026-08-30T02:01:34+09:00", title: "問題一覧の導線を整えました", body: "問題一覧・お気に入り・アーカイブを各画面の上部から切り替えられるようにし、問題一覧では表示範囲やフィルターを省いて問題へ集中できるようにしました。" },
+        { version: 190, date: "2026-08-30", publishedAt: "2026-08-30T01:40:20+09:00", title: "学習画面をコンパクトに整理しました", body: "進捗は学習するの見出し横に集約し、未回答・苦手克服・全問学習の3つからすぐに始められるようにしました。問題一覧・お気に入り・アーカイブは上部タブから確認でき、カスタム設定は全問を解くにだけ表示されます。" },
+        { version: 189, date: "2026-08-30", publishedAt: "2026-08-30T01:00:05+09:00", title: "全問学習のカスタム設定を見直しました", body: "全問を解くときだけ、出題順・ジャンル・直近履歴をチェックボックスで組み合わせて選べるようになりました。未回答を解く・苦手克服は、これまでどおり固定の学習順で進みます。" },
+        { version: 188, date: "2026-08-30", publishedAt: "2026-08-30T00:26:13+09:00", title: "学習の入口を3つに整理しました", body: "未回答を解く・苦手克服・全問を解く、の3つからすぐに学習を始められるようになりました。お気に入り・アーカイブ・問題一覧・直近解答履歴は学習画面のタブから確認でき、出題順とジャンルもカスタム設定で選べます。" },
+        { version: 187, date: "2026-08-29", publishedAt: "2026-08-29T17:20:09+09:00", title: "ログインして安全に学習できるようにしました", body: "学習を始める前にDiscordログインを必須にし、携帯・パソコン間で回答履歴を安全に同期できるようにしました。端末内の履歴を取り込むボタンは廃止し、URLから開いた問題もログイン後にそのまま再開できます。" },
         { version: 186, date: "2026-08-29", publishedAt: "2026-08-29T14:00:00+09:00", title: "問題集を選びやすくしました", body: "問題集選択画面に全巻数を表示し、問題集を選んだ後はすぐに問題一覧へ移動できるようにしました。ナビゲーションも学習の入口から順に整理しています。" },
         { version: 185, date: "2026-08-29", publishedAt: "2026-08-29T13:00:00+09:00", title: "巻管理と学習集計を整理しました", body: "アーカイブ済みの問題も全問題数と習熟度へ反映し、200問単位の巻追加に対応しました。問題一覧ではジャンルと直近履歴を一列で確認できます。" },
         { version: 182, date: "2026-08-29", publishedAt: "2026-08-29T12:00:00+09:00", title: "ピエール問題集の巻をカードから選べるようにしました", body: "ピエール問題集を選ぶと、そのカードの直後に1巻〜9巻の選択肢が展開されます。選択の起点を明確にし、巻選択まで迷わないようにしました。" },
@@ -4140,7 +4141,7 @@
         if (!list) return;
         list.innerHTML = [...APP_ANNOUNCEMENTS_V66]
           .sort((left, right) => right.version - left.version)
-          .map(item => `<article class="notice-item"><div class="notice-item-top"><strong class="notice-item-question">V${item.version}　${escapeHtml(item.title)}</strong><time datetime="${escapeHtml(item.publishedAt || item.date)}">${escapeHtml(formatAnnouncementDateV111(item))}</time></div><div class="notice-item-body">${escapeHtml(item.body)}</div></article>`)
+          .map(item => `<article class="notice-item"><div class="notice-item-top"><strong class="notice-item-question">V${item.version}　${escapeHtml(item.title)}</strong><time datetime="${escapeHtml(item.publishedAt || item.date)}">更新 ${escapeHtml(formatAnnouncementDateV111(item))}</time></div><div class="notice-item-body">${escapeHtml(item.body)}</div></article>`)
           .join("");
       }
 
@@ -7587,6 +7588,12 @@
         startSessionV44(mode, candidates, { skipSharedPreparation: true });
       }
 
+      function renderLearningActionButtonV194({ mode, title, count, description, tone, disabled = "" }) {
+        const countText = String(count);
+        const actionLabel = `${title} ${countText}問をプレイ`;
+        return `<button class="learning-action-card is-${tone}" type="button" data-learning-action="${escapeHtml(mode)}" aria-label="${escapeHtml(actionLabel)}"${disabled}><span class="learning-action-main"><strong class="learning-action-title">${escapeHtml(title)}</strong><span class="learning-action-count">${escapeHtml(countText)}<small>問</small></span></span><small class="learning-action-description">${escapeHtml(description)}</small><span class="learning-action-link"><span>プレイ</span><span aria-hidden="true">→</span></span></button>`;
+      }
+
       function renderRecentHistoryViewV180() {
         const metrics = learningMetricsV172();
         const learningQuestions = learningScopeQuestionsV184();
@@ -7622,7 +7629,19 @@
                     return `<span class="learning-history-mark ${menuScoreMarkClassV63(mark)}">${escapeHtml(mark)}</span>`;
                   }).join("")
                 : `<span class="learning-history-empty">—</span>`;
-              return `<button class="today-recent-row learning-recent-row" type="button" data-question-index="${index}"><span class="learning-recent-question"><strong>${escapeHtml(question.title || `問題${question.number}`)}</strong><small>${escapeHtml(questionTypeV44(question))}</small></span><span class="learning-history-marks" aria-label="${escapeHtml(historyLabel)}" title="${escapeHtml(historyLabel)}">${history}</span><span class="today-recent-arrow" aria-hidden="true">›</span></button>`;
+              const favorite = isFavoriteV16(question);
+              const archived = isArchivedV109(question);
+              const archiveEligible = canArchiveFromMenuV131(question);
+              const favoriteLabel = favorite ? `問題${question.number}のお気に入りを解除` : `問題${question.number}をお気に入りに追加`;
+              const archiveLabel = archived
+                ? `問題${question.number}をアーカイブから戻す`
+                : archiveEligible
+                ? `問題${question.number}をアーカイブに追加`
+                : `問題${question.number}は直近の回答が◎のときにアーカイブへ追加できます`;
+              const archiveAction = archived
+                ? `<button class="learning-recent-action is-archived" type="button" data-menu-action="unarchive" data-question-index="${index}" aria-label="${escapeHtml(archiveLabel)}" title="${escapeHtml(archiveLabel)}">${menuArchiveIconV109()}<span class="sr-only">アーカイブ済み</span></button>`
+                : `<button class="learning-recent-action${archiveEligible ? "" : " is-unavailable"}" type="button" data-menu-action="archive" data-question-index="${index}" aria-label="${escapeHtml(archiveLabel)}" title="${escapeHtml(archiveLabel)}"${archiveEligible ? "" : " disabled aria-disabled=\"true\""}>${menuArchiveIconV109()}<span class="sr-only">アーカイブに追加</span></button>`;
+              return `<article class="today-recent-row learning-recent-row"><button class="learning-recent-open" type="button" data-question-index="${index}" title="${escapeHtml(question.title || `問題${question.number}`)}を開く"><span class="learning-recent-question"><strong>${escapeHtml(question.title || `問題${question.number}`)}</strong><small>${escapeHtml(questionTypeV44(question))}</small></span><span class="learning-history-marks" aria-label="${escapeHtml(historyLabel)}" title="${escapeHtml(historyLabel)}">${history}</span><span class="today-recent-arrow" aria-hidden="true">›</span></button><span class="learning-recent-actions" role="group" aria-label="問題${escapeHtml(String(question.number))}の整理"><button class="learning-recent-action${favorite ? " is-active" : ""}" type="button" data-menu-action="favorite" data-question-index="${index}" aria-pressed="${favorite}" aria-label="${escapeHtml(favoriteLabel)}" title="${escapeHtml(favoriteLabel)}">${favorite ? "★" : "☆"}<span class="sr-only">${escapeHtml(favoriteLabel)}</span></button>${archiveAction}</span></article>`;
             }).join("")
           : `<p class="today-empty-note">この巻の問題を解くと、ここに直近の回答履歴が表示されます。</p>`;
         const resumeMarkup = session
@@ -7630,7 +7649,12 @@
           : "";
         const isBasicSequence = isBasicSequenceCollectionV163();
         const actionDisabled = (count) => summaryPending ? "" : count === 0 ? " disabled aria-disabled=\"true\"" : "";
-        return `<section class="learning-dashboard today-dashboard" aria-labelledby="menuTitle"><nav class="learning-tabs" aria-label="学習メニュー"><button type="button" data-menu-jump="my"><span class="learning-tab-icon" aria-hidden="true">▦</span><span>問題一覧</span><span class="learning-tab-count">${displayedTotal}</span></button><button type="button" data-menu-jump="favorites"><span class="learning-tab-icon" aria-hidden="true">☆</span><span>お気に入り</span><span class="learning-tab-count">${displayedFavorites}</span></button><button type="button" data-menu-jump="archive"><span class="learning-tab-icon" aria-hidden="true">${menuArchiveIconV109()}</span><span>アーカイブ</span></button></nav>${resumeMarkup}<section class="learning-action-grid" aria-label="学習を始める"><button class="learning-action-card is-primary" type="button" data-learning-action="unanswered"${actionDisabled(Number(displayedUnanswered))}><strong class="learning-action-title">未回答を解く</strong><span class="learning-action-count">${displayedUnanswered}<small>問</small></span><small class="learning-action-description">未回答問題を一通り進める</small><span class="learning-action-link">開始 <span aria-hidden="true">→</span></span></button><button class="learning-action-card is-weak" type="button" data-learning-action="weak"${actionDisabled(Number(displayedWeak))}><strong class="learning-action-title">苦手克服</strong><span class="learning-action-count">${displayedWeak}<small>問</small></span><small class="learning-action-description">直近×・△を中心に復習</small><span class="learning-action-link">開始 <span aria-hidden="true">→</span></span></button><div class="learning-all-action"><button class="learning-action-card is-all" type="button" data-learning-action="all"${actionDisabled(Number(displayedAll))}><strong class="learning-action-title">全問を解く</strong><span class="learning-action-count">${displayedAll}<small>問</small></span><small class="learning-action-description">選択した条件で学習</small><span class="learning-action-link">開始 <span aria-hidden="true">→</span></span></button><details class="learning-custom-settings" id="learningCustomSettings"><summary><span><span class="learning-settings-icon" aria-hidden="true">⚙</span>全問を解くの設定</span><span data-learning-settings-summary>${escapeHtml(learningSettingsSummaryV189())}</span></summary><div class="learning-custom-settings-body"><fieldset class="learning-setting-group"><legend>出題順 <small>1つ選択</small></legend><div class="learning-check-grid learning-check-grid-order"><label class="learning-check"><input type="checkbox" data-learning-setting="order" data-learning-value="sequential"${learningOrderV189 === "sequential" ? " checked" : ""}><span>順番${isBasicSequence ? "（推奨）" : ""}</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="order" data-learning-value="random"${learningOrderV189 === "random" ? " checked" : ""}><span>ランダム</span></label></div></fieldset><fieldset class="learning-setting-group"><legend>ジャンル <small>複数選択可</small></legend><div class="learning-check-grid"><label class="learning-check"><input type="checkbox" data-learning-setting="genre" data-learning-value="discard"${learningGenresV189.has("discard") ? " checked" : ""}><span>打牌判断</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="genre" data-learning-value="riichi"${learningGenresV189.has("riichi") ? " checked" : ""}><span>リーチ判断</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="genre" data-learning-value="call"${learningGenresV189.has("call") ? " checked" : ""}><span>副露判断</span></label></div></fieldset><fieldset class="learning-setting-group"><legend>直近履歴 <small>複数選択可</small></legend><div class="learning-check-grid learning-check-grid-history"><label class="learning-check"><input type="checkbox" data-learning-setting="history" data-learning-value="unanswered"${learningHistoryFiltersV189.has("unanswered") ? " checked" : ""}><span>未回答</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="history" data-learning-value="×"${learningHistoryFiltersV189.has("×") ? " checked" : ""}><span class="learning-status-mark is-miss">×</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="history" data-learning-value="△"${learningHistoryFiltersV189.has("△") ? " checked" : ""}><span class="learning-status-mark is-review">△</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="history" data-learning-value="〇"${learningHistoryFiltersV189.has("〇") ? " checked" : ""}><span class="learning-status-mark is-safe">〇</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="history" data-learning-value="◎"${learningHistoryFiltersV189.has("◎") ? " checked" : ""}><span class="learning-status-mark is-excellent">◎</span></label></div></fieldset><p>この設定は「全問を解く」にのみ適用されます。未回答を解く・苦手克服は固定ルールです。</p></div></details></div></section><section class="today-recent learning-recent-section"><div class="today-section-heading"><h3>直近回答履歴</h3><button type="button" data-menu-jump="my">問題一覧を見る <span aria-hidden="true">→</span></button></div><div class="today-recent-list">${recentMarkup}</div></section></section>`;
+        const actionMarkup = [
+          renderLearningActionButtonV194({ mode: "unanswered", title: "未回答", count: displayedUnanswered, description: "未回答問題を一通り進める", tone: "primary", disabled: actionDisabled(Number(displayedUnanswered)) }),
+          renderLearningActionButtonV194({ mode: "weak", title: "苦手克服", count: displayedWeak, description: "直近×・△を中心に復習", tone: "weak", disabled: actionDisabled(Number(displayedWeak)) }),
+          `<div class="learning-all-action">${renderLearningActionButtonV194({ mode: "all", title: "全問", count: displayedAll, description: "選択した条件で学習", tone: "all", disabled: actionDisabled(Number(displayedAll)) })}<details class="learning-custom-settings" id="learningCustomSettings"><summary><span><span class="learning-settings-icon" aria-hidden="true">⚙</span>全問を解くの設定</span><span data-learning-settings-summary>${escapeHtml(learningSettingsSummaryV189())}</span></summary><div class="learning-custom-settings-body"><fieldset class="learning-setting-group"><legend>出題順 <small>1つ選択</small></legend><div class="learning-check-grid learning-check-grid-order"><label class="learning-check"><input type="checkbox" data-learning-setting="order" data-learning-value="sequential"${learningOrderV189 === "sequential" ? " checked" : ""}><span>順番${isBasicSequence ? "（推奨）" : ""}</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="order" data-learning-value="random"${learningOrderV189 === "random" ? " checked" : ""}><span>ランダム</span></label></div></fieldset><fieldset class="learning-setting-group"><legend>ジャンル <small>複数選択可</small></legend><div class="learning-check-grid"><label class="learning-check"><input type="checkbox" data-learning-setting="genre" data-learning-value="discard"${learningGenresV189.has("discard") ? " checked" : ""}><span>打牌判断</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="genre" data-learning-value="riichi"${learningGenresV189.has("riichi") ? " checked" : ""}><span>リーチ判断</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="genre" data-learning-value="call"${learningGenresV189.has("call") ? " checked" : ""}><span>副露判断</span></label></div></fieldset><fieldset class="learning-setting-group"><legend>直近履歴 <small>複数選択可</small></legend><div class="learning-check-grid learning-check-grid-history"><label class="learning-check"><input type="checkbox" data-learning-setting="history" data-learning-value="unanswered"${learningHistoryFiltersV189.has("unanswered") ? " checked" : ""}><span>未回答</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="history" data-learning-value="×"${learningHistoryFiltersV189.has("×") ? " checked" : ""}><span class="learning-status-mark is-miss">×</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="history" data-learning-value="△"${learningHistoryFiltersV189.has("△") ? " checked" : ""}><span class="learning-status-mark is-review">△</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="history" data-learning-value="〇"${learningHistoryFiltersV189.has("〇") ? " checked" : ""}><span class="learning-status-mark is-safe">〇</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="history" data-learning-value="◎"${learningHistoryFiltersV189.has("◎") ? " checked" : ""}><span class="learning-status-mark is-excellent">◎</span></label></div></fieldset><p>この設定は「全問を解く」にのみ適用されます。未回答を解く・苦手克服は固定ルールです。</p></div></details></div>`
+        ].join("");
+        return `<section class="learning-dashboard today-dashboard" aria-labelledby="menuTitle"><nav class="learning-tabs" aria-label="学習メニュー"><button type="button" data-menu-jump="my"><span class="learning-tab-icon" aria-hidden="true">▦</span><span>問題一覧</span><span class="learning-tab-count">${displayedTotal}</span></button><button type="button" data-menu-jump="favorites"><span class="learning-tab-icon" aria-hidden="true">☆</span><span>お気に入り</span><span class="learning-tab-count">${displayedFavorites}</span></button><button type="button" data-menu-jump="archive"><span class="learning-tab-icon" aria-hidden="true">${menuArchiveIconV109()}</span><span>アーカイブ</span></button></nav>${resumeMarkup}<section class="learning-action-grid" aria-label="学習を始める">${actionMarkup}</section><section class="today-recent learning-recent-section"><div class="today-section-heading"><h3>直近回答履歴</h3><button type="button" data-menu-jump="my">問題一覧を見る <span aria-hidden="true">→</span></button></div><div class="today-recent-list">${recentMarkup}</div></section></section>`;
       }
 
       // 旧セッションや外部リンクとの互換性を保つため、内部名だけ残す。
