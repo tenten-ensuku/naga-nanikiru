@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=192">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=192">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=192">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=193">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=193">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=193">
   <title>NAGA局面ドリル｜何切る復習問題集</title>
   <meta name="description" content="NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリ。">
   <meta name="theme-color" content="#06131e">
@@ -2152,16 +2152,15 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=192">
+  <link rel="stylesheet" href="ux-v159.css?v=193">
 </head>
 <body class="auth-gate-open">
   <main class="page" inert aria-hidden="true">
     <section class="menu-panel" id="menuPanel" aria-labelledby="menuTitle">
       <aside class="menu-sidebar" aria-label="問題集ナビゲーション">
-        <div class="menu-brand"><span class="menu-brand-tile" aria-hidden="true">中</span><span class="menu-brand-title">問題集</span><span class="menu-brand-actions"><button class="menu-notice-button" id="announcementButton" type="button" aria-label="アナウンスを開く" title="アプリの更新情報を見る"><span class="menu-notice-label">更新</span><span class="notification-badge" id="announcementBadge" hidden></span></button><button class="menu-notice-button" id="commentNotificationsButton" type="button" aria-label="コメント・追加通知を開く" title="コメントと問題追加の通知を見る"><span class="menu-notice-label">通知</span><span class="notification-badge" id="commentNotificationBadge" hidden></span></button><span class="menu-brand-version">V<span id="menuVersion"></span></span></span></div>
+        <div class="menu-brand"><span class="menu-brand-tile" aria-hidden="true">中</span><span class="menu-brand-title">問題集</span><span class="menu-brand-version">V<span id="menuVersion"></span></span><span class="menu-brand-actions"><button class="menu-notice-button" id="announcementButton" type="button" aria-label="アナウンスを開く" title="アプリの更新情報を見る"><span class="menu-notice-icon" aria-hidden="true">📣</span><span class="menu-notice-label">更新</span><span class="notification-badge" id="announcementBadge" hidden></span></button><button class="menu-notice-button" id="commentNotificationsButton" type="button" aria-label="コメント・追加通知を開く" title="コメントと追加の通知を見る"><span class="menu-notice-icon" aria-hidden="true">🔔</span><span class="menu-notice-label">通知</span><span class="notification-badge" id="commentNotificationBadge" hidden></span></button></span></div>
         <button class="active-collection-button" type="button" data-open-collection-chooser aria-label="現在の問題集を確認・変更する">
-          <span class="active-collection-label">選択中の問題集</span>
-          <strong data-active-collection-name>問題集を選ぶ</strong>
+          <strong class="active-collection-title" data-active-collection-name>問題集を選ぶ</strong>
           <span class="active-collection-status" data-active-collection-status>未選択</span>
           <span class="active-collection-arrow" aria-hidden="true">›</span>
         </button>
@@ -2180,7 +2179,7 @@
       </aside>
       <div class="menu-content">
         <button class="mobile-collection-context" type="button" data-open-collection-chooser aria-label="現在の問題集を確認・変更する">
-          <span><small>選択中の問題集</small><strong data-active-collection-name>問題集を選ぶ</strong></span>
+          <strong class="mobile-collection-context-title" data-active-collection-name>問題集を選ぶ</strong>
           <span class="mobile-collection-context-status" data-active-collection-status>未選択</span>
           <span aria-hidden="true">›</span>
         </button>
@@ -2437,13 +2436,13 @@
   </dialog>
 
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=192"></script>
-  <script src="drill-ux-v44.js?v=192"></script>
+  <script src="supabase-sync-v48.js?v=193"></script>
+  <script src="drill-ux-v44.js?v=193"></script>
   <script src="naga-generator-v44.js"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 192;
+    const APP_VERSION = 193;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -3604,6 +3603,7 @@
         { version: 172, date: "2026-08-26", publishedAt: "2026-08-26T19:00:00+09:00", title: "一周達成と完全習得を祝うようにしました", body: "未回答がなくなったときは一周達成、最新1回の回答が〇以上で全問がそろったときは習熟度100％として祝福します。今日の10問に対象がないときは、達成をたたえる表示に切り替わります。" },
         { version: 176, date: "2026-08-26", publishedAt: "2026-08-26T21:00:00+09:00", title: "問題一覧のフィルターを見やすく整理しました", body: "問題範囲・ジャンル・フィルターを3段に整理し、直近の評価記号を問題一覧と同じ色で表示するようにしました。" },
         { version: 178, date: "2026-08-26", publishedAt: "2026-08-26T23:00:00+09:00", title: "大規模問題集の範囲切り替えを安定させました", body: "範囲の読み込みが重なったときに古い結果で表示を上書きしないようにし、取得に失敗した場合は元の範囲へ安全に戻します。100問目以降のお気に入り・アーカイブも初回読み込みで失わないようにしました。" },
+        { version: 193, date: "2026-08-30", title: "問題集の選択後に学習を始めやすくしました", body: "問題集や巻を選ぶと学習する画面へ移動し、ヘッダーの更新情報・通知と現在の問題集を見分けやすく整理しました。" },
         { version: 192, date: "2026-08-30", title: "問題集を変更しやすくしました", body: "選択中の問題集から問題集を変更できることを分かりやすくし、問題集選択画面の補足表示を整理しました。" },
         { version: 191, date: "2026-08-30", title: "問題一覧の導線を整えました", body: "問題一覧・お気に入り・アーカイブを各画面の上部から切り替えられるようにし、問題一覧では表示範囲やフィルターを省いて問題へ集中できるようにしました。" },
         { version: 190, date: "2026-08-30", title: "学習画面をコンパクトに整理しました", body: "進捗は学習するの見出し横に集約し、未回答・苦手克服・全問学習の3つからすぐに始められるようにしました。問題一覧・お気に入り・アーカイブは上部タブから確認でき、カスタム設定は全問を解くにだけ表示されます。" },
@@ -4577,7 +4577,7 @@
           normalizeQuestionTitlesV79();
           migrateAnswerHistoryScoresV16();
           importedQuestionsReadyV81 = true;
-          menuViewV16 = "my";
+          menuViewV16 = "today";
           renderQuestionOptionsV16();
           showMenuV16(menuViewV16);
           if (questionsV16.length) void startCommentNotificationPollingV65();
@@ -8409,7 +8409,7 @@
         const collectionButton = event.target.closest("[data-collection-slug]");
         if (collectionButton) {
           const slug = String(collectionButton.dataset.collectionSlug || "");
-          if (slug && slug === String(sharedCollectionV46?.share_slug || "")) showMenuV16(isSeriesParentCollectionV180(sharedCollectionV46) ? "collections" : "my");
+          if (slug && slug === String(sharedCollectionV46?.share_slug || "")) showMenuV16(isSeriesParentCollectionV180(sharedCollectionV46) ? "collections" : "today");
           else navigateToCollectionV106(slug);
           return;
         }

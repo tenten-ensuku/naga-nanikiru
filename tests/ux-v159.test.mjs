@@ -13,9 +13,9 @@ test("V180 exposes the recent-history shell and synchronized release assets", as
     readFile(identityUrl, "utf8"),
   ]);
 
-  assert.match(html, /const APP_VERSION = 192;/);
-  assert.match(identity, /APP_VERSION = 192/);
-  assert.match(html, /ux-v159\.css\?v=192/);
+  assert.match(html, /const APP_VERSION = 193;/);
+  assert.match(identity, /APP_VERSION = 193/);
+  assert.match(html, /ux-v159\.css\?v=193/);
   assert.match(html, /data-menu-view="today"/);
   assert.match(html, /<span>学習する<\/span>/);
   assert.doesNotMatch(html, /<span class="quick-start-title">今日の10問/);

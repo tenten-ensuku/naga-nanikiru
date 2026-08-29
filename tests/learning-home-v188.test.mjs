@@ -7,7 +7,7 @@ const cssUrl = new URL("../public/ux-v159.css", import.meta.url);
 const identityUrl = new URL("../app/lib/appIdentity.ts", import.meta.url);
 const packageUrl = new URL("../package.json", import.meta.url);
 
-test("V192 keeps the compact learning home and clarifies collection switching", async () => {
+test("V193 starts learning after collection selection and clarifies the header", async () => {
   const [html, css, identity, packageSource] = await Promise.all([
     readFile(indexUrl, "utf8"),
     readFile(cssUrl, "utf8"),
@@ -15,12 +15,17 @@ test("V192 keeps the compact learning home and clarifies collection switching", 
     readFile(packageUrl, "utf8")
   ]);
 
-  assert.match(html, /const APP_VERSION = 192;/);
-  assert.match(identity, /APP_VERSION = 192/);
+  assert.match(html, /const APP_VERSION = 193;/);
+  assert.match(identity, /APP_VERSION = 193/);
   for (const asset of ["ux-v159\\.css", "supabase-sync-v48\\.js", "drill-ux-v44\\.js"]) {
-    assert.match(html, new RegExp(`${asset}\\?v=192`));
+    assert.match(html, new RegExp(`${asset}\\?v=193`));
   }
   assert.match(html, /問題集を変更する/);
+  assert.doesNotMatch(html, /class="active-collection-label"/);
+  assert.doesNotMatch(html, /<small>選択中の問題集<\/small>/);
+  assert.match(html, /isSeriesParentCollectionV180\(sharedCollectionV46\) \? "collections" : "today"/);
+  const switchCollection = html.match(/async function switchCollectionInPlaceV177\([\s\S]*?\n      function navigateToCollectionV106/)?.[0] || "";
+  assert.match(switchCollection, /menuViewV16 = "today";/);
   assert.doesNotMatch(html, /COLLECTION LIBRARY/);
   assert.doesNotMatch(html, /選んだ問題集は次回も保持されます/);
 
@@ -74,6 +79,7 @@ test("V192 keeps the compact learning home and clarifies collection switching", 
   assert.match(css, /\.learning-custom-settings/);
   assert.match(css, /\.learning-check input:checked/);
   assert.match(css, /V191: keep the list shortcuts visible after entering the problem list/);
+  assert.match(css, /V193: clarify the app header and give the current collection more room/);
   assert.ok(css.indexOf("/* V189: checkbox-based custom filters") > css.indexOf(".learning-custom-settings-body select"), "V189 checkbox styles should come after legacy select styles");
 
   const scripts = JSON.parse(packageSource).scripts;

@@ -73,11 +73,11 @@ test("V184 exposes volume creation through the Supabase client and generator pro
   assert.match(html, /await window\.NagaSupabase\.createCollectionVolume\(parentShareSlug, nextVolume\)/);
 });
 
-test("V186 shows series volume counts, orders navigation from the list, and opens the list after selection", async () => {
+test("V186 shows series volume counts, orders navigation from the list, and opens learning after selection", async () => {
   const html = await read("public/index.html");
   assert.match(html, /function collectionChooserTitleV186\(row\)/);
   assert.match(html, /`\$\{title\}　全\$\{volumeCount\}巻`/);
   assert.match(html, /escapeHtml\(collectionChooserTitleV186\(row\)\)/);
   assert.match(html, /data-menu-view="today"[\s\S]*data-menu-view="analysis"[\s\S]*data-menu-view="generator"[\s\S]*data-menu-view="settings"/);
-  assert.match(html, /menuViewV16 = "my";/);
+  assert.match(html, /menuViewV16 = "today";/);
 });
