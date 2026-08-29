@@ -13,9 +13,9 @@ test("V180 exposes the recent-history shell and synchronized release assets", as
     readFile(identityUrl, "utf8"),
   ]);
 
-  assert.match(html, /const APP_VERSION = 198;/);
-  assert.match(identity, /APP_VERSION = 198/);
-  assert.match(html, /ux-v159\.css\?v=198/);
+  assert.match(html, /const APP_VERSION = 199;/);
+  assert.match(identity, /APP_VERSION = 199/);
+  assert.match(html, /ux-v159\.css\?v=199/);
   assert.match(html, /\.comment-form textarea \{ display: block; width: 100%; min-width: 0;/);
   assert.match(html, /data-menu-view="today"/);
   assert.match(html, /<span>学習する<\/span>/);
@@ -252,4 +252,22 @@ test("V198 carries Discord avatar data into imported comment groups", async () =
   assert.match(migration, /'marlboro0908'/i);
   assert.match(migration, /'kakisakinima'/i);
   assert.match(migration, /'kunimusya'/i);
+});
+
+test("V199 keeps comment submission independent from the later app scope", async () => {
+  const html = await readFile(indexUrl, "utf8");
+  const start = html.indexOf("function submitNewCommentV75(content) {");
+  const end = html.indexOf("\n    async function deleteCommentV75", start);
+  assert.ok(start >= 0, "comment submit function should exist");
+  assert.ok(end > start, "comment submit function should have a bounded body");
+  const submitSource = html.slice(start, end);
+
+  assert.match(submitSource, /window\.nagaCurrentUserDisplayNameV75/);
+  assert.match(submitSource, /window\.nagaCurrentUserAvatarUrlV198/);
+  assert.doesNotMatch(submitSource, /\bsupabaseSessionV46\b/);
+  assert.doesNotMatch(submitSource, /\bcurrentUserDisplayNameV47\b/);
+  assert.match(submitSource, /const persistence = window\.persistLocalCommentV44\?\.\(message\);/);
+  assert.match(submitSource, /Promise\.resolve\(persistence\)/);
+  assert.match(html, /window\.nagaCurrentUserDisplayNameV75 = session \? currentUserDisplayNameV47\(\) : "";/);
+  assert.match(html, /window\.nagaCurrentUserAvatarUrlV198 = normalizeCommentAvatarUrlV196\(session\?\.user\?\.user_metadata\?\.avatar_url\);/);
 });

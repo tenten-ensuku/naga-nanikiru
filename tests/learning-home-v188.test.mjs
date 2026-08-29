@@ -15,10 +15,10 @@ test("V194 starts learning after collection selection and clarifies the learning
     readFile(packageUrl, "utf8")
   ]);
 
-  assert.match(html, /const APP_VERSION = 198;/);
-  assert.match(identity, /APP_VERSION = 198/);
+  assert.match(html, /const APP_VERSION = 199;/);
+  assert.match(identity, /APP_VERSION = 199/);
   for (const asset of ["ux-v159\\.css", "supabase-sync-v48\\.js", "drill-ux-v44\\.js"]) {
-    assert.match(html, new RegExp(`${asset}\\?v=198`));
+    assert.match(html, new RegExp(`${asset}\\?v=199`));
   }
   assert.match(html, /問題集を変更する/);
   assert.doesNotMatch(html, /class="active-collection-label"/);
