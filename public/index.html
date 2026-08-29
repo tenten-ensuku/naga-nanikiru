@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=189">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=189">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=189">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=190">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=190">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=190">
   <title>NAGA局面ドリル｜何切る復習問題集</title>
   <meta name="description" content="NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリ。">
   <meta name="theme-color" content="#06131e">
@@ -2152,7 +2152,7 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=189">
+  <link rel="stylesheet" href="ux-v159.css?v=190">
 </head>
 <body class="auth-gate-open">
   <main class="page" inert aria-hidden="true">
@@ -2233,12 +2233,7 @@
           </div>
           <div class="menu-active-filters" id="menuActiveFilters" aria-live="polite" hidden></div>
          </div>
-         <div class="menu-range-actions" id="menuRangeActions" hidden>
-          <span class="menu-range-target" id="menuRangeTarget" aria-live="polite"></span>
-          <label class="menu-order-control" for="menuOrderSelect" title="次の問題へ進む順序を選びます"><span>出題順</span><select id="menuOrderSelect" aria-label="出題順"><option value="sequential">順番</option><option value="reverse">逆順</option><option value="random">ランダム（解答数が少ない順）</option></select></label>
-          <button class="menu-range-action primary" type="button" data-range-session="all" title="現在の範囲から10問の学習を始めます">10問解く <span aria-hidden="true">→</span></button>
-        </div>
-        <div class="menu-list-header" id="menuListHeader" aria-hidden="true"><span title="問題のタイトル">問題</span><span title="直近5回の採点履歴">最近の成績</span><span title="この問題集でのログインユーザー個人のお気に入り">お気に入り</span><span title="直近の結果が◎の問題だけ、ここからアーカイブに移せます">アーカイブ</span></div>
+         <div class="menu-list-header" id="menuListHeader" aria-hidden="true"><span title="問題のタイトル">問題</span><span title="直近5回の採点履歴">最近の成績</span><span title="この問題集でのログインユーザー個人のお気に入り">お気に入り</span><span title="直近の結果が◎の問題だけ、ここからアーカイブに移せます">アーカイブ</span></div>
         <div class="menu-grid" id="menuGrid"></div>
         <div class="menu-load-more" id="menuLoadMore" hidden></div>
         <div class="menu-empty" id="menuEmpty" hidden></div>
@@ -2437,13 +2432,13 @@
   </dialog>
 
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=189"></script>
-  <script src="drill-ux-v44.js?v=189"></script>
+  <script src="supabase-sync-v48.js?v=190"></script>
+  <script src="drill-ux-v44.js?v=190"></script>
   <script src="naga-generator-v44.js"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 189;
+    const APP_VERSION = 190;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -3604,6 +3599,7 @@
         { version: 172, date: "2026-08-26", publishedAt: "2026-08-26T19:00:00+09:00", title: "一周達成と完全習得を祝うようにしました", body: "未回答がなくなったときは一周達成、最新1回の回答が〇以上で全問がそろったときは習熟度100％として祝福します。今日の10問に対象がないときは、達成をたたえる表示に切り替わります。" },
         { version: 176, date: "2026-08-26", publishedAt: "2026-08-26T21:00:00+09:00", title: "問題一覧のフィルターを見やすく整理しました", body: "問題範囲・ジャンル・フィルターを3段に整理し、直近の評価記号を問題一覧と同じ色で表示するようにしました。" },
         { version: 178, date: "2026-08-26", publishedAt: "2026-08-26T23:00:00+09:00", title: "大規模問題集の範囲切り替えを安定させました", body: "範囲の読み込みが重なったときに古い結果で表示を上書きしないようにし、取得に失敗した場合は元の範囲へ安全に戻します。100問目以降のお気に入り・アーカイブも初回読み込みで失わないようにしました。" },
+        { version: 190, date: "2026-08-30", title: "学習画面をコンパクトに整理しました", body: "進捗は学習するの見出し横に集約し、未回答・苦手克服・全問学習の3つからすぐに始められるようにしました。問題一覧・お気に入り・アーカイブは上部タブから確認でき、カスタム設定は全問を解くにだけ表示されます。" },
         { version: 189, date: "2026-08-30", title: "全問学習のカスタム設定を見直しました", body: "全問を解くときだけ、出題順・ジャンル・直近履歴をチェックボックスで組み合わせて選べるようになりました。未回答を解く・苦手克服は、これまでどおり固定の学習順で進みます。" },
         { version: 188, date: "2026-08-30", title: "学習の入口を3つに整理しました", body: "未回答を解く・苦手克服・全問を解く、の3つからすぐに学習を始められるようになりました。お気に入り・アーカイブ・問題一覧・直近解答履歴は学習画面のタブから確認でき、出題順とジャンルもカスタム設定で選べます。" },
         { version: 187, date: "2026-08-29", title: "ログインして安全に学習できるようにしました", body: "学習を始める前にDiscordログインを必須にし、携帯・パソコン間で回答履歴を安全に同期できるようにしました。端末内の履歴を取り込むボタンは廃止し、URLから開いた問題もログイン後にそのまま再開できます。" },
@@ -6472,7 +6468,7 @@
       }
 
       function sessionModeLabelV44(mode) {
-        return { today: "おすすめ10問", recommended: "おすすめ10問", weak: "苦手10問（×・△）", unanswered: "未回答10問", all: "全問10問", riichi: "リーチ判断", call: "副露判断", favorites: "お気に入り", range: "この範囲の10問", "range-unanswered": "未回答の10問" }[mode] || "選択ドリル";
+        return { today: "おすすめ学習", recommended: "おすすめ学習", weak: "苦手復習", unanswered: "未回答問題", all: "全問学習", riichi: "リーチ判断", call: "副露判断", favorites: "お気に入り", range: "この範囲", "range-unanswered": "未回答問題" }[mode] || "選択ドリル";
       }
 
       function nextFilteredQuestionV87() {
@@ -6852,8 +6848,13 @@
           && !sharedQuestionPagingV177.allLoaded
           && sharedTotal > rangeLearningQuestions.length;
         const visibleSummary = partialAll ? `${rangeLearningQuestions.length} / ${sharedTotal}` : String(rangeLearningQuestions.length);
-        summary.innerHTML = `<div class="menu-summary-stat"><small>この範囲の問題</small><strong>${visibleSummary}<em>問</em></strong></div><div class="menu-summary-stat${rangeUnanswered ? " is-alert" : ""}"><small>未回答</small><strong>${rangeUnanswered}<em>問</em></strong></div><div class="menu-summary-stat"><small>回答済み</small><strong>${rangeAnswered.length}<em>問</em></strong></div>`;
-        summary.hidden = !listView;
+        if (summary) {
+          summary.classList.remove("is-learning-progress");
+          summary.innerHTML = listView
+            ? `<div class="menu-summary-stat"><small>この範囲の問題</small><strong>${visibleSummary}<em>問</em></strong></div><div class="menu-summary-stat${rangeUnanswered ? " is-alert" : ""}"><small>未回答</small><strong>${rangeUnanswered}<em>問</em></strong></div><div class="menu-summary-stat"><small>回答済み</small><strong>${rangeAnswered.length}<em>問</em></strong></div>`
+            : "";
+          summary.hidden = !listView;
+        }
         const rangeTarget = document.getElementById("menuRangeTarget");
         if (rangeTarget) rangeTarget.textContent = partialAll ? `先頭${rangeLearningQuestions.length}問を表示中（全${sharedTotal}問）` : `${rangeLearningQuestions.length}問が対象`;
         const rangeCount = document.getElementById("menuRangeCount");
@@ -6861,6 +6862,19 @@
         const allLearningQuestions = learningScopeQuestionsV184();
         const allAnswered = allLearningQuestions.filter(isAnsweredForLearningV184).length;
         const progress = allLearningQuestions.length ? Math.round(allAnswered / allLearningQuestions.length * 100) : 0;
+        const progressPending = sharedTotal !== null
+          && !sharedQuestionPagingV177.allLoaded
+          && sharedTotal > allLearningQuestions.length;
+        const progressTotal = progressPending ? sharedTotal : allLearningQuestions.length;
+        const progressAnswered = progressPending ? "…" : String(allAnswered);
+        const progressUnanswered = progressPending ? "…" : String(Math.max(progressTotal - allAnswered, 0));
+        const progressPercent = progressPending ? 0 : progressTotal ? Math.round(allAnswered / progressTotal * 100) : 0;
+        if (summary && menuViewV16 === "today") {
+          const collectionLabel = collectionDisplayNameV101() || "この問題集";
+          summary.classList.add("is-learning-progress");
+          summary.hidden = false;
+          summary.innerHTML = `<div class="learning-header-progress" aria-label="${escapeHtml(collectionLabel)}の回答進捗"><div class="learning-header-progress-copy"><span>回答済み</span><strong>${progressAnswered}<small> / ${progressTotal}問</small></strong></div><span class="learning-header-progress-track" aria-hidden="true"><span style="width:${progressPercent}%"></span></span><small>未回答 ${progressUnanswered}問</small></div>`;
+        }
         const masteredCount = learningMetrics.mastered;
         const mastery = allLearningQuestions.length ? Math.round(masteredCount / allLearningQuestions.length * 100) : 0;
         document.getElementById("menuSidebarProgress").innerHTML = `<span class="menu-sidebar-progress-title">学習の進捗</span><div class="menu-progress-metric"><div class="menu-progress-metric-head"><span class="menu-progress-metric-label">回答率</span><strong class="menu-progress-metric-value">${progress}%</strong></div><span class="menu-progress-metric-note">${allAnswered} / ${allLearningQuestions.length}問を回答済み</span><span class="menu-sidebar-progress-track" aria-hidden="true"><span class="menu-sidebar-progress-fill" style="width:${progress}%"></span></span></div><div class="menu-progress-metric menu-progress-mastery"><div class="menu-progress-metric-head"><span class="menu-progress-metric-label">習熟度</span><strong class="menu-progress-metric-value">${mastery}%</strong></div><span class="menu-progress-metric-note">${masteredCount} / ${allLearningQuestions.length}問が習熟（直近1回が〇以上またはアーカイブ）</span><span class="menu-sidebar-progress-track" aria-hidden="true"><span class="menu-sidebar-progress-fill is-mastery" style="width:${mastery}%"></span></span></div>`;
@@ -6881,7 +6895,6 @@
           if (resume) document.getElementById("resumeSessionNote").textContent = `${Number(resume.cursor || 0) + 1} / ${resume.questionKeys.length} から再開`;
         }
         document.getElementById("menuFilters").hidden = !["my", "archive"].includes(menuViewV16);
-        document.getElementById("menuRangeActions").hidden = menuViewV16 !== "my";
         document.getElementById("menuListHeader").hidden = !listView;
         document.getElementById("menuListHeader").setAttribute("aria-hidden", String(!listView));
         renderMenuRangeControlsV137();
@@ -7204,12 +7217,12 @@
           ["リーチ判断", stats.breakdowns?.riichi],
           ["副露判断", stats.breakdowns?.call]
         ].map(([label, value]) => `<div class="analysis-breakdown"><strong>${label}</strong><span>${value?.attempts || 0}回答・悪手回避率 ${Math.round(value?.safeRate || 0)}%</span></div>`).join("");
-        return `<section class="analysis-section"><h3>学習の現在地</h3><div class="analysis-grid"><div class="stat-card"><span class="stat-label">回答数</span><span class="stat-value">${attempts}</span></div><div class="stat-card"><span class="stat-label">悪手回避率</span><span class="stat-value">${safeRate}%</span></div><div class="stat-card"><span class="stat-label">平均回答時間</span><span class="stat-value">${averageSeconds}<small>秒</small></span></div><div class="stat-card"><span class="stat-label">連続学習</span><span class="stat-value">${stats.streakDays || 0}<small>日</small></span></div></div><div class="analysis-breakdowns">${breakdowns}</div><div class="drill-actions"><button class="drill-action" type="button" data-analysis-drill="weak">直近×を10問</button><button class="drill-action secondary" type="button" data-analysis-drill="riichi">リーチ判断を10問</button><button class="drill-action secondary" type="button" data-analysis-drill="call">副露判断を10問</button><button class="drill-action secondary" type="button" data-analysis-drill="unanswered">未回答を10問</button></div><p>未ログイン時はこの端末内に保存されます。Discordログイン中は、自分の回答履歴を問題集ごとに同期し、別端末でも復元します。</p></section>`;
+        return `<section class="analysis-section"><h3>学習の現在地</h3><div class="analysis-grid"><div class="stat-card"><span class="stat-label">回答数</span><span class="stat-value">${attempts}</span></div><div class="stat-card"><span class="stat-label">悪手回避率</span><span class="stat-value">${safeRate}%</span></div><div class="stat-card"><span class="stat-label">平均回答時間</span><span class="stat-value">${averageSeconds}<small>秒</small></span></div><div class="stat-card"><span class="stat-label">連続学習</span><span class="stat-value">${stats.streakDays || 0}<small>日</small></span></div></div><div class="analysis-breakdowns">${breakdowns}</div><div class="drill-actions"><button class="drill-action" type="button" data-analysis-drill="weak">直近×を復習</button><button class="drill-action secondary" type="button" data-analysis-drill="riichi">リーチ判断を復習</button><button class="drill-action secondary" type="button" data-analysis-drill="call">副露判断を復習</button><button class="drill-action secondary" type="button" data-analysis-drill="unanswered">未回答を復習</button></div><p>未ログイン時はこの端末内に保存されます。Discordログイン中は、自分の回答履歴を問題集ごとに同期し、別端末でも復元します。</p></section>`;
       }
 
       function renderSessionResultV44() {
         const result = userStateV16.lastSessionResult;
-        if (!result) return `<div class="menu-placeholder"><strong>まだ終了したセッションがありません</strong>「おすすめ10問」から学習を始めてください。</div>`;
+        if (!result) return `<div class="menu-placeholder"><strong>まだ終了したセッションがありません</strong>学習するボタンから始めてください。</div>`;
         const rows = result.results || [];
         const counts = rows.reduce((map, row) => {
           const mark = normalizeScoreMarkV159(row.scoreMark);
@@ -7219,9 +7232,9 @@
         const average = rows.length ? (rows.reduce((sum, row) => sum + Number(row.responseTimeMs || 0), 0) / rows.length / 1000).toFixed(1) : "0.0";
         const weak = rows.filter(row => ["×", "△"].includes(normalizeScoreMarkV159(row.scoreMark))).length;
         const unansweredMode = result.mode === "unanswered" || result.mode === "range-unanswered";
-        const nextTenAction = result.mode === "range-unanswered" ? "range-unanswered" : ["weak", "all"].includes(result.mode) ? result.mode : "unanswered";
-        const nextTenLabel = unansweredMode ? "次の10問へ" : result.mode === "weak" ? "次の苦手10問" : result.mode === "all" ? "次の全問" : "新しい10問";
-        return `<section class="session-result"><h3>${sessionModeLabelV44(result.mode)} 完了</h3><div class="dashboard-grid"><div class="stat-card"><span class="stat-label">回答</span><span class="stat-value">${rows.length}</span></div><div class="stat-card"><span class="stat-label">◎・〇</span><span class="stat-value">${(counts["◎"] || 0) + (counts["〇"] || 0)}</span></div><div class="stat-card"><span class="stat-label">△・×</span><span class="stat-value">${weak}</span></div><div class="stat-card"><span class="stat-label">平均時間</span><span class="stat-value">${average}<small>秒</small></span></div></div><p>◎ ${counts["◎"] || 0}　〇 ${counts["〇"] || 0}　△ ${counts["△"] || 0}　× ${counts["×"] || 0}</p><div class="session-result-actions">${weak ? `<button class="drill-action" type="button" data-result-action="retry-weak">間違えた${weak}問をもう一度</button>` : ""}<button class="drill-action secondary" type="button" data-result-action="${nextTenAction}">${nextTenLabel}</button><button class="drill-action secondary" type="button" data-result-action="menu">${escapeHtml(collectionDisplayNameV101())}へ</button></div></section>`;
+        const nextSessionAction = result.mode === "range-unanswered" ? "range-unanswered" : ["weak", "all"].includes(result.mode) ? result.mode : "unanswered";
+        const nextSessionLabel = unansweredMode ? "次の未回答問題" : result.mode === "weak" ? "次の苦手問題" : result.mode === "all" ? "次の全問" : "新しい問題";
+        return `<section class="session-result"><h3>${sessionModeLabelV44(result.mode)} 完了</h3><div class="dashboard-grid"><div class="stat-card"><span class="stat-label">回答</span><span class="stat-value">${rows.length}</span></div><div class="stat-card"><span class="stat-label">◎・〇</span><span class="stat-value">${(counts["◎"] || 0) + (counts["〇"] || 0)}</span></div><div class="stat-card"><span class="stat-label">△・×</span><span class="stat-value">${weak}</span></div><div class="stat-card"><span class="stat-label">平均時間</span><span class="stat-value">${average}<small>秒</small></span></div></div><p>◎ ${counts["◎"] || 0}　〇 ${counts["〇"] || 0}　△ ${counts["△"] || 0}　× ${counts["×"] || 0}</p><div class="session-result-actions">${weak ? `<button class="drill-action" type="button" data-result-action="retry-weak">間違えた${weak}問をもう一度</button>` : ""}<button class="drill-action secondary" type="button" data-result-action="${nextSessionAction}">${nextSessionLabel}</button><button class="drill-action secondary" type="button" data-result-action="menu">${escapeHtml(collectionDisplayNameV101())}へ</button></div></section>`;
       }
 
       function generatorSeatOptionsV46() {
@@ -7536,14 +7549,12 @@
       function renderRecentHistoryViewV180() {
         const metrics = learningMetricsV172();
         const learningQuestions = learningScopeQuestionsV184();
-        const answeredCount = learningQuestions.filter(isAnsweredForLearningV184).length;
         const favoriteCount = learningQuestions.filter(isFavoriteV16).length;
         const knownTotal = sharedQuestionKnownTotalV177();
         const summaryPending = knownTotal !== null
           && !sharedQuestionPagingV177.allLoaded
           && knownTotal > learningQuestions.length;
         const displayedTotal = summaryPending ? knownTotal : metrics.total;
-        const displayedAnswered = summaryPending ? "…" : answeredCount;
         const latestAnswers = summaryPending ? null : learningLatestAnswersV189();
         const displayedUnanswered = summaryPending ? "…" : learningCandidatesV189("unanswered", { ordered: false, latestAnswers }).length;
         const displayedWeak = summaryPending ? "…" : learningCandidatesV189("weak", { ordered: false, latestAnswers }).length;
@@ -7552,7 +7563,6 @@
         const session = activeSessionV44();
         const sessionTotal = Number(session?.questionKeys?.length || 0);
         const sessionCurrent = session ? Math.min(sessionTotal, Number(session.cursor || 0) + 1) : 0;
-        const collectionName = collectionDisplayNameV101();
         const seen = new Set();
         const recent = (userStateV16.answerHistory || [])
           .slice()
@@ -7577,13 +7587,9 @@
         const resumeMarkup = session
           ? `<section class="learning-resume"><div><span>途中の学習</span><strong>${escapeHtml(sessionModeLabelV44(session.mode))}</strong><small>${sessionCurrent} / ${sessionTotal}問から再開できます</small></div><button type="button" data-today-session="resume">続きから再開<span aria-hidden="true">→</span></button></section>`
           : "";
-        const collectionLabel = collectionName || "選択中の問題集";
         const isBasicSequence = isBasicSequenceCollectionV163();
         const actionDisabled = (count) => summaryPending ? "" : count === 0 ? " disabled aria-disabled=\"true\"" : "";
-        const flowNote = displayedUnanswered === "0"
-          ? "未回答を終えたら、直近×・△の復習へ進みます。"
-          : "まず未回答を一通り解き、その後に苦手問題を復習します。";
-        return `<section class="learning-dashboard today-dashboard" aria-labelledby="learningDashboardTitle"><div class="learning-breadcrumb"><span>${escapeHtml(collectionLabel)}</span><span aria-hidden="true">›</span><strong>学習する</strong></div><nav class="learning-tabs" aria-label="問題集の確認"><button type="button" data-menu-jump="favorites"><span class="learning-tab-icon" aria-hidden="true">☆</span><span>お気に入り</span><span class="learning-tab-count">${displayedFavorites}</span></button><button type="button" data-menu-jump="archive"><span class="learning-tab-icon" aria-hidden="true">${menuArchiveIconV109()}</span><span>アーカイブ</span></button><button type="button" data-menu-jump="my"><span class="learning-tab-icon" aria-hidden="true">▦</span><span>問題一覧</span><span class="learning-tab-count">${displayedTotal}</span></button><button type="button" class="is-active" data-menu-jump="today" aria-current="page"><span class="learning-tab-icon" aria-hidden="true">↺</span><span>直近解答履歴</span></button></nav><section class="learning-hero"><div class="learning-hero-copy"><p class="today-kicker">LEARNING PATH</p><h3 id="learningDashboardTitle">学習する</h3><p>${escapeHtml(flowNote)}</p><div class="learning-path-note"><span><b>1</b> 未回答を解く</span><span aria-hidden="true">→</span><span><b>2</b> 苦手克服</span></div></div><div class="learning-progress" aria-label="${escapeHtml(collectionLabel)}の学習進捗"><span>回答済み</span><strong>${displayedAnswered}<small> / ${displayedTotal}問</small></strong><span class="learning-progress-track" aria-hidden="true"><span style="width:${displayedAnswered === "…" ? 0 : displayedTotal ? Math.round(answeredCount / displayedTotal * 100) : 0}%"></span></span><small>未回答 ${displayedUnanswered}問</small></div></section>${resumeMarkup}<section class="learning-action-grid" aria-label="学習を始める"><button class="learning-action-card is-primary" type="button" data-learning-action="unanswered"${actionDisabled(Number(displayedUnanswered))}><span class="learning-action-step">STEP 1</span><strong>未回答を解く</strong><span class="learning-action-count">${displayedUnanswered}<small>問</small></span><small>未回答問題を一通り進める</small><span class="learning-action-link">すぐ始める <span aria-hidden="true">→</span></span></button><button class="learning-action-card is-weak" type="button" data-learning-action="weak"${actionDisabled(Number(displayedWeak))}><span class="learning-action-step">STEP 2</span><strong>苦手克服</strong><span class="learning-action-count">${displayedWeak}<small>問</small></span><small>直近×・△を中心に復習</small><span class="learning-action-link">復習を始める <span aria-hidden="true">→</span></span></button><button class="learning-action-card is-all" type="button" data-learning-action="all"${actionDisabled(Number(displayedAll))}><span class="learning-action-step">自由に学ぶ</span><strong>全問を解く</strong><span class="learning-action-count">${displayedAll}<small>問</small></span><small>カスタム設定を適用して学習</small><span class="learning-action-link">学習を始める <span aria-hidden="true">→</span></span></button></section><details class="learning-custom-settings" id="learningCustomSettings"><summary><span><span class="learning-settings-icon" aria-hidden="true">⚙</span>カスタム設定</span><span data-learning-settings-summary>${escapeHtml(learningSettingsSummaryV189())}</span></summary><div class="learning-custom-settings-body"><fieldset class="learning-setting-group"><legend>出題順 <small>1つ選択</small></legend><div class="learning-check-grid learning-check-grid-order"><label class="learning-check"><input type="checkbox" data-learning-setting="order" data-learning-value="sequential"${learningOrderV189 === "sequential" ? " checked" : ""}><span>順番${isBasicSequence ? "（推奨）" : ""}</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="order" data-learning-value="random"${learningOrderV189 === "random" ? " checked" : ""}><span>ランダム</span></label></div></fieldset><fieldset class="learning-setting-group"><legend>ジャンル <small>複数選択可</small></legend><div class="learning-check-grid"><label class="learning-check"><input type="checkbox" data-learning-setting="genre" data-learning-value="discard"${learningGenresV189.has("discard") ? " checked" : ""}><span>打牌判断</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="genre" data-learning-value="riichi"${learningGenresV189.has("riichi") ? " checked" : ""}><span>リーチ判断</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="genre" data-learning-value="call"${learningGenresV189.has("call") ? " checked" : ""}><span>副露判断</span></label></div></fieldset><fieldset class="learning-setting-group"><legend>直近履歴 <small>複数選択可</small></legend><div class="learning-check-grid learning-check-grid-history"><label class="learning-check"><input type="checkbox" data-learning-setting="history" data-learning-value="unanswered"${learningHistoryFiltersV189.has("unanswered") ? " checked" : ""}><span>未回答</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="history" data-learning-value="×"${learningHistoryFiltersV189.has("×") ? " checked" : ""}><span class="learning-status-mark is-miss">×</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="history" data-learning-value="△"${learningHistoryFiltersV189.has("△") ? " checked" : ""}><span class="learning-status-mark is-review">△</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="history" data-learning-value="〇"${learningHistoryFiltersV189.has("〇") ? " checked" : ""}><span class="learning-status-mark is-safe">〇</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="history" data-learning-value="◎"${learningHistoryFiltersV189.has("◎") ? " checked" : ""}><span class="learning-status-mark is-excellent">◎</span></label></div></fieldset><p>この設定は「全問を解く」にのみ適用されます。未回答を解く・苦手克服は固定ルールです。</p></div></details><section class="today-recent learning-recent-section"><div class="today-section-heading"><div><p class="today-kicker">RECENT ANSWERS</p><h3>直近解答履歴</h3></div><button type="button" data-menu-jump="my">問題一覧を見る <span aria-hidden="true">→</span></button></div><div class="today-recent-list">${recentMarkup}</div></section></section>`;
+        return `<section class="learning-dashboard today-dashboard" aria-labelledby="menuTitle"><nav class="learning-tabs" aria-label="学習メニュー"><button type="button" data-menu-jump="my"><span class="learning-tab-icon" aria-hidden="true">▦</span><span>問題一覧</span><span class="learning-tab-count">${displayedTotal}</span></button><button type="button" data-menu-jump="favorites"><span class="learning-tab-icon" aria-hidden="true">☆</span><span>お気に入り</span><span class="learning-tab-count">${displayedFavorites}</span></button><button type="button" data-menu-jump="archive"><span class="learning-tab-icon" aria-hidden="true">${menuArchiveIconV109()}</span><span>アーカイブ</span></button></nav>${resumeMarkup}<section class="learning-action-grid" aria-label="学習を始める"><button class="learning-action-card is-primary" type="button" data-learning-action="unanswered"${actionDisabled(Number(displayedUnanswered))}><strong class="learning-action-title">未回答を解く</strong><span class="learning-action-count">${displayedUnanswered}<small>問</small></span><small class="learning-action-description">未回答問題を一通り進める</small><span class="learning-action-link">開始 <span aria-hidden="true">→</span></span></button><button class="learning-action-card is-weak" type="button" data-learning-action="weak"${actionDisabled(Number(displayedWeak))}><strong class="learning-action-title">苦手克服</strong><span class="learning-action-count">${displayedWeak}<small>問</small></span><small class="learning-action-description">直近×・△を中心に復習</small><span class="learning-action-link">開始 <span aria-hidden="true">→</span></span></button><div class="learning-all-action"><button class="learning-action-card is-all" type="button" data-learning-action="all"${actionDisabled(Number(displayedAll))}><strong class="learning-action-title">全問を解く</strong><span class="learning-action-count">${displayedAll}<small>問</small></span><small class="learning-action-description">選択した条件で学習</small><span class="learning-action-link">開始 <span aria-hidden="true">→</span></span></button><details class="learning-custom-settings" id="learningCustomSettings"><summary><span><span class="learning-settings-icon" aria-hidden="true">⚙</span>全問を解くの設定</span><span data-learning-settings-summary>${escapeHtml(learningSettingsSummaryV189())}</span></summary><div class="learning-custom-settings-body"><fieldset class="learning-setting-group"><legend>出題順 <small>1つ選択</small></legend><div class="learning-check-grid learning-check-grid-order"><label class="learning-check"><input type="checkbox" data-learning-setting="order" data-learning-value="sequential"${learningOrderV189 === "sequential" ? " checked" : ""}><span>順番${isBasicSequence ? "（推奨）" : ""}</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="order" data-learning-value="random"${learningOrderV189 === "random" ? " checked" : ""}><span>ランダム</span></label></div></fieldset><fieldset class="learning-setting-group"><legend>ジャンル <small>複数選択可</small></legend><div class="learning-check-grid"><label class="learning-check"><input type="checkbox" data-learning-setting="genre" data-learning-value="discard"${learningGenresV189.has("discard") ? " checked" : ""}><span>打牌判断</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="genre" data-learning-value="riichi"${learningGenresV189.has("riichi") ? " checked" : ""}><span>リーチ判断</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="genre" data-learning-value="call"${learningGenresV189.has("call") ? " checked" : ""}><span>副露判断</span></label></div></fieldset><fieldset class="learning-setting-group"><legend>直近履歴 <small>複数選択可</small></legend><div class="learning-check-grid learning-check-grid-history"><label class="learning-check"><input type="checkbox" data-learning-setting="history" data-learning-value="unanswered"${learningHistoryFiltersV189.has("unanswered") ? " checked" : ""}><span>未回答</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="history" data-learning-value="×"${learningHistoryFiltersV189.has("×") ? " checked" : ""}><span class="learning-status-mark is-miss">×</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="history" data-learning-value="△"${learningHistoryFiltersV189.has("△") ? " checked" : ""}><span class="learning-status-mark is-review">△</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="history" data-learning-value="〇"${learningHistoryFiltersV189.has("〇") ? " checked" : ""}><span class="learning-status-mark is-safe">〇</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="history" data-learning-value="◎"${learningHistoryFiltersV189.has("◎") ? " checked" : ""}><span class="learning-status-mark is-excellent">◎</span></label></div></fieldset><p>この設定は「全問を解く」にのみ適用されます。未回答を解く・苦手克服は固定ルールです。</p></div></details></div></section><section class="today-recent learning-recent-section"><div class="today-section-heading"><h3>直近回答履歴</h3><button type="button" data-menu-jump="my">問題一覧を見る <span aria-hidden="true">→</span></button></div><div class="today-recent-list">${recentMarkup}</div></section></section>`;
       }
 
       // 旧セッションや外部リンクとの互換性を保つため、内部名だけ残す。
@@ -9118,13 +9124,6 @@
         document.getElementById("quickStart")?.addEventListener("click", event => {
           const button = event.target.closest("[data-session-mode]");
           if (button) startSessionV44(button.dataset.sessionMode);
-        });
-        document.getElementById("menuRangeActions").addEventListener("click", event => {
-          const button = event.target.closest("[data-range-session]");
-          if (button) startRangeSessionV61(button.dataset.rangeSession);
-        });
-        document.getElementById("menuOrderSelect").addEventListener("change", event => {
-          menuOrderV92 = ["sequential", "reverse", "random"].includes(event.target.value) ? event.target.value : "sequential";
         });
         document.querySelectorAll("[data-menu-status]").forEach(input => input.addEventListener("change", () => {
           menuStatusFiltersV92 = [...document.querySelectorAll("[data-menu-status]:checked")].map(checked => checked.dataset.menuStatus);

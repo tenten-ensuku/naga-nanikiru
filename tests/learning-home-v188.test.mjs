@@ -7,7 +7,7 @@ const cssUrl = new URL("../public/ux-v159.css", import.meta.url);
 const identityUrl = new URL("../app/lib/appIdentity.ts", import.meta.url);
 const packageUrl = new URL("../package.json", import.meta.url);
 
-test("V189 makes all-question custom settings checkbox-based", async () => {
+test("V190 keeps the compact learning home and checkbox-based custom settings", async () => {
   const [html, css, identity, packageSource] = await Promise.all([
     readFile(indexUrl, "utf8"),
     readFile(cssUrl, "utf8"),
@@ -15,10 +15,10 @@ test("V189 makes all-question custom settings checkbox-based", async () => {
     readFile(packageUrl, "utf8")
   ]);
 
-  assert.match(html, /const APP_VERSION = 189;/);
-  assert.match(identity, /APP_VERSION = 189/);
+  assert.match(html, /const APP_VERSION = 190;/);
+  assert.match(identity, /APP_VERSION = 190/);
   for (const asset of ["ux-v159\\.css", "supabase-sync-v48\\.js", "drill-ux-v44\\.js"]) {
-    assert.match(html, new RegExp(`${asset}\\?v=189`));
+    assert.match(html, new RegExp(`${asset}\\?v=190`));
   }
 
   const sidebar = html.match(/<nav class="menu-nav"[\s\S]*?<\/nav>/)?.[0] || "";
@@ -30,9 +30,11 @@ test("V189 makes all-question custom settings checkbox-based", async () => {
   for (const action of ["unanswered", "weak", "all"]) {
     assert.match(learningView, new RegExp(`data-learning-action="${action}"`));
   }
-  for (const tab of ["favorites", "archive", "my", "today"]) {
-    assert.match(learningView, new RegExp(`data-menu-jump="${tab}"`));
-  }
+  assert.match(learningView, /data-menu-jump="my"[\s\S]*data-menu-jump="favorites"[\s\S]*data-menu-jump="archive"/);
+  assert.doesNotMatch(learningView, /data-menu-jump="today"/);
+  assert.match(learningView, /class="learning-all-action"/);
+  assert.doesNotMatch(learningView, /learning-hero|learning-path-note|learning-action-step|LEARNING PATH|RECENT ANSWERS|\bSTEP\b/);
+  assert.match(html, /class="learning-header-progress"/);
   const customSettings = learningView.match(/<details class="learning-custom-settings"[\s\S]*?<\/details>/)?.[0] || "";
   assert.ok(customSettings, "custom settings details should be rendered");
   assert.equal((customSettings.match(/type="checkbox" data-learning-setting="order"/g) || []).length, 2);

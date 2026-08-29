@@ -10,7 +10,7 @@ test("renders the v87 scene and half-game generator controls", async () => {
     readFile(indexUrl, "utf8"),
     readFile(generatorUrl, "utf8")
   ]);
-  assert.match(html, /const APP_VERSION = 189/);
+  assert.match(html, /const APP_VERSION = 190/);
   assert.match(html, /function captureGeneratorFormDraftV157\(\)/);
   assert.match(html, /destination: document\.getElementById\("generatorDestinationSelect"\)\?\.value \|\| generatorDestinationV130 \|\| ""/);
   assert.match(html, /function restoreGeneratorFormDraftV157\(draft\)/);
@@ -24,11 +24,11 @@ test("renders the v87 scene and half-game generator controls", async () => {
   assert.match(html, /generatorForm\?\.addEventListener\("change", persistGeneratorFormDraftV157\)/);
   assert.match(html, /const storedIsValid = stored === "local" \|\| rows\.some/);
   assert.match(html, /const defaultValue = generatorDestinationExplicitV157/);
-  assert.match(html, /data-range-session="all"[^>]*>10問解く\s*<span/);
-  assert.doesNotMatch(html, /data-range-session="unanswered">未回答を10問解く/);
-  assert.match(html, /range: "この範囲の10問"/);
-  assert.match(html, /"range-unanswered": "未回答の10問"/);
-  assert.match(html, /id="menuOrderSelect"/);
+  assert.doesNotMatch(html, /data-range-session=/);
+  assert.doesNotMatch(html, /id="menuRangeActions"/);
+  assert.match(html, /range: "この範囲"/);
+  assert.match(html, /"range-unanswered": "未回答問題"/);
+  assert.doesNotMatch(html, /id="menuOrderSelect"/);
   assert.match(html, /let menuOrderV92 = "sequential"/);
   assert.match(html, /menuOrderV92 === "reverse"/);
   assert.match(html, /menuOrderV92 === "random"/);
@@ -173,8 +173,8 @@ test("renders the v87 scene and half-game generator controls", async () => {
   assert.match(html, /id="nextQuestionBottomButton"[^>]*>次の問題へ<\/button>/);
   assert.doesNotMatch(html, /id="resetButton"/);
   assert.match(html, /id="currentManageButton"[^>]*>整理<\/button>/);
-  assert.match(html, /const nextTenAction = result\.mode === "range-unanswered" \? "range-unanswered" : \["weak", "all"\]\.includes\(result\.mode\) \? result\.mode : "unanswered";/);
-  assert.match(html, /const nextTenLabel = unansweredMode \? "次の10問へ" : result\.mode === "weak" \? "次の苦手10問" : result\.mode === "all" \? "次の全問" : "新しい10問";/);
+  assert.match(html, /const nextSessionAction = result\.mode === "range-unanswered" \? "range-unanswered" : \["weak", "all"\]\.includes\(result\.mode\) \? result\.mode : "unanswered";/);
+  assert.match(html, /const nextSessionLabel = unansweredMode \? "次の未回答問題" : result\.mode === "weak" \? "次の苦手問題" : result\.mode === "all" \? "次の全問" : "新しい問題";/);
   assert.match(html, /action === "unanswered"/);
 });
 
