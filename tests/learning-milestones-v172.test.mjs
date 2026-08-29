@@ -56,7 +56,7 @@ test("V180 renders recent history while keeping the celebration dialog", async (
   const html = await readFile(htmlUrl, "utf8");
   const recentView = html.match(/function renderRecentHistoryViewV180\([\s\S]*?\n      function renderTodayViewV159\(/)?.[0] || "";
 
-  assert.match(html, /const APP_VERSION = 185;/);
+  assert.match(html, /const APP_VERSION = 186;/);
   assert.match(html, /id="learningCelebrationDialog"/);
   assert.match(html, /1周達成おめでとう！/);
   assert.match(html, /完全習得おめでとう！/);

@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=185">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=185">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=185">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=186">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=186">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=186">
   <title>NAGA局面ドリル｜何切る復習問題集</title>
   <meta name="description" content="NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリ。">
   <meta name="theme-color" content="#06131e">
@@ -2152,7 +2152,7 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=185">
+  <link rel="stylesheet" href="ux-v159.css?v=186">
 </head>
 <body>
   <main class="page">
@@ -2166,8 +2166,8 @@
           <span class="active-collection-arrow" aria-hidden="true">›</span>
         </button>
         <nav class="menu-nav" aria-label="問題集メニュー">
-          <button class="menu-nav-button is-active" type="button" data-menu-view="today" title="選択中の問題集の最近の回答履歴を見る"><span class="menu-nav-icon" aria-hidden="true">↺</span><span>最近の履歴</span></button>
           <button class="menu-nav-button" type="button" data-menu-view="my" title="選択中の問題集の一覧から学習を始める"><span class="menu-nav-icon" aria-hidden="true">▦</span><span>問題一覧</span><span class="menu-nav-badge" data-menu-count="my">0</span></button>
+          <button class="menu-nav-button is-active" type="button" data-menu-view="today" title="選択中の問題集の最近の回答履歴を見る"><span class="menu-nav-icon" aria-hidden="true">↺</span><span>最近の履歴</span></button>
           <button class="menu-nav-button" type="button" data-menu-view="analysis" title="回答率・習熟度・回答時間など、自分の学習状況を見る"><span class="menu-nav-icon" aria-hidden="true">▥</span><span>成績・履歴</span></button>
           <button class="menu-nav-button" type="button" data-menu-view="generator" title="NAGA URLから問題を作り、保存先を選ぶ"><span class="menu-nav-icon" aria-hidden="true">＋</span><span>問題生成</span></button>
           <button class="menu-nav-button" type="button" data-menu-view="settings" title="表示名・表示方法・問題集の設定を変更する"><span class="menu-nav-icon" aria-hidden="true">⚙</span><span>設定</span></button>
@@ -2428,13 +2428,13 @@
   </dialog>
 
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=185"></script>
-  <script src="drill-ux-v44.js?v=185"></script>
+  <script src="supabase-sync-v48.js?v=186"></script>
+  <script src="drill-ux-v44.js?v=186"></script>
   <script src="naga-generator-v44.js"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 185;
+    const APP_VERSION = 186;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -3589,6 +3589,7 @@
         { version: 172, date: "2026-08-26", publishedAt: "2026-08-26T19:00:00+09:00", title: "一周達成と完全習得を祝うようにしました", body: "未回答がなくなったときは一周達成、最新1回の回答が〇以上で全問がそろったときは習熟度100％として祝福します。今日の10問に対象がないときは、達成をたたえる表示に切り替わります。" },
         { version: 176, date: "2026-08-26", publishedAt: "2026-08-26T21:00:00+09:00", title: "問題一覧のフィルターを見やすく整理しました", body: "問題範囲・ジャンル・フィルターを3段に整理し、直近の評価記号を問題一覧と同じ色で表示するようにしました。" },
         { version: 178, date: "2026-08-26", publishedAt: "2026-08-26T23:00:00+09:00", title: "大規模問題集の範囲切り替えを安定させました", body: "範囲の読み込みが重なったときに古い結果で表示を上書きしないようにし、取得に失敗した場合は元の範囲へ安全に戻します。100問目以降のお気に入り・アーカイブも初回読み込みで失わないようにしました。" },
+        { version: 186, date: "2026-08-29", publishedAt: "2026-08-29T14:00:00+09:00", title: "問題集を選びやすくしました", body: "問題集選択画面に全巻数を表示し、問題集を選んだ後はすぐに問題一覧へ移動できるようにしました。ナビゲーションも学習の入口から順に整理しています。" },
         { version: 185, date: "2026-08-29", publishedAt: "2026-08-29T13:00:00+09:00", title: "巻管理と学習集計を整理しました", body: "アーカイブ済みの問題も全問題数と習熟度へ反映し、200問単位の巻追加に対応しました。問題一覧ではジャンルと直近履歴を一列で確認できます。" },
         { version: 182, date: "2026-08-29", publishedAt: "2026-08-29T12:00:00+09:00", title: "ピエール問題集の巻をカードから選べるようにしました", body: "ピエール問題集を選ぶと、そのカードの直後に1巻〜9巻の選択肢が展開されます。選択の起点を明確にし、巻選択まで迷わないようにしました。" },
         { version: 175, date: "2026-08-26", publishedAt: "2026-08-26T20:00:00+09:00", title: "回答状態を直近の評価ごとに絞り込めるようにしました", body: "問題一覧の回答状態を、未回答・直近×・直近△・直近〇・直近◎の5種類から複数選択できるようにしました。直近の回答だけを基準に、復習したい問題を正確に絞り込めます。" },
@@ -4301,6 +4302,15 @@
         return title || "問題集";
       }
 
+      function collectionChooserTitleV186(row) {
+        const title = String(row?.display_title || collectionDisplayNameV101(row)).trim() || "問題集";
+        if (!isSeriesParentCollectionV180(row)) return title;
+        const volumeCount = Number(row?.volume_count);
+        return Number.isInteger(volumeCount) && volumeCount > 0 && !/全\d+巻/.test(title)
+          ? `${title}　全${volumeCount}巻`
+          : title;
+      }
+
       function collectionAccessNotificationCountV100() {
         return collectionAccessNotificationsV100.filter(row => !row?.read_at && !row?.readAt).length;
       }
@@ -4546,7 +4556,7 @@
           normalizeQuestionTitlesV79();
           migrateAnswerHistoryScoresV16();
           importedQuestionsReadyV81 = true;
-          menuViewV16 = previousView === "collections" ? "today" : MENU_VIEW_COPY_V16[previousView] ? previousView : "today";
+          menuViewV16 = "my";
           renderQuestionOptionsV16();
           showMenuV16(menuViewV16);
           if (questionsV16.length) void startCommentNotificationPollingV65();
@@ -4769,7 +4779,7 @@
           const hasExplicitRole = Boolean(row.member_role) || Boolean(row.can_edit) || Boolean(row.can_manage) || (supabaseSessionV46?.user?.id && String(row.owner_id || "") === String(supabaseSessionV46.user.id));
           const role = hasExplicitRole ? collectionRoleLabelV130(row) : collectionVisibilityLabelV100(row.visibility);
           const description = String(row.description || "").trim();
-          const card = `<button class="${collectionChooserCardClassV167(row, current)}" type="button" data-collection-slug="${escapeHtml(slug)}" aria-pressed="${current}"${isSeriesParentCollectionV180(row) ? ` aria-expanded="${current}"` : ""}><span class="collection-choice-card-kicker">${escapeHtml(status)}</span><strong>${escapeHtml(row.display_title || collectionDisplayNameV101(row))}</strong>${description ? `<span class="collection-choice-card-description">${escapeHtml(description)}</span>` : ""}<span class="collection-choice-card-meta">${escapeHtml(role || collectionVisibilityLabelV100(row.visibility))}<span aria-hidden="true">›</span></span></button>`;
+          const card = `<button class="${collectionChooserCardClassV167(row, current)}" type="button" data-collection-slug="${escapeHtml(slug)}" aria-pressed="${current}"${isSeriesParentCollectionV180(row) ? ` aria-expanded="${current}"` : ""}><span class="collection-choice-card-kicker">${escapeHtml(status)}</span><strong>${escapeHtml(collectionChooserTitleV186(row))}</strong>${description ? `<span class="collection-choice-card-description">${escapeHtml(description)}</span>` : ""}<span class="collection-choice-card-meta">${escapeHtml(role || collectionVisibilityLabelV100(row.visibility))}<span aria-hidden="true">›</span></span></button>`;
           const volumeExpansion = current && isSeriesParentCollectionV180(row)
             ? `<div class="collection-choice-card-expansion" id="pierreVolumeExpansion">${renderCollectionVolumeChooserV180()}</div>`
             : "";
