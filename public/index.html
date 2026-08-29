@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=194">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=194">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=194">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=195">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=195">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=195">
   <title>NAGA局面ドリル｜何切る復習問題集</title>
   <meta name="description" content="NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリ。">
   <meta name="theme-color" content="#06131e">
@@ -553,7 +553,7 @@
     .comment-form { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px; align-items: end; padding: 9px; border: 1px solid rgba(113,183,255,.28); border-radius: 8px; background: rgba(0,0,0,.14); }
     .comment-form[hidden] { display: none; }
     .comment-form label { grid-column: 1 / -1; color: #eafefe; font-size: 11px; font-weight: 800; }
-    .comment-form textarea { min-height: 58px; resize: vertical; padding: 7px 8px; color: var(--ink); background: #061c2c; border: 1px solid rgba(255,255,255,.18); border-radius: 6px; font: inherit; font-size: 13px; line-height: 1.45; }
+    .comment-form textarea { display: block; width: 100%; min-width: 0; min-height: 58px; box-sizing: border-box; resize: vertical; padding: 7px 8px; color: var(--ink); background: #061c2c; border: 1px solid rgba(255,255,255,.18); border-radius: 6px; font: inherit; font-size: 13px; line-height: 1.45; }
     .comment-form textarea:focus { border-color: rgba(113,183,255,.8); outline: 2px solid rgba(113,183,255,.18); }
     .comment-compose-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; grid-column: 1 / -1; }
     .comment-format-button, .comment-format-select, .comment-image-button { min-height: 30px; padding: 5px 8px; color: #e7f8ff; background: #164862; border: 1px solid rgba(113,183,255,.5); border-radius: 5px; font-size: 10px; font-weight: 800; }
@@ -2152,7 +2152,7 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=194">
+  <link rel="stylesheet" href="ux-v159.css?v=195">
 </head>
 <body class="auth-gate-open">
   <main class="page" inert aria-hidden="true">
@@ -2436,13 +2436,13 @@
   </dialog>
 
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=194"></script>
-  <script src="drill-ux-v44.js?v=194"></script>
+  <script src="supabase-sync-v48.js?v=195"></script>
+  <script src="drill-ux-v44.js?v=195"></script>
   <script src="naga-generator-v44.js"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 194;
+    const APP_VERSION = 195;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -3534,6 +3534,7 @@
       const QUESTION_NOTICE_STORAGE_KEY_V66 = storageKey("question-notices-v1");
       const ANNOUNCEMENT_SEEN_STORAGE_KEY_V65 = storageKey("announcement-seen-v1");
       const APP_ANNOUNCEMENTS_V66 = [
+        { version: 195, date: "2026-08-30", publishedAt: "2026-08-30T04:21:41+09:00", title: "コメント入力欄を広げました", body: "コメントの入力欄がコメントパネルの横幅いっぱいに広がるようにし、PCの2ペイン表示はそのまま維持しました。" },
         { version: 194, date: "2026-08-30", publishedAt: "2026-08-30T03:43:03+09:00", title: "学習ボタンと直近履歴を使いやすくしました", body: "未回答・苦手克服・全問をプレイできる入口を押しやすいボタンに整え、直近回答履歴からお気に入りとアーカイブを操作できるようにしました。アナウンスには更新日時を表示します。" },
         { version: 66, date: "2026-08-14", title: "コメント・問題追加通知を追加しました", body: "新しいコメントに加えて、他の利用者が共有問題集へ追加した問題も通知一覧で確認できるようになりました。" },
         { version: 67, date: "2026-08-14", title: "作成者表示名の設定を追加しました", body: "設定から1〜5文字の表示名を登録できます。コメントや問題作成時の作成者名に使用されます。" },
