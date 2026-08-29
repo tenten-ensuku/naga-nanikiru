@@ -5066,3 +5066,13 @@ body.auth-gate-open {
     font-size: 9px;
   }
 }
+
+/* V191: keep the list shortcuts visible after entering the problem list. */
+.page.menu-active .menu-context-tabs {
+  width: 100%;
+  margin: -6px 0 16px;
+}
+
+.page.menu-active .menu-context-tabs[hidden] {
+  display: none;
+}

@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=190">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=190">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=190">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=191">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=191">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=191">
   <title>NAGA局面ドリル｜何切る復習問題集</title>
   <meta name="description" content="NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリ。">
   <meta name="theme-color" content="#06131e">
@@ -2152,7 +2152,7 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=190">
+  <link rel="stylesheet" href="ux-v159.css?v=191">
 </head>
 <body class="auth-gate-open">
   <main class="page" inert aria-hidden="true">
@@ -2188,6 +2188,11 @@
           <h2 id="menuTitle">学習する</h2>
           <div class="menu-summary" id="menuSummary" aria-live="polite"></div>
         </div>
+        <nav class="learning-tabs menu-context-tabs" id="menuContextTabs" aria-label="問題集メニュー" hidden>
+          <button type="button" data-menu-jump="my" aria-pressed="false"><span class="learning-tab-icon" aria-hidden="true">▦</span><span>問題一覧</span><span class="learning-tab-count" data-context-tab-count="my">0</span></button>
+          <button type="button" data-menu-jump="favorites" aria-pressed="false"><span class="learning-tab-icon" aria-hidden="true">☆</span><span>お気に入り</span><span class="learning-tab-count" data-context-tab-count="favorites">0</span></button>
+          <button type="button" data-menu-jump="archive" aria-pressed="false"><span class="learning-tab-icon" aria-hidden="true"><span class="menu-archive-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M4 7.5h16v12H4zM3 4h18v3.5H3zM9 12h6"></path></svg></span></span><span>アーカイブ</span><span class="learning-tab-count" data-context-tab-count="archive">0</span></button>
+        </nav>
         <section class="collection-space-panel" id="collectionSpacePanel" aria-live="polite" hidden></section>
         <div class="menu-filter-stack" id="menuFilters">
           <section class="menu-filter-row menu-range-row" aria-labelledby="menuRangeHeading">
@@ -2432,13 +2437,13 @@
   </dialog>
 
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=190"></script>
-  <script src="drill-ux-v44.js?v=190"></script>
+  <script src="supabase-sync-v48.js?v=191"></script>
+  <script src="drill-ux-v44.js?v=191"></script>
   <script src="naga-generator-v44.js"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 190;
+    const APP_VERSION = 191;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -3599,6 +3604,7 @@
         { version: 172, date: "2026-08-26", publishedAt: "2026-08-26T19:00:00+09:00", title: "一周達成と完全習得を祝うようにしました", body: "未回答がなくなったときは一周達成、最新1回の回答が〇以上で全問がそろったときは習熟度100％として祝福します。今日の10問に対象がないときは、達成をたたえる表示に切り替わります。" },
         { version: 176, date: "2026-08-26", publishedAt: "2026-08-26T21:00:00+09:00", title: "問題一覧のフィルターを見やすく整理しました", body: "問題範囲・ジャンル・フィルターを3段に整理し、直近の評価記号を問題一覧と同じ色で表示するようにしました。" },
         { version: 178, date: "2026-08-26", publishedAt: "2026-08-26T23:00:00+09:00", title: "大規模問題集の範囲切り替えを安定させました", body: "範囲の読み込みが重なったときに古い結果で表示を上書きしないようにし、取得に失敗した場合は元の範囲へ安全に戻します。100問目以降のお気に入り・アーカイブも初回読み込みで失わないようにしました。" },
+        { version: 191, date: "2026-08-30", title: "問題一覧の導線を整えました", body: "問題一覧・お気に入り・アーカイブを各画面の上部から切り替えられるようにし、問題一覧では表示範囲やフィルターを省いて問題へ集中できるようにしました。" },
         { version: 190, date: "2026-08-30", title: "学習画面をコンパクトに整理しました", body: "進捗は学習するの見出し横に集約し、未回答・苦手克服・全問学習の3つからすぐに始められるようにしました。問題一覧・お気に入り・アーカイブは上部タブから確認でき、カスタム設定は全問を解くにだけ表示されます。" },
         { version: 189, date: "2026-08-30", title: "全問学習のカスタム設定を見直しました", body: "全問を解くときだけ、出題順・ジャンル・直近履歴をチェックボックスで組み合わせて選べるようになりました。未回答を解く・苦手克服は、これまでどおり固定の学習順で進みます。" },
         { version: 188, date: "2026-08-30", title: "学習の入口を3つに整理しました", body: "未回答を解く・苦手克服・全問を解く、の3つからすぐに学習を始められるようになりました。お気に入り・アーカイブ・問題一覧・直近解答履歴は学習画面のタブから確認でき、出題順とジャンルもカスタム設定で選べます。" },
@@ -6847,6 +6853,32 @@
           && sharedTotal !== null
           && !sharedQuestionPagingV177.allLoaded
           && sharedTotal > rangeLearningQuestions.length;
+        const contextTabs = document.getElementById("menuContextTabs");
+        if (contextTabs) {
+          const contextTabsVisible = Boolean(sharedCollectionV46)
+            && ["my", "archive"].includes(menuViewV16)
+            && !isSeriesParentCollectionV180(sharedCollectionV46);
+          contextTabs.hidden = !contextTabsVisible;
+          const contextCounts = {
+            my: partialAll ? String(sharedTotal) : String(learningQuestions.length),
+            favorites: partialAll ? "…" : String(learningQuestions.filter(isFavoriteV16).length),
+            archive: String(counts.archive)
+          };
+          contextTabs.querySelectorAll("[data-menu-jump]").forEach(button => {
+            const target = String(button.dataset.menuJump || "my");
+            const active = contextTabsVisible && (
+              target === "my" && menuViewV16 === "my" && !menuFavoritesOnlyV137
+              || target === "favorites" && menuViewV16 === "my" && menuFavoritesOnlyV137
+              || target === "archive" && menuViewV16 === "archive"
+            );
+            button.classList.toggle("is-active", active);
+            button.setAttribute("aria-pressed", String(active));
+            if (active) button.setAttribute("aria-current", "page");
+            else button.removeAttribute("aria-current");
+            const count = button.querySelector("[data-context-tab-count]");
+            if (count) count.textContent = contextCounts[target] ?? "0";
+          });
+        }
         const visibleSummary = partialAll ? `${rangeLearningQuestions.length} / ${sharedTotal}` : String(rangeLearningQuestions.length);
         if (summary) {
           summary.classList.remove("is-learning-progress");
@@ -6894,7 +6926,7 @@
           resumeButton.hidden = !resume;
           if (resume) document.getElementById("resumeSessionNote").textContent = `${Number(resume.cursor || 0) + 1} / ${resume.questionKeys.length} から再開`;
         }
-        document.getElementById("menuFilters").hidden = !["my", "archive"].includes(menuViewV16);
+        document.getElementById("menuFilters").hidden = menuViewV16 !== "archive";
         document.getElementById("menuListHeader").hidden = !listView;
         document.getElementById("menuListHeader").setAttribute("aria-hidden", String(!listView));
         renderMenuRangeControlsV137();
@@ -7187,6 +7219,14 @@
         if (menuViewV16 === "archive") menuViewV16 = "my";
         resetMenuRenderLimitV119();
         renderMenuCardsV16();
+      }
+
+      function resetMenuListFiltersV191() {
+        menuRangeV60 = "all";
+        menuTypeV44 = "all";
+        menuStatusFiltersV92 = [];
+        menuSearchV44 = "";
+        resetMenuRenderLimitV119();
       }
 
       function latestAnswerV44(question) {
@@ -8350,9 +8390,11 @@
         if (menuJumpButton) {
           const target = String(menuJumpButton.dataset.menuJump || "my");
           if (target === "favorites") {
+            resetMenuListFiltersV191();
             menuFavoritesOnlyV137 = true;
             showMenuV16("my");
           } else {
+            if (["my", "archive"].includes(target)) resetMenuListFiltersV191();
             menuFavoritesOnlyV137 = false;
             showMenuV16(target);
           }

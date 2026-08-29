@@ -7,7 +7,7 @@ const cssUrl = new URL("../public/ux-v159.css", import.meta.url);
 const identityUrl = new URL("../app/lib/appIdentity.ts", import.meta.url);
 const packageUrl = new URL("../package.json", import.meta.url);
 
-test("V190 keeps the compact learning home and checkbox-based custom settings", async () => {
+test("V191 keeps the compact learning home and restores list context tabs", async () => {
   const [html, css, identity, packageSource] = await Promise.all([
     readFile(indexUrl, "utf8"),
     readFile(cssUrl, "utf8"),
@@ -15,10 +15,10 @@ test("V190 keeps the compact learning home and checkbox-based custom settings", 
     readFile(packageUrl, "utf8")
   ]);
 
-  assert.match(html, /const APP_VERSION = 190;/);
-  assert.match(identity, /APP_VERSION = 190/);
+  assert.match(html, /const APP_VERSION = 191;/);
+  assert.match(identity, /APP_VERSION = 191/);
   for (const asset of ["ux-v159\\.css", "supabase-sync-v48\\.js", "drill-ux-v44\\.js"]) {
-    assert.match(html, new RegExp(`${asset}\\?v=190`));
+    assert.match(html, new RegExp(`${asset}\\?v=191`));
   }
 
   const sidebar = html.match(/<nav class="menu-nav"[\s\S]*?<\/nav>/)?.[0] || "";
@@ -32,6 +32,11 @@ test("V190 keeps the compact learning home and checkbox-based custom settings", 
   }
   assert.match(learningView, /data-menu-jump="my"[\s\S]*data-menu-jump="favorites"[\s\S]*data-menu-jump="archive"/);
   assert.doesNotMatch(learningView, /data-menu-jump="today"/);
+  const contextTabs = html.match(/<nav class="learning-tabs menu-context-tabs"[\s\S]*?<\/nav>/)?.[0] || "";
+  assert.ok(contextTabs, "problem-list context tabs should be present outside the learning dashboard");
+  assert.match(contextTabs, /id="menuContextTabs"/);
+  assert.match(contextTabs, /data-menu-jump="my"[\s\S]*data-menu-jump="favorites"[\s\S]*data-menu-jump="archive"/);
+  assert.match(html, /document\.getElementById\("menuFilters"\)\.hidden = menuViewV16 !== "archive"/);
   assert.match(learningView, /class="learning-all-action"/);
   assert.doesNotMatch(learningView, /learning-hero|learning-path-note|learning-action-step|LEARNING PATH|RECENT ANSWERS|\bSTEP\b/);
   assert.match(html, /class="learning-header-progress"/);
@@ -65,6 +70,7 @@ test("V190 keeps the compact learning home and checkbox-based custom settings", 
   assert.match(css, /\.learning-action-grid/);
   assert.match(css, /\.learning-custom-settings/);
   assert.match(css, /\.learning-check input:checked/);
+  assert.match(css, /V191: keep the list shortcuts visible after entering the problem list/);
   assert.ok(css.indexOf("/* V189: checkbox-based custom filters") > css.indexOf(".learning-custom-settings-body select"), "V189 checkbox styles should come after legacy select styles");
 
   const scripts = JSON.parse(packageSource).scripts;
