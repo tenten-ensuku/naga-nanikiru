@@ -7,7 +7,7 @@ const indexUrl = new URL("../public/index.html", import.meta.url);
 test("V180 replaces the daily queue entry point with recent history", async () => {
   const html = await readFile(indexUrl, "utf8");
 
-  assert.match(html, /const APP_VERSION = 197;/);
+  assert.match(html, /const APP_VERSION = 198;/);
   assert.match(html, /data-menu-view="today"[^>]*title="未回答・苦手・全問題から学習を始める"/);
   assert.match(html, /<span>学習する<\/span>/);
   assert.doesNotMatch(html, /<span class="quick-start-title">今日の10問/);

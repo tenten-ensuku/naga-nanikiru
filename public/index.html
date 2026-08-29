@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=197">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=197">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=197">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=198">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=198">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=198">
   <title>NAGA局面ドリル｜何切る復習問題集</title>
   <meta name="description" content="NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリ。">
   <meta name="theme-color" content="#06131e">
@@ -2163,7 +2163,7 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=197">
+  <link rel="stylesheet" href="ux-v159.css?v=198">
 </head>
 <body class="auth-gate-open">
   <main class="page" inert aria-hidden="true">
@@ -2447,13 +2447,13 @@
   </dialog>
 
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=197"></script>
-  <script src="drill-ux-v44.js?v=197"></script>
+  <script src="supabase-sync-v48.js?v=198"></script>
+  <script src="drill-ux-v44.js?v=198"></script>
   <script src="naga-generator-v44.js"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 197;
+    const APP_VERSION = 198;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -2969,11 +2969,21 @@
       }
     }
 
+    function commentAvatarUrlV198(message) {
+      return normalizeCommentAvatarUrlV196(
+        message?.avatarUrl
+        || message?.authorAvatarUrl
+        || message?.author_avatar_url
+        || message?.avatar_url
+        || message?.profile?.avatar_url
+      );
+    }
+
     function mergeCommentGroupsV65(messages) {
       return messages.reduce((groups, message) => {
         const author = String(message.author || "不明").trim() || "不明";
         const authorId = String(message.authorId || message.author_id || "").trim();
-        const avatarUrl = normalizeCommentAvatarUrlV196(message.avatarUrl || message.authorAvatarUrl || message.author_avatar_url);
+        const avatarUrl = commentAvatarUrlV198(message);
         const groupKey = authorId ? `id:${authorId}` : `name:${author}\u0000avatar:${avatarUrl}`;
         const last = groups[groups.length - 1];
         if (last && last.groupKey === groupKey) {
@@ -3588,6 +3598,7 @@
       const QUESTION_NOTICE_STORAGE_KEY_V66 = storageKey("question-notices-v1");
       const ANNOUNCEMENT_SEEN_STORAGE_KEY_V65 = storageKey("announcement-seen-v1");
       const APP_ANNOUNCEMENTS_V66 = [
+        { version: 198, date: "2026-08-30", publishedAt: "2026-08-30T05:38:15+09:00", title: "過去のコメントにもDiscordアイコンを表示しました", body: "Discordスレッドから取り込んだ過去コメントにも、対応するプロフィールのアイコンを反映しました。対応するプロフィールがない場合は表示名を残します。" },
         { version: 197, date: "2026-08-30", publishedAt: "2026-08-30T05:18:17+09:00", title: "問題集の表示と権限管理を整理しました", body: "学習画面以外では、特定の問題集に紐づく表示を隠して機能の範囲を分かりやすくしました。設定では、自分が所有する問題集を選んで公開範囲とメンバーを管理できます。" },
         { version: 196, date: "2026-08-30", publishedAt: "2026-08-30T04:43:24+09:00", title: "コメント欄にDiscordアイコンを表示しました", body: "Discordプロフィールに登録されたアイコンをコメント欄の投稿者表示へ反映しました。アイコンが未設定・取得できない場合は、これまでどおり表示名を表示します。" },
         { version: 195, date: "2026-08-30", publishedAt: "2026-08-30T04:21:41+09:00", title: "コメント入力欄を広げました", body: "コメントの入力欄がコメントパネルの横幅いっぱいに広がるようにし、PCの2ペイン表示はそのまま維持しました。" },
@@ -4069,7 +4080,7 @@
           questionId: String(row?.question_id || row?.questionId || ""),
           author: String(row?.author_name || row?.authorName || "不明"),
           authorId: String(row?.author_id || row?.authorId || ""),
-          avatarUrl: normalizeCommentAvatarUrlV196(row?.author_avatar_url || row?.authorAvatarUrl || row?.avatar_url || row?.avatarUrl),
+          avatarUrl: commentAvatarUrlV198(row),
           content: String(row?.body || row?.content || ""),
           createdAt: row?.created_at || row?.createdAt || new Date().toISOString()
         };
@@ -9222,7 +9233,7 @@
             id: comment.id,
             author: comment.author_name,
             authorId: comment.author_id || comment.authorId || "",
-            avatarUrl: normalizeCommentAvatarUrlV196(comment.author_avatar_url || comment.authorAvatarUrl || comment.avatar_url || comment.avatarUrl),
+            avatarUrl: commentAvatarUrlV198(comment),
             createdAt: comment.created_at,
             updatedAt: comment.updated_at || comment.updatedAt || comment.created_at,
             content: comment.body,

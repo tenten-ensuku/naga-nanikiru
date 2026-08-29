@@ -13,9 +13,9 @@ test("V180 exposes the recent-history shell and synchronized release assets", as
     readFile(identityUrl, "utf8"),
   ]);
 
-  assert.match(html, /const APP_VERSION = 197;/);
-  assert.match(identity, /APP_VERSION = 197/);
-  assert.match(html, /ux-v159\.css\?v=197/);
+  assert.match(html, /const APP_VERSION = 198;/);
+  assert.match(identity, /APP_VERSION = 198/);
+  assert.match(html, /ux-v159\.css\?v=198/);
   assert.match(html, /\.comment-form textarea \{ display: block; width: 100%; min-width: 0;/);
   assert.match(html, /data-menu-view="today"/);
   assert.match(html, /<span>学習する<\/span>/);
@@ -236,6 +236,20 @@ test("V196 renders Discord avatars with a safe fallback in comment groups", asyn
   assert.match(html, /class="comment-author-fallback"/);
   assert.match(html, /image\.addEventListener\("error"/);
   assert.match(html, /author_avatar_url/);
-  assert.match(html, /avatarUrl: normalizeCommentAvatarUrlV196\(comment\.author_avatar_url/);
+  assert.match(html, /avatarUrl: commentAvatarUrlV198\(comment\)/);
   assert.match(html, /message\.avatarUrl = normalizeCommentAvatarUrlV196\(session\.user\.user_metadata\?\.avatar_url\)/);
+});
+
+test("V198 carries Discord avatar data into imported comment groups", async () => {
+  const [html, migration] = await Promise.all([
+    readFile(indexUrl, "utf8"),
+    readFile(new URL("../supabase/migrations/20260830054000_comment_avatar_backfill_v198.sql", import.meta.url), "utf8"),
+  ]);
+  assert.match(html, /function commentAvatarUrlV198\(message\)/);
+  assert.match(html, /message\?\.profile\?\.avatar_url/);
+  assert.match(html, /avatarUrl: commentAvatarUrlV198\(comment\)/);
+  assert.match(migration, /jsonb_build_object\('avatarUrl', matched\.avatar_url\)/);
+  assert.match(migration, /'marlboro0908'/i);
+  assert.match(migration, /'kakisakinima'/i);
+  assert.match(migration, /'kunimusya'/i);
 });
