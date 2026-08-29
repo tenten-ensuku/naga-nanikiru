@@ -10,7 +10,7 @@ test("renders the v87 scene and half-game generator controls", async () => {
     readFile(indexUrl, "utf8"),
     readFile(generatorUrl, "utf8")
   ]);
-  assert.match(html, /const APP_VERSION = 187/);
+  assert.match(html, /const APP_VERSION = 188/);
   assert.match(html, /function captureGeneratorFormDraftV157\(\)/);
   assert.match(html, /destination: document\.getElementById\("generatorDestinationSelect"\)\?\.value \|\| generatorDestinationV130 \|\| ""/);
   assert.match(html, /function restoreGeneratorFormDraftV157\(draft\)/);
@@ -173,8 +173,8 @@ test("renders the v87 scene and half-game generator controls", async () => {
   assert.match(html, /id="nextQuestionBottomButton"[^>]*>次の問題へ<\/button>/);
   assert.doesNotMatch(html, /id="resetButton"/);
   assert.match(html, /id="currentManageButton"[^>]*>整理<\/button>/);
-  assert.match(html, /const nextTenAction = result\.mode === "range-unanswered" \? "range-unanswered" : "unanswered";/);
-  assert.match(html, /const nextTenLabel = unansweredMode \? "次の10問へ" : "新しい10問";/);
+  assert.match(html, /const nextTenAction = result\.mode === "range-unanswered" \? "range-unanswered" : \["weak", "all"\]\.includes\(result\.mode\) \? result\.mode : "unanswered";/);
+  assert.match(html, /const nextTenLabel = unansweredMode \? "次の10問へ" : result\.mode === "weak" \? "次の苦手10問" : result\.mode === "all" \? "次の全問" : "新しい10問";/);
   assert.match(html, /action === "unanswered"/);
 });
 

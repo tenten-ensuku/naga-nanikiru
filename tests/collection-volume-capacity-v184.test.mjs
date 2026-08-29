@@ -78,6 +78,6 @@ test("V186 shows series volume counts, orders navigation from the list, and open
   assert.match(html, /function collectionChooserTitleV186\(row\)/);
   assert.match(html, /`\$\{title\}　全\$\{volumeCount\}巻`/);
   assert.match(html, /escapeHtml\(collectionChooserTitleV186\(row\)\)/);
-  assert.match(html, /data-menu-view="my"[\s\S]*data-menu-view="today"[\s\S]*data-menu-view="analysis"[\s\S]*data-menu-view="generator"[\s\S]*data-menu-view="settings"/);
+  assert.match(html, /data-menu-view="today"[\s\S]*data-menu-view="analysis"[\s\S]*data-menu-view="generator"[\s\S]*data-menu-view="settings"/);
   assert.match(html, /menuViewV16 = "my";/);
 });

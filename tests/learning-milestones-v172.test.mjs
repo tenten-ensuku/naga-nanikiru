@@ -56,15 +56,15 @@ test("V180 renders recent history while keeping the celebration dialog", async (
   const html = await readFile(htmlUrl, "utf8");
   const recentView = html.match(/function renderRecentHistoryViewV180\([\s\S]*?\n      function renderTodayViewV159\(/)?.[0] || "";
 
-  assert.match(html, /const APP_VERSION = 187;/);
+  assert.match(html, /const APP_VERSION = 188;/);
   assert.match(html, /id="learningCelebrationDialog"/);
   assert.match(html, /1周達成おめでとう！/);
   assert.match(html, /完全習得おめでとう！/);
   assert.match(html, /evaluateLearningMilestonesV172\(true\)/);
   assert.match(html, /learningMilestoneTransitions/);
-  assert.match(html, /最新1回が〇以上/);
-  assert.match(recentView, /recent-history-dashboard/);
-  assert.match(recentView, /直近の回答 10件/);
+  assert.match(html, /直近1回が〇以上またはアーカイブ/);
+  assert.match(recentView, /learning-dashboard/);
+  assert.match(recentView, /直近解答履歴/);
   assert.doesNotMatch(recentView, /todayQueueCandidatesV172\(\)/);
   assert.doesNotMatch(recentView, /今日の10問/);
   assert.doesNotMatch(recentView, /直近2回連続で◎/);

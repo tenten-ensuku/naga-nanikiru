@@ -13,11 +13,11 @@ test("V180 exposes the recent-history shell and synchronized release assets", as
     readFile(identityUrl, "utf8"),
   ]);
 
-  assert.match(html, /const APP_VERSION = 187;/);
-  assert.match(identity, /APP_VERSION = 187/);
-  assert.match(html, /ux-v159\.css\?v=187/);
+  assert.match(html, /const APP_VERSION = 188;/);
+  assert.match(identity, /APP_VERSION = 188/);
+  assert.match(html, /ux-v159\.css\?v=188/);
   assert.match(html, /data-menu-view="today"/);
-  assert.match(html, /最近の履歴/);
+  assert.match(html, /<span>学習する<\/span>/);
   assert.doesNotMatch(html, /<span class="quick-start-title">今日の10問/);
   assert.match(html, /function renderRecentHistoryViewV180\(/);
   assert.match(html, /function renderTodayViewV159\(/);
@@ -57,7 +57,8 @@ test("V161 displays the canonical perfect mark while accepting legacy history", 
   assert.match(html, /function normalizeScoreMarkV159\(value\)/);
   assert.match(html, /replaceAll\("💮", "◎"\)/);
   assert.match(html, /return normalizeScoreMarkV159\(value\) === "◎"/);
-  assert.match(todayView, /最新1回が〇以上/);
+  assert.match(todayView, /learning-dashboard/);
+  assert.match(todayView, /直近×・△/);
   assert.doesNotMatch(todayView, /直近2回連続で◎/);
 });
 
