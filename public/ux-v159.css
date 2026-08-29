@@ -5505,3 +5505,10 @@ body.auth-gate-open {
   .page.menu-active .learning-action-card,
   .page.menu-active .learning-recent-action { transition: none; }
 }
+
+/* V197: the collection context belongs to learning; global tools stay collection-neutral. */
+@media (max-width: 800px) {
+  .page.menu-active .menu-panel:not([data-view="today"]) .mobile-collection-context {
+    display: none;
+  }
+}

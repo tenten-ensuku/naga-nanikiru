@@ -15,7 +15,7 @@ test("V170 は問題集切り替え時に軽量インデックスだけを読み
     readFile(pagingMigrationUrl, "utf8"),
   ]);
 
-  assert.match(html, /const APP_VERSION = 196;/);
+  assert.match(html, /const APP_VERSION = 197;/);
   assert.match(html, /sharedQuestionDetailsDeferredV170/);
   assert.match(html, /ensureSharedQuestionDetailV170/);
   assert.match(html, /SHARED_QUESTION_PAGE_SIZE_V177 = 100/);

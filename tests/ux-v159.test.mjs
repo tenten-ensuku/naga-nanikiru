@@ -13,9 +13,9 @@ test("V180 exposes the recent-history shell and synchronized release assets", as
     readFile(identityUrl, "utf8"),
   ]);
 
-  assert.match(html, /const APP_VERSION = 196;/);
-  assert.match(identity, /APP_VERSION = 196/);
-  assert.match(html, /ux-v159\.css\?v=196/);
+  assert.match(html, /const APP_VERSION = 197;/);
+  assert.match(identity, /APP_VERSION = 197/);
+  assert.match(html, /ux-v159\.css\?v=197/);
   assert.match(html, /\.comment-form textarea \{ display: block; width: 100%; min-width: 0;/);
   assert.match(html, /data-menu-view="today"/);
   assert.match(html, /<span>学習する<\/span>/);
@@ -26,6 +26,19 @@ test("V180 exposes the recent-history shell and synchronized release assets", as
   assert.match(css, /\.today-dashboard/);
   assert.match(css, /\.today-primary-action/);
   assert.match(css, /--ux-brown-gold: #b78943/);
+});
+
+test("V197 separates global tool context and owner-only collection management", async () => {
+  const [html, css] = await Promise.all([readFile(indexUrl, "utf8"), readFile(cssUrl, "utf8")]);
+  assert.match(html, /function ownedCollectionOptionsV197\(\)/);
+  assert.match(html, /filter\(row => String\(row\?\.owner_id \|\| ""\) === userId\)/);
+  assert.match(html, /id="collectionManagementSelect"/);
+  assert.match(html, /function collectionManagementTargetV197\(\)/);
+  assert.match(html, /collectionManagementSlugV197/);
+  assert.match(html, /setCollectionVisibility\(target\.id, value\)/);
+  assert.match(html, /revokeCollectionAccess\(target\.id, userId\)/);
+  assert.match(html, /transferCollectionOwnership\(target\.id, userId\)/);
+  assert.match(css, /menu-panel:not\(\[data-view="today"\]\) \.mobile-collection-context/);
 });
 
 test("V161 keeps account actions compact and removes the obsolete share-copy control", async () => {
