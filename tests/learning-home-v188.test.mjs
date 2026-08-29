@@ -7,7 +7,7 @@ const cssUrl = new URL("../public/ux-v159.css", import.meta.url);
 const identityUrl = new URL("../app/lib/appIdentity.ts", import.meta.url);
 const packageUrl = new URL("../package.json", import.meta.url);
 
-test("V191 keeps the compact learning home and restores list context tabs", async () => {
+test("V192 keeps the compact learning home and clarifies collection switching", async () => {
   const [html, css, identity, packageSource] = await Promise.all([
     readFile(indexUrl, "utf8"),
     readFile(cssUrl, "utf8"),
@@ -15,11 +15,14 @@ test("V191 keeps the compact learning home and restores list context tabs", asyn
     readFile(packageUrl, "utf8")
   ]);
 
-  assert.match(html, /const APP_VERSION = 191;/);
-  assert.match(identity, /APP_VERSION = 191/);
+  assert.match(html, /const APP_VERSION = 192;/);
+  assert.match(identity, /APP_VERSION = 192/);
   for (const asset of ["ux-v159\\.css", "supabase-sync-v48\\.js", "drill-ux-v44\\.js"]) {
-    assert.match(html, new RegExp(`${asset}\\?v=191`));
+    assert.match(html, new RegExp(`${asset}\\?v=192`));
   }
+  assert.match(html, /問題集を変更する/);
+  assert.doesNotMatch(html, /COLLECTION LIBRARY/);
+  assert.doesNotMatch(html, /選んだ問題集は次回も保持されます/);
 
   const sidebar = html.match(/<nav class="menu-nav"[\s\S]*?<\/nav>/)?.[0] || "";
   assert.match(sidebar, /data-menu-view="today"[^>]*>[\s\S]*?<span>学習する<\/span>/);

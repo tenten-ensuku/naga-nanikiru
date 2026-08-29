@@ -7,7 +7,7 @@ const migrationUrl = new URL("../supabase/migrations/20260821110000_collection_e
 
 test("V130 baseline exposes a clear destination selector and editor-member wording", async () => {
   const html = await readFile(htmlUrl, "utf8");
-  assert.match(html, /const APP_VERSION = 191/);
+  assert.match(html, /const APP_VERSION = 192/);
   assert.match(html, /function editableCollectionOptionsV130\(/);
   assert.match(html, /function currentGeneratorDestinationV130\(/);
   assert.match(html, /function canAddGeneratedQuestionV130\(/);
