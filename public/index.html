@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=186">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=186">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=186">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=187">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=187">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=187">
   <title>NAGA局面ドリル｜何切る復習問題集</title>
   <meta name="description" content="NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリ。">
   <meta name="theme-color" content="#06131e">
@@ -2152,10 +2152,10 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=186">
+  <link rel="stylesheet" href="ux-v159.css?v=187">
 </head>
-<body>
-  <main class="page">
+<body class="auth-gate-open">
+  <main class="page" inert aria-hidden="true">
     <section class="menu-panel" id="menuPanel" aria-labelledby="menuTitle">
       <aside class="menu-sidebar" aria-label="問題集ナビゲーション">
         <div class="menu-brand"><span class="menu-brand-tile" aria-hidden="true">中</span><span class="menu-brand-title">問題集</span><span class="menu-brand-actions"><button class="menu-notice-button" id="announcementButton" type="button" aria-label="アナウンスを開く" title="アプリの更新情報を見る"><span class="menu-notice-label">更新</span><span class="notification-badge" id="announcementBadge" hidden></span></button><button class="menu-notice-button" id="commentNotificationsButton" type="button" aria-label="コメント・追加通知を開く" title="コメントと問題追加の通知を見る"><span class="menu-notice-label">通知</span><span class="notification-badge" id="commentNotificationBadge" hidden></span></button><span class="menu-brand-version">V<span id="menuVersion"></span></span></span></div>
@@ -2175,9 +2175,8 @@
         </nav>
         <div class="menu-sidebar-progress" id="menuSidebarProgress" aria-live="polite"></div>
         <div class="account-strip" id="accountStrip">
-          <span class="account-status" id="accountStatus">回答履歴はこの端末だけに保存されています。</span>
+          <span class="account-status" id="accountStatus">ログイン状態を確認しています…</span>
           <button class="primary" id="discordAuthButton" type="button">Discordでログイン</button>
-          <button id="importHistoryButton" type="button" hidden>この端末の履歴を取り込む</button>
         </div>
       </aside>
       <div class="menu-content">
@@ -2362,6 +2361,17 @@
     </div>
   </main>
 
+  <section class="auth-gate" id="authGate" data-state="checking" aria-label="ログインが必要です">
+    <div class="auth-gate-card" role="dialog" aria-modal="true" aria-labelledby="authGateTitle" aria-describedby="authGateDescription" tabindex="-1">
+      <p class="auth-gate-kicker">NAGA DRILL</p>
+      <h2 id="authGateTitle">ログインして学習を始める</h2>
+      <p id="authGateDescription">このアプリはログイン後に利用できます。Discordでログインすると、回答履歴・お気に入り・習熟度を携帯とパソコンで引き継げます。</p>
+      <p class="auth-gate-return-note">今開いている問題集やURLは、ログイン後もそのまま再開できます。</p>
+      <button class="primary auth-gate-login-button" id="authGateLoginButton" type="button" disabled>Discordでログイン</button>
+      <p class="auth-gate-status" id="authGateStatus" aria-live="polite">ログイン状態を確認しています…</p>
+    </div>
+  </section>
+
   <dialog class="question-manage-dialog" id="questionManageDialog">
     <div class="question-manage-inner">
       <h3 id="questionManageTitle">問題を整理</h3>
@@ -2428,13 +2438,13 @@
   </dialog>
 
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=186"></script>
-  <script src="drill-ux-v44.js?v=186"></script>
+  <script src="supabase-sync-v48.js?v=187"></script>
+  <script src="drill-ux-v44.js?v=187"></script>
   <script src="naga-generator-v44.js"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 186;
+    const APP_VERSION = 187;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -3378,6 +3388,8 @@
       }
       let supabaseSessionV46 = null;
       let authPendingV46 = false;
+      let pendingExistingQuestionIdV187 = "";
+      let pendingExistingQuestionOpeningV187 = false;
       let sharedCollectionV46 = null;
       let collectionCatalogV100 = [];
       let collectionVolumesV180 = [];
@@ -3589,6 +3601,7 @@
         { version: 172, date: "2026-08-26", publishedAt: "2026-08-26T19:00:00+09:00", title: "一周達成と完全習得を祝うようにしました", body: "未回答がなくなったときは一周達成、最新1回の回答が〇以上で全問がそろったときは習熟度100％として祝福します。今日の10問に対象がないときは、達成をたたえる表示に切り替わります。" },
         { version: 176, date: "2026-08-26", publishedAt: "2026-08-26T21:00:00+09:00", title: "問題一覧のフィルターを見やすく整理しました", body: "問題範囲・ジャンル・フィルターを3段に整理し、直近の評価記号を問題一覧と同じ色で表示するようにしました。" },
         { version: 178, date: "2026-08-26", publishedAt: "2026-08-26T23:00:00+09:00", title: "大規模問題集の範囲切り替えを安定させました", body: "範囲の読み込みが重なったときに古い結果で表示を上書きしないようにし、取得に失敗した場合は元の範囲へ安全に戻します。100問目以降のお気に入り・アーカイブも初回読み込みで失わないようにしました。" },
+        { version: 187, date: "2026-08-29", title: "ログインして安全に学習できるようにしました", body: "学習を始める前にDiscordログインを必須にし、携帯・パソコン間で回答履歴を安全に同期できるようにしました。端末内の履歴を取り込むボタンは廃止し、URLから開いた問題もログイン後にそのまま再開できます。" },
         { version: 186, date: "2026-08-29", publishedAt: "2026-08-29T14:00:00+09:00", title: "問題集を選びやすくしました", body: "問題集選択画面に全巻数を表示し、問題集を選んだ後はすぐに問題一覧へ移動できるようにしました。ナビゲーションも学習の入口から順に整理しています。" },
         { version: 185, date: "2026-08-29", publishedAt: "2026-08-29T13:00:00+09:00", title: "巻管理と学習集計を整理しました", body: "アーカイブ済みの問題も全問題数と習熟度へ反映し、200問単位の巻追加に対応しました。問題一覧ではジャンルと直近履歴を一列で確認できます。" },
         { version: 182, date: "2026-08-29", publishedAt: "2026-08-29T12:00:00+09:00", title: "ピエール問題集の巻をカードから選べるようにしました", body: "ピエール問題集を選ぶと、そのカードの直後に1巻〜9巻の選択肢が展開されます。選択の起点を明確にし、巻選択まで迷わないようにしました。" },
@@ -5608,6 +5621,7 @@
       }
 
       function recordAnswerV16() {
+        if (!requireLoginForPlayV187()) return;
         const question = questionsV16[currentQuestionIndexV16];
         if (!question) return;
         const score = choiceScoreV16();
@@ -6197,6 +6211,7 @@
       }
 
       function selectCallV16(decision) {
+        if (!requireLoginForPlayV187()) return;
         if (SCENE.decisionType !== "call") return;
         state.callDecision = normalizeCallActionV112(decision);
         renderHandV16();
@@ -6204,6 +6219,7 @@
       }
 
       function selectTileV16(index) {
+        if (!requireLoginForPlayV187()) return;
         if (SCENE.decisionType === "call") return;
         const displaySlots = displayHandSlotsV146(SCENE);
         const tiles = displaySlots
@@ -6217,6 +6233,7 @@
       }
 
       function toggleRiichiV16() {
+        if (!requireLoginForPlayV187()) return;
         if (!hasReachV16()) return;
         state.riichi = !state.riichi;
         renderHandV16();
@@ -6224,6 +6241,7 @@
       }
 
       function confirmAnswerV41() {
+        if (!requireLoginForPlayV187()) return;
         if (state.revealed) return;
         const hasChoice = SCENE.decisionType === "call" ? Boolean(selectedCallActionV112()) : Boolean(state.selected);
         if (!hasChoice) return;
@@ -6489,6 +6507,7 @@
       }
 
       function startSessionV44(mode, explicitQuestions = null, { skipSharedPreparation = false } = {}) {
+        if (!requireLoginForPlayV187()) return;
         const needsCompleteSharedIndex = !skipSharedPreparation
           && sharedQuestionPagingIsCurrentV177()
           && !sharedQuestionPagingV177.allLoaded
@@ -6568,6 +6587,7 @@
       }
 
       function startRangeSessionV61(mode) {
+        if (!requireLoginForPlayV187()) return;
         const unansweredOnly = mode === "unanswered";
         const candidates = menuFilteredQuestionsV80().filter(question => isPlayableV16(question) && (!unansweredOnly || !latestAnswerV44(question)));
         const sequentialCandidates = isBasicSequenceCollectionV163()
@@ -6594,6 +6614,7 @@
       }
 
       async function advanceQuestionV44() {
+        if (!requireLoginForPlayV187()) return;
         if (state.sharedAttemptPromise) await state.sharedAttemptPromise;
         const session = activeSessionV44();
         if (!session) {
@@ -6742,8 +6763,9 @@
       }
 
       async function openQuestionV16(index, { preserveSession = false } = {}) {
+        if (!requireLoginForPlayV187()) return false;
         const requestedQuestion = questionsV16[index];
-        if (!requestedQuestion) return;
+        if (!requestedQuestion) return false;
         const requestedKey = questionKeyV16(requestedQuestion);
         const menuPanel = document.getElementById("menuPanel");
         const menuWasVisible = Boolean(menuPanel && !menuPanel.hidden);
@@ -6755,17 +6777,17 @@
             await ensureSharedQuestionDetailV170(requestedQuestion, index);
           } catch (error) {
             window.alert(error?.message || "問題を読み込めませんでした。通信状態を確認してください。");
-            return;
+            return false;
           } finally {
             menuPanel?.removeAttribute("aria-busy");
             sceneCard?.removeAttribute("aria-busy");
           }
         }
         const resolvedIndex = questionsV16.findIndex(question => questionKeyV16(question) === requestedKey);
-        if (resolvedIndex < 0) return;
+        if (resolvedIndex < 0) return false;
         index = resolvedIndex;
         const question = questionsV16[index];
-        if (!question) return;
+        if (!question) return false;
         if (!preserveSession && userStateV16.activeSessionId) {
           userStateV16.activeSessionId = null;
           saveUserStateV16();
@@ -6775,6 +6797,7 @@
         document.querySelector(".page").classList.remove("menu-active");
         applyDesktopLayoutV70();
         applyQuestionV16(question, index);
+        return true;
       }
 
       function isBasicSequenceCollectionV163(collection = sharedCollectionV46, question = null) {
@@ -8349,37 +8372,148 @@
         }
       }
 
+      function authGateDefaultMessageV187(state) {
+        return {
+          checking: "ログイン状態を確認しています…",
+          unauthenticated: "学習を始めるにはDiscordでログインしてください。",
+          "signing-in": "Discordのログイン画面へ移動しています…",
+          unavailable: "ログイン機能を利用できません。管理者にSupabase設定を確認してください。",
+          authenticated: ""
+        }[state] || "学習を始めるにはDiscordでログインしてください。";
+      }
+
+      function setAuthGateStateV187(nextState, message = "") {
+        const state = ["checking", "unauthenticated", "signing-in", "unavailable", "authenticated"].includes(nextState)
+          ? nextState
+          : "unauthenticated";
+        const gate = document.getElementById("authGate");
+        const page = document.querySelector(".page");
+        const loginButton = document.getElementById("authGateLoginButton");
+        const status = document.getElementById("authGateStatus");
+        const authenticated = state === "authenticated";
+        if (gate) {
+          gate.dataset.state = state;
+          gate.hidden = authenticated;
+          gate.setAttribute("aria-hidden", String(authenticated));
+        }
+        if (page) {
+          page.toggleAttribute("inert", !authenticated);
+          if ("inert" in page) page.inert = !authenticated;
+          if (authenticated) page.removeAttribute("aria-hidden");
+          else page.setAttribute("aria-hidden", "true");
+        }
+        document.body.classList.toggle("auth-gate-open", !authenticated);
+        if (loginButton) {
+          loginButton.disabled = ["checking", "signing-in", "unavailable"].includes(state);
+          loginButton.textContent = state === "signing-in" ? "ログイン画面へ移動中…" : "Discordでログイン";
+        }
+        if (status) status.textContent = message || authGateDefaultMessageV187(state);
+        const focusTarget = loginButton && !loginButton.disabled ? loginButton : gate?.querySelector(".auth-gate-card");
+        if (!authenticated && focusTarget && document.visibilityState === "visible" && document.activeElement !== focusTarget) {
+          window.setTimeout(() => {
+            if (!document.getElementById("authGate")?.hidden) focusTarget.focus();
+          }, 0);
+        }
+      }
+
+      function syncAuthGateForSessionV187(session = null) {
+        supabaseSessionV46 = session || null;
+        if (!window.NagaSupabase?.configured) {
+          setAuthGateStateV187("unavailable");
+          return;
+        }
+        if (session?.user?.id) {
+          setAuthGateStateV187("authenticated");
+          void openRequestedQuestionAfterAuthV187();
+        } else {
+          setAuthGateStateV187("unauthenticated");
+        }
+      }
+
+      function requireLoginForPlayV187() {
+        if (supabaseSessionV46?.user?.id) return true;
+        setAuthGateStateV187(window.NagaSupabase?.configured ? "unauthenticated" : "unavailable");
+        return false;
+      }
+
+      async function handleDiscordAuthV187() {
+        if (authPendingV46) return;
+        if (!window.NagaSupabase?.configured) {
+          setAuthGateStateV187("unavailable");
+          return;
+        }
+        const authButton = document.getElementById("discordAuthButton");
+        const signingOut = Boolean(supabaseSessionV46?.user?.id);
+        authPendingV46 = true;
+        if (!signingOut) setAuthGateStateV187("signing-in");
+        if (authButton) {
+          authButton.disabled = true;
+          authButton.textContent = signingOut ? "ログアウト中…" : "ログイン中…";
+        }
+        try {
+          if (signingOut) {
+            if (typeof window.NagaSupabase.signOut !== "function") throw new Error("ログアウト機能を利用できません。");
+            await window.NagaSupabase.signOut();
+          } else {
+            if (typeof window.NagaSupabase.signInWithDiscord !== "function") throw new Error("Discordログインを利用できません。");
+            await window.NagaSupabase.signInWithDiscord();
+          }
+        } catch (error) {
+          const message = error?.message || "ログイン処理に失敗しました。もう一度お試しください。";
+          console.warn("Discord認証に失敗しました", error);
+          setAuthGateStateV187(supabaseSessionV46?.user?.id ? "authenticated" : "unauthenticated", message);
+        } finally {
+          authPendingV46 = false;
+          await refreshAccountV46(supabaseSessionV46);
+        }
+      }
+
+      async function openRequestedQuestionAfterAuthV187() {
+        const questionId = String(pendingExistingQuestionIdV187 || "").trim();
+        if (!questionId || !supabaseSessionV46?.user?.id || pendingExistingQuestionOpeningV187) return false;
+        const index = questionsV16.findIndex(question => String(question.serverQuestionId || "") === questionId);
+        if (index < 0) return false;
+        pendingExistingQuestionOpeningV187 = true;
+        try {
+          const opened = await openQuestionV16(index);
+          if (!opened) return false;
+          const cleanUrl = new URL(window.location.href);
+          cleanUrl.searchParams.delete("existing_question");
+          window.history.replaceState({}, "", cleanUrl.toString());
+          pendingExistingQuestionIdV187 = "";
+          return true;
+        } finally {
+          pendingExistingQuestionOpeningV187 = false;
+        }
+      }
+
       async function refreshAccountBodyV153(session = null) {
-        supabaseSessionV46 = session;
+        syncAuthGateForSessionV187(session);
         if (!session) remoteHistorySyncScopeV135 = "";
         window.nagaCurrentUserIdV75 = String(session?.user?.id || "");
         if (typeof renderComments === "function") renderComments();
         const status = document.getElementById("accountStatus");
         const authButton = document.getElementById("discordAuthButton");
-        const importButton = document.getElementById("importHistoryButton");
         const studentNav = document.getElementById("studentHistoryNav");
         if (!window.NagaSupabase?.configured) {
-          status.textContent = "回答履歴はこの端末だけに保存されています。Supabase接続後に同期できます。";
+          status.textContent = "ログイン機能を利用できません。管理者にSupabase設定を確認してください。";
           authButton.textContent = "ログイン準備中";
           authButton.disabled = true;
-          importButton.hidden = true;
           studentNav.hidden = true;
           await refreshCollectionAccessStateV100();
           return;
         }
         authButton.disabled = authPendingV46;
         if (!session) {
-          status.textContent = "未ログイン：回答履歴はこの端末だけに保存されます。";
+          status.textContent = "未ログイン：ログインすると学習できます。";
           authButton.textContent = "Discordでログイン";
-          importButton.hidden = true;
           studentNav.hidden = true;
           await refreshCollectionAccessStateV100();
           return;
         }
         const displayName = currentUserDisplayNameV47();
-        status.textContent = `${displayName}としてログイン中。履歴は他の利用者と混ざりません。`;
+        status.textContent = `${displayName}としてログイン中。履歴は携帯・パソコン間で自動同期されます。`;
         authButton.textContent = "ログアウト";
-        importButton.hidden = false;
         studentNav.hidden = !canViewStudentDashboardV84();
         const synced = await hydrateRemoteAnswerHistoryV81();
         await refreshCollectionAccessStateV100();
@@ -8409,50 +8543,36 @@
 
       async function initializeAccountV46() {
         const authButton = document.getElementById("discordAuthButton");
-        authButton.addEventListener("click", async () => {
-          if (authPendingV46) return;
-          authPendingV46 = true;
-          authButton.disabled = true;
-          authButton.textContent = supabaseSessionV46 ? "ログアウト中…" : "ログイン中…";
-          try {
-            if (supabaseSessionV46) await window.NagaSupabase.signOut();
-            else await window.NagaSupabase.signInWithDiscord();
-          } catch (error) {
-            window.alert(error?.message || "ログイン処理に失敗しました。");
-          } finally {
-            authPendingV46 = false;
-            await refreshAccountV46(supabaseSessionV46);
+        authButton.addEventListener("click", handleDiscordAuthV187);
+        document.getElementById("authGateLoginButton")?.addEventListener("click", handleDiscordAuthV187);
+        document.addEventListener("keydown", event => {
+          const gate = document.getElementById("authGate");
+          if (!gate || gate.hidden) return;
+          if (!gate.contains(document.activeElement) || event.key === "Tab") {
+            event.preventDefault();
+            const loginButton = document.getElementById("authGateLoginButton");
+            (loginButton && !loginButton.disabled ? loginButton : gate.querySelector(".auth-gate-card"))?.focus();
           }
         });
-        document.getElementById("importHistoryButton").addEventListener("click", async event => {
-          if (!window.confirm("この端末にある回答履歴を、現在ログイン中の自分の履歴へ取り込みますか？")) return;
-          const button = event.currentTarget;
-          button.disabled = true;
-          button.textContent = "取り込み中…";
-          try {
-            const result = await window.NagaSupabase.importLocalHistory(userStateV16);
-            button.textContent = `${result.imported}件取り込み済み`;
-            document.getElementById("accountStatus").textContent = `この端末から${result.imported}件を取り込みました。未登録問題など${result.skipped}件は端末内に残しています。`;
-          } catch (error) {
-            button.textContent = "この端末の履歴を取り込む";
-            window.alert(error?.message || "回答履歴を取り込めませんでした。");
-          } finally {
-            button.disabled = false;
-          }
+        window.addEventListener("naga:authchange", event => {
+          void refreshAccountV46(event.detail?.session || null);
         });
-        window.addEventListener("naga:authchange", event => refreshAccountV46(event.detail?.session || null));
         window.addEventListener("naga:autherror", event => {
           if (!supabaseSessionV46) {
-            document.getElementById("accountStatus").textContent = event.detail?.message || "認証状態を確認できませんでした。もう一度ログインしてください。";
+            const message = event.detail?.message || "認証状態を確認できませんでした。もう一度ログインしてください。";
+            document.getElementById("accountStatus").textContent = message;
+            setAuthGateStateV187(window.NagaSupabase?.configured ? "unauthenticated" : "unavailable", message);
           }
         });
         let initialSession = null;
+        let initialSessionError = "";
         try {
           initialSession = await window.NagaSupabase?.currentSession?.() || null;
         } catch {
-          document.getElementById("accountStatus").textContent = "認証状態を確認できませんでした。もう一度ログインしてください。";
+          initialSessionError = "認証状態を確認できませんでした。もう一度ログインしてください。";
         }
         await refreshAccountV46(initialSession);
+        if (initialSessionError && !initialSession) setAuthGateStateV187("unauthenticated", initialSessionError);
       }
 
       function sharedQuestionPageIndexV177(rangeKey = menuRangeV60) {
@@ -8795,10 +8915,8 @@
         if (requestedExistingQuestionId) {
           const existingIndex = questionsV16.findIndex(question => String(question.serverQuestionId || "") === requestedExistingQuestionId);
           if (existingIndex >= 0) {
-            const cleanUrl = new URL(window.location.href);
-            cleanUrl.searchParams.delete("existing_question");
-            window.history.replaceState({}, "", cleanUrl.toString());
-            openQuestionV16(existingIndex);
+            pendingExistingQuestionIdV187 = requestedExistingQuestionId;
+            await openRequestedQuestionAfterAuthV187();
           }
         }
         document.getElementById("questionSelect").addEventListener("change", event => openQuestionV16(Number(event.target.value)));
@@ -8911,6 +9029,7 @@
         });
         document.getElementById("confirmAnswerButton").addEventListener("click", confirmAnswerV41);
         await initializeAccountV46();
+        await openRequestedQuestionAfterAuthV187();
       }
 
       renderHand = renderHandV16;
