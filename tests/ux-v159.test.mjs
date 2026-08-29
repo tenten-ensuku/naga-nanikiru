@@ -13,9 +13,9 @@ test("V180 exposes the recent-history shell and synchronized release assets", as
     readFile(identityUrl, "utf8"),
   ]);
 
-  assert.match(html, /const APP_VERSION = 195;/);
-  assert.match(identity, /APP_VERSION = 195/);
-  assert.match(html, /ux-v159\.css\?v=195/);
+  assert.match(html, /const APP_VERSION = 196;/);
+  assert.match(identity, /APP_VERSION = 196/);
+  assert.match(html, /ux-v159\.css\?v=196/);
   assert.match(html, /\.comment-form textarea \{ display: block; width: 100%; min-width: 0;/);
   assert.match(html, /data-menu-view="today"/);
   assert.match(html, /<span>学習する<\/span>/);
@@ -210,4 +210,19 @@ test("V183 keeps five latest marks and makes question rows one line", async () =
   assert.match(css, /V183: keep question rows scannable/);
   assert.match(css, /grid-template-columns: minmax\(0, 1fr\) max-content 34px 34px/);
   assert.doesNotMatch(css, /menu-card-latest-mark:nth-child\(n \+ 4\)[\s\S]*?display:\s*none/);
+});
+
+test("V196 renders Discord avatars with a safe fallback in comment groups", async () => {
+  const html = await readFile(indexUrl, "utf8");
+  assert.match(html, /function normalizeCommentAvatarUrlV196\(value\)/);
+  assert.match(html, /cdn\.discordapp\.com/);
+  assert.match(html, /media\.discordapp\.net/);
+  assert.match(html, /function commentAuthorBadgeMarkupV196\(group, authorClass\)/);
+  assert.match(html, /data-comment-avatar/);
+  assert.match(html, /class="comment-author-avatar"/);
+  assert.match(html, /class="comment-author-fallback"/);
+  assert.match(html, /image\.addEventListener\("error"/);
+  assert.match(html, /author_avatar_url/);
+  assert.match(html, /avatarUrl: normalizeCommentAvatarUrlV196\(comment\.author_avatar_url/);
+  assert.match(html, /message\.avatarUrl = normalizeCommentAvatarUrlV196\(session\.user\.user_metadata\?\.avatar_url\)/);
 });

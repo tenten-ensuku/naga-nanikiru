@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=195">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=195">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=195">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=196">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=196">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=196">
   <title>NAGA局面ドリル｜何切る復習問題集</title>
   <meta name="description" content="NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリ。">
   <meta name="theme-color" content="#06131e">
@@ -498,6 +498,11 @@
     .comment-group.comment-author-color-5 { border-left-color: #aecb73; }
     .comment-group.comment-author-color-6 { border-left-color: #8fc5d4; }
     .comment-author-badge { display: inline-flex; align-items: center; justify-content: center; width: 44px; min-height: 44px; padding: 4px; color: #eafefe; background: linear-gradient(145deg, #21536b, #102c3e); border: 1px solid rgba(155,232,216,.55); border-radius: 50%; font-size: 9px; font-weight: 800; line-height: 1.15; text-align: center; overflow-wrap: anywhere; }
+    .comment-author-badge.has-avatar { height: 44px; padding: 0; overflow: hidden; }
+    .comment-author-avatar { display: block; width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+    .comment-author-fallback { display: block; }
+    .comment-author-badge.has-avatar .comment-author-fallback { display: none; }
+    .comment-author-badge.avatar-fallback { padding: 4px; }
     .comment-author-badge.comment-author-color-0 { background: linear-gradient(145deg, #1d6a6b, #10333d); border-color: #63c9c0; }
     .comment-author-badge.comment-author-color-1 { background: linear-gradient(145deg, #5b4382, #2b2141); border-color: #b496ee; }
     .comment-author-badge.comment-author-color-2 { background: linear-gradient(145deg, #2e5d92, #172d4b); border-color: #73a9ed; }
@@ -2152,7 +2157,7 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=195">
+  <link rel="stylesheet" href="ux-v159.css?v=196">
 </head>
 <body class="auth-gate-open">
   <main class="page" inert aria-hidden="true">
@@ -2436,13 +2441,13 @@
   </dialog>
 
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=195"></script>
-  <script src="drill-ux-v44.js?v=195"></script>
+  <script src="supabase-sync-v48.js?v=196"></script>
+  <script src="drill-ux-v44.js?v=196"></script>
   <script src="naga-generator-v44.js"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 195;
+    const APP_VERSION = 196;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -2943,14 +2948,44 @@
       return `comment-author-color-${Math.abs(hash) % 7}`;
     }
 
+    function normalizeCommentAvatarUrlV196(value) {
+      const raw = String(value || "").trim();
+      if (!raw) return "";
+      try {
+        const url = new URL(raw);
+        const host = url.hostname.toLowerCase();
+        const isDiscordCdn = host === "cdn.discordapp.com"
+          || host === "media.discordapp.net"
+          || /^images-ext-\d+\.discordapp\.net$/.test(host);
+        return url.protocol === "https:" && isDiscordCdn ? url.toString() : "";
+      } catch {
+        return "";
+      }
+    }
+
     function mergeCommentGroupsV65(messages) {
       return messages.reduce((groups, message) => {
         const author = String(message.author || "不明").trim() || "不明";
+        const authorId = String(message.authorId || message.author_id || "").trim();
+        const avatarUrl = normalizeCommentAvatarUrlV196(message.avatarUrl || message.authorAvatarUrl || message.author_avatar_url);
+        const groupKey = authorId ? `id:${authorId}` : `name:${author}\u0000avatar:${avatarUrl}`;
         const last = groups[groups.length - 1];
-        if (last && last.author === author) last.messages.push(message);
-        else groups.push({ author, messages: [message] });
+        if (last && last.groupKey === groupKey) {
+          last.avatarUrl ||= avatarUrl;
+          last.messages.push(message);
+        } else {
+          groups.push({ groupKey, author, authorId, avatarUrl, messages: [message] });
+        }
         return groups;
       }, []);
+    }
+
+    function commentAuthorBadgeMarkupV196(group, authorClass) {
+      const author = escapeHtml(group.author);
+      const avatarUrl = normalizeCommentAvatarUrlV196(group.avatarUrl);
+      const fallback = `<span class="comment-author-fallback" aria-hidden="${avatarUrl ? "true" : "false"}">${author}</span>`;
+      if (!avatarUrl) return `<span class="comment-author-badge ${authorClass}" title="${author}">${fallback}</span>`;
+      return `<span class="comment-author-badge ${authorClass} has-avatar" title="${author}"><img class="comment-author-avatar" data-comment-avatar src="${escapeHtml(avatarUrl)}" alt="${author}のDiscordアイコン" loading="lazy" decoding="async" referrerpolicy="no-referrer">${fallback}</span>`;
     }
 
     function canEditCommentV75(message) {
@@ -2978,8 +3013,19 @@
       const groups = mergeCommentGroupsV65(messages);
       list.innerHTML = groups.map(group => {
         const authorClass = commentAuthorColorV65(group.author);
-        return `<article class="comment-card comment-group ${authorClass}"><span class="comment-author-badge ${authorClass}" title="${escapeHtml(group.author)}">${escapeHtml(group.author)}</span><div class="comment-card-main">${group.messages.map(renderCommentEntryV65).join("")}</div></article>`;
+        return `<article class="comment-card comment-group ${authorClass}">${commentAuthorBadgeMarkupV196(group, authorClass)}<div class="comment-card-main">${group.messages.map(renderCommentEntryV65).join("")}</div></article>`;
       }).join("");
+      list.querySelectorAll("[data-comment-avatar]").forEach(image => {
+        image.addEventListener("error", () => {
+          const badge = image.closest(".comment-author-badge");
+          if (!badge) return;
+          image.remove();
+          badge.classList.remove("has-avatar");
+          badge.classList.add("avatar-fallback");
+          const fallback = badge.querySelector(".comment-author-fallback");
+          if (fallback) fallback.setAttribute("aria-hidden", "false");
+        }, { once: true });
+      });
       hydrateCommentYoutubeCardsV96(list);
       document.getElementById("commentsMeta").textContent = `${messages.length}件の投稿・${groups.length}人の発言（連続投稿は統合表示）`;
       if (scrollToBottom) list.scrollTop = list.scrollHeight;
@@ -3190,7 +3236,7 @@
 
     function submitNewCommentV75(content) {
       const input = document.getElementById("commentInput");
-      const message = { id: `local-${Date.now()}`, author: typeof currentUserDisplayNameV47 === "function" ? currentUserDisplayNameV47() : "このブラウザ", authorId: String(window.nagaCurrentUserIdV75 || ""), createdAt: new Date().toISOString(), content, attachments: state.commentAttachments.map(attachment => ({ ...attachment })) };
+      const message = { id: `local-${Date.now()}`, author: typeof currentUserDisplayNameV47 === "function" ? currentUserDisplayNameV47() : "このブラウザ", authorId: String(window.nagaCurrentUserIdV75 || ""), avatarUrl: normalizeCommentAvatarUrlV196(supabaseSessionV46?.user?.user_metadata?.avatar_url), createdAt: new Date().toISOString(), content, attachments: state.commentAttachments.map(attachment => ({ ...attachment })) };
       state.comments.push(message);
       input.value = "";
       clearCommentDraftV68({ clearStatus: false });
@@ -3534,6 +3580,7 @@
       const QUESTION_NOTICE_STORAGE_KEY_V66 = storageKey("question-notices-v1");
       const ANNOUNCEMENT_SEEN_STORAGE_KEY_V65 = storageKey("announcement-seen-v1");
       const APP_ANNOUNCEMENTS_V66 = [
+        { version: 196, date: "2026-08-30", publishedAt: "2026-08-30T04:43:24+09:00", title: "コメント欄にDiscordアイコンを表示しました", body: "Discordプロフィールに登録されたアイコンをコメント欄の投稿者表示へ反映しました。アイコンが未設定・取得できない場合は、これまでどおり表示名を表示します。" },
         { version: 195, date: "2026-08-30", publishedAt: "2026-08-30T04:21:41+09:00", title: "コメント入力欄を広げました", body: "コメントの入力欄がコメントパネルの横幅いっぱいに広がるようにし、PCの2ペイン表示はそのまま維持しました。" },
         { version: 194, date: "2026-08-30", publishedAt: "2026-08-30T03:43:03+09:00", title: "学習ボタンと直近履歴を使いやすくしました", body: "未回答・苦手克服・全問をプレイできる入口を押しやすいボタンに整え、直近回答履歴からお気に入りとアーカイブを操作できるようにしました。アナウンスには更新日時を表示します。" },
         { version: 66, date: "2026-08-14", title: "コメント・問題追加通知を追加しました", body: "新しいコメントに加えて、他の利用者が共有問題集へ追加した問題も通知一覧で確認できるようになりました。" },
@@ -4012,6 +4059,8 @@
           id,
           questionId: String(row?.question_id || row?.questionId || ""),
           author: String(row?.author_name || row?.authorName || "不明"),
+          authorId: String(row?.author_id || row?.authorId || ""),
+          avatarUrl: normalizeCommentAvatarUrlV196(row?.author_avatar_url || row?.authorAvatarUrl || row?.avatar_url || row?.avatarUrl),
           content: String(row?.body || row?.content || ""),
           createdAt: row?.created_at || row?.createdAt || new Date().toISOString()
         };
@@ -5403,6 +5452,7 @@
             message.id = String(id);
             message.author = currentUserDisplayNameV47();
             message.authorId = session.user.id;
+            message.avatarUrl = normalizeCommentAvatarUrlV196(session.user.user_metadata?.avatar_url);
             message.attachments = uploadedAttachments;
             markSharedCommentKnownV65(message.id);
             renderComments({ scrollToBottom: true });
@@ -5460,6 +5510,7 @@
             }
             message.author = currentUserDisplayNameV47();
             message.authorId = session.user.id;
+            message.avatarUrl = normalizeCommentAvatarUrlV196(session.user.user_metadata?.avatar_url);
             message.attachments = uploadedAttachments;
             state.comments = state.comments.map(candidate => candidate.id === message.id ? { ...message } : candidate);
             renderComments();
@@ -9101,6 +9152,7 @@
             id: comment.id,
             author: comment.author_name,
             authorId: comment.author_id || comment.authorId || "",
+            avatarUrl: normalizeCommentAvatarUrlV196(comment.author_avatar_url || comment.authorAvatarUrl || comment.avatar_url || comment.avatarUrl),
             createdAt: comment.created_at,
             updatedAt: comment.updated_at || comment.updatedAt || comment.created_at,
             content: comment.body,
