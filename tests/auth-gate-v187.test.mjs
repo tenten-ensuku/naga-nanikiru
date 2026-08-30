@@ -7,11 +7,13 @@ const indexUrl = new URL("../public/index.html", import.meta.url);
 test("V187 removes local-history import and requires login before study", async () => {
   const html = await readFile(indexUrl, "utf8");
 
-  assert.match(html, /const APP_VERSION = 211/);
+  assert.match(html, /const APP_VERSION = 212/);
   assert.match(html, /<body class="auth-gate-open">/);
   assert.match(html, /<main class="page" inert aria-hidden="true">/);
   assert.match(html, /class="auth-gate" id="authGate"/);
   assert.match(html, /id="authGateLoginButton"/);
+  assert.match(html, /class="auth-gate-logo" src="assets\/min-kiru-header\.png" alt="みん切る（みんなの何切る問題集）">/);
+  assert.doesNotMatch(html, /NAGA DRILL/);
   assert.doesNotMatch(html, /importHistoryButton/);
   assert.match(html, /function requireLoginForPlayV187\(\)/);
   assert.match(html, /function syncAuthGateForSessionV187\(session = null\)/);
@@ -40,6 +42,6 @@ test("V187 removes local-history import and requires login before study", async 
   assert.match(html, /pendingExistingQuestionIdV187 = requestedExistingQuestionId/);
   assert.match(html, /await openRequestedQuestionAfterAuthV187\(\)/);
   assert.match(html, /cleanUrl\.searchParams\.delete\("existing_question"\)/);
-  assert.match(html, /supabase-sync-v48\.js\?v=211/);
-  assert.match(html, /drill-ux-v44\.js\?v=211/);
+  assert.match(html, /supabase-sync-v48\.js\?v=212/);
+  assert.match(html, /drill-ux-v44\.js\?v=212/);
 });

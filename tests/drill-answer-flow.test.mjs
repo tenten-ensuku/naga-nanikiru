@@ -34,7 +34,7 @@ test("requires explicit confirmation before revealing or recording an answer", a
 
 test("records answer timing and exposes the synchronized drill version", async () => {
   const html = await source();
-  assert.match(html, /const APP_VERSION = 211;/);
+  assert.match(html, /const APP_VERSION = 212;/);
   assert.match(html, /const MODEL_PRIORITY = \["ニシキ", "ヒバカリ", "カガシ", "ガンマ", "オメガ"\];/);
   assert.match(html, /const HAND_BAR_MODEL_NAMES = \["ニシキ", "ヒバカリ", "カガシ"\];/);
   assert.match(html, /const topCallModelIndices = priorityIndicesV16\(3\);/);
@@ -74,7 +74,7 @@ test("detects self-meld hand masks from dark-blue panels and image-bottom panels
   assert.match(html, /const isLegacyImmediate = question\?\.decisionType === "discard"[\s\S]*?handBeforeDraw\.length < 13[\s\S]*?question\?\.actualDiscard != null/);
   assert.match(html, /function displayConcealedHandV143\(/);
   assert.match(html, /generator\.displayConcealedHand\(question\)/);
-  assert.match(html, /const displaySlots = displayHandSlotsV146\(SCENE\)/);
+  assert.match(html, /const displaySlots = displayHandSlotsV212\(SCENE\)/);
   assert.match(html, /displaySlots\.filter\(Boolean\)/);
   assert.match(html, /displaySlots\.map\(\(tile, index\) => tile == null \? emptyHandSlotV146\(\) : tileButtonV16\(tile, index\)\)/);
   assert.match(html, /sortHandV20\(displayHand\)/);

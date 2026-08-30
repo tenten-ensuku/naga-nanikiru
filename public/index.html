@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=211">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=211">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=211">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=212">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=212">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=212">
   <title>みん切る｜みんなの何切る問題集</title>
   <meta name="description" content="みん切るは、NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリです。">
   <meta name="theme-color" content="#06131e">
@@ -2169,7 +2169,7 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=211">
+  <link rel="stylesheet" href="ux-v159.css?v=212">
 </head>
 <body class="auth-gate-open">
   <main class="page" inert aria-hidden="true">
@@ -2405,7 +2405,7 @@
 
   <section class="auth-gate" id="authGate" data-state="checking" aria-label="ログインが必要です">
     <div class="auth-gate-card" role="dialog" aria-modal="true" aria-labelledby="authGateTitle" aria-describedby="authGateDescription" tabindex="-1">
-      <p class="auth-gate-kicker">NAGA DRILL</p>
+      <img class="auth-gate-logo" src="assets/min-kiru-header.png" alt="みん切る（みんなの何切る問題集）">
       <h2 id="authGateTitle">ログインして学習を始める</h2>
       <p id="authGateDescription">このアプリはログイン後に利用できます。Discordでログインすると、回答履歴・お気に入り・習熟度を携帯とパソコンで引き継げます。</p>
       <p class="auth-gate-return-note">今開いている問題集やURLは、ログイン後もそのまま再開できます。</p>
@@ -2480,13 +2480,13 @@
   </dialog>
 
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=211"></script>
-  <script src="drill-ux-v44.js?v=211"></script>
+  <script src="supabase-sync-v48.js?v=212"></script>
+  <script src="drill-ux-v44.js?v=212"></script>
   <script src="naga-generator-v44.js"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 211;
+    const APP_VERSION = 212;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -4124,6 +4124,7 @@
       const QUESTION_NOTICE_STORAGE_KEY_V66 = storageKey("question-notices-v1");
       const ANNOUNCEMENT_SEEN_STORAGE_KEY_V65 = storageKey("announcement-seen-v1");
       const APP_ANNOUNCEMENTS_V66 = [
+        { version: 212, date: "2026-08-31", publishedAt: "2026-08-31T02:00:00+09:00", title: "副露後の回答表示を整えました", body: "副露直後に回答したあとも、回答前と同じ手牌の並び・空きスロット・マスク範囲で表示するようにしました。ダイミンカンやアンカンを含む既存問題にも共通ルールを適用しています。" },
         { version: 211, date: "2026-08-31", publishedAt: "2026-08-31T01:12:31+09:00", title: "カスタムリアクションを追加できるようにしました", body: "設定から絵文字リアクションを追加できます。追加されたリアクションは、リアクション選択パネルの「カスタム」タブから他の利用者も使えます。定番リアクションの「黙る」は「ダマ」に変更しました。" },
         { version: 209, date: "2026-08-31", publishedAt: "2026-08-31T00:12:12+09:00", title: "リアクションを見本のアイコン表示に整えました", body: "リアクションを👍や💡などのアイコンと指定文言で表示し、立直は専用の立直棒アイコンで表現しました。" },
         { version: 208, date: "2026-08-30", publishedAt: "2026-08-30T23:45:37+09:00", title: "リアクション機能を追加しました", body: "問題全体とコメントに20種類のリアクションを付けられるようになりました。選択したリアクションの参加者はDiscordアイコンと人数で確認できます。" },
@@ -6616,11 +6617,10 @@
           : [...source];
       }
 
-      function displayHandSlotsV146(question = SCENE) {
-        // Keep the original 13-slot view only while the user is choosing the
-        // discard immediately after the call.  After confirmation, the
-        // ordinary post-call layout is restored.
-        if (state.revealed) return null;
+      function displayHandSlotsV212(question = SCENE) {
+        // Use the canonical call-slot resolver during both discard selection
+        // and the answer-confirmed view.  This preserves the original slot
+        // positions and the consumed-tile holes after a call.
         const generator = globalThis.NagaGeneratorV44;
         const slots = typeof generator?.displayConcealedHandSlots === "function"
           ? generator.displayConcealedHandSlots(question, sortHandV20)
@@ -6633,7 +6633,7 @@
       }
 
       function renderHandV16() {
-        const displaySlots = displayHandSlotsV146(SCENE);
+        const displaySlots = displayHandSlotsV212(SCENE);
         const displayHand = displaySlots
           ? displaySlots.filter(Boolean)
           : displayConcealedHandV143(SCENE);
@@ -7008,7 +7008,7 @@
       function selectTileV16(index) {
         if (!requireLoginForPlayV187()) return;
         if (SCENE.decisionType === "call") return;
-        const displaySlots = displayHandSlotsV146(SCENE);
+        const displaySlots = displayHandSlotsV212(SCENE);
         const tiles = displaySlots
           ? [...displaySlots, SCENE.draw]
           : [...sortHandV20(displayConcealedHandV143(SCENE)), SCENE.draw].filter(Boolean);
@@ -7088,9 +7088,10 @@
       }
 
       function handMaskMeldCountForDisplayV152(question) {
-        if (!state.revealed && isImmediateCallDiscardV132(question)) {
+        if (isImmediateCallDiscardV132(question)) {
           // Keep the mask width of the concealed area immediately before the
-          // current call: first=13 slots, second=10, third=7, fourth=4.
+          // current call in both the input and answer-confirmed views:
+          // first=13 slots, second=10, third=7, fourth=4.
           return Math.min(immediateCallPreviousMeldCountV152(question), 5);
         }
         return handMaskMeldCountV144(question);
@@ -7103,9 +7104,8 @@
 
       function syncImmediateCallLayoutV146(question = SCENE) {
         if (!isImmediateCallDiscardV132(question)) return;
-        const active = !state.revealed;
         const mask = handMaskFallbackV17(question);
-        sceneFrameV16.classList.toggle("is-immediate-call-discard", active);
+        sceneFrameV16.classList.toggle("is-immediate-call-discard", true);
         setHandMaskV17(mask);
         setHandLayoutV18(question, mask);
       }
@@ -7226,7 +7226,7 @@
         activeHandMaskV18 = mask;
         const frameWidth = sceneFrameV16.clientWidth || sceneImageV16.clientWidth;
         if (!frameWidth) return;
-        const displaySlots = displayHandSlotsV146(question);
+        const displaySlots = displayHandSlotsV212(question);
         const closedCount = displaySlots ? displaySlots.length : displayConcealedHandV143(question).length;
         const hasDraw = Boolean(question?.draw);
         const tileCount = closedCount + (hasDraw ? 1 : 0);

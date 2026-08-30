@@ -4011,6 +4011,16 @@ body.auth-gate-open {
   text-align: center;
 }
 
+.auth-gate-logo {
+  display: block;
+  width: min(100%, 300px);
+  height: auto;
+  margin: 0 auto 18px;
+  border: 1px solid rgba(225, 188, 116, .3);
+  border-radius: 8px;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, .24);
+}
+
 .auth-gate-kicker {
   margin: 0 0 12px;
   color: var(--ux-brown-gold-light, #e1bc74);
