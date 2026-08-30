@@ -396,6 +396,25 @@ async function setSharedCommentReaction(questionId: string, commentId: string, r
   if (error) throw error;
 }
 
+async function loadCustomReactions() {
+  const session = await currentSession();
+  if (!session?.user?.id) throw new Error("カスタムリアクションの利用にはDiscordログインが必要です。");
+  const { data, error } = await requireClient().rpc("list_custom_reactions");
+  if (error) throw error;
+  return data ?? [];
+}
+
+async function createCustomReaction(label: string, icon: string) {
+  const session = await currentSession();
+  if (!session?.user?.id) throw new Error("カスタムリアクションの追加にはDiscordログインが必要です。");
+  const { data, error } = await requireClient().rpc("create_custom_reaction", {
+    p_label: label,
+    p_icon: icon,
+  });
+  if (error) throw error;
+  return Array.isArray(data) ? data[0] ?? null : data;
+}
+
 function publicCommentAssetUrl(path: string) {
   const normalized = String(path ?? "").replace(/^\/+/, "");
   if (!normalized || !config.supabaseUrl) return "";
@@ -802,6 +821,8 @@ function buildApi() {
     loadSharedReactionSummary,
     setSharedQuestionReaction,
     setSharedCommentReaction,
+    loadCustomReactions,
+    createCustomReaction,
     publicCommentAssetUrl,
     uploadCommentAttachment,
     removeCommentAttachment,

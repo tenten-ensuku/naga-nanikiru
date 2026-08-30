@@ -16,11 +16,11 @@ const migration = read("supabase/migrations/20260830150000_shared_reactions_v208
 const reactionLabels = [
   "いいね！", "そーだね！", "ムズい", "良問だね～", "重要だね！", "うーん", "方針が重要",
   "間違えちゃった", "大差だね", "微差かな", "メモメモ", "セオリー", "基本序列", "鳴く",
-  "立直", "スルー", "黙る", "カン", "！", "？"
+  "立直", "スルー", "ダマ", "カン"
 ];
 
 test("V209 exposes the sample-style reaction icons and preserves the current-question hydration flow", () => {
-  assert.match(html, /const APP_VERSION = 210;/);
+  assert.match(html, /const APP_VERSION = 211;/);
   assert.match(html, /reactionPickerV208/);
   assert.match(html, /この問題へのリアクション/);
   assert.match(html, /data-reaction-add/);

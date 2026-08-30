@@ -6618,3 +6618,206 @@ body.auth-gate-open {
     font-size: 1.35em;
   }
 }
+
+/* V211: separate the curated set from shared custom reactions. */
+.reaction-picker-tabs-v211 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 4px;
+  margin-bottom: 9px;
+  padding: 3px;
+  background: rgba(0, 0, 0, .18);
+  border: 1px solid rgba(255, 255, 255, .12);
+  border-radius: 9px;
+}
+
+.reaction-picker-tab-v211 {
+  min-width: 0;
+  min-height: 31px;
+  padding: 5px 8px;
+  color: #a9cbd0;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  font-size: 11px;
+  font-weight: 850;
+}
+
+.reaction-picker-tab-v211:hover,
+.reaction-picker-tab-v211:focus-visible {
+  color: #f3ffff;
+  background: rgba(155, 232, 216, .12);
+  border-color: rgba(155, 232, 216, .5);
+  outline: none;
+}
+
+.reaction-picker-tab-v211.is-active {
+  color: #19251f;
+  background: linear-gradient(135deg, #fff0ab, #f1c457);
+  border-color: #ffe08a;
+}
+
+.reaction-picker-tab-v211 span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 17px;
+  margin-left: 2px;
+  padding: 1px 4px;
+  color: #eafefe;
+  background: rgba(0, 0, 0, .24);
+  border-radius: 999px;
+  font-size: 9px;
+}
+
+.reaction-picker-tab-v211.is-active span {
+  color: #6f4e1a;
+  background: rgba(255, 255, 255, .48);
+}
+
+.reaction-picker-option-v208.is-icon-only {
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
+  text-align: center;
+}
+
+.reaction-chip-toggle-v208.is-icon-only {
+  justify-content: center;
+  min-width: 34px;
+  padding-inline: 8px;
+}
+
+.reaction-picker-custom-note-v211,
+.reaction-picker-empty-v211 {
+  margin: 9px 2px 0;
+  color: #a9cbd0;
+  font-size: 10px;
+  line-height: 1.45;
+}
+
+.reaction-picker-empty-v211 {
+  grid-column: 1 / -1;
+  margin: 5px 2px;
+}
+
+.reaction-picker-settings-button-v211 {
+  width: 100%;
+  min-height: 34px;
+  margin-top: 8px;
+  padding: 6px 9px;
+  color: #17231d;
+  background: linear-gradient(135deg, #fff0ab, #f1c457);
+  border: 1px solid #ffe08a;
+  border-radius: 8px;
+  font-size: 10px;
+  font-weight: 900;
+}
+
+.reaction-picker-settings-button-v211:hover,
+.reaction-picker-settings-button-v211:focus-visible {
+  background: #fff5c8;
+  outline: 2px solid rgba(255, 224, 138, .3);
+  outline-offset: 1px;
+}
+
+@media (min-width: 801px) {
+  /* Four columns keep the curated eight reactions in the first two rows. */
+  .reaction-picker-options-v208 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 800px) {
+  .reaction-picker-tab-v211 {
+    min-height: 34px;
+    font-size: 11px;
+  }
+
+  .reaction-picker-settings-button-v211 {
+    min-height: 38px;
+    font-size: 11px;
+  }
+}
+
+/* V211: compact, readable custom-reaction management in settings. */
+.custom-reaction-settings-v211 {
+  min-width: 0;
+}
+
+.custom-reaction-input-grid-v211 {
+  display: grid;
+  grid-template-columns: minmax(90px, .7fr) minmax(0, 1.3fr);
+  gap: 8px;
+}
+
+.custom-reaction-form-v211 label {
+  min-width: 0;
+}
+
+.custom-reaction-form-v211 input {
+  width: 100%;
+  min-width: 0;
+}
+
+.custom-reaction-list-v211 {
+  display: grid;
+  gap: 5px;
+  margin-top: 10px;
+}
+
+.custom-reaction-row-v211 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  padding: 7px 8px;
+  color: #eafefe;
+  background: rgba(5, 30, 44, .72);
+  border: 1px solid rgba(155, 232, 216, .2);
+  border-radius: 8px;
+}
+
+.custom-reaction-preview-v211 {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 30px;
+  height: 30px;
+  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+  font-size: 20px;
+  line-height: 1;
+}
+
+.custom-reaction-row-copy-v211 {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.custom-reaction-row-copy-v211 strong,
+.custom-reaction-row-copy-v211 small {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.custom-reaction-row-copy-v211 strong {
+  font-size: 11px;
+}
+
+.custom-reaction-row-copy-v211 small,
+.custom-reaction-empty-v211 {
+  color: #a9cbd0;
+  font-size: 10px;
+  line-height: 1.45;
+}
+
+.custom-reaction-empty-v211 {
+  margin: 10px 0 0;
+}
+
+@media (max-width: 480px) {
+  .custom-reaction-input-grid-v211 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
