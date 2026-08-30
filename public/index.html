@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=207">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=207">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=207">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=208">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=208">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=208">
   <title>みん切る｜みんなの何切る問題集</title>
   <meta name="description" content="みん切るは、NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリです。">
   <meta name="theme-color" content="#06131e">
@@ -2163,7 +2163,7 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=207">
+  <link rel="stylesheet" href="ux-v159.css?v=208">
 </head>
 <body class="auth-gate-open">
   <main class="page" inert aria-hidden="true">
@@ -2319,6 +2319,13 @@
           <p class="comments-meta" id="commentsMeta"></p>
         </div>
       </div>
+      <section class="reaction-section-v208" id="questionReactionSection" aria-labelledby="questionReactionTitle" hidden>
+        <div class="reaction-section-heading-v208">
+          <h3 id="questionReactionTitle">この問題へのリアクション</h3>
+          <button class="reaction-add-button-v208" type="button" data-reaction-add data-reaction-scope="question" aria-expanded="false">＋リアクション</button>
+        </div>
+        <div class="reaction-chips-v208" id="questionReactionChips" aria-live="polite"></div>
+      </section>
       <div class="comments-scroll" id="commentsScroll" tabindex="0" aria-label="スレッド内のコメント一覧"></div>
       <form class="comment-form" id="commentForm" hidden>
         <label for="commentInput">コメントを追加</label>
@@ -2361,6 +2368,16 @@
       <button class="comment-image-viewer-close" id="commentImageViewerClose" type="button">閉じる</button>
       <img class="comment-image-viewer-image" id="commentImageViewerImage" alt="">
       <p class="comment-image-viewer-hint">画像の外側をタップするか、Escキーで閉じます</p>
+    </div>
+
+    <div class="reaction-picker-v208" id="reactionPickerV208" role="dialog" aria-modal="false" aria-labelledby="reactionPickerTitleV208" hidden>
+      <div class="reaction-popover-heading-v208"><strong id="reactionPickerTitleV208">リアクションを選択</strong><button class="reaction-popover-close-v208" id="reactionPickerCloseV208" type="button" aria-label="リアクション選択を閉じる">×</button></div>
+      <div class="reaction-picker-options-v208" id="reactionPickerOptionsV208"></div>
+    </div>
+
+    <div class="reaction-details-v208" id="reactionDetailsV208" role="dialog" aria-modal="false" aria-labelledby="reactionDetailsTitleV208" hidden>
+      <div class="reaction-popover-heading-v208"><strong id="reactionDetailsTitleV208">リアクションした人</strong><button class="reaction-popover-close-v208" id="reactionDetailsCloseV208" type="button" aria-label="参加者一覧を閉じる">×</button></div>
+      <div class="reaction-details-list-v208" id="reactionDetailsListV208"></div>
     </div>
 
     <div class="below-note">
@@ -2446,13 +2463,13 @@
   </dialog>
 
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=207"></script>
-  <script src="drill-ux-v44.js?v=207"></script>
+  <script src="supabase-sync-v48.js?v=208"></script>
+  <script src="drill-ux-v44.js?v=208"></script>
   <script src="naga-generator-v44.js"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 207;
+    const APP_VERSION = 208;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -2493,7 +2510,30 @@
     const COMMENT_MAX_ATTACHMENTS_V68 = 4;
     const COMMENT_MAX_IMAGE_BYTES_V68 = 5 * 1024 * 1024;
     const COMMENT_IMAGE_TYPES_V68 = new Set(["image/png", "image/jpeg", "image/webp", "image/gif"]);
-    const state = { selected: null, selectedIndex: null, callDecision: null, revealed: false, answerRecorded: false, answerAttemptId: null, sharedAttemptPromise: null, questionStartedAt: Date.now(), judgeModel: 2, riichi: false, commentComposerOpen: false, commentEditingId: null, commentAttachments: [], comments: THREAD_MESSAGES.map(message => ({ ...message, attachments: [...message.attachments] })) };
+    const REACTION_DEFINITIONS_V208 = Object.freeze([
+      Object.freeze({ key: "like", label: "いいね！", symbol: "★", tone: "gold" }),
+      Object.freeze({ key: "agree", label: "そーだね！", symbol: "✓", tone: "teal" }),
+      Object.freeze({ key: "difficult", label: "ムズい", symbol: "△", tone: "blue" }),
+      Object.freeze({ key: "good_question", label: "良問！", symbol: "◎", tone: "gold" }),
+      Object.freeze({ key: "important", label: "重要！", symbol: "!", tone: "gold" }),
+      Object.freeze({ key: "hmm", label: "うーん", symbol: "…", tone: "purple" }),
+      Object.freeze({ key: "strategy", label: "方針が重要", symbol: "◇", tone: "teal" }),
+      Object.freeze({ key: "mistake", label: "間違えちゃった", symbol: "×", tone: "red" }),
+      Object.freeze({ key: "big_difference", label: "大差っぽい", symbol: "⇄", tone: "blue" }),
+      Object.freeze({ key: "small_difference", label: "微差かな", symbol: "≈", tone: "purple" }),
+      Object.freeze({ key: "memo", label: "メモメモ", symbol: "▤", tone: "teal" }),
+      Object.freeze({ key: "theory", label: "セオリー", symbol: "◈", tone: "gold" }),
+      Object.freeze({ key: "basic_order", label: "基本序列", symbol: "▥", tone: "blue" }),
+      Object.freeze({ key: "call", label: "鳴く", symbol: "鳴", tone: "teal" }),
+      Object.freeze({ key: "riichi", label: "立直", symbol: "立", tone: "gold" }),
+      Object.freeze({ key: "pass", label: "スルー", symbol: "▶", tone: "blue" }),
+      Object.freeze({ key: "silent", label: "黙る", symbol: "◌", tone: "purple" }),
+      Object.freeze({ key: "kan", label: "カン", symbol: "カ", tone: "gold" }),
+      Object.freeze({ key: "exclaim", label: "！", symbol: "!", tone: "red" }),
+      Object.freeze({ key: "question", label: "？", symbol: "?", tone: "purple" })
+    ]);
+    const REACTION_DEFINITION_MAP_V208 = new Map(REACTION_DEFINITIONS_V208.map(definition => [definition.key, definition]));
+    const state = { selected: null, selectedIndex: null, callDecision: null, revealed: false, answerRecorded: false, answerAttemptId: null, sharedAttemptPromise: null, questionStartedAt: Date.now(), judgeModel: 2, riichi: false, commentComposerOpen: false, commentEditingId: null, commentAttachments: [], comments: THREAD_MESSAGES.map(message => ({ ...message, attachments: [...message.attachments] })), reactionEnabled: false, reactionShareSlug: "", reactionQuestionId: "", reactionSummary: { question: {}, comments: {} }, reactionPending: new Set() };
     let archiveActionStateV161 = { questionKey: "", phase: "idle" };
 
     function tileLabel(tile) {
@@ -2978,6 +3018,360 @@
       );
     }
 
+    function emptyReactionSummaryV208() {
+      return { question: {}, comments: {} };
+    }
+
+    function reactionCurrentUserIdV208() {
+      return String(window.nagaCurrentUserIdV75 || "").trim();
+    }
+
+    function reactionParticipantInitialV208(displayName) {
+      return [...String(displayName || "プレイヤー").trim()][0] || "?";
+    }
+
+    function normalizeReactionReactorsV208(value) {
+      let rows = value;
+      if (typeof rows === "string") {
+        try { rows = JSON.parse(rows); } catch { rows = []; }
+      }
+      if (!Array.isArray(rows)) return [];
+      const seen = new Set();
+      return rows.map((row, index) => {
+        const displayName = String(row?.displayName ?? row?.display_name ?? row?.name ?? "プレイヤー").trim() || "プレイヤー";
+        const rawUserId = String(row?.userId ?? row?.user_id ?? "").trim();
+        const userId = rawUserId || `unknown-${index}-${displayName}`;
+        return {
+          userId,
+          displayName,
+          avatarUrl: normalizeCommentAvatarUrlV196(row?.avatarUrl ?? row?.avatar_url ?? "")
+        };
+      }).filter(row => {
+        if (seen.has(row.userId)) return false;
+        seen.add(row.userId);
+        return true;
+      });
+    }
+
+    function normalizeReactionSummaryV208(rows) {
+      const summary = emptyReactionSummaryV208();
+      (Array.isArray(rows) ? rows : []).forEach(row => {
+        const scope = String(row?.scope || "").trim();
+        const targetId = String(row?.target_id ?? row?.targetId ?? "").trim();
+        const reactionKey = String(row?.reaction_key ?? row?.reactionKey ?? "").trim();
+        if (!(scope === "question" || scope === "comment") || !targetId || !REACTION_DEFINITION_MAP_V208.has(reactionKey)) return;
+        const normalized = {
+          scope,
+          targetId,
+          reactionKey,
+          reactionCount: Math.max(0, Number(row?.reaction_count ?? row?.reactionCount) || 0),
+          reactors: normalizeReactionReactorsV208(row?.reactors),
+          reactedByMe: Boolean(row?.reacted_by_me ?? row?.reactedByMe)
+        };
+        normalized.reactionCount = Math.max(normalized.reactionCount, normalized.reactors.length);
+        if (scope === "question") summary.question[reactionKey] = normalized;
+        else (summary.comments[targetId] ||= {})[reactionKey] = normalized;
+      });
+      return summary;
+    }
+
+    function reactionBucketV208(scope, targetId) {
+      const safeScope = String(scope || "");
+      const safeTargetId = String(targetId || "");
+      if (safeScope === "question") return state.reactionSummary.question || {};
+      return state.reactionSummary.comments?.[safeTargetId] || {};
+    }
+
+    function reactionTargetCanRenderV208(scope, targetId) {
+      if (!state.reactionEnabled || !state.reactionQuestionId) return false;
+      if (scope === "question") return String(targetId || "") === String(state.reactionQuestionId);
+      const value = String(targetId || "").trim();
+      return value.length > 0 && value.length <= 200 && !value.startsWith("local-");
+    }
+
+    function reactionParticipantAvatarMarkupV208(participant, { large = false } = {}) {
+      const displayName = escapeHtml(participant?.displayName || "プレイヤー");
+      const avatarUrl = normalizeCommentAvatarUrlV196(participant?.avatarUrl);
+      const className = large ? "reaction-chip-avatar-v208 reaction-details-avatar-v208" : "reaction-chip-avatar-v208";
+      if (avatarUrl) return `<img class="${className}" data-reaction-avatar src="${escapeHtml(avatarUrl)}" alt="${displayName}のDiscordアイコン" loading="lazy" decoding="async" referrerpolicy="no-referrer">`;
+      return `<span class="reaction-chip-avatar-fallback-v208${large ? " reaction-details-avatar-v208" : ""}" aria-hidden="true">${escapeHtml(reactionParticipantInitialV208(participant?.displayName))}</span>`;
+    }
+
+    function renderReactionChipsV208(scope, targetId) {
+      if (!reactionTargetCanRenderV208(scope, targetId)) return "";
+      const bucket = reactionBucketV208(scope, targetId);
+      return REACTION_DEFINITIONS_V208.filter(definition => Number(bucket[definition.key]?.reactionCount || 0) > 0).map(definition => {
+        const row = bucket[definition.key];
+        const count = Math.max(0, Number(row.reactionCount) || 0);
+        const reactedByMe = Boolean(row.reactedByMe);
+        const participants = Array.isArray(row.reactors) ? row.reactors : [];
+        const avatars = participants.slice(0, 3).map(participant => reactionParticipantAvatarMarkupV208(participant)).join("");
+        const label = `${definition.label} ${count}人${reactedByMe ? "（あなたが選択中）" : ""}`;
+        const safeTargetId = escapeHtml(String(targetId));
+        return `<span class="reaction-chip-group-v208 reaction-tone-${definition.tone}-v208"><button class="reaction-chip-toggle-v208${reactedByMe ? " is-active" : ""}" type="button" data-reaction-toggle data-reaction-scope="${scope}" data-reaction-target-id="${safeTargetId}" data-reaction-key="${definition.key}" aria-pressed="${String(reactedByMe)}" aria-label="${escapeHtml(label)}"><span class="reaction-chip-symbol-v208" aria-hidden="true">${definition.symbol}</span><span class="reaction-chip-label-v208">${definition.label}</span></button><button class="reaction-people-button-v208" type="button" data-reaction-details data-reaction-scope="${scope}" data-reaction-target-id="${safeTargetId}" data-reaction-key="${definition.key}" aria-label="${escapeHtml(definition.label)}にリアクションした人を表示"><span class="reaction-chip-avatar-stack-v208" aria-hidden="true">${avatars}</span><span class="reaction-chip-count-v208">${count}</span></button></span>`;
+      }).join("");
+    }
+
+    function renderReactionBarV208(scope, targetId) {
+      if (!reactionTargetCanRenderV208(scope, targetId)) return "";
+      const safeTargetId = escapeHtml(String(targetId));
+      return `<div class="reaction-entry-bar-v208" data-reaction-bar data-reaction-scope="${scope}" data-reaction-target-id="${safeTargetId}">${renderReactionChipsV208(scope, targetId)}<button class="reaction-add-button-v208" type="button" data-reaction-add data-reaction-scope="${scope}" data-reaction-target-id="${safeTargetId}" aria-expanded="false">＋リアクション</button></div>`;
+    }
+
+    function bindReactionAvatarFallbackV208(root) {
+      root?.querySelectorAll("img[data-reaction-avatar]").forEach(image => image.addEventListener("error", () => {
+        const fallback = document.createElement("span");
+        fallback.className = "reaction-chip-avatar-fallback-v208";
+        fallback.setAttribute("aria-hidden", "true");
+        fallback.textContent = reactionParticipantInitialV208(image.alt.replace(/のDiscordアイコン$/, ""));
+        image.replaceWith(fallback);
+      }, { once: true }));
+    }
+
+    function renderQuestionReactionSectionV208() {
+      const section = document.getElementById("questionReactionSection");
+      const chips = document.getElementById("questionReactionChips");
+      const addButton = section?.querySelector("[data-reaction-add]");
+      const enabled = reactionTargetCanRenderV208("question", state.reactionQuestionId);
+      if (!section || !chips || !addButton) return;
+      section.hidden = !enabled;
+      if (!enabled) return;
+      addButton.dataset.reactionTargetId = String(state.reactionQuestionId);
+      addButton.setAttribute("aria-expanded", "false");
+      chips.innerHTML = renderReactionChipsV208("question", state.reactionQuestionId);
+      bindReactionAvatarFallbackV208(section);
+    }
+
+    function reactionPopoverPositionV208(popover, anchor) {
+      if (!popover || !anchor) return;
+      const rect = anchor.getBoundingClientRect();
+      const margin = 12;
+      const width = Math.min(popover.offsetWidth || 430, Math.max(280, window.innerWidth - margin * 2));
+      const height = popover.offsetHeight || 280;
+      let left = Math.min(Math.max(margin, rect.left), Math.max(margin, window.innerWidth - width - margin));
+      let top = rect.bottom + 8;
+      if (top + height > window.innerHeight - margin && rect.top - height - 8 >= margin) top = rect.top - height - 8;
+      top = Math.min(Math.max(margin, top), Math.max(margin, window.innerHeight - height - margin));
+      popover.style.left = `${Math.round(left)}px`;
+      popover.style.top = `${Math.round(top)}px`;
+    }
+
+    let reactionPickerTargetV208 = null;
+    let reactionDetailsTargetV208 = null;
+    let reactionSummaryRequestV208 = 0;
+
+    function closeReactionPickerV208({ focus = false } = {}) {
+      const picker = document.getElementById("reactionPickerV208");
+      const opener = reactionPickerTargetV208?.opener;
+      if (picker) picker.hidden = true;
+      if (opener?.isConnected) {
+        opener.setAttribute("aria-expanded", "false");
+        if (focus) opener.focus();
+      }
+      reactionPickerTargetV208 = null;
+    }
+
+    function closeReactionDetailsV208({ focus = false } = {}) {
+      const details = document.getElementById("reactionDetailsV208");
+      const opener = reactionDetailsTargetV208?.opener;
+      if (details) details.hidden = true;
+      if (opener?.isConnected) {
+        if (focus) opener.focus();
+      }
+      reactionDetailsTargetV208 = null;
+    }
+
+    function closeReactionPopoversV208(options = {}) {
+      closeReactionPickerV208(options);
+      closeReactionDetailsV208(options);
+    }
+
+    function renderReactionPickerOptionsV208() {
+      const options = document.getElementById("reactionPickerOptionsV208");
+      const target = reactionPickerTargetV208;
+      if (!options || !target) return;
+      const bucket = reactionBucketV208(target.scope, target.targetId);
+      options.innerHTML = REACTION_DEFINITIONS_V208.map(definition => {
+        const selected = Boolean(bucket[definition.key]?.reactedByMe);
+        return `<button class="reaction-picker-option-v208${selected ? " is-selected" : ""}" type="button" data-reaction-picker-key="${definition.key}" aria-pressed="${String(selected)}"><span class="reaction-picker-symbol-v208" aria-hidden="true">${definition.symbol}</span><span class="reaction-picker-label-v208">${definition.label}</span></button>`;
+      }).join("");
+    }
+
+    function openReactionPickerV208(opener) {
+      const scope = String(opener?.dataset.reactionScope || "");
+      const targetId = String(opener?.dataset.reactionTargetId || "");
+      if (!opener || !reactionTargetCanRenderV208(scope, targetId)) return;
+      closeReactionDetailsV208();
+      closeReactionPickerV208();
+      reactionPickerTargetV208 = { scope, targetId, opener };
+      const picker = document.getElementById("reactionPickerV208");
+      if (!picker) return;
+      renderReactionPickerOptionsV208();
+      picker.hidden = false;
+      opener.setAttribute("aria-expanded", "true");
+      reactionPopoverPositionV208(picker, opener);
+    }
+
+    function openReactionDetailsV208(opener) {
+      const scope = String(opener?.dataset.reactionScope || "");
+      const targetId = String(opener?.dataset.reactionTargetId || "");
+      const reactionKey = String(opener?.dataset.reactionKey || "");
+      const definition = REACTION_DEFINITION_MAP_V208.get(reactionKey);
+      const row = reactionBucketV208(scope, targetId)[reactionKey];
+      if (!opener || !definition || !row || !reactionTargetCanRenderV208(scope, targetId)) return;
+      closeReactionPickerV208();
+      closeReactionDetailsV208();
+      reactionDetailsTargetV208 = { scope, targetId, reactionKey, opener };
+      const details = document.getElementById("reactionDetailsV208");
+      const title = document.getElementById("reactionDetailsTitleV208");
+      const list = document.getElementById("reactionDetailsListV208");
+      if (!details || !title || !list) return;
+      title.textContent = `${definition.label}（${row.reactionCount}人）`;
+      const participants = Array.isArray(row.reactors) ? row.reactors : [];
+      list.innerHTML = participants.length
+        ? participants.map(participant => `<div class="reaction-details-person-v208">${reactionParticipantAvatarMarkupV208(participant, { large: true })}<span class="reaction-details-person-name-v208">${escapeHtml(participant.displayName)}</span></div>`).join("")
+        : `<p class="reaction-details-empty-v208">参加者情報はありません。</p>`;
+      details.hidden = false;
+      reactionPopoverPositionV208(details, opener);
+      bindReactionAvatarFallbackV208(details);
+    }
+
+    function updateOptimisticReactionV208(scope, targetId, reactionKey, active) {
+      const currentUserId = reactionCurrentUserIdV208();
+      if (!currentUserId) return;
+      const bucket = scope === "question"
+        ? state.reactionSummary.question
+        : (state.reactionSummary.comments[targetId] ||= {});
+      const previous = bucket[reactionKey];
+      const participants = normalizeReactionReactorsV208(previous?.reactors || []);
+      const currentIndex = participants.findIndex(participant => participant.userId === currentUserId);
+      const currentParticipant = {
+        userId: currentUserId,
+        displayName: String(window.nagaCurrentUserDisplayNameV75 || "プレイヤー").trim() || "プレイヤー",
+        avatarUrl: normalizeCommentAvatarUrlV196(window.nagaCurrentUserAvatarUrlV198)
+      };
+      if (active && currentIndex < 0) participants.push(currentParticipant);
+      if (!active && currentIndex >= 0) participants.splice(currentIndex, 1);
+      const count = Math.max(0, Number(previous?.reactionCount || 0) + (active ? (currentIndex < 0 ? 1 : 0) : (currentIndex >= 0 ? -1 : 0)));
+      if (!count) delete bucket[reactionKey];
+      else bucket[reactionKey] = {
+        scope,
+        targetId,
+        reactionKey,
+        reactionCount: count,
+        reactors: participants,
+        reactedByMe: active
+      };
+    }
+
+    function reactionContextIsCurrentV208(shareSlug, questionId) {
+      return state.reactionEnabled
+        && String(state.reactionShareSlug) === String(shareSlug)
+        && String(state.reactionQuestionId) === String(questionId);
+    }
+
+    async function refreshReactionSummaryV208({ silent = true } = {}) {
+      const shareSlug = String(state.reactionShareSlug || "");
+      const questionId = String(state.reactionQuestionId || "");
+      if (!state.reactionEnabled || !shareSlug || !questionId || typeof window.NagaSupabase?.loadSharedReactionSummary !== "function") return false;
+      const requestId = ++reactionSummaryRequestV208;
+      try {
+        const rows = await window.NagaSupabase.loadSharedReactionSummary(shareSlug, questionId);
+        if (requestId !== reactionSummaryRequestV208 || !reactionContextIsCurrentV208(shareSlug, questionId)) return false;
+        state.reactionSummary = normalizeReactionSummaryV208(rows);
+        renderComments();
+        return true;
+      } catch (error) {
+        if (!silent) setCommentFormStatusV68(error?.message || "リアクションを読み込めませんでした。", true);
+        console.warn("リアクション集計を読み込めませんでした", error);
+        return false;
+      }
+    }
+
+    async function toggleReactionV208(scope, targetId, reactionKey) {
+      const definition = REACTION_DEFINITION_MAP_V208.get(reactionKey);
+      const userId = reactionCurrentUserIdV208();
+      if (!definition || !userId || !reactionTargetCanRenderV208(scope, targetId)) return;
+      const pendingKey = `${scope}:${targetId}:${reactionKey}`;
+      if (state.reactionPending.has(pendingKey)) return;
+      const bucket = reactionBucketV208(scope, targetId);
+      const active = !Boolean(bucket[reactionKey]?.reactedByMe);
+      const snapshot = JSON.parse(JSON.stringify(state.reactionSummary));
+      state.reactionPending.add(pendingKey);
+      updateOptimisticReactionV208(scope, String(targetId), reactionKey, active);
+      renderComments();
+      const shareSlug = String(state.reactionShareSlug);
+      const questionId = String(state.reactionQuestionId);
+      try {
+        if (scope === "question") {
+          await window.NagaSupabase.setSharedQuestionReaction(String(targetId), reactionKey, active);
+        } else {
+          await window.NagaSupabase.setSharedCommentReaction(questionId, String(targetId), reactionKey, active);
+        }
+        await refreshReactionSummaryV208();
+      } catch (error) {
+        if (reactionContextIsCurrentV208(shareSlug, questionId)) {
+          state.reactionSummary = snapshot;
+          renderComments();
+        }
+        setCommentFormStatusV68(error?.message || `${definition.label}を保存できませんでした。`, true);
+      } finally {
+        state.reactionPending.delete(pendingKey);
+      }
+    }
+
+    function initReactionUiV208() {
+      document.addEventListener("click", event => {
+        const target = event.target instanceof Element ? event.target : null;
+        if (!target) return;
+        const pickerOption = target.closest("[data-reaction-picker-key]");
+        if (pickerOption && reactionPickerTargetV208) {
+          const { scope, targetId } = reactionPickerTargetV208;
+          const key = String(pickerOption.dataset.reactionPickerKey || "");
+          closeReactionPickerV208();
+          void toggleReactionV208(scope, targetId, key);
+          return;
+        }
+        const addButton = target.closest("[data-reaction-add]");
+        if (addButton) {
+          event.preventDefault();
+          openReactionPickerV208(addButton);
+          return;
+        }
+        const toggleButton = target.closest("[data-reaction-toggle]");
+        if (toggleButton) {
+          event.preventDefault();
+          void toggleReactionV208(toggleButton.dataset.reactionScope, toggleButton.dataset.reactionTargetId, toggleButton.dataset.reactionKey);
+          return;
+        }
+        const detailsButton = target.closest("[data-reaction-details]");
+        if (detailsButton) {
+          event.preventDefault();
+          openReactionDetailsV208(detailsButton);
+          return;
+        }
+        if (!target.closest("#reactionPickerV208") && !target.closest("#reactionDetailsV208")) closeReactionPopoversV208();
+      });
+      document.getElementById("reactionPickerCloseV208")?.addEventListener("click", () => closeReactionPickerV208({ focus: true }));
+      document.getElementById("reactionDetailsCloseV208")?.addEventListener("click", () => closeReactionDetailsV208({ focus: true }));
+      document.addEventListener("keydown", event => {
+        if (event.key === "Escape") closeReactionPopoversV208({ focus: true });
+      });
+      window.addEventListener("resize", () => {
+        if (reactionPickerTargetV208) reactionPopoverPositionV208(document.getElementById("reactionPickerV208"), reactionPickerTargetV208.opener);
+        if (reactionDetailsTargetV208) reactionPopoverPositionV208(document.getElementById("reactionDetailsV208"), reactionDetailsTargetV208.opener);
+      }, { passive: true });
+    }
+
+    function setReactionContextV208(shareSlug = "", questionId = "", enabled = false) {
+      reactionSummaryRequestV208 += 1;
+      closeReactionPopoversV208();
+      state.reactionShareSlug = String(shareSlug || "");
+      state.reactionQuestionId = String(questionId || "");
+      state.reactionEnabled = Boolean(enabled && state.reactionShareSlug && state.reactionQuestionId);
+      state.reactionSummary = emptyReactionSummaryV208();
+    }
+
     function mergeCommentGroupsV65(messages) {
       return messages.reduce((groups, message) => {
         const author = String(message.author || "不明").trim() || "不明";
@@ -3019,11 +3413,13 @@
 
     function renderCommentEntryV65(message) {
       const editingClass = state.commentEditingId === message.id ? " is-editing" : "";
-      return `<div class="comment-entry${editingClass}" data-comment-id="${escapeHtml(message.id)}"><div class="comment-card-meta"><time class="comment-time" datetime="${escapeHtml(message.createdAt)}">${formatCommentTime(message.createdAt)}</time>${commentActionMarkupV75(message)}</div>${message.content ? `<div class="comment-body">${formatCommentContent(message.content, message.embeds)}</div>` : ""}${renderCommentEmbedPlaceholdersV96(message)}${(message.attachments || []).map(attachment => `<button class="comment-attachment-button" type="button" data-comment-image-src="${escapeHtml(attachment.src)}" data-comment-image-alt="${escapeHtml(attachment.alt)}" aria-label="${escapeHtml(attachment.alt)}を拡大"><img class="comment-attachment" src="${escapeHtml(attachment.src)}" alt="${escapeHtml(attachment.alt)}" loading="lazy"></button>`).join("")}</div>`;
+      const commentId = String(message.id || "");
+      return `<div class="comment-entry${editingClass}" data-comment-id="${escapeHtml(commentId)}"><div class="comment-card-meta"><time class="comment-time" datetime="${escapeHtml(message.createdAt)}">${formatCommentTime(message.createdAt)}</time>${commentActionMarkupV75(message)}</div>${message.content ? `<div class="comment-body">${formatCommentContent(message.content, message.embeds)}</div>` : ""}${renderCommentEmbedPlaceholdersV96(message)}${(message.attachments || []).map(attachment => `<button class="comment-attachment-button" type="button" data-comment-image-src="${escapeHtml(attachment.src)}" data-comment-image-alt="${escapeHtml(attachment.alt)}" aria-label="${escapeHtml(attachment.alt)}を拡大"><img class="comment-attachment" src="${escapeHtml(attachment.src)}" alt="${escapeHtml(attachment.alt)}" loading="lazy"></button>`).join("")}${renderReactionBarV208("comment", commentId)}</div>`;
     }
 
     function renderComments({ scrollToBottom = false } = {}) {
       const list = document.getElementById("commentsScroll");
+      renderQuestionReactionSectionV208();
       const messages = state.comments.filter(message => message.showInComments !== false && (message.content || message.attachments?.length || message.embeds?.length));
       const groups = mergeCommentGroupsV65(messages);
       list.innerHTML = groups.map(group => {
@@ -3042,6 +3438,7 @@
         }, { once: true });
       });
       hydrateCommentYoutubeCardsV96(list);
+      bindReactionAvatarFallbackV208(list);
       document.getElementById("commentsMeta").textContent = `${messages.length}件の投稿・${groups.length}人の発言（連続投稿は統合表示）`;
       if (scrollToBottom) list.scrollTop = list.scrollHeight;
     }
@@ -3325,6 +3722,7 @@
       document.getElementById("commentForm").addEventListener("submit", submitComment);
       initCommentComposerV68();
       initCommentImageViewer();
+      initReactionUiV208();
       document.getElementById("threadLink").href = THREAD_URL;
       renderComments();
       renderHand();
@@ -3599,6 +3997,7 @@
       const QUESTION_NOTICE_STORAGE_KEY_V66 = storageKey("question-notices-v1");
       const ANNOUNCEMENT_SEEN_STORAGE_KEY_V65 = storageKey("announcement-seen-v1");
       const APP_ANNOUNCEMENTS_V66 = [
+        { version: 208, date: "2026-08-30", publishedAt: "2026-08-30T23:45:37+09:00", title: "リアクション機能を追加しました", body: "問題全体とコメントに20種類のリアクションを付けられるようになりました。選択したリアクションの参加者はDiscordアイコンと人数で確認できます。" },
         { version: 207, date: "2026-08-30", publishedAt: "2026-08-30T22:00:00+09:00", title: "ヘッダーを「みん切る」ロゴに変更しました", body: "ご指定の「みん切る／みんなの何切る問題集」ロゴをヘッダーに採用しました。更新・通知・ログイン操作はこれまでどおり利用できます。" },
         { version: 206, date: "2026-08-30", publishedAt: "2026-08-30T21:12:42+09:00", title: "問題集カードの表示崩れを直しました", body: "PCの問題集カードで、問題集名・変更操作・矢印が重ならないよう表示領域を分けました。狭い画面でもカードの内容を読みやすく整理しています。" },
         { version: 205, date: "2026-08-30", publishedAt: "2026-08-30T20:46:56+09:00", title: "PC版ヘッダーの重なりを整理しました", body: "PCではブランド情報と更新・通知・ログアウトを分けて配置し、左上の要素が重ならないようにしました。スマホの表示と学習機能はこれまでどおりです。" },
@@ -6851,6 +7250,7 @@
         state.commentComposerOpen = false;
         state.commentEditingId = null;
         document.getElementById("commentInput").value = "";
+        setReactionContextV208();
         const breadcrumb = document.getElementById("questionBreadcrumb");
         const pageTitle = document.getElementById("questionPageTitle");
         if (breadcrumb) {
@@ -9236,10 +9636,28 @@
       }
 
       async function hydrateSharedCommentsV46(question) {
-        if (!sharedCollectionV46 || !question?.serverQuestionId) return;
+        if (!sharedCollectionV46 || !question?.serverQuestionId) {
+          setReactionContextV208();
+          return;
+        }
+        const shareSlug = String(sharedCollectionV46.share_slug || "");
+        const questionId = String(question.serverQuestionId || "");
+        const canLoadReactions = Boolean(
+          supabaseSessionV46?.user?.id
+          && typeof window.NagaSupabase?.loadSharedReactionSummary === "function"
+          && typeof window.NagaSupabase?.setSharedQuestionReaction === "function"
+          && typeof window.NagaSupabase?.setSharedCommentReaction === "function"
+        );
+        setReactionContextV208(shareSlug, questionId, false);
+        if (canLoadReactions) window.nagaCurrentUserIdV75 ||= String(supabaseSessionV46.user.id);
         try {
-          const serverComments = await window.NagaSupabase.loadSharedComments(sharedCollectionV46.share_slug, question.serverQuestionId);
+          const [commentsResult, reactionsResult] = await Promise.allSettled([
+            window.NagaSupabase.loadSharedComments(shareSlug, questionId),
+            canLoadReactions ? window.NagaSupabase.loadSharedReactionSummary(shareSlug, questionId) : Promise.resolve([])
+          ]);
           if (question !== questionsV16[currentQuestionIndexV16]) return;
+          if (commentsResult.status === "rejected") throw commentsResult.reason;
+          const serverComments = Array.isArray(commentsResult.value) ? commentsResult.value : [];
           const converted = serverComments.map(comment => ({
             id: comment.id,
             author: comment.author_name,
@@ -9257,6 +9675,12 @@
           }));
           const base = (SCENE.comments || []).map(message => ({ ...message, attachments: [...(message.attachments || [])] }));
           state.comments = [...base, ...converted];
+          if (canLoadReactions && reactionsResult.status === "fulfilled") {
+            state.reactionEnabled = true;
+            state.reactionSummary = normalizeReactionSummaryV208(reactionsResult.value);
+          } else if (canLoadReactions) {
+            console.warn("リアクション集計を読み込めませんでした", reactionsResult.reason);
+          }
           renderComments();
           markQuestionCommentsReadV65(question.serverQuestionId);
         } catch (error) {

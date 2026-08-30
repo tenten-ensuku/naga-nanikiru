@@ -368,6 +368,34 @@ async function loadSharedComments(shareSlug: string, questionId?: string | null)
   return data ?? [];
 }
 
+async function loadSharedReactionSummary(shareSlug: string, questionId: string) {
+  const { data, error } = await requireClient().rpc("get_shared_reaction_summary", {
+    p_share_slug: shareSlug,
+    p_question_id: questionId,
+  });
+  if (error) throw error;
+  return data ?? [];
+}
+
+async function setSharedQuestionReaction(questionId: string, reactionKey: string, active: boolean) {
+  const { error } = await requireClient().rpc("set_shared_question_reaction", {
+    p_question_id: questionId,
+    p_reaction_key: reactionKey,
+    p_active: Boolean(active),
+  });
+  if (error) throw error;
+}
+
+async function setSharedCommentReaction(questionId: string, commentId: string, reactionKey: string, active: boolean) {
+  const { error } = await requireClient().rpc("set_shared_comment_reaction", {
+    p_question_id: questionId,
+    p_comment_id: commentId,
+    p_reaction_key: reactionKey,
+    p_active: Boolean(active),
+  });
+  if (error) throw error;
+}
+
 function publicCommentAssetUrl(path: string) {
   const normalized = String(path ?? "").replace(/^\/+/, "");
   if (!normalized || !config.supabaseUrl) return "";
@@ -771,6 +799,9 @@ function buildApi() {
     loadCollectionNotifications,
     markCollectionNotificationsRead,
     loadSharedComments,
+    loadSharedReactionSummary,
+    setSharedQuestionReaction,
+    setSharedCommentReaction,
     publicCommentAssetUrl,
     uploadCommentAttachment,
     removeCommentAttachment,

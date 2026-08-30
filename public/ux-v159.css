@@ -6176,3 +6176,391 @@ body.auth-gate-open {
     height: 44px;
   }
 }
+
+/* V208: compact shared reactions for the current question and each comment. */
+.reaction-section-v208 {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+  padding: 7px 0 3px;
+  border-top: 1px solid rgba(155, 232, 216, .16);
+}
+
+.reaction-section-heading-v208 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-width: 0;
+}
+
+.reaction-section-heading-v208 h3 {
+  min-width: 0;
+  margin: 0;
+  color: #dffbfb;
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.reaction-add-button-v208,
+.reaction-people-button-v208,
+.reaction-popover-close-v208 {
+  border: 1px solid rgba(155, 232, 216, .46);
+  border-radius: 999px;
+  color: #eafefe;
+  background: rgba(12, 62, 82, .74);
+  font-size: 10px;
+  font-weight: 850;
+}
+
+.reaction-add-button-v208 {
+  flex: 0 0 auto;
+  min-height: 30px;
+  padding: 5px 10px;
+}
+
+.reaction-add-button-v208:hover,
+.reaction-add-button-v208:focus-visible,
+.reaction-people-button-v208:hover,
+.reaction-people-button-v208:focus-visible {
+  color: #10211e;
+  background: #bde7e0;
+  border-color: #d6fff5;
+  outline: 2px solid rgba(155, 232, 216, .22);
+  outline-offset: 1px;
+}
+
+.reaction-chips-v208 {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 5px;
+  min-width: 0;
+}
+
+.reaction-chips-v208:empty::before {
+  content: "まだリアクションはありません";
+  color: var(--muted);
+  font-size: 9px;
+}
+
+.reaction-chip-group-v208 {
+  display: inline-flex;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.reaction-chip-toggle-v208 {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+  min-height: 30px;
+  max-width: min(100%, 220px);
+  padding: 4px 7px;
+  overflow: hidden;
+  color: #dffbfb;
+  background: rgba(4, 27, 42, .82);
+  border: 1px solid rgba(255, 255, 255, .17);
+  border-right: 0;
+  border-radius: 999px 0 0 999px;
+  font-size: 10px;
+  font-weight: 800;
+  line-height: 1.2;
+  text-align: left;
+}
+
+.reaction-chip-toggle-v208:hover,
+.reaction-chip-toggle-v208:focus-visible {
+  background: #164862;
+  border-color: rgba(155, 232, 216, .78);
+  outline: 2px solid rgba(155, 232, 216, .2);
+  outline-offset: 1px;
+}
+
+.reaction-chip-toggle-v208.is-active {
+  color: #16211e;
+  background: linear-gradient(135deg, #d6fff5, #9be8d8);
+  border-color: #d6fff5;
+}
+
+.reaction-chip-toggle-v208.is-active:hover,
+.reaction-chip-toggle-v208.is-active:focus-visible {
+  background: #eaffff;
+}
+
+.reaction-chip-symbol-v208 {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 16px;
+  color: #f1c457;
+  font-size: 13px;
+  font-weight: 950;
+}
+
+.reaction-chip-toggle-v208.is-active .reaction-chip-symbol-v208 {
+  color: #1b6c67;
+}
+
+.reaction-chip-label-v208 {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.reaction-people-button-v208 {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  min-height: 30px;
+  margin-left: -1px;
+  padding: 3px 7px 3px 4px;
+  border-left: 1px solid rgba(255, 255, 255, .18);
+  border-radius: 0 999px 999px 0;
+  white-space: nowrap;
+}
+
+.reaction-chip-toggle-v208.is-active + .reaction-people-button-v208 {
+  color: #16211e;
+  background: linear-gradient(135deg, #bde7e0, #83d8ce);
+  border-color: #d6fff5;
+}
+
+.reaction-chip-avatar-stack-v208 {
+  display: inline-flex;
+  align-items: center;
+  padding-left: 2px;
+}
+
+.reaction-chip-avatar-v208,
+.reaction-chip-avatar-fallback-v208 {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  margin-left: -4px;
+  overflow: hidden;
+  color: #eafefe;
+  background: #21536b;
+  border: 1px solid #a9e9e2;
+  border-radius: 50%;
+  font-size: 8px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.reaction-chip-avatar-v208:first-child,
+.reaction-chip-avatar-fallback-v208:first-child {
+  margin-left: 0;
+}
+
+.reaction-chip-avatar-v208 {
+  object-fit: cover;
+}
+
+.reaction-chip-count-v208 {
+  min-width: 12px;
+  color: #dffbfb;
+  font-size: 10px;
+  font-weight: 900;
+  text-align: center;
+}
+
+.reaction-chip-toggle-v208.is-active + .reaction-people-button-v208 .reaction-chip-count-v208 {
+  color: #163f42;
+}
+
+.reaction-entry-bar-v208 {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 5px;
+  min-width: 0;
+  margin-top: 7px;
+}
+
+.reaction-entry-bar-v208 .reaction-add-button-v208 {
+  min-height: 27px;
+  padding: 4px 8px;
+}
+
+.reaction-picker-v208,
+.reaction-details-v208 {
+  position: fixed;
+  z-index: 80;
+  width: min(430px, calc(100vw - 24px));
+  max-height: min(72vh, 580px);
+  overflow: auto;
+  padding: 11px;
+  color: var(--ink);
+  background: linear-gradient(145deg, rgba(12, 49, 68, .99), rgba(5, 23, 37, .99));
+  border: 1px solid rgba(155, 232, 216, .68);
+  border-radius: 12px;
+  box-shadow: 0 18px 55px rgba(0, 0, 0, .55);
+}
+
+.reaction-details-v208 {
+  z-index: 81;
+  width: min(340px, calc(100vw - 24px));
+}
+
+.reaction-picker-v208[hidden],
+.reaction-details-v208[hidden] {
+  display: none;
+}
+
+.reaction-popover-heading-v208 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 9px;
+}
+
+.reaction-popover-heading-v208 strong {
+  color: #fff7d6;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.reaction-popover-close-v208 {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  min-height: 28px;
+  padding: 2px;
+  border-radius: 7px;
+  font-size: 17px;
+  line-height: 1;
+}
+
+.reaction-popover-close-v208:hover,
+.reaction-popover-close-v208:focus-visible {
+  color: #10211e;
+  background: #bde7e0;
+  outline: 2px solid rgba(155, 232, 216, .25);
+  outline-offset: 1px;
+}
+
+.reaction-picker-options-v208 {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 6px;
+  min-width: 0;
+}
+
+.reaction-picker-option-v208 {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 5px;
+  min-width: 0;
+  min-height: 46px;
+  padding: 7px 6px;
+  color: #eafefe;
+  background: rgba(0, 0, 0, .2);
+  border: 1px solid rgba(255, 255, 255, .15);
+  border-radius: 8px;
+  font-size: 10px;
+  font-weight: 800;
+  line-height: 1.25;
+  text-align: left;
+}
+
+.reaction-picker-option-v208:hover,
+.reaction-picker-option-v208:focus-visible {
+  background: #164862;
+  border-color: rgba(155, 232, 216, .86);
+  outline: 2px solid rgba(155, 232, 216, .2);
+  outline-offset: 1px;
+}
+
+.reaction-picker-option-v208.is-selected {
+  color: #17231d;
+  background: linear-gradient(135deg, #fff0ab, #f1c457);
+  border-color: #ffe08a;
+}
+
+.reaction-picker-symbol-v208 {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  color: #f1c457;
+  font-size: 15px;
+  font-weight: 950;
+}
+
+.reaction-picker-option-v208.is-selected .reaction-picker-symbol-v208 {
+  color: #6f4e1a;
+}
+
+.reaction-picker-label-v208 {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.reaction-details-list-v208 {
+  display: grid;
+  gap: 5px;
+}
+
+.reaction-details-person-v208 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  padding: 6px 7px;
+  color: #eafefe;
+  background: rgba(0, 0, 0, .2);
+  border: 1px solid rgba(255, 255, 255, .12);
+  border-radius: 7px;
+}
+
+.reaction-details-person-v208 .reaction-chip-avatar-v208,
+.reaction-details-person-v208 .reaction-chip-avatar-fallback-v208 {
+  flex: 0 0 auto;
+  width: 28px;
+  height: 28px;
+  margin-left: 0;
+  font-size: 11px;
+}
+
+.reaction-details-person-name-v208 {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.reaction-details-empty-v208 {
+  margin: 0;
+  color: var(--muted);
+  font-size: 10px;
+}
+
+@media (min-width: 801px) and (max-width: 1100px) {
+  .reaction-picker-options-v208 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 800px) {
+  .reaction-picker-options-v208 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .reaction-picker-option-v208 {
+    min-height: 48px;
+    font-size: 11px;
+  }
+
+  .reaction-chip-toggle-v208 {
+    max-width: min(100%, 190px);
+  }
+}
