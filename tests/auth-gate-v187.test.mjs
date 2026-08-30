@@ -7,7 +7,7 @@ const indexUrl = new URL("../public/index.html", import.meta.url);
 test("V187 removes local-history import and requires login before study", async () => {
   const html = await readFile(indexUrl, "utf8");
 
-  assert.match(html, /const APP_VERSION = 200/);
+  assert.match(html, /const APP_VERSION = 201/);
   assert.match(html, /<body class="auth-gate-open">/);
   assert.match(html, /<main class="page" inert aria-hidden="true">/);
   assert.match(html, /class="auth-gate" id="authGate"/);
@@ -40,6 +40,6 @@ test("V187 removes local-history import and requires login before study", async 
   assert.match(html, /pendingExistingQuestionIdV187 = requestedExistingQuestionId/);
   assert.match(html, /await openRequestedQuestionAfterAuthV187\(\)/);
   assert.match(html, /cleanUrl\.searchParams\.delete\("existing_question"\)/);
-  assert.match(html, /supabase-sync-v48\.js\?v=200/);
-  assert.match(html, /drill-ux-v44\.js\?v=200/);
+  assert.match(html, /supabase-sync-v48\.js\?v=201/);
+  assert.match(html, /drill-ux-v44\.js\?v=201/);
 });

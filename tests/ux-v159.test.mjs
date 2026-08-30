@@ -5,7 +5,7 @@ import test from "node:test";
 const indexUrl = new URL("../public/index.html", import.meta.url);
 const cssUrl = new URL("../public/ux-v159.css", import.meta.url);
 const identityUrl = new URL("../app/lib/appIdentity.ts", import.meta.url);
-const kanMigrationUrl = new URL("../supabase/migrations/20260829230033_repair_kan_in_question_1603_v200.sql", import.meta.url);
+const kanMigrationUrl = new URL("../supabase/migrations/20260830084615_repair_kan_melds_v201.sql", import.meta.url);
 
 test("V180 exposes the recent-history shell and synchronized release assets", async () => {
   const [html, css, identity] = await Promise.all([
@@ -14,9 +14,9 @@ test("V180 exposes the recent-history shell and synchronized release assets", as
     readFile(identityUrl, "utf8"),
   ]);
 
-  assert.match(html, /const APP_VERSION = 200;/);
-  assert.match(identity, /APP_VERSION = 200/);
-  assert.match(html, /ux-v159\.css\?v=200/);
+  assert.match(html, /const APP_VERSION = 201;/);
+  assert.match(identity, /APP_VERSION = 201/);
+  assert.match(html, /ux-v159\.css\?v=201/);
   assert.match(html, /\.comment-form textarea \{ display: block; width: 100%; min-width: 0;/);
   assert.match(html, /data-menu-view="today"/);
   assert.match(html, /<span>学習する<\/span>/);
@@ -273,13 +273,20 @@ test("V199 keeps comment submission independent from the later app scope", async
   assert.match(html, /window\.nagaCurrentUserAvatarUrlV198 = normalizeCommentAvatarUrlV196\(session\?\.user\?\.user_metadata\?\.avatar_url\);/);
 });
 
-test("V200 repairs the stored daiminkan payload by stable NAGA scene coordinates", async () => {
+test("V201 repairs all stored hand-retaining daiminkan payloads by stable NAGA scene coordinates", async () => {
   const migration = await readFile(kanMigrationUrl, "utf8");
-  assert.match(migration, /source_report_id = 'f839fbe953e327b32422e1d16c523aa49bef1083780d2a8005282f74451e977bv2_2'/);
-  assert.match(migration, /scene_tw = 2/);
-  assert.match(migration, /scene_ts = 7/);
-  assert.match(migration, /scene_tv = 81/);
-  assert.match(migration, /'type', 'daiminkan'/);
+  assert.match(migration, /source_report_id = 'ff3708c66c66cd676a4a787c0d488d74b76efc7a70c81b0a713d290da3ebf6f0v2_2'/);
+  assert.match(migration, /source_report_id = '34a33ce6f47e9175ac23dbfd1214dc3e0e200c6cbd78182d94decc071ab21443v2_2'/);
+  assert.match(migration, /source_report_id = '0d235c549aa64bc6c64f3829bb9f861a63db48c7bb0cda136de409eb391cc9fbv2_2'/);
+  assert.match(migration, /collection_id = '3c14e853-67df-4dd7-8237-77e95056ade2'::uuid/);
+  assert.match(migration, /collection_id = 'd6b773c0-f727-4541-8740-d9920888f6bb'::uuid/);
+  assert.match(migration, /scene_tw = 2[\s\S]*?scene_ts = 7[\s\S]*?scene_tv = 20/);
+  assert.match(migration, /scene_tw = 0[\s\S]*?scene_ts = 1[\s\S]*?scene_tv = 19/);
+  assert.match(migration, /scene_tw = 3[\s\S]*?scene_ts = 11[\s\S]*?scene_tv = 26/);
+  assert.equal((migration.match(/'type', 'daiminkan'/g) || []).length, 3);
+  assert.match(migration, /'pai', 'pin9'/);
+  assert.match(migration, /'pai', 'ji2'/);
   assert.match(migration, /'pai', 'ji5'/);
   assert.match(migration, /jsonb_array_length\(payload -> 'handBeforeDraw'\) = 7/);
+  assert.match(migration, /jsonb_array_length\(payload -> 'handBeforeDraw'\) = 10/);
 });

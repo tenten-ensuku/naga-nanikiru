@@ -579,6 +579,29 @@ test("removes daiminkan tiles from the concealed hand during replay", async () =
   assert.deepEqual(Array.from(snapshot.melds[0].consumed), ["ji5", "ji5", "ji5"]);
 });
 
+test("replays minkan and upgrades pon to kakan without retaining kan tiles", async () => {
+  const api = await loadApi();
+  const hand = ["P", "P", "P", "1m", "2m", "3m", "4m", "5m", "6m", "7m", "8m", "9m", "E"];
+
+  const minkanSnapshot = api.replayKyoku([
+    startKyoku([hand, startKyoku().info.msg.tehais[1], startKyoku().info.msg.tehais[2], startKyoku().info.msg.tehais[3]]),
+    msg("minkan", { actor: 0, pai: "P", consumed: ["P", "P", "P"] })
+  ], 2, 0);
+  assert.equal(minkanSnapshot.hand.filter(tile => tile === "ji5").length, 0);
+  assert.equal(minkanSnapshot.melds[0].type, "minkan");
+  assert.equal(minkanSnapshot.melds[0].consumed.length, 3);
+
+  const kakanSnapshot = api.replayKyoku([
+    startKyoku([hand, startKyoku().info.msg.tehais[1], startKyoku().info.msg.tehais[2], startKyoku().info.msg.tehais[3]]),
+    msg("pon", { actor: 0, pai: "P", consumed: ["P", "P"] }),
+    msg("kakan", { actor: 0, pai: "P", consumed: ["P"] })
+  ], 3, 0);
+  assert.equal(kakanSnapshot.hand.filter(tile => tile === "ji5").length, 0);
+  assert.equal(kakanSnapshot.melds.length, 1);
+  assert.equal(kakanSnapshot.melds[0].type, "kakan");
+  assert.equal(kakanSnapshot.melds[0].consumed.length, 3);
+});
+
 test("extracts bad discards and calls at exactly 5 percent, filters actors and reached moves", async () => {
   const api = await loadApi();
   const zeroRows = () => [Array(34).fill(0)];
