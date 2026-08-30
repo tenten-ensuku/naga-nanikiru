@@ -7,7 +7,7 @@ const cssUrl = new URL("../public/ux-v159.css", import.meta.url);
 const identityUrl = new URL("../app/lib/appIdentity.ts", import.meta.url);
 const packageUrl = new URL("../package.json", import.meta.url);
 
-test("V203 keeps the learning actions usable and stable on desktop and mobile", async () => {
+test("V204 keeps the learning actions usable and stable on desktop and mobile", async () => {
   const [html, css, identity, packageSource] = await Promise.all([
     readFile(indexUrl, "utf8"),
     readFile(cssUrl, "utf8"),
@@ -15,10 +15,10 @@ test("V203 keeps the learning actions usable and stable on desktop and mobile", 
     readFile(packageUrl, "utf8")
   ]);
 
-  assert.match(html, /const APP_VERSION = 203;/);
-  assert.match(identity, /APP_VERSION = 203/);
+  assert.match(html, /const APP_VERSION = 204;/);
+  assert.match(identity, /APP_VERSION = 204/);
   for (const asset of ["ux-v159\\.css", "supabase-sync-v48\\.js", "drill-ux-v44\\.js"]) {
-    assert.match(html, new RegExp(`${asset}\\?v=203`));
+    assert.match(html, new RegExp(`${asset}\\?v=204`));
   }
   assert.match(html, /問題集を変更する/);
   assert.doesNotMatch(html, /class="active-collection-label"/);
@@ -83,16 +83,25 @@ test("V203 keeps the learning actions usable and stable on desktop and mobile", 
   assert.match(css, /V194: make the three learning entry points feel like clear, premium actions/);
   assert.match(css, /V194: recent rows now expose personal organization without nesting buttons/);
   assert.match(css, /V203: turn the learning entries into a stable three-column action rail on desktop/);
+  assert.match(css, /V204: make the header identity and learning cards read as compact primary actions/);
   assert.match(css, /grid-template-columns: repeat\(3, minmax\(0, 1fr\)\)/);
   assert.match(css, /\.learning-all-action > \.learning-custom-settings/);
   assert.match(css, /learning-custom-settings:not\(\[open\]\) > \.learning-custom-settings-body/);
   assert.match(html, /<summary aria-label="全問を解くの設定">[\s\S]*条件設定/);
   assert.match(html, /function renderLearningActionButtonV194\(/);
   assert.match(html, /プレイ/);
+  assert.match(html, /class="menu-brand-subtitle">みんなの何切る問題集<\/span>/);
+  assert.match(html, /class="menu-brand-actions"[\s\S]*id="discordAuthButton"/);
+  assert.match(html, /id="accountStatus"/);
+  const learningActionRenderer = html.match(/function renderLearningActionButtonV194\([\s\S]*?\n      \}/)?.[0] || "";
+  assert.match(learningActionRenderer, /class="learning-action-link"><span>プレイ<\/span><\/span>/);
+  assert.doesNotMatch(learningActionRenderer, /aria-hidden="true">→/);
+  assert.match(css, /\.learning-action-card \.learning-action-link \{\s*display: none;/);
+  assert.match(css, /\.learning-action-card \.learning-action-description \{[\s\S]*white-space: normal;/);
   assert.match(learningView, /data-menu-action="favorite"/);
   assert.match(learningView, /data-menu-action="archive"/);
   assert.match(learningView, /aria-label="問題\$\{escapeHtml\(String\(question\.number\)\)\}の整理"/);
-  assert.match(html, /publishedAt: "2026-08-30T03:43:03\+09:00"/);
+  assert.match(html, /publishedAt: "2026-08-30T12:00:00\+09:00"/);
   assert.match(html, /function formatAnnouncementDateV111\(/);
   assert.ok(css.indexOf("/* V189: checkbox-based custom filters") > css.indexOf(".learning-custom-settings-body select"), "V189 checkbox styles should come after legacy select styles");
 

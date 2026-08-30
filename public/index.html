@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=203">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=203">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=203">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=204">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=204">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=204">
   <title>みん切る｜みんなの何切る問題集</title>
   <meta name="description" content="みん切るは、NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリです。">
   <meta name="theme-color" content="#06131e">
@@ -2163,13 +2163,13 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=203">
+  <link rel="stylesheet" href="ux-v159.css?v=204&amp;rev=2">
 </head>
 <body class="auth-gate-open">
   <main class="page" inert aria-hidden="true">
     <section class="menu-panel" id="menuPanel" aria-labelledby="menuTitle">
       <aside class="menu-sidebar" aria-label="問題集ナビゲーション">
-        <div class="menu-brand" aria-label="みん切る（みんなの何切る問題集）"><span class="menu-brand-tile" aria-hidden="true">中</span><span class="menu-brand-title">みん切る</span><span class="menu-brand-version">V<span id="menuVersion"></span></span><span class="menu-brand-actions"><button class="menu-notice-button" id="announcementButton" type="button" aria-label="アナウンスを開く" title="アプリの更新情報を見る"><span class="menu-notice-icon" aria-hidden="true">📣</span><span class="menu-notice-label">更新</span><span class="notification-badge" id="announcementBadge" hidden></span></button><button class="menu-notice-button" id="commentNotificationsButton" type="button" aria-label="コメント・追加通知を開く" title="コメントと追加の通知を見る"><span class="menu-notice-icon" aria-hidden="true">🔔</span><span class="menu-notice-label">通知</span><span class="notification-badge" id="commentNotificationBadge" hidden></span></button></span></div>
+        <div class="menu-brand" aria-label="みん切る（みんなの何切る問題集）"><span class="menu-brand-tile" aria-hidden="true">中</span><span class="menu-brand-copy"><span class="menu-brand-title-row"><span class="menu-brand-title">みん切る</span><span class="menu-brand-version">V<span id="menuVersion"></span></span></span><span class="menu-brand-subtitle">みんなの何切る問題集</span></span><span class="menu-brand-actions"><button class="menu-notice-button" id="announcementButton" type="button" aria-label="アナウンスを開く" title="アプリの更新情報を見る"><span class="menu-notice-icon" aria-hidden="true">📣</span><span class="menu-notice-label">更新</span><span class="notification-badge" id="announcementBadge" hidden></span></button><button class="menu-notice-button" id="commentNotificationsButton" type="button" aria-label="コメント・追加通知を開く" title="コメントと追加の通知を見る"><span class="menu-notice-icon" aria-hidden="true">🔔</span><span class="menu-notice-label">通知</span><span class="notification-badge" id="commentNotificationBadge" hidden></span></button><button class="primary menu-auth-button" id="discordAuthButton" type="button">Discordでログイン</button></span></div>
         <button class="active-collection-button" type="button" data-open-collection-chooser aria-label="現在の問題集を確認・変更する">
           <strong class="active-collection-title" data-active-collection-name>問題集を選ぶ</strong>
           <span class="active-collection-status" data-active-collection-status>未選択</span>
@@ -2184,8 +2184,7 @@
         </nav>
         <div class="menu-sidebar-progress" id="menuSidebarProgress" aria-live="polite"></div>
         <div class="account-strip" id="accountStrip">
-          <span class="account-status" id="accountStatus">ログイン状態を確認しています…</span>
-          <button class="primary" id="discordAuthButton" type="button">Discordでログイン</button>
+          <span class="account-status sr-only" id="accountStatus">ログイン状態を確認しています…</span>
         </div>
       </aside>
       <div class="menu-content">
@@ -2447,13 +2446,13 @@
   </dialog>
 
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=203"></script>
-  <script src="drill-ux-v44.js?v=203"></script>
+  <script src="supabase-sync-v48.js?v=204"></script>
+  <script src="drill-ux-v44.js?v=204"></script>
   <script src="naga-generator-v44.js"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 203;
+    const APP_VERSION = 204;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -3600,6 +3599,7 @@
       const QUESTION_NOTICE_STORAGE_KEY_V66 = storageKey("question-notices-v1");
       const ANNOUNCEMENT_SEEN_STORAGE_KEY_V65 = storageKey("announcement-seen-v1");
       const APP_ANNOUNCEMENTS_V66 = [
+        { version: 204, date: "2026-08-30", publishedAt: "2026-08-30T12:00:00+09:00", title: "学習画面の入口とヘッダーを整えました", body: "学習カードの円形矢印をなくし、PCではカード全体を押せる主操作ボタンにしました。スマホではプレイ表示を残し、みん切るの正式名称とログアウトの位置も分かりやすく整理しています。" },
         { version: 203, date: "2026-08-30", publishedAt: "2026-08-30T11:00:00+09:00", title: "PC版の学習ボタンを整えました", body: "PCでも未回答・苦手克服・全問を解くの3つの入口が画面内に均等に収まり、主操作ボタンとして押しやすくなりました。スマホでは従来の縦積み表示を保ちます。" },
         { version: 202, date: "2026-08-30T10:00:00+09:00", title: "アプリ名を「みん切る」に変更しました", body: "アプリの表示名を「みん切る」、正式名称を「みんなの何切る問題集」に統一しました。" },
         { version: 200, date: "2026-08-30", publishedAt: "2026-08-30T07:00:00+09:00", title: "カンの手牌表示を修正しました", body: "カンした牌が手牌に残らず、副露として正しく表示されるように修正しました。" },
@@ -7730,7 +7730,7 @@
       function renderLearningActionButtonV194({ mode, title, count, description, tone, disabled = "" }) {
         const countText = String(count);
         const actionLabel = `${title} ${countText}問をプレイ`;
-        return `<button class="learning-action-card is-${tone}" type="button" data-learning-action="${escapeHtml(mode)}" aria-label="${escapeHtml(actionLabel)}"${disabled}><span class="learning-action-main"><strong class="learning-action-title">${escapeHtml(title)}</strong><span class="learning-action-count">${escapeHtml(countText)}<small>問</small></span></span><small class="learning-action-description">${escapeHtml(description)}</small><span class="learning-action-link"><span>プレイ</span><span aria-hidden="true">→</span></span></button>`;
+        return `<button class="learning-action-card is-${tone}" type="button" data-learning-action="${escapeHtml(mode)}" aria-label="${escapeHtml(actionLabel)}"${disabled}><span class="learning-action-main"><strong class="learning-action-title">${escapeHtml(title)}</strong><span class="learning-action-count">${escapeHtml(countText)}<small>問</small></span></span><small class="learning-action-description">${escapeHtml(description)}</small><span class="learning-action-link"><span>プレイ</span></span></button>`;
       }
 
       function renderRecentHistoryViewV180() {
