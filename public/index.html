@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=208">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=208">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=208">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=209">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=209">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=209">
   <title>みん切る｜みんなの何切る問題集</title>
   <meta name="description" content="みん切るは、NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリです。">
   <meta name="theme-color" content="#06131e">
@@ -2163,7 +2163,7 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=208">
+  <link rel="stylesheet" href="ux-v159.css?v=209">
 </head>
 <body class="auth-gate-open">
   <main class="page" inert aria-hidden="true">
@@ -2463,13 +2463,13 @@
   </dialog>
 
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=208"></script>
-  <script src="drill-ux-v44.js?v=208"></script>
+  <script src="supabase-sync-v48.js?v=209"></script>
+  <script src="drill-ux-v44.js?v=209"></script>
   <script src="naga-generator-v44.js"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 208;
+    const APP_VERSION = 209;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -2510,29 +2510,30 @@
     const COMMENT_MAX_ATTACHMENTS_V68 = 4;
     const COMMENT_MAX_IMAGE_BYTES_V68 = 5 * 1024 * 1024;
     const COMMENT_IMAGE_TYPES_V68 = new Set(["image/png", "image/jpeg", "image/webp", "image/gif"]);
-    const REACTION_DEFINITIONS_V208 = Object.freeze([
-      Object.freeze({ key: "like", label: "いいね！", symbol: "★", tone: "gold" }),
-      Object.freeze({ key: "agree", label: "そーだね！", symbol: "✓", tone: "teal" }),
-      Object.freeze({ key: "difficult", label: "ムズい", symbol: "△", tone: "blue" }),
-      Object.freeze({ key: "good_question", label: "良問！", symbol: "◎", tone: "gold" }),
-      Object.freeze({ key: "important", label: "重要！", symbol: "!", tone: "gold" }),
-      Object.freeze({ key: "hmm", label: "うーん", symbol: "…", tone: "purple" }),
-      Object.freeze({ key: "strategy", label: "方針が重要", symbol: "◇", tone: "teal" }),
-      Object.freeze({ key: "mistake", label: "間違えちゃった", symbol: "×", tone: "red" }),
-      Object.freeze({ key: "big_difference", label: "大差っぽい", symbol: "⇄", tone: "blue" }),
-      Object.freeze({ key: "small_difference", label: "微差かな", symbol: "≈", tone: "purple" }),
-      Object.freeze({ key: "memo", label: "メモメモ", symbol: "▤", tone: "teal" }),
-      Object.freeze({ key: "theory", label: "セオリー", symbol: "◈", tone: "gold" }),
-      Object.freeze({ key: "basic_order", label: "基本序列", symbol: "▥", tone: "blue" }),
-      Object.freeze({ key: "call", label: "鳴く", symbol: "鳴", tone: "teal" }),
-      Object.freeze({ key: "riichi", label: "立直", symbol: "立", tone: "gold" }),
-      Object.freeze({ key: "pass", label: "スルー", symbol: "▶", tone: "blue" }),
-      Object.freeze({ key: "silent", label: "黙る", symbol: "◌", tone: "purple" }),
-      Object.freeze({ key: "kan", label: "カン", symbol: "カ", tone: "gold" }),
-      Object.freeze({ key: "exclaim", label: "！", symbol: "!", tone: "red" }),
-      Object.freeze({ key: "question", label: "？", symbol: "?", tone: "purple" })
+    const REACTION_DEFINITIONS_V209 = Object.freeze([
+      Object.freeze({ id: "like", storageKey: "like", label: "いいね！", icon: "👍", tone: "gold" }),
+      Object.freeze({ id: "agree", storageKey: "agree", label: "そーだね！", icon: "✅", tone: "teal" }),
+      Object.freeze({ id: "hard", storageKey: "difficult", label: "ムズい", icon: "😥", tone: "blue" }),
+      Object.freeze({ id: "good-question", storageKey: "good_question", label: "良問だね～", icon: "✨", tone: "gold" }),
+      Object.freeze({ id: "important", storageKey: "important", label: "重要だね！", icon: "💡", tone: "gold" }),
+      Object.freeze({ id: "hmm", storageKey: "hmm", label: "うーん", icon: "🤔", tone: "purple" }),
+      Object.freeze({ id: "policy", storageKey: "strategy", label: "方針が重要", icon: "🧭", tone: "teal" }),
+      Object.freeze({ id: "mistake", storageKey: "mistake", label: "間違えちゃった", icon: "😣", tone: "red" }),
+      Object.freeze({ id: "big-diff", storageKey: "big_difference", label: "大差だね", icon: "📏", tone: "blue" }),
+      Object.freeze({ id: "small-diff", storageKey: "small_difference", label: "微差かな", icon: "⚖️", tone: "purple" }),
+      Object.freeze({ id: "memo", storageKey: "memo", label: "メモメモ", icon: "📝", tone: "teal" }),
+      Object.freeze({ id: "theory", storageKey: "theory", label: "セオリー", icon: "📗", tone: "gold" }),
+      Object.freeze({ id: "basic-order", storageKey: "basic_order", label: "基本序列", icon: "📘", tone: "blue" }),
+      Object.freeze({ id: "call", storageKey: "call", label: "鳴く", icon: "🗣️", tone: "teal" }),
+      Object.freeze({ id: "riichi", storageKey: "riichi", label: "立直", icon: "棒", iconType: "riichi-stick", tone: "gold" }),
+      Object.freeze({ id: "pass", storageKey: "pass", label: "スルー", icon: "⏩", tone: "blue" }),
+      Object.freeze({ id: "silent", storageKey: "silent", label: "黙る", icon: "🤫", tone: "purple" }),
+      Object.freeze({ id: "kan", storageKey: "kan", label: "カン", icon: "", tone: "gold" }),
+      Object.freeze({ id: "exclamation", storageKey: "exclaim", label: "！", icon: "❗", tone: "red" }),
+      Object.freeze({ id: "question", storageKey: "question", label: "？", icon: "❓", tone: "purple" })
     ]);
-    const REACTION_DEFINITION_MAP_V208 = new Map(REACTION_DEFINITIONS_V208.map(definition => [definition.key, definition]));
+    const REACTION_DEFINITION_MAP_V209 = new Map(REACTION_DEFINITIONS_V209.map(definition => [definition.id, definition]));
+    const REACTION_STORAGE_KEY_MAP_V209 = new Map(REACTION_DEFINITIONS_V209.flatMap(definition => [[definition.id, definition], [definition.storageKey, definition]]));
     const state = { selected: null, selectedIndex: null, callDecision: null, revealed: false, answerRecorded: false, answerAttemptId: null, sharedAttemptPromise: null, questionStartedAt: Date.now(), judgeModel: 2, riichi: false, commentComposerOpen: false, commentEditingId: null, commentAttachments: [], comments: THREAD_MESSAGES.map(message => ({ ...message, attachments: [...message.attachments] })), reactionEnabled: false, reactionShareSlug: "", reactionQuestionId: "", reactionSummary: { question: {}, comments: {} }, reactionPending: new Set() };
     let archiveActionStateV161 = { questionKey: "", phase: "idle" };
 
@@ -3058,8 +3059,10 @@
       (Array.isArray(rows) ? rows : []).forEach(row => {
         const scope = String(row?.scope || "").trim();
         const targetId = String(row?.target_id ?? row?.targetId ?? "").trim();
-        const reactionKey = String(row?.reaction_key ?? row?.reactionKey ?? "").trim();
-        if (!(scope === "question" || scope === "comment") || !targetId || !REACTION_DEFINITION_MAP_V208.has(reactionKey)) return;
+        const storageKey = String(row?.reaction_key ?? row?.reactionKey ?? "").trim();
+        const definition = REACTION_STORAGE_KEY_MAP_V209.get(storageKey);
+        if (!(scope === "question" || scope === "comment") || !targetId || !definition) return;
+        const reactionKey = definition.id;
         const normalized = {
           scope,
           targetId,
@@ -3089,6 +3092,14 @@
       return value.length > 0 && value.length <= 200 && !value.startsWith("local-");
     }
 
+    function reactionIconMarkupV209(definition, className) {
+      if (definition?.iconType === "riichi-stick") {
+        return `<svg class="${className} reaction-riichi-stick-v209" viewBox="0 0 24 32" role="img" aria-label="立直棒" focusable="false"><rect x="7" y="1" width="10" height="30" rx="3" fill="currentColor"></rect><path d="M7 7h10M7 25h10" stroke="#fff7d6" stroke-width="2"></path></svg>`;
+      }
+      if (!definition?.icon) return "";
+      return `<span class="${className}" aria-hidden="true">${escapeHtml(definition.icon)}</span>`;
+    }
+
     function reactionParticipantAvatarMarkupV208(participant, { large = false } = {}) {
       const displayName = escapeHtml(participant?.displayName || "プレイヤー");
       const avatarUrl = normalizeCommentAvatarUrlV196(participant?.avatarUrl);
@@ -3100,15 +3111,16 @@
     function renderReactionChipsV208(scope, targetId) {
       if (!reactionTargetCanRenderV208(scope, targetId)) return "";
       const bucket = reactionBucketV208(scope, targetId);
-      return REACTION_DEFINITIONS_V208.filter(definition => Number(bucket[definition.key]?.reactionCount || 0) > 0).map(definition => {
-        const row = bucket[definition.key];
+      return REACTION_DEFINITIONS_V209.filter(definition => Number(bucket[definition.id]?.reactionCount || 0) > 0).map(definition => {
+        const row = bucket[definition.id];
         const count = Math.max(0, Number(row.reactionCount) || 0);
         const reactedByMe = Boolean(row.reactedByMe);
         const participants = Array.isArray(row.reactors) ? row.reactors : [];
         const avatars = participants.slice(0, 3).map(participant => reactionParticipantAvatarMarkupV208(participant)).join("");
         const label = `${definition.label} ${count}人${reactedByMe ? "（あなたが選択中）" : ""}`;
         const safeTargetId = escapeHtml(String(targetId));
-        return `<span class="reaction-chip-group-v208 reaction-tone-${definition.tone}-v208"><button class="reaction-chip-toggle-v208${reactedByMe ? " is-active" : ""}" type="button" data-reaction-toggle data-reaction-scope="${scope}" data-reaction-target-id="${safeTargetId}" data-reaction-key="${definition.key}" aria-pressed="${String(reactedByMe)}" aria-label="${escapeHtml(label)}"><span class="reaction-chip-symbol-v208" aria-hidden="true">${definition.symbol}</span><span class="reaction-chip-label-v208">${definition.label}</span></button><button class="reaction-people-button-v208" type="button" data-reaction-details data-reaction-scope="${scope}" data-reaction-target-id="${safeTargetId}" data-reaction-key="${definition.key}" aria-label="${escapeHtml(definition.label)}にリアクションした人を表示"><span class="reaction-chip-avatar-stack-v208" aria-hidden="true">${avatars}</span><span class="reaction-chip-count-v208">${count}</span></button></span>`;
+        const icon = reactionIconMarkupV209(definition, "reaction-chip-icon-v209");
+        return `<span class="reaction-chip-group-v208 reaction-tone-${definition.tone}-v208"><button class="reaction-chip-toggle-v208${reactedByMe ? " is-active" : ""}" type="button" data-reaction-toggle data-reaction-scope="${scope}" data-reaction-target-id="${safeTargetId}" data-reaction-key="${definition.id}" aria-pressed="${String(reactedByMe)}" aria-label="${escapeHtml(label)}">${icon}<span class="reaction-chip-label-v208">${definition.label}</span></button><button class="reaction-people-button-v208" type="button" data-reaction-details data-reaction-scope="${scope}" data-reaction-target-id="${safeTargetId}" data-reaction-key="${definition.id}" aria-label="${escapeHtml(definition.label)}にリアクションした人を表示"><span class="reaction-chip-avatar-stack-v208" aria-hidden="true">${avatars}</span><span class="reaction-chip-count-v208">${count}</span></button></span>`;
       }).join("");
     }
 
@@ -3191,9 +3203,10 @@
       const target = reactionPickerTargetV208;
       if (!options || !target) return;
       const bucket = reactionBucketV208(target.scope, target.targetId);
-      options.innerHTML = REACTION_DEFINITIONS_V208.map(definition => {
-        const selected = Boolean(bucket[definition.key]?.reactedByMe);
-        return `<button class="reaction-picker-option-v208${selected ? " is-selected" : ""}" type="button" data-reaction-picker-key="${definition.key}" aria-pressed="${String(selected)}"><span class="reaction-picker-symbol-v208" aria-hidden="true">${definition.symbol}</span><span class="reaction-picker-label-v208">${definition.label}</span></button>`;
+      options.innerHTML = REACTION_DEFINITIONS_V209.map(definition => {
+        const selected = Boolean(bucket[definition.id]?.reactedByMe);
+        const icon = reactionIconMarkupV209(definition, "reaction-picker-icon-v209");
+        return `<button class="reaction-picker-option-v208${selected ? " is-selected" : ""}${icon ? "" : " no-icon"}" type="button" data-reaction-picker-key="${definition.id}" aria-pressed="${String(selected)}">${icon}<span class="reaction-picker-label-v208">${definition.label}</span></button>`;
       }).join("");
     }
 
@@ -3216,7 +3229,7 @@
       const scope = String(opener?.dataset.reactionScope || "");
       const targetId = String(opener?.dataset.reactionTargetId || "");
       const reactionKey = String(opener?.dataset.reactionKey || "");
-      const definition = REACTION_DEFINITION_MAP_V208.get(reactionKey);
+      const definition = REACTION_DEFINITION_MAP_V209.get(reactionKey);
       const row = reactionBucketV208(scope, targetId)[reactionKey];
       if (!opener || !definition || !row || !reactionTargetCanRenderV208(scope, targetId)) return;
       closeReactionPickerV208();
@@ -3289,7 +3302,7 @@
     }
 
     async function toggleReactionV208(scope, targetId, reactionKey) {
-      const definition = REACTION_DEFINITION_MAP_V208.get(reactionKey);
+      const definition = REACTION_DEFINITION_MAP_V209.get(reactionKey);
       const userId = reactionCurrentUserIdV208();
       if (!definition || !userId || !reactionTargetCanRenderV208(scope, targetId)) return;
       const pendingKey = `${scope}:${targetId}:${reactionKey}`;
@@ -3303,10 +3316,11 @@
       const shareSlug = String(state.reactionShareSlug);
       const questionId = String(state.reactionQuestionId);
       try {
+        const storageKey = definition.storageKey || definition.id;
         if (scope === "question") {
-          await window.NagaSupabase.setSharedQuestionReaction(String(targetId), reactionKey, active);
+          await window.NagaSupabase.setSharedQuestionReaction(String(targetId), storageKey, active);
         } else {
-          await window.NagaSupabase.setSharedCommentReaction(questionId, String(targetId), reactionKey, active);
+          await window.NagaSupabase.setSharedCommentReaction(questionId, String(targetId), storageKey, active);
         }
         await refreshReactionSummaryV208();
       } catch (error) {
@@ -3997,6 +4011,7 @@
       const QUESTION_NOTICE_STORAGE_KEY_V66 = storageKey("question-notices-v1");
       const ANNOUNCEMENT_SEEN_STORAGE_KEY_V65 = storageKey("announcement-seen-v1");
       const APP_ANNOUNCEMENTS_V66 = [
+        { version: 209, date: "2026-08-31", publishedAt: "2026-08-31T00:12:12+09:00", title: "リアクションを見本のアイコン表示に整えました", body: "リアクションを👍や💡などのアイコンと指定文言で表示し、立直は専用の立直棒アイコンで表現しました。" },
         { version: 208, date: "2026-08-30", publishedAt: "2026-08-30T23:45:37+09:00", title: "リアクション機能を追加しました", body: "問題全体とコメントに20種類のリアクションを付けられるようになりました。選択したリアクションの参加者はDiscordアイコンと人数で確認できます。" },
         { version: 207, date: "2026-08-30", publishedAt: "2026-08-30T22:00:00+09:00", title: "ヘッダーを「みん切る」ロゴに変更しました", body: "ご指定の「みん切る／みんなの何切る問題集」ロゴをヘッダーに採用しました。更新・通知・ログイン操作はこれまでどおり利用できます。" },
         { version: 206, date: "2026-08-30", publishedAt: "2026-08-30T21:12:42+09:00", title: "問題集カードの表示崩れを直しました", body: "PCの問題集カードで、問題集名・変更操作・矢印が重ならないよう表示領域を分けました。狭い画面でもカードの内容を読みやすく整理しています。" },

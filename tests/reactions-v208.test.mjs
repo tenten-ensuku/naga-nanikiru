@@ -14,13 +14,13 @@ const syncClient = read("client/supabase-sync.ts");
 const migration = read("supabase/migrations/20260830150000_shared_reactions_v208.sql");
 
 const reactionLabels = [
-  "いいね！", "そーだね！", "ムズい", "良問！", "重要！", "うーん", "方針が重要",
-  "間違えちゃった", "大差っぽい", "微差かな", "メモメモ", "セオリー", "基本序列", "鳴く",
+  "いいね！", "そーだね！", "ムズい", "良問だね～", "重要だね！", "うーん", "方針が重要",
+  "間違えちゃった", "大差だね", "微差かな", "メモメモ", "セオリー", "基本序列", "鳴く",
   "立直", "スルー", "黙る", "カン", "！", "？"
 ];
 
-test("V208 exposes the reaction UI and preserves the current-question hydration flow", () => {
-  assert.match(html, /const APP_VERSION = 208;/);
+test("V209 exposes the sample-style reaction icons and preserves the current-question hydration flow", () => {
+  assert.match(html, /const APP_VERSION = 209;/);
   assert.match(html, /reactionPickerV208/);
   assert.match(html, /この問題へのリアクション/);
   assert.match(html, /data-reaction-add/);
@@ -28,7 +28,7 @@ test("V208 exposes the reaction UI and preserves the current-question hydration 
   assert.match(html, /data-reaction-details/);
   assert.match(html, /Promise\.allSettled\(\[/);
   assert.match(html, /loadSharedReactionSummary\(shareSlug, questionId\)/);
-  assert.match(html, /setSharedCommentReaction\(questionId, String\(targetId\), reactionKey, active\)/);
+  assert.match(html, /setSharedCommentReaction\(questionId, String\(targetId\), storageKey, active\)/);
   assert.match(html, /reactionPending: new Set\(\)/);
 
   let previousIndex = -1;
@@ -37,6 +37,12 @@ test("V208 exposes the reaction UI and preserves the current-question hydration 
     assert.ok(index > previousIndex, `リアクション文言の順番が不正: ${label}`);
     previousIndex = index;
   }
+  for (const icon of ["👍", "✅", "😥", "✨", "💡", "🤔", "🧭", "😣", "📏", "⚖️", "📝", "📗", "📘", "🗣️", "⏩", "🤫", "❗", "❓"]) {
+    assert.match(html, new RegExp(`icon: "${icon}"`));
+  }
+  assert.match(html, /icon: "棒", iconType: "riichi-stick"/);
+  assert.match(html, /reaction-riichi-stick-v209/);
+  assert.match(html, /REACTION_STORAGE_KEY_MAP_V209/);
 });
 
 test("V208 renders a responsive picker without horizontal overflow", () => {
