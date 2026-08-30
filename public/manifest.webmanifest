@@ -1,8 +1,8 @@
 {
   "id": "/naga-nanikiru/",
-  "name": "NAGA局面ドリル｜何切る復習問題集",
-  "short_name": "NAGA何切る",
-  "description": "NAGAの局面を解き、復習予定・苦手分析・URLからの問題生成まで行える麻雀学習アプリ。",
+  "name": "みん切る｜みんなの何切る問題集",
+  "short_name": "みん切る",
+  "description": "みん切るは、NAGAの局面を解き、復習予定・苦手分析・URLからの問題生成まで行える麻雀学習アプリです。",
   "start_url": "/naga-nanikiru/",
   "scope": "/naga-nanikiru/",
   "display": "standalone",

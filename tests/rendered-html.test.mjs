@@ -20,9 +20,9 @@ test("server-renders the NAGA drill shell", async () => {
   assert.equal(response.status, 200);
   assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
   const html = await response.text();
-  assert.match(html, /<title>NAGA局面ドリル/);
+  assert.match(html, /<title>みん切る｜みんなの何切る問題集/);
   assert.match(html, /src="\/naga-nanikiru\/index\.html"/);
-  assert.match(html, /title="NAGA局面ドリル｜スクリーンショットベース"/);
+  assert.match(html, /title="みん切る｜みんなの何切る問題集"/);
 });
 
 test("wires v65 learning UX, generator, Supabase bridge, metadata, and social image", async () => {
@@ -32,7 +32,7 @@ test("wires v65 learning UX, generator, Supabase bridge, metadata, and social im
     readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
     access(new URL("../public/og-v44.png", import.meta.url)),
   ]);
-  assert.match(index, /const APP_VERSION = 201/);
+  assert.match(index, /const APP_VERSION = 202/);
   assert.match(index, /function menuRangeStepV120\(\)[\s\S]*?return MENU_RANGE_STEP_V137/);
   assert.match(index, /id="collectionDirectorySelect"/);
   assert.doesNotMatch(index, /class="collection-directory-item/);

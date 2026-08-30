@@ -6,7 +6,7 @@ export default function Home() {
       <iframe
         className="prototype-frame"
         src={`${APP_BASE_PATH}index.html`}
-        title="NAGA局面ドリル｜スクリーンショットベース"
+        title="みん切る｜みんなの何切る問題集"
       />
     </main>
   );

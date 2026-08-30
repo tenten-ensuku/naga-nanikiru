@@ -10,7 +10,7 @@ test("renders the v87 scene and half-game generator controls", async () => {
     readFile(indexUrl, "utf8"),
     readFile(generatorUrl, "utf8")
   ]);
-  assert.match(html, /const APP_VERSION = 201/);
+  assert.match(html, /const APP_VERSION = 202/);
   assert.match(html, /function captureGeneratorFormDraftV157\(\)/);
   assert.match(html, /destination: document\.getElementById\("generatorDestinationSelect"\)\?\.value \|\| generatorDestinationV130 \|\| ""/);
   assert.match(html, /function restoreGeneratorFormDraftV157\(draft\)/);
@@ -113,7 +113,7 @@ test("renders the v87 scene and half-game generator controls", async () => {
   assert.match(html, /function setMenuRangeV137\(rangeKey\)/);
   assert.match(html, /function moveMenuRangeV137\(delta\)/);
   assert.match(html, /sourceQuestions\.filter\(menuRangeMatchesV60\)/);
-  assert.match(html, /class="menu-brand-title">問題集<\/span><span class="menu-brand-version">V<span id="menuVersion"><\/span><\/span><span class="menu-brand-actions">/);
+  assert.match(html, /class="menu-brand-title">みん切る<\/span><span class="menu-brand-version">V<span id="menuVersion"><\/span><\/span><span class="menu-brand-actions">/);
   assert.match(html, /class="menu-notice-icon"[^>]*>📣<\/span>/);
   assert.match(html, /class="menu-notice-icon"[^>]*>🔔<\/span>/);
   assert.match(html, /getElementById\("menuVersion"\)\.textContent = APP_VERSION/);

@@ -3,8 +3,8 @@ import { headers } from "next/headers";
 import "./globals.css";
 import { APP_BASE_PATH, APP_VERSION } from "./lib/appIdentity";
 
-const title = "NAGA局面ドリル｜何切る復習問題集";
-const description = "NAGAの局面を解き、復習予定・苦手分析・URLからの問題生成まで行える麻雀学習アプリ。";
+const title = "みん切る｜みんなの何切る問題集";
+const description = "みん切るは、NAGAの局面を解き、復習予定・苦手分析・URLからの問題生成まで行える麻雀学習アプリです。";
 
 export async function generateMetadata(): Promise<Metadata> {
   const requestHeaders = await headers();
@@ -20,7 +20,7 @@ export async function generateMetadata(): Promise<Metadata> {
       shortcut: `${APP_BASE_PATH}icons/favicon-32.png?v=${APP_VERSION}`,
       apple: `${APP_BASE_PATH}icons/apple-touch-icon-180.png?v=${APP_VERSION}`,
     },
-    openGraph: { title, description, type: "website", images: [{ url: image, width: 1730, height: 907, alt: "NAGA局面ドリル" }] },
+    openGraph: { title, description, type: "website", images: [{ url: image, width: 1730, height: 907, alt: "みん切る｜みんなの何切る問題集" }] },
     twitter: { card: "summary_large_image", title, description, images: [image] },
   };
 }

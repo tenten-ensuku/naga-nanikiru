@@ -3,20 +3,20 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=201">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=201">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=201">
-  <title>NAGA局面ドリル｜何切る復習問題集</title>
-  <meta name="description" content="NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリ。">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=202">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=202">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=202">
+  <title>みん切る｜みんなの何切る問題集</title>
+  <meta name="description" content="みん切るは、NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリです。">
   <meta name="theme-color" content="#06131e">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="NAGA局面ドリル｜何切る復習問題集">
-  <meta property="og:description" content="NAGAの局面を解き、復習し、弱点を育て直す実戦問題集。">
+  <meta property="og:title" content="みん切る｜みんなの何切る問題集">
+  <meta property="og:description" content="みんなの何切る問題集。NAGAの局面を解き、復習し、弱点を育て直します。">
   <meta property="og:url" content="https://tenten-ensuku.github.io/naga-nanikiru/">
   <meta property="og:image" content="https://tenten-ensuku.github.io/naga-nanikiru/og-v44.png">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="NAGA局面ドリル｜何切る復習問題集">
-  <meta name="twitter:description" content="おすすめ問題、習熟度分析、NAGA URLからの問題生成。">
+  <meta name="twitter:title" content="みん切る｜みんなの何切る問題集">
+  <meta name="twitter:description" content="おすすめ問題、習熟度分析、NAGA URLからの問題生成。みん切るで何切るを学びます。">
   <meta name="twitter:image" content="https://tenten-ensuku.github.io/naga-nanikiru/og-v44.png">
   <style>
     :root {
@@ -2163,13 +2163,13 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=201">
+  <link rel="stylesheet" href="ux-v159.css?v=202">
 </head>
 <body class="auth-gate-open">
   <main class="page" inert aria-hidden="true">
     <section class="menu-panel" id="menuPanel" aria-labelledby="menuTitle">
       <aside class="menu-sidebar" aria-label="問題集ナビゲーション">
-        <div class="menu-brand"><span class="menu-brand-tile" aria-hidden="true">中</span><span class="menu-brand-title">問題集</span><span class="menu-brand-version">V<span id="menuVersion"></span></span><span class="menu-brand-actions"><button class="menu-notice-button" id="announcementButton" type="button" aria-label="アナウンスを開く" title="アプリの更新情報を見る"><span class="menu-notice-icon" aria-hidden="true">📣</span><span class="menu-notice-label">更新</span><span class="notification-badge" id="announcementBadge" hidden></span></button><button class="menu-notice-button" id="commentNotificationsButton" type="button" aria-label="コメント・追加通知を開く" title="コメントと追加の通知を見る"><span class="menu-notice-icon" aria-hidden="true">🔔</span><span class="menu-notice-label">通知</span><span class="notification-badge" id="commentNotificationBadge" hidden></span></button></span></div>
+        <div class="menu-brand" aria-label="みん切る（みんなの何切る問題集）"><span class="menu-brand-tile" aria-hidden="true">中</span><span class="menu-brand-title">みん切る</span><span class="menu-brand-version">V<span id="menuVersion"></span></span><span class="menu-brand-actions"><button class="menu-notice-button" id="announcementButton" type="button" aria-label="アナウンスを開く" title="アプリの更新情報を見る"><span class="menu-notice-icon" aria-hidden="true">📣</span><span class="menu-notice-label">更新</span><span class="notification-badge" id="announcementBadge" hidden></span></button><button class="menu-notice-button" id="commentNotificationsButton" type="button" aria-label="コメント・追加通知を開く" title="コメントと追加の通知を見る"><span class="menu-notice-icon" aria-hidden="true">🔔</span><span class="menu-notice-label">通知</span><span class="notification-badge" id="commentNotificationBadge" hidden></span></button></span></div>
         <button class="active-collection-button" type="button" data-open-collection-chooser aria-label="現在の問題集を確認・変更する">
           <strong class="active-collection-title" data-active-collection-name>問題集を選ぶ</strong>
           <span class="active-collection-status" data-active-collection-status>未選択</span>
@@ -2447,13 +2447,13 @@
   </dialog>
 
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=201"></script>
-  <script src="drill-ux-v44.js?v=201"></script>
+  <script src="supabase-sync-v48.js?v=202"></script>
+  <script src="drill-ux-v44.js?v=202"></script>
   <script src="naga-generator-v44.js"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 201;
+    const APP_VERSION = 202;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -3600,7 +3600,7 @@
       const QUESTION_NOTICE_STORAGE_KEY_V66 = storageKey("question-notices-v1");
       const ANNOUNCEMENT_SEEN_STORAGE_KEY_V65 = storageKey("announcement-seen-v1");
       const APP_ANNOUNCEMENTS_V66 = [
-        { version: 201, date: "2026-08-30", publishedAt: "2026-08-30T09:00:00+09:00", title: "カンの副露表示を追加修正しました", body: "一部の既存問題でカンした牌が手牌に残る不備を追加修正しました。ダイミンカンを含め、副露として正しく表示されます。" },
+        { version: 202, date: "2026-08-30", publishedAt: "2026-08-30T10:00:00+09:00", title: "アプリ名を「みん切る」に変更しました", body: "アプリの表示名を「みん切る」、正式名称を「みんなの何切る問題集」に統一しました。" },
         { version: 200, date: "2026-08-30", publishedAt: "2026-08-30T07:00:00+09:00", title: "カンの手牌表示を修正しました", body: "カンした牌が手牌に残らず、副露として正しく表示されるように修正しました。" },
         { version: 199, date: "2026-08-30", publishedAt: "2026-08-30T06:00:00+09:00", title: "コメント追加ボタンを修正しました", body: "コメント追加ボタンを押したときに、入力内容が確実に表示・保存されるように修正しました。" },
         { version: 198, date: "2026-08-30", publishedAt: "2026-08-30T05:38:15+09:00", title: "過去のコメントにもDiscordアイコンを表示しました", body: "Discordスレッドから取り込んだ過去コメントにも、対応するプロフィールのアイコンを反映しました。対応するプロフィールがない場合は表示名を残します。" },
@@ -9195,7 +9195,7 @@
             collectionVolumesLoadingV180 = false;
           }
         }
-        document.title = `${sharedCollectionV46.title}｜NAGA局面ドリル`;
+        document.title = `${sharedCollectionV46.title}｜みん切る`;
         return true;
       }
 
