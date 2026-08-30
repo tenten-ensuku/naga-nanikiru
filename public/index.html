@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=209">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=209">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=209">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=210">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=210">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=210">
   <title>みん切る｜みんなの何切る問題集</title>
   <meta name="description" content="みん切るは、NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリです。">
   <meta name="theme-color" content="#06131e">
@@ -1657,6 +1657,7 @@
       .page.desktop-split-layout:not(.menu-active) > .session-strip { grid-area: session; margin-bottom: 0; }
       .page.desktop-split-layout:not(.menu-active) > .scene-card { grid-area: scene; min-width: 0; align-self: start; }
       .page.desktop-split-layout:not(.menu-active) > .answer-strip { grid-area: answer; min-width: 0; margin-top: 0; }
+      /* V210: keep the comment composer reachable by scrolling the PC comment pane. */
       .page.desktop-split-layout:not(.menu-active) > .comments-panel {
         grid-area: comments;
         min-width: 0;
@@ -1664,11 +1665,16 @@
         margin-top: 0;
         position: sticky;
         top: 12px;
-        overflow: hidden;
+        overflow-x: hidden;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        scrollbar-gutter: stable;
+        -webkit-overflow-scrolling: touch;
       }
       .page.desktop-split-layout:not(.menu-active) > .comments-panel .comments-scroll {
         min-height: 220px;
-        max-height: calc(100vh - 190px);
+        max-height: none;
+        overflow: visible;
       }
       .page.desktop-split-layout:not(.menu-active) > .below-note { grid-area: note; }
       .page.desktop-split-layout:not(.menu-active) .scene-frame { max-width: none; }
@@ -2163,7 +2169,7 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=209">
+  <link rel="stylesheet" href="ux-v159.css?v=210">
 </head>
 <body class="auth-gate-open">
   <main class="page" inert aria-hidden="true">
@@ -2463,13 +2469,13 @@
   </dialog>
 
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=209"></script>
-  <script src="drill-ux-v44.js?v=209"></script>
+  <script src="supabase-sync-v48.js?v=210"></script>
+  <script src="drill-ux-v44.js?v=210"></script>
   <script src="naga-generator-v44.js"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 209;
+    const APP_VERSION = 210;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -4011,6 +4017,7 @@
       const QUESTION_NOTICE_STORAGE_KEY_V66 = storageKey("question-notices-v1");
       const ANNOUNCEMENT_SEEN_STORAGE_KEY_V65 = storageKey("announcement-seen-v1");
       const APP_ANNOUNCEMENTS_V66 = [
+        { version: 210, date: "2026-08-31", publishedAt: "2026-08-31T00:40:25+09:00", title: "コメント送信欄をスクロールで操作できるようにしました", body: "PCの2ペイン表示でコメントが長くなっても、右側のコメントペインを独立してスクロールし、コメント送信ボタンまで到達できるようにしました。スマホ表示はこれまでどおりです。" },
         { version: 209, date: "2026-08-31", publishedAt: "2026-08-31T00:12:12+09:00", title: "リアクションを見本のアイコン表示に整えました", body: "リアクションを👍や💡などのアイコンと指定文言で表示し、立直は専用の立直棒アイコンで表現しました。" },
         { version: 208, date: "2026-08-30", publishedAt: "2026-08-30T23:45:37+09:00", title: "リアクション機能を追加しました", body: "問題全体とコメントに20種類のリアクションを付けられるようになりました。選択したリアクションの参加者はDiscordアイコンと人数で確認できます。" },
         { version: 207, date: "2026-08-30", publishedAt: "2026-08-30T22:00:00+09:00", title: "ヘッダーを「みん切る」ロゴに変更しました", body: "ご指定の「みん切る／みんなの何切る問題集」ロゴをヘッダーに採用しました。更新・通知・ログイン操作はこれまでどおり利用できます。" },
