@@ -7,7 +7,7 @@ const cssUrl = new URL("../public/ux-v159.css", import.meta.url);
 const identityUrl = new URL("../app/lib/appIdentity.ts", import.meta.url);
 const packageUrl = new URL("../package.json", import.meta.url);
 
-test("V206 keeps the learning actions usable and stable on desktop and mobile", async () => {
+test("V207 keeps the learning actions usable and stable on desktop and mobile", async () => {
   const [html, css, identity, packageSource] = await Promise.all([
     readFile(indexUrl, "utf8"),
     readFile(cssUrl, "utf8"),
@@ -15,10 +15,10 @@ test("V206 keeps the learning actions usable and stable on desktop and mobile", 
     readFile(packageUrl, "utf8")
   ]);
 
-  assert.match(html, /const APP_VERSION = 206;/);
-  assert.match(identity, /APP_VERSION = 206/);
+  assert.match(html, /const APP_VERSION = 207;/);
+  assert.match(identity, /APP_VERSION = 207/);
   for (const asset of ["ux-v159\\.css", "supabase-sync-v48\\.js", "drill-ux-v44\\.js"]) {
-    assert.match(html, new RegExp(`${asset}\\?v=206`));
+    assert.match(html, new RegExp(`${asset}\\?v=207`));
   }
   assert.match(html, /問題集を変更する/);
   assert.doesNotMatch(html, /class="active-collection-label"/);
@@ -86,6 +86,8 @@ test("V206 keeps the learning actions usable and stable on desktop and mobile", 
   assert.match(css, /V204: make the header identity and learning cards read as compact primary actions/);
   assert.match(css, /V205: separate the PC brand row from its account and notice controls/);
   assert.match(css, /V206: reserve separate title, status, and arrow areas in the collection switcher/);
+  assert.match(css, /V207: use the supplied Min-Kiru wordmark without mixing brand and account controls/);
+  assert.match(css, /\.menu-brand-logo-wrap/);
   assert.match(css, /grid-template-columns: minmax\(0, 1fr\) 18px/);
   assert.match(css, /active-collection-button > \.active-collection-arrow \{[\s\S]*?position: static;[\s\S]*?grid-column: 2;[\s\S]*?grid-row: 1 \/ -1;/);
   assert.match(css, /grid-template-areas: "tile copy" "actions actions"/);
@@ -96,7 +98,7 @@ test("V206 keeps the learning actions usable and stable on desktop and mobile", 
   assert.match(html, /<summary aria-label="全問を解くの設定">[\s\S]*条件設定/);
   assert.match(html, /function renderLearningActionButtonV194\(/);
   assert.match(html, /プレイ/);
-  assert.match(html, /class="menu-brand-subtitle">みんなの何切る問題集<\/span>/);
+  assert.match(html, /class="menu-brand-logo" src="assets\/min-kiru-header\.png" alt="みん切る（みんなの何切る問題集）"/);
   assert.match(html, /class="menu-brand-actions"[\s\S]*id="discordAuthButton"/);
   assert.match(html, /id="accountStatus"/);
   const learningActionRenderer = html.match(/function renderLearningActionButtonV194\([\s\S]*?\n      \}/)?.[0] || "";
