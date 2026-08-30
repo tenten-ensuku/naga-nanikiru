@@ -5649,6 +5649,10 @@ body.auth-gate-open {
   background: transparent;
 }
 
+.page.menu-active .learning-all-action > .learning-custom-settings:not([open]) > .learning-custom-settings-body {
+  display: none;
+}
+
 .page.menu-active .learning-all-action > .learning-custom-settings > summary {
   min-height: 30px;
   padding: 5px 9px;

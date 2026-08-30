@@ -85,6 +85,7 @@ test("V203 keeps the learning actions usable and stable on desktop and mobile", 
   assert.match(css, /V203: turn the learning entries into a stable three-column action rail on desktop/);
   assert.match(css, /grid-template-columns: repeat\(3, minmax\(0, 1fr\)\)/);
   assert.match(css, /\.learning-all-action > \.learning-custom-settings/);
+  assert.match(css, /learning-custom-settings:not\(\[open\]\) > \.learning-custom-settings-body/);
   assert.match(html, /<summary aria-label="全問を解くの設定">[\s\S]*条件設定/);
   assert.match(html, /function renderLearningActionButtonV194\(/);
   assert.match(html, /プレイ/);
