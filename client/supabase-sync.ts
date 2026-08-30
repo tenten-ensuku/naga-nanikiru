@@ -404,15 +404,61 @@ async function loadCustomReactions() {
   return data ?? [];
 }
 
-async function createCustomReaction(label: string, icon: string) {
+const REACTION_IMAGE_BUCKET = "reaction-assets";
+const REACTION_IMAGE_TYPES = new Set(["image/png", "image/jpeg", "image/webp", "image/gif"]);
+const REACTION_IMAGE_EXTENSIONS: Record<string, string> = {
+  "image/png": "png",
+  "image/jpeg": "jpg",
+  "image/webp": "webp",
+  "image/gif": "gif",
+};
+
+function publicReactionAssetUrl(path: string) {
+  const normalized = String(path ?? "").replace(/^\/+/, "");
+  if (!normalized || !config.supabaseUrl || !/^[0-9a-f-]{36}\/reactions\/[A-Za-z0-9][A-Za-z0-9._-]{0,200}$/i.test(normalized)) return "";
+  return `${config.supabaseUrl.replace(/\/$/, "")}/storage/v1/object/public/${REACTION_IMAGE_BUCKET}/${normalized.split("/").map(encodeURIComponent).join("/")}`;
+}
+
+async function createCustomReaction(label: string, icon: string): Promise<unknown>;
+async function createCustomReaction(label: string, icon: string, imageFile?: File | null) {
   const session = await currentSession();
   if (!session?.user?.id) throw new Error("カスタムリアクションの追加にはDiscordログインが必要です。");
-  const { data, error } = await requireClient().rpc("create_custom_reaction", {
-    p_label: label,
-    p_icon: icon,
-  });
-  if (error) throw error;
-  return Array.isArray(data) ? data[0] ?? null : data;
+  const normalizedLabel = String(label ?? "").trim();
+  const normalizedIcon = String(icon ?? "").trim();
+  if (Array.from(normalizedLabel).length < 1 || Array.from(normalizedLabel).length > 24) {
+    throw new Error("表示名は1〜24文字で入力してください。");
+  }
+  if (Array.from(normalizedIcon).length > 8) throw new Error("絵文字は8文字以内で入力してください。");
+  if (!normalizedIcon && !imageFile) throw new Error("絵文字または画像のどちらかを指定してください。");
+  if (imageFile && (!REACTION_IMAGE_TYPES.has(imageFile.type) || imageFile.size > 1024 * 1024)) {
+    throw new Error("画像はPNG・JPEG・WebP・GIFのいずれか、1MB以内で指定してください。");
+  }
+
+  let imagePath = "";
+  try {
+    if (imageFile) {
+      const extension = REACTION_IMAGE_EXTENSIONS[imageFile.type] || "img";
+      imagePath = `${session.user.id}/reactions/${crypto.randomUUID()}.${extension}`;
+      const { error: uploadError } = await requireClient().storage.from(REACTION_IMAGE_BUCKET).upload(imagePath, imageFile, {
+        cacheControl: "31536000",
+        contentType: imageFile.type,
+        upsert: false,
+      });
+      if (uploadError) throw uploadError;
+    }
+    const { data, error } = await requireClient().rpc("create_custom_reaction", {
+      p_label: normalizedLabel,
+      p_icon: normalizedIcon,
+      p_image_path: imagePath || null,
+    });
+    if (error) throw error;
+    return Array.isArray(data) ? data[0] ?? null : data;
+  } catch (error) {
+    if (imagePath) {
+      try { await requireClient().storage.from(REACTION_IMAGE_BUCKET).remove([imagePath]); } catch { /* cleanup is best effort */ }
+    }
+    throw error;
+  }
 }
 
 function publicCommentAssetUrl(path: string) {
@@ -823,6 +869,7 @@ function buildApi() {
     setSharedCommentReaction,
     loadCustomReactions,
     createCustomReaction,
+    publicReactionAssetUrl,
     publicCommentAssetUrl,
     uploadCommentAttachment,
     removeCommentAttachment,

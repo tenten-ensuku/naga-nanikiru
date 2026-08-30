@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=212">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=212">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=212">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=213">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=213">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=213">
   <title>みん切る｜みんなの何切る問題集</title>
   <meta name="description" content="みん切るは、NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリです。">
   <meta name="theme-color" content="#06131e">
@@ -2169,7 +2169,7 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=212">
+  <link rel="stylesheet" href="ux-v159.css?v=213">
 </head>
 <body class="auth-gate-open">
   <main class="page" inert aria-hidden="true">
@@ -2380,14 +2380,18 @@
       <div class="reaction-popover-heading-v208"><strong id="reactionPickerTitleV208">リアクションを選択</strong><button class="reaction-popover-close-v208" id="reactionPickerCloseV208" type="button" aria-label="リアクション選択を閉じる">×</button></div>
       <div class="reaction-picker-tabs-v211" role="tablist" aria-label="リアクションの種類">
         <button class="reaction-picker-tab-v211 is-active" id="reactionPickerStandardTabV211" type="button" role="tab" aria-selected="true" aria-controls="reactionPickerStandardPanelV211" data-reaction-tab="standard">定番</button>
-        <button class="reaction-picker-tab-v211" id="reactionPickerCustomTabV211" type="button" role="tab" aria-selected="false" aria-controls="reactionPickerCustomPanelV211" data-reaction-tab="custom">カスタム <span id="reactionPickerCustomCountV211">0</span></button>
+        <button class="reaction-picker-tab-v213" id="reactionPickerTileTabV213" type="button" role="tab" aria-selected="false" aria-controls="reactionPickerTilePanelV213" data-reaction-tab="tiles">牌</button>
+        <button class="reaction-picker-tab-v213" id="reactionPickerCustomTabV211" type="button" role="tab" aria-selected="false" aria-controls="reactionPickerCustomPanelV211" data-reaction-tab="custom">カスタム <span id="reactionPickerCustomCountV211">0</span></button>
       </div>
       <div id="reactionPickerStandardPanelV211" role="tabpanel" aria-labelledby="reactionPickerStandardTabV211">
         <div class="reaction-picker-options-v208" id="reactionPickerOptionsV208"></div>
       </div>
+      <div id="reactionPickerTilePanelV213" role="tabpanel" aria-labelledby="reactionPickerTileTabV213" hidden>
+        <div class="reaction-picker-options-v208 reaction-tile-picker-options-v213" id="reactionTilePickerOptionsV213"></div>
+      </div>
       <div id="reactionPickerCustomPanelV211" role="tabpanel" aria-labelledby="reactionPickerCustomTabV211" hidden>
         <div class="reaction-picker-options-v208" id="reactionCustomPickerOptionsV211"></div>
-        <p class="reaction-picker-custom-note-v211">設定から追加した絵文字は、他の利用者も使えます。</p>
+        <p class="reaction-picker-custom-note-v211">設定から追加した絵文字や画像は、他の利用者も使えます。</p>
         <button class="reaction-picker-settings-button-v211" type="button" data-reaction-open-settings>設定でカスタムリアクションを追加</button>
       </div>
     </div>
@@ -2480,13 +2484,13 @@
   </dialog>
 
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=212"></script>
-  <script src="drill-ux-v44.js?v=212"></script>
+  <script src="supabase-sync-v48.js?v=213"></script>
+  <script src="drill-ux-v44.js?v=213"></script>
   <script src="naga-generator-v44.js"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 212;
+    const APP_VERSION = 213;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -2550,8 +2554,24 @@
       Object.freeze({ id: "question", storageKey: "question", label: "", icon: "❓", tone: "purple" })
     ]);
     const REACTION_TOP_KEYS_V211 = Object.freeze(["like", "agree", "hard", "good-question", "important", "hmm", "policy", "mistake"]);
-    const REACTION_DEFINITION_MAP_V209 = new Map(REACTION_DEFINITIONS_V209.map(definition => [definition.id, definition]));
-    const REACTION_STORAGE_KEY_MAP_V209 = new Map(REACTION_DEFINITIONS_V209.flatMap(definition => [[definition.id, definition], [definition.storageKey, definition]]));
+    const MAHJONG_TILE_REACTION_KEYS_V213 = Object.freeze([
+      "man1", "man2", "man3", "man4", "man5", "man6", "man7", "man8", "man9",
+      "pin1", "pin2", "pin3", "pin4", "pin5", "pin6", "pin7", "pin8", "pin9",
+      "sou1", "sou2", "sou3", "sou4", "sou5", "sou6", "sou7", "sou8", "sou9",
+      "ji1", "ji2", "ji3", "ji4", "ji5", "ji6", "ji7", "aka1", "aka2", "aka3"
+    ]);
+    const MAHJONG_TILE_REACTION_LABELS_V213 = Object.freeze({ aka1: "赤五萬", aka2: "赤五筒", aka3: "赤五索" });
+    const MAHJONG_TILE_REACTION_DEFINITIONS_V213 = Object.freeze(MAHJONG_TILE_REACTION_KEYS_V213.map((tileKey, index) => Object.freeze({
+      id: `tile_${tileKey}`,
+      storageKey: `tile_${tileKey}`,
+      label: MAHJONG_TILE_REACTION_LABELS_V213[tileKey] || tileLabel(tileKey),
+      icon: "",
+      iconType: "mahjong-tile",
+      tileKey,
+      tone: ["gold", "teal", "blue", "purple", "red"][index % 5]
+    })));
+    const REACTION_DEFINITION_MAP_V209 = new Map([...REACTION_DEFINITIONS_V209, ...MAHJONG_TILE_REACTION_DEFINITIONS_V213].map(definition => [definition.id, definition]));
+    const REACTION_STORAGE_KEY_MAP_V209 = new Map([...REACTION_DEFINITIONS_V209, ...MAHJONG_TILE_REACTION_DEFINITIONS_V213].flatMap(definition => [[definition.id, definition], [definition.storageKey, definition]]));
     const state = { selected: null, selectedIndex: null, callDecision: null, revealed: false, answerRecorded: false, answerAttemptId: null, sharedAttemptPromise: null, questionStartedAt: Date.now(), judgeModel: 2, riichi: false, commentComposerOpen: false, commentEditingId: null, commentAttachments: [], comments: THREAD_MESSAGES.map(message => ({ ...message, attachments: [...message.attachments] })), reactionEnabled: false, reactionShareSlug: "", reactionQuestionId: "", reactionSummary: { question: {}, comments: {} }, reactionPending: new Set(), customReactions: [] };
     let archiveActionStateV161 = { questionKey: "", phase: "idle" };
 
@@ -3072,6 +3092,17 @@
       });
     }
 
+    function normalizeReactionAssetPathV213(value) {
+      const normalized = String(value || "").trim().replace(/^\/+/, "");
+      return /^[0-9a-f-]{36}\/reactions\/[A-Za-z0-9][A-Za-z0-9._-]{0,200}$/i.test(normalized) ? normalized : "";
+    }
+
+    function reactionAssetUrlV213(path) {
+      const normalized = normalizeReactionAssetPathV213(path);
+      const builder = window.NagaSupabase?.publicReactionAssetUrl;
+      return normalized && typeof builder === "function" ? String(builder(normalized) || "").trim() : "";
+    }
+
     function normalizeCustomReactionDefinitionsV211(rows) {
       const tones = ["gold", "teal", "blue", "purple", "red"];
       const seen = new Set();
@@ -3079,13 +3110,18 @@
         const reactionKey = String(row?.reaction_key ?? row?.reactionKey ?? "").trim();
         const label = String(row?.label ?? "").trim();
         const icon = String(row?.icon ?? "").trim();
-        if (!/^custom_[0-9a-f]{32}$/.test(reactionKey) || !label || !icon || seen.has(reactionKey)) return null;
+        const imagePath = normalizeReactionAssetPathV213(row?.image_path ?? row?.imagePath ?? "");
+        const imageUrl = reactionAssetUrlV213(imagePath);
+        if (!/^custom_[0-9a-f]{32}$/.test(reactionKey) || !label || (!icon && !imagePath) || seen.has(reactionKey)) return null;
         seen.add(reactionKey);
         return {
           id: reactionKey,
           storageKey: reactionKey,
           label,
           icon,
+          iconType: imagePath ? "image" : "emoji",
+          imagePath,
+          imageUrl,
           tone: tones[index % tones.length],
           isCustom: true,
           creatorUserId: String(row?.creator_user_id ?? row?.creatorUserId ?? "").trim(),
@@ -3103,7 +3139,7 @@
     }
 
     function reactionDefinitionsV211() {
-      return [...REACTION_DEFINITIONS_V209, ...(state.customReactions || [])];
+      return [...REACTION_DEFINITIONS_V209, ...MAHJONG_TILE_REACTION_DEFINITIONS_V213, ...(state.customReactions || [])];
     }
 
     function reactionAccessibleLabelV211(definition) {
@@ -3148,12 +3184,22 @@
       return value.length > 0 && value.length <= 200 && !value.startsWith("local-");
     }
 
-    function reactionIconMarkupV209(definition, className) {
+    function reactionIconMarkupV213(definition, className) {
       if (definition?.iconType === "riichi-stick") {
         return `<svg class="${className} reaction-riichi-stick-v209" viewBox="0 0 24 32" role="img" aria-label="立直棒" focusable="false"><rect x="7" y="1" width="10" height="30" rx="3" fill="currentColor"></rect><path d="M7 7h10M7 25h10" stroke="#fff7d6" stroke-width="2"></path></svg>`;
       }
+      if (definition?.iconType === "mahjong-tile" && MAHJONG_TILE_REACTION_KEYS_V213.includes(definition.tileKey)) {
+        return `<img class="${className} reaction-mahjong-tile-icon-v213" src="tiles/${escapeHtml(definition.tileKey)}-66-90-l.png" alt="" loading="lazy" decoding="async">`;
+      }
+      if (definition?.iconType === "image" && definition.imageUrl) {
+        return `<img class="${className} reaction-image-icon-v213" src="${escapeHtml(definition.imageUrl)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">`;
+      }
       if (!definition?.icon) return "";
       return `<span class="${className}" aria-hidden="true">${escapeHtml(definition.icon)}</span>`;
+    }
+
+    function reactionIconMarkupV209(definition, className) {
+      return reactionIconMarkupV213(definition, className);
     }
 
     function reactionParticipantAvatarMarkupV208(participant, { large = false } = {}) {
@@ -3259,14 +3305,20 @@
 
     function reactionPickerOptionMarkupV211(definition, bucket) {
       const selected = Boolean(bucket[definition.id]?.reactedByMe);
-      const icon = reactionIconMarkupV209(definition, "reaction-picker-icon-v209");
+      const icon = reactionIconMarkupV213(definition, "reaction-picker-icon-v209");
       const visibleLabel = definition.label ? `<span class="reaction-picker-label-v208">${escapeHtml(definition.label)}</span>` : "";
       const accessibleLabel = reactionAccessibleLabelV211(definition);
-      return `<button class="reaction-picker-option-v208${selected ? " is-selected" : ""}${icon ? "" : " no-icon"}${definition.label ? "" : " is-icon-only"}" type="button" data-reaction-picker-key="${escapeHtml(definition.id)}" aria-label="${escapeHtml(accessibleLabel)}" aria-pressed="${String(selected)}">${icon}${visibleLabel}</button>`;
+      const tileClass = definition.iconType === "mahjong-tile" ? " is-tile" : "";
+      const imageClass = definition.iconType === "image" ? " is-image" : "";
+      return `<button class="reaction-picker-option-v208 reaction-picker-option-v213${tileClass}${imageClass}${selected ? " is-selected" : ""}${icon ? "" : " no-icon"}${definition.label ? "" : " is-icon-only"}" type="button" data-reaction-picker-key="${escapeHtml(definition.id)}" aria-label="${escapeHtml(accessibleLabel)}" aria-pressed="${String(selected)}">${icon}${visibleLabel}</button>`;
     }
 
-    function setReactionPickerTabV211(tab) {
-      reactionPickerTabV211 = tab === "custom" ? "custom" : "standard";
+    function normalizeReactionPickerTabV213(tab) {
+      return ["standard", "tiles", "custom"].includes(tab) ? tab : "standard";
+    }
+
+    function setReactionPickerTabV213(tab) {
+      reactionPickerTabV211 = normalizeReactionPickerTabV213(tab);
       const picker = document.getElementById("reactionPickerV208");
       picker?.querySelectorAll("[data-reaction-tab]").forEach(button => {
         const active = button.dataset.reactionTab === reactionPickerTabV211;
@@ -3274,21 +3326,29 @@
         button.setAttribute("aria-selected", String(active));
       });
       const standardPanel = document.getElementById("reactionPickerStandardPanelV211");
+      const tilePanel = document.getElementById("reactionPickerTilePanelV213");
       const customPanel = document.getElementById("reactionPickerCustomPanelV211");
       if (standardPanel) standardPanel.hidden = reactionPickerTabV211 !== "standard";
+      if (tilePanel) tilePanel.hidden = reactionPickerTabV211 !== "tiles";
       if (customPanel) customPanel.hidden = reactionPickerTabV211 !== "custom";
+    }
+
+    function setReactionPickerTabV211(tab) {
+      setReactionPickerTabV213(tab);
     }
 
     function renderReactionPickerOptionsV208() {
       const options = document.getElementById("reactionPickerOptionsV208");
+      const tileOptions = document.getElementById("reactionTilePickerOptionsV213");
       const customOptions = document.getElementById("reactionCustomPickerOptionsV211");
       const target = reactionPickerTargetV208;
-      if (!options || !customOptions || !target) return;
+      if (!options || !tileOptions || !customOptions || !target) return;
       const bucket = reactionBucketV208(target.scope, target.targetId);
       const topDefinitions = REACTION_TOP_KEYS_V211.map(key => REACTION_DEFINITION_MAP_V209.get(key)).filter(Boolean);
       const topKeySet = new Set(REACTION_TOP_KEYS_V211);
       const standardDefinitions = [...topDefinitions, ...REACTION_DEFINITIONS_V209.filter(definition => !topKeySet.has(definition.id))];
       options.innerHTML = standardDefinitions.map(definition => reactionPickerOptionMarkupV211(definition, bucket)).join("");
+      tileOptions.innerHTML = MAHJONG_TILE_REACTION_DEFINITIONS_V213.map(definition => reactionPickerOptionMarkupV211(definition, bucket)).join("");
       const customDefinitions = state.customReactions || [];
       customOptions.innerHTML = customDefinitions.length
         ? customDefinitions.map(definition => reactionPickerOptionMarkupV211(definition, bucket)).join("")
@@ -4123,8 +4183,9 @@
       const COMMENT_NOTICE_STORAGE_KEY_V65 = storageKey("comment-notices-v1");
       const QUESTION_NOTICE_STORAGE_KEY_V66 = storageKey("question-notices-v1");
       const ANNOUNCEMENT_SEEN_STORAGE_KEY_V65 = storageKey("announcement-seen-v1");
-      const APP_ANNOUNCEMENTS_V66 = [
-        { version: 212, date: "2026-08-31", publishedAt: "2026-08-31T02:00:00+09:00", title: "副露後の回答表示を整えました", body: "副露直後に回答したあとも、回答前と同じ手牌の並び・空きスロット・マスク範囲で表示するようにしました。ダイミンカンやアンカンを含む既存問題にも共通ルールを適用しています。" },
+        const APP_ANNOUNCEMENTS_V66 = [
+          { version: 213, date: "2026-08-31", publishedAt: "2026-08-31T03:00:00+09:00", title: "画像リアクションと牌リアクションを追加しました", body: "設定から画像付きのカスタムリアクションを追加できるようになりました。リアクション選択には「牌」タブを追加し、定番の麻雀牌37種類も選べます。" },
+          { version: 212, date: "2026-08-31", publishedAt: "2026-08-31T02:00:00+09:00", title: "副露後の回答表示を整えました", body: "副露直後に回答したあとも、回答前と同じ手牌の並び・空きスロット・マスク範囲で表示するようにしました。ダイミンカンやアンカンを含む既存問題にも共通ルールを適用しています。" },
         { version: 211, date: "2026-08-31", publishedAt: "2026-08-31T01:12:31+09:00", title: "カスタムリアクションを追加できるようにしました", body: "設定から絵文字リアクションを追加できます。追加されたリアクションは、リアクション選択パネルの「カスタム」タブから他の利用者も使えます。定番リアクションの「黙る」は「ダマ」に変更しました。" },
         { version: 209, date: "2026-08-31", publishedAt: "2026-08-31T00:12:12+09:00", title: "リアクションを見本のアイコン表示に整えました", body: "リアクションを👍や💡などのアイコンと指定文言で表示し、立直は専用の立直棒アイコンで表現しました。" },
         { version: 208, date: "2026-08-30", publishedAt: "2026-08-30T23:45:37+09:00", title: "リアクション機能を追加しました", body: "問題全体とコメントに20種類のリアクションを付けられるようになりました。選択したリアクションの参加者はDiscordアイコンと人数で確認できます。" },
@@ -5771,40 +5832,62 @@
         }
       }
 
-      function customReactionSettingsListMarkupV211() {
+      function customReactionPreviewMarkupV213(row, className = "custom-reaction-preview-v213") {
+        const imagePath = normalizeReactionAssetPathV213(row?.image_path ?? row?.imagePath ?? "");
+        const imageUrl = reactionAssetUrlV213(imagePath);
+        if (imageUrl) return `<img class="${className} custom-reaction-image-preview-v213" src="${escapeHtml(imageUrl)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">`;
+        return `<span class="${className}" aria-hidden="true">${escapeHtml(String(row?.icon || "🖼️"))}</span>`;
+      }
+
+      function customReactionSettingsListMarkupV213() {
         const rows = Array.isArray(customReactionCatalogV211) ? customReactionCatalogV211 : [];
         if (!rows.length) return `<p class="custom-reaction-empty-v211">カスタムリアクションはまだありません。追加したものは、すべてのログイン利用者が使えます。</p>`;
-        return `<div class="custom-reaction-list-v211">${rows.map(row => {
+        return `<div class="custom-reaction-list-v211 custom-reaction-list-v213">${rows.map(row => {
           const key = escapeHtml(String(row?.reaction_key || ""));
-          const icon = escapeHtml(String(row?.icon || ""));
           const label = escapeHtml(String(row?.label || ""));
           const creator = escapeHtml(String(row?.creator_display_name || "プレイヤー"));
-          return `<div class="custom-reaction-row-v211" data-custom-reaction-key="${key}"><span class="custom-reaction-preview-v211" aria-hidden="true">${icon}</span><span class="custom-reaction-row-copy-v211"><strong>${label}</strong><small>追加者：${creator}</small></span></div>`;
+          return `<div class="custom-reaction-row-v211 custom-reaction-row-v213" data-custom-reaction-key="${key}">${customReactionPreviewMarkupV213(row)}<span class="custom-reaction-row-copy-v211"><strong>${label}</strong><small>追加者：${creator}</small></span></div>`;
         }).join("")}</div>`;
       }
 
-      function customReactionSettingsMarkupV211() {
-        return `<div class="settings-divider" role="presentation"></div><section class="custom-reaction-settings-v211"><h3>カスタムリアクション</h3><p>絵文字と短い表示名を追加できます。追加したリアクションは、共有問題で他のログイン利用者も使えます。</p><form class="settings-form custom-reaction-form-v211" id="customReactionFormV211"><div class="custom-reaction-input-grid-v211"><label for="customReactionIconV211">絵文字<input id="customReactionIconV211" type="text" maxlength="8" required placeholder="🔥" autocomplete="off"></label><label for="customReactionLabelV211">表示名<input id="customReactionLabelV211" type="text" maxlength="24" required placeholder="ここ大事" autocomplete="off"></label></div><p class="settings-form-note">絵文字は1〜8文字、表示名は1〜24文字で入力してください。</p><div class="settings-form-actions"><button class="primary" type="submit">カスタムリアクションを追加</button><span class="settings-form-status" id="customReactionStatusV211" aria-live="polite"></span></div></form><div id="customReactionListV211">${customReactionSettingsListMarkupV211()}</div></section>`;
+      function customReactionSettingsListMarkupV211() {
+        return customReactionSettingsListMarkupV213();
       }
 
-      function bindCustomReactionSettingsV211() {
-        const form = document.getElementById("customReactionFormV211");
+      function customReactionSettingsMarkupV213() {
+        return `<div class="settings-divider" role="presentation"></div><section class="custom-reaction-settings-v211 custom-reaction-settings-v213"><h3>カスタムリアクション</h3><p>絵文字または画像と短い表示名を追加できます。追加したリアクションは、共有問題で他のログイン利用者も使えます。</p><form class="settings-form custom-reaction-form-v211 custom-reaction-form-v213" id="customReactionFormV213"><div class="custom-reaction-input-grid-v211 custom-reaction-input-grid-v213"><label for="customReactionIconV213">絵文字（任意）<input id="customReactionIconV213" type="text" maxlength="8" placeholder="🔥" autocomplete="off"></label><label for="customReactionLabelV213">表示名<input id="customReactionLabelV213" type="text" maxlength="24" required placeholder="ここ大事" autocomplete="off"></label></div><label for="customReactionImageV213">画像（任意）<input id="customReactionImageV213" type="file" accept="image/png,image/jpeg,image/webp,image/gif"></label><p class="settings-form-note">絵文字または画像のどちらかを指定してください。画像を指定した場合は、リアクション上では画像を優先して表示します（1MB以内）。</p><div class="settings-form-actions"><button class="primary" type="submit">カスタムリアクションを追加</button><span class="settings-form-status" id="customReactionStatusV213" aria-live="polite"></span></div></form><div id="customReactionListV213">${customReactionSettingsListMarkupV213()}</div></section>`;
+      }
+
+      function customReactionSettingsMarkupV211() {
+        return customReactionSettingsMarkupV213();
+      }
+
+      function bindCustomReactionSettingsV213() {
+        const form = document.getElementById("customReactionFormV213");
         if (!form) return;
         form.addEventListener("submit", async event => {
           event.preventDefault();
-          const iconInput = document.getElementById("customReactionIconV211");
-          const labelInput = document.getElementById("customReactionLabelV211");
-          const status = document.getElementById("customReactionStatusV211");
+          const iconInput = document.getElementById("customReactionIconV213");
+          const labelInput = document.getElementById("customReactionLabelV213");
+          const imageInput = document.getElementById("customReactionImageV213");
+          const status = document.getElementById("customReactionStatusV213");
           const button = form.querySelector("button[type=submit]");
           const icon = String(iconInput?.value || "").trim();
           const label = String(labelInput?.value || "").trim();
+          const imageFile = imageInput?.files?.[0] || null;
           const iconLength = Array.from(icon).length;
           const labelLength = Array.from(label).length;
           status?.classList.remove("is-error");
-          if (!icon || iconLength > 8 || !label || labelLength > 24) {
+          if ((!icon && !imageFile) || iconLength > 8 || !label || labelLength > 24) {
             status?.classList.add("is-error");
-            if (status) status.textContent = "絵文字は1〜8文字、表示名は1〜24文字で入力してください。";
-            (iconLength > 8 || !icon ? iconInput : labelInput)?.focus();
+            if (status) status.textContent = "絵文字または画像のどちらかと、1〜24文字の表示名を指定してください。絵文字は8文字以内です。";
+            (iconLength > 8 || (!icon && !imageFile) ? iconInput : labelInput)?.focus();
+            return;
+          }
+          if (imageFile && (!COMMENT_IMAGE_TYPES_V68.has(imageFile.type) || imageFile.size > 1 * 1024 * 1024)) {
+            status?.classList.add("is-error");
+            if (status) status.textContent = "画像はPNG・JPEG・WebP・GIFのいずれか、1MB以内で指定してください。";
+            imageInput?.focus();
             return;
           }
           if (!supabaseSessionV46 || typeof window.NagaSupabase?.createCustomReaction !== "function") {
@@ -5818,13 +5901,14 @@
           }
           if (status) status.textContent = "";
           try {
-            await window.NagaSupabase.createCustomReaction(label, icon);
+            await window.NagaSupabase.createCustomReaction(label, icon, imageFile);
             await refreshCustomReactionCatalogV211({ force: true });
             if (iconInput) iconInput.value = "";
             if (labelInput) labelInput.value = "";
+            if (imageInput) imageInput.value = "";
             if (status) status.textContent = "カスタムリアクションを追加しました。";
-            const list = document.getElementById("customReactionListV211");
-            if (list) list.innerHTML = customReactionSettingsListMarkupV211();
+            const list = document.getElementById("customReactionListV213");
+            if (list) list.innerHTML = customReactionSettingsListMarkupV213();
           } catch (error) {
             status?.classList.add("is-error");
             if (status) status.textContent = error?.message || "カスタムリアクションを追加できませんでした。";
@@ -5835,6 +5919,10 @@
             }
           }
         });
+      }
+
+      function bindCustomReactionSettingsV211() {
+        bindCustomReactionSettingsV213();
       }
 
       function renderSettingsViewV67() {
