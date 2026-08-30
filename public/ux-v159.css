@@ -5988,3 +5988,55 @@ body.auth-gate-open {
     width: auto;
   }
 }
+
+/* V206: reserve separate title, status, and arrow areas in the collection switcher. */
+@media (min-width: 801px) {
+  .page.menu-active .active-collection-button {
+    grid-template-columns: minmax(0, 1fr) 18px;
+    grid-template-rows: auto auto;
+    align-items: center;
+    align-content: center;
+    column-gap: 8px;
+    row-gap: 4px;
+    min-height: 86px;
+    padding: 12px 10px 12px 14px;
+  }
+
+  .page.menu-active .active-collection-button > strong.active-collection-title {
+    grid-column: 1;
+    grid-row: 1;
+    display: -webkit-box;
+    min-width: 0;
+    max-width: 100%;
+    overflow: hidden;
+    padding: 0;
+    font-size: 16px;
+    line-height: 1.25;
+    overflow-wrap: anywhere;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .page.menu-active .active-collection-button > .active-collection-status {
+    grid-column: 1;
+    grid-row: 2;
+    align-self: start;
+    min-width: 0;
+    overflow: hidden;
+    padding: 0;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .page.menu-active .active-collection-button > .active-collection-arrow {
+    position: static;
+    grid-column: 2;
+    grid-row: 1 / -1;
+    align-self: center;
+    justify-self: end;
+    transform: none;
+    color: var(--ux-brown-gold-light);
+    font-size: 25px;
+    line-height: 1;
+  }
+}

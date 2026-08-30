@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=205">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=205">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=205">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=206">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=206">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=206">
   <title>みん切る｜みんなの何切る問題集</title>
   <meta name="description" content="みん切るは、NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリです。">
   <meta name="theme-color" content="#06131e">
@@ -2163,7 +2163,7 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=205&amp;rev=3">
+  <link rel="stylesheet" href="ux-v159.css?v=206">
 </head>
 <body class="auth-gate-open">
   <main class="page" inert aria-hidden="true">
@@ -2446,13 +2446,13 @@
   </dialog>
 
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=205"></script>
-  <script src="drill-ux-v44.js?v=205"></script>
+  <script src="supabase-sync-v48.js?v=206"></script>
+  <script src="drill-ux-v44.js?v=206"></script>
   <script src="naga-generator-v44.js"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 205;
+    const APP_VERSION = 206;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -3599,6 +3599,7 @@
       const QUESTION_NOTICE_STORAGE_KEY_V66 = storageKey("question-notices-v1");
       const ANNOUNCEMENT_SEEN_STORAGE_KEY_V65 = storageKey("announcement-seen-v1");
       const APP_ANNOUNCEMENTS_V66 = [
+        { version: 206, date: "2026-08-30", publishedAt: "2026-08-30T21:12:42+09:00", title: "問題集カードの表示崩れを直しました", body: "PCの問題集カードで、問題集名・変更操作・矢印が重ならないよう表示領域を分けました。狭い画面でもカードの内容を読みやすく整理しています。" },
         { version: 205, date: "2026-08-30", publishedAt: "2026-08-30T20:46:56+09:00", title: "PC版ヘッダーの重なりを整理しました", body: "PCではブランド情報と更新・通知・ログアウトを分けて配置し、左上の要素が重ならないようにしました。スマホの表示と学習機能はこれまでどおりです。" },
         { version: 204, date: "2026-08-30", publishedAt: "2026-08-30T12:00:00+09:00", title: "学習画面の入口とヘッダーを整えました", body: "学習カードの円形矢印をなくし、PCではカード全体を押せる主操作ボタンにしました。スマホではプレイ表示を残し、みん切るの正式名称とログアウトの位置も分かりやすく整理しています。" },
         { version: 203, date: "2026-08-30", publishedAt: "2026-08-30T11:00:00+09:00", title: "PC版の学習ボタンを整えました", body: "PCでも未回答・苦手克服・全問を解くの3つの入口が画面内に均等に収まり、主操作ボタンとして押しやすくなりました。スマホでは従来の縦積み表示を保ちます。" },
