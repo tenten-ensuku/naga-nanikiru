@@ -5941,3 +5941,44 @@ body.auth-gate-open {
     display: none;
   }
 }
+
+/* V205: separate the PC brand row from its account and notice controls. */
+@media (min-width: 801px) {
+  .page.menu-active .menu-brand {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    grid-template-areas: "tile copy" "tile actions";
+    align-items: center;
+    column-gap: 7px;
+    row-gap: 5px;
+    min-height: 76px;
+    padding-block: 3px;
+  }
+
+  .page.menu-active .menu-brand-tile {
+    grid-area: tile;
+    align-self: center;
+  }
+
+  .page.menu-active .menu-brand-copy {
+    grid-area: copy;
+    align-self: end;
+    width: 100%;
+  }
+
+  .page.menu-active .menu-brand-actions {
+    grid-area: actions;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+    gap: 4px;
+  }
+
+  .page.menu-active .menu-brand-actions .menu-auth-button {
+    flex: 0 0 auto;
+    min-width: 72px;
+  }
+}
