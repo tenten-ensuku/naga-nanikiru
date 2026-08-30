@@ -85,7 +85,7 @@ test("V205 keeps the learning actions usable and stable on desktop and mobile", 
   assert.match(css, /V203: turn the learning entries into a stable three-column action rail on desktop/);
   assert.match(css, /V204: make the header identity and learning cards read as compact primary actions/);
   assert.match(css, /V205: separate the PC brand row from its account and notice controls/);
-  assert.match(css, /grid-template-areas: "tile copy" "tile actions"/);
+  assert.match(css, /grid-template-areas: "tile copy" "actions actions"/);
   assert.match(css, /\.menu-brand-actions #discordAuthButton \{[\s\S]*?width: auto;/);
   assert.match(css, /grid-template-columns: repeat\(3, minmax\(0, 1fr\)\)/);
   assert.match(css, /\.learning-all-action > \.learning-custom-settings/);

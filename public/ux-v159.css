@@ -5948,7 +5948,7 @@ body.auth-gate-open {
     display: grid;
     grid-template-columns: auto minmax(0, 1fr);
     grid-template-rows: auto auto;
-    grid-template-areas: "tile copy" "tile actions";
+    grid-template-areas: "tile copy" "actions actions";
     align-items: center;
     column-gap: 7px;
     row-gap: 5px;
