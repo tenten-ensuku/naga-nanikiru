@@ -7,7 +7,7 @@ const cssUrl = new URL("../public/ux-v159.css", import.meta.url);
 const identityUrl = new URL("../app/lib/appIdentity.ts", import.meta.url);
 const packageUrl = new URL("../package.json", import.meta.url);
 
-test("V194 starts learning after collection selection and clarifies the learning actions", async () => {
+test("V203 keeps the learning actions usable and stable on desktop and mobile", async () => {
   const [html, css, identity, packageSource] = await Promise.all([
     readFile(indexUrl, "utf8"),
     readFile(cssUrl, "utf8"),
@@ -15,10 +15,10 @@ test("V194 starts learning after collection selection and clarifies the learning
     readFile(packageUrl, "utf8")
   ]);
 
-  assert.match(html, /const APP_VERSION = 202;/);
-  assert.match(identity, /APP_VERSION = 202/);
+  assert.match(html, /const APP_VERSION = 203;/);
+  assert.match(identity, /APP_VERSION = 203/);
   for (const asset of ["ux-v159\\.css", "supabase-sync-v48\\.js", "drill-ux-v44\\.js"]) {
-    assert.match(html, new RegExp(`${asset}\\?v=202`));
+    assert.match(html, new RegExp(`${asset}\\?v=203`));
   }
   assert.match(html, /問題集を変更する/);
   assert.doesNotMatch(html, /class="active-collection-label"/);
@@ -82,6 +82,10 @@ test("V194 starts learning after collection selection and clarifies the learning
   assert.match(css, /V193: clarify the app header and give the current collection more room/);
   assert.match(css, /V194: make the three learning entry points feel like clear, premium actions/);
   assert.match(css, /V194: recent rows now expose personal organization without nesting buttons/);
+  assert.match(css, /V203: turn the learning entries into a stable three-column action rail on desktop/);
+  assert.match(css, /grid-template-columns: repeat\(3, minmax\(0, 1fr\)\)/);
+  assert.match(css, /\.learning-all-action > \.learning-custom-settings/);
+  assert.match(html, /<summary aria-label="全問を解くの設定">[\s\S]*条件設定/);
   assert.match(html, /function renderLearningActionButtonV194\(/);
   assert.match(html, /プレイ/);
   assert.match(learningView, /data-menu-action="favorite"/);

@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=202">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=202">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=202">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=203">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=203">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=203">
   <title>みん切る｜みんなの何切る問題集</title>
   <meta name="description" content="みん切るは、NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリです。">
   <meta name="theme-color" content="#06131e">
@@ -2163,7 +2163,7 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=202">
+  <link rel="stylesheet" href="ux-v159.css?v=203">
 </head>
 <body class="auth-gate-open">
   <main class="page" inert aria-hidden="true">
@@ -2447,13 +2447,13 @@
   </dialog>
 
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=202"></script>
-  <script src="drill-ux-v44.js?v=202"></script>
+  <script src="supabase-sync-v48.js?v=203"></script>
+  <script src="drill-ux-v44.js?v=203"></script>
   <script src="naga-generator-v44.js"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 202;
+    const APP_VERSION = 203;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -3600,7 +3600,8 @@
       const QUESTION_NOTICE_STORAGE_KEY_V66 = storageKey("question-notices-v1");
       const ANNOUNCEMENT_SEEN_STORAGE_KEY_V65 = storageKey("announcement-seen-v1");
       const APP_ANNOUNCEMENTS_V66 = [
-        { version: 202, date: "2026-08-30", publishedAt: "2026-08-30T10:00:00+09:00", title: "アプリ名を「みん切る」に変更しました", body: "アプリの表示名を「みん切る」、正式名称を「みんなの何切る問題集」に統一しました。" },
+        { version: 203, date: "2026-08-30", publishedAt: "2026-08-30T11:00:00+09:00", title: "PC版の学習ボタンを整えました", body: "PCでも未回答・苦手克服・全問を解くの3つの入口が画面内に均等に収まり、主操作ボタンとして押しやすくなりました。スマホでは従来の縦積み表示を保ちます。" },
+        { version: 202, date: "2026-08-30T10:00:00+09:00", title: "アプリ名を「みん切る」に変更しました", body: "アプリの表示名を「みん切る」、正式名称を「みんなの何切る問題集」に統一しました。" },
         { version: 200, date: "2026-08-30", publishedAt: "2026-08-30T07:00:00+09:00", title: "カンの手牌表示を修正しました", body: "カンした牌が手牌に残らず、副露として正しく表示されるように修正しました。" },
         { version: 199, date: "2026-08-30", publishedAt: "2026-08-30T06:00:00+09:00", title: "コメント追加ボタンを修正しました", body: "コメント追加ボタンを押したときに、入力内容が確実に表示・保存されるように修正しました。" },
         { version: 198, date: "2026-08-30", publishedAt: "2026-08-30T05:38:15+09:00", title: "過去のコメントにもDiscordアイコンを表示しました", body: "Discordスレッドから取り込んだ過去コメントにも、対応するプロフィールのアイコンを反映しました。対応するプロフィールがない場合は表示名を残します。" },
@@ -7790,7 +7791,7 @@
         const actionMarkup = [
           renderLearningActionButtonV194({ mode: "unanswered", title: "未回答", count: displayedUnanswered, description: "未回答問題を一通り進める", tone: "primary", disabled: actionDisabled(Number(displayedUnanswered)) }),
           renderLearningActionButtonV194({ mode: "weak", title: "苦手克服", count: displayedWeak, description: "直近×・△を中心に復習", tone: "weak", disabled: actionDisabled(Number(displayedWeak)) }),
-          `<div class="learning-all-action">${renderLearningActionButtonV194({ mode: "all", title: "全問", count: displayedAll, description: "選択した条件で学習", tone: "all", disabled: actionDisabled(Number(displayedAll)) })}<details class="learning-custom-settings" id="learningCustomSettings"><summary><span><span class="learning-settings-icon" aria-hidden="true">⚙</span>全問を解くの設定</span><span data-learning-settings-summary>${escapeHtml(learningSettingsSummaryV189())}</span></summary><div class="learning-custom-settings-body"><fieldset class="learning-setting-group"><legend>出題順 <small>1つ選択</small></legend><div class="learning-check-grid learning-check-grid-order"><label class="learning-check"><input type="checkbox" data-learning-setting="order" data-learning-value="sequential"${learningOrderV189 === "sequential" ? " checked" : ""}><span>順番${isBasicSequence ? "（推奨）" : ""}</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="order" data-learning-value="random"${learningOrderV189 === "random" ? " checked" : ""}><span>ランダム</span></label></div></fieldset><fieldset class="learning-setting-group"><legend>ジャンル <small>複数選択可</small></legend><div class="learning-check-grid"><label class="learning-check"><input type="checkbox" data-learning-setting="genre" data-learning-value="discard"${learningGenresV189.has("discard") ? " checked" : ""}><span>打牌判断</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="genre" data-learning-value="riichi"${learningGenresV189.has("riichi") ? " checked" : ""}><span>リーチ判断</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="genre" data-learning-value="call"${learningGenresV189.has("call") ? " checked" : ""}><span>副露判断</span></label></div></fieldset><fieldset class="learning-setting-group"><legend>直近履歴 <small>複数選択可</small></legend><div class="learning-check-grid learning-check-grid-history"><label class="learning-check"><input type="checkbox" data-learning-setting="history" data-learning-value="unanswered"${learningHistoryFiltersV189.has("unanswered") ? " checked" : ""}><span>未回答</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="history" data-learning-value="×"${learningHistoryFiltersV189.has("×") ? " checked" : ""}><span class="learning-status-mark is-miss">×</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="history" data-learning-value="△"${learningHistoryFiltersV189.has("△") ? " checked" : ""}><span class="learning-status-mark is-review">△</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="history" data-learning-value="〇"${learningHistoryFiltersV189.has("〇") ? " checked" : ""}><span class="learning-status-mark is-safe">〇</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="history" data-learning-value="◎"${learningHistoryFiltersV189.has("◎") ? " checked" : ""}><span class="learning-status-mark is-excellent">◎</span></label></div></fieldset><p>この設定は「全問を解く」にのみ適用されます。未回答を解く・苦手克服は固定ルールです。</p></div></details></div>`
+          `<div class="learning-all-action">${renderLearningActionButtonV194({ mode: "all", title: "全問", count: displayedAll, description: "選択した条件で学習", tone: "all", disabled: actionDisabled(Number(displayedAll)) })}<details class="learning-custom-settings" id="learningCustomSettings"><summary aria-label="全問を解くの設定"><span><span class="learning-settings-icon" aria-hidden="true">⚙</span>条件設定</span><span data-learning-settings-summary>${escapeHtml(learningSettingsSummaryV189())}</span></summary><div class="learning-custom-settings-body"><fieldset class="learning-setting-group"><legend>出題順 <small>1つ選択</small></legend><div class="learning-check-grid learning-check-grid-order"><label class="learning-check"><input type="checkbox" data-learning-setting="order" data-learning-value="sequential"${learningOrderV189 === "sequential" ? " checked" : ""}><span>順番${isBasicSequence ? "（推奨）" : ""}</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="order" data-learning-value="random"${learningOrderV189 === "random" ? " checked" : ""}><span>ランダム</span></label></div></fieldset><fieldset class="learning-setting-group"><legend>ジャンル <small>複数選択可</small></legend><div class="learning-check-grid"><label class="learning-check"><input type="checkbox" data-learning-setting="genre" data-learning-value="discard"${learningGenresV189.has("discard") ? " checked" : ""}><span>打牌判断</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="genre" data-learning-value="riichi"${learningGenresV189.has("riichi") ? " checked" : ""}><span>リーチ判断</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="genre" data-learning-value="call"${learningGenresV189.has("call") ? " checked" : ""}><span>副露判断</span></label></div></fieldset><fieldset class="learning-setting-group"><legend>直近履歴 <small>複数選択可</small></legend><div class="learning-check-grid learning-check-grid-history"><label class="learning-check"><input type="checkbox" data-learning-setting="history" data-learning-value="unanswered"${learningHistoryFiltersV189.has("unanswered") ? " checked" : ""}><span>未回答</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="history" data-learning-value="×"${learningHistoryFiltersV189.has("×") ? " checked" : ""}><span class="learning-status-mark is-miss">×</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="history" data-learning-value="△"${learningHistoryFiltersV189.has("△") ? " checked" : ""}><span class="learning-status-mark is-review">△</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="history" data-learning-value="〇"${learningHistoryFiltersV189.has("〇") ? " checked" : ""}><span class="learning-status-mark is-safe">〇</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="history" data-learning-value="◎"${learningHistoryFiltersV189.has("◎") ? " checked" : ""}><span class="learning-status-mark is-excellent">◎</span></label></div></fieldset><p>この設定は「全問を解く」にのみ適用されます。未回答を解く・苦手克服は固定ルールです。</p></div></details></div>`
         ].join("");
         return `<section class="learning-dashboard today-dashboard" aria-labelledby="menuTitle"><nav class="learning-tabs" aria-label="学習メニュー"><button type="button" data-menu-jump="my"><span class="learning-tab-icon" aria-hidden="true">▦</span><span>問題一覧</span><span class="learning-tab-count">${displayedTotal}</span></button><button type="button" data-menu-jump="favorites"><span class="learning-tab-icon" aria-hidden="true">☆</span><span>お気に入り</span><span class="learning-tab-count">${displayedFavorites}</span></button><button type="button" data-menu-jump="archive"><span class="learning-tab-icon" aria-hidden="true">${menuArchiveIconV109()}</span><span>アーカイブ</span></button></nav>${resumeMarkup}<section class="learning-action-grid" aria-label="学習を始める">${actionMarkup}</section><section class="today-recent learning-recent-section"><div class="today-section-heading"><h3>直近回答履歴</h3><button type="button" data-menu-jump="my">問題一覧を見る <span aria-hidden="true">→</span></button></div><div class="today-recent-list">${recentMarkup}</div></section></section>`;
       }
