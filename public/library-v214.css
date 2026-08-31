@@ -362,7 +362,8 @@
 
 .library-v214 .library-book:not(:disabled):active { transform: translateY(-3px) scale(.99); }
 
-.library-v214.is-reorder-ready .library-book.is-picked { cursor: grab; touch-action: none; }
+.library-v214.is-reorder-ready .library-book:not(.is-placeholder) { cursor: grab; touch-action: pan-y; }
+.library-v214.is-reorder-ready .library-book:not(.is-placeholder):active { cursor: grabbing; }
 .library-v214 .library-book.is-placeholder { opacity: .4; pointer-events: none; filter: saturate(.3); }
 .library-v214 .library-book.is-picked .library-book-surface { outline: 1px solid #e6c17d; outline-offset: -2px; }
 .library-v214.is-reordering .library-rail { scroll-snap-type: none; }

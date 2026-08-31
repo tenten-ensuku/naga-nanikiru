@@ -226,7 +226,7 @@
         <div class="library-shelf-heading"><div class="library-breadcrumb"><h4>あなたの本棚</h4><span class="library-shelf-total">${state.entries.length}冊</span></div><button type="button" class="library-reset" data-library-reset>標準順に戻す</button><div class="library-rail-actions" data-library-rail-actions><button type="button" data-library-scroll="-1" aria-label="前の本を表示">${icon("left")}</button><button type="button" data-library-scroll="1" aria-label="次の本を表示">${icon("right")}</button></div></div>
         ${notice ? `<div class="library-notice" role="alert"><span>${escape(notice)}</span>${state.failures.size ? '<button type="button" data-library-retry>もう一度読み込む</button>' : ""}</div>` : ""}
         <div class="library-stage"><img class="library-study-art" src="${ASSET_ROOT}study.webp" alt="" width="1672" height="941" decoding="async" fetchpriority="high"><div class="library-rail" data-library-rail role="group" aria-label="すべての問題集の本棚">${state.entries.map(book => bookMarkup(book, book.slug === state.selected, { picked: book.slug === state.picked })).join("") || `<p class="library-empty" role="status">${context.loading ? "問題集を本棚に並べています…" : "まだ問題集がありません。新しい問題集を作るか、共有された問題集を開いてください。"}</p>`}</div></div>
-        <div class="library-shelf-foot"><span>選んだ本をドラッグして並べ替え</span><span>並び順はこのブラウザーに保存</span></div>
+        <div class="library-shelf-foot"><span>本をそのままドラッグして並べ替え</span><span>並び順はこのブラウザーに保存</span></div>
         <section class="library-detail" data-library-detail aria-labelledby="libraryDetailTitleV214">${detail()}</section>
         <p class="library-order-status" data-library-status role="status" aria-live="polite"></p>
       </section>`;
@@ -403,6 +403,10 @@
       if (!drag || drag.started) return;
       const doc = host.document;
       if (!doc?.createElement || !drag.source.cloneNode) return;
+      // The first press may become either a normal preview tap or a drag.
+      // Once movement crosses the threshold, select that book in place and
+      // continue directly into reordering without requiring a prior tap.
+      if (state.picked !== drag.slug) setSelection(drag.slug);
       // Capture on the stable parent: moving the book node would otherwise release capture.
       drag.captureTarget = state.root;
       try { drag.captureTarget.setPointerCapture?.(drag.pointerId); }
@@ -500,8 +504,8 @@
         // A fresh physical tap is intentional, even immediately after a cancelled drag.
         state.suppressClick = { slug: "", until: 0 };
         const source = event.target.closest("[data-library-book]");
-        if (!source || source.dataset.libraryBook !== state.picked || !reorderReady() || state.opening || (event.button !== undefined && event.button !== 0)) return;
-        state.drag = { source, slug: state.picked, pointerId: event.pointerId, startX: event.clientX, startY: event.clientY,
+        if (!source || !reorderReady() || state.opening || (event.button !== undefined && event.button !== 0)) return;
+        state.drag = { source, slug: source.dataset.libraryBook, pointerId: event.pointerId, startX: event.clientX, startY: event.clientY,
           x: event.clientX, y: event.clientY, rail: root.querySelector("[data-library-rail]"), before: state.entries.map(book => book.slug), started: false, captureTarget: source };
         try { source.setPointerCapture?.(event.pointerId); }
         catch { state.drag = null; announce("左右ボタンで本を移動できます。"); }

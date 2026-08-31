@@ -411,7 +411,7 @@ test("switching users invalidates old in-flight/cache data", async () => {
 
 test("adapter keeps legacy fallback, controller mount/unmount hooks, and navigation reset contract", async () => {
   const [index, library] = await Promise.all([readFile(INDEX_PATH, "utf8"), readFile(LIBRARY_PATH, "utf8")]);
-  assert.match(index, /library-v214\.js\?v=215/);
+  assert.match(index, /library-v214\.js\?v=216/);
   const renderStart = index.indexOf("function renderCollectionChooserV165");
   const renderEnd = index.indexOf("function renderCollectionSpacePanelV100", renderStart);
   const renderer = index.slice(renderStart, renderEnd);
@@ -889,6 +889,46 @@ test("V215 drag uses a stable capture parent, drop saves, and its synthetic clic
   assert.equal(opens, 0);
   assert.equal(shelf.root.capturedPointer, null);
   assert.equal(source.classList.contains("is-drag-source"), false);
+});
+
+test("V216 the first press can drag an unselected book without opening it", async () => {
+  const api = await libraryApi();
+  let saves = 0, opens = 0;
+  const controller = api.create({ saveOrder: () => { saves++; }, onOpen: () => { opens++; return true; } });
+  const shelf = mountShelfV215(controller, context("u", v215Books()));
+  const source = shelf.buttons[1];
+
+  shelf.root.dispatch("pointerdown", { target: source, pointerId: 16, clientX: 68, clientY: 210, button: 0 });
+  shelf.root.dispatch("pointermove", { target: source, pointerId: 16, clientX: 170, clientY: 210 });
+
+  assert.equal(source.classList.contains("is-picked"), true);
+  assert.equal(source.classList.contains("is-drag-source"), true);
+  assert.match(shelf.detail.innerHTML, /この本で学びますか？/);
+
+  shelf.root.dispatch("pointerup", { target: shelf.root, pointerId: 16 });
+  shelf.root.dispatch("click", { target: source, detail: 1 });
+
+  assert.deepEqual(v215Ids(shelf.root), ["basic", "pierre", "kunitaso"]);
+  assert.equal(saves, 1);
+  assert.equal(opens, 0);
+});
+
+test("V216 a short first press still previews instead of opening or reordering", async () => {
+  const api = await libraryApi();
+  let saves = 0, opens = 0;
+  const controller = api.create({ saveOrder: () => { saves++; }, onOpen: () => { opens++; return true; } });
+  const shelf = mountShelfV215(controller, context("u", v215Books()));
+  const source = shelf.buttons[1];
+
+  shelf.root.dispatch("pointerdown", { target: source, pointerId: 17, clientX: 68, clientY: 210, button: 0 });
+  shelf.root.dispatch("pointerup", { target: source, pointerId: 17 });
+  shelf.root.dispatch("click", { target: source, detail: 1 });
+
+  assert.equal(source.classList.contains("is-picked"), true);
+  assert.match(shelf.detail.innerHTML, /この本で学びますか？/);
+  assert.deepEqual(v215Ids(shelf.root), ["basic", "kunitaso", "pierre"]);
+  assert.equal(saves, 0);
+  assert.equal(opens, 0);
 });
 
 test("V215 Escape and pointercancel roll a drag back without persisting", async () => {

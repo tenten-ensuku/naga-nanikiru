@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=215">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=215">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=215">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=216">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=216">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=216">
   <title>みん切る｜みんなの何切る問題集</title>
   <meta name="description" content="みん切るは、NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリです。">
   <meta name="theme-color" content="#06131e">
@@ -2169,8 +2169,8 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=215">
-  <link rel="stylesheet" href="library-v214.css?v=215">
+  <link rel="stylesheet" href="ux-v159.css?v=216">
+  <link rel="stylesheet" href="library-v214.css?v=216">
 </head>
 <body class="auth-gate-open">
   <main class="page" inert aria-hidden="true">
@@ -2485,15 +2485,15 @@
   </dialog>
 
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=215"></script>
-  <script src="drill-ux-v44.js?v=215"></script>
-  <script src="library-order-v215.js?v=215"></script>
-  <script src="library-v214.js?v=215"></script>
+  <script src="supabase-sync-v48.js?v=216"></script>
+  <script src="drill-ux-v44.js?v=216"></script>
+  <script src="library-order-v215.js?v=216"></script>
+  <script src="library-v214.js?v=216"></script>
   <script src="naga-generator-v44.js"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 215;
+    const APP_VERSION = 216;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -4187,6 +4187,7 @@
       const QUESTION_NOTICE_STORAGE_KEY_V66 = storageKey("question-notices-v1");
       const ANNOUNCEMENT_SEEN_STORAGE_KEY_V65 = storageKey("announcement-seen-v1");
         const APP_ANNOUNCEMENTS_V66 = [
+          { version: 216, date: "2026-09-01", publishedAt: "2026-09-01T08:11:18+09:00", title: "最初の長押しから本を移動", body: "本を先に選択しなくても、最初の長押し・ドラッグからそのまま並べ替えできるようになりました。短くタップした場合は、これまでどおり本の説明を表示します。" },
           { version: 215, date: "2026-09-01", publishedAt: "2026-09-01T00:10:02+09:00", title: "本棚を自分の並び順に", body: "1タップで問題数ややりこみ度を確認、もう1タップで本を開けるようになりました。すべて薄い背表紙で表示し、スマホでも約10冊が見渡せます。選んだ本はドラッグや左右ボタンで並べ替えでき、並び順はユーザーごとにこのブラウザーへ保存されます。" },
           { version: 214, date: "2026-08-31", publishedAt: "2026-08-31T09:48:00+09:00", title: "問題集選択が本棚になりました", body: "革装の本が並ぶ本棚から問題集や各巻を選べるようになりました。本を手に取る演出のあと、そのまま学習画面へ進みます。スマホでは本棚を左右に動かして選べます。" },
           { version: 213, date: "2026-08-31", publishedAt: "2026-08-31T03:00:00+09:00", title: "画像リアクションと牌リアクションを追加しました", body: "設定から画像付きのカスタムリアクションを追加できるようになりました。リアクション選択には「牌」タブを追加し、定番の麻雀牌37種類も選べます。" },
