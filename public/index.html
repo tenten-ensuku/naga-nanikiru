@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=213">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=213">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=213">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=214">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=214">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=214">
   <title>みん切る｜みんなの何切る問題集</title>
   <meta name="description" content="みん切るは、NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリです。">
   <meta name="theme-color" content="#06131e">
@@ -2169,7 +2169,8 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=213">
+  <link rel="stylesheet" href="ux-v159.css?v=214">
+  <link rel="stylesheet" href="library-v214.css?v=214">
 </head>
 <body class="auth-gate-open">
   <main class="page" inert aria-hidden="true">
@@ -2484,13 +2485,14 @@
   </dialog>
 
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=213"></script>
-  <script src="drill-ux-v44.js?v=213"></script>
+  <script src="supabase-sync-v48.js?v=214"></script>
+  <script src="drill-ux-v44.js?v=214"></script>
+  <script src="library-v214.js?v=214"></script>
   <script src="naga-generator-v44.js"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 213;
+    const APP_VERSION = 214;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -4184,6 +4186,7 @@
       const QUESTION_NOTICE_STORAGE_KEY_V66 = storageKey("question-notices-v1");
       const ANNOUNCEMENT_SEEN_STORAGE_KEY_V65 = storageKey("announcement-seen-v1");
         const APP_ANNOUNCEMENTS_V66 = [
+          { version: 214, date: "2026-08-31", publishedAt: "2026-08-31T09:48:00+09:00", title: "問題集選択が本棚になりました", body: "革装の本が並ぶ本棚から問題集や各巻を選べるようになりました。本を手に取る演出のあと、そのまま学習画面へ進みます。スマホでは本棚を左右に動かして選べます。" },
           { version: 213, date: "2026-08-31", publishedAt: "2026-08-31T03:00:00+09:00", title: "画像リアクションと牌リアクションを追加しました", body: "設定から画像付きのカスタムリアクションを追加できるようになりました。リアクション選択には「牌」タブを追加し、定番の麻雀牌37種類も選べます。" },
           { version: 212, date: "2026-08-31", publishedAt: "2026-08-31T02:00:00+09:00", title: "副露後の回答表示を整えました", body: "副露直後に回答したあとも、回答前と同じ手牌の並び・空きスロット・マスク範囲で表示するようにしました。ダイミンカンやアンカンを含む既存問題にも共通ルールを適用しています。" },
         { version: 211, date: "2026-08-31", publishedAt: "2026-08-31T01:12:31+09:00", title: "カスタムリアクションを追加できるようにしました", body: "設定から絵文字リアクションを追加できます。追加されたリアクションは、リアクション選択パネルの「カスタム」タブから他の利用者も使えます。定番リアクションの「黙る」は「ダマ」に変更しました。" },
@@ -5322,6 +5325,7 @@
           if (questionsV16.length) void startCommentNotificationPollingV65();
           void refreshCollectionAccessStateV100().catch(error => console.warn("問題集の権限情報を更新できませんでした", error));
           void refreshAccountV46(supabaseSessionV46);
+          return true;
         } catch (error) {
           sharedCollectionV46 = previousCollection;
           questionsV16 = previousQuestions;
@@ -5347,12 +5351,14 @@
           document.getElementById("accountStatus").textContent = collectionLoadErrorV165;
           renderQuestionOptionsV16();
           showMenuV16(previousView);
+          if (previousReady && questionsV16.length && supabaseSessionV46?.user?.id) void startCommentNotificationPollingV65();
+          return false;
         }
       }
 
       function navigateToCollectionV106(slug, { historyMode = "push" } = {}) {
         const value = String(slug || "").trim();
-        if (!value || collectionNavigationPendingV165) return;
+        if (!value || collectionNavigationPendingV165) return Promise.resolve(false);
         collectionNavigationPendingV165 = true;
         document.querySelector(".page")?.classList.add("is-collection-switching");
         document.querySelectorAll("[data-active-collection-status]").forEach(node => { node.textContent = "切り替え中…"; });
@@ -5381,11 +5387,39 @@
         url.hash = "";
         if (historyMode === "push") window.history.pushState({}, "", url.toString());
         if (historyMode === "replace") window.history.replaceState({}, "", url.toString());
-        void switchCollectionInPlaceV177(value, previousView, previousUrl, previousState).finally(() => {
+        return switchCollectionInPlaceV177(value, previousView, previousUrl, previousState).finally(async () => {
           collectionNavigationPendingV165 = false;
           document.querySelector(".page")?.classList.remove("is-collection-switching");
           document.querySelectorAll("[data-collection-slug]").forEach(button => { button.disabled = false; });
+          const pendingHistory = collectionHistoryPendingV214;
+          collectionHistoryPendingV214 = null;
+          if (pendingHistory) await restoreCollectionHistoryV214(pendingHistory);
         });
+      }
+
+      let collectionHistoryPendingV214 = null;
+
+      async function restoreCollectionHistoryV214(requested) {
+        if (!requireLoginForPlayV187()) return false;
+        if (window.location.href !== requested.url) window.history.replaceState({}, "", requested.url);
+        if (!requested.slug) {
+          showMenuV16("collections");
+          return true;
+        }
+        if (requested.slug === String(sharedCollectionV46?.share_slug || "")) {
+          showMenuV16(isSeriesParentCollectionV180() ? "collections" : "today");
+          return true;
+        }
+        return await navigateToCollectionV106(requested.slug, { historyMode: "none" });
+      }
+
+      function handleCollectionHistoryV214() {
+        const requested = { slug: collectionSlugFromUrlV165(), url: window.location.href };
+        if (collectionNavigationPendingV165) {
+          collectionHistoryPendingV214 = requested;
+          return Promise.resolve(false);
+        }
+        return restoreCollectionHistoryV214(requested);
       }
 
       function captureCollectionCreateDraftV114() {
@@ -5530,7 +5564,7 @@
         return `<section class="collection-volume-picker" aria-labelledby="collectionVolumeHeading"><div class="collection-volume-picker-head"><div><p class="collection-chooser-kicker">COLLECTION / VOLUME</p><h4 id="collectionVolumeHeading">${escapeHtml(seriesTitle)}の巻を選択</h4><p>巻を選ぶと、その巻の問題・回答履歴・習熟度だけを表示します。問題IDは全巻でそのまま引き継がれます。</p></div><span class="collection-volume-total">全${collectionVolumesV180.length}巻</span></div><div class="collection-volume-grid">${cards || empty}</div></section>`;
       }
 
-      function renderCollectionChooserV165() {
+      function renderCollectionChooserLegacyV165() {
         const rows = sortCollectionRowsV166(collectionCatalogOptionsV100());
         const cards = rows.map(row => {
           const slug = String(row.share_slug || "");
@@ -5548,6 +5582,65 @@
         const empty = `<div class="collection-chooser-empty"><strong>選べる問題集を読み込んでいます</strong><span>一覧が表示されない場合は、Discordログイン後にもう一度お試しください。</span></div>`;
         const errorNotice = collectionLoadErrorV165 ? `<div class="collection-chooser-error" role="alert"><strong>この問題集を開けませんでした</strong><span>${escapeHtml(collectionLoadErrorV165)}</span><small>下の一覧から、開き直す問題集を選んでください。</small></div>` : "";
         return `<section class="collection-chooser" aria-labelledby="collectionChooserHeading"><header class="collection-chooser-header"><div><h3 id="collectionChooserHeading">学習する問題集を選択</h3></div><button class="collection-chooser-create" type="button" data-menu-jump="settings">＋ 新しい問題集</button></header>${errorNotice}<div class="collection-choice-grid">${cards || empty}</div></section>`;
+      }
+
+      let collectionLibraryControllerV214 = null;
+
+      function getCollectionLibraryV214() {
+        if (!window.MinkiruLibraryV214) return null;
+        if (collectionLibraryControllerV214) return collectionLibraryControllerV214;
+        collectionLibraryControllerV214 = window.MinkiruLibraryV214.create({
+          isVisible: () => menuViewV16 === "collections" && Boolean(document.querySelector(".page.menu-active")),
+          canOpen: () => requireLoginForPlayV187(),
+          onRender: () => { if (menuViewV16 === "collections") renderMenuCardsV16(); },
+          loadSeries: async slug => {
+            if (!supabaseSessionV46?.user?.id) throw new Error("Discordログインが必要です。");
+            if (slug === String(sharedCollectionV46?.share_slug || "") && isSeriesParentCollectionV180() && collectionVolumesV180.length && !collectionVolumesErrorV180) {
+              return { volumes: collectionVolumesV180, progress: collectionVolumeProgressV180 };
+            }
+            // Only the selected series metadata is loaded. Never fetch all questions for the bookshelf.
+            const [volumes, progress] = await Promise.allSettled([
+              window.NagaSupabase.loadCollectionVolumes(slug),
+              window.NagaSupabase.loadCollectionVolumeProgress(slug)
+            ]);
+            if (volumes.status === "rejected") throw volumes.reason;
+            return { volumes: volumes.value, progress: progress.status === "fulfilled" ? progress.value : [], progressError: progress.status === "rejected" };
+          },
+          onOpen: async slug => {
+            if (!requireLoginForPlayV187()) return false;
+            if (slug === String(sharedCollectionV46?.share_slug || "")) {
+              showMenuV16(isSeriesParentCollectionV180(sharedCollectionV46) ? "collections" : "today");
+              return true;
+            }
+            return await navigateToCollectionV106(slug);
+          }
+        });
+        return collectionLibraryControllerV214;
+      }
+
+      function collectionLibraryMetricsV214() {
+        if (!sharedCollectionV46 || isSeriesParentCollectionV180()) return null;
+        const knownTotal = sharedQuestionKnownTotalV177();
+        const complete = importedQuestionsReadyV81 && sharedQuestionPagingV177.allLoaded && questionsV16.length <= 250;
+        const metrics = complete ? learningMetricsV172() : null;
+        return {
+          questionCount: knownTotal ?? metrics?.total ?? null,
+          answeredCount: metrics ? metrics.total - metrics.unanswered : null,
+          mastery: metrics ? metrics.total ? Math.round(metrics.mastered / metrics.total * 100) : 0 : null
+        };
+      }
+
+      function renderCollectionChooserV165() {
+        const library = getCollectionLibraryV214();
+        if (!library) return renderCollectionChooserLegacyV165();
+        return library.render({
+          collections: sortCollectionRowsV166(collectionCatalogOptionsV100()).map(row => ({ ...row, status_label: collectionChooserStatusV165(row) })),
+          current: sharedCollectionV46,
+          currentMetrics: collectionLibraryMetricsV214(),
+          userId: supabaseSessionV46?.user?.id || "",
+          loading: Boolean(collectionAccessRefreshInFlightV153 || collectionNavigationPendingV165),
+          error: collectionLoadErrorV165
+        });
       }
 
       function renderCollectionSpacePanelV100() {
@@ -5816,6 +5909,7 @@
         }
         renderImportQuestionButtonV115();
         renderNotificationBadgesV65();
+        collectionLibraryControllerV214?.invalidate();
         if (document.querySelector(".page")?.classList.contains("menu-active")) renderMenuCardsV16();
         else renderCollectionSpacePanelV100();
       }
@@ -8533,6 +8627,7 @@
         const grid = document.getElementById("menuGrid");
         const empty = document.getElementById("menuEmpty");
         const loadMore = document.getElementById("menuLoadMore");
+        if (menuViewV16 !== "collections") collectionLibraryControllerV214?.unmount();
         if (menuViewV16 === "generator") persistGeneratorFormDraftV157();
         if (loadMore) {
           loadMore.hidden = true;
@@ -8543,6 +8638,7 @@
           grid.innerHTML = renderCollectionChooserV165();
           grid.style.display = "block";
           empty.hidden = true;
+          getCollectionLibraryV214()?.mount(grid);
           return;
         }
         if (menuViewV16 === "today") {
@@ -10140,11 +10236,7 @@
         document.getElementById("commentNotificationDialogDone").addEventListener("click", () => document.getElementById("commentNotificationDialog").close());
         document.getElementById("markAllCommentsReadButton").addEventListener("click", markAllCommentsReadV65);
         window.addEventListener("resize", applyDesktopLayoutV70, { passive: true });
-        window.addEventListener("popstate", () => {
-          const nextSlug = collectionSlugFromUrlV165();
-          const currentSlug = String(sharedCollectionV46?.share_slug || "");
-          if (nextSlug && nextSlug !== currentSlug) navigateToCollectionV106(nextSlug, { historyMode: "none" });
-        });
+        window.addEventListener("popstate", () => { void handleCollectionHistoryV214(); });
         applyDesktopLayoutV70();
         document.getElementById("commentNotificationList").addEventListener("click", event => {
           const button = event.target.closest("[data-community-notification-question]");
