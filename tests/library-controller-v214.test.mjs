@@ -14,8 +14,10 @@ class FakeResizeObserver {
 async function loadLibraryApi() {
   const source = await readFile(LIBRARY_PATH, "utf8");
   const host = {
-    document: {},
+    document: { createElement: () => new FakeNode(), body: new FakeNode() },
     matchMedia: () => ({ matches: false }),
+    requestAnimationFrame: () => 1,
+    cancelAnimationFrame() {},
     setTimeout,
     clearTimeout
   };
@@ -28,6 +30,9 @@ async function loadLibraryApi() {
     clearTimeout,
     console
   };
+  const orderSource = await readFile(new URL("../public/library-order-v215.js", import.meta.url), "utf8");
+  vm.runInNewContext(orderSource, sandbox);
+  host.MinkiruLibraryOrderV215 = sandbox.MinkiruLibraryOrderV215;
   vm.runInNewContext(source, sandbox, { filename: String(LIBRARY_PATH) });
   return sandbox.window.MinkiruLibraryV214;
 }
@@ -61,6 +66,7 @@ class FakeNode {
 
   append(...nodes) {
     for (const node of nodes) {
+      if (node.parentElement) node.parentElement.children = node.parentElement.children.filter(child => child !== node);
       node.parentElement = this;
       this.children.push(node);
     }
@@ -126,6 +132,15 @@ class FakeNode {
   focus() { this.focused = true; }
   scrollIntoView() {}
   scrollBy({ left = 0 } = {}) { this.scrollLeft += left; }
+  setPointerCapture(id) { this.capturedPointer = id; }
+  releasePointerCapture() { this.capturedPointer = null; }
+  getBoundingClientRect() {
+    const index = this.parentElement ? this.parentElement.children.indexOf(this) : 0;
+    const left = 10 + index * 40;
+    return { left, right: left + 36, top: 100, bottom: 340, width: 36, height: 240 };
+  }
+  cloneNode() { return new FakeNode({ className: this.className, dataset: this.dataset }); }
+  remove() { if (this.parentElement) this.parentElement.children = this.parentElement.children.filter(child => child !== this); this.parentElement = null; }
 }
 
 function mountedRoot({ bookSlug = "", retry = false } = {}) {
@@ -286,7 +301,7 @@ test("normalises real count values and keeps volume children out of catalogue ro
   assert.equal(roots[0].share_slug, "series-a");
 });
 
-test("late series A response cannot replace the currently browsed series B", async () => {
+test("V215 late series results remain together on one flat bookshelf", async () => {
   const api = await libraryApi();
   const pending = new Map();
   const controller = api.create({
@@ -312,7 +327,8 @@ test("late series A response cannot replace the currently browsed series B", asy
   assert.equal(await requestA, true);
   const html = controller.render(contextB);
   assert.match(html, /series-b-1/);
-  assert.doesNotMatch(html, /series-a-1/);
+  assert.match(html, /series-a-1/);
+  assert.doesNotMatch(html, /is-front/);
 });
 
 test("failed series load can be retried through the mounted retry hook", async () => {
@@ -332,7 +348,7 @@ test("failed series load can be retried through the mounted retry hook", async (
   });
   controller.render(current);
   assert.equal(await controller.browseSeries("series-a"), false);
-  assert.match(controller.render(current), /temporary metadata failure/);
+  assert.match(controller.render(current), /一部の件数・進捗を読み込めませんでした/);
   assert.match(controller.render(current), /data-library-retry/);
   const mounted = mountedRoot({ retry: true });
   controller.mount(mounted.root);
@@ -395,7 +411,7 @@ test("switching users invalidates old in-flight/cache data", async () => {
 
 test("adapter keeps legacy fallback, controller mount/unmount hooks, and navigation reset contract", async () => {
   const [index, library] = await Promise.all([readFile(INDEX_PATH, "utf8"), readFile(LIBRARY_PATH, "utf8")]);
-  assert.match(index, /library-v214\.js\?v=214/);
+  assert.match(index, /library-v214\.js\?v=215/);
   const renderStart = index.indexOf("function renderCollectionChooserV165");
   const renderEnd = index.indexOf("function renderCollectionSpacePanelV100", renderStart);
   const renderer = index.slice(renderStart, renderEnd);
@@ -485,24 +501,24 @@ test("V214 a late response from before logout is ignored even when the same user
   assert.doesNotMatch(controller.render(user), /stale-private-volume/);
 });
 
-test("V214 leaving study and returning refreshes progress without fetching every series", async () => {
+test("V215 leaving study refreshes cached progress and keeps metadata-only series loading", async () => {
   const api = await libraryApi();
   const current = context("user", [series("series-a"), series("series-b")]);
   const calls = [];
   const controller = api.create({ loadSeries: slug => {
     calls.push(slug);
-    return { volumes: [volume("volume-1", 1)], progress: [{ volume_number: 1, answered_count: calls.length, mastered_count: 1 }] };
+    return { volumes: [volume(slug + "-1", 1)], progress: [{ volume_number: 1, answered_count: calls.filter(item => item === slug).length, mastered_count: 1 }] };
   }});
   controller.render(current);
   await controller.browseSeries("series-a");
   controller.render(current);
   controller.mount(mountedRoot().root);
   await controller.browseSeries("series-a");
-  assert.deepEqual(calls, ["series-a"]);
+  assert.equal(calls.filter(slug => slug === "series-a").length, 1);
   controller.unmount();
   controller.render(current);
   await controller.browseSeries("series-a");
-  assert.deepEqual(calls, ["series-a", "series-a"]);
+  assert.equal(calls.filter(slug => slug === "series-a").length, 2);
   assert.match(controller.render(current), /2<small>問/);
 });
 
@@ -514,7 +530,7 @@ test("V214 unavailable progress never hides otherwise accessible volumes or inve
   assert.equal(await controller.browseSeries("series-a"), true);
   const html = controller.render(current);
   assert.match(html, /data-library-book="volume-1"/);
-  assert.match(html, /進捗の取得に失敗/);
+  assert.match(html, /一部の件数・進捗を読み込めませんでした/);
   assert.match(html, /回答済み<\/dt><dd>—/);
 });
 
@@ -538,9 +554,9 @@ test("V214 reopening the library follows the newly active collection instead of 
   assert.match(controller.render(context("user", [parent, other], parent)), /data-library-book="volume-a"/);
   controller.unmount();
   const html = controller.render(context("user", [parent, other], other));
-  assert.match(html, /is-catalogue/);
+  assert.match(html, /has-volumes/);
   assert.match(html, /libraryDetailTitleV214">Other book/);
-  assert.doesNotMatch(html, /data-library-book="volume-a"/);
+  assert.match(html, /data-library-book="volume-a"/);
 });
 
 test("V214 permission refresh drops cached volumes and ignores older responses", async () => {
@@ -567,7 +583,7 @@ test("V214 even a cached series disappears immediately when its parent loses acc
   controller.render(context("user", [parent]));
   await controller.browseSeries("series-a");
   const html = controller.render(context("user", [{ ...parent, can_view: false }]));
-  assert.match(html, /is-catalogue/);
+  assert.match(html, /has-volumes/);
   assert.doesNotMatch(html, /data-library-book="private-volume"/);
 });
 
@@ -635,4 +651,285 @@ test("V214 multiple Back actions use the final destination, including the root c
   assert.equal(sandbox.inspect().view, "collections");
   assert.equal(sandbox.inspect().pending, false);
   assert.equal(window.location.href, "https://example.test/");
+});
+
+function v215Books() {
+  return [
+    { share_slug: "basic", title: "基本序列問題集", can_view: true, question_count: 228 },
+    { share_slug: "kunitaso", title: "くにたそ問題集", can_view: true, question_count: 400 },
+    { share_slug: "pierre", title: "ピエール問題集", can_view: true, question_count: 1754 }
+  ];
+}
+function mountShelfV215(controller, ctx) {
+  const html = controller.render(ctx);
+  const root = new FakeNode();
+  const surface = new FakeNode({ className: "library-v214" });
+  const rail = new FakeNode({ dataset: { libraryRail: "" } });
+  const detail = new FakeNode({ dataset: { libraryDetail: "" } });
+  const status = new FakeNode({ dataset: { libraryStatus: "" } });
+  rail.clientWidth = 400;
+  const buttons = [...html.matchAll(/data-library-book="([^"]+)"/g)].map(match => new FakeNode({ dataset: { libraryBook: match[1] } }));
+  rail.append(...buttons);
+  surface.append(rail, detail, status);
+  root.append(surface);
+  controller.mount(root);
+  return { root, rail, detail, status, buttons };
+}
+const v215Ids = root => root.querySelectorAll("[data-library-book]").map(button => button.dataset.libraryBook);
+
+test("V215 leaving during a series request ignores the old response and permits a fresh request", async () => {
+  const api = await libraryApi();
+  const requests = [];
+  const controller = api.create({ loadSeries: () => { const d = deferred(); requests.push(d); return d.promise; } });
+  const ctx = context("u", [series("s")]);
+  controller.render(ctx);
+  const old = controller.browseSeries("s");
+  controller.unmount();
+  controller.render(ctx);
+  const fresh = controller.browseSeries("s");
+  await nextTurn();
+  assert.equal(requests.length, 2);
+  requests[1].resolve({ volumes: [volume("fresh", 1)], progress: [] });
+  assert.equal(await fresh, true);
+  requests[0].resolve({ volumes: [volume("stale", 1)], progress: [] });
+  assert.equal(await old, false);
+  const html = controller.render(ctx);
+  assert.match(html, /data-library-book="fresh"/);
+  assert.doesNotMatch(html, /data-library-book="stale"/);
+});
+
+test("V215 retry refetches progress even when the series volumes are already cached", async () => {
+  const api = await libraryApi();
+  let calls = 0;
+  const controller = api.create({ loadSeries: () => ({ volumes: [volume("v", 1)], progressError: ++calls === 1,
+    progress: calls === 1 ? [] : [{ volume_number: 1, answered_count: 20, mastered_count: 10 }] }) });
+  const ctx = context("u", [series("s")]);
+  controller.render(ctx);
+  await controller.browseSeries("s");
+  const shelf = mountShelfV215(controller, ctx);
+  shelf.root.dispatch("click", { target: new FakeNode({ dataset: { libraryRetry: "" } }) });
+  await nextTurn();
+  assert.equal(calls, 2);
+  const html = controller.render(ctx);
+  assert.match(html, /20<small>問/);
+  assert.doesNotMatch(html, /一部の件数・進捗/);
+});
+
+test("V215 pending series are non-interactive spines and cannot steal a confirmed book or reorder", async () => {
+  const api = await libraryApi();
+  const response = deferred();
+  let saves = 0;
+  const controller = api.create({ loadSeries: () => response.promise, saveOrder: () => { saves++; } });
+  const ctx = context("u", [v215Books()[0], series("s")]);
+  const shelf = mountShelfV215(controller, ctx);
+  assert.match(controller.render(ctx), /data-library-placeholder="s"/);
+  assert.doesNotMatch(controller.render(ctx), /data-library-book="s"/);
+  const basic = shelf.buttons[0];
+  shelf.root.dispatch("click", { target: basic });
+  shelf.root.dispatch("click", { target: new FakeNode({ dataset: { libraryBook: "s" } }) });
+  shelf.root.dispatch("keydown", { target: basic, key: "ArrowRight", shiftKey: true });
+  shelf.root.dispatch("pointerdown", { target: basic, pointerId: 2, clientX: 28, clientY: 210 });
+  assert.equal(basic.capturedPointer, undefined);
+  assert.equal(saves, 0);
+  await nextTurn();
+  response.resolve({ volumes: [volume("v", 1)], progress: [] });
+  await nextTurn();
+  const html = controller.render(ctx);
+  assert.match(html, /libraryDetailTitleV214">基本序列問題集/);
+  assert.match(html, /この本で学びますか/);
+  assert.match(html, /is-reorder-ready/);
+});
+
+test("V215 an intentional new tap immediately after cancelling a drag is accepted", async () => {
+  const api = await libraryApi();
+  let opens = 0;
+  const controller = api.create({ onOpen: () => { opens++; return true; } });
+  const shelf = mountShelfV215(controller, context("u", v215Books()));
+  const source = shelf.buttons[0];
+  shelf.root.dispatch("click", { target: source });
+  shelf.root.dispatch("pointerdown", { target: source, pointerId: 1, clientX: 28, clientY: 210 });
+  shelf.root.dispatch("pointermove", { target: source, pointerId: 1, clientX: 130, clientY: 210 });
+  shelf.root.dispatch("keydown", { target: source, key: "Escape" });
+  shelf.root.dispatch("pointerdown", { target: source, pointerId: 2, clientX: 28, clientY: 210 });
+  shelf.root.dispatch("pointerup", { target: source, pointerId: 2 });
+  shelf.root.dispatch("click", { target: source, detail: 1 });
+  await nextTurn();
+  assert.equal(opens, 1);
+});
+
+test("V215 a second pointer cannot cancel or replace the active drag", async () => {
+  const api = await libraryApi();
+  let saves = 0;
+  const controller = api.create({ saveOrder: () => { saves++; } });
+  const shelf = mountShelfV215(controller, context("u", v215Books()));
+  const source = shelf.buttons[0];
+  shelf.root.dispatch("click", { target: source });
+  shelf.root.dispatch("pointerdown", { target: source, pointerId: 1, clientX: 28, clientY: 210 });
+  shelf.root.dispatch("pointermove", { target: source, pointerId: 1, clientX: 130, clientY: 210 });
+  shelf.root.dispatch("pointerdown", { target: source, pointerId: 2, clientX: 28, clientY: 210 });
+  shelf.root.dispatch("pointercancel", { target: source, pointerId: 2 });
+  assert.equal(source.classList.contains("is-drag-source"), true);
+  shelf.root.dispatch("pointerup", { target: shelf.root, pointerId: 1 });
+  assert.equal(saves, 1);
+});
+
+test("V215 a late summary from a previous visit never replaces refreshed progress", async () => {
+  const api = await libraryApi();
+  const requests = [];
+  const controller = api.create({ loadSummary: () => { const d = deferred(); requests.push(d); return d.promise; } });
+  const ctx = context("u", [v215Books()[0]]);
+  mountShelfV215(controller, ctx);
+  await nextTurn();
+  controller.unmount();
+  mountShelfV215(controller, ctx);
+  await nextTurn();
+  assert.equal(requests.length, 2);
+  requests[1].resolve({ question_count: 200, answered_count: 100, mastered_count: 50 });
+  await nextTurn();
+  requests[0].resolve({ question_count: 99, answered_count: 99, mastered_count: 99 });
+  await nextTurn();
+  const html = controller.render(ctx);
+  assert.match(html, /200<small>問/);
+  assert.doesNotMatch(html, /99<small>/);
+});
+
+test("V215 first tap previews, a different book previews, and the second tap opens only that book", async () => {
+  const api = await libraryApi();
+  const opened = [];
+  const controller = api.create({ onOpen: slug => { opened.push(slug); return true; } });
+  const shelf = mountShelfV215(controller, context("u", v215Books()));
+  shelf.root.dispatch("click", { target: shelf.buttons[1] });
+  assert.deepEqual(opened, []);
+  assert.match(shelf.detail.innerHTML, /この本で学びますか？/);
+  assert.match(shelf.detail.innerHTML, /400<small>問/);
+  assert.equal(shelf.buttons[1]["aria-pressed"], "true");
+  shelf.root.dispatch("click", { target: shelf.buttons[2] });
+  assert.deepEqual(opened, []);
+  assert.equal(shelf.buttons[1]["aria-pressed"], "false");
+  shelf.root.dispatch("click", { target: shelf.buttons[2] });
+  await nextTurn();
+  assert.deepEqual(opened, ["pierre"]);
+});
+
+test("V215 an initially current book still requires a first confirmation tap", async () => {
+  const api = await libraryApi();
+  let opened = 0;
+  const books = v215Books();
+  const controller = api.create({ onOpen: () => { opened++; return true; } });
+  const shelf = mountShelfV215(controller, context("u", books, books[0]));
+  shelf.root.dispatch("click", { target: shelf.buttons[0] });
+  assert.equal(opened, 0);
+  assert.match(shelf.detail.innerHTML, /この本で学びますか？/);
+});
+
+test("V215 hover and keyboard focus never count as the first confirmation tap", async () => {
+  const api = await libraryApi();
+  let opened = 0;
+  const controller = api.create({ onOpen: () => { opened++; return true; } });
+  const shelf = mountShelfV215(controller, context("u", v215Books()));
+  shelf.root.dispatch("pointermove", { target: shelf.buttons[1], pointerType: "mouse" });
+  shelf.root.dispatch("focusin", { target: shelf.buttons[1] });
+  shelf.root.dispatch("click", { target: shelf.buttons[1] });
+  assert.equal(opened, 0);
+});
+
+test("V215 Shift+arrow reorders, saves once, and reloads the personal order", async () => {
+  const api = await libraryApi();
+  const saved = new Map();
+  let writes = 0;
+  const options = { loadOrder: user => saved.get(user), saveOrder: (user, ids) => { saved.set(user, ids); writes++; } };
+  const controller = api.create(options);
+  const ctx = context("u", v215Books());
+  const shelf = mountShelfV215(controller, ctx);
+  shelf.root.dispatch("keydown", { target: shelf.buttons[2], key: "ArrowLeft", shiftKey: true });
+  assert.deepEqual(v215Ids(shelf.root), ["basic", "pierre", "kunitaso"]);
+  assert.equal(writes, 1);
+  const restored = mountShelfV215(api.create(options), ctx);
+  assert.deepEqual(v215Ids(restored.root), ["basic", "pierre", "kunitaso"]);
+  const reset = new FakeNode({ dataset: { libraryReset: "" } });
+  restored.root.dispatch("click", { target: reset });
+  assert.deepEqual(v215Ids(restored.root), ["basic", "kunitaso", "pierre"]);
+  assert.equal(saved.get("u").length, 0);
+});
+
+test("V215 one account cannot inherit another account's custom order", async () => {
+  const api = await libraryApi();
+  const controller = api.create({ loadOrder: user => user === "a" ? ["pierre", "kunitaso", "basic"] : [] });
+  let shelf = mountShelfV215(controller, context("a", v215Books()));
+  assert.deepEqual(v215Ids(shelf.root), ["pierre", "kunitaso", "basic"]);
+  shelf = mountShelfV215(controller, context("b", v215Books()));
+  assert.deepEqual(v215Ids(shelf.root), ["basic", "kunitaso", "pierre"]);
+  assert.doesNotMatch(controller.render(context("b", v215Books())), /is-picked/);
+});
+
+test("V215 malformed browser preferences never hide the available books", async () => {
+  const api = await libraryApi();
+  for (const invalid of [{ __proto__: ["no"] }, "not an array", [null, {}, "pierre", "pierre", "missing"]]) {
+    const shelf = mountShelfV215(api.create({ loadOrder: () => invalid }), context("u", v215Books()));
+    assert.equal(v215Ids(shelf.root).length, 3);
+    assert.equal(new Set(v215Ids(shelf.root)).size, 3);
+  }
+});
+
+test("V215 drag uses a stable capture parent, drop saves, and its synthetic click never opens", async () => {
+  const api = await libraryApi();
+  let saves = 0, opens = 0;
+  const controller = api.create({ saveOrder: () => { saves++; }, onOpen: () => { opens++; return true; } });
+  const shelf = mountShelfV215(controller, context("u", v215Books()));
+  const source = shelf.buttons[0];
+  shelf.root.dispatch("click", { target: source });
+  shelf.root.dispatch("pointerdown", { target: source, pointerId: 7, clientX: 28, clientY: 210, button: 0 });
+  shelf.root.dispatch("pointermove", { target: source, pointerId: 7, clientX: 130, clientY: 210 });
+  assert.equal(shelf.root.capturedPointer, 7);
+  shelf.root.dispatch("lostpointercapture", { target: source, pointerId: 7 });
+  assert.deepEqual(v215Ids(shelf.root), ["kunitaso", "pierre", "basic"]);
+  shelf.root.dispatch("pointerup", { target: shelf.root, pointerId: 7 });
+  shelf.root.dispatch("click", { target: source });
+  assert.equal(saves, 1);
+  assert.equal(opens, 0);
+  assert.equal(shelf.root.capturedPointer, null);
+  assert.equal(source.classList.contains("is-drag-source"), false);
+});
+
+test("V215 Escape and pointercancel roll a drag back without persisting", async () => {
+  const api = await libraryApi();
+  for (const mode of ["escape", "cancel"]) {
+    let saves = 0;
+    const controller = api.create({ saveOrder: () => { saves++; } });
+    const shelf = mountShelfV215(controller, context("u", v215Books()));
+    const source = shelf.buttons[0];
+    shelf.root.dispatch("click", { target: source });
+    shelf.root.dispatch("pointerdown", { target: source, pointerId: 9, clientX: 28, clientY: 210 });
+    shelf.root.dispatch("pointermove", { target: source, pointerId: 9, clientX: 130, clientY: 210 });
+    if (mode === "escape") shelf.root.dispatch("keydown", { target: source, key: "Escape" });
+    else shelf.root.dispatch("pointercancel", { target: source, pointerId: 9 });
+    assert.deepEqual(v215Ids(shelf.root), ["basic", "kunitaso", "pierre"]);
+    assert.equal(saves, 0);
+  }
+});
+
+test("V215 disabled storage keeps the in-memory arrangement with an honest warning", async () => {
+  const api = await libraryApi();
+  const controller = api.create({ loadOrder: () => { throw new Error("denied"); }, saveOrder: () => { throw new Error("quota"); } });
+  const shelf = mountShelfV215(controller, context("u", v215Books()));
+  shelf.root.dispatch("keydown", { target: shelf.buttons[2], key: "ArrowLeft", shiftKey: true });
+  assert.deepEqual(v215Ids(shelf.root), ["basic", "pierre", "kunitaso"]);
+  assert.match(shelf.status.textContent, /保存できません/);
+});
+
+test("V215 asynchronous current-volume metadata chooses the current book, but never steals an explicit choice", async () => {
+  const api = await libraryApi();
+  const parent = series("series-a");
+  const active = { ...volume("volume-a", 1), series_parent_slug: "series-a" };
+  const response = deferred();
+  const controller = api.create({ loadSeries: () => response.promise });
+  const ctx = context("u", [v215Books()[0], parent], active);
+  controller.render(ctx);
+  const load = controller.browseSeries("series-a");
+  response.resolve({ volumes: [active], progress: [] });
+  await load;
+  assert.match(controller.render(ctx), /libraryDetailTitleV214">volume-a/);
+  const shelf = mountShelfV215(controller, ctx);
+  shelf.root.dispatch("click", { target: shelf.buttons.find(b => b.dataset.libraryBook === "basic") });
+  assert.match(controller.render(ctx), /libraryDetailTitleV214">基本序列問題集/);
 });

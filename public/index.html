@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=214">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=214">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=214">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=215">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=215">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=215">
   <title>みん切る｜みんなの何切る問題集</title>
   <meta name="description" content="みん切るは、NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリです。">
   <meta name="theme-color" content="#06131e">
@@ -2169,8 +2169,8 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=214">
-  <link rel="stylesheet" href="library-v214.css?v=214">
+  <link rel="stylesheet" href="ux-v159.css?v=215">
+  <link rel="stylesheet" href="library-v214.css?v=215">
 </head>
 <body class="auth-gate-open">
   <main class="page" inert aria-hidden="true">
@@ -2485,14 +2485,15 @@
   </dialog>
 
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=214"></script>
-  <script src="drill-ux-v44.js?v=214"></script>
-  <script src="library-v214.js?v=214"></script>
+  <script src="supabase-sync-v48.js?v=215"></script>
+  <script src="drill-ux-v44.js?v=215"></script>
+  <script src="library-order-v215.js?v=215"></script>
+  <script src="library-v214.js?v=215"></script>
   <script src="naga-generator-v44.js"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 214;
+    const APP_VERSION = 215;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -4186,6 +4187,7 @@
       const QUESTION_NOTICE_STORAGE_KEY_V66 = storageKey("question-notices-v1");
       const ANNOUNCEMENT_SEEN_STORAGE_KEY_V65 = storageKey("announcement-seen-v1");
         const APP_ANNOUNCEMENTS_V66 = [
+          { version: 215, date: "2026-09-01", publishedAt: "2026-09-01T00:10:02+09:00", title: "本棚を自分の並び順に", body: "1タップで問題数ややりこみ度を確認、もう1タップで本を開けるようになりました。すべて薄い背表紙で表示し、スマホでも約10冊が見渡せます。選んだ本はドラッグや左右ボタンで並べ替えでき、並び順はユーザーごとにこのブラウザーへ保存されます。" },
           { version: 214, date: "2026-08-31", publishedAt: "2026-08-31T09:48:00+09:00", title: "問題集選択が本棚になりました", body: "革装の本が並ぶ本棚から問題集や各巻を選べるようになりました。本を手に取る演出のあと、そのまま学習画面へ進みます。スマホでは本棚を左右に動かして選べます。" },
           { version: 213, date: "2026-08-31", publishedAt: "2026-08-31T03:00:00+09:00", title: "画像リアクションと牌リアクションを追加しました", body: "設定から画像付きのカスタムリアクションを追加できるようになりました。リアクション選択には「牌」タブを追加し、定番の麻雀牌37種類も選べます。" },
           { version: 212, date: "2026-08-31", publishedAt: "2026-08-31T02:00:00+09:00", title: "副露後の回答表示を整えました", body: "副露直後に回答したあとも、回答前と同じ手牌の並び・空きスロット・マスク範囲で表示するようにしました。ダイミンカンやアンカンを含む既存問題にも共通ルールを適用しています。" },
@@ -5593,12 +5595,26 @@
           isVisible: () => menuViewV16 === "collections" && Boolean(document.querySelector(".page.menu-active")),
           canOpen: () => requireLoginForPlayV187(),
           onRender: () => { if (menuViewV16 === "collections") renderMenuCardsV16(); },
+          loadOrder: userId => {
+            if (!userId) return [];
+            return JSON.parse(window.localStorage.getItem(storageKey(`library-order-v215:${userId}`)) || "[]");
+          },
+          saveOrder: (userId, ids) => {
+            if (!userId || String(supabaseSessionV46?.user?.id || "") !== userId) return;
+            window.localStorage.setItem(storageKey(`library-order-v215:${userId}`), JSON.stringify(ids));
+          },
+          loadSummary: async (slug, parentSlug = "") => {
+            if (!supabaseSessionV46?.user?.id) throw new Error("Discordログインが必要です。");
+            const scopeKey = `${supabaseSessionV46.user.id}::${parentSlug || slug}`;
+            const archived = userStateV16.collectionPersonal?.[scopeKey]?.archived;
+            return await window.NagaSupabase.loadCollectionLibrarySummary(slug, Array.isArray(archived) ? archived : []);
+          },
           loadSeries: async slug => {
             if (!supabaseSessionV46?.user?.id) throw new Error("Discordログインが必要です。");
             if (slug === String(sharedCollectionV46?.share_slug || "") && isSeriesParentCollectionV180() && collectionVolumesV180.length && !collectionVolumesErrorV180) {
               return { volumes: collectionVolumesV180, progress: collectionVolumeProgressV180 };
             }
-            // Only the selected series metadata is loaded. Never fetch all questions for the bookshelf.
+            // The controller limits concurrent requests to two. Only volume metadata and totals are loaded.
             const [volumes, progress] = await Promise.allSettled([
               window.NagaSupabase.loadCollectionVolumes(slug),
               window.NagaSupabase.loadCollectionVolumeProgress(slug)

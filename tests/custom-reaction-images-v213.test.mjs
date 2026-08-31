@@ -14,7 +14,7 @@ const syncClient = read("client/supabase-sync.ts");
 const migration = read("supabase/migrations/20260830172600_custom_reaction_images_and_tiles_v213.sql");
 
 test("V213 adds the 37 approved tile reactions between standard and custom", () => {
-  assert.match(html, /const APP_VERSION = 214;/);
+  assert.match(html, /const APP_VERSION = 215;/);
   assert.match(html, /data-reaction-tab="standard"[\s\S]*data-reaction-tab="tiles"[\s\S]*data-reaction-tab="custom"/);
   assert.match(html, /id="reactionPickerTilePanelV213"/);
   assert.match(html, /id="reactionTilePickerOptionsV213"/);
