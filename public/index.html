@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=217">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=217">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=217">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=218">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=218">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=218">
   <title>みん切る｜みんなの何切る問題集</title>
   <meta name="description" content="みん切るは、NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリです。">
   <meta name="theme-color" content="#06131e">
@@ -231,12 +231,22 @@
     .generator-custom-settings { grid-column: 1 / -1; min-width: 0; padding: 8px 10px; color: #dffbfb; background: rgba(0,0,0,.12); border: 1px solid rgba(255,255,255,.12); border-radius: 8px; }
     .generator-custom-settings summary { cursor: pointer; color: #fff7d6; font-size: 10px; font-weight: 900; }
     .generator-settings-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 7px; margin-top: 8px; }
+    .generator-model-filter { display: grid; gap: 8px; min-width: 0; margin: 9px 0 0; padding: 9px; color: #dffbfb; border: 1px solid rgba(155,232,216,.2); border-radius: 8px; }
+    .generator-model-filter legend { padding: 0 4px; color: #fff7d6; font-size: 10px; font-weight: 900; }
+    .generator-model-rule { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; }
+    .generator-model-rule-label { color: var(--muted); font-size: 9px; font-weight: 800; }
+    .generator-model-rule label, .generator-model-option { display: inline-flex !important; grid-template-columns: none !important; align-items: center; gap: 4px; color: #dffbfb; font-size: 9px !important; font-weight: 800; }
+    .generator-model-rule input, .generator-model-option input { width: auto !important; min-height: 0 !important; margin: 0; padding: 0; color: inherit; background: transparent; border: 0; border-radius: 0; font-size: inherit; accent-color: #bde7e0; }
+    .generator-model-options { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 5px; }
+    .generator-model-option { min-width: 0; min-height: 31px; padding: 5px 7px; color: #e7f8ff; background: rgba(12,50,70,.68); border: 1px solid rgba(113,183,255,.22); border-radius: 6px; }
+    .generator-model-option span { min-width: 0; overflow-wrap: anywhere; }
+    .generator-model-empty { margin: 0; color: var(--muted); font-size: 9px; line-height: 1.45; }
     .generator-settings-note { margin-top: 7px !important; font-size: 9px !important; }
     .generator-results { display: grid; gap: 8px; }
     .generator-results-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 2px 0; color: var(--muted); font-size: 10px; }
     .generator-results-toolbar strong { color: #fff7d6; font-size: 13px; }
     .generator-results-actions, .candidate-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 6px; }
-    .generator-candidate-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 8px; }
+    .generator-candidate-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
     .generator-candidate { display: grid; grid-template-columns: minmax(0, 1fr); gap: 7px; align-items: start; min-width: 0; padding: 8px; background: rgba(12,50,70,.55); border: 1px solid rgba(255,255,255,.11); border-radius: 9px; }
     .generator-candidate.is-duplicate { opacity: .62; }
     .candidate-header { display: flex; align-items: flex-start; gap: 7px; min-width: 0; }
@@ -252,8 +262,12 @@
     .candidate-choice strong { color: #fff7d6; font-size: 10px; }
     .candidate-choice small { color: #dffbfb; font-size: 7px; line-height: 1; }
     .candidate-choice img { width: 24px; height: auto; }
+    .candidate-body { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(300px, .85fr); gap: 12px; align-items: start; min-width: 0; }
+    .candidate-preview-column, .candidate-analysis-column { min-width: 0; }
+    .candidate-analysis-column { display: grid; gap: 8px; padding: 9px; background: rgba(0,0,0,.12); border: 1px solid rgba(255,255,255,.1); border-radius: 8px; }
+    .candidate-analysis-heading { color: #fff7d6; font-size: 10px; font-weight: 900; }
     .candidate-controls { display: grid; grid-template-columns: minmax(0, 1fr); gap: 5px; min-width: 0; align-items: center; }
-    .candidate-preview { width: min(320px, 100%); aspect-ratio: 14 / 13; overflow: hidden; background: #075b91; border: 1px solid rgba(113,183,255,.38); border-radius: 7px; }
+    .candidate-preview { width: 100%; max-width: none; aspect-ratio: 14 / 13; overflow: hidden; background: #075b91; border: 1px solid rgba(113,183,255,.38); border-radius: 7px; }
     .candidate-preview img { display: block; width: 100%; height: 100%; object-fit: contain; }
     .candidate-preview-empty { display: grid; place-items: center; color: rgba(223,251,251,.72); font-size: 10px; }
     .candidate-capture-state { color: #bfe9ef; font-size: 9px; line-height: 1.4; }
@@ -914,12 +928,14 @@
       .generator-form { grid-template-columns: 1fr; }
       .generator-destination { grid-template-columns: 1fr; gap: 5px; }
       .generator-settings-grid { grid-template-columns: 1fr 1fr; }
+      .generator-model-options { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .student-row { grid-template-columns: 1fr 1fr; }
       .student-row > strong { grid-column: 1 / -1; }
       .generator-results-toolbar { align-items: flex-start; flex-direction: column; }
       .generator-results-actions, .candidate-actions { justify-content: flex-start; }
       .generator-candidate-grid { grid-template-columns: 1fr; }
       .generator-candidate { grid-template-columns: 1fr; }
+      .candidate-body { grid-template-columns: 1fr; }
       .candidate-controls { grid-template-columns: 1fr; min-width: 0; }
       .scene-card { padding: 3px; border-radius: 9px; }
       .answer-strip { grid-template-columns: 1fr; gap: 8px; padding: 9px; }
@@ -2169,8 +2185,8 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=217">
-  <link rel="stylesheet" href="library-v214.css?v=217">
+  <link rel="stylesheet" href="ux-v159.css?v=218">
+  <link rel="stylesheet" href="library-v214.css?v=218">
 </head>
 <body class="auth-gate-open">
   <main class="page" inert aria-hidden="true">
@@ -2485,15 +2501,15 @@
   </dialog>
 
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=217"></script>
-  <script src="drill-ux-v44.js?v=217"></script>
-  <script src="library-order-v215.js?v=217"></script>
-  <script src="library-v214.js?v=217"></script>
+  <script src="supabase-sync-v48.js?v=218"></script>
+  <script src="drill-ux-v44.js?v=218"></script>
+  <script src="library-order-v215.js?v=218"></script>
+  <script src="library-v214.js?v=218"></script>
   <script src="naga-generator-v44.js"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 217;
+    const APP_VERSION = 218;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -3998,7 +4014,8 @@
           seat: document.getElementById("generatorSeat")?.value || "",
           threshold: document.getElementById("generatorThreshold")?.value || "5",
           decisionType: document.getElementById("generatorDecisionType")?.value || "all",
-          modelMode: document.getElementById("generatorModelMode")?.value || "any",
+          modelMode: document.querySelector('input[name="generatorModelMode"]:checked')?.value || "any",
+          modelNames: selectedGeneratorModelNamesV46(),
           maxCandidates: document.getElementById("generatorMaxCandidates")?.value || "100",
           customSettingsOpen: Boolean(document.getElementById("generatorCustomSettings")?.open)
         };
@@ -4022,8 +4039,19 @@
         if (threshold) threshold.value = draft.threshold;
         const decisionType = document.getElementById("generatorDecisionType");
         if (decisionType && [...decisionType.options].some(option => option.value === draft.decisionType)) decisionType.value = draft.decisionType;
-        const modelMode = document.getElementById("generatorModelMode");
-        if (modelMode && [...modelMode.options].some(option => option.value === draft.modelMode)) modelMode.value = draft.modelMode;
+        const modelMode = String(draft.modelMode || "any");
+        document.querySelectorAll('input[name="generatorModelMode"]').forEach(input => {
+          input.checked = input.value === modelMode;
+        });
+        const availableModels = generatorReportedModelNamesV46(generatorReportV44);
+        if (availableModels.length) {
+          const draftModels = Array.isArray(draft.modelNames) && draft.modelNames.length
+            ? new Set(draft.modelNames.map(name => String(name || "")).filter(name => availableModels.includes(name)))
+            : new Set(availableModels);
+          document.querySelectorAll('input[name="generatorModel"]').forEach(input => {
+            input.checked = draftModels.has(input.value);
+          });
+        }
         const maxCandidates = document.getElementById("generatorMaxCandidates");
         if (maxCandidates) maxCandidates.value = draft.maxCandidates;
         const customSettings = document.getElementById("generatorCustomSettings");
@@ -4194,6 +4222,7 @@
       const QUESTION_NOTICE_STORAGE_KEY_V66 = storageKey("question-notices-v1");
       const ANNOUNCEMENT_SEEN_STORAGE_KEY_V65 = storageKey("announcement-seen-v1");
         const APP_ANNOUNCEMENTS_V66 = [
+          { version: 218, date: "2026-09-02", publishedAt: "2026-09-02T23:38:26+09:00", title: "問題生成のプレビューとモデル条件を見直しました", body: "問題生成の候補プレビューをPCでは大きく表示し、右側でプレイヤーとAIの選択を比較できるようにしました。半荘URLのカスタム設定では、解析済みモデルだけを選んで候補を再抽出できます。" },
           { version: 217, date: "2026-09-02", publishedAt: "2026-09-02T19:00:00+09:00", title: "Discordのスポイラー本文を保持", body: "Discordで||伏せられた本文||も取得し、アプリでは伏せ字のまま表示するようにしました。伏せ字を押すと本文を確認できます。" },
           { version: 216, date: "2026-09-01", publishedAt: "2026-09-01T08:11:18+09:00", title: "最初の長押しから本を移動", body: "本を先に選択しなくても、最初の長押し・ドラッグからそのまま並べ替えできるようになりました。短くタップした場合は、これまでどおり本の説明を表示します。" },
           { version: 215, date: "2026-09-01", publishedAt: "2026-09-01T00:10:02+09:00", title: "本棚を自分の並び順に", body: "1タップで問題数ややりこみ度を確認、もう1タップで本を開けるようになりました。すべて薄い背表紙で表示し、スマホでも約10冊が見渡せます。選んだ本はドラッグや左右ボタンで並べ替えでき、並び順はユーザーごとにこのブラウザーへ保存されます。" },
@@ -8273,6 +8302,40 @@
         return `<option value="auto">URLのtwを使用</option><option value="0">プレイヤー1</option><option value="1">プレイヤー2</option><option value="2">プレイヤー3</option><option value="3">プレイヤー4</option>`;
       }
 
+      function generatorReportedModelNamesV46(report = generatorReportV44) {
+        const names = window.NagaGeneratorV44?.modelNames?.(report);
+        if (!Array.isArray(names)) return [];
+        return [...new Set(names.map(name => String(name || "").trim()).filter(Boolean))];
+      }
+
+      function selectedGeneratorModelNamesV46() {
+        return [...document.querySelectorAll('input[name="generatorModel"]:checked')]
+          .map(input => String(input.value || "").trim())
+          .filter(Boolean);
+      }
+
+      function generatorModelFilterMarkupV46(report = generatorReportV44, selectedNames = null) {
+        const names = generatorReportedModelNamesV46(report);
+        const draftNames = Array.isArray(selectedNames)
+          ? selectedNames.map(name => String(name || "").trim()).filter(name => names.includes(name))
+          : Array.isArray(generatorFormDraftV157?.modelNames)
+          ? generatorFormDraftV157.modelNames.map(name => String(name || "").trim()).filter(name => names.includes(name))
+          : [];
+        const checkedNames = new Set(draftNames.length ? draftNames : names);
+        const modelMode = generatorFormDraftV157?.modelMode === "all" ? "all" : "any";
+        const options = names.length
+          ? names.map(name => `<label class="generator-model-option"><input type="checkbox" name="generatorModel" value="${escapeHtml(name)}"${checkedNames.has(name) ? " checked" : ""}><span>${escapeHtml(name)}</span></label>`).join("")
+          : `<p class="generator-model-empty">解析後に取得できたモデル名がここに表示されます。未解析のモデルは候補に表示しません。</p>`;
+        return `<fieldset class="generator-model-filter" id="generatorModelFilter"><legend>モデル条件（解析済みモデルのみ）</legend><div class="generator-model-rule"><span class="generator-model-rule-label">悪手判定</span><label><input type="radio" name="generatorModelMode" value="any"${modelMode === "any" ? " checked" : ""}>いずれかの選択モデル</label><label><input type="radio" name="generatorModelMode" value="all"${modelMode === "all" ? " checked" : ""}>選択モデルすべて</label></div><div class="generator-model-options">${options}</div></fieldset>`;
+      }
+
+      function renderGeneratorModelFiltersV46(report = generatorReportV44, selectedNames = null) {
+        const current = document.getElementById("generatorModelFilter");
+        if (!current) return;
+        current.outerHTML = generatorModelFilterMarkupV46(report, selectedNames);
+        bindGeneratorModelControlsV46();
+      }
+
       function generatorProgressMarkupV159() {
         const steps = ["URLを入力", "解析", "候補を確認", "追加完了"];
         return `<ol class="generator-progress" aria-label="問題生成の進捗">${steps.map((label, index) => {
@@ -8299,7 +8362,7 @@
         const destinationNote = destination.kind === "shared"
           ? `共有問題集「${escapeHtml(destination.label)}」へ保存します。追加内容は利用者全員に反映され、問題番号は保存先で自動採番されます。`
           : "この端末だけに保存します。共有問題集へ追加する場合は、上の保存先を切り替えてください。";
-        return `<section class="generator-panel" aria-busy="${generatorBusyV159}"><div class="generator-heading"><div><p class="generator-kicker">QUESTION BUILDER</p><h3>NAGA URLから問題生成</h3><p>URLを解析し、候補を確認してから追加します。盤面プレビューは順番に自動取得できます。</p></div></div>${generatorProgressMarkupV159()}<div class="generator-setup">${renderGeneratorDestinationV130()}<form class="generator-form generator-form-v46" id="generatorForm"><fieldset class="generator-mode-field"><legend>入力種類</legend><label><input type="radio" name="generatorMode" value="scene"${sceneMode ? " checked" : ""}> 局面URL（1問）</label><label><input type="radio" name="generatorMode" value="match"${sceneMode ? "" : " checked"}> 半荘URL（候補を一括抽出）</label></fieldset><label class="generator-url-field">NAGA URL<input id="generatorUrl" type="url" required inputmode="url" autocomplete="off" placeholder="https://naga.dmv.nico/htmls/..."></label><label id="generatorSeatLabel">対象プレイヤー<select id="generatorSeat">${generatorSeatOptionsV46()}</select></label><button class="generator-button" type="submit">${sceneMode ? "1問を生成" : "候補を抽出"}</button><details class="generator-custom-settings" id="generatorCustomSettings"${sceneMode ? " hidden" : ""}><summary>抽出条件をカスタム設定</summary><div class="generator-settings-grid"><label>悪手閾値（%）<input id="generatorThreshold" type="number" min="0.1" max="50" step="0.1" value="5"></label><label>対象判断<select id="generatorDecisionType"><option value="all">すべて</option><option value="discard">打牌</option><option value="call">副露</option><option value="reach">リーチ</option></select></label><label>モデル条件<select id="generatorModelMode"><option value="any">いずれかのモデルで悪手</option><option value="all">全モデルで悪手</option></select></label><label>最大抽出数<input id="generatorMaxCandidates" type="number" min="1" max="500" step="1" value="100"></label></div><p class="generator-settings-note">悪手は選択した打牌・副露の実際の選択率が閾値以下の候補です。リーチ判断を含む局面も対象にできます。</p></details></form><p class="generator-destination-note">${destinationNote}</p></div><div class="generator-status" id="generatorStatus" aria-live="polite"></div><div class="generator-results" id="generatorResults">${renderGeneratorCandidatesV44()}</div></section>`;
+        return `<section class="generator-panel" aria-busy="${generatorBusyV159}"><div class="generator-heading"><div><p class="generator-kicker">QUESTION BUILDER</p><h3>NAGA URLから問題生成</h3><p>URLを解析し、候補を確認してから追加します。盤面プレビューは順番に自動取得できます。</p></div></div>${generatorProgressMarkupV159()}<div class="generator-setup">${renderGeneratorDestinationV130()}<form class="generator-form generator-form-v46" id="generatorForm"><fieldset class="generator-mode-field"><legend>入力種類</legend><label><input type="radio" name="generatorMode" value="scene"${sceneMode ? " checked" : ""}> 局面URL（1問）</label><label><input type="radio" name="generatorMode" value="match"${sceneMode ? "" : " checked"}> 半荘URL（候補を一括抽出）</label></fieldset><label class="generator-url-field">NAGA URL<input id="generatorUrl" type="url" required inputmode="url" autocomplete="off" placeholder="https://naga.dmv.nico/htmls/..."></label><label id="generatorSeatLabel">対象プレイヤー<select id="generatorSeat">${generatorSeatOptionsV46()}</select></label><button class="generator-button" type="submit">${sceneMode ? "1問を生成" : "候補を抽出"}</button><details class="generator-custom-settings" id="generatorCustomSettings"${sceneMode ? " hidden" : ""}><summary>抽出条件をカスタム設定</summary><div class="generator-settings-grid"><label>悪手閾値（%）<input id="generatorThreshold" type="number" min="0.1" max="50" step="0.1" value="5"></label><label>対象判断<select id="generatorDecisionType"><option value="all">すべて</option><option value="discard">打牌</option><option value="call">副露</option><option value="reach">リーチ</option></select></label><label>最大抽出数<input id="generatorMaxCandidates" type="number" min="1" max="500" step="1" value="100"></label></div>${generatorModelFilterMarkupV46()}<p class="generator-settings-note">悪手は選択した打牌・副露の実際の選択率が閾値以下の候補です。リーチ判断を含む局面も対象にできます。モデルを変更すると、解析済みデータだけで候補を再抽出します。</p></details></form><p class="generator-destination-note">${destinationNote}</p></div><div class="generator-status" id="generatorStatus" aria-live="polite"></div><div class="generator-results" id="generatorResults">${renderGeneratorCandidatesV44()}</div></section>`;
       }
 
       function generatorCandidateChoiceMarkupV158(candidate) {
@@ -8312,7 +8375,8 @@
       }
 
       function generatorCandidateModelsMarkupV158(candidate) {
-        return (candidate.models || []).slice(0, 3).map((model, modelIndex) => {
+        const analyzedModels = new Set(generatorReportedModelNamesV46());
+        return (candidate.models || []).map((model, modelIndex) => ({ model, modelIndex })).filter(({ model }) => analyzedModels.has(String(model?.name || ""))).map(({ model, modelIndex }) => {
           const recommendation = candidate.decisionType === "call"
             ? callActionLabelV112(questionCallActionV112(candidate, modelIndex))
             : tileLabel(model.recommendation);
@@ -8349,7 +8413,7 @@
           const addDisabled = duplicate || !canAdd;
           const checked = generatorSelectedCandidatesV158.has(index) ? " checked" : "";
           const selectionDisabled = duplicate || !canAdd ? " disabled" : "";
-          return `<article class="generator-candidate${duplicate ? " is-duplicate" : ""}"><div class="candidate-header"><label class="candidate-select"><input type="checkbox" data-generator-select="${index}"${checked}${selectionDisabled}><span>選択</span></label><div><div class="candidate-title">${escapeHtml(candidate.playerName || `プレイヤー${Number(candidate.playerSeat ?? candidate.tw ?? 0) + 1}`)}<span class="candidate-title-sub">${escapeHtml(candidate.title || `局${Number(candidate.ts || 0) + 1}・操作${candidate.tv}`)} ／ ${escapeHtml(questionTypeV44(candidate))}</span></div>${candidate.isBadMove ? `<div class="candidate-meta">悪手候補${badModels}</div>` : ""}</div></div><div class="candidate-choice-row">${generatorCandidateChoiceMarkupV158(candidate)}${generatorCandidateModelsMarkupV158(candidate)}</div><div class="candidate-controls">${preview}<span class="candidate-capture-state${captureErrorClass}">${escapeHtml(captureState)}</span><div class="candidate-actions"><button class="generator-button secondary" type="button" data-generator-capture="${index}"${candidate._captureState === "loading" ? " disabled" : ""}>${captureLabel}</button><button class="generator-button${duplicate || !canAdd ? " secondary" : ""}" type="button" data-generator-add="${index}"${addDisabled ? " disabled" : ""}>${duplicate ? duplicateLabel : addLabel}</button></div></div></article>`;
+          return `<article class="generator-candidate${duplicate ? " is-duplicate" : ""}"><div class="candidate-header"><label class="candidate-select"><input type="checkbox" data-generator-select="${index}"${checked}${selectionDisabled}><span>選択</span></label><div><div class="candidate-title">${escapeHtml(candidate.playerName || `プレイヤー${Number(candidate.playerSeat ?? candidate.tw ?? 0) + 1}`)}<span class="candidate-title-sub">${escapeHtml(candidate.title || `局${Number(candidate.ts || 0) + 1}・操作${candidate.tv}`)} ／ ${escapeHtml(questionTypeV44(candidate))}</span></div>${candidate.isBadMove ? `<div class="candidate-meta">悪手候補${badModels}</div>` : ""}</div></div><div class="candidate-body"><div class="candidate-preview-column"><div class="candidate-controls">${preview}<span class="candidate-capture-state${captureErrorClass}">${escapeHtml(captureState)}</span><div class="candidate-actions"><button class="generator-button secondary" type="button" data-generator-capture="${index}"${candidate._captureState === "loading" ? " disabled" : ""}>${captureLabel}</button><button class="generator-button${duplicate || !canAdd ? " secondary" : ""}" type="button" data-generator-add="${index}"${addDisabled ? " disabled" : ""}>${duplicate ? duplicateLabel : addLabel}</button></div></div></div><div class="candidate-analysis-column"><div class="candidate-analysis-heading">プレイヤーとAIの選択</div><div class="candidate-choice-row">${generatorCandidateChoiceMarkupV158(candidate)}${generatorCandidateModelsMarkupV158(candidate)}</div></div></div></article>`;
         }).join("")}</div>`;
       }
 
@@ -9056,9 +9120,50 @@
         return {
           thresholdPercent: Number(document.getElementById("generatorThreshold")?.value || 5),
           decisionType: document.getElementById("generatorDecisionType")?.value || "all",
-          modelMode: document.getElementById("generatorModelMode")?.value || "any",
+          modelMode: document.querySelector('input[name="generatorModelMode"]:checked')?.value || "any",
+          modelNames: selectedGeneratorModelNamesV46(),
           maxCandidates: Number(document.getElementById("generatorMaxCandidates")?.value || 100)
         };
+      }
+
+      function refreshGeneratorCandidatesV46() {
+        if (generatorModeV46 !== "match" || !generatorReportV44) return;
+        const seat = Number(document.getElementById("generatorSeat")?.value);
+        if (!Number.isInteger(seat) || seat < 0 || seat > 3) return;
+        const extraction = generatorExtractionOptionsV46();
+        if (!extraction.modelNames.length && generatorReportedModelNamesV46(generatorReportV44).length) {
+          generatorSelectedCandidatesV158.clear();
+          generatorCandidatesV44 = [];
+          setGeneratorStatusV44("モデルを1つ以上選択してください。", true);
+          const results = document.getElementById("generatorResults");
+          if (results) results.innerHTML = "";
+          setGeneratorStageV159(2, false);
+          return;
+        }
+        generatorSelectedCandidatesV158.clear();
+        const reportId = generatorReportV44.reportId || generatorReportV44.report_id || generatorReportV44.id || generatorReportV44.haihu_id;
+        generatorCandidatesV44 = window.NagaGeneratorV44.extractBadMoves(generatorReportV44, seat, { ...extraction, reportId });
+        setGeneratorStatusV44(generatorCandidatesV44.length ? `${generatorCandidatesV44.length}件の候補を再抽出しました。` : "条件に一致する局面はありませんでした。", !generatorCandidatesV44.length);
+        const results = document.getElementById("generatorResults");
+        if (results) {
+          results.innerHTML = renderGeneratorCandidatesV44();
+          bindGeneratorCandidateInputsV44();
+        }
+        setGeneratorStageV159(generatorCandidatesV44.length ? 3 : 2, false);
+      }
+
+      function bindGeneratorModelControlsV46() {
+        document.querySelectorAll("#generatorModelFilter input").forEach(input => input.addEventListener("change", event => {
+          const target = event.currentTarget;
+          if (target.type === "checkbox" && !selectedGeneratorModelNamesV46().length) {
+            target.checked = true;
+            setGeneratorStatusV44("モデルを1つ以上選択してください。", true);
+            persistGeneratorFormDraftV157();
+            return;
+          }
+          persistGeneratorFormDraftV157();
+          refreshGeneratorCandidatesV46();
+        }));
       }
 
       function setGeneratorPlayersV46(report, preferredSeat) {
@@ -9109,6 +9214,7 @@
                 thresholdPercent: extractionRequest.thresholdPercent,
                 decisionTypes: extractionRequest.decisionType === "all" ? ["discard", "call", "riichi"] : [extractionRequest.decisionType === "reach" ? "riichi" : extractionRequest.decisionType],
                 modelRule: extractionRequest.modelMode,
+                modelNames: extractionRequest.modelNames,
                 maxCandidates: extractionRequest.maxCandidates
               } : undefined
             });
@@ -9120,6 +9226,7 @@
             if (!response.ok) throw new Error(report.error || "NAGAレポートを取得できませんでした。");
           }
           generatorReportV44 = report;
+          if (mode === "match") renderGeneratorModelFiltersV46(report);
 
           if (mode === "scene") {
             generatorSpecV44 = { ...spec, tw: preferredSeat };
@@ -9380,6 +9487,7 @@
           if (status) status.textContent = `保存先を「${currentGeneratorDestinationV130().label}」に変更しました。`;
         });
         syncGeneratorModeV46();
+        bindGeneratorModelControlsV46();
         bindGeneratorCandidateInputsV44();
       }
 

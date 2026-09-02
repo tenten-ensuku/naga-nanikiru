@@ -10,7 +10,7 @@ test("renders the v87 scene and half-game generator controls", async () => {
     readFile(indexUrl, "utf8"),
     readFile(generatorUrl, "utf8")
   ]);
-  assert.match(html, /const APP_VERSION = 217/);
+  assert.match(html, /const APP_VERSION = 218/);
   assert.match(html, /function captureGeneratorFormDraftV157\(\)/);
   assert.match(html, /destination: document\.getElementById\("generatorDestinationSelect"\)\?\.value \|\| generatorDestinationV130 \|\| ""/);
   assert.match(html, /function restoreGeneratorFormDraftV157\(draft\)/);
@@ -118,8 +118,11 @@ test("renders the v87 scene and half-game generator controls", async () => {
   assert.match(html, /class="menu-notice-icon"[^>]*>📣<\/span>/);
   assert.match(html, /class="menu-notice-icon"[^>]*>🔔<\/span>/);
   assert.match(html, /getElementById\("menuVersion"\)\.textContent = APP_VERSION/);
-  assert.match(html, /width: min\(320px, 100%\)/);
+  assert.match(html, /\.candidate-preview \{[^}]*width: 100%;[^}]*max-width: none/);
   assert.match(html, /aspect-ratio: 14 \/ 13/);
+  assert.match(html, /class="candidate-body"/);
+  assert.match(html, /class="candidate-analysis-column"/);
+  assert.match(html, /プレイヤーとAIの選択/);
   assert.match(html, /name="generatorMode"/);
   assert.match(html, /value="scene"/);
   assert.match(html, /class="call-target-tile"/);
@@ -140,8 +143,13 @@ test("renders the v87 scene and half-game generator controls", async () => {
   assert.match(html, /value="call"/);
   assert.match(html, /value="reach"/);
   assert.match(generator, /actualReach/);
-  assert.match(html, /id="generatorModelMode"/);
-  assert.match(html, /value="all">全モデルで悪手/);
+  assert.match(html, /id="generatorModelFilter"/);
+  assert.match(html, /name="generatorModelMode"/);
+  assert.match(html, /name="generatorModel"/);
+  assert.match(html, /解析済みモデルのみ/);
+  assert.match(html, /modelNames: selectedGeneratorModelNamesV46\(\)/);
+  assert.match(html, /function generatorReportedModelNamesV46\(report = generatorReportV44\)/);
+  assert.doesNotMatch(html, /candidate\.models \|\| \[\]\)\.slice\(0, 3\)/);
   assert.match(html, /id="generatorMaxCandidates"[^>]+max="500"/);
   assert.match(html, /局面URLではURLにtsとtvの両方が必要です/);
   assert.match(html, /ts: null, tv: null/);

@@ -661,6 +661,18 @@ test("supports custom extraction decision, model, threshold, and max-count filte
   assert.deepEqual(Array.from(api.extractBadMoves(report, 0, { modelMode: "all" }).map(item => item.id)), [
     "custom-report|0|0|2|discard"
   ]);
+  assert.deepEqual(Array.from(api.extractBadMoves(report, 0, { modelNames: ["M1"] }).map(item => item.id)), [
+    "custom-report|0|0|2|discard"
+  ]);
+  assert.deepEqual(Array.from(api.extractBadMoves(report, 0, { modelNames: ["M0"] }).map(item => item.id)), [
+    "custom-report|0|0|1|discard",
+    "custom-report|0|0|2|discard"
+  ]);
+  assert.deepEqual(Array.from(api.extractBadMoves(report, 0, { modelNames: ["M0", "M1"], modelMode: "all" }).map(item => item.id)), [
+    "custom-report|0|0|2|discard"
+  ]);
+  assert.deepEqual(Array.from(api.extractBadMoves(report, 0, { modelNames: ["未解析モデル"] }).map(item => item.id)), []);
+  assert.deepEqual(Array.from(api.normalizeExtractionOptions({ modelNames: [" M0 ", "M1", "M0"] }).modelNames), ["M0", "M1"]);
   assert.deepEqual(Array.from(api.extractBadMoves(report, 0, { decisionType: "reach" }).map(item => item.id)), [
     "custom-report|0|0|2|discard"
   ]);

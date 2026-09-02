@@ -37,10 +37,14 @@ function normalizeExtractionConfig(value: unknown) {
   const decisionTypes = Array.isArray(source.decisionTypes)
     ? source.decisionTypes.filter((item): item is string => typeof item === "string" && allowedDecisions.has(item))
     : []
+  const modelNames = Array.isArray(source.modelNames)
+    ? [...new Set(source.modelNames.filter((item): item is string => typeof item === "string" && item.trim().length > 0).map(item => item.trim().slice(0, 80)))].slice(0, 20)
+    : []
   return {
     thresholdPercent: Number.isFinite(threshold) ? Math.min(50, Math.max(0.1, threshold)) : 5,
     decisionTypes: decisionTypes.length ? [...new Set(decisionTypes)] : ["discard", "call", "riichi"],
     modelRule: source.modelRule === "all" ? "all" : "any",
+    modelNames,
     maxCandidates: Number.isInteger(maximum) ? Math.min(300, Math.max(1, maximum)) : 100,
   }
 }

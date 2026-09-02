@@ -92,6 +92,7 @@ test("pins Supabase dependencies and protects the NAGA proxy", async () => {
   assert.match(edgeFunction, /createClient\(supabaseUrl, supabaseAnonKey/);
   assert.match(edgeFunction, /supabase\.auth\.getUser\(\)/);
   assert.match(edgeFunction, /https:\/\/naga\.dmv\.nico\/reports\/\$\{reportId\}\.json/);
+  assert.match(edgeFunction, /modelNames/);
   assert.match(runtimeConfig, /Never put a Supabase secret\/service-role key here/);
   assert.doesNotMatch(runtimeConfig, /sb_secret_|service_role\s*:/i);
   assert.match(clientSource, /provider: "discord"/);
@@ -156,7 +157,7 @@ test("supports private collection spaces and owner-reviewed access requests", as
   assert.match(clientSource, /loadMyCollections|loadCollectionDirectory|requestCollectionAccess|reviewCollectionAccess|revokeCollectionAccess/i);
   assert.match(clientSource, /rpc\("create_collection"/i);
   assert.match(clientSource, /rpc\("import_shared_question"/i);
-  assert.match(html, /const APP_VERSION = 217/);
+  assert.match(html, /const APP_VERSION = 218/);
   assert.match(html, /id="collectionSpacePanel"/);
   assert.doesNotMatch(html, /data-menu-view="collections"/);
   assert.match(html, /data-menu-view="today"[^>]*><span class="menu-nav-icon"[^>]*>▶<\/span><span>学習する<\/span>/);
@@ -204,7 +205,7 @@ test("preassigns the verified Kakisaki Nima account as the collection owner", as
   assert.match(migration, /public\.answer_attempts/);
   assert.match(migration, /title = '垣崎にま問題集'/i);
   assert.match(migration, /set owner_id = target_user_id/i);
-  assert.match(html, /const APP_VERSION = 217/);
+  assert.match(html, /const APP_VERSION = 218/);
   assert.match(html, /垣崎にまさんを問題集オーナーに設定しました/);
 });
 

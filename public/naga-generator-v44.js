@@ -1116,6 +1116,12 @@
       throw new TypeError("modelMode must be any or all");
     }
 
+    var modelNames = Array.isArray(settings.modelNames)
+      ? Array.from(new Set(settings.modelNames
+        .map(function (name) { return String(name || "").trim(); })
+        .filter(Boolean)))
+      : [];
+
     var maxCandidates = settings.maxCandidates == null ? 100 : Number(settings.maxCandidates);
     if (!Number.isSafeInteger(maxCandidates) || maxCandidates < 1 || maxCandidates > 500) {
       throw new RangeError("maxCandidates must be an integer between 1 and 500");
@@ -1126,6 +1132,7 @@
       thresholdPercent: threshold,
       decisionType: decisionType,
       modelMode: modelMode,
+      modelNames: modelNames,
       maxCandidates: maxCandidates
     };
   }
@@ -1170,14 +1177,21 @@
         if (!candidate || seen[candidate.id]) continue;
         if (!candidateMatchesDecision(candidate, settings.decisionType)) continue;
         var probabilities = candidateProbabilityValues(candidate);
+        var analyzedModelNames = modelNames(report);
+        var requestedModelIndices = settings.modelNames.length
+          ? settings.modelNames.map(function (name) { return analyzedModelNames.indexOf(name); }).filter(function (modelIndex) { return modelIndex >= 0; })
+          : [];
+        var consideredModelIndices = settings.modelNames.length
+          ? requestedModelIndices
+          : (Array.isArray(probabilities) ? probabilities.map(function (_value, modelIndex) { return modelIndex; }) : []);
         var badModelIndices = Array.isArray(probabilities)
-          ? probabilities.reduce(function (indices, value, modelIndex) {
-            if (Number.isFinite(Number(value)) && Number(value) <= settings.thresholdPercent) indices.push(modelIndex);
-            return indices;
-          }, [])
+          ? consideredModelIndices.filter(function (modelIndex) {
+            var value = probabilities[modelIndex];
+            return Number.isFinite(Number(value)) && Number(value) <= settings.thresholdPercent;
+          })
           : [];
         var bad = badModelIndices.length > 0
-          && (settings.modelMode === "any" || badModelIndices.length === probabilities.length);
+          && (settings.modelMode === "any" || badModelIndices.length === consideredModelIndices.length);
         if (!bad) continue;
         if (candidate.decisionType === "discard"
           && (candidate.reached || candidate.actualDiscardNaga === "?")) {
@@ -1186,6 +1200,9 @@
         candidate.isBadMove = true;
         candidate.badMoveThresholdPercent = settings.thresholdPercent;
         candidate.badMoveModelMode = settings.modelMode;
+        candidate.badMoveSelectedModels = consideredModelIndices.map(function (modelIndex) {
+          return analyzedModelNames[modelIndex];
+        }).filter(Boolean);
         candidate.badMoveModels = badModelIndices.map(function (modelIndex) {
           return candidate.models[modelIndex] && candidate.models[modelIndex].name;
         }).filter(Boolean);
