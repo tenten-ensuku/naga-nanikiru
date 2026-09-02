@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=221">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=221">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=221">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=222">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=222">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=222">
   <title>みん切る｜みんなの何切る問題集</title>
   <meta name="description" content="みん切るは、NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリです。">
   <meta name="theme-color" content="#06131e">
@@ -2185,8 +2185,8 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=221">
-  <link rel="stylesheet" href="library-v214.css?v=221">
+  <link rel="stylesheet" href="ux-v159.css?v=222">
+  <link rel="stylesheet" href="library-v214.css?v=222">
 </head>
 <body class="auth-gate-open">
   <main class="page" inert aria-hidden="true">
@@ -2383,7 +2383,7 @@
       <p class="comment-sync-note">追加したコメントはこのアプリ内に保存されます。共有問題集ではDiscordログイン後に他の利用者にも表示されます。投稿者本人のコメントには「編集」が表示されます。Discordのスレッドには投稿されません。</p>
       <div class="comments-footer">
         <button class="comment-add-button" id="commentAddButton" type="button" aria-expanded="false">コメント追加</button>
-        <a id="threadLink" href="https://discord.com/channels/1166706544856006656/1532011607209541833" target="_blank" rel="noreferrer">Discordで開く</a>
+        <a id="threadLink" hidden target="_blank" rel="noreferrer">Discordで開く</a>
       </div>
     </section>
 
@@ -2511,15 +2511,15 @@
   </dialog>
 
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=221"></script>
-  <script src="drill-ux-v44.js?v=221"></script>
-  <script src="library-order-v215.js?v=221"></script>
-  <script src="library-v214.js?v=221"></script>
+  <script src="supabase-sync-v48.js?v=222"></script>
+  <script src="drill-ux-v44.js?v=222"></script>
+  <script src="library-order-v215.js?v=222"></script>
+  <script src="library-v214.js?v=222"></script>
   <script src="naga-generator-v44.js"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 221;
+    const APP_VERSION = 222;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -3098,7 +3098,48 @@
         || message?.author_avatar_url
         || message?.avatar_url
         || message?.profile?.avatar_url
+        || message?.profile?.avatarUrl
+        || message?.author?.avatar_url
+        || message?.author?.avatarUrl
+        || message?.user?.avatar_url
+        || message?.user?.avatarUrl
       );
+    }
+
+    function normalizeDiscordThreadUrlV222(value) {
+      const raw = String(value || "").trim();
+      if (!raw || raw === "#") return "";
+      try {
+        const url = new URL(raw);
+        if (url.protocol !== "https:" || url.hostname.toLowerCase() !== "discord.com") return "";
+        if (!/^\/channels\/\d+\/\d+(?:\/\d+)?\/?$/.test(url.pathname)) return "";
+        return `https://discord.com${url.pathname}${url.search}${url.hash}`;
+      } catch {
+        return "";
+      }
+    }
+
+    function questionDiscordThreadUrlV222(question) {
+      return normalizeDiscordThreadUrlV222(
+        question?.threadUrl
+        || question?.thread_url
+        || question?.discordUrl
+        || question?.discord_url
+      );
+    }
+
+    function syncThreadLinkV222(question = SCENE) {
+      const link = document.getElementById("threadLink");
+      if (!link) return;
+      const href = questionDiscordThreadUrlV222(question);
+      link.hidden = !href;
+      if (href) {
+        link.href = href;
+        link.removeAttribute("aria-disabled");
+      } else {
+        link.removeAttribute("href");
+        link.setAttribute("aria-disabled", "true");
+      }
     }
 
     function emptyReactionSummaryV208() {
@@ -4052,7 +4093,7 @@
       initCommentComposerV68();
       initCommentImageViewer();
       initReactionUiV208();
-      document.getElementById("threadLink").href = THREAD_URL;
+      syncThreadLinkV222({ threadUrl: THREAD_URL });
       renderComments();
       renderHand();
       renderAnswer();
@@ -4373,6 +4414,7 @@
       const QUESTION_NOTICE_STORAGE_KEY_V66 = storageKey("question-notices-v1");
       const ANNOUNCEMENT_SEEN_STORAGE_KEY_V65 = storageKey("announcement-seen-v1");
         const APP_ANNOUNCEMENTS_V66 = [
+          { version: 222, date: "2026-09-03", publishedAt: "2026-09-03T09:00:00+09:00", title: "Discord転送元とコメントアイコンを整理しました", body: "Discordから転送していない問題ではDiscordリンクを表示せず、ピエール問題集・垣崎にま問題集の既存コメントにはプロフィールのDiscordアイコンを表示するようにしました。" },
           { version: 221, date: "2026-09-03", publishedAt: "2026-09-03T01:20:00+09:00", title: "定番リアクションとお気に入り・履歴を追加しました", body: "アリ！・好みで・ふむふむ・なるほど！・基礎講義・オリ・押し・お好み焼きを定番へ追加し、リアクション選択にお気に入りと履歴を追加しました。" },
           { version: 220, date: "2026-09-03", publishedAt: "2026-09-03T00:20:00+09:00", title: "問題生成の既存コメントを整理しました", body: "問題生成時に自動追加されていた定型コメントを、既存の問題からも削除しました。通常の利用者コメントはそのまま保持しています。" },
           { version: 219, date: "2026-09-03", publishedAt: "2026-09-03T00:00:00+09:00", title: "問題生成コメントと牌リアクションを整理しました", body: "問題生成時の自動コメントをなくし、牌リアクションは名称を省いて牌画像だけの高密度表示にしました。" },
@@ -7906,7 +7948,7 @@
         document.getElementById("modelSelect").value = String(state.judgeModel);
         sourceTitleV16.textContent = `問題${SCENE.number}`;
         document.getElementById("nagaSourceLink").href = SCENE.nagaUrl;
-        document.getElementById("threadLink").href = SCENE.threadUrl;
+        syncThreadLinkV222(SCENE);
         renderImportQuestionButtonV115();
         sceneImageV16.src = SCENE.image || SCENE.images?.off;
         sceneImageV16.alt = `問題${SCENE.number}の伏牌スクリーンショット`;
@@ -9027,7 +9069,7 @@
         if (questionIndexByKeyV44(questionKeyV16(question)) === currentQuestionIndexV16) {
           sourceTitleV16.textContent = `問題${question.number}`;
           document.getElementById("nagaSourceLink").href = question.nagaUrl || "#";
-          document.getElementById("threadLink").href = question.threadUrl || "#";
+          syncThreadLinkV222(question);
         }
         document.getElementById("questionManageEditForm").hidden = true;
         document.getElementById("questionManageDialog").close();
@@ -9546,7 +9588,7 @@
           title: nextNumber ? `問題${nextNumber}` : "生成候補",
           image: candidate._imageData || null,
           comments: [],
-          threadUrl: candidate.threadUrl || "#",
+          threadUrl: normalizeDiscordThreadUrlV222(candidate.threadUrl),
           localGenerated: true,
           needsScreenshot: !candidate._imageData,
           createdById: creatorId,

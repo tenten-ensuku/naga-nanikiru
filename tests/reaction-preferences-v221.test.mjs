@@ -22,7 +22,7 @@ const addedReactions = [
 ];
 
 test("V221 adds the requested curated reactions in the requested order", () => {
-  assert.match(html, /const APP_VERSION = 221;/);
+  assert.match(html, /const APP_VERSION = 222;/);
   let previousIndex = html.indexOf('id: "question"');
   assert.ok(previousIndex >= 0);
   for (const [label, icon] of addedReactions) {
