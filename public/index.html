@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=220">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=220">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=220">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=221">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=221">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=221">
   <title>みん切る｜みんなの何切る問題集</title>
   <meta name="description" content="みん切るは、NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリです。">
   <meta name="theme-color" content="#06131e">
@@ -2185,8 +2185,8 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=220">
-  <link rel="stylesheet" href="library-v214.css?v=220">
+  <link rel="stylesheet" href="ux-v159.css?v=221">
+  <link rel="stylesheet" href="library-v214.css?v=221">
 </head>
 <body class="auth-gate-open">
   <main class="page" inert aria-hidden="true">
@@ -2393,25 +2393,35 @@
       <p class="comment-image-viewer-hint">画像の外側をタップするか、Escキーで閉じます</p>
     </div>
 
-    <div class="reaction-picker-v208" id="reactionPickerV208" role="dialog" aria-modal="false" aria-labelledby="reactionPickerTitleV208" hidden>
-      <div class="reaction-popover-heading-v208"><strong id="reactionPickerTitleV208">リアクションを選択</strong><button class="reaction-popover-close-v208" id="reactionPickerCloseV208" type="button" aria-label="リアクション選択を閉じる">×</button></div>
-      <div class="reaction-picker-tabs-v211" role="tablist" aria-label="リアクションの種類">
-        <button class="reaction-picker-tab-v211 is-active" id="reactionPickerStandardTabV211" type="button" role="tab" aria-selected="true" aria-controls="reactionPickerStandardPanelV211" data-reaction-tab="standard">定番</button>
-        <button class="reaction-picker-tab-v213" id="reactionPickerTileTabV213" type="button" role="tab" aria-selected="false" aria-controls="reactionPickerTilePanelV213" data-reaction-tab="tiles">牌</button>
-        <button class="reaction-picker-tab-v213" id="reactionPickerCustomTabV211" type="button" role="tab" aria-selected="false" aria-controls="reactionPickerCustomPanelV211" data-reaction-tab="custom">カスタム <span id="reactionPickerCustomCountV211">0</span></button>
+      <div class="reaction-picker-v208" id="reactionPickerV208" role="dialog" aria-modal="false" aria-labelledby="reactionPickerTitleV208" hidden>
+        <div class="reaction-popover-heading-v208"><strong id="reactionPickerTitleV208">リアクションを選択</strong><button class="reaction-popover-close-v208" id="reactionPickerCloseV208" type="button" aria-label="リアクション選択を閉じる">×</button></div>
+        <div class="reaction-picker-tabs-v211 reaction-picker-tabs-v221" role="tablist" aria-label="リアクションの種類">
+          <button class="reaction-picker-tab-v211 reaction-picker-tab-v221" id="reactionPickerFavoritesTabV221" type="button" role="tab" aria-selected="false" aria-controls="reactionPickerFavoritesPanelV221" data-reaction-tab="favorites">お気に入り <span id="reactionPickerFavoritesCountV221">0</span></button>
+          <button class="reaction-picker-tab-v211 reaction-picker-tab-v221" id="reactionPickerHistoryTabV221" type="button" role="tab" aria-selected="false" aria-controls="reactionPickerHistoryPanelV221" data-reaction-tab="history">履歴</button>
+          <button class="reaction-picker-tab-v211 reaction-picker-tab-v221 is-active" id="reactionPickerStandardTabV211" type="button" role="tab" aria-selected="true" aria-controls="reactionPickerStandardPanelV211" data-reaction-tab="standard">定番</button>
+          <button class="reaction-picker-tab-v213 reaction-picker-tab-v221" id="reactionPickerTileTabV213" type="button" role="tab" aria-selected="false" aria-controls="reactionPickerTilePanelV213" data-reaction-tab="tiles">牌</button>
+          <button class="reaction-picker-tab-v213 reaction-picker-tab-v221" id="reactionPickerCustomTabV211" type="button" role="tab" aria-selected="false" aria-controls="reactionPickerCustomPanelV211" data-reaction-tab="custom">カスタム <span id="reactionPickerCustomCountV211">0</span></button>
+        </div>
+        <div id="reactionPickerFavoritesPanelV221" role="tabpanel" aria-labelledby="reactionPickerFavoritesTabV221" hidden>
+          <div class="reaction-picker-options-v208 reaction-picker-options-v221" id="reactionPickerFavoritesOptionsV221"></div>
+          <p class="reaction-picker-personal-note-v221">各リアクションの☆を押すと、ここへ登録できます。</p>
+        </div>
+        <div id="reactionPickerHistoryPanelV221" role="tabpanel" aria-labelledby="reactionPickerHistoryTabV221" hidden>
+          <div class="reaction-picker-options-v208 reaction-picker-options-v221" id="reactionPickerHistoryOptionsV221"></div>
+          <p class="reaction-picker-personal-note-v221">最近使ったリアクションを最大24件表示します。</p>
+        </div>
+        <div id="reactionPickerStandardPanelV211" role="tabpanel" aria-labelledby="reactionPickerStandardTabV211">
+          <div class="reaction-picker-options-v208 reaction-picker-options-v221" id="reactionPickerOptionsV208"></div>
+        </div>
+        <div id="reactionPickerTilePanelV213" role="tabpanel" aria-labelledby="reactionPickerTileTabV213" hidden>
+          <div class="reaction-picker-options-v208 reaction-picker-options-v221 reaction-tile-picker-options-v213" id="reactionTilePickerOptionsV213"></div>
+        </div>
+        <div id="reactionPickerCustomPanelV211" role="tabpanel" aria-labelledby="reactionPickerCustomTabV211" hidden>
+          <div class="reaction-picker-options-v208 reaction-picker-options-v221" id="reactionCustomPickerOptionsV211"></div>
+          <p class="reaction-picker-custom-note-v211">設定から追加した絵文字や画像は、他の利用者も使えます。</p>
+          <button class="reaction-picker-settings-button-v211" type="button" data-reaction-open-settings>設定でカスタムリアクションを追加</button>
+        </div>
       </div>
-      <div id="reactionPickerStandardPanelV211" role="tabpanel" aria-labelledby="reactionPickerStandardTabV211">
-        <div class="reaction-picker-options-v208" id="reactionPickerOptionsV208"></div>
-      </div>
-      <div id="reactionPickerTilePanelV213" role="tabpanel" aria-labelledby="reactionPickerTileTabV213" hidden>
-        <div class="reaction-picker-options-v208 reaction-tile-picker-options-v213" id="reactionTilePickerOptionsV213"></div>
-      </div>
-      <div id="reactionPickerCustomPanelV211" role="tabpanel" aria-labelledby="reactionPickerCustomTabV211" hidden>
-        <div class="reaction-picker-options-v208" id="reactionCustomPickerOptionsV211"></div>
-        <p class="reaction-picker-custom-note-v211">設定から追加した絵文字や画像は、他の利用者も使えます。</p>
-        <button class="reaction-picker-settings-button-v211" type="button" data-reaction-open-settings>設定でカスタムリアクションを追加</button>
-      </div>
-    </div>
 
     <div class="reaction-details-v208" id="reactionDetailsV208" role="dialog" aria-modal="false" aria-labelledby="reactionDetailsTitleV208" hidden>
       <div class="reaction-popover-heading-v208"><strong id="reactionDetailsTitleV208">リアクションした人</strong><button class="reaction-popover-close-v208" id="reactionDetailsCloseV208" type="button" aria-label="参加者一覧を閉じる">×</button></div>
@@ -2501,15 +2511,15 @@
   </dialog>
 
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=220"></script>
-  <script src="drill-ux-v44.js?v=220"></script>
-  <script src="library-order-v215.js?v=220"></script>
-  <script src="library-v214.js?v=220"></script>
+  <script src="supabase-sync-v48.js?v=221"></script>
+  <script src="drill-ux-v44.js?v=221"></script>
+  <script src="library-order-v215.js?v=221"></script>
+  <script src="library-v214.js?v=221"></script>
   <script src="naga-generator-v44.js"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 220;
+    const APP_VERSION = 221;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -2570,7 +2580,15 @@
       Object.freeze({ id: "silent", storageKey: "silent", label: "ダマ", icon: "🤫", tone: "purple" }),
       Object.freeze({ id: "kan", storageKey: "kan", label: "カン", icon: "", tone: "gold" }),
       Object.freeze({ id: "exclamation", storageKey: "exclaim", label: "", icon: "❗", tone: "red" }),
-      Object.freeze({ id: "question", storageKey: "question", label: "", icon: "❓", tone: "purple" })
+      Object.freeze({ id: "question", storageKey: "question", label: "", icon: "❓", tone: "purple" }),
+      Object.freeze({ id: "ari", storageKey: "ari", label: "アリ！", icon: "⭕", tone: "teal" }),
+      Object.freeze({ id: "preference", storageKey: "preference", label: "好みで", icon: "🎨", tone: "blue" }),
+      Object.freeze({ id: "humu-humu", storageKey: "humu_humu", label: "ふむふむ", icon: "🤓", tone: "purple" }),
+      Object.freeze({ id: "understood", storageKey: "understood", label: "なるほど！", icon: "🙌", tone: "gold" }),
+      Object.freeze({ id: "basic-lesson", storageKey: "basic_lesson", label: "基礎講義", icon: "📚", tone: "teal" }),
+      Object.freeze({ id: "fold", storageKey: "fold", label: "オリ", icon: "🛡️", tone: "blue" }),
+      Object.freeze({ id: "push", storageKey: "push", label: "押し", icon: "💪", tone: "red" }),
+      Object.freeze({ id: "okonomiyaki", storageKey: "okonomiyaki", label: "お好み焼き", icon: "🥞", tone: "gold" })
     ]);
     const REACTION_TOP_KEYS_V211 = Object.freeze(["like", "agree", "hard", "good-question", "important", "hmm", "policy", "mistake"]);
     const MAHJONG_TILE_REACTION_KEYS_V213 = Object.freeze([
@@ -3091,6 +3109,80 @@
       return String(window.nagaCurrentUserIdV75 || "").trim();
     }
 
+    const REACTION_PREFERENCES_STORAGE_KEY_V221 = storageKey("reaction-preferences-v1");
+    const REACTION_FAVORITE_LIMIT_V221 = 64;
+    const REACTION_HISTORY_LIMIT_V221 = 24;
+    let reactionPreferencesV221 = { favoriteKeys: [], historyKeys: [] };
+    let reactionPreferencesScopeV221 = "";
+
+    function reactionPreferencesScopeKeyV221() {
+      return reactionCurrentUserIdV208() || "guest";
+    }
+
+    function normalizeReactionPreferenceKeysV221(value, limit) {
+      return [...new Set((Array.isArray(value) ? value : []).map(key => String(key || "").trim()).filter(Boolean))].slice(0, limit);
+    }
+
+    function loadReactionPreferencesV221() {
+      const scope = reactionPreferencesScopeKeyV221();
+      if (reactionPreferencesScopeV221 === scope) return reactionPreferencesV221;
+      let saved = null;
+      try { saved = JSON.parse(window.localStorage.getItem(`${REACTION_PREFERENCES_STORAGE_KEY_V221}:${scope}`) || "null"); } catch { saved = null; }
+      reactionPreferencesV221 = {
+        favoriteKeys: normalizeReactionPreferenceKeysV221(saved?.favoriteKeys, REACTION_FAVORITE_LIMIT_V221),
+        historyKeys: normalizeReactionPreferenceKeysV221(saved?.historyKeys, REACTION_HISTORY_LIMIT_V221)
+      };
+      reactionPreferencesScopeV221 = scope;
+      return reactionPreferencesV221;
+    }
+
+    function saveReactionPreferencesV221() {
+      loadReactionPreferencesV221();
+      try {
+        window.localStorage.setItem(`${REACTION_PREFERENCES_STORAGE_KEY_V221}:${reactionPreferencesScopeV221}`, JSON.stringify(reactionPreferencesV221));
+        return true;
+      } catch {
+        return false;
+      }
+    }
+
+    function reactionPreferenceDefinitionsV221(kind) {
+      const preferences = loadReactionPreferencesV221();
+      const keys = kind === "history" ? preferences.historyKeys : preferences.favoriteKeys;
+      const seen = new Set();
+      return keys.map(key => reactionDefinitionByKeyV211(key)).filter(definition => {
+        if (!definition || seen.has(definition.id)) return false;
+        seen.add(definition.id);
+        return true;
+      });
+    }
+
+    function isReactionFavoriteV221(reactionKey) {
+      return loadReactionPreferencesV221().favoriteKeys.includes(String(reactionKey || "").trim());
+    }
+
+    function toggleReactionFavoriteV221(reactionKey) {
+      const definition = reactionDefinitionByKeyV211(reactionKey);
+      if (!definition) return;
+      const preferences = loadReactionPreferencesV221();
+      const key = definition.id;
+      const index = preferences.favoriteKeys.indexOf(key);
+      if (index >= 0) preferences.favoriteKeys.splice(index, 1);
+      else preferences.favoriteKeys.unshift(key);
+      preferences.favoriteKeys = preferences.favoriteKeys.slice(0, REACTION_FAVORITE_LIMIT_V221);
+      saveReactionPreferencesV221();
+      renderReactionPickerOptionsV208();
+      if (reactionPickerTargetV208) reactionPopoverPositionV208(document.getElementById("reactionPickerV208"), reactionPickerTargetV208.opener);
+    }
+
+    function rememberReactionHistoryV221(reactionKey) {
+      const definition = reactionDefinitionByKeyV211(reactionKey);
+      if (!definition) return;
+      const preferences = loadReactionPreferencesV221();
+      preferences.historyKeys = [definition.id, ...preferences.historyKeys.filter(key => key !== definition.id)].slice(0, REACTION_HISTORY_LIMIT_V221);
+      saveReactionPreferencesV221();
+    }
+
     function reactionParticipantInitialV208(displayName) {
       return [...String(displayName || "プレイヤー").trim()][0] || "?";
     }
@@ -3331,6 +3423,7 @@
 
     function reactionPickerOptionMarkupV211(definition, bucket) {
       const selected = Boolean(bucket[definition.id]?.reactedByMe);
+      const favorite = isReactionFavoriteV221(definition.id);
       const icon = reactionIconMarkupV213(definition, "reaction-picker-icon-v209");
       const isMahjongTile = definition.iconType === "mahjong-tile";
       const visibleLabel = !isMahjongTile && definition.label ? `<span class="reaction-picker-label-v208">${escapeHtml(definition.label)}</span>` : "";
@@ -3338,11 +3431,12 @@
       const tileClass = isMahjongTile ? " is-tile" : "";
       const imageClass = definition.iconType === "image" ? " is-image" : "";
       const iconOnlyClass = !isMahjongTile && definition.label ? "" : " is-icon-only";
-      return `<button class="reaction-picker-option-v208 reaction-picker-option-v213${tileClass}${imageClass}${selected ? " is-selected" : ""}${icon ? "" : " no-icon"}${iconOnlyClass}" type="button" data-reaction-picker-key="${escapeHtml(definition.id)}" aria-label="${escapeHtml(accessibleLabel)}" aria-pressed="${String(selected)}">${icon}${visibleLabel}</button>`;
+      const favoriteLabel = favorite ? `${accessibleLabel}をお気に入りから外す` : `${accessibleLabel}をお気に入りに追加`;
+      return `<div class="reaction-picker-option-v208 reaction-picker-option-v213 reaction-picker-option-v221${tileClass}${imageClass}${selected ? " is-selected" : ""}${icon ? "" : " no-icon"}${iconOnlyClass}" data-reaction-option-key="${escapeHtml(definition.id)}"><button class="reaction-picker-select-v221" type="button" data-reaction-picker-key="${escapeHtml(definition.id)}" aria-label="${escapeHtml(accessibleLabel)}" aria-pressed="${String(selected)}">${icon}${visibleLabel}</button><button class="reaction-picker-favorite-v221${favorite ? " is-active" : ""}" type="button" data-reaction-favorite-toggle data-reaction-favorite-key="${escapeHtml(definition.id)}" aria-pressed="${String(favorite)}" aria-label="${escapeHtml(favoriteLabel)}" title="${escapeHtml(favoriteLabel)}">${favorite ? "★" : "☆"}<span class="sr-only">${escapeHtml(favoriteLabel)}</span></button></div>`;
     }
 
     function normalizeReactionPickerTabV213(tab) {
-      return ["standard", "tiles", "custom"].includes(tab) ? tab : "standard";
+      return ["favorites", "history", "standard", "tiles", "custom"].includes(tab) ? tab : "standard";
     }
 
     function setReactionPickerTabV213(tab) {
@@ -3353,9 +3447,13 @@
         button.classList.toggle("is-active", active);
         button.setAttribute("aria-selected", String(active));
       });
+      const favoritesPanel = document.getElementById("reactionPickerFavoritesPanelV221");
+      const historyPanel = document.getElementById("reactionPickerHistoryPanelV221");
       const standardPanel = document.getElementById("reactionPickerStandardPanelV211");
       const tilePanel = document.getElementById("reactionPickerTilePanelV213");
       const customPanel = document.getElementById("reactionPickerCustomPanelV211");
+      if (favoritesPanel) favoritesPanel.hidden = reactionPickerTabV211 !== "favorites";
+      if (historyPanel) historyPanel.hidden = reactionPickerTabV211 !== "history";
       if (standardPanel) standardPanel.hidden = reactionPickerTabV211 !== "standard";
       if (tilePanel) tilePanel.hidden = reactionPickerTabV211 !== "tiles";
       if (customPanel) customPanel.hidden = reactionPickerTabV211 !== "custom";
@@ -3367,14 +3465,24 @@
 
     function renderReactionPickerOptionsV208() {
       const options = document.getElementById("reactionPickerOptionsV208");
+      const favoritesOptions = document.getElementById("reactionPickerFavoritesOptionsV221");
+      const historyOptions = document.getElementById("reactionPickerHistoryOptionsV221");
       const tileOptions = document.getElementById("reactionTilePickerOptionsV213");
       const customOptions = document.getElementById("reactionCustomPickerOptionsV211");
       const target = reactionPickerTargetV208;
-      if (!options || !tileOptions || !customOptions || !target) return;
+      if (!options || !favoritesOptions || !historyOptions || !tileOptions || !customOptions || !target) return;
       const bucket = reactionBucketV208(target.scope, target.targetId);
       const topDefinitions = REACTION_TOP_KEYS_V211.map(key => REACTION_DEFINITION_MAP_V209.get(key)).filter(Boolean);
       const topKeySet = new Set(REACTION_TOP_KEYS_V211);
       const standardDefinitions = [...topDefinitions, ...REACTION_DEFINITIONS_V209.filter(definition => !topKeySet.has(definition.id))];
+      const favoriteDefinitions = reactionPreferenceDefinitionsV221("favorites");
+      const historyDefinitions = reactionPreferenceDefinitionsV221("history");
+      favoritesOptions.innerHTML = favoriteDefinitions.length
+        ? favoriteDefinitions.map(definition => reactionPickerOptionMarkupV211(definition, bucket)).join("")
+        : `<p class="reaction-picker-empty-v211">お気に入りはまだありません。各リアクションの☆から登録できます。</p>`;
+      historyOptions.innerHTML = historyDefinitions.length
+        ? historyDefinitions.map(definition => reactionPickerOptionMarkupV211(definition, bucket)).join("")
+        : `<p class="reaction-picker-empty-v211">最近使ったリアクションはまだありません。</p>`;
       options.innerHTML = standardDefinitions.map(definition => reactionPickerOptionMarkupV211(definition, bucket)).join("");
       tileOptions.innerHTML = MAHJONG_TILE_REACTION_DEFINITIONS_V213.map(definition => reactionPickerOptionMarkupV211(definition, bucket)).join("");
       const customDefinitions = state.customReactions || [];
@@ -3383,6 +3491,8 @@
         : `<p class="reaction-picker-empty-v211">カスタムリアクションはまだありません。</p>`;
       const count = document.getElementById("reactionPickerCustomCountV211");
       if (count) count.textContent = String(customDefinitions.length);
+      const favoritesCount = document.getElementById("reactionPickerFavoritesCountV221");
+      if (favoritesCount) favoritesCount.textContent = String(favoriteDefinitions.length);
       setReactionPickerTabV211(reactionPickerTabV211);
     }
 
@@ -3499,6 +3609,7 @@
           await window.NagaSupabase.setSharedCommentReaction(questionId, String(targetId), storageKey, active);
         }
         await refreshReactionSummaryV208();
+        if (active) rememberReactionHistoryV221(definition.id);
       } catch (error) {
         if (reactionContextIsCurrentV208(shareSlug, questionId)) {
           state.reactionSummary = snapshot;
@@ -3525,6 +3636,13 @@
           event.preventDefault();
           closeReactionPickerV208();
           document.querySelector('[data-menu-view="settings"]')?.click();
+          return;
+        }
+        const favoriteToggle = target.closest("[data-reaction-favorite-toggle]");
+        if (favoriteToggle && reactionPickerTargetV208) {
+          event.preventDefault();
+          event.stopPropagation();
+          toggleReactionFavoriteV221(favoriteToggle.dataset.reactionFavoriteKey || "");
           return;
         }
         const pickerOption = target.closest("[data-reaction-picker-key]");
@@ -4255,6 +4373,7 @@
       const QUESTION_NOTICE_STORAGE_KEY_V66 = storageKey("question-notices-v1");
       const ANNOUNCEMENT_SEEN_STORAGE_KEY_V65 = storageKey("announcement-seen-v1");
         const APP_ANNOUNCEMENTS_V66 = [
+          { version: 221, date: "2026-09-03", publishedAt: "2026-09-03T01:20:00+09:00", title: "定番リアクションとお気に入り・履歴を追加しました", body: "アリ！・好みで・ふむふむ・なるほど！・基礎講義・オリ・押し・お好み焼きを定番へ追加し、リアクション選択にお気に入りと履歴を追加しました。" },
           { version: 220, date: "2026-09-03", publishedAt: "2026-09-03T00:20:00+09:00", title: "問題生成の既存コメントを整理しました", body: "問題生成時に自動追加されていた定型コメントを、既存の問題からも削除しました。通常の利用者コメントはそのまま保持しています。" },
           { version: 219, date: "2026-09-03", publishedAt: "2026-09-03T00:00:00+09:00", title: "問題生成コメントと牌リアクションを整理しました", body: "問題生成時の自動コメントをなくし、牌リアクションは名称を省いて牌画像だけの高密度表示にしました。" },
           { version: 218, date: "2026-09-02", publishedAt: "2026-09-02T23:38:26+09:00", title: "問題生成のプレビューとモデル条件を見直しました", body: "問題生成の候補プレビューをPCでは大きく表示し、右側でプレイヤーとAIの選択を比較できるようにしました。半荘URLのカスタム設定では、解析済みモデルだけを選んで候補を再抽出できます。" },

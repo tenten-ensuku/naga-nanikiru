@@ -7084,3 +7084,160 @@ body.auth-gate-open {
     grid-template-columns: repeat(7, minmax(0, 1fr));
   }
 }
+
+/* V221: add personal reaction favorites and history without changing shared reaction data. */
+.reaction-picker-tabs-v221 {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.reaction-picker-tab-v221 {
+  min-width: 0;
+  padding-inline: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.reaction-picker-options-v221 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.reaction-picker-option-v221 {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: stretch;
+  min-width: 0;
+  min-height: 46px;
+  padding: 0;
+  overflow: hidden;
+}
+
+.reaction-picker-option-v221 .reaction-picker-select-v221 {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 5px;
+  width: 100%;
+  min-width: 0;
+  min-height: 46px;
+  padding: 7px 25px 7px 6px;
+  color: inherit;
+  background: transparent;
+  border: 0;
+  border-radius: inherit;
+  font-size: 10px;
+  font-weight: 800;
+  line-height: 1.25;
+  text-align: left;
+}
+
+.reaction-picker-option-v221 .reaction-picker-select-v221:hover,
+.reaction-picker-option-v221 .reaction-picker-select-v221:focus-visible {
+  background: rgba(155, 232, 216, .12);
+  outline: 2px solid rgba(155, 232, 216, .32);
+  outline-offset: -2px;
+}
+
+.reaction-picker-option-v221.no-icon .reaction-picker-select-v221,
+.reaction-picker-option-v221.is-icon-only .reaction-picker-select-v221 {
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
+  text-align: center;
+}
+
+.reaction-picker-favorite-v221 {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 19px;
+  height: 19px;
+  padding: 0;
+  color: rgba(255, 247, 214, .72);
+  background: rgba(2, 16, 26, .52);
+  border: 1px solid rgba(255, 255, 255, .18);
+  border-radius: 50%;
+  font-size: 12px;
+  line-height: 1;
+}
+
+.reaction-picker-favorite-v221:hover,
+.reaction-picker-favorite-v221:focus-visible,
+.reaction-picker-favorite-v221.is-active {
+  color: #6f4e1a;
+  background: #fff0ab;
+  border-color: #ffe08a;
+  outline: 2px solid rgba(255, 224, 138, .26);
+  outline-offset: 1px;
+}
+
+.reaction-picker-option-v221.is-selected .reaction-picker-favorite-v221 {
+  color: #6f4e1a;
+  background: rgba(255, 255, 255, .55);
+  border-color: rgba(255, 255, 255, .7);
+}
+
+.reaction-picker-option-v221.is-tile {
+  min-height: 42px;
+}
+
+.reaction-picker-option-v221.is-tile .reaction-picker-select-v221 {
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
+  min-height: 42px;
+  padding: 3px 2px;
+  gap: 0;
+  text-align: center;
+}
+
+.reaction-picker-option-v221.is-tile .reaction-picker-favorite-v221 {
+  top: 2px;
+  right: 2px;
+  width: 17px;
+  height: 17px;
+  font-size: 10px;
+}
+
+.reaction-picker-personal-note-v221 {
+  margin: 9px 2px 0;
+  color: #a9cbd0;
+  font-size: 10px;
+  line-height: 1.45;
+}
+
+@media (min-width: 801px) and (max-width: 1100px) {
+  .reaction-picker-options-v221 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 800px) {
+  .reaction-picker-tabs-v221 {
+    gap: 3px;
+  }
+
+  .reaction-picker-tab-v221 {
+    min-height: 34px;
+    padding-inline: 2px;
+    font-size: 10px;
+  }
+
+  .reaction-picker-options-v221 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .reaction-picker-option-v221 .reaction-picker-select-v221 {
+    min-height: 48px;
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 480px) {
+  .reaction-picker-tab-v221 {
+    font-size: 9px;
+  }
+}
