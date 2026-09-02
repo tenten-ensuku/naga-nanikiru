@@ -8,7 +8,7 @@ test("V210 keeps the PC comment composer reachable inside the scrollable comment
   const html = await readFile(indexUrl, "utf8");
   const desktopLayout = html.match(/@media \(min-width: 801px\) \{[\s\S]*?\.page\.desktop-split-layout:not\(\.menu-active\) > \.below-note/)?.[0] || "";
 
-  assert.match(html, /const APP_VERSION = 218;/);
+  assert.match(html, /const APP_VERSION = 219;/);
   assert.match(desktopLayout, /V210: keep the comment composer reachable/);
   assert.match(desktopLayout, /\.page\.desktop-split-layout:not\(\.menu-active\) > \.comments-panel/);
   assert.match(desktopLayout, /overflow-y: auto;/);

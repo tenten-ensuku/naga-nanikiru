@@ -10,7 +10,7 @@ test("renders the v87 scene and half-game generator controls", async () => {
     readFile(indexUrl, "utf8"),
     readFile(generatorUrl, "utf8")
   ]);
-  assert.match(html, /const APP_VERSION = 218/);
+  assert.match(html, /const APP_VERSION = 219/);
   assert.match(html, /function captureGeneratorFormDraftV157\(\)/);
   assert.match(html, /destination: document\.getElementById\("generatorDestinationSelect"\)\?\.value \|\| generatorDestinationV130 \|\| ""/);
   assert.match(html, /function restoreGeneratorFormDraftV157\(draft\)/);
@@ -170,6 +170,8 @@ test("renders the v87 scene and half-game generator controls", async () => {
   assert.doesNotMatch(html, /手動でスクリーンショットを指定/);
   assert.doesNotMatch(html, /if \(!candidate\._imageData\)/);
   assert.match(html, /image: candidate\._imageData \|\| null/);
+  assert.match(html, /image: candidate\._imageData \|\| null,\s*comments: \[\]/);
+  assert.doesNotMatch(html, /NAGA URLから作成した問題です/);
   assert.match(html, /needsScreenshot: !candidate\._imageData/);
   assert.doesNotMatch(html, /id="surroundingsToggle"/);
   assert.doesNotMatch(html, /SCENE_IMAGES/);

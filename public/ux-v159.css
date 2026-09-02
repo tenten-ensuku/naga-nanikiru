@@ -7045,3 +7045,42 @@ body.auth-gate-open {
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+/* V219: show the tile reaction tab as a compact image-only palette. */
+.reaction-tile-picker-options-v213 {
+  grid-template-columns: repeat(10, minmax(0, 1fr));
+  gap: 3px;
+}
+
+.reaction-picker-option-v213.is-tile {
+  min-height: 42px;
+  padding: 3px 2px;
+  gap: 0;
+  line-height: 0;
+}
+
+.reaction-picker-option-v213.is-tile .reaction-picker-label-v208 {
+  display: none;
+}
+
+.reaction-picker-option-v213.is-tile .reaction-mahjong-tile-icon-v213 {
+  width: 24px;
+  height: 32px;
+}
+
+@media (max-width: 800px) {
+  .reaction-tile-picker-options-v213 {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+  }
+
+  .reaction-picker-option-v213.is-tile .reaction-mahjong-tile-icon-v213 {
+    width: 25px;
+    height: 34px;
+  }
+}
+
+@media (max-width: 480px) {
+  .reaction-tile-picker-options-v213 {
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+  }
+}

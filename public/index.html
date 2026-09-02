@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=218">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=218">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=218">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=219">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=219">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=219">
   <title>みん切る｜みんなの何切る問題集</title>
   <meta name="description" content="みん切るは、NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリです。">
   <meta name="theme-color" content="#06131e">
@@ -2185,8 +2185,8 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=218">
-  <link rel="stylesheet" href="library-v214.css?v=218">
+  <link rel="stylesheet" href="ux-v159.css?v=219">
+  <link rel="stylesheet" href="library-v214.css?v=219">
 </head>
 <body class="auth-gate-open">
   <main class="page" inert aria-hidden="true">
@@ -2501,15 +2501,15 @@
   </dialog>
 
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=218"></script>
-  <script src="drill-ux-v44.js?v=218"></script>
-  <script src="library-order-v215.js?v=218"></script>
-  <script src="library-v214.js?v=218"></script>
+  <script src="supabase-sync-v48.js?v=219"></script>
+  <script src="drill-ux-v44.js?v=219"></script>
+  <script src="library-order-v215.js?v=219"></script>
+  <script src="library-v214.js?v=219"></script>
   <script src="naga-generator-v44.js"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 218;
+    const APP_VERSION = 219;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -3332,11 +3332,13 @@
     function reactionPickerOptionMarkupV211(definition, bucket) {
       const selected = Boolean(bucket[definition.id]?.reactedByMe);
       const icon = reactionIconMarkupV213(definition, "reaction-picker-icon-v209");
-      const visibleLabel = definition.label ? `<span class="reaction-picker-label-v208">${escapeHtml(definition.label)}</span>` : "";
+      const isMahjongTile = definition.iconType === "mahjong-tile";
+      const visibleLabel = !isMahjongTile && definition.label ? `<span class="reaction-picker-label-v208">${escapeHtml(definition.label)}</span>` : "";
       const accessibleLabel = reactionAccessibleLabelV211(definition);
-      const tileClass = definition.iconType === "mahjong-tile" ? " is-tile" : "";
+      const tileClass = isMahjongTile ? " is-tile" : "";
       const imageClass = definition.iconType === "image" ? " is-image" : "";
-      return `<button class="reaction-picker-option-v208 reaction-picker-option-v213${tileClass}${imageClass}${selected ? " is-selected" : ""}${icon ? "" : " no-icon"}${definition.label ? "" : " is-icon-only"}" type="button" data-reaction-picker-key="${escapeHtml(definition.id)}" aria-label="${escapeHtml(accessibleLabel)}" aria-pressed="${String(selected)}">${icon}${visibleLabel}</button>`;
+      const iconOnlyClass = !isMahjongTile && definition.label ? "" : " is-icon-only";
+      return `<button class="reaction-picker-option-v208 reaction-picker-option-v213${tileClass}${imageClass}${selected ? " is-selected" : ""}${icon ? "" : " no-icon"}${iconOnlyClass}" type="button" data-reaction-picker-key="${escapeHtml(definition.id)}" aria-label="${escapeHtml(accessibleLabel)}" aria-pressed="${String(selected)}">${icon}${visibleLabel}</button>`;
     }
 
     function normalizeReactionPickerTabV213(tab) {
@@ -4222,6 +4224,7 @@
       const QUESTION_NOTICE_STORAGE_KEY_V66 = storageKey("question-notices-v1");
       const ANNOUNCEMENT_SEEN_STORAGE_KEY_V65 = storageKey("announcement-seen-v1");
         const APP_ANNOUNCEMENTS_V66 = [
+          { version: 219, date: "2026-09-03", publishedAt: "2026-09-03T00:00:00+09:00", title: "問題生成コメントと牌リアクションを整理しました", body: "問題生成時の自動コメントをなくし、牌リアクションは名称を省いて牌画像だけの高密度表示にしました。" },
           { version: 218, date: "2026-09-02", publishedAt: "2026-09-02T23:38:26+09:00", title: "問題生成のプレビューとモデル条件を見直しました", body: "問題生成の候補プレビューをPCでは大きく表示し、右側でプレイヤーとAIの選択を比較できるようにしました。半荘URLのカスタム設定では、解析済みモデルだけを選んで候補を再抽出できます。" },
           { version: 217, date: "2026-09-02", publishedAt: "2026-09-02T19:00:00+09:00", title: "Discordのスポイラー本文を保持", body: "Discordで||伏せられた本文||も取得し、アプリでは伏せ字のまま表示するようにしました。伏せ字を押すと本文を確認できます。" },
           { version: 216, date: "2026-09-01", publishedAt: "2026-09-01T08:11:18+09:00", title: "最初の長押しから本を移動", body: "本を先に選択しなくても、最初の長押し・ドラッグからそのまま並べ替えできるようになりました。短くタップした場合は、これまでどおり本の説明を表示します。" },
@@ -9390,7 +9393,7 @@
           number: nextNumber,
           title: nextNumber ? `問題${nextNumber}` : "生成候補",
           image: candidate._imageData || null,
-          comments: [{ id: `generated-${Date.now()}`, author: "問題生成", createdAt: now, content: "NAGA URLから作成した問題です。", attachments: [] }],
+          comments: [],
           threadUrl: candidate.threadUrl || "#",
           localGenerated: true,
           needsScreenshot: !candidate._imageData,

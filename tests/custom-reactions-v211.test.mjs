@@ -14,14 +14,14 @@ const syncClient = read("client/supabase-sync.ts");
 const migration = read("supabase/migrations/20260830160223_custom_reactions_v211.sql");
 
 test("V211 places the curated eight reactions first and removes duplicate labels", () => {
-  assert.match(html, /const APP_VERSION = 218;/);
+  assert.match(html, /const APP_VERSION = 219;/);
   assert.match(html, /const REACTION_TOP_KEYS_V211 = Object\.freeze\(\["like", "agree", "hard", "good-question", "important", "hmm", "policy", "mistake"\]\)/);
   assert.match(html, /id: "silent", storageKey: "silent", label: "ダマ"/);
   assert.match(html, /id: "exclamation", storageKey: "exclaim", label: "", icon: "❗"/);
   assert.match(html, /id: "question", storageKey: "question", label: "", icon: "❓"/);
   assert.match(html, /const topDefinitions = REACTION_TOP_KEYS_V211/);
   assert.match(html, /const standardDefinitions = \[\.\.\.topDefinitions, \.\.\.REACTION_DEFINITIONS_V209/);
-  assert.match(html, /definition\.label \? `<span class="reaction-picker-label-v208">/);
+  assert.match(html, /!isMahjongTile && definition\.label \? `<span class="reaction-picker-label-v208">/);
   assert.match(html, /definition\.label \? `<span class="reaction-chip-label-v208">/);
 });
 
