@@ -7529,6 +7529,20 @@ body.auth-gate-open {
     padding: 4px 8px;
     border-radius: 8px;
   }
+
+  .page.menu-active .learning-all-action > .learning-custom-settings[open] {
+    width: calc(100% - 30px);
+    max-width: none;
+  }
+
+  .page.menu-active .learning-all-action > .learning-custom-settings[open] .learning-custom-settings-body {
+    position: static;
+    width: 100%;
+    max-width: 100%;
+    max-height: none;
+    margin-top: 6px;
+    overflow: visible;
+  }
 }
 
 @media (max-width: 480px) {
@@ -7557,6 +7571,10 @@ body.auth-gate-open {
   .page.menu-active .learning-all-action > .learning-custom-settings {
     max-width: calc(100% - 26px);
     margin: 0 0 7px 13px;
+  }
+
+  .page.menu-active .learning-all-action > .learning-custom-settings[open] {
+    width: calc(100% - 26px);
   }
 }
 

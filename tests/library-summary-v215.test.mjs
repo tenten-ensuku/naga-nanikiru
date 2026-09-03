@@ -70,5 +70,5 @@ test('V215 adapter reuses the current account and series archive scope without m
   assert.match(section, /parentSlug \|\| slug/);
   assert.match(section, /userStateV16\.collectionPersonal\?\.\[scopeKey\]\?\.archived/);
   assert.doesNotMatch(section, /saveUserState|setItem|push\(/);
-  assert.match(html, /library-order-v215\.js\?v=225/);
+  assert.match(html, /library-order-v215\.js\?v=226/);
 });

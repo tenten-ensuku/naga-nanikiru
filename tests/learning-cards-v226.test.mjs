@@ -7,7 +7,7 @@ const cssUrl = new URL("../public/ux-v159.css", import.meta.url);
 const identityUrl = new URL("../app/lib/appIdentity.ts", import.meta.url);
 const packageUrl = new URL("../package.json", import.meta.url);
 
-test("V225 keeps settings inside a compact all-question card at every responsive size", async () => {
+test("V226 keeps settings inside a compact all-question card at every responsive size", async () => {
   const [html, css, identity, packageSource] = await Promise.all([
     readFile(htmlUrl, "utf8"),
     readFile(cssUrl, "utf8"),
@@ -15,10 +15,10 @@ test("V225 keeps settings inside a compact all-question card at every responsive
     readFile(packageUrl, "utf8")
   ]);
 
-  assert.match(html, /const APP_VERSION = 225;/);
-  assert.match(identity, /APP_VERSION = 225/);
+  assert.match(html, /const APP_VERSION = 226;/);
+  assert.match(identity, /APP_VERSION = 226/);
   for (const asset of ["ux-v159\\.css", "library-v214\\.css", "drill-ux-v44\\.js"]) {
-    assert.match(html, new RegExp(`${asset}\\?v=225`));
+    assert.match(html, new RegExp(`${asset}\\?v=226`));
   }
 
   const allActionMarkup = html.match(/<div class="learning-all-action">[\s\S]*?<details class="learning-custom-settings"[\s\S]*?<\/details><\/div>/)?.[0] || "";
@@ -34,8 +34,9 @@ test("V225 keeps settings inside a compact all-question card at every responsive
   assert.match(v225, /@media \(max-width: 800px\)[\s\S]*\.learning-action-card \{[\s\S]*min-height: 66px;[\s\S]*grid-template-areas: "main cta" "description cta";/);
   assert.match(v225, /@media \(max-width: 800px\)[\s\S]*\.learning-all-action \{[\s\S]*min-height: 91px;/);
   assert.doesNotMatch(v225, /\.learning-all-action > \.learning-custom-settings \{[^}]*position: absolute;/);
+  assert.match(v225, /@media \(max-width: 800px\)[\s\S]*\.learning-custom-settings\[open\] \.learning-custom-settings-body \{[\s\S]*position: static;[\s\S]*width: 100%;[\s\S]*max-height: none;/);
 
   const scripts = JSON.parse(packageSource).scripts;
-  assert.match(scripts["test:drill"], /tests\/learning-cards-v225\.test\.mjs/);
+  assert.match(scripts["test:drill"], /tests\/learning-cards-v226\.test\.mjs/);
   assert.doesNotMatch(scripts["test:drill"], /learning-settings-(?:responsive-v223|position-v224)/);
 });
