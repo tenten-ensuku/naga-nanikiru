@@ -20,7 +20,7 @@ const reactionLabels = [
 ];
 
 test("V209 exposes the sample-style reaction icons and preserves the current-question hydration flow", () => {
-  assert.match(html, /const APP_VERSION = 224;/);
+  assert.match(html, /const APP_VERSION = 225;/);
   assert.match(html, /reactionPickerV208/);
   assert.match(html, /この問題へのリアクション/);
   assert.match(html, /data-reaction-add/);

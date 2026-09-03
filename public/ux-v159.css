@@ -7313,3 +7313,255 @@ body.auth-gate-open {
     top: auto;
   }
 }
+
+/* V225: compact the three learning actions and make the all-question settings part of its card. */
+.page.menu-active .learning-action-grid {
+  align-items: stretch;
+  gap: 9px;
+}
+
+.page.menu-active .learning-action-card {
+  height: 116px;
+  min-height: 116px;
+  padding: 13px 16px 12px 18px;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  grid-template-areas: "main" "description";
+  align-content: center;
+  gap: 7px;
+}
+
+.page.menu-active .learning-action-main {
+  flex-direction: row;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.page.menu-active .learning-action-card .learning-action-title {
+  font-size: 19px;
+  line-height: 1.15;
+}
+
+.page.menu-active .learning-action-card .learning-action-count {
+  font-size: 31px;
+  line-height: 1;
+}
+
+.page.menu-active .learning-action-card .learning-action-description {
+  align-self: start;
+  padding-top: 0;
+  font-size: 10px;
+  line-height: 1.35;
+}
+
+.page.menu-active .learning-all-action {
+  position: relative;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: 0;
+  width: 100%;
+  height: 116px;
+  min-height: 116px;
+  overflow: visible;
+  border: 1px solid rgba(98, 214, 198, .44);
+  border-radius: 17px;
+  background: linear-gradient(135deg, #123b49 0%, #0d2a38 68%, #0b2330 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .07), 0 8px 22px rgba(0, 0, 0, .16);
+  isolation: isolate;
+  transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease, filter .18s ease;
+}
+
+.page.menu-active .learning-all-action::before {
+  position: absolute;
+  z-index: 0;
+  inset: 0 auto 0 0;
+  width: 4px;
+  border-radius: 17px 0 0 17px;
+  background: var(--ux-mint);
+  content: "";
+}
+
+.page.menu-active .learning-all-action:has(> .learning-action-card:hover:not(:disabled)),
+.page.menu-active .learning-all-action:has(> .learning-action-card:focus-visible:not(:disabled)) {
+  transform: translateY(-2px);
+  border-color: rgba(155, 232, 216, .7);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .1), 0 13px 28px rgba(0, 0, 0, .25);
+  filter: saturate(1.08);
+}
+
+.page.menu-active .learning-all-action:has(> .learning-action-card:focus-visible:not(:disabled)) {
+  outline: 2px solid rgba(242, 195, 79, .9);
+  outline-offset: 3px;
+}
+
+.page.menu-active .learning-all-action > .learning-action-card {
+  z-index: 1;
+  height: auto;
+  min-height: 0;
+  padding: 11px 16px 2px 18px;
+  overflow: visible;
+  border: 0;
+  border-radius: inherit;
+  outline: 0;
+  background: transparent;
+  box-shadow: none;
+  filter: none;
+  isolation: auto;
+}
+
+.page.menu-active .learning-all-action > .learning-action-card::before {
+  display: none;
+}
+
+.page.menu-active .learning-all-action > .learning-action-card:hover:not(:disabled),
+.page.menu-active .learning-all-action > .learning-action-card:focus-visible:not(:disabled) {
+  transform: none;
+  border-color: transparent;
+  background: transparent;
+  box-shadow: none;
+  filter: none;
+}
+
+.page.menu-active .learning-all-action > .learning-custom-settings {
+  position: relative;
+  z-index: 4;
+  top: auto;
+  right: auto;
+  bottom: auto;
+  left: auto;
+  order: initial;
+  width: max-content;
+  max-width: calc(100% - 36px);
+  margin: 0 0 11px 18px;
+  border: 0;
+  background: transparent;
+}
+
+.page.menu-active .learning-all-action > .learning-custom-settings > summary {
+  display: inline-flex;
+  box-sizing: border-box;
+  width: auto;
+  min-height: 28px;
+  padding: 4px 8px;
+  border: 1px solid rgba(98, 214, 198, .5);
+  border-radius: 8px;
+  background: rgba(5, 35, 43, .82);
+  color: #d4fff8;
+  font-size: 10px;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.page.menu-active .learning-all-action > .learning-custom-settings[open] .learning-custom-settings-body {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: auto;
+  bottom: auto;
+  left: 0;
+  width: min(390px, calc(100vw - 32px));
+  max-width: none;
+  max-height: min(64vh, 480px);
+  margin-top: 0;
+  overflow: auto;
+}
+
+@media (max-width: 800px) {
+  .page.menu-active .learning-action-grid {
+    gap: 7px;
+  }
+
+  .page.menu-active .learning-action-card {
+    height: auto;
+    min-height: 66px;
+    padding: 8px 12px 8px 15px;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-rows: auto auto;
+    grid-template-areas: "main cta" "description cta";
+    align-content: center;
+    gap: 2px 10px;
+    border-radius: 14px;
+  }
+
+  .page.menu-active .learning-action-card .learning-action-title {
+    font-size: 16px;
+  }
+
+  .page.menu-active .learning-action-card .learning-action-count {
+    font-size: 24px;
+  }
+
+  .page.menu-active .learning-action-card .learning-action-description {
+    font-size: 9px;
+    line-height: 1.3;
+  }
+
+  .page.menu-active .learning-action-card .learning-action-link {
+    min-height: 34px;
+    padding-inline: 10px;
+  }
+
+  .page.menu-active .learning-all-action {
+    display: grid;
+    height: auto;
+    min-height: 91px;
+    border-radius: 14px;
+  }
+
+  .page.menu-active .learning-all-action::before {
+    border-radius: 14px 0 0 14px;
+  }
+
+  .page.menu-active .learning-all-action > .learning-action-card {
+    height: auto;
+    min-height: 59px;
+    padding: 8px 12px 1px 15px;
+  }
+
+  .page.menu-active .learning-all-action > .learning-custom-settings {
+    width: max-content;
+    max-width: calc(100% - 30px);
+    margin: 0 0 8px 15px;
+  }
+
+  .page.menu-active .learning-all-action > .learning-custom-settings > summary {
+    width: auto;
+    min-height: 27px;
+    padding: 4px 8px;
+    border-radius: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .page.menu-active .learning-action-card {
+    min-height: 62px;
+    padding: 7px 10px 7px 13px;
+  }
+
+  .page.menu-active .learning-action-card .learning-action-title {
+    font-size: 15px;
+  }
+
+  .page.menu-active .learning-action-card .learning-action-count {
+    font-size: 22px;
+  }
+
+  .page.menu-active .learning-all-action {
+    min-height: 86px;
+  }
+
+  .page.menu-active .learning-all-action > .learning-action-card {
+    min-height: 55px;
+    padding: 7px 10px 1px 13px;
+  }
+
+  .page.menu-active .learning-all-action > .learning-custom-settings {
+    max-width: calc(100% - 26px);
+    margin: 0 0 7px 13px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page.menu-active .learning-all-action {
+    transition: none;
+  }
+}

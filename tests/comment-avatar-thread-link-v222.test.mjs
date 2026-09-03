@@ -7,8 +7,8 @@ const identity = await readFile(new URL("../app/lib/appIdentity.ts", import.meta
 const migration = await readFile(new URL("../supabase/migrations/20260903090000_comment_avatar_backfill_v222.sql", import.meta.url), "utf8");
 
 test("V222のDiscordリンクは有効な転送元だけを表示する", () => {
-  assert.match(identity, /APP_VERSION = 224/);
-  assert.match(html, /const APP_VERSION = 224/);
+  assert.match(identity, /APP_VERSION = 225/);
+  assert.match(html, /const APP_VERSION = 225/);
   assert.match(html, /function normalizeDiscordThreadUrlV222\(value\)/);
   assert.match(html, /if \(!raw \|\| raw === "#"\) return ""/);
   assert.match(html, /link\.hidden = !href/);
