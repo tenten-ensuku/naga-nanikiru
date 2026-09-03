@@ -15,10 +15,10 @@ test("V223 keeps the all-question settings inside the card on vertical layouts",
     readFile(packageUrl, "utf8")
   ]);
 
-  assert.match(html, /const APP_VERSION = 223;/);
-  assert.match(identity, /APP_VERSION = 223/);
+  assert.match(html, /const APP_VERSION = 224;/);
+  assert.match(identity, /APP_VERSION = 224/);
   for (const asset of ["ux-v159\\.css", "library-v214\\.css", "drill-ux-v44\\.js"]) {
-    assert.match(html, new RegExp(`${asset}\\?v=223`));
+    assert.match(html, new RegExp(`${asset}\\?v=224`));
   }
 
   const responsivePatch = css.match(/\/\* V223: keep the all-question settings inside the card on vertical layouts\. \*\/[\s\S]*$/)?.[0] || "";

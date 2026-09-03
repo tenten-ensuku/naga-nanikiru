@@ -7306,3 +7306,10 @@ body.auth-gate-open {
     left: 8px;
   }
 }
+
+/* V224: clear the desktop top offset before pinning the settings row to the bottom. */
+@media (max-width: 800px) {
+  .page.menu-active .learning-all-action > .learning-custom-settings {
+    top: auto;
+  }
+}
