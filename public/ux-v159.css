@@ -7241,3 +7241,68 @@ body.auth-gate-open {
     font-size: 9px;
   }
 }
+
+/* V223: keep the all-question settings inside the card on vertical layouts. */
+@media (max-width: 800px) {
+  .page.menu-active .learning-all-action {
+    position: relative;
+    display: block;
+    min-height: 118px;
+    overflow: visible;
+  }
+
+  .page.menu-active .learning-all-action > .learning-action-card {
+    min-height: 118px;
+    padding-bottom: 51px;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-rows: auto auto;
+    grid-template-areas: "main cta" "description cta";
+  }
+
+  .page.menu-active .learning-all-action > .learning-custom-settings {
+    position: absolute;
+    z-index: 2;
+    right: 10px;
+    bottom: 8px;
+    left: 10px;
+    order: initial;
+    margin: 0;
+  }
+
+  .page.menu-active .learning-all-action > .learning-custom-settings > summary {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 34px;
+    padding: 6px 9px;
+    border-radius: 10px;
+  }
+
+  .page.menu-active .learning-all-action > .learning-custom-settings[open] .learning-custom-settings-body {
+    position: absolute;
+    top: calc(100% + 5px);
+    right: 0;
+    left: 0;
+    width: auto;
+    max-width: none;
+    max-height: min(64vh, 480px);
+    margin-top: 0;
+    overflow: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .page.menu-active .learning-all-action,
+  .page.menu-active .learning-all-action > .learning-action-card {
+    min-height: 112px;
+  }
+
+  .page.menu-active .learning-all-action > .learning-action-card {
+    padding-bottom: 46px;
+  }
+
+  .page.menu-active .learning-all-action > .learning-custom-settings {
+    right: 8px;
+    bottom: 7px;
+    left: 8px;
+  }
+}

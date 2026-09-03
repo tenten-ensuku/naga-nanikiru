@@ -411,7 +411,7 @@ test("switching users invalidates old in-flight/cache data", async () => {
 
 test("adapter keeps legacy fallback, controller mount/unmount hooks, and navigation reset contract", async () => {
   const [index, library] = await Promise.all([readFile(INDEX_PATH, "utf8"), readFile(LIBRARY_PATH, "utf8")]);
-  assert.match(index, /library-v214\.js\?v=222/);
+  assert.match(index, /library-v214\.js\?v=223/);
   const renderStart = index.indexOf("function renderCollectionChooserV165");
   const renderEnd = index.indexOf("function renderCollectionSpacePanelV100", renderStart);
   const renderer = index.slice(renderStart, renderEnd);
