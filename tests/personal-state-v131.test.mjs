@@ -6,7 +6,7 @@ const htmlUrl = new URL("../public/index.html", import.meta.url);
 
 test("V131 scopes personal archive and favorite state by user and collection", async () => {
   const html = await readFile(htmlUrl, "utf8");
-  assert.match(html, /const APP_VERSION = 227/);
+  assert.match(html, /const APP_VERSION = 229/);
   assert.match(html, /function personalCollectionScopeKeyV131\(/);
   assert.match(html, /supabaseSessionV46\?\.user\?\.id/);
   assert.match(html, /sharedCollectionV46\?\.share_slug/);

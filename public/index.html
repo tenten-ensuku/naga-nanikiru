@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=227">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=227">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=227">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=229">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=229">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=229">
   <title>みん切る｜みんなの何切る問題集</title>
   <meta name="description" content="みん切るは、NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリです。">
   <meta name="theme-color" content="#06131e">
@@ -18,6 +18,10 @@
   <meta name="twitter:title" content="みん切る｜みんなの何切る問題集">
   <meta name="twitter:description" content="おすすめ問題、習熟度分析、NAGA URLからの問題生成。みん切るで何切るを学びます。">
   <meta name="twitter:image" content="https://tenten-ensuku.github.io/naga-nanikiru/og-v44.png">
+  <script>
+    // 復旧完了後はこの値だけを false に戻すと通常のログイン導線へ復帰します。
+    window.NAGA_MAINTENANCE_MODE = true;
+  </script>
   <style>
     :root {
       --ink: #f6fbff;
@@ -2185,10 +2189,10 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=227">
-  <link rel="stylesheet" href="library-v214.css?v=227">
+  <link rel="stylesheet" href="ux-v159.css?v=229">
+  <link rel="stylesheet" href="library-v214.css?v=229">
 </head>
-<body class="auth-gate-open">
+<body class="auth-gate-open recovery-notice-open">
   <main class="page" inert aria-hidden="true">
     <section class="menu-panel" id="menuPanel" aria-labelledby="menuTitle">
       <aside class="menu-sidebar" aria-label="問題集ナビゲーション">
@@ -2434,7 +2438,15 @@
     </div>
   </main>
 
-  <section class="auth-gate" id="authGate" data-state="checking" aria-label="ログインが必要です">
+  <section class="recovery-notice" id="recoveryNotice" role="dialog" aria-modal="true" aria-labelledby="recoveryNoticeTitle" aria-describedby="recoveryNoticeDescription">
+    <div class="recovery-notice-frame">
+      <h1 class="sr-only" id="recoveryNoticeTitle">復旧のお知らせ</h1>
+      <p class="sr-only" id="recoveryNoticeDescription">現在、復旧作業中です。アプリは一時的に利用できません。2026年9月6日から順次復旧予定です。</p>
+      <img class="recovery-notice-image" src="assets/recovery-notice-v229.png" alt="お知らせ。現在、復旧作業中です。アプリは一時的にご利用いただけません。2026年9月6日から順次復旧予定です。現在、システム調整および復旧対応を進めています。ご不便をおかけして申し訳ございません。復旧まで今しばらくお待ちください。">
+    </div>
+  </section>
+
+  <section class="auth-gate" id="authGate" data-state="checking" aria-label="ログインが必要です" hidden>
     <div class="auth-gate-card" role="dialog" aria-modal="true" aria-labelledby="authGateTitle" aria-describedby="authGateDescription" tabindex="-1">
       <img class="auth-gate-logo" src="assets/min-kiru-header.png" alt="みん切る（みんなの何切る問題集）">
       <h2 id="authGateTitle">ログインして学習を始める</h2>
@@ -2511,15 +2523,15 @@
   </dialog>
 
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=227"></script>
-  <script src="drill-ux-v44.js?v=227"></script>
-  <script src="library-order-v215.js?v=227"></script>
-  <script src="library-v214.js?v=227"></script>
+  <script src="supabase-sync-v48.js?v=229"></script>
+  <script src="drill-ux-v44.js?v=229"></script>
+  <script src="library-order-v215.js?v=229"></script>
+  <script src="library-v214.js?v=229"></script>
   <script src="naga-generator-v44.js"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 227;
+    const APP_VERSION = 229;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -4412,8 +4424,9 @@
 
       const COMMENT_NOTICE_STORAGE_KEY_V65 = storageKey("comment-notices-v1");
       const QUESTION_NOTICE_STORAGE_KEY_V66 = storageKey("question-notices-v1");
-      const ANNOUNCEMENT_SEEN_STORAGE_KEY_V65 = storageKey("announcement-seen-v1");
+        const ANNOUNCEMENT_SEEN_STORAGE_KEY_V65 = storageKey("announcement-seen-v1");
         const APP_ANNOUNCEMENTS_V66 = [
+          { version: 229, date: "2026-09-04", publishedAt: "2026-09-04T15:00:00+09:00", title: "復旧のお知らせを更新しました", body: "現在、システム調整および復旧対応を進めています。2026年9月6日から順次復旧予定です。" },
           { version: 227, date: "2026-09-04", publishedAt: "2026-09-04T12:55:00+09:00", title: "バックグラウンド通信を軽量化しました", body: "非表示タブと重複タブの定期通信を停止し、問題一覧の周期的な再取得を廃止しました。通知を開いた時は最新のコメントと追加問題を確認できます。" },
           { version: 226, date: "2026-09-04", publishedAt: "2026-09-04T01:46:00+09:00", title: "条件設定を縦画面でも最後まで操作できます", body: "全問カード内の条件設定を開くとカードが自然に展開し、下部ナビに隠れずスクロールしてすべての項目を操作できるようにしました。" },
           { version: 225, date: "2026-09-04", publishedAt: "2026-09-04T01:33:00+09:00", title: "学習カードをコンパクトに整えました", body: "未回答・苦手克服・全問の余白を縮め、条件設定を全問カード内の独立した操作として重ならず配置しました。" },
@@ -10034,6 +10047,30 @@
         }[state] || "学習を始めるにはDiscordでログインしてください。";
       }
 
+      const RECOVERY_NOTICE_MODE_V229 = window.NAGA_MAINTENANCE_MODE === true;
+
+      function applyRecoveryNoticeModeV229(enabled) {
+        const notice = document.getElementById("recoveryNotice");
+        const gate = document.getElementById("authGate");
+        const page = document.querySelector(".page");
+        if (notice) {
+          notice.hidden = !enabled;
+          notice.setAttribute("aria-hidden", String(!enabled));
+        }
+        if (gate) {
+          gate.hidden = enabled;
+          gate.setAttribute("aria-hidden", String(enabled));
+        }
+        if (page) {
+          page.toggleAttribute("inert", enabled);
+          if ("inert" in page) page.inert = enabled;
+          if (enabled) page.setAttribute("aria-hidden", "true");
+          else page.removeAttribute("aria-hidden");
+        }
+        document.body.classList.toggle("recovery-notice-open", enabled);
+        document.body.classList.toggle("auth-gate-open", enabled);
+      }
+
       function setAuthGateStateV187(nextState, message = "") {
         const state = ["checking", "unauthenticated", "signing-in", "unavailable", "authenticated"].includes(nextState)
           ? nextState
@@ -10197,6 +10234,11 @@
       }
 
       async function initializeAccountV46() {
+        if (RECOVERY_NOTICE_MODE_V229) {
+          applyRecoveryNoticeModeV229(true);
+          return;
+        }
+        applyRecoveryNoticeModeV229(false);
         const authButton = document.getElementById("discordAuthButton");
         authButton.addEventListener("click", handleDiscordAuthV187);
         document.getElementById("authGateLoginButton")?.addEventListener("click", handleDiscordAuthV187);

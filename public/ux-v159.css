@@ -4092,6 +4092,79 @@ button:disabled {
   }
 }
 
+/* V229: show a static recovery notice before any Supabase authentication work. */
+body.recovery-notice-open {
+  overflow: hidden;
+  background: #f7f3eb;
+}
+
+.recovery-notice {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: grid;
+  place-items: center;
+  padding: clamp(10px, 2.4vw, 32px);
+  overflow: auto;
+  background: #f7f3eb;
+}
+
+.recovery-notice[hidden] {
+  display: none;
+}
+
+.recovery-notice-frame {
+  display: grid;
+  place-items: center;
+  width: min(100%, 1280px);
+  min-height: 0;
+  padding: clamp(6px, 1.4vw, 18px);
+  border: 1px solid rgba(183, 137, 67, .28);
+  border-radius: 22px;
+  background: rgba(255, 253, 248, .92);
+  box-shadow: 0 20px 70px rgba(80, 61, 30, .18);
+}
+
+.recovery-notice-image {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  max-height: calc(100dvh - clamp(20px, 4vw, 64px));
+  height: auto;
+  object-fit: contain;
+  border-radius: 12px;
+}
+
+@media (max-width: 560px) {
+  .recovery-notice {
+    align-items: start;
+    padding: 8px;
+  }
+
+  .recovery-notice-frame {
+    width: 100%;
+    padding: 4px;
+    border-radius: 15px;
+  }
+
+  .recovery-notice-image {
+    width: 100%;
+    max-height: none;
+    border-radius: 9px;
+  }
+}
+
+@media (max-height: 520px) and (orientation: landscape) {
+  .recovery-notice {
+    align-items: center;
+  }
+
+  .recovery-notice-image {
+    width: auto;
+    max-height: calc(100dvh - 16px);
+  }
+}
+
 /* V187: require account authentication before any study interaction. */
 body.auth-gate-open {
   overflow: hidden;

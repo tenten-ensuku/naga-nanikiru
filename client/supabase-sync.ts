@@ -30,12 +30,15 @@ type LocalState = {
 declare global {
   interface Window {
     NAGA_RUNTIME_CONFIG?: RuntimeConfig;
+    NAGA_MAINTENANCE_MODE?: boolean;
     NagaSupabase?: ReturnType<typeof buildApi>;
   }
 }
 
 const config = window.NAGA_RUNTIME_CONFIG ?? {};
+const maintenanceMode = window.NAGA_MAINTENANCE_MODE === true;
 const configured = Boolean(
+  !maintenanceMode &&
   config.supabaseUrl?.startsWith("https://") &&
   config.supabasePublishableKey?.startsWith("sb_publishable_")
 );
@@ -72,7 +75,7 @@ async function deterministicUuid(value: string) {
 }
 
 async function currentSession() {
-  if (!client) return null;
+  if (!client || maintenanceMode) return null;
   const { data, error } = await client.auth.getSession();
   if (error) throw error;
   return data.session;
@@ -918,7 +921,7 @@ function buildApi() {
 }
 
 window.NagaSupabase = buildApi();
-if (client) {
+if (client && !maintenanceMode) {
   client.auth.onAuthStateChange((_event, session) => {
     const hadAuthError = clearAuthCallbackUrl();
     dispatchSession(session);

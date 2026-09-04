@@ -15,7 +15,7 @@ test("V180 defines the Pierre volume boundaries without changing question IDs", 
     readFile(accessContractMigrationUrl, "utf8"),
   ]);
 
-  assert.match(html, /const APP_VERSION = 227;/);
+  assert.match(html, /const APP_VERSION = 229;/);
   assert.match(migration, /\(1, 1, 200\)/);
   assert.match(migration, /\(2, 201, 400\)/);
   assert.match(migration, /\(3, 401, 600\)/);

@@ -14,7 +14,7 @@ const syncClient = read("client/supabase-sync.ts");
 const migration = read("supabase/migrations/20260830160223_custom_reactions_v211.sql");
 
 test("V211 places the curated eight reactions first and removes duplicate labels", () => {
-  assert.match(html, /const APP_VERSION = 227;/);
+  assert.match(html, /const APP_VERSION = 229;/);
   assert.match(html, /const REACTION_TOP_KEYS_V211 = Object\.freeze\(\["like", "agree", "hard", "good-question", "important", "hmm", "policy", "mistake"\]\)/);
   assert.match(html, /id: "silent", storageKey: "silent", label: "ダマ"/);
   assert.match(html, /id: "exclamation", storageKey: "exclaim", label: "", icon: "❗"/);

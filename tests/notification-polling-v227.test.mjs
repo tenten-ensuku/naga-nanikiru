@@ -7,7 +7,7 @@ const indexUrl = new URL("../public/index.html", import.meta.url);
 test("V227 pauses hidden tabs and elects one visible notification poller", async () => {
   const html = await readFile(indexUrl, "utf8");
 
-  assert.match(html, /const APP_VERSION = 227;/);
+  assert.match(html, /const APP_VERSION = 229;/);
   assert.match(html, /COMMENT_NOTIFICATION_POLL_MS_V227 = 300000/);
   assert.match(html, /NOTIFICATION_LEADER_STORAGE_KEY_V227 = storageKey\("notification-poll-leader-v227"\)/);
   assert.match(html, /function claimNotificationLeaderV227\(\)/);
