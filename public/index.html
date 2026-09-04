@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=226">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=226">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=226">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=227">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=227">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=227">
   <title>みん切る｜みんなの何切る問題集</title>
   <meta name="description" content="みん切るは、NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリです。">
   <meta name="theme-color" content="#06131e">
@@ -2185,8 +2185,8 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=226">
-  <link rel="stylesheet" href="library-v214.css?v=226">
+  <link rel="stylesheet" href="ux-v159.css?v=227">
+  <link rel="stylesheet" href="library-v214.css?v=227">
 </head>
 <body class="auth-gate-open">
   <main class="page" inert aria-hidden="true">
@@ -2511,15 +2511,15 @@
   </dialog>
 
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=226"></script>
-  <script src="drill-ux-v44.js?v=226"></script>
-  <script src="library-order-v215.js?v=226"></script>
-  <script src="library-v214.js?v=226"></script>
+  <script src="supabase-sync-v48.js?v=227"></script>
+  <script src="drill-ux-v44.js?v=227"></script>
+  <script src="library-order-v215.js?v=227"></script>
+  <script src="library-v214.js?v=227"></script>
   <script src="naga-generator-v44.js"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 226;
+    const APP_VERSION = 227;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -4414,6 +4414,7 @@
       const QUESTION_NOTICE_STORAGE_KEY_V66 = storageKey("question-notices-v1");
       const ANNOUNCEMENT_SEEN_STORAGE_KEY_V65 = storageKey("announcement-seen-v1");
         const APP_ANNOUNCEMENTS_V66 = [
+          { version: 227, date: "2026-09-04", publishedAt: "2026-09-04T12:55:00+09:00", title: "バックグラウンド通信を軽量化しました", body: "非表示タブと重複タブの定期通信を停止し、問題一覧の周期的な再取得を廃止しました。通知を開いた時は最新のコメントと追加問題を確認できます。" },
           { version: 226, date: "2026-09-04", publishedAt: "2026-09-04T01:46:00+09:00", title: "条件設定を縦画面でも最後まで操作できます", body: "全問カード内の条件設定を開くとカードが自然に展開し、下部ナビに隠れずスクロールしてすべての項目を操作できるようにしました。" },
           { version: 225, date: "2026-09-04", publishedAt: "2026-09-04T01:33:00+09:00", title: "学習カードをコンパクトに整えました", body: "未回答・苦手克服・全問の余白を縮め、条件設定を全問カード内の独立した操作として重ならず配置しました。" },
           { version: 224, date: "2026-09-04", publishedAt: "2026-09-04T10:00:00+09:00", title: "全問カードの設定位置を修正しました", body: "縦画面の全問カードで条件設定が上部の内容に重ならないよう、カード下部へ正しく配置しました。" },
@@ -4536,8 +4537,14 @@
       let commentVisibilityHandlerBoundV65 = false;
       let questionNoticeStoreV66 = loadQuestionNoticeStoreV66();
       let sharedQuestionRowsV66 = [];
-      let questionPollTimerV66 = null;
       let questionRefreshBusyV66 = false;
+      const COMMENT_NOTIFICATION_POLL_MS_V227 = 300000;
+      const NOTIFICATION_LEADER_HEARTBEAT_MS_V227 = 15000;
+      const NOTIFICATION_LEADER_LEASE_MS_V227 = 45000;
+      const NOTIFICATION_LEADER_STORAGE_KEY_V227 = storageKey("notification-poll-leader-v227");
+      const notificationTabIdV227 = globalThis.crypto?.randomUUID?.() || `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+      let notificationLeaderHeartbeatTimerV227 = null;
+      let notificationLeaderLocalFallbackV227 = false;
 
       function loadCommentNoticeStoreV65() {
         try {
@@ -5111,6 +5118,11 @@
       function openCommentNotificationDialogV65() {
         renderCommunityNotificationListV66();
         document.getElementById("commentNotificationDialog")?.showModal();
+        if (!sharedCollectionV46 || !window.NagaSupabase?.configured || document.visibilityState !== "visible") return;
+        void Promise.allSettled([
+          refreshSharedCommentNotificationsV65(),
+          refreshSharedQuestionNotificationsV66()
+        ]).then(() => renderCommunityNotificationListV66());
       }
 
       function markAllCommentsReadV65() {
@@ -5126,7 +5138,68 @@
         renderCommunityNotificationListV66();
       }
 
-      async function refreshSharedCommentNotificationsV65() {
+      function notificationPageVisibleV227() {
+        return document.visibilityState === "visible";
+      }
+
+      function readNotificationLeaderLeaseV227() {
+        try {
+          const value = JSON.parse(window.localStorage.getItem(NOTIFICATION_LEADER_STORAGE_KEY_V227) || "null");
+          return value && typeof value === "object" ? value : null;
+        } catch {
+          return null;
+        }
+      }
+
+      function isNotificationLeaderV227() {
+        const lease = readNotificationLeaderLeaseV227();
+        if (!lease) return notificationLeaderLocalFallbackV227;
+        return String(lease?.tabId || "") === notificationTabIdV227 && Number(lease?.expiresAt || 0) > Date.now();
+      }
+
+      function claimNotificationLeaderV227() {
+        if (!notificationPageVisibleV227()) return false;
+        const now = Date.now();
+        const lease = readNotificationLeaderLeaseV227();
+        if (lease && String(lease.tabId || "") !== notificationTabIdV227 && Number(lease.expiresAt || 0) > now) return false;
+        try {
+          window.localStorage.setItem(NOTIFICATION_LEADER_STORAGE_KEY_V227, JSON.stringify({
+            tabId: notificationTabIdV227,
+            expiresAt: now + NOTIFICATION_LEADER_LEASE_MS_V227
+          }));
+        } catch {
+          // localStorage が使えない環境では、この表示中タブだけで通信する。
+          notificationLeaderLocalFallbackV227 = true;
+          return true;
+        }
+        notificationLeaderLocalFallbackV227 = false;
+        return isNotificationLeaderV227();
+      }
+
+      function releaseNotificationLeaderV227() {
+        notificationLeaderLocalFallbackV227 = false;
+        if (!isNotificationLeaderV227()) return;
+        try {
+          window.localStorage.removeItem(NOTIFICATION_LEADER_STORAGE_KEY_V227);
+        } catch {
+          // 保存領域を利用できない場合は期限切れに任せる。
+        }
+      }
+
+      function stopCommentNotificationNetworkTimerV227() {
+        if (commentPollTimerV65) window.clearInterval(commentPollTimerV65);
+        commentPollTimerV65 = null;
+      }
+
+      function stopNotificationPollingV227({ releaseLeader = false } = {}) {
+        stopCommentNotificationNetworkTimerV227();
+        if (notificationLeaderHeartbeatTimerV227) window.clearInterval(notificationLeaderHeartbeatTimerV227);
+        notificationLeaderHeartbeatTimerV227 = null;
+        if (releaseLeader) releaseNotificationLeaderV227();
+      }
+
+      async function refreshSharedCommentNotificationsV65({ background = false } = {}) {
+        if (background && (!notificationPageVisibleV227() || !isNotificationLeaderV227())) return;
         if (!sharedCollectionV46 || !window.NagaSupabase?.configured || commentRefreshBusyV65) return;
         commentRefreshBusyV65 = true;
         try {
@@ -5137,6 +5210,37 @@
         } finally {
           commentRefreshBusyV65 = false;
         }
+      }
+
+      function ensureNotificationLeaderHeartbeatV227() {
+        if (notificationLeaderHeartbeatTimerV227 || !notificationPageVisibleV227()) return;
+        notificationLeaderHeartbeatTimerV227 = window.setInterval(() => {
+          void coordinateNotificationPollingV227();
+        }, NOTIFICATION_LEADER_HEARTBEAT_MS_V227);
+      }
+
+      async function coordinateNotificationPollingV227({ refresh = false } = {}) {
+        if (!sharedCollectionV46 || !window.NagaSupabase?.configured || !notificationPageVisibleV227()) {
+          stopCommentNotificationNetworkTimerV227();
+          if (!notificationPageVisibleV227()) releaseNotificationLeaderV227();
+          return false;
+        }
+        ensureNotificationLeaderHeartbeatV227();
+        if (!claimNotificationLeaderV227()) {
+          stopCommentNotificationNetworkTimerV227();
+          return false;
+        }
+        if (!commentPollTimerV65) {
+          commentPollTimerV65 = window.setInterval(() => {
+            if (!notificationPageVisibleV227() || !claimNotificationLeaderV227()) {
+              stopCommentNotificationNetworkTimerV227();
+              return;
+            }
+            void refreshSharedCommentNotificationsV65({ background: true });
+          }, COMMENT_NOTIFICATION_POLL_MS_V227);
+        }
+        if (refresh) await refreshSharedCommentNotificationsV65({ background: true });
+        return true;
       }
 
       async function refreshSharedQuestionNotificationsV66() {
@@ -5181,24 +5285,26 @@
       }
 
       async function startCommentNotificationPollingV65() {
+        stopNotificationPollingV227({ releaseLeader: true });
         if (!sharedCollectionV46 || !window.NagaSupabase?.configured) return;
-        if (commentPollTimerV65) window.clearInterval(commentPollTimerV65);
-        if (questionPollTimerV66) window.clearInterval(questionPollTimerV66);
-        const knownQuestionTotal = sharedQuestionKnownTotalV177();
-        const isLargeCollectionV119 = (knownQuestionTotal ?? questionsV16.length) > MENU_RENDER_THRESHOLD_V119;
-        commentPollTimerV65 = window.setInterval(() => { void refreshSharedCommentNotificationsV65(); }, isLargeCollectionV119 ? 120000 : 30000);
-        if (!isLargeCollectionV119) questionPollTimerV66 = window.setInterval(() => { void refreshSharedQuestionNotificationsV66(); }, 60000);
         if (!commentVisibilityHandlerBoundV65) {
           document.addEventListener("visibilitychange", () => {
             if (document.visibilityState === "visible") {
-              void refreshSharedCommentNotificationsV65();
-              if ((sharedQuestionKnownTotalV177() ?? questionsV16.length) <= MENU_RENDER_THRESHOLD_V119) void refreshSharedQuestionNotificationsV66();
+              void coordinateNotificationPollingV227({ refresh: true });
+            } else {
+              stopNotificationPollingV227({ releaseLeader: true });
             }
           });
+          window.addEventListener("storage", event => {
+            if (event.key === NOTIFICATION_LEADER_STORAGE_KEY_V227 && notificationPageVisibleV227()) {
+              void coordinateNotificationPollingV227();
+            }
+          });
+          window.addEventListener("pagehide", () => stopNotificationPollingV227({ releaseLeader: true }));
           commentVisibilityHandlerBoundV65 = true;
         }
-        // 問題集の初期表示をコメント通知の取得でブロックしない。
-        void refreshSharedCommentNotificationsV65();
+        // 問題一覧は定期取得しない。表示中の代表タブだけがコメントを低頻度で確認する。
+        await coordinateNotificationPollingV227({ refresh: true });
       }
 
       function publishCustomReactionCatalogV211(rows) {
@@ -5533,10 +5639,7 @@
         const previousVolumesLoading = previousState.volumesLoading;
         const previousVolumesError = previousState.volumesError;
         const previousReady = previousState.ready;
-        if (commentPollTimerV65) window.clearInterval(commentPollTimerV65);
-        if (questionPollTimerV66) window.clearInterval(questionPollTimerV66);
-        commentPollTimerV65 = null;
-        questionPollTimerV66 = null;
+        stopNotificationPollingV227({ releaseLeader: true });
         sharedCollectionV46 = null;
         questionsV16 = [];
         sharedQuestionRowsV66 = [];
