@@ -9,7 +9,7 @@
   "vars": {
     "SUPABASE_URL": "https://akabzpfknwsdmabavcqz.supabase.co",
     "ALLOWED_ORIGINS": "https://tenten-ensuku.github.io",
-    "UPLOADS_ENABLED": "false",
+    "UPLOADS_ENABLED": "true",
     "BOT_COLLECTION_IDS": ""
   },
   "triggers": { "crons": ["0 18 * * *"] },
