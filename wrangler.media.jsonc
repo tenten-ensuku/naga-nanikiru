@@ -1,0 +1,17 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "minkiru-media",
+  "main": "worker/media.mjs",
+  "account_id": "e5b748838ea561070abc576dea21577d",
+  "compatibility_date": "2026-09-06",
+  "workers_dev": true,
+  "r2_buckets": [{ "binding": "IMAGES", "bucket_name": "minkiru-images" }],
+  "vars": {
+    "SUPABASE_URL": "https://akabzpfknwsdmabavcqz.supabase.co",
+    "ALLOWED_ORIGINS": "https://tenten-ensuku.github.io",
+    "UPLOADS_ENABLED": "false",
+    "BOT_COLLECTION_IDS": ""
+  },
+  "triggers": { "crons": ["0 18 * * *"] },
+  "observability": { "enabled": true, "head_sampling_rate": 0.05 }
+}

@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="data:,">
+  <title>V231 native IndexedDB tests</title>
+</head>
+<body>
+  <h1>V231 native IndexedDB tests</h1>
+  <p>Serve the repository on a fresh localhost / 127.0.0.1 HTTP origin and open
+    /tests/fixtures/offline-indexeddb-v231.html. Tests run automatically.</p>
+  <p>The injected factory maps the module's fixed database name to one random test
+    database. Only that database is opened and deleted. No app page, auth, network
+    API, localStorage or existing database is used.</p>
+  <p>Automation: wait for <code>document.documentElement.dataset.status</code>
+    to become <code>passed</code> or <code>failed</code>.
+    Details: <code>window.offlineIndexedDbV231</code>.</p>
+  <pre id="results" role="status">Running...</pre>
+  <script type="module">
+    const report = {
+      status: "running", passed: 0, failed: 0, cleanup: "not-started",
+      databaseName: null, cases: [], indexedReads: 0, unscopedReads: 0,
+    };
+    window.offlineIndexedDbV231 = report;
+    const output = document.getElementById("results");
+
+    function render() {
+      document.documentElement.dataset.status = report.status;
+      output.textContent = JSON.stringify(report, null, 2);
+    }
+
+    function assert(condition, message) {
+      if (!condition) throw new Error(message);
+    }
+
+    function equal(actual, expected, message) {
+      assert(JSON.stringify(actual) === JSON.stringify(expected),
+        message + "\nActual: " + JSON.stringify(actual) + "\nExpected: " + JSON.stringify(expected));
+    }
+
+    async function rejects(operation, code) {
+      try {
+        await operation();
+      } catch (error) {
+        equal(error.code, code, "Expected rejection code");
+        return;
+      }
+      throw new Error("Expected rejection: " + code);
+    }
+
+    async function check(name, operation) {
+      try {
+        await operation();
+        report.passed += 1;
+        report.cases.push({ name, status: "passed" });
+      } catch (error) {
+        report.failed += 1;
+        report.cases.push({ name, status: "failed", error: String(error.stack || error) });
+        throw error;
+      } finally {
+        render();
+      }
+    }
+
+    async function run() {
+      assert(location.protocol === "http:" &&
+        ["localhost", "127.0.0.1", "[::1]"].includes(location.hostname),
+      "Run this fixture on a fresh loopback HTTP origin.");
+      assert(window.indexedDB && window.IDBIndex && window.IDBObjectStore,
+        "Native IndexedDB is required.");
+
+      const { createOfflineStore, createIndexedDbAdapter } =
+        await import("../../client/offline-store.mjs");
+      const nativeIndexedDB = window.indexedDB;
+      const databaseName = "offline-indexeddb-v231-test-" + crypto.randomUUID();
+      report.databaseName = databaseName;
+      const connections = new Set();
+      const adapters = [];
+      const reads = [];
+      let openStarted = false;
+      let abortNextUserWrite = null;
+      let abortEvents = 0;
+      const restores = [];
+      const scopedStores = new Set(["questions", "attempts"]);
+      const userA = "fixture-user-a";
+      const userB = "fixture-user-b";
+      const pendingId = crypto.randomUUID();
+      const concurrentId = crypto.randomUUID();
+
+      // The factory changes only the name. Every returned request, database,
+      // transaction, object store and index is the browser's actual IDB API.
+      const factory = {
+        open(name, version) {
+          assert(name === "naga-nanikiru-offline-v231" && version === 1,
+            "Unexpected database or schema version requested by adapter.");
+          openStarted = true;
+          const request = nativeIndexedDB.open(databaseName, version);
+          request.addEventListener("upgradeneeded", () => connections.add(request.result));
+          request.addEventListener("success", () => connections.add(request.result));
+          return request;
+        },
+      };
+
+      function makeStore() {
+        const adapter = createIndexedDbAdapter(factory);
+        adapters.push(adapter);
+        return { adapter, store: createOfflineStore({ adapter, maxQuestions: 2, maxBytes: 4096 }) };
+      }
+
+      function patch(prototype, name, replacement) {
+        const descriptor = Object.getOwnPropertyDescriptor(prototype, name);
+        Object.defineProperty(prototype, name, { ...descriptor, value: replacement(descriptor.value) });
+        restores.push(() => Object.defineProperty(prototype, name, descriptor));
+      }
+
+      function isTestStore(store) {
+        return store.transaction.db.name === databaseName;
+      }
+
+      function assertReadsSince(start, expectedUser, transactions = 1) {
+        const observed = reads.slice(start);
+        equal(observed.length, transactions * 2, "One questions and one attempts index read per transaction");
+        const byTransaction = new Map();
+        for (const read of observed) {
+          equal(read.userId, expectedUser, "Index query must use the requested user");
+          assert(read.returnedUsers !== null, "Index request must finish before adapter resolves");
+          assert(read.returnedUsers.every((id) => id === expectedUser),
+            "Index result must not materialize another user's record or blobs");
+          const stores = byTransaction.get(read.transaction) ?? [];
+          stores.push(read.store);
+          byTransaction.set(read.transaction, stores);
+        }
+        equal(byTransaction.size, transactions, "Each operation uses one transaction");
+        for (const [transaction, stores] of byTransaction) {
+          equal(stores.sort(), ["attempts", "questions"], "Both index reads share a transaction");
+          equal(Array.from(transaction.objectStoreNames).sort(), ["attempts", "questions", "users"],
+            "Transaction scope must include questions, attempts and user metadata");
+        }
+        equal(report.unscopedReads, 0, "No object-store scans");
+      }
+
+      async function scoped(userId, operation, transactions = 1) {
+        const start = reads.length;
+        try {
+          return await operation();
+        } finally {
+          assertReadsSince(start, userId, transactions);
+        }
+      }
+
+      async function snapshot(adapter, userId) {
+        const state = await scoped(userId, () => adapter.read(userId));
+        for (const item of state.questions) {
+          item.images = await Promise.all(item.images.map(async ({ src, blob }) => ({
+            src, type: blob.type, bytes: Array.from(new Uint8Array(await blob.arrayBuffer())),
+          })));
+        }
+        return JSON.stringify(state);
+      }
+
+      function question(id, owner, collection = "fixture-collection") {
+        return {
+          questionId: id, shareSlug: collection, collectionTitle: "Fixture " + owner,
+          payload: { owner, text: "日本語の問題" },
+          images: [{ src: "fixture-image", blob: new Blob(["blob-" + owner], { type: "image/png" }) }],
+          updatedAt: "2026-09-07T00:00:00.000Z",
+        };
+      }
+
+      function attempt(id, answer) {
+        return {
+          clientAttemptId: id, questionId: "shared-question", shareSlug: "fixture-collection",
+          answer: { selected: answer }, grade: "correct",
+          answeredAt: "2026-09-07T00:00:00.000Z", elapsedMs: 123,
+        };
+      }
+
+      let otherBefore;
+      try {
+        // Guard actual object-store scans even if filtering would later hide the
+        // privacy/performance regression. The guard affects only this test DB.
+        for (const method of ["getAll", "openCursor"]) {
+          patch(IDBObjectStore.prototype, method, (original) => function (...args) {
+            if (isTestStore(this) && scopedStores.has(this.name)) {
+              report.unscopedReads += 1;
+              throw new Error("Unscoped " + this.name + "." + method + " is forbidden.");
+            }
+            return original.apply(this, args);
+          });
+        }
+        patch(IDBIndex.prototype, "getAll", (original) => function (...args) {
+          if (!isTestStore(this.objectStore)) return original.apply(this, args);
+          assert(this.name === "byUser" && this.keyPath === "userId",
+            "Use the byUser index with the userId keyPath.");
+          assert(args.length === 1 && typeof args[0] === "string" && args[0].trim(),
+            "Index.getAll requires one nonempty userId, not an unbounded query.");
+          const read = {
+            userId: args[0], store: this.objectStore.name,
+            transaction: this.objectStore.transaction, returnedUsers: null,
+          };
+          reads.push(read);
+          report.indexedReads += 1;
+          const request = original.apply(this, args);
+          request.addEventListener("success", () => {
+            read.returnedUsers = request.result.map((row) => row.userId);
+          });
+          return request;
+        });
+        patch(IDBObjectStore.prototype, "put", (original) => function (...args) {
+          const request = original.apply(this, args);
+          if (isTestStore(this) && this.name === "users" &&
+            abortNextUserWrite !== null && args[0].userId === abortNextUserWrite) {
+            abortNextUserWrite = null;
+            const transaction = this.transaction;
+            // Abort after the real final write succeeds, before commit. Earlier
+            // deletes and puts have executed and must all be rolled back.
+            request.addEventListener("success", () => {
+              abortEvents += 1;
+              transaction.abort();
+            });
+          }
+          return request;
+        });
+
+        const first = makeStore();
+        const second = makeStore();
+        await check("v1 creates byUser indexes; native Blob round-trip stays user-scoped", async () => {
+          await scoped(userA, () => first.store.saveQuestion(userA, question("shared-question", "a")));
+          await scoped(userB, () => first.store.saveQuestion(userB, question("shared-question", "b")));
+          await scoped(userA, () => first.store.addAttempt(userA, attempt(pendingId, "a")));
+          await scoped(userB, () => first.store.addAttempt(userB, attempt(pendingId, "b")));
+
+          const db = connections.values().next().value;
+          equal(db.version, 1, "New database remains schema v1");
+          const transaction = db.transaction(["questions", "attempts"], "readonly");
+          const completed = new Promise((resolve, reject) => {
+            transaction.oncomplete = resolve;
+            transaction.onabort = () => reject(transaction.error || new Error("Schema inspection aborted"));
+          });
+          for (const storeName of scopedStores) {
+            const index = transaction.objectStore(storeName).index("byUser");
+            equal(index.keyPath, "userId", "Index keyPath");
+            equal(index.unique, false, "Many questions/attempts can belong to one user");
+          }
+          await completed;
+          const a = await scoped(userA, () => second.store.getQuestion(userA, "shared-question"));
+          const b = await scoped(userB, () => first.store.getQuestion(userB, "shared-question"));
+          equal(a.payload.owner, "a", "User A payload");
+          equal(b.payload.owner, "b", "User B payload");
+          assert(a.images[0].blob instanceof Blob && b.images[0].blob instanceof Blob, "Native blobs are restored");
+          equal(await a.images[0].blob.text(), "blob-a", "User A blob bytes");
+          equal(await b.images[0].blob.text(), "blob-b", "User B blob bytes");
+          equal((await scoped(userB, () => first.store.listPendingAttempts(userB)))[0].answer.selected, "b",
+            "Same attempt ID belongs to separate users");
+          otherBefore = await snapshot(first.adapter, userB);
+        });
+
+        await check("readonly lists, missing users and duplicate attempts use exact user queries", async () => {
+          equal((await scoped(userA, () => first.store.listQuestions(userA))).length, 1, "Question list");
+          equal((await scoped(userA, () => first.store.listPendingAttempts(userA))).length, 1, "Outbox list");
+          equal(await scoped("missing-user", () => first.store.listQuestions("missing-user")), [], "Missing user questions");
+          equal(await scoped("missing-user", () => first.store.listPendingAttempts("missing-user")), [], "Missing user attempts");
+          const duplicate = await scoped(userA, () => first.store.addAttempt(userA, attempt(pendingId, "changed")));
+          equal(duplicate.answer.selected, "a", "Duplicate ID cannot overwrite payload");
+          equal(await snapshot(first.adapter, userB), otherBefore, "Other user remains byte-for-byte unchanged");
+        });
+
+        await check("two connections serialize concurrent saves, LRU eviction and duplicate outbox inserts", async () => {
+          const results = await scoped(userA, () => Promise.all([
+            first.store.saveQuestion(userA, question("q2", "a")),
+            second.store.saveQuestion(userA, question("q3", "a")),
+            first.store.addAttempt(userA, attempt(concurrentId, "first")),
+            second.store.addAttempt(userA, attempt(concurrentId, "second")),
+          ]), 4);
+          equal(results[2], results[3], "Concurrent duplicates return one immutable attempt");
+          equal((await scoped(userA, () => first.store.listQuestions(userA))).map((q) => q.questionId).sort(),
+            ["q2", "q3"], "Concurrent saves preserve two new questions under the per-user cap");
+          equal(await scoped(userA, () => second.store.getQuestion(userA, "shared-question")), null, "Oldest question evicted");
+          equal((await scoped(userA, () => first.store.listPendingAttempts(userA))).length, 2, "Eviction preserves outbox");
+          equal(await snapshot(first.adapter, userB), otherBefore, "Other user's blobs and outbox survive eviction");
+        });
+
+        await check("native abort after writes restores questions, blobs, outbox and export metadata", async () => {
+          await scoped(userA, () => first.store.exportPendingAttempts(userA));
+          const before = await snapshot(first.adapter, userA);
+          abortNextUserWrite = userA;
+          await scoped(userA, () => rejects(() =>
+            first.store.saveQuestion(userA, question("q4", "replacement")), "STORAGE_WRITE"));
+          equal(abortEvents, 1, "Abort happened after the native users.put success event");
+          equal(await snapshot(second.adapter, userA), before, "Full pre-transaction state restored across connections");
+          equal(await snapshot(second.adapter, userB), otherBefore, "Other user unchanged after abort");
+          await scoped(userA, () => first.store.saveQuestion(userA, question("q4", "a")));
+          assert((await scoped(userA, () => second.store.listQuestions(userA))).some((q) => q.questionId === "q4"),
+            "A later transaction can still commit");
+        });
+
+        await check("collection/question clears preserve pending attempts and affect only their user", async () => {
+          const pending = await scoped(userA, () => first.store.listPendingAttempts(userA));
+          const removed = await scoped(userA, () => first.store.removeCollection(userA, "fixture-collection"));
+          equal(removed, 2, "Remove both questions in this user's collection");
+          equal(await scoped(userA, () => first.store.listPendingAttempts(userA)), pending, "Collection removal preserves pending");
+          await scoped(userA, () => first.store.saveQuestion(userA, question("q5", "a")));
+          equal(await scoped(userA, () => first.store.clearQuestions(userA)), 1, "Clear only this user's question cache");
+          equal(await scoped(userA, () => first.store.listPendingAttempts(userA)), pending, "Cache clear preserves pending");
+          equal(await snapshot(first.adapter, userB), otherBefore, "Other user unaffected by both deletion APIs");
+        });
+
+        await check("new pending attempts block account clear; export preserves them; ack and clear stay scoped", async () => {
+          const newId = crypto.randomUUID();
+          await scoped(userA, () => first.store.addAttempt(userA, attempt(newId, "new")));
+          await scoped(userA, () => first.store.saveQuestion(userA, question("q6", "a")));
+          const before = await snapshot(first.adapter, userA);
+          await scoped(userA, () => rejects(() => first.store.clearUser(userA), "PENDING_ATTEMPTS"));
+          equal(await snapshot(first.adapter, userA), before, "A previous export does not approve newly added attempts");
+          equal(await scoped(userA, () => first.store.acknowledgeAttempt(userA, pendingId)), true, "Acknowledge one ID");
+          equal(await scoped(userA, () => first.store.acknowledgeAttempt(userA, pendingId)), false, "Acknowledgment is idempotent");
+          equal((await scoped(userA, () => first.store.listPendingAttempts(userA))).length, 2, "Only one attempt removed");
+          const exported = await scoped(userA, () => first.store.exportPendingAttempts(userA));
+          equal(await scoped(userA, () => first.store.listPendingAttempts(userA)), exported, "Export retains outbox");
+          equal(await scoped(userA, () => second.store.clearUser(userA)), { questions: 1, attempts: 2 },
+            "Export approval persists across connections");
+          equal(await scoped(userA, () => second.store.listQuestions(userA)), [], "Cleared user's questions");
+          equal(await scoped(userA, () => second.store.listPendingAttempts(userA)), [], "Cleared user's outbox");
+          equal(await snapshot(second.adapter, userB), otherBefore, "Clearing A preserves B, including B's identical IDs");
+        });
+      } finally {
+        for (const restore of restores.reverse()) restore();
+        for (const adapter of adapters) adapter.close();
+        for (const db of connections) db.close();
+        if (openStarted) {
+          report.cleanup = "running";
+          await new Promise((resolve, reject) => {
+            // This literal local variable is the sole deletion target; never
+            // enumerate databases or open/delete the module's fixed app DB.
+            const request = nativeIndexedDB.deleteDatabase(databaseName);
+            request.onsuccess = resolve;
+            request.onerror = () => reject(request.error || new Error("Test DB cleanup failed"));
+            request.onblocked = () => reject(new Error("Test DB cleanup was blocked"));
+          }).then(() => {
+            report.cleanup = "passed";
+          }, (error) => {
+            report.cleanup = "failed";
+            throw error;
+          });
+        }
+      }
+    }
+
+    render();
+    try {
+      await run();
+      report.status = "passed";
+    } catch (error) {
+      report.status = "failed";
+      report.error = String(error.stack || error);
+      if (report.failed === 0) report.failed = 1;
+    }
+    render();
+  </script>
+</body>
+</html>

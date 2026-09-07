@@ -7,7 +7,7 @@ const cssUrl = new URL("../public/ux-v159.css", import.meta.url);
 const clientUrl = new URL("../client/supabase-sync.ts", import.meta.url);
 const assetUrl = new URL("../public/assets/recovery-notice-v229.png", import.meta.url);
 
-test("V229 exposes the recovery notice and keeps the normal auth gate reversible", async () => {
+test("V230 restores normal login and retains the reversible static outage notice", async () => {
   const [html, css, client] = await Promise.all([
     readFile(htmlUrl, "utf8"),
     readFile(cssUrl, "utf8"),
@@ -15,8 +15,9 @@ test("V229 exposes the recovery notice and keeps the normal auth gate reversible
     access(assetUrl),
   ]);
 
-  assert.match(html, /const APP_VERSION = 229;/);
-  assert.match(html, /window\.NAGA_MAINTENANCE_MODE = true;/);
+  assert.match(html, /const APP_VERSION = 230;/);
+  assert.match(html, /window\.NAGA_MAINTENANCE_MODE = false;/);
+  assert.match(html, /id="recoveryNotice"[^>]* hidden>/);
   assert.match(html, /class="recovery-notice" id="recoveryNotice"/);
   assert.match(html, /src="assets\/recovery-notice-v229\.png"/);
   assert.match(html, /2026年9月6日から順次復旧予定です/);

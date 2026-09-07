@@ -1,8 +1,12 @@
 import { createClient, type Session, type SupabaseClient } from "@supabase/supabase-js";
+import { createMediaClient } from "./media-assets.mjs";
+import { createServiceGuard } from "./service-guard.mjs";
 
 type RuntimeConfig = {
   supabaseUrl?: string;
   supabasePublishableKey?: string;
+  mediaApiUrl?: string;
+  mediaReadyBuckets?: string[];
 };
 
 type LocalAttempt = {
@@ -36,6 +40,13 @@ declare global {
 }
 
 const config = window.NAGA_RUNTIME_CONFIG ?? {};
+let mediaSessionV230: Session | null = null;
+const services = createServiceGuard({ onRestricted: () => {
+  queueMicrotask(() => { void client?.auth.stopAutoRefresh(); });
+  window.dispatchEvent(new CustomEvent("naga:servicerestricted", { detail: { status: 402 } }));
+} });
+// Synchronous snapshot: render-time URL helpers must never consult an unresolved session promise.
+const media = createMediaClient({ config, getSession: () => mediaSessionV230, fetchImpl: services.fetch });
 const maintenanceMode = window.NAGA_MAINTENANCE_MODE === true;
 const configured = Boolean(
   !maintenanceMode &&
@@ -45,6 +56,7 @@ const configured = Boolean(
 const client: SupabaseClient | null = configured
   ? createClient(config.supabaseUrl!, config.supabasePublishableKey!, {
       auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true },
+      global: { fetch: services.fetch },
     })
   : null;
 
@@ -82,6 +94,7 @@ async function currentSession() {
 }
 
 function dispatchSession(session: Session | null) {
+  mediaSessionV230 = session;
   window.dispatchEvent(new CustomEvent("naga:authchange", { detail: { session, configured } }));
 }
 
@@ -109,6 +122,9 @@ function buildOAuthRedirectUrl() {
 
 async function signInWithDiscord() {
   const supabase = requireClient();
+  if (!await services.probe(config.supabaseUrl + "/auth/v1/settings", config.supabasePublishableKey)) {
+    throw new Error("現在、ログインサービスの復旧を待っています。しばらくしてから再度お試しください。");
+  }
   const { error } = await supabase.auth.signInWithOAuth({
     provider: "discord",
     options: { redirectTo: buildOAuthRedirectUrl() },
@@ -202,18 +218,8 @@ async function loadSharedQuestionIndexPage(shareSlug: string, options: SharedQue
   }
   if (!isMissingRpc(legacyIndexPage.error, "get_shared_question_index")) throw legacyIndexPage.error;
 
-  // 古い公開版DBへの互換経路。ページ単位で取得するため、旧版でも全件待ちは発生させない。
-  const fallbackPage = await supabase.rpc("get_shared_questions_page", params);
-  if (fallbackPage.error) throw fallbackPage.error;
-  const rows = Array.isArray(fallbackPage.data) ? fallbackPage.data : [];
-  return {
-    rows,
-    detailsDeferred: false,
-    hasMore: rows.length === limit,
-    totalCount: null,
-    offset,
-    limit,
-  };
+  // V230: an absent index must never silently download every full question payload.
+  throw new Error("軽量な問題一覧APIが未設定です。管理者による更新が必要です。");
 }
 
 async function loadSharedCollection(shareSlug: string, options: SharedQuestionPageOptions = {}) {
@@ -290,7 +296,12 @@ async function loadSharedQuestionDetail(shareSlug: string, questionId: string) {
     p_question_id: normalizedQuestionId,
   });
   if (error) throw error;
-  return Array.isArray(data) ? data[0] ?? null : data ?? null;
+  const row = Array.isArray(data) ? data[0] ?? null : data ?? null;
+  return row ? refreshMediaPayload(row) : null;
+}
+
+async function refreshMediaPayload<T>(payload: T): Promise<T> {
+  return await media.resolvePrivatePayload(await media.resolvePublicPayload(payload)) as T;
 }
 
 async function loadMyCollections() {
@@ -300,6 +311,9 @@ async function loadMyCollections() {
 }
 
 async function loadCollectionDirectory() {
+  // The login gate covers this UI; do not download the directory before login.
+  const session = await currentSession();
+  if (!session?.user?.id) return [];
   const { data, error } = await requireClient().rpc("list_collection_directory");
   if (error) throw error;
   return data ?? [];
@@ -379,11 +393,14 @@ async function markCollectionNotificationsRead(notificationIds: string[] | null 
 }
 
 async function loadSharedComments(shareSlug: string, questionId?: string | null) {
+  if (!questionId) throw new Error("コメントの一括取得は停止しました。問題を選択してください。");
   const { data, error } = await requireClient().rpc("get_shared_comments", {
     p_share_slug: shareSlug,
     p_question_id: questionId ?? null,
   });
   if (error) throw error;
+  await media.preparePublicPaths("comment-assets", (data ?? []).flatMap((row: { attachments?: { path?: string }[] }) =>
+    (row.attachments ?? []).map(attachment => attachment.path).filter(Boolean)));
   return data ?? [];
 }
 
@@ -394,6 +411,18 @@ async function loadSharedReactionSummary(shareSlug: string, questionId: string) 
   });
   if (error) throw error;
   return data ?? [];
+}
+
+async function loadSharedCommentChanges(shareSlug: string, cursor?: { updatedAt: string; id: string } | null) {
+  const { data, error } = await requireClient().rpc("get_shared_comment_changes", {
+    p_share_slug: shareSlug, p_after: cursor?.updatedAt ?? null,
+    p_after_id: cursor?.id ?? "00000000-0000-0000-0000-000000000000", p_limit: 100,
+  });
+  if (error) throw error;
+  if (!data || !Array.isArray(data.rows) || !data.cursor?.updatedAt || !data.cursor?.id) {
+    throw new Error("コメント通知APIの更新が完了していません。全文取得への切替は行いません。");
+  }
+  return data;
 }
 
 async function setSharedQuestionReaction(questionId: string, reactionKey: string, active: boolean) {
@@ -420,22 +449,17 @@ async function loadCustomReactions() {
   if (!session?.user?.id) throw new Error("カスタムリアクションの利用にはDiscordログインが必要です。");
   const { data, error } = await requireClient().rpc("list_custom_reactions");
   if (error) throw error;
+  await media.preparePublicPaths("reaction-assets", (data ?? []).map((row: { image_path?: string }) => row.image_path).filter(Boolean));
   return data ?? [];
 }
 
 const REACTION_IMAGE_BUCKET = "reaction-assets";
 const REACTION_IMAGE_TYPES = new Set(["image/png", "image/jpeg", "image/webp", "image/gif"]);
-const REACTION_IMAGE_EXTENSIONS: Record<string, string> = {
-  "image/png": "png",
-  "image/jpeg": "jpg",
-  "image/webp": "webp",
-  "image/gif": "gif",
-};
 
 function publicReactionAssetUrl(path: string) {
   const normalized = String(path ?? "").replace(/^\/+/, "");
   if (!normalized || !config.supabaseUrl || !/^[0-9a-f-]{36}\/reactions\/[A-Za-z0-9][A-Za-z0-9._-]{0,200}$/i.test(normalized)) return "";
-  return `${config.supabaseUrl.replace(/\/$/, "")}/storage/v1/object/public/${REACTION_IMAGE_BUCKET}/${normalized.split("/").map(encodeURIComponent).join("/")}`;
+  return media.resolvePublicUrl(REACTION_IMAGE_BUCKET, normalized);
 }
 
 async function createCustomReaction(label: string, icon: string): Promise<unknown>;
@@ -456,14 +480,8 @@ async function createCustomReaction(label: string, icon: string, imageFile?: Fil
   let imagePath = "";
   try {
     if (imageFile) {
-      const extension = REACTION_IMAGE_EXTENSIONS[imageFile.type] || "img";
-      imagePath = `${session.user.id}/reactions/${crypto.randomUUID()}.${extension}`;
-      const { error: uploadError } = await requireClient().storage.from(REACTION_IMAGE_BUCKET).upload(imagePath, imageFile, {
-        cacheControl: "31536000",
-        contentType: imageFile.type,
-        upsert: false,
-      });
-      if (uploadError) throw uploadError;
+      const uploaded = await media.uploadImage(imageFile, { bucket: REACTION_IMAGE_BUCKET });
+      imagePath = uploaded.path;
     }
     const { data, error } = await requireClient().rpc("create_custom_reaction", {
       p_label: normalizedLabel,
@@ -474,7 +492,7 @@ async function createCustomReaction(label: string, icon: string, imageFile?: Fil
     return Array.isArray(data) ? data[0] ?? null : data;
   } catch (error) {
     if (imagePath) {
-      try { await requireClient().storage.from(REACTION_IMAGE_BUCKET).remove([imagePath]); } catch { /* cleanup is best effort */ }
+      try { await media.removeImage(REACTION_IMAGE_BUCKET, imagePath); } catch { /* referenced images remain protected by the server */ }
     }
     throw error;
   }
@@ -483,30 +501,22 @@ async function createCustomReaction(label: string, icon: string, imageFile?: Fil
 function publicCommentAssetUrl(path: string) {
   const normalized = String(path ?? "").replace(/^\/+/, "");
   if (!normalized || !config.supabaseUrl) return "";
-  return `${config.supabaseUrl.replace(/\/$/, "")}/storage/v1/object/public/comment-assets/${normalized.split("/").map(encodeURIComponent).join("/")}`;
+  return media.resolvePublicUrl("comment-assets", normalized);
 }
 
-async function uploadCommentAttachment(file: File) {
+async function uploadCommentAttachment(file: File, shareSlug?: string) {
   const session = await currentSession();
   if (!session?.user?.id) throw new Error("共有コメントの画像添付にはDiscordログインが必要です。");
   const allowedTypes = new Set(["image/png", "image/jpeg", "image/webp", "image/gif"]);
   if (!allowedTypes.has(file.type)) throw new Error("PNG・JPEG・WebP・GIF画像のみ添付できます。");
   if (file.size > 5 * 1024 * 1024) throw new Error("画像は1枚5MB以内にしてください。");
-  const extension = ({ "image/png": "png", "image/jpeg": "jpg", "image/webp": "webp", "image/gif": "gif" } as Record<string, string>)[file.type] || "img";
-  const path = `${session.user.id}/comments/${crypto.randomUUID()}.${extension}`;
-  const { error } = await requireClient().storage.from("comment-assets").upload(path, file, {
-    cacheControl: "31536000",
-    contentType: file.type,
-    upsert: false,
-  });
-  if (error) throw error;
-  return { path, src: publicCommentAssetUrl(path), alt: file.name || "添付画像" };
+  const uploaded = await media.uploadImage(file, { bucket: "comment-assets", shareSlug });
+  return { path: uploaded.path, src: uploaded.src, alt: file.name || "添付画像" };
 }
 
 async function removeCommentAttachment(path: string) {
   if (!path) return;
-  const { error } = await requireClient().storage.from("comment-assets").remove([path]);
-  if (error) throw error;
+  await media.removeImage("comment-assets", path);
 }
 
 async function postSharedComment(shareSlug: string, body: string, questionId?: string | null, attachments: Array<{ path: string; alt?: string }> = []) {
@@ -614,10 +624,11 @@ async function createSharedQuestion(input: {
   sceneTv?: number | null;
   decisionType?: "discard" | "call" | "riichi" | "combined";
 }) {
+  const payload = await media.externalizePayload(input.payload, { shareSlug: input.shareSlug });
   const { data, error } = await requireClient().rpc("create_shared_question", {
     p_share_slug: input.shareSlug,
     p_title: input.title,
-    p_payload: input.payload,
+    p_payload: payload,
     p_source_kind: input.sourceKind ?? "manual",
     p_source_report_id: input.sourceReportId ?? null,
     p_source_url: input.sourceUrl ?? null,
@@ -640,10 +651,11 @@ async function createCollectionVolume(shareSlug: string, volumeNumber: number | 
 }
 
 async function updateSharedQuestion(questionId: string, title: string, payload: Record<string, unknown>) {
+  const normalized = await media.externalizePayload(payload, { shareSlug: String(payload.sharedCollectionSlug || "") });
   const { error } = await requireClient().rpc("update_shared_question", {
     p_question_id: questionId,
     p_title: title,
-    p_payload: payload,
+    p_payload: normalized,
   });
   if (error) throw error;
 }
@@ -860,6 +872,8 @@ async function importSharedQuestion(sourceQuestionId: string, targetShareSlug: s
 
 function buildApi() {
   return {
+    serviceAvailable: services.available,
+    retryServices: () => services.probe(config.supabaseUrl + "/auth/v1/settings", config.supabasePublishableKey),
     configured,
     client,
     currentSession,
@@ -869,6 +883,7 @@ function buildApi() {
     loadSharedCollection,
     loadSharedQuestionPage,
     loadSharedQuestionDetail,
+    refreshMediaPayload,
     loadCollectionVolumes,
     loadCollectionVolumeProgress,
     loadCollectionLibrarySummary,
@@ -884,6 +899,7 @@ function buildApi() {
     loadCollectionNotifications,
     markCollectionNotificationsRead,
     loadSharedComments,
+    loadSharedCommentChanges,
     loadSharedReactionSummary,
     setSharedQuestionReaction,
     setSharedCommentReaction,

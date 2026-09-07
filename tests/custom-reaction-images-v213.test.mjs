@@ -14,7 +14,7 @@ const syncClient = read("client/supabase-sync.ts");
 const migration = read("supabase/migrations/20260830172600_custom_reaction_images_and_tiles_v213.sql");
 
 test("V213 adds the 37 approved tile reactions between standard and custom", () => {
-  assert.match(html, /const APP_VERSION = 229;/);
+  assert.match(html, /const APP_VERSION = 230;/);
   assert.match(html, /data-reaction-tab="standard"[\s\S]*data-reaction-tab="tiles"[\s\S]*data-reaction-tab="custom"/);
   assert.match(html, /id="reactionPickerTilePanelV213"/);
   assert.match(html, /id="reactionTilePickerOptionsV213"/);
@@ -38,9 +38,9 @@ test("V213 accepts either an emoji or a shared image for custom reactions", () =
   assert.match(html, /iconType: imagePath \? "image" : "emoji"/);
   assert.match(syncClient, /const REACTION_IMAGE_BUCKET = "reaction-assets"/);
   assert.match(syncClient, /publicReactionAssetUrl\(path: string\)/);
-  assert.match(syncClient, /storage\.from\(REACTION_IMAGE_BUCKET\)\.upload/);
+  assert.match(syncClient, /media\.uploadImage\(imageFile, \{ bucket: REACTION_IMAGE_BUCKET \}\)/);
   assert.match(syncClient, /p_image_path: imagePath \|\| null/);
-  assert.match(syncClient, /upsert: false/);
+  assert.doesNotMatch(syncClient, /storage\.from\(REACTION_IMAGE_BUCKET\)\.upload/);
   assert.match(css, /\.custom-reaction-image-preview-v213/);
 });
 

@@ -24,11 +24,20 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      # These checks use local fixtures, never production Supabase or R2.
+      - run: npm run test:drill
+      - run: npm run test:media
+      - run: npm run test:offline
       - run: npm run build:supabase-client
       - run: npm run runtime:config
         env:
           SUPABASE_URL: ${{ vars.SUPABASE_URL }}
           SUPABASE_PUBLISHABLE_KEY: ${{ vars.SUPABASE_PUBLISHABLE_KEY }}
+          MEDIA_API_URL: ${{ vars.MEDIA_API_URL }}
+          MEDIA_READY_BUCKETS: ${{ vars.MEDIA_READY_BUCKETS }}
+      - run: node scripts/prepare-recovery-preview.mjs
+        env:
+          RECOVERY_PREVIEW_ONLY: ${{ vars.RECOVERY_PREVIEW_ONLY }}
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

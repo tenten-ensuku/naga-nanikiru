@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=229">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=229">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=229">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=230">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=230">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=230">
   <title>みん切る｜みんなの何切る問題集</title>
   <meta name="description" content="みん切るは、NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリです。">
   <meta name="theme-color" content="#06131e">
@@ -19,8 +19,8 @@
   <meta name="twitter:description" content="おすすめ問題、習熟度分析、NAGA URLからの問題生成。みん切るで何切るを学びます。">
   <meta name="twitter:image" content="https://tenten-ensuku.github.io/naga-nanikiru/og-v44.png">
   <script>
-    // 復旧完了後はこの値だけを false に戻すと通常のログイン導線へ復帰します。
-    window.NAGA_MAINTENANCE_MODE = true;
+    // 障害時は true で静的案内へ切り替え、認証・自動通信を停止します。
+    window.NAGA_MAINTENANCE_MODE = false;
   </script>
   <style>
     :root {
@@ -2189,10 +2189,10 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=229">
-  <link rel="stylesheet" href="library-v214.css?v=229">
+  <link rel="stylesheet" href="ux-v159.css?v=230">
+  <link rel="stylesheet" href="library-v214.css?v=230">
 </head>
-<body class="auth-gate-open recovery-notice-open">
+<body class="auth-gate-open">
   <main class="page" inert aria-hidden="true">
     <section class="menu-panel" id="menuPanel" aria-labelledby="menuTitle">
       <aside class="menu-sidebar" aria-label="問題集ナビゲーション">
@@ -2438,7 +2438,7 @@
     </div>
   </main>
 
-  <section class="recovery-notice" id="recoveryNotice" role="dialog" aria-modal="true" aria-labelledby="recoveryNoticeTitle" aria-describedby="recoveryNoticeDescription">
+  <section class="recovery-notice" id="recoveryNotice" role="dialog" aria-modal="true" aria-labelledby="recoveryNoticeTitle" aria-describedby="recoveryNoticeDescription" hidden>
     <div class="recovery-notice-frame">
       <h1 class="sr-only" id="recoveryNoticeTitle">復旧のお知らせ</h1>
       <p class="sr-only" id="recoveryNoticeDescription">現在、復旧作業中です。アプリは一時的に利用できません。2026年9月6日から順次復旧予定です。</p>
@@ -2523,15 +2523,15 @@
   </dialog>
 
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=229"></script>
-  <script src="drill-ux-v44.js?v=229"></script>
-  <script src="library-order-v215.js?v=229"></script>
-  <script src="library-v214.js?v=229"></script>
+  <script src="supabase-sync-v48.js?v=230"></script>
+  <script src="drill-ux-v44.js?v=230"></script>
+  <script src="library-order-v215.js?v=230"></script>
+  <script src="library-v214.js?v=230"></script>
   <script src="naga-generator-v44.js"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 229;
+    const APP_VERSION = 230;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -5215,9 +5215,39 @@
         if (background && (!notificationPageVisibleV227() || !isNotificationLeaderV227())) return;
         if (!sharedCollectionV46 || !window.NagaSupabase?.configured || commentRefreshBusyV65) return;
         commentRefreshBusyV65 = true;
+        const shareSlug = sharedCollectionV46.share_slug;
+        const noticeUserIdV230 = supabaseSessionV46?.user?.id;
+        const bucket = commentNoticeBucketV65();
         try {
-          const rows = await window.NagaSupabase.loadSharedComments(sharedCollectionV46.share_slug, null);
-          adoptSharedCommentRowsV65(rows);
+          sharedCommentRowsV65 = bucket.rowsV230 || [];
+          renderNotificationBadgesV65();
+          if (Date.now() - Number(bucket.checkedAtV230 || 0) < 30000) return;
+          const result = await window.NagaSupabase.loadSharedCommentChanges(shareSlug, bucket.cursorV230 || null);
+          if (shareSlug !== sharedCollectionV46?.share_slug || noticeUserIdV230 !== supabaseSessionV46?.user?.id) return;
+          const previous = new Map((bucket.rowsV230 || []).map(row => [row.id, row]));
+          const known = new Set(bucket.knownIds);
+          const unread = new Set(bucket.unreadIds);
+          const initial = !bucket.cursorV230;
+          const ordered = result.rows;
+          for (const row of ordered) {
+            if (row.deleted_at) { previous.delete(String(row.id)); unread.delete(String(row.id)); }
+            else {
+              const normalized = normalizeSharedCommentV65(row);
+              if (normalized) previous.set(normalized.id, normalized);
+              if (!initial && !known.has(String(row.id))) unread.add(String(row.id));
+            }
+            known.add(String(row.id));
+          }
+          bucket.cursorV230 = result.cursor;
+          bucket.checkedAtV230 = Date.now();
+          bucket.initialized = true;
+          bucket.rowsV230 = [...previous.values()].slice(-500);
+          bucket.knownIds = [...known].slice(-1000);
+          const retained = new Set(bucket.rowsV230.map(row => row.id));
+          bucket.unreadIds = [...unread].filter(id => retained.has(id));
+          sharedCommentRowsV65 = bucket.rowsV230;
+          saveCommentNoticeStoreV65();
+          renderNotificationBadgesV65();
         } catch (error) {
           console.warn("共有コメント通知を更新できませんでした", error);
         } finally {
@@ -5233,7 +5263,7 @@
       }
 
       async function coordinateNotificationPollingV227({ refresh = false } = {}) {
-        if (!sharedCollectionV46 || !window.NagaSupabase?.configured || !notificationPageVisibleV227()) {
+        if (!sharedCollectionV46 || !window.NagaSupabase?.configured || window.NagaSupabase?.serviceAvailable?.() === false || !notificationPageVisibleV227()) {
           stopCommentNotificationNetworkTimerV227();
           if (!notificationPageVisibleV227()) releaseNotificationLeaderV227();
           return false;
@@ -6720,7 +6750,7 @@
             const uploadedAttachments = [];
             for (const attachment of message.attachments || []) {
               const uploaded = attachment.file
-                ? await window.NagaSupabase.uploadCommentAttachment(attachment.file)
+                ? await window.NagaSupabase.uploadCommentAttachment(attachment.file, sharedCollectionV46.share_slug)
                 : attachment.path
                   ? { path: attachment.path, src: attachment.src || window.NagaSupabase.publicCommentAssetUrl(attachment.path), alt: attachment.alt || "添付画像" }
                   : null;
@@ -6775,7 +6805,7 @@
             const uploadedAttachments = [];
             for (const attachment of message.attachments || []) {
               const uploaded = attachment.file
-                ? await window.NagaSupabase.uploadCommentAttachment(attachment.file)
+                ? await window.NagaSupabase.uploadCommentAttachment(attachment.file, sharedCollectionV46.share_slug)
                 : attachment.path
                   ? { path: attachment.path, src: attachment.src || window.NagaSupabase.publicCommentAssetUrl(attachment.path), alt: attachment.alt || "添付画像" }
                   : null;
@@ -10505,6 +10535,10 @@
       }
 
       async function ensureSharedQuestionDetailV170(question, index) {
+        if (question?.__sharedDetailLoaded && window.NagaSupabase?.refreshMediaPayload) {
+          Object.assign(question, await window.NagaSupabase.refreshMediaPayload(question));
+          return question;
+        }
         if (!question || !sharedQuestionDetailsDeferredV170 || question.__sharedDetailLoaded || !sharedCollectionV46?.share_slug) return question;
         const questionId = String(question.serverQuestionId || question.id || "");
         if (!questionId || typeof window.NagaSupabase?.loadSharedQuestionDetail !== "function") return question;
