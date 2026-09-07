@@ -1,5 +1,6 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts"
 import { createClient } from "@supabase/supabase-js"
+import { checkOpsCapacity } from "../_shared/ops-capacity.ts"
 
 const REPORT_ID_PATTERN = /^[A-Za-z0-9_]{20,160}$/
 const JOB_ID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
@@ -175,6 +176,12 @@ Deno.serve(async (request) => {
     .maybeSingle()
   if (jobError) return jsonResponse({ error: "生成ジョブを確認できませんでした。" }, 500)
   if (!job || job.status !== "completed") return jsonResponse({ error: "先にNAGA局面を解析してください。" }, 403)
+
+  const capacity = await checkOpsCapacity({
+    supabaseUrl,
+    serviceRoleKey: Deno.env.get("SUPABASE_SERVICE_ROLE_KEY"),
+  })
+  if (capacity.kind !== "allowed") return jsonResponse({ error: capacity.message }, 503)
 
   try {
     const endpoint = new URL(`${browserlessEndpoint}/function`)

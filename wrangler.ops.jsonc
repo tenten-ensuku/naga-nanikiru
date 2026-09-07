@@ -1,0 +1,25 @@
+{
+  "$schema":"node_modules/wrangler/config-schema.json",
+  "name":"ensuku-ops",
+  "main":"ops/worker.mjs",
+  "account_id":"e5b748838ea561070abc576dea21577d",
+  "compatibility_date":"2026-09-07",
+  "workers_dev":true,
+  "preview_urls":false,
+  "assets":{"directory":"./ops/public","binding":"ASSETS","run_worker_first":true},
+  "r2_buckets":[{"binding":"OPS_DATA","bucket_name":"ensuku-ops-data"},{"binding":"IMAGES","bucket_name":"minkiru-images"}],
+  "vars":{
+    "MINKIRU_URL":"https://akabzpfknwsdmabavcqz.supabase.co",
+    "RANKING_URL":"https://kclkzevcgpfbavegwbnf.supabase.co",
+    "CF_ACCOUNT_ID":"e5b748838ea561070abc576dea21577d",
+    "ACCESS_TEAM_DOMAIN":"",
+    "ACCESS_AUD":"",
+    "COLLECTOR_ENABLED":"true",
+    "CONTROL_SYNC_ENABLED":"true",
+    "ENFORCEMENT_READY":"false",
+    "NOTIFICATIONS_ENABLED":"false",
+    "SEND_SETUP_DM":"true"
+  },
+  "triggers":{"crons":["*/15 * * * *"]},
+  "observability":{"enabled":true,"head_sampling_rate":1}
+}

@@ -429,3 +429,10 @@ enabled = true
 verify_jwt = true
 import_map = "./functions/naga-capture/deno.json"
 entrypoint = "./functions/naga-capture/index.ts"
+
+[functions.ops-capacity]
+enabled = true
+# Service-to-service custom authentication: random256-bit token checked against a SHA-256 verifier.
+# No aggregate is served without that check; normal Supabase user JWTs do not grant access.
+verify_jwt = false
+entrypoint = "./functions/ops-capacity/index.ts"

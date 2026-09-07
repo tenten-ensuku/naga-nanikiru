@@ -6,6 +6,7 @@
     "node": ">=22.13.0"
   },
   "scripts": {
+    "test:ops": "node --test tests/ops-*.test.mjs",
     "prebuild": "npm run build:supabase-client",
     "build:supabase-client": "node scripts/build-supabase-client.mjs",
     "runtime:config": "node scripts/write-runtime-config.mjs",

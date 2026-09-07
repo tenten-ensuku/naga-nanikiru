@@ -1,5 +1,6 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts"
 import { createClient } from "@supabase/supabase-js"
+import { checkOpsCapacity } from "../_shared/ops-capacity.ts"
 
 const REPORT_ID_PATTERN = /^[A-Za-z0-9_]{20,160}$/
 const MAX_REPORT_BYTES = 32 * 1024 * 1024
@@ -90,6 +91,12 @@ Deno.serve(async (request) => {
   const targetPlayerName = cleanText(input.targetPlayerName, 80) || null
   const extractionPreset = input.extractionPreset === "custom" ? "custom" : "bad_moves"
   const extractionConfig = normalizeExtractionConfig(input.extractionConfig)
+
+  const capacity = await checkOpsCapacity({
+    supabaseUrl,
+    serviceRoleKey: Deno.env.get("SUPABASE_SERVICE_ROLE_KEY"),
+  })
+  if (capacity.kind !== "allowed") return jsonResponse({ error: capacity.message }, 503)
 
   const oneMinuteAgo = new Date(Date.now() - 60_000).toISOString()
   const { count, error: countError } = await supabase

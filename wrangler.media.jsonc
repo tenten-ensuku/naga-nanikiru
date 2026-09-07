@@ -12,6 +12,6 @@
     "UPLOADS_ENABLED": "true",
     "BOT_COLLECTION_IDS": ""
   },
-  "triggers": { "crons": ["0 18 * * *"] },
+  "triggers": { "crons": [] },
   "observability": { "enabled": true, "head_sampling_rate": 0.05 }
 }
