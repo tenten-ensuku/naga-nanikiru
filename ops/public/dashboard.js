@@ -213,8 +213,8 @@
     const units = ["B", "KB", "MB", "GB", "TB"];
     const exponent = Math.min(Math.floor(Math.log(value) / Math.log(1000)), units.length - 1);
     const scaled = value / (1000 ** exponent);
-    const digits = exponent === 0 ? 0 : scaled < 10 ? 1 : 0;
-    return `${formatNumber(Number(scaled.toFixed(digits)))} ${units[exponent]}`;
+    const digits = exponent === 0 ? 0 : exponent >= 3 ? 3 : 2;
+    return `${new Intl.NumberFormat("ja-JP", { maximumFractionDigits: digits }).format(scaled)} ${units[exponent]}`;
   }
 
   function formatCount(value) {
@@ -1144,7 +1144,7 @@
     return `
       <div class="ops-shell${exportMode ? " ops-shell--export" : ""}">
         <header class="ops-header">
-          <div><p class="eyebrow">ENSUKU OPS / OWNER VIEW</p><h1>容量と復旧の観測</h1><p>サービス別の物理使用量、観測の確度、再開条件をひとつの読み取り面で確認します。</p></div>
+          <div><p class="eyebrow">ENSUKU OPS / OWNER VIEW</p><h1>アプリ別・容量管理</h1><p>保存容量・通信量・警告を確認する本人専用ページです。取得できない項目は「不明」と表示します。</p></div>
           <div class="header-side"><div class="snapshot-meta"><strong>${escapeHtml(connectionMessage)}</strong><span>生成: ${escapeHtml(formatDateTime(snapshot.generatedAt))}</span></div>${exportMode ? `<span class="export-badge">現在値の静的エクスポート</span>` : `<div class="header-actions"><button class="ops-button ops-button--quiet" type="button" data-action="refresh">最新を再読込</button><button class="ops-button" type="button" data-action="export">HTMLで保存</button></div>`}</div>
         </header>
         <main class="ops-main">

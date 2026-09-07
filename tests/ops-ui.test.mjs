@@ -197,7 +197,7 @@ test("fixture rendering preserves zero, keeps unknown distinct, escapes data, an
   assert.match(html, /使用量内 25%/);
   assert.match(html, /残り枠: 216 MB/);
   assert.match(html, /期間平均（保存量）/);
-  assert.match(html, /1\.8 GB/);
+  assert.match(html, /1\.782 GB/);
   assert.match(html, /平均 − 現在/);
   assert.match(html, /998 MB/);
   assert.match(html, /30日推移/);
