@@ -12,14 +12,15 @@
     "MINKIRU_URL":"https://akabzpfknwsdmabavcqz.supabase.co",
     "RANKING_URL":"https://kclkzevcgpfbavegwbnf.supabase.co",
     "CF_ACCOUNT_ID":"e5b748838ea561070abc576dea21577d",
-    "ACCESS_TEAM_DOMAIN":"",
-    "ACCESS_AUD":"",
+    "ACCESS_TEAM_DOMAIN":"hidden-art-98e0.cloudflareaccess.com",
+    "ACCESS_AUD":"d42b1b02ca918fb7e28eb10a52eab6c56dd7ab4c624b339bbb291ca38d3d2443",
     "COLLECTOR_ENABLED":"true",
-    "CONTROL_SYNC_ENABLED":"true",
+    "READ_ONLY_MODE":"true",
+    "CONTROL_SYNC_ENABLED":"false",
     "ENFORCEMENT_READY":"false",
     "NOTIFICATIONS_ENABLED":"false",
-    "SEND_SETUP_DM":"true"
+    "SEND_SETUP_DM":"false"
   },
-  "triggers":{"crons":["*/15 * * * *"]},
-  "observability":{"enabled":true,"head_sampling_rate":1}
+  "triggers":{"crons":["0 18 * * *"]},
+  "observability":{"enabled":true,"head_sampling_rate":0.1}
 }

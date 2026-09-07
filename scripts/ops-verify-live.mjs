@@ -20,7 +20,10 @@ if(process.argv[2]==='public'){
 }
 if(process.argv[2]==='snapshot'){
  const raw=await cli(['r2','object','get','ensuku-ops-data/state.json','--remote','--pipe']);
- const state=JSON.parse(raw.trim());const latest=snapshot(state,Date.now());
+ const state=JSON.parse(raw.trim());
+ const config=JSON.parse(await fs.readFile(path.join(root,'wrangler.ops.jsonc'),'utf8'));
+ if(config.vars.READ_ONLY_MODE==='true')state.readOnly=true;
+ const latest=snapshot(state,Date.now());
  await fs.mkdir(target,{recursive:true});
  await fs.writeFile(path.join(target,'latest.json'),JSON.stringify(latest,null,2));
  const context={console,URL,Intl};context.globalThis=context;

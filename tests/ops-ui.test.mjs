@@ -262,22 +262,20 @@ test("export is self-contained, keeps current data inline, and has no API or for
   assert.doesNotMatch(exported, /fixture-secret|Bearer should-not-appear/);
 });
 
-test("source safeguards keep refresh GET-only, visible-only at 15 minutes, and writes contract-scoped", () => {
+test("source safeguards keep viewing GET-only with no polling or visibility refresh", () => {
   const endpointLiterals = new Set(dashboardSource.match(/\/api\/[A-Za-z0-9/_-]+/g) || []);
   assert.deepEqual(endpointLiterals, new Set(["/api/latest", "/api/history", "/api/egress", "/api/resume"]));
-  assert.match(dashboardSource, /const REFRESH_INTERVAL_MS = 15 \* 60_000/);
-  assert.match(dashboardSource, /const HISTORY_REFRESH_INTERVAL_MS = 15 \* 60_000/);
-  assert.match(dashboardSource, /documentRef\.visibilityState !== "visible"/);
+  assert.match(dashboardSource, /const REFRESH_INTERVAL_MS = 0/);
+  assert.match(dashboardSource, /const HISTORY_REFRESH_INTERVAL_MS = 0/);
+  assert.doesNotMatch(dashboardSource, /visibilitychange|setInterval|host\.setTimeout\(async/);
   assert.match(dashboardSource, /method: "GET"/);
   assert.match(dashboardSource, /method: "POST"/);
   assert.match(dashboardSource, /const payload = \{ periodStart, periodEnd, confirmedAt, uncachedBytes, cachedBytes \}/);
   assert.match(dashboardSource, /payload\.storageAverageBytes = storageAverageBytes/);
   assert.match(dashboardSource, /postJson\("\/api\/resume", \{ confirm: true \}\)/);
   assert.match(dashboardSource, /loadData\(false, \{ includeHistory: true \}\)/);
-  assert.match(dashboardSource, /loadData\(true, \{ includeHistory: historyIsDue\(\), auto: true \}\)/);
   assert.match(dashboardSource, /metric\.kind === "requests" \|\| metric\.kind === "egress"/);
-  assert.match(dashboardSource, /hasPendingOwnerInput/);
-  assert.match(dashboardSource, /未送信のオーナー入力があるため、自動更新を見送りました/);
+  assert.match(dashboardSource, /Preserve unsent input/);
   assert.match(dashboardSource, /critical: "重大"/);
   assert.match(dashboardSource, /snapshotState: "stale"/);
   assert.doesNotMatch(dashboardSource, /method:\s*["']DELETE|\.delete\s*\(/i);
@@ -291,6 +289,23 @@ test("source safeguards keep refresh GET-only, visible-only at 15 minutes, and w
   assert.match(dashboardSource, /id: "cloudflare"/);
   assert.match(dashboardSource, /id: "egress"/);
   assert.match(styleCss, /\.table-wrap\s*\{[\s\S]*max-width:\s*100%[\s\S]*overflow-x:\s*auto/);
+});
+
+test("daily view prioritizes four percentages, measured overhead and no resume control", () => {
+  const api = loadDashboardApi();
+  const source = {...FIXTURE_LATEST,control:{mode:'read-only',blocked:true,canResume:true},collection:{cadence:'daily'},overhead:{metadataOnly:true,measuredAt:FIXTURE_LATEST.generatedAt,inputResponseBytes:501,supabaseResponseBytes:500,supabaseRequests:4,requestCount:5,r2ListCalls:10,imageBodyBytes:0,secret:'never-export'}};
+  const normalized = api.normalizeLatest(source);
+  assert.equal(normalized.control.blocked,false);assert.equal(normalized.control.canResume,false);
+  const html=api.renderDashboardMarkup(source,FIXTURE_HISTORY);
+  assert.equal((html.match(/data-daily-usage=/g)||[]).length,4);
+  assert.match(html,/残り /);assert.match(html,/毎日03:00/);assert.match(html,/collector-overhead/);
+  assert.doesNotMatch(html,/id="resume-form"|never-export/);
+  assert.ok(html.indexOf('data-daily-usage')<html.indexOf('id="candidates"'));
+  assert.match(html,/500 B/);assert.match(html,/15 KB（推計）/);
+  const unknown=api.renderDashboardMarkup({...source,metrics:[],overhead:null},{});
+  assert.match(unknown,/初回日次計測待ち/);assert.doesNotMatch(unknown,/NaN|Infinity/);
+  const exported=api.createExportHtml(source,FIXTURE_HISTORY);
+  assert.match(exported,/Ensuku Ops v2/);assert.doesNotMatch(exported,/fetch\s*\(|<form\b|never-export/);
 });
 
 test("boot reads only the saved latest/history snapshots on the initial render", async () => {
@@ -345,7 +360,7 @@ test("boot reads only the saved latest/history snapshots on the initial render",
   assert.equal(state.snapshot.generatedAt, "2026-09-07T08:30:00.000Z");
 });
 
-test("manual latest refresh does not spend another 30-day history read", async () => {
+test("manual refresh reads two small saved files without scheduling another refresh", async () => {
   const sandbox = {
     Array,
     Date,
@@ -401,9 +416,8 @@ test("manual latest refresh does not spend another 30-day history read", async (
   await new Promise((resolve) => setTimeout(resolve, 0));
   assert.equal(typeof handlers.refresh, "function");
   await handlers.refresh();
-  assert.deepEqual(requests.map((request) => request.url), ["/api/latest", "/api/history", "/api/latest"]);
-  assert.ok(timers.length >= 2);
-  assert.equal(timers.at(-1).delay, 15 * 60_000);
+  assert.deepEqual(requests.map((request) => request.url), ["/api/latest", "/api/history", "/api/latest", "/api/history"]);
+  assert.equal(timers.length, 0);
 });
 
 test("latest failure keeps the previous snapshot, timestamp, and stale status", async () => {
@@ -467,10 +481,10 @@ test("latest failure keeps the previous snapshot, timestamp, and stale status", 
   assert.equal(state.snapshot.generatedAt, FIXTURE_LATEST.generatedAt);
   assert.match(root.innerHTML, /前回値（stale）/);
   assert.match(root.innerHTML, /前回生成:/);
-  assert.deepEqual(requests.map((request) => request.url), ["/api/latest", "/api/history", "/api/latest"]);
+  assert.deepEqual(requests.map((request) => request.url), ["/api/latest", "/api/history", "/api/latest", "/api/history"]);
 });
 
-test("automatic refresh leaves an in-progress owner form untouched", async () => {
+test("an in-progress form has no timer that could refresh over the draft", async () => {
   const sandbox = {
     Array,
     Date,
@@ -536,8 +550,8 @@ test("automatic refresh leaves an in-progress owner form untouched", async () =>
   await new Promise((resolve) => setTimeout(resolve, 0));
   const before = root.innerHTML;
   egressForm.elements.uncachedBytes.value = "123";
-  await timers.at(-1).handler();
+  await new Promise((resolve) => setTimeout(resolve, 0));
   assert.deepEqual(requests.map((request) => request.url), ["/api/latest", "/api/history"]);
   assert.equal(root.innerHTML, before, "automatic refresh must not redraw over unsent input");
-  assert.equal(timers.at(-1).delay, 15 * 60_000);
+  assert.equal(timers.length, 0);
 });

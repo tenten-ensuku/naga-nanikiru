@@ -1,8 +1,9 @@
 import {createAccessVerifier} from './access.mjs';
 import {buildMetrics,evaluate,severity,parseEgress,DAY,HOUR} from './policy.mjs';
 import {monitor,inventory,cloudflareUsage,pruneSnapshots} from './collect.mjs';
+import {collectDaily,dailyCollection} from './daily.mjs';
 const LABELS={minkiru:'みん切るDB・Storage',ranking:'ランキングDB・Storage',r2:'R2日次台帳',cloudflare:'Cloudflare利用回数',egress:'Supabase Egress確認値'};
-const safeError=e=>/^monitor_http_\d+$/.test(e.message)?e.message:'取得できませんでした（秘密情報は記録しません）';
+const safeError=e=>e.message==='analytics_token_missing'?'Cloudflare利用回数の読み取り権限は設定待ちです（容量集計は継続）':/^monitor_http_\d+$/.test(e.message)?e.message:'取得できませんでした（秘密情報は記録しません）';
 const jsonHeaders={'Content-Type':'application/json','Cache-Control':'private, no-store','X-Content-Type-Options':'nosniff','Referrer-Policy':'no-referrer','X-Frame-Options':'DENY'};
 const json=(x,status=200)=>new Response(JSON.stringify(x),{status,headers:jsonHeaders});
 async function read(bucket,key){const object=await bucket.get(key);return {object,value:object?await object.json():null};}
@@ -10,16 +11,17 @@ async function rawPut(bucket,key,value,options={}){return bucket.put(key,JSON.st
 export function initialState(now){return {version:1,startedAt:new Date(now).toISOString(),observeUntil:new Date(now+DAY).toISOString(),successfulTicks:0,enforcementApproved:false,raw:{},events:[],alerts:{},blocked:false,blockReasons:[]};}
 function sources(state,now){
   return Object.entries(LABELS).map(([id,label])=>{
-    const r=state.raw[id],ttl=id==='r2'?26*HOUR:id==='egress'?DAY:id==='cloudflare'?HOUR:2*HOUR;
+    const r=state.raw[id],ttl=state.readOnly?(id==='egress'?7*DAY:48*HOUR):id==='r2'?26*HOUR:id==='egress'?DAY:id==='cloudflare'?HOUR:2*HOUR;
     const age=now-Date.parse(r?.lastSuccessAt||0);
     const changedPeriod=id==='cloudflare'&&r?.value?.day!==new Date(now).toISOString().slice(0,10);
     return{id,label,status:!r?.lastSuccessAt?'unknown':r.failures||age>ttl||changedPeriod?'stale':'ok',checkedAt:r?.checkedAt||null,lastSuccessAt:r?.lastSuccessAt||null,failures:r?.failures||0,error:r?.error||null};
   });
 }
 export function snapshot(state,now){
-  const metrics=buildMetrics(state.raw,state.egress,now),ss=sources(state,now);
+  const metrics=buildMetrics(state.raw,state.egress,now,state.readOnly),ss=sources(state,now);
   const control=evaluate(state,metrics,ss,now),audit=state.raw.minkiru?.value?.tables?.find(x=>x.name==='question_audit_events'),questions=state.raw.minkiru?.value?.tables?.find(x=>x.name==='questions');
   return {version:1,generatedAt:state.generatedAt||state.startedAt,control,sources:ss,metrics,events:state.events.slice(-100).reverse(),
+    ...(state.readOnly?{collection:dailyCollection,overhead:state.overhead||null}:{}),
     billing:state.egress?{storageAverageBytes:state.egress.storageAverageBytes??null,periodStart:state.egress.periodStart,periodEnd:state.egress.periodEnd,confirmedAt:state.egress.confirmedAt}:null,
     candidates:[{label:'Supabaseに残る画像原本',bytes:metrics[0].used,count:metrics[0].parts.reduce((s,p)=>s+(p.count||0),0),status:'R2実表示・独立原本・現行参照の再照合が必要',advice:'削除はこの画面から実行できません。現在参照・R2照合・独立バックアップが揃った固定対象だけ別途確認します。'},
       {label:'問題変更監査ログ',bytes:audit?.bytes??null,count:audit?.count??null,status:'最大のDB削減検討候補',advice:'内容が同じ更新の記録抑制と、古い詳細の非公開R2保管を検討。回答履歴や監査記録を一括削除しません。'},
@@ -91,6 +93,7 @@ export function createOpsWorker({fetchImpl=fetch,now=()=>Date.now(),verify=creat
         if(initial){try{state.egress=parseEgress(initial,now());}catch{/* Expired confirmation is unknown, never treated as zero. */}}
         state.initialConfirmationRead=true;
       }
+      if(env.READ_ONLY_MODE==='true')return collectDaily(state,env,{now,fetchImpl,put,collect,alert,persist});
       if(state.lastTick&&now()-Date.parse(state.lastTick)<10*60000)return;
       for(const id of ['minkiru','ranking'])if(!state.raw[id]?.checkedAt||now()-Date.parse(state.raw[id].checkedAt)>=55*60000)await collect(state,id,()=>monitor(env,id,'snapshot',undefined,fetchImpl));
       await collect(state,'cloudflare',()=>cloudflareUsage(env,fetchImpl,now()));
@@ -132,17 +135,21 @@ export function createOpsWorker({fetchImpl=fetch,now=()=>Date.now(),verify=creat
       if(!env.OPS_DATA)return json({error:'管理用ストレージの設定待ちです'},503);
       if(request.method==='GET'&&url.pathname==='/api/latest'){
         const state=(await read(env.OPS_DATA,'state.json')).value;if(!state)return json({error:'初回集計を待っています'},503);
+        if(env.READ_ONLY_MODE==='true')state.readOnly=true;
         return json(snapshot(state,now()));
       }
       if(request.method==='GET'&&url.pathname==='/api/history'){
+        if(env.READ_ONLY_MODE==='true')return json((await read(env.OPS_DATA,'history.json')).value||{daily:[],recent:[]});
         const page=await env.OPS_DATA.list({prefix:'daily/',limit:100});
         const rows=await Promise.all(page.objects.sort((a,b)=>a.key.localeCompare(b.key)).slice(-30).map(async o=>(await read(env.OPS_DATA,o.key)).value));
         return json({daily:rows.filter(Boolean),recent:[]});
       }
       if(request.method==='POST'&&['/api/egress','/api/resume'].includes(url.pathname)){
+        if(env.READ_ONLY_MODE==='true'&&url.pathname==='/api/resume')return json({error:'容量を確認する専用モードです。アプリの停止・再開は操作しません。'},409);
         if(request.headers.get('origin')!==url.origin||request.headers.get('sec-fetch-site')==='cross-site')return json({error:'同じ管理ページから操作してください'},403);
         try{return await lease(env,async()=>{
           const state=(await read(env.OPS_DATA,'state.json')).value;if(!state)throw new Error('初回集計を待っています');
+          if(env.READ_ONLY_MODE==='true')state.readOnly=true;
           const input=await body(request);
           if(url.pathname==='/api/egress'){
             state.egress=parseEgress(input,now());

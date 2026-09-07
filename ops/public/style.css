@@ -1446,3 +1446,26 @@ button:disabled {
     transition-duration: 0.001ms !important;
   }
 }
+/* Daily capacity overview: no assets, fonts or chart libraries to download. */
+.usage-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.usage-card{min-width:0;padding:18px;border:1px solid var(--line);border-top:4px solid var(--teal);border-radius:12px;background:var(--paper)}
+.usage-card h3{margin:0 0 10px;font-size:.91rem;color:var(--navy)}
+.usage-percent{font-size:2.3rem;font-weight:900;line-height:1.2;color:var(--navy-deep);letter-spacing:-.04em}
+.usage-percent small{margin-left:4px;font-size:.78rem;letter-spacing:0}
+.usage-bar{height:7px;margin:12px 0;border-radius:8px;background:#e0e8e5;overflow:hidden}
+.usage-bar span{height:100%;display:block;background:var(--teal)}
+.usage-card--warning{border-top-color:var(--gold)}.usage-card--warning .usage-bar span{background:var(--gold)}
+.usage-card--danger{border-top-color:var(--danger)}.usage-card--danger .usage-bar span{background:var(--danger)}
+.usage-card p{margin:0 0 4px;color:var(--muted);font-size:.83rem}.usage-card strong{font-size:.95rem}
+.usage-card .cell-sub{margin-top:8px;overflow-wrap:anywhere}
+.daily-note{display:flex;flex-wrap:wrap;gap:8px 20px;padding:13px 17px;border-left:3px solid var(--teal);background:var(--teal-soft);font-size:.82rem}
+.daily-note span{color:var(--muted)}
+.overhead-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin:0}
+.overhead-grid div{min-width:0}.overhead-grid dt{color:var(--muted);font-size:.8rem}.overhead-grid dd{margin:4px 0;font-weight:800;color:var(--navy);overflow-wrap:anywhere}
+.ops-details{min-width:0;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--paper)}
+.ops-details>summary{padding:16px 19px;cursor:pointer;font-weight:800;color:var(--navy);min-height:48px}
+.ops-details>summary:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
+.ops-details>.panel{border:0;box-shadow:none;border-radius:0}.ops-details>p{padding:0 20px;font-size:.83rem}
+.write-grid--daily{grid-template-columns:minmax(0,1fr)}
+@media(max-width:950px){.usage-grid,.overhead-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:480px){.usage-grid{gap:8px}.usage-card{padding:12px}.usage-percent{font-size:1.8rem}.usage-card h3{font-size:.77rem}.usage-card p,.usage-card strong{font-size:.75rem}.usage-card .cell-sub{font-size:.66rem}.overhead-grid{grid-template-columns:1fr}}

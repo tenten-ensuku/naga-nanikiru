@@ -10,6 +10,8 @@ const modules=process.env.PLAYWRIGHT_MODULES;if(!modules)throw Error('PLAYWRIGHT
 const {chromium}=createRequire(path.join(modules,'package.json'))('playwright');
 const out=path.join(root,'outputs/ops-v1');await fs.mkdir(out,{recursive:true});
 let latest=JSON.parse(await fs.readFile(path.join(out,'latest.json'),'utf8').catch(()=>JSON.stringify(snapshot(initialState(Date.now()),Date.now()))));
+latest.control={mode:'read-only',blocked:false,canResume:false,reasons:[],observeUntil:null};
+latest.collection={cadence:'daily',timezone:'Asia/Tokyo',scheduledTime:'03:00',automaticRefresh:false};
 let posts=[],exportedHtml='';const requests=[],errors=[];
 const server=http.createServer(async(req,res)=>{
  const url=new URL(req.url,'http://127.0.0.1');
@@ -32,6 +34,8 @@ try{
     return route.continue();
   });
   const page=await context.newPage();page.on('pageerror',error=>errors.push(error.message));
+  const apiRequests=[];page.on('request',request=>{if(new URL(request.url()).pathname.startsWith('/api/'))apiRequests.push(new URL(request.url()).pathname);});
+  await page.addInitScript(()=>{window.__scheduledDelays=[];const original=window.setTimeout;window.setTimeout=(fn,delay,...rest)=>{window.__scheduledDelays.push(delay);return original(fn,delay,...rest);};});
   await page.goto(origin);await page.getByRole('heading',{name:'保存先の現在値'}).waitFor();
   const layout=await page.evaluate(()=>({width:document.documentElement.clientWidth,scrollWidth:document.documentElement.scrollWidth,charts:document.querySelectorAll('[data-resource-id]').length,overflow:[...document.querySelectorAll('button,input,.resource-card')].filter(x=>{const r=x.getBoundingClientRect();return r.right>innerWidth+1||r.left< -1;}).length}));
   await page.screenshot({path:path.join(out,'dashboard-'+width+'.png'),fullPage:width===1440});
@@ -39,9 +43,17 @@ try{
   if(layout.scrollWidth>width+1)console.log(JSON.stringify({layout,containers:await page.evaluate(()=>[...document.querySelectorAll('body,.ops-root,.ops-shell,.ops-main,.panel,.table-wrap,.trend-frame,.trend-svg')].map(x=>({tag:x.tagName,class:x.className,width:x.clientWidth,scroll:x.scrollWidth,left:x.getBoundingClientRect().left,overflow:getComputedStyle(x).overflowX})).filter(x=>x.scroll>x.width+1))}));
   if(layout.scrollWidth>width+1)console.log(JSON.stringify(await page.evaluate(()=>[...document.querySelectorAll('body *')].filter(x=>{const r=x.getBoundingClientRect();return r.right>innerWidth+1&&getComputedStyle(x).position!=='absolute';}).slice(0,20).map(x=>({tag:x.tagName,class:x.className,right:x.getBoundingClientRect().right,text:x.textContent.slice(0,70)})))));
   assert.equal(layout.charts,3);assert.ok(layout.scrollWidth<=width+1,'horizontal page overflow at '+width);assert.equal(layout.overflow,0,'offscreen controls at '+width);
+  assert.equal(await page.locator('[data-daily-usage]').count(),4);
+  assert.equal(await page.locator('#resume-form').count(),0);
+  assert.deepEqual(apiRequests.sort(),['/api/history','/api/latest']);
+  await page.evaluate(()=>document.dispatchEvent(new Event('visibilitychange')));
+  assert.ok(await page.evaluate(()=>window.__scheduledDelays.every(delay=>delay===0)),'no polling timer');
+  assert.equal(apiRequests.length,2,'visibility does not request snapshots');
+  await page.locator('details.ops-details').evaluateAll(nodes=>nodes.forEach(node=>node.open=true));
+  assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'expanded details overflow at '+width);
   const downloadEvent=page.waitForEvent('download');await page.getByRole('button',{name:'HTMLで保存',exact:true}).click();const download=await downloadEvent;
   const file=path.join(out,'export-'+width+'.html');await download.saveAs(file);
-  const exported=await fs.readFile(file,'utf8');assert.doesNotMatch(exported,/\/api\/(?:latest|history|egress|resume)|fetch\s*\(/);assert.match(exported,/Ensuku Ops v1/);
+  const exported=await fs.readFile(file,'utf8');assert.doesNotMatch(exported,/\/api\/(?:latest|history|egress|resume)|fetch\s*\(/);assert.match(exported,/Ensuku Ops v2/);
   exportedHtml=exported;
   const exportPage=await context.newPage();await exportPage.goto(origin+'/export.html');
   assert.ok(await exportPage.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'export horizontal overflow at '+width);
@@ -55,6 +67,7 @@ try{
   assert.ok(critical<=width+1,'blocked/unknown page overflow at '+width);
   await page.reload();await page.getByRole('heading',{name:'保存先の現在値'}).waitFor();
   if(width===1440){
+    await page.locator('#daily-manual > summary').click();
     await page.locator('[name=periodStart]').fill('2026-09-06');await page.locator('[name=periodEnd]').fill('2026-10-06');await page.locator('[name=confirmedAt]').fill('2026-09-07T20:00');await page.locator('[name=uncachedBytes]').fill('8000000');await page.locator('[name=cachedBytes]').fill('0');
     await page.getByRole('button',{name:'最新を再読込',exact:true}).click();
     await page.waitForFunction(()=>!document.querySelector('[data-action=refresh]').disabled);

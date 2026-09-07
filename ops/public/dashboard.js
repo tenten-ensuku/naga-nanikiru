@@ -1,8 +1,9 @@
 (function installOpsDashboard(host) {
   "use strict";
 
-  const REFRESH_INTERVAL_MS = 15 * 60_000;
-  const HISTORY_REFRESH_INTERVAL_MS = 15 * 60_000;
+  // No automatic polling. The daily collector and viewing the page are separate.
+  const REFRESH_INTERVAL_MS = 0;
+  const HISTORY_REFRESH_INTERVAL_MS = 0;
   const SNAPSHOT_ENDPOINT = "/api/latest";
   const HISTORY_ENDPOINT = "/api/history";
   const MAX_TREND_POINTS = 30;
@@ -104,7 +105,8 @@
     pending: "保留中",
   });
 
-  const EXPORT_CSS = String.raw`
+  const DAILY_CSS = "\n.usage-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}\n.usage-card{min-width:0;padding:18px;border:1px solid var(--line);border-top:4px solid var(--teal);border-radius:12px;background:var(--paper)}\n.usage-card h3{margin:0 0 10px;font-size:.91rem;color:var(--navy)}\n.usage-percent{font-size:2.3rem;font-weight:900;line-height:1.2;color:var(--navy-deep);letter-spacing:-.04em}\n.usage-percent small{margin-left:4px;font-size:.78rem;letter-spacing:0}\n.usage-bar{height:7px;margin:12px 0;border-radius:8px;background:#e0e8e5;overflow:hidden}\n.usage-bar span{height:100%;display:block;background:var(--teal)}\n.usage-card--warning{border-top-color:var(--gold)}.usage-card--warning .usage-bar span{background:var(--gold)}\n.usage-card--danger{border-top-color:var(--danger)}.usage-card--danger .usage-bar span{background:var(--danger)}\n.usage-card p{margin:0 0 4px;color:var(--muted);font-size:.83rem}.usage-card strong{font-size:.95rem}\n.usage-card .cell-sub{margin-top:8px;overflow-wrap:anywhere}\n.daily-note{display:flex;flex-wrap:wrap;gap:8px 20px;padding:13px 17px;border-left:3px solid var(--teal);background:var(--teal-soft);font-size:.82rem}\n.daily-note span{color:var(--muted)}\n.overhead-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin:0}\n.overhead-grid div{min-width:0}.overhead-grid dt{color:var(--muted);font-size:.8rem}.overhead-grid dd{margin:4px 0;font-weight:800;color:var(--navy);overflow-wrap:anywhere}\n.ops-details{min-width:0;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--paper)}\n.ops-details>summary{padding:16px 19px;cursor:pointer;font-weight:800;color:var(--navy);min-height:48px}\n.ops-details>summary:focus-visible{outline:3px solid var(--teal);outline-offset:2px}\n.ops-details>.panel{border:0;box-shadow:none;border-radius:0}.ops-details>p{padding:0 20px;font-size:.83rem}\n.write-grid--daily{grid-template-columns:minmax(0,1fr)}\n@media(max-width:950px){.usage-grid,.overhead-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}\n@media(max-width:480px){.usage-grid{gap:8px}.usage-card{padding:12px}.usage-percent{font-size:1.8rem}.usage-card h3{font-size:.77rem}.usage-card p,.usage-card strong{font-size:.75rem}.usage-card .cell-sub{font-size:.66rem}.overhead-grid{grid-template-columns:1fr}}\n";
+  const EXPORT_CSS = DAILY_CSS + String.raw`
     .trend-panel{grid-template-columns:minmax(0,1fr)}.trend-table{min-width:0;max-width:100%;overflow-x:auto}.signal-value>.status-chip,.control-value>.status-chip{max-width:100%;white-space:normal;overflow-wrap:anywhere}
     :root{color-scheme:light;--navy:#173247;--navy-deep:#10283a;--teal:#137d78;--teal-soft:#d8efeb;--gold:#b48326;--gold-soft:#f7edcf;--ivory:#f8f5ed;--paper:#fffdf8;--ink:#203443;--muted:#687985;--line:#d9e0dc;--line-strong:#bbc9c7;--danger:#b5494d;--danger-soft:#f9e3e1;--shadow:0 16px 38px rgba(23,50,71,.09);font-family:Inter,"Avenir Next","Yu Gothic UI","Hiragino Kaku Gothic ProN",Meiryo,sans-serif;font-size:16px;line-height:1.55}
     *{box-sizing:border-box}html{background:var(--ivory);scroll-behavior:smooth}body{margin:0;min-width:0;background:var(--ivory);color:var(--ink)}button,input{font:inherit}button{cursor:pointer}.ops-shell{width:min(100% - 32px,1440px);margin:0 auto;padding:30px 0 56px}.ops-header{display:flex;align-items:flex-start;justify-content:space-between;gap:28px;padding:10px 0 28px;border-bottom:1px solid var(--line)}.eyebrow,.section-kicker,.resource-kicker{margin:0;color:var(--teal);font-size:.76rem;font-weight:800;letter-spacing:.13em;text-transform:uppercase}.ops-header h1{margin:5px 0 7px;color:var(--navy-deep);font-size:clamp(1.75rem,3vw,2.65rem);letter-spacing:-.04em;line-height:1.12}.ops-header p{margin:0;max-width:680px;color:var(--muted)}.header-side{display:grid;gap:12px;justify-items:end;min-width:245px}.snapshot-meta{color:var(--muted);font-size:.82rem;text-align:right}.snapshot-meta strong{display:block;color:var(--navy);font-size:.95rem}.header-actions{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8px}.ops-button{min-height:42px;padding:8px 14px;border:1px solid var(--navy);border-radius:9px;background:var(--navy);color:#fff;font-weight:800;transition:transform .15s ease,background .15s ease,box-shadow .15s ease}.ops-button:hover{background:var(--navy-deep);box-shadow:0 6px 14px rgba(16,40,58,.17);transform:translateY(-1px)}.ops-button:focus-visible,.ops-input:focus-visible{outline:3px solid rgba(19,125,120,.28);outline-offset:2px}.ops-button--quiet{border-color:var(--line-strong);background:var(--paper);color:var(--navy)}.ops-button--quiet:hover{background:#f1f7f5}.export-badge,.status-chip,.level-chip,.delivery-chip{display:inline-flex;align-items:center;justify-content:center;gap:5px;min-height:25px;padding:3px 9px;border-radius:999px;font-size:.76rem;font-weight:800;white-space:nowrap}.export-badge{border:1px solid #c9deda;background:var(--teal-soft);color:#176862}.status-chip--ok{background:#dff1e9;color:#22694e}.status-chip--unknown{background:#edf0ee;color:#5b6b72}.status-chip--stale{background:var(--gold-soft);color:#80621e}.status-chip--manual{background:#e4eafb;color:#425a88}.status-chip--critical{background:var(--danger-soft);color:#963a3f}.ops-main{display:grid;gap:18px;padding-top:24px}.signal-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.signal-card{min-width:0;padding:17px 18px;border:1px solid var(--line);border-radius:14px;background:var(--paper);box-shadow:0 6px 18px rgba(23,50,71,.04)}.signal-card--focus{border-color:#d2bbb3;background:linear-gradient(135deg,#fffdf8 0%,#fcf1ec 100%)}.signal-label{display:block;margin-bottom:5px;color:var(--muted);font-size:.78rem;font-weight:800}.signal-value{display:flex;align-items:baseline;gap:7px;color:var(--navy-deep);font-size:1.55rem;font-weight:900;letter-spacing:-.03em}.signal-value small{color:var(--muted);font-size:.8rem;font-weight:800;letter-spacing:0}.signal-note{display:block;margin-top:3px;color:var(--muted);font-size:.77rem}.control-strip{display:grid;grid-template-columns:1.1fr 1fr 1.25fr;gap:16px;align-items:stretch;padding:16px 18px;border:1px solid #d5e5e2;border-radius:14px;background:linear-gradient(115deg,#eef8f5,#fffdf8 74%)}.control-block{min-width:0}.control-block+.control-block{padding-left:16px;border-left:1px solid #cfe0dd}.control-label{display:block;color:var(--muted);font-size:.76rem;font-weight:800}.control-value{display:flex;align-items:center;gap:8px;margin-top:5px;color:var(--navy);font-size:1rem;font-weight:900}.control-reasons{margin:5px 0 0;padding-left:18px;color:var(--ink);font-size:.84rem}.section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:15px;margin-bottom:13px}.section-head h2{margin:0;color:var(--navy-deep);font-size:1.18rem;letter-spacing:-.02em}.section-head p{margin:2px 0 0;color:var(--muted);font-size:.84rem}.section-head-aside{color:var(--muted);font-size:.78rem;font-weight:700;text-align:right}.panel{min-width:0;padding:22px;border:1px solid var(--line);border-radius:16px;background:var(--paper);box-shadow:var(--shadow)}.resource-section{min-width:0}.resource-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}.resource-card{min-width:0;display:grid;gap:15px;padding:18px;border:1px solid var(--line);border-top:4px solid var(--teal);border-radius:14px;background:var(--paper);box-shadow:0 9px 22px rgba(23,50,71,.06)}.resource-card--gold{border-top-color:var(--gold)}.resource-card--navy{border-top-color:var(--navy)}.resource-card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}.resource-card h3{margin:3px 0 0;color:var(--navy-deep);font-size:1.05rem}.resource-provider{display:block;margin-top:3px;color:var(--muted);font-size:.78rem}.resource-body{display:grid;grid-template-columns:126px minmax(0,1fr);gap:17px;align-items:center}.donut-wrap{display:grid;justify-items:center;gap:7px}.donut{position:relative;display:grid;place-items:center;width:120px;aspect-ratio:1;border-radius:50%;background:conic-gradient(var(--donut-color,#137d78) 0 var(--donut-progress,0%),#e8eeeb var(--donut-progress,0%) 100%);box-shadow:inset 0 0 0 1px rgba(23,50,71,.08)}.donut::after{content:"";position:absolute;inset:13px;border-radius:50%;background:var(--paper);box-shadow:inset 0 0 0 1px rgba(23,50,71,.05)}.donut--unknown{background:repeating-conic-gradient(#e6ece9 0 9deg,#d2dcda 9deg 18deg)}.donut-center{position:relative;z-index:1;color:var(--navy-deep);font-size:1.12rem;font-weight:900;text-align:center;line-height:1.1}.donut-center small{display:block;margin-top:3px;color:var(--muted);font-size:.64rem;letter-spacing:.02em}.donut-caption{color:var(--muted);font-size:.73rem;font-weight:700;text-align:center}.resource-reading{min-width:0}.resource-reading strong{display:block;color:var(--navy-deep);font-size:1.32rem;letter-spacing:-.025em}.resource-reading>span{display:block;margin-top:2px;color:var(--muted);font-size:.78rem}.resource-facts{display:grid;gap:7px;margin:12px 0 0}.resource-fact{display:flex;justify-content:space-between;gap:12px;padding-top:7px;border-top:1px solid #edf0ed;font-size:.78rem}.resource-fact dt{color:var(--muted)}.resource-fact dd{margin:0;color:var(--navy);font-weight:800;text-align:right}.resource-note{margin:0;padding-top:12px;border-top:1px dashed var(--line-strong);color:var(--muted);font-size:.82rem}.resource-note strong{color:var(--navy)}.legend{display:flex;flex-wrap:wrap;gap:6px 10px;margin:0;padding:0;list-style:none}.legend li{display:flex;align-items:center;gap:5px;color:var(--muted);font-size:.73rem}.legend-dot{width:8px;height:8px;border-radius:50%;background:var(--dot-color,#137d78)}.table-wrap{width:100%;min-width:0;overflow-x:auto}.data-table{width:100%;border-collapse:collapse;font-size:.84rem}.data-table th,.data-table td{padding:11px 10px;border-bottom:1px solid #e7ece9;vertical-align:top;text-align:left}.data-table th{color:var(--muted);font-size:.74rem;font-weight:900;letter-spacing:.02em;white-space:nowrap}.data-table td{color:var(--ink)}.data-table tbody tr:last-child td{border-bottom:0}.data-table tbody tr:hover{background:#fbfcfa}.cell-title{display:block;color:var(--navy-deep);font-weight:900}.cell-sub{display:block;margin-top:2px;color:var(--muted);font-size:.74rem}.value-unknown{color:#68777e;font-weight:800}.value-zero{color:var(--teal);font-weight:900}.table-status{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}.table-status::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}.table-status--ok{color:#287c5b}.table-status--unknown{color:#7a888e}.table-status--stale{color:#9a7623}.table-status--manual{color:#50689a}.table-status--critical{color:var(--danger)}.subtle-rule{margin:17px 0;border:0;border-top:1px solid var(--line)}.app-table-card{padding-bottom:13px}.app-table-card .data-table th:nth-child(n+2),.app-table-card .data-table td:nth-child(n+2){min-width:112px}.app-table-card .data-table th:last-child,.app-table-card .data-table td:last-child{min-width:82px}.app-table-note{margin:10px 0 0;color:var(--muted);font-size:.79rem}.two-column{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);gap:18px}.source-list{display:grid;gap:9px}.source-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:5px 12px;padding:11px 0;border-bottom:1px solid #e8edeb}.source-row:last-child{border-bottom:0}.source-main{min-width:0}.source-name{display:block;color:var(--navy);font-weight:900}.source-meta{display:flex;flex-wrap:wrap;gap:4px 12px;margin-top:2px;color:var(--muted);font-size:.75rem}.source-error{grid-column:1/-1;color:#9a4b4d;font-size:.76rem;overflow-wrap:anywhere}.source-link{color:var(--teal);font-weight:800;text-decoration-thickness:1px;text-underline-offset:2px}.event-list{display:grid;gap:9px}.event-row{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px;align-items:start;padding:10px 0;border-bottom:1px solid #e8edeb}.event-row:last-child{border-bottom:0}.event-message{margin:0;color:var(--navy);font-size:.84rem;font-weight:750}.event-meta{display:flex;flex-wrap:wrap;gap:4px 10px;margin-top:3px;color:var(--muted);font-size:.74rem}.level-chip--notice{background:#e8f0f3;color:#49626f}.level-chip--warning{background:var(--gold-soft);color:#80621e}.level-chip--critical,.level-chip--error{background:var(--danger-soft);color:#963a3f}.level-chip--recovery{background:#dff1e9;color:#22694e}.delivery-chip{border:1px solid var(--line);background:#f5f7f5;color:var(--muted);font-size:.7rem}.trend-panel{display:grid;gap:0}.trend-frame{min-width:0;padding:10px 0 0;overflow:hidden;border-top:1px solid #edf0ed}.trend-svg{display:block;width:100%;height:auto;min-width:620px}.trend-empty{display:grid;place-items:center;min-height:170px;border:1px dashed var(--line-strong);border-radius:10px;color:var(--muted);font-size:.9rem}.trend-caption{margin:10px 0 0;color:var(--muted);font-size:.78rem}.trend-caption strong{color:var(--navy)}.trend-table{margin-top:14px}.trend-table .data-table{font-size:.76rem}.trend-table .data-table th,.trend-table .data-table td{padding:7px 8px}.details-table .data-table th:nth-child(3),.details-table .data-table td:nth-child(3){min-width:115px}.details-table .data-table th:nth-child(6),.details-table .data-table td:nth-child(6){min-width:130px}.note-box{margin-top:13px;padding:12px 14px;border-left:3px solid var(--gold);background:#fffbf0;color:var(--ink);font-size:.82rem}.note-box strong{color:var(--navy)}.growth-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.growth-item{padding:14px;border:1px solid var(--line);border-radius:11px;background:#fbfcfa}.growth-item dt{color:var(--muted);font-size:.77rem;font-weight:800}.growth-item dd{margin:5px 0 0;color:var(--navy-deep);font-size:1.16rem;font-weight:900}.growth-item small{display:block;margin-top:4px;color:var(--muted);font-size:.72rem}.readonly-label{display:inline-flex;align-items:center;gap:6px;color:var(--muted);font-size:.76rem;font-weight:800}.readonly-label::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--gold)}.owner-panel{border-color:#cededa;background:linear-gradient(135deg,#fffdf8,#f2f9f6)}.owner-lead{margin:0;color:var(--muted);font-size:.84rem}.write-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(260px,.65fr);gap:18px;margin-top:17px}.ops-form{padding:17px;border:1px solid #d4e3df;border-radius:12px;background:rgba(255,255,255,.58)}.ops-form h3{margin:0;color:var(--navy);font-size:1rem}.form-intro{margin:4px 0 14px;color:var(--muted);font-size:.79rem}.form-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.form-field{display:grid;gap:4px}.form-field--wide{grid-column:1/-1}.form-field label,.form-field>span{color:var(--navy);font-size:.78rem;font-weight:850}.ops-input{width:100%;min-height:40px;padding:8px 10px;border:1px solid var(--line-strong);border-radius:8px;background:#fff;color:var(--ink)}.form-actions{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin-top:14px}.form-help{margin:0;color:var(--muted);font-size:.74rem}.confirm-line{display:flex;align-items:flex-start;gap:8px;color:var(--ink);font-size:.8rem}.confirm-line input{margin-top:4px;accent-color:var(--teal)}.write-status{min-height:24px;margin:11px 0 0;color:var(--muted);font-size:.8rem}.write-status--error{color:var(--danger);font-weight:800}.write-status--success{color:#287c5b;font-weight:800}.export-note{padding:15px;border:1px dashed #aaccc5;border-radius:11px;background:#f4fbf8;color:var(--navy);font-size:.85rem}.empty-row{text-align:center!important;color:var(--muted)!important;padding:24px!important}.ops-footer{display:flex;justify-content:space-between;gap:16px;padding-top:22px;color:var(--muted);font-size:.74rem}.ops-footer strong{color:var(--navy)}.boot-state{display:grid;place-items:center;min-height:55vh;color:var(--muted);font-weight:800}.boot-mark{display:block;width:22px;height:22px;margin-bottom:12px;border:3px solid #d4e4e0;border-top-color:var(--teal);border-radius:50%;animation:ops-spin .85s linear infinite}.no-script-message{width:min(100% - 32px,720px);margin:40px auto;padding:18px;border:1px solid var(--line);border-radius:12px;background:var(--paper);color:var(--navy)}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}@keyframes ops-spin{to{transform:rotate(360deg)}}
@@ -310,16 +312,16 @@
 
   function normalizeControl(value) {
     const source = isRecord(value) ? value : {};
-    const mode = ["observe", "armed", "blocked"].includes(source.mode) ? source.mode : null;
+    const mode = ["read-only", "observe", "armed", "blocked"].includes(source.mode) ? source.mode : null;
     const reasons = Array.isArray(source.reasons)
       ? source.reasons.map((reason) => safeString(reason)).filter(Boolean).slice(0, 12)
       : [];
     return {
       mode,
       observeUntil: normalizeTimestamp(source.observeUntil),
-      blocked: source.blocked === true,
+      blocked: mode !== "read-only" && source.blocked === true,
       reasons: reasons.length ? reasons : mode === null ? ["最新スナップショット未取得"] : [],
-      canResume: source.canResume === true,
+      canResume: mode !== "read-only" && source.canResume === true,
     };
   }
 
@@ -501,7 +503,37 @@
       candidates: Array.isArray(source.candidates) ? source.candidates.slice(0, 100).map(normalizeCandidate) : [],
       growth: normalizeGrowth(source.growth),
       billing: normalizeBilling(source.billing),
+      collection: source.collection?.cadence === "daily" ? { cadence: "daily", timezone: "Asia/Tokyo", scheduledTime: "03:00", automaticRefresh: false } : null,
+      overhead: normalizeOverhead(source.overhead),
     };
+  }
+
+  function normalizeOverhead(value) {
+    if (!isRecord(value) || value.metadataOnly !== true) return null;
+    const result = { metadataOnly: true, measuredAt: normalizeTimestamp(value.measuredAt) };
+    for (const key of ["inputResponseBytes", "requestCount", "supabaseResponseBytes", "supabaseRequests", "r2ListCalls", "imageBodyBytes"]) result[key] = finiteNonNegative(value[key]);
+    return result;
+  }
+
+  function renderDailyUsage(snapshot) {
+    const metrics = metricMap(snapshot);
+    const cards = [["supabase-storage", "Supabase画像"], ["database-minkiru", "みん切るDB"], ["database-ranking", "ランキングDB"], ["r2-storage", "R2画像・管理データ"]].map(([id, label]) => {
+      const metric = metrics.get(id);
+      const used = metric?.used ?? null, limit = metric?.limit ?? null;
+      const ratio = used !== null && limit > 0 ? used / limit * 100 : null;
+      const left = ratio === null ? null : Math.max(0, limit - used);
+      const level = ratio === null ? "unknown" : ratio >= 90 ? "danger" : ratio >= 75 ? "warning" : "normal";
+      return `<article class="usage-card usage-card--${level}" data-daily-usage="${id}"><h3>${label}</h3><div class="usage-percent">${ratio === null ? "不明" : `${formatNumber(ratio)}<small>% 使用</small>`}</div><div class="usage-bar" aria-hidden="true"><span style="width:${ratio === null ? 0 : Math.min(100, ratio)}%"></span></div><p>${escapeHtml(formatBytes(used))} / ${escapeHtml(formatBytes(limit))}</p><strong>残り ${escapeHtml(formatBytes(left))}</strong><span class="cell-sub">${escapeHtml(formatDateTime(metric?.observedAt))} 時点${metric?.status === "stale" ? " · 前回値" : ""}</span></article>`;
+    }).join("");
+    return `<section class="daily-usage" aria-label="無料枠の使用率"><div class="section-head"><div><h2>無料枠を、どれくらい使っている？</h2><p>保存先ごとの使用率と残り容量。DBの空き枠は他のDBへ移せません。</p></div></div><div class="usage-grid">${cards}</div></section>`;
+  }
+
+  function renderCollectorOverhead(snapshot) {
+    const overhead = snapshot.overhead;
+    const r2 = metricMap(snapshot).get("r2-storage");
+    const management = r2?.details.find(row => row.label === "管理用データ");
+    const bytes = overhead?.supabaseResponseBytes;
+    return `<section class="panel" id="collector-overhead"><div class="section-head"><div><h2>この管理画面自身の負担</h2><p>画像をダウンロードして容量を調べることはありません。</p></div></div><dl class="overhead-grid"><div><dt>管理データの保存量</dt><dd>${escapeHtml(formatBytes(management?.bytes))}</dd><span class="cell-sub">${escapeHtml(formatDateTime(r2?.observedAt))} 時点</span></div><div><dt>1回の集計HTTP通信</dt><dd>${overhead ? `${formatInteger(overhead.requestCount)}回` : "初回日次計測待ち"}</dd></div><div><dt>うちSupabaseの応答データ</dt><dd>${escapeHtml(formatBytes(bytes))}</dd></div><div><dt>R2一覧確認 / 画像本体取得</dt><dd>${overhead ? `${formatInteger(overhead.r2ListCalls)}回 / ${formatBytes(overhead.imageBodyBytes)}` : "初回日次計測待ち"}</dd></div></dl><p class="app-table-note">${bytes == null ? "初回の日次実行後に計測結果が入ります。" : `同じ集計量が続く場合、30日で ${formatBytes(bytes * 30)}（推計）。`} 計測：${escapeHtml(formatDateTime(overhead?.measuredAt))}。応答データ量は圧縮・内部通信などを含まず、公式の請求Egressとは異なります。</p></section>`;
   }
 
   function markSnapshotStale(snapshotValue) {
@@ -716,7 +748,7 @@
       ? `${billing.periodStart}〜${billing.periodEnd}`
       : "不明";
     return `
-      <div class="resource-fact"><dt>期間平均（保存量）</dt><dd>${valueMarkup(billing.storageAverageBytes)}</dd></div>
+      <div class="resource-fact"><dt>期間平均（保存量）</dt><dd>${valueMarkup(billing.storageAverageBytes)}${billing.storageAverageBytes != null && metric.limit > 0 ? ` / ${formatNumber(billing.storageAverageBytes / metric.limit * 100)}%` : ""}</dd></div>
       <div class="resource-fact"><dt>平均 − 現在</dt><dd>${valueMarkup(difference, formatSignedBytes)}</dd></div>
       <div class="resource-fact"><dt>平均の確認期間</dt><dd>${escapeHtml(period)}<br>確認: ${escapeHtml(formatDateTime(billing.confirmedAt))}</dd></div>`;
   }
@@ -1099,7 +1131,7 @@
       </section>`;
   }
 
-  function renderOwnerActions(exportMode, state) {
+  function renderOwnerActions(exportMode, state, readOnly = false) {
     if (exportMode) {
       return `<section class="panel owner-panel" id="owner-actions"><div class="section-head"><div><p class="section-kicker">OWNER ACTIONS</p><h2>オーナー入力</h2></div><span class="export-badge">静的エクスポート</span></div><div class="export-note">このHTMLは現在のスナップショットを読むための静的コピーです。API取得、エグレス保存、再開判定のフォームは含まれていません。</div></section>`;
     }
@@ -1107,11 +1139,11 @@
     const statusMarkup = writeStatus.text ? `<p id="write-status" class="write-status write-status--${escapeAttribute(writeStatus.kind)}" role="status" aria-live="polite">${escapeHtml(writeStatus.text)}</p>` : `<p id="write-status" class="write-status" role="status" aria-live="polite"></p>`;
     return `
       <section class="panel owner-panel" id="owner-actions">
-        <div class="section-head"><div><p class="section-kicker">OWNER ACTIONS</p><h2>オーナー確認値と再開判定</h2><p>書き込みは明示的な送信時だけ。収集処理はこの画面から呼び出しません。</p></div><span class="status-chip status-chip--manual">オーナー限定</span></div>
+        <div class="section-head"><div><p class="section-kicker">OWNER ACTIONS</p><h2>${readOnly ? "通信量の確認値を記録" : "オーナー確認値と再開判定"}</h2><p>確認値の保存時だけ通信します。本番データの再集計は行いません。</p></div><span class="status-chip status-chip--manual">オーナー限定</span></div>
         <p class="owner-lead">エグレスはリクエストから推計せず、期間・確認日時と組織合計を手動で記録します。容量グラフとは別の記録です。</p>
-        <div class="write-grid" data-ops-write>
+        <div class="write-grid${readOnly ? " write-grid--daily" : ""}" data-ops-write>
           <form id="egress-form" class="ops-form" data-ops-form="egress" novalidate>
-            <h3>期間内エグレスを記録</h3><p class="form-intro">契約どおり uncachedBytes / cachedBytes の両方を入力してください。Storage期間平均は任意です。</p>
+            <h3>期間内の通信量を記録</h3><p class="form-intro">Supabase管理画面で確認した通常・キャッシュ通信量を入力します。Storage期間平均は任意です。</p>
             <div class="form-fields">
               <div class="form-field"><label for="period-start">期間開始</label><input class="ops-input" id="period-start" name="periodStart" type="date" required></div>
               <div class="form-field"><label for="period-end">期間終了</label><input class="ops-input" id="period-end" name="periodEnd" type="date" required></div>
@@ -1120,13 +1152,13 @@
               <div class="form-field"><label for="cached-bytes">キャッシュ量（bytes）</label><input class="ops-input" id="cached-bytes" name="cachedBytes" type="number" min="0" step="1" inputmode="numeric" required></div>
               <div class="form-field form-field--wide"><label for="storage-average-bytes">Storage期間平均（bytes・任意）</label><input class="ops-input" id="storage-average-bytes" name="storageAverageBytes" type="number" min="0" step="1" inputmode="numeric"><span class="form-help">未入力なら送信payloadに含めません。</span></div>
             </div>
-            <div class="form-actions"><button class="ops-button" type="submit">確認値を保存</button><p class="form-help">POST /api/egress</p></div>
+            <div class="form-actions"><button class="ops-button" type="submit">確認値を保存</button></div>
           </form>
-          <form id="resume-form" class="ops-form" data-ops-form="resume" novalidate>
+          ${readOnly ? "" : `<form id="resume-form" class="ops-form" data-ops-form="resume" novalidate>
             <h3>制御の再開判定</h3><p class="form-intro">最新のソース状態・容量・観測完了条件をWorker側で確認します。</p>
             <label class="confirm-line"><input name="confirm" type="checkbox" value="true" required><span>条件を確認し、再開判定を依頼します。</span></label>
             <div class="form-actions"><button class="ops-button ops-button--quiet" type="submit">再開判定を依頼</button><p class="form-help">POST /api/resume</p></div>
-          </form>
+          </form>`}
         </div>
         ${statusMarkup}
       </section>`;
@@ -1137,6 +1169,7 @@
     const history = normalizeHistory(historyValue);
     const exportMode = options.exportMode === true;
     const metrics = metricMap(snapshot);
+    const readOnly = snapshot.control.mode === "read-only";
     const state = options.state || { loading: false, message: "", growthEstimateQuestions: 1_000, writeStatus: { kind: "", text: "" } };
     const connectionMessage = state.loading
       ? "最新スナップショットを確認中…"
@@ -1144,25 +1177,23 @@
     return `
       <div class="ops-shell${exportMode ? " ops-shell--export" : ""}">
         <header class="ops-header">
-          <div><p class="eyebrow">ENSUKU OPS / OWNER VIEW</p><h1>アプリ別・容量管理</h1><p>保存容量・通信量・警告を確認する本人専用ページです。取得できない項目は「不明」と表示します。</p></div>
+          <div><p class="eyebrow">ENSUKU OPS / OWNER VIEW</p><h1>アプリ別・容量管理</h1><p>空き容量を確認して、節約する場所を見つける本人専用ページです。</p></div>
           <div class="header-side"><div class="snapshot-meta"><strong>${escapeHtml(connectionMessage)}</strong><span>生成: ${escapeHtml(formatDateTime(snapshot.generatedAt))}</span></div>${exportMode ? `<span class="export-badge">現在値の静的エクスポート</span>` : `<div class="header-actions"><button class="ops-button ops-button--quiet" type="button" data-action="refresh">最新を再読込</button><button class="ops-button" type="button" data-action="export">HTMLで保存</button></div>`}</div>
         </header>
         <main class="ops-main">
-          ${renderSignalStrip(snapshot)}
-          ${renderControlStrip(snapshot)}
+          ${renderDailyUsage(snapshot)}
+          ${readOnly ? `<aside class="daily-note"><strong>毎日03:00（日本時間）に1回更新</strong><span>画面を開くたびの本番集計・自動ポーリングなし。この管理画面から学習アプリを自動停止しません。</span></aside>` : renderSignalStrip(snapshot) + renderControlStrip(snapshot)}
+          ${renderCandidates(snapshot)}
           <section class="resource-section" id="resources"><div class="section-head"><div><p class="section-kicker">CAPACITY OVERVIEW</p><h2>保存先の現在値</h2><p>容量ポリシーの異なる3つの保存先を、別々のドーナツで確認します。</p></div><div class="section-head-aside">物理値 / 現在値</div></div><div class="resource-grid">${renderResourceCard(metrics.get("supabase-storage") || createUnknownMetric(METRIC_DEFINITIONS[0]), "teal", snapshot.billing)}${renderResourceCard(metrics.get("supabase-database") || createUnknownMetric(METRIC_DEFINITIONS[1]), "navy")}${renderResourceCard(metrics.get("r2-storage") || createUnknownMetric(METRIC_DEFINITIONS[2]), "gold")}</div></section>
           ${renderAppCapacityTable(snapshot)}
-          ${renderSourcesAndEvents(snapshot)}
           ${renderTrafficMetrics(snapshot, { exportMode })}
-          ${renderTrend(history)}
-          ${renderDetails(snapshot, { exportMode })}
-          ${renderSupabaseDbComparison(snapshot, { exportMode })}
-          ${renderFuturePlan(exportMode)}
-          ${renderGrowth(snapshot, state, exportMode)}
-          ${renderCandidates(snapshot)}
-          ${renderOwnerActions(exportMode, state)}
+          ${renderCollectorOverhead(snapshot)}
+          <details class="ops-details" id="daily-details"><summary>30日間の推移・内訳を見る</summary>${renderTrend(history)}${renderDetails(snapshot, { exportMode })}${renderSupabaseDbComparison(snapshot, { exportMode })}</details>
+          <details class="ops-details" id="daily-sources"><summary>取得日時・警告記録を見る</summary>${renderSourcesAndEvents(snapshot)}<p>取得できない項目は不明、更新失敗時は日時付きの前回値です。Cloudflare利用回数は専用の読み取り権限設定後に取得します。</p></details>
+          <details class="ops-details" id="daily-growth"><summary>問題数が増えた場合の試算・今後の選択肢</summary>${renderGrowth(snapshot, state, exportMode)}${renderFuturePlan(exportMode)}</details>
+          <details class="ops-details" id="daily-manual"><summary>Supabaseの通信量を手動で記録</summary>${renderOwnerActions(exportMode, state, readOnly)}</details>
         </main>
-        <footer class="ops-footer"><span><strong>Ensuku Ops v1</strong> / aggregate metadata only</span><span>観測値は保存済みスナップショットに基づきます。</span></footer>
+        <footer class="ops-footer"><span><strong>Ensuku Ops v2</strong> / 日次・軽量版</span><span>保存容量と通信量は別々に確認します。</span></footer>
       </div>`;
   }
 
@@ -1269,7 +1300,12 @@
       const drafts = [...root.querySelectorAll?.("[data-ops-form] input") || []].map((input) => ({
         id: input.id, value: input.value, checked: input.checked, type: input.type,
       }));
+      const openedDetails = [...root.querySelectorAll?.("details[open]") || []].map(detail => detail.id);
       root.innerHTML = renderDashboardMarkup(state.snapshot, state.history, { exportMode, state });
+      for (const id of openedDetails) {
+        const detail = documentRef.getElementById?.(id);
+        if (detail) detail.open = true;
+      }
       for (const draft of drafts) {
         const input = draft.id && documentRef.getElementById?.(draft.id);
         if (input) {
@@ -1283,40 +1319,11 @@
     function setRefreshTimer() {
       if (state.timer && typeof host.clearTimeout === "function") host.clearTimeout(state.timer);
       state.timer = null;
-      if (exportMode || documentRef.visibilityState !== "visible" || typeof host.setTimeout !== "function") return;
-      state.timer = host.setTimeout(async () => {
-        state.timer = null;
-        await loadData(true, { includeHistory: historyIsDue(), auto: true });
-      }, REFRESH_INTERVAL_MS);
-    }
-
-    function historyIsDue() {
-      return state.historyLoadedAt === null || Date.now() - state.historyLoadedAt >= HISTORY_REFRESH_INTERVAL_MS;
-    }
-
-    function fieldHasPendingValue(form, name) {
-      const field = form && form.elements ? form.elements[name] : null;
-      if (!field) return false;
-      if (field.type === "checkbox") return field.checked === true;
-      return typeof field.value === "string" && field.value.trim() !== "";
-    }
-
-    function hasPendingOwnerInput() {
-      const egressForm = root.querySelector("[data-ops-form=egress]");
-      const resumeForm = root.querySelector("[data-ops-form=resume]");
-      return ["periodStart", "periodEnd", "confirmedAt", "uncachedBytes", "cachedBytes", "storageAverageBytes"].some((name) => fieldHasPendingValue(egressForm, name))
-        || fieldHasPendingValue(resumeForm, "confirm");
     }
 
     async function loadData(silent = false, options = {}) {
       if (exportMode || state.disposed) return;
       const includeHistory = options.includeHistory === true;
-      if (silent && options.auto === true && hasPendingOwnerInput()) {
-        state.loading = false;
-        state.message = "未送信のオーナー入力があるため、自動更新を見送りました。";
-        setRefreshTimer();
-        return;
-      }
       state.loading = !silent;
       if (!silent) {
         state.message = "最新スナップショットを確認しています…";
@@ -1365,7 +1372,7 @@
       if (exportMode) return;
       const refreshButton = root.querySelector("[data-action=refresh]");
       const exportButton = root.querySelector("[data-action=export]");
-      if (refreshButton) refreshButton.addEventListener("click", () => loadData(false));
+      if (refreshButton) refreshButton.addEventListener("click", () => loadData(false, { includeHistory: true }));
       if (exportButton) exportButton.addEventListener("click", downloadExport);
       const growthInput = root.querySelector("[data-growth-input]");
       if (growthInput) growthInput.addEventListener("input", () => {
@@ -1422,15 +1429,6 @@
 
     render();
     if (exportMode) return state;
-    documentRef.addEventListener("visibilitychange", () => {
-      if (documentRef.visibilityState === "visible") {
-        loadData(true, { includeHistory: historyIsDue(), auto: true });
-      } else if (state.timer && typeof host.clearTimeout === "function") {
-        host.clearTimeout(state.timer);
-        state.timer = null;
-      }
-      if (documentRef.visibilityState === "visible") setRefreshTimer();
-    });
     loadData(false, { includeHistory: true });
     return state;
   }
