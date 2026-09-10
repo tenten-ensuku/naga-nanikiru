@@ -1,8 +1,11 @@
 import { createClient, type Session, type SupabaseClient } from "@supabase/supabase-js";
 import { createMediaClient } from "./media-assets.mjs";
 import { createServiceGuard } from "./service-guard.mjs";
+import { createCloudflareClient } from "./cloudflare-transport.mjs";
 
 type RuntimeConfig = {
+  backend?: "cloudflare" | "supabase";
+  legacyMediaApiUrl?: string;
   supabaseUrl?: string;
   supabasePublishableKey?: string;
   mediaApiUrl?: string;
@@ -40,6 +43,7 @@ declare global {
 }
 
 const config = window.NAGA_RUNTIME_CONFIG ?? {};
+const cloudflareBackend = config.backend === "cloudflare";
 let mediaSessionV230: Session | null = null;
 const services = createServiceGuard({ onRestricted: () => {
   queueMicrotask(() => { void client?.auth.stopAutoRefresh(); });
@@ -50,11 +54,11 @@ const media = createMediaClient({ config, getSession: () => mediaSessionV230, fe
 const maintenanceMode = window.NAGA_MAINTENANCE_MODE === true;
 const configured = Boolean(
   !maintenanceMode &&
-  config.supabaseUrl?.startsWith("https://") &&
-  config.supabasePublishableKey?.startsWith("sb_publishable_")
+  (cloudflareBackend || (config.supabaseUrl?.startsWith("https://") &&
+  config.supabasePublishableKey?.startsWith("sb_publishable_")))
 );
 const client: SupabaseClient | null = configured
-  ? createClient(config.supabaseUrl!, config.supabasePublishableKey!, {
+  ? cloudflareBackend ? createCloudflareClient({ fetchImpl: services.fetch }) as unknown as SupabaseClient : createClient(config.supabaseUrl!, config.supabasePublishableKey!, {
       auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true },
       global: { fetch: services.fetch },
     })
@@ -64,7 +68,7 @@ const AUTH_CALLBACK_QUERY_KEYS = ["error", "error_code", "error_description", "e
 const AUTH_CALLBACK_HASH_PATTERN = /(?:^|&)(?:access_token|refresh_token|code|error|error_code|state)=/;
 
 function requireClient() {
-  if (!client) throw new Error("Supabaseが未設定です。runtime-config.jsを設定してください。");
+  if (!client) throw new Error("ログインサービスが未設定です。runtime-config.jsを確認してください。");
   return client;
 }
 
@@ -122,7 +126,7 @@ function buildOAuthRedirectUrl() {
 
 async function signInWithDiscord() {
   const supabase = requireClient();
-  if (!await services.probe(config.supabaseUrl + "/auth/v1/settings", config.supabasePublishableKey)) {
+  if (!await services.probe(cloudflareBackend ? "/health" : config.supabaseUrl + "/auth/v1/settings", cloudflareBackend ? undefined : config.supabasePublishableKey)) {
     throw new Error("現在、ログインサービスの復旧を待っています。しばらくしてから再度お試しください。");
   }
   const { error } = await supabase.auth.signInWithOAuth({
@@ -718,6 +722,7 @@ async function captureNagaScene(input: {
   ts: number;
   tv: number;
 }) {
+  if (cloudflareBackend) throw new Error("問題生成は移行確認中です。学習・回答保存はご利用いただけます。");
   const session = await currentSession();
   if (!session) throw new Error("Discordログインが必要です。");
   const response = await fetch(`${config.supabaseUrl}/functions/v1/naga-capture`, {
@@ -747,6 +752,7 @@ async function captureNagaScene(input: {
 }
 
 async function importLocalHistory(state: LocalState) {
+  if (cloudflareBackend) throw new Error("過去の回答履歴は移行済みです。端末からの一括取り込みは確認中です。通常の回答は保存できます。");
   const supabase = requireClient();
   const session = await currentSession();
   if (!session) throw new Error("Discordログインが必要です。");
@@ -873,7 +879,7 @@ async function importSharedQuestion(sourceQuestionId: string, targetShareSlug: s
 function buildApi() {
   return {
     serviceAvailable: services.available,
-    retryServices: () => services.probe(config.supabaseUrl + "/auth/v1/settings", config.supabasePublishableKey),
+    retryServices: () => services.probe(cloudflareBackend ? "/health" : config.supabaseUrl + "/auth/v1/settings", cloudflareBackend ? undefined : config.supabasePublishableKey),
     configured,
     client,
     currentSession,

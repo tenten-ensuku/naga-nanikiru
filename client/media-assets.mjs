@@ -498,7 +498,7 @@ function normalizeUploadResponse(body, requestedBucket, bytes, sha256, mediaOrig
 
 function createHeaderSet(token, extra = {}) {
   return {
-    Authorization: `Bearer ${token}`,
+    ...(token ? { Authorization: `Bearer ${token}` } : {}),
     ...extra,
   };
 }
@@ -513,6 +513,8 @@ export function createMediaClient({ config = {}, getSession, fetchImpl = globalT
   const runtimeConfig = config && typeof config === "object" ? config : {};
   const supabaseOrigin = normalizeOrigin(runtimeConfig.supabaseUrl);
   const mediaOrigin = normalizeMediaApiOrigin(runtimeConfig.mediaApiUrl);
+  const cookieAuth = runtimeConfig.backend === "cloudflare";
+  const legacyMediaOrigin = cookieAuth ? normalizeMediaApiOrigin(runtimeConfig.legacyMediaApiUrl) : "";
   // This is a feature allowlist, never evidence that an individual object exists.
   const publicBucketAllowlist = new Set(
     Array.isArray(runtimeConfig.mediaReadyBuckets)
@@ -533,7 +535,7 @@ export function createMediaClient({ config = {}, getSession, fetchImpl = globalT
     const session = value?.data?.session ?? value?.session ?? value;
     const token = typeof session?.access_token === "string" ? session.access_token.trim() : "";
     const id = typeof session?.user?.id === "string" ? session.user.id : "";
-    const userId = token && !CONTROL_CHARACTER_PATTERN.test(token) && id.trim() ? id : "";
+    const userId = (cookieAuth || (token && !CONTROL_CHARACTER_PATTERN.test(token))) && id.trim() ? id : "";
 
     // An older async getter must not restore an account observed before a newer read.
     if (sequence < observedSessionSequence) {
@@ -619,6 +621,10 @@ export function createMediaClient({ config = {}, getSession, fetchImpl = globalT
   }
 
   function legacyPublicReference(value) {
+    if (legacyMediaOrigin) {
+      const oldMedia = parseMediaPublicReference(value, legacyMediaOrigin);
+      if (oldMedia && isAllowedPublicBucket(oldMedia.bucket)) return oldMedia;
+    }
     const reference = parsePublicRouteReference(value, supabaseOrigin, "/storage/v1/object/public/");
     if (!reference || !isAllowedPublicBucket(reference.bucket)) return null;
     // Preserve queries (including empty '?'), fragments, and noncanonical/encoded aliases.
@@ -642,6 +648,10 @@ export function createMediaClient({ config = {}, getSession, fetchImpl = globalT
     if (typeof getSession !== "function") throw mediaError("認証セッション取得関数が設定されていません。");
     const value = await getSession();
     const session = value?.data?.session ?? value?.session ?? value;
+    if (cookieAuth) {
+      if (!session?.user?.id) throw mediaError("このメディア操作にはログインが必要です。");
+      return "";
+    }
     const accessToken = typeof session?.access_token === "string" ? session.access_token.trim() : "";
     if (!accessToken) throw mediaError("このメディア操作にはログインが必要です。");
     if (CONTROL_CHARACTER_PATTERN.test(accessToken)) throw mediaError("認証トークンが不正です。");
@@ -650,6 +660,16 @@ export function createMediaClient({ config = {}, getSession, fetchImpl = globalT
 
   async function request(url, options) {
     if (typeof fetchImpl !== "function") throw mediaError("fetch 実装が設定されていません。");
+    if (cookieAuth) {
+      // HttpOnly authentication remains on the same origin; never expose a token.
+      const pageOrigin = globalThis.location?.origin;
+      if (pageOrigin && new URL(url).origin !== pageOrigin) throw mediaError("認証先のドメインが一致しません。");
+      const headers = new Headers(options.headers);
+      headers.delete("Authorization");
+      const csrf = String(globalThis.document?.cookie || "").split(";").map(x => x.trim()).find(x => x.startsWith("__Host-minkiru_csrf="))?.slice("__Host-minkiru_csrf=".length) || "";
+      headers.set("X-Minkiru-CSRF", csrf);
+      options = { ...options, credentials: "same-origin", headers };
+    }
     const response = await fetchImpl(url, options);
     return response;
   }
@@ -840,6 +860,8 @@ export function createMediaClient({ config = {}, getSession, fetchImpl = globalT
     const keys = [];
     const seenKeys = new Set();
     const cloned = await mapPayload(payload, (value) => {
+      const oldReference = legacyMediaOrigin && parsePrivateReference(value, legacyMediaOrigin, { allowSigned: true });
+      if (oldReference) value = canonicalPrivateUrl(mediaOrigin, oldReference.bucket, oldReference.path);
       const reference = parsePrivateReference(value, mediaOrigin, { allowSigned: true });
       if (reference) {
         const key = `${reference.bucket}/${reference.path}`;

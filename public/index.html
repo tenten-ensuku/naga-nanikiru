@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=231">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=231">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=231">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=232">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=232">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=232">
   <title>みん切る｜みんなの何切る問題集</title>
   <meta name="description" content="みん切るは、NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリです。">
   <meta name="theme-color" content="#06131e">
@@ -2189,8 +2189,8 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=231">
-  <link rel="stylesheet" href="library-v214.css?v=231">
+  <link rel="stylesheet" href="ux-v159.css?v=232">
+  <link rel="stylesheet" href="library-v214.css?v=232">
 </head>
 <body class="auth-gate-open">
   <main class="page" inert aria-hidden="true">
@@ -2523,15 +2523,16 @@
   </dialog>
 
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=231"></script>
-  <script src="drill-ux-v44.js?v=231"></script>
-  <script src="library-order-v215.js?v=231"></script>
-  <script src="library-v214.js?v=231"></script>
+  <script src="supabase-sync-v48.js?v=232"></script>
+  <script defer src="legacy-transfer-v232.js?v=232"></script>
+  <script src="drill-ux-v44.js?v=232"></script>
+  <script src="library-order-v215.js?v=232"></script>
+  <script src="library-v214.js?v=232"></script>
   <script src="naga-generator-v44.js"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 231;
+    const APP_VERSION = 232;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -4275,6 +4276,11 @@
       const modelColorByNameV16 = { オメガ: "model-omega", ガンマ: "model-gamma", ニシキ: "model-nishiki", ヒバカリ: "model-hihikari", カガシ: "model-kagashi" };
       const USER_STATE_KEY_V16 = storageKey("user-state-v1");
       const LEGACY_USER_STATE_KEY_V16 = "naga-nanikiru-user-state-v1";
+      function userStateStorageKeyV232() {
+        return window.NAGA_RUNTIME_CONFIG?.backend === "cloudflare"
+          ? `${USER_STATE_KEY_V16}:cloudflare:${supabaseSessionV46?.user?.id || "signed-out"}`
+          : USER_STATE_KEY_V16;
+      }
       const ACTIVE_COLLECTION_KEY_V165 = storageKey("active-collection-v1");
       let collectionNavigationPendingV165 = false;
       let collectionLoadErrorV165 = "";
@@ -4316,11 +4322,12 @@
       function loadUserStateV16() {
         const fallback = window.DrillUxV44?.migrateState?.(null) || { schemaVersion: 2, favorites: [], trashed: [], archived: [], hidden: [], answerHistory: [], snoozed: {}, studyDates: [], sessions: {}, activeSessionId: null, lastSessionResult: null, customQuestions: [], pendingGenerated: [], settings: {}, localComments: {}, questionOverrides: {}, deletionProposals: {}, collectionPersonal: {}, collectionPersonalLegacyMigrated: false };
         try {
-          if (window.localStorage.getItem(USER_STATE_KEY_V16) === null) {
+          const stateKey = userStateStorageKeyV232();
+          if (stateKey === USER_STATE_KEY_V16 && window.localStorage.getItem(stateKey) === null) {
             const legacyValue = window.localStorage.getItem(LEGACY_USER_STATE_KEY_V16);
-            if (legacyValue !== null) window.localStorage.setItem(USER_STATE_KEY_V16, legacyValue);
+            if (legacyValue !== null) window.localStorage.setItem(stateKey, legacyValue);
           }
-          const saved = JSON.parse(window.localStorage.getItem(USER_STATE_KEY_V16) || "null");
+          const saved = JSON.parse(window.localStorage.getItem(stateKey) || "null");
           const migrated = window.DrillUxV44?.migrateState?.(saved) || saved || fallback;
           const legacyTrash = Array.isArray(migrated.trashed) ? migrated.trashed : [];
           migrated.archived = [...new Set([...(Array.isArray(migrated.archived) ? migrated.archived : []), ...legacyTrash])];
@@ -4342,7 +4349,7 @@
             });
           });
           if (generatedCommentsRemoved) {
-            try { window.localStorage.setItem(USER_STATE_KEY_V16, JSON.stringify(migrated)); } catch { /* storage disabled */ }
+            try { window.localStorage.setItem(stateKey, JSON.stringify(migrated)); } catch { /* storage disabled */ }
           }
           return migrated;
         } catch {
@@ -4352,7 +4359,7 @@
 
       function saveUserStateV16() {
         try {
-          window.localStorage.setItem(USER_STATE_KEY_V16, JSON.stringify(userStateV16));
+          window.localStorage.setItem(userStateStorageKeyV232(), JSON.stringify(userStateV16));
           return true;
         } catch {
           // Private browsing or storage-disabled environments can still use the drill.
@@ -10136,7 +10143,12 @@
       }
 
       function syncAuthGateForSessionV187(session = null) {
+        const previousUserId = String(supabaseSessionV46?.user?.id || "");
         supabaseSessionV46 = session || null;
+        if (window.NAGA_RUNTIME_CONFIG?.backend === "cloudflare" && previousUserId !== String(session?.user?.id || "")) {
+          userStateV16 = loadUserStateV16();
+          remoteHistorySyncScopeV135 = "";
+        }
         if (!window.NagaSupabase?.configured) {
           setAuthGateStateV187("unavailable");
           return;

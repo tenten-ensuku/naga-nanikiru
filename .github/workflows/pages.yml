@@ -30,15 +30,9 @@ jobs:
       - run: npm run test:media
       - run: npm run test:offline
       - run: npm run build:supabase-client
-      - run: npm run runtime:config
-        env:
-          SUPABASE_URL: ${{ vars.SUPABASE_URL }}
-          SUPABASE_PUBLISHABLE_KEY: ${{ vars.SUPABASE_PUBLISHABLE_KEY }}
-          MEDIA_API_URL: ${{ vars.MEDIA_API_URL }}
-          MEDIA_READY_BUCKETS: ${{ vars.MEDIA_READY_BUCKETS }}
-      - run: node scripts/prepare-recovery-preview.mjs
-        env:
-          RECOVERY_PREVIEW_ONLY: ${{ vars.RECOVERY_PREVIEW_ONLY }}
+      # Pages remains a static entrance; authentication and study use the Worker.
+      - run: node --test tests/cloudflare-*.test.mjs
+      - run: node scripts/prepare-cloudflare-entry.mjs --output-dir public --mode ci
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

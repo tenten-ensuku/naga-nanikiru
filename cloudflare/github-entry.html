@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=232">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=232">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=232">
+  <meta name="theme-color" content="#06131e">
+  <title>みん切る｜新しい入口</title>
+  <meta name="description" content="みん切るの新しい入口です。学習を続けるには新しいURLを開いてください。">
+  <style>
+    :root { color-scheme: dark; font-family: system-ui, -apple-system, "Hiragino Kaku Gothic ProN", Meiryo, sans-serif; background: #06131e; color: #f6fbff; }
+    * { box-sizing: border-box; }
+    body { min-height: 100vh; margin: 0; display: grid; place-items: center; padding: 22px; background: radial-gradient(circle at 20% 10%, rgba(37, 118, 142, .28), transparent 42%), #06131e; }
+    main { width: min(100%, 720px); padding: clamp(24px, 6vw, 56px); border: 1px solid rgba(178, 235, 229, .24); border-radius: 22px; background: rgba(8, 32, 47, .92); box-shadow: 0 24px 70px rgba(0, 0, 0, .28); }
+    header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; }
+    header img { width: min(100%, 250px); height: auto; display: block; }
+    .eyebrow { margin: 0 0 8px; color: #8fd9d0; font-size: 12px; font-weight: 800; letter-spacing: .12em; }
+    h1 { margin: 0; color: #fff7d6; font-size: clamp(26px, 5vw, 42px); line-height: 1.18; }
+    .lead { margin: 18px 0 0; color: #c6d9df; font-size: clamp(15px, 2.4vw, 18px); line-height: 1.8; }
+    .notices { display: grid; gap: 10px; margin: 26px 0; }
+    .notice { display: grid; gap: 4px; padding: 14px 16px; border-radius: 12px; background: rgba(33, 115, 119, .2); border: 1px solid rgba(143, 217, 208, .25); line-height: 1.6; }
+    .notice strong { color: #fff7d6; }
+    .notice.paused { background: rgba(148, 91, 48, .2); border-color: rgba(255, 202, 129, .25); }
+    .primary { display: inline-flex; align-items: center; justify-content: center; width: 100%; min-height: 52px; padding: 12px 18px; border-radius: 10px; color: #06202c; background: #a7eee3; font-weight: 900; text-decoration: none; transition: transform .15s ease, background .15s ease; }
+    .primary:hover, .primary:focus-visible { background: #d2fff7; transform: translateY(-1px); }
+    .privacy, .route-note { margin: 16px 0 0; color: #9db8c1; font-size: 12px; line-height: 1.7; }
+    .route-note { min-height: 1.7em; }
+    @media (max-width: 460px) { body { padding: 12px; } main { padding: 24px 18px; border-radius: 16px; } header { align-items: flex-start; } header img { width: min(100%, 220px); } }
+  </style>
+</head>
+<body>
+  <main data-static-legacy-entry>
+    <header>
+      <img src="/naga-nanikiru/assets/min-kiru-header.png" alt="みん切る（みんなの何切る問題集）">
+    </header>
+    <p class="eyebrow">NEW ENTRANCE</p>
+    <small>V232</small>
+    <h1>新しい入口から、何切るを続ける</h1>
+    <p class="lead">みん切るの学習入口が新しくなりました。下のボタンから、問題集を開いて学習を続けてください。</p>
+    <div class="notices" aria-label="提供状況">
+      <div class="notice"><strong>登録済みの方の学習を再開しました</strong><span>今までのDiscordアカウントでログインできます。問題・回答履歴は引き継ぎ済みです。</span></div>
+      <div class="notice paused"><strong>問題生成・画像追加・大量取込は準備中です</strong><span>まずは学習と回答保存から再開しています。</span></div>
+    </div>
+    <a id="canonicalLink" class="primary" href="https://minkiru.naga-study.workers.dev/">新しいみん切るを開く</a>
+    <p id="routeNote" class="route-note" aria-live="polite">問題集リンクの指定がある場合は、その問題集を引き継いで開きます。</p>
+    <details style="margin-top:24px;line-height:1.8"><summary>この端末のお気に入り・本棚順を引き継ぐ</summary>
+      <p>下のボタンで設定ファイルを保存し、新しいみん切るの「設定 → 旧サイトの設定を引き継ぐ」で読み込んでください。取り込み時に、ログインした本人の分だけ反映します。</p>
+      <button id="legacyExportButton" class="primary" type="button">お気に入り・本棚順を保存</button>
+      <p id="legacyExportStatus" class="privacy" role="status"></p>
+      <p class="privacy">元の保存データは消しません。回答履歴・コメント・問題・ログイン情報は、このファイルには含めません。本人を判別できない古い形式の設定は自動移行せず、この端末に保持します。</p>
+    </details>
+    <p class="privacy">この入口では認証サービスへの通信は行いません。以前のURLも引き続き入口として使えます。</p>
+  </main>
+  <script>
+    (() => {
+      const canonicalOrigin = "https://minkiru.naga-study.workers.dev";
+      const allowedParams = ["collection", "existing_question"];
+      const source = new URL(window.location.href);
+      const target = new URL("/", canonicalOrigin);
+      for (const key of allowedParams) {
+        const value = source.searchParams.get(key);
+        if (value !== null && value.trim() !== "") target.searchParams.set(key, value.trim());
+      }
+      const link = document.getElementById("canonicalLink");
+      if (link) link.href = target.toString();
+      const note = document.getElementById("routeNote");
+      if (note && target.search) note.textContent = "問題集の指定を保ったまま、新しい入口を開きます。";
+    })();
+  </script>
+  <script defer src="/naga-nanikiru/legacy-transfer-v232.js?v=232"></script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "minkiru",
+  "main": "cloudflare/worker.mjs",
+  "account_id": "e5b748838ea561070abc576dea21577d",
+  "compatibility_date": "2026-09-10",
+  "workers_dev": true,
+  "preview_urls": false,
+  "d1_databases": [{
+    "binding": "DB",
+    "database_name": "minkiru-main",
+    "database_id": "c8b5cb1a-2bdf-4545-abef-12e4ffcc9a79",
+    "migrations_dir": "cloudflare/migrations"
+  }],
+  "r2_buckets": [
+    {"binding": "IMAGES", "bucket_name": "minkiru-images"},
+    {"binding": "ARCHIVES", "bucket_name": "ensuku-ops-data"}
+  ],
+  "assets": {"directory":"./public", "binding":"ASSETS", "run_worker_first":true},
+  "ratelimits": [
+    {"name":"AUTH_LIMIT","namespace_id":"232001","simple":{"limit":12,"period":60}},
+    {"name":"WRITE_LIMIT","namespace_id":"232002","simple":{"limit":40,"period":60}}
+  ],
+  "vars": {
+    "CUTOVER_READY": "true", "UPLOADS_ENABLED": "false", "SIGNUPS_ENABLED":"false",
+    "APP_ORIGIN":"https://minkiru.naga-study.workers.dev",
+    "DISCORD_CLIENT_ID":"1533072667278835822"
+  },
+  "triggers": {"crons": []},
+  "observability": {"enabled": false}
+}
