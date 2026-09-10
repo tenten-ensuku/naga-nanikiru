@@ -15,7 +15,7 @@ test("V230 restores normal login and retains the reversible static outage notice
     access(assetUrl),
   ]);
 
-  assert.match(html, /const APP_VERSION = 232;/);
+  assert.match(html, /const APP_VERSION = 233;/);
   assert.match(html, /window\.NAGA_MAINTENANCE_MODE = false;/);
   assert.match(html, /id="recoveryNotice"[^>]* hidden>/);
   assert.match(html, /class="recovery-notice" id="recoveryNotice"/);

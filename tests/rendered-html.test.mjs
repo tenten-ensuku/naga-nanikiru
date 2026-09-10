@@ -32,7 +32,7 @@ test("wires v65 learning UX, generator, Supabase bridge, metadata, and social im
     readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
     access(new URL("../public/og-v44.png", import.meta.url)),
   ]);
-  assert.match(index, /const APP_VERSION = 232/);
+  assert.match(index, /const APP_VERSION = 233/);
   assert.match(index, /function menuRangeStepV120\(\)[\s\S]*?return MENU_RANGE_STEP_V137/);
   assert.match(index, /id="collectionDirectorySelect"/);
   assert.doesNotMatch(index, /class="collection-directory-item/);
@@ -47,10 +47,10 @@ test("wires v65 learning UX, generator, Supabase bridge, metadata, and social im
   assert.match(index, /\.sort\(\(left, right\) => menuQuestionSortKeyV99\(left\.question\) - menuQuestionSortKeyV99\(right\.question\)/);
   assert.match(index, /<h1 id="questionPageTitle">何切る？<\/h1>/);
   assert.doesNotMatch(index, /<p class="header-note">NAGAの局面を解き、復習し、弱点を育て直す実戦問題集<\/p>/);
-  assert.match(index, /id="menuButton"[^>]*>メニューに戻る<\/button>/);
+  assert.match(index, /id="menuButton"[^>]*aria-label="メニューに戻る"[^>]*><span class="question-toolbar-label-full">メニューに戻る<\/span><span class="question-toolbar-label-short" aria-hidden="true">戻る<\/span><\/button>/);
   assert.match(index, /const typeMetadata = questionTypeV44\(question\);/);
   assert.doesNotMatch(index, /questionTypeV44\(question\), isSharedQuestionV47\(question\) \? "共有"/);
-  assert.match(index, /id="sceneProblemTitle">問題249<\/strong><a class="source-link" id="nagaSourceLink"[^>]*>局面NAGAURLに移動<\/a>/);
+  assert.match(index, /id="sceneProblemTitle">問題249<\/strong><a class="source-link" id="nagaSourceLink"[^>]*aria-label="局面NAGAURLに移動"[^>]*><span class="question-toolbar-label-full">局面NAGAURLに移動<\/span><span class="question-toolbar-label-short" aria-hidden="true">NAGAへ移動<\/span><\/a>/);
   assert.doesNotMatch(index, /<div class="source-url">.*元画面：.*<\/div>/);
   assert.doesNotMatch(index, /<div class="source-url">.*report_viewer\.html.*<\/div>/);
   assert.match(index, /supabase-sync-v48\.js/);

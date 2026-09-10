@@ -7656,3 +7656,91 @@ body.auth-gate-open {
     transition: none;
   }
 }
+
+/* V233: compact mobile question toolbar. Keep the hand and answer flow unchanged. */
+.question-toolbar-label-short { display: none; }
+
+@media (max-width: 800px) {
+  .page:not(.menu-active) {
+    padding-top: 4px;
+    padding-bottom: calc(24px + env(safe-area-inset-bottom));
+  }
+
+  .page:not(.menu-active) > .header {
+    min-height: 44px;
+    margin-bottom: 4px;
+    gap: 8px;
+  }
+
+  .page:not(.menu-active) > .source-bar {
+    grid-template-columns: minmax(84px, 1fr) minmax(0, 1.35fr) max-content;
+    align-items: center;
+    gap: 6px;
+    min-height: 0;
+    padding: 6px;
+    margin-bottom: 4px;
+  }
+
+  .page:not(.menu-active) .source-url {
+    grid-column: 1 / 3;
+    grid-row: 1;
+    flex-wrap: nowrap;
+    gap: 5px;
+    margin: 0;
+    overflow: visible;
+  }
+
+  .page:not(.menu-active) .source-url > strong,
+  .page:not(.menu-active) .question-toolbar-label-full { display: none; }
+
+  .page:not(.menu-active) .question-toolbar-label-short { display: inline; }
+
+  .page:not(.menu-active) .source-link,
+  .page:not(.menu-active) .import-question-button,
+  .page:not(.menu-active) .menu-button {
+    flex: 0 0 auto;
+    min-height: 30px;
+    padding: 0 7px;
+    margin: 0;
+    font-size: 11px;
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+
+  .page:not(.menu-active) .menu-button {
+    grid-column: 3;
+    grid-row: 1;
+    width: auto;
+  }
+
+  .page:not(.menu-active) .question-control {
+    grid-column: 1;
+    grid-row: 2;
+    min-width: 0;
+    margin: 0;
+  }
+
+  .page:not(.menu-active) .model-control {
+    grid-column: 2 / 4;
+    grid-row: 2;
+    min-width: 0;
+  }
+
+  .page:not(.menu-active) .question-control,
+  .page:not(.menu-active) .model-control { gap: 2px; }
+
+  .page:not(.menu-active) .question-control select,
+  .page:not(.menu-active) .model-control select {
+    width: 100%;
+    min-width: 0;
+    min-height: 34px;
+    padding-block: 3px;
+  }
+
+  .page:not(.menu-active) .next-button {
+    grid-column: 1 / -1;
+    min-height: 34px;
+  }
+
+  .page:not(.menu-active) > .scene-card { margin-top: 4px; }
+}

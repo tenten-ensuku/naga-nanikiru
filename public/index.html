@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=232">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=232">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=232">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=233">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=233">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=233">
   <title>みん切る｜みんなの何切る問題集</title>
   <meta name="description" content="みん切るは、NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリです。">
   <meta name="theme-color" content="#06131e">
@@ -2189,8 +2189,8 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=232">
-  <link rel="stylesheet" href="library-v214.css?v=232">
+  <link rel="stylesheet" href="ux-v159.css?v=233">
+  <link rel="stylesheet" href="library-v214.css?v=233">
 </head>
 <body class="auth-gate-open">
   <main class="page" inert aria-hidden="true">
@@ -2289,10 +2289,10 @@
     </header>
 
     <div class="source-bar">
-      <div class="source-url"><strong id="sceneProblemTitle">問題249</strong><a class="source-link" id="nagaSourceLink" href="#" target="_blank" rel="noopener noreferrer" title="元のNAGA局面を別タブで開きます">局面NAGAURLに移動</a><button class="import-question-button" id="importQuestionButton" type="button" title="この問題を、自分が編集できる問題集へコピーします" hidden>自分の問題集にインポート</button></div>
+      <div class="source-url"><strong id="sceneProblemTitle">問題249</strong><a class="source-link" id="nagaSourceLink" href="#" target="_blank" rel="noopener noreferrer" aria-label="局面NAGAURLに移動" title="元のNAGA局面を別タブで開きます"><span class="question-toolbar-label-full">局面NAGAURLに移動</span><span class="question-toolbar-label-short" aria-hidden="true">NAGAへ移動</span></a><button class="import-question-button" id="importQuestionButton" type="button" aria-label="自分の問題集にインポート" title="この問題を、自分が編集できる問題集へコピーします" hidden><span class="question-toolbar-label-full">自分の問題集にインポート</span><span class="question-toolbar-label-short" aria-hidden="true">インポート</span></button></div>
       <label class="question-control" title="この問題集の別の問題を選びます">問題を選ぶ <select id="questionSelect" aria-label="問題を選ぶ"></select></label>
       <label class="model-control" title="正誤判定に使うNAGAモデルを選びます">正誤判定基準 <select id="modelSelect" aria-label="正誤判定基準"></select></label>
-      <button class="menu-button" id="menuButton" type="button" title="問題一覧・問題集選択へ戻ります">メニューに戻る</button>
+      <button class="menu-button" id="menuButton" type="button" aria-label="メニューに戻る" title="問題一覧・問題集選択へ戻ります"><span class="question-toolbar-label-full">メニューに戻る</span><span class="question-toolbar-label-short" aria-hidden="true">戻る</span></button>
       <button class="next-button" id="nextQuestionButton" type="button" title="現在の出題順に従って次の問題へ進みます" hidden>次の問題へ</button>
     </div>
 
@@ -2523,16 +2523,16 @@
   </dialog>
 
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=232"></script>
-  <script defer src="legacy-transfer-v232.js?v=232"></script>
-  <script src="drill-ux-v44.js?v=232"></script>
-  <script src="library-order-v215.js?v=232"></script>
-  <script src="library-v214.js?v=232"></script>
+  <script src="supabase-sync-v48.js?v=233"></script>
+  <script defer src="legacy-transfer-v232.js?v=233"></script>
+  <script src="drill-ux-v44.js?v=233"></script>
+  <script src="library-order-v215.js?v=233"></script>
+  <script src="library-v214.js?v=233"></script>
   <script src="naga-generator-v44.js"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 232;
+    const APP_VERSION = 233;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {

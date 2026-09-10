@@ -6,6 +6,7 @@
     "node": ">=22.13.0"
   },
   "scripts": {
+    "test:mobile": "node --test tests/mobile-question-toolbar-v233.test.mjs",
     "test:ops": "node --test tests/ops-*.test.mjs",
     "prebuild": "npm run build:supabase-client",
     "build:supabase-client": "node scripts/build-supabase-client.mjs",
