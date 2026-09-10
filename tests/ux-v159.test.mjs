@@ -14,12 +14,12 @@ test("V180 exposes the recent-history shell and synchronized release assets", as
     readFile(identityUrl, "utf8"),
   ]);
 
-  assert.match(html, /const APP_VERSION = 233;/);
-  assert.match(identity, /APP_VERSION = 233/);
-  assert.match(html, /ux-v159\.css\?v=233/);
+  assert.match(html, /const APP_VERSION = 234;/);
+  assert.match(identity, /APP_VERSION = 234/);
+  assert.match(html, /ux-v159\.css\?v=234/);
   assert.match(html, /\.comment-form textarea \{ display: block; width: 100%; min-width: 0;/);
   assert.match(html, /data-menu-view="today"/);
-  assert.match(html, /<span>学習する<\/span>/);
+  assert.match(html, /data-menu-view="today"[^>]*>[\s\S]*?<span>学ぶ<\/span>/);
   assert.doesNotMatch(html, /<span class="quick-start-title">今日の10問/);
   assert.match(html, /function renderRecentHistoryViewV180\(/);
   assert.match(html, /function renderTodayViewV159\(/);
@@ -30,7 +30,7 @@ test("V180 exposes the recent-history shell and synchronized release assets", as
 });
 
 test("V197 separates global tool context and owner-only collection management", async () => {
-  const [html, css] = await Promise.all([readFile(indexUrl, "utf8"), readFile(cssUrl, "utf8")]);
+  const html = await readFile(indexUrl, "utf8");
   assert.match(html, /function ownedCollectionOptionsV197\(\)/);
   assert.match(html, /filter\(row => String\(row\?\.owner_id \|\| ""\) === userId\)/);
   assert.match(html, /id="collectionManagementSelect"/);
@@ -39,7 +39,13 @@ test("V197 separates global tool context and owner-only collection management", 
   assert.match(html, /setCollectionVisibility\(target\.id, value\)/);
   assert.match(html, /revokeCollectionAccess\(target\.id, userId\)/);
   assert.match(html, /transferCollectionOwnership\(target\.id, userId\)/);
-  assert.match(css, /menu-panel:not\(\[data-view="today"\]\) \.mobile-collection-context/);
+  const settings = html.match(/function renderSettingsViewV67\([\s\S]*?\n      \}/)?.[0] || "";
+  assert.ok(settings, "global settings renderer should remain available");
+  assert.doesNotMatch(settings, /renderCollectionManagementV100/);
+  assert.match(html, /menuViewV16 === "book-settings"\)[\s\S]*?renderCollectionManagementV100\(\{ bookOnly: true \}\)/);
+  const bookNavigation = html.match(/function renderBookNavigationV234\([\s\S]*?\n      \}/)?.[0] || "";
+  assert.match(bookNavigation, /context\.hidden = !hasBook \|\| !navigationV234\.isBookView\(view\)/);
+  assert.match(bookNavigation, /\[data-book-manage\][^\n]*!collectionManagementCanManageV197\(sharedCollectionV46\)/);
 });
 
 test("V161 keeps account actions compact and removes the obsolete share-copy control", async () => {
@@ -146,11 +152,16 @@ test("V164 makes the collection targeted by visibility settings explicit", async
   assert.match(html, /作成する問題集の公開範囲/);
 });
 
-test("V165 keeps the active collection visible and opens a dedicated chooser", async () => {
+test("V234 keeps the shared book context visible across book views and opens the bookshelf", async () => {
   const [html, css] = await Promise.all([readFile(indexUrl, "utf8"), readFile(cssUrl, "utf8")]);
   assert.match(html, /data-open-collection-chooser/);
   assert.match(html, /data-active-collection-name/);
-  assert.match(html, /class="mobile-collection-context"/);
+  const bookContext = html.match(/<section[^>]*id="bookContextV234"[\s\S]*?<\/section>/)?.[0] || "";
+  assert.match(bookContext, /class="book-context-v234"[^>]*aria-label="選択中の問題集"/);
+  assert.match(bookContext, /data-active-collection-name/);
+  assert.match(bookContext, /data-open-collection-chooser>本棚へ/);
+  assert.deepEqual([...bookContext.matchAll(/data-book-view="([^"]+)"/g)].map(match => match[1]), ["today", "my", "analysis"]);
+  assert.doesNotMatch(html, /class="mobile-collection-context"/);
   assert.match(html, /function renderActiveCollectionContextV165\(/);
   assert.match(html, /function renderCollectionChooserV165\(/);
   assert.match(html, /ACTIVE_COLLECTION_KEY_V165 = storageKey\("active-collection-v1"\)/);
@@ -160,7 +171,9 @@ test("V165 keeps the active collection visible and opens a dedicated chooser", a
   assert.match(css, /\.active-collection-button/);
   assert.match(css, /linear-gradient\(145deg, #5a3b22/);
   assert.match(css, /\.collection-choice-grid/);
-  assert.match(css, /position: sticky;[\s\S]*?\.page\.menu-active \.mobile-collection-context|\.page\.menu-active \.mobile-collection-context[\s\S]*?position: sticky;/);
+  const bookNavigation = html.match(/function renderBookNavigationV234\([\s\S]*?\n      \}/)?.[0] || "";
+  assert.match(bookNavigation, /context\.hidden = !hasBook \|\| !navigationV234\.isBookView\(view\)/);
+  assert.match(bookNavigation, /button\.setAttribute\("aria-current", "page"\)/);
 });
 
 test("V166 puts basic sequence first, recommends sequential order, and shows ten recent answers", async () => {

@@ -78,6 +78,9 @@ test("V186 shows series volume counts, orders navigation from the list, and open
   assert.match(html, /function collectionChooserTitleV186\(row\)/);
   assert.match(html, /`\$\{title\}　全\$\{volumeCount\}巻`/);
   assert.match(html, /escapeHtml\(collectionChooserTitleV186\(row\)\)/);
-  assert.match(html, /data-menu-view="today"[\s\S]*data-menu-view="analysis"[\s\S]*data-menu-view="generator"[\s\S]*data-menu-view="settings"/);
+  const navigation = html.match(/<nav class="menu-nav"[\s\S]*?<\/nav>/)?.[0] || "";
+  assert.deepEqual([...navigation.matchAll(/data-menu-view="([^"]+)"/g)].map(match => match[1]), ["collections", "today", "generator", "settings"]);
+  const bookContext = html.match(/<section[^>]*id="bookContextV234"[\s\S]*?<\/section>/)?.[0] || "";
+  assert.match(bookContext, /data-book-view="analysis">この本の成績/);
   assert.match(html, /menuViewV16 = "today";/);
 });

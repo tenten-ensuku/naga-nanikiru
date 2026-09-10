@@ -15,10 +15,10 @@ test("V210 keeps the learning actions usable and stable on desktop and mobile", 
     readFile(packageUrl, "utf8")
   ]);
 
-  assert.match(html, /const APP_VERSION = 233;/);
-  assert.match(identity, /APP_VERSION = 233/);
+  assert.match(html, /const APP_VERSION = 234;/);
+  assert.match(identity, /APP_VERSION = 234/);
   for (const asset of ["ux-v159\\.css", "supabase-sync-v48\\.js", "drill-ux-v44\\.js"]) {
-    assert.match(html, new RegExp(`${asset}\\?v=233`));
+    assert.match(html, new RegExp(`${asset}\\?v=234`));
   }
   assert.match(html, /問題集を変更する/);
   assert.doesNotMatch(html, /class="active-collection-label"/);
@@ -30,8 +30,15 @@ test("V210 keeps the learning actions usable and stable on desktop and mobile", 
   assert.doesNotMatch(html, /選んだ問題集は次回も保持されます/);
 
   const sidebar = html.match(/<nav class="menu-nav"[\s\S]*?<\/nav>/)?.[0] || "";
-  assert.match(sidebar, /data-menu-view="today"[^>]*>[\s\S]*?<span>学習する<\/span>/);
-  assert.match(sidebar, /data-menu-view="today"[\s\S]*data-menu-view="analysis"[\s\S]*data-menu-view="generator"[\s\S]*data-menu-view="settings"/);
+  assert.deepEqual([...sidebar.matchAll(/data-menu-view="([^"]+)"/g)].map(match => match[1]), ["collections", "today", "generator", "settings"]);
+  for (const [view, label] of [["collections", "本棚"], ["today", "学ぶ"], ["generator", "つくる"], ["settings", "マイページ"]]) {
+    assert.match(sidebar, new RegExp(`data-menu-view="${view}"[^>]*>[\\s\\S]*?<span>${label}<\\/span>`));
+  }
+  assert.doesNotMatch(sidebar, /data-menu-view="analysis"/);
+  const bookContext = html.match(/<section[^>]*id="bookContextV234"[\s\S]*?<\/section>/)?.[0] || "";
+  assert.match(bookContext, /data-active-collection-name/);
+  assert.match(bookContext, /data-book-view="my">問題一覧<\/button>/);
+  assert.match(bookContext, /data-book-view="analysis">この本の成績<\/button>/);
   assert.doesNotMatch(sidebar, /data-menu-view="my"/);
 
   const learningView = html.match(/function renderRecentHistoryViewV180\([\s\S]*?\n      \/\/ 旧セッション/)?.[0] || "";

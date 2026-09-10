@@ -19,9 +19,9 @@ function functionBlock(source, name, nextName) {
 
 test("V233 aligns the mobile toolbar version, labels, and accessible names", async () => {
   const html = await readFile(indexPath, "utf8");
-  assert.match(html, /const APP_VERSION = 233;/);
-  assert.match(html, /ux-v159\.css\?v=233/);
-  assert.match(html, /legacy-transfer-v232\.js\?v=233/);
+  assert.match(html, /const APP_VERSION = 234;/);
+  assert.match(html, /ux-v159\.css\?v=234/);
+  assert.match(html, /legacy-transfer-v232\.js\?v=234/);
 
   const sourceBar = html.match(/<div class="source-bar">[\s\S]*?<\/div>\s*\n\s*<div class="session-strip"/)?.[0] || "";
   assert.ok(sourceBar, "question source bar should remain a single toolbar block");
@@ -31,25 +31,30 @@ test("V233 aligns the mobile toolbar version, labels, and accessible names", asy
   assert.match(sourceBar, /id="importQuestionButton"[^>]*aria-label="自分の問題集にインポート"/);
   assert.match(sourceBar, /<span class="question-toolbar-label-full">自分の問題集にインポート<\/span>/);
   assert.match(sourceBar, /<span class="question-toolbar-label-short" aria-hidden="true">インポート<\/span>/);
-  assert.match(sourceBar, /id="menuButton"[^>]*aria-label="メニューに戻る"/);
-  assert.match(sourceBar, /<span class="question-toolbar-label-short" aria-hidden="true">戻る<\/span>/);
+  assert.match(sourceBar, /id="menuButton"[^>]*aria-label="問題一覧へ戻る"/);
+  assert.match(sourceBar, /<span class="question-toolbar-label-full">問題一覧へ戻る<\/span>/);
+  assert.match(sourceBar, /<span class="question-toolbar-label-short" aria-hidden="true">一覧へ<\/span>/);
+  const navigation = functionBlock(html, "renderBookNavigationV234", "isLegacyGeneratedQuestionCommentV220");
+  assert.match(navigation, /back\.setAttribute\("aria-label", originLabel\)/);
+  assert.match(navigation, /back\.querySelector\("\.question-toolbar-label-full"\)\.textContent = originLabel/);
+  for (const label of ["この本の学習へ", "この本の成績へ", "アーカイブへ", "問題一覧へ戻る"]) assert.ok(navigation.includes(`"${label}"`), label);
+  assert.match(html, /getElementById\("menuButton"\)\.addEventListener\("click", \(\) => showMenuV16\(questionOriginViewV234\)\)/);
   assert.match(sourceBar, /id="questionSelect" aria-label="問題を選ぶ"/);
   assert.match(sourceBar, /id="modelSelect" aria-label="正誤判定基準"/);
 });
 
-test("V233 keeps the compact mobile source bar contract at the end of UX CSS", async () => {
+test("V233 keeps the compact mobile source bar override intact alongside later release styles", async () => {
   const css = normalizeNewlines(await readFile(cssPath, "utf8"));
   const marker = "/* V233: compact mobile question toolbar.";
   const markerIndex = css.lastIndexOf(marker);
   assert.ok(markerIndex >= 0, "V233 CSS marker should exist");
-  assert.ok(markerIndex > css.length - 2200, "V233 CSS should be the末尾追加 block");
-
-  const v233 = css.slice(markerIndex);
+  const v233 = css.slice(markerIndex).split(/\n\/\* V\d+:/)[0];
+  const previousCss = css.slice(0, markerIndex);
   assert.match(v233, /@media\s*\(max-width:\s*800px\)/);
   assert.match(v233, /\.page:not\(\.menu-active\)\s*\{[\s\S]*?padding-top:\s*4px;/);
   assert.match(v233, /\.page:not\(\.menu-active\)\s*>\s*\.header\s*\{[\s\S]*?margin-bottom:\s*4px;/);
   assert.match(v233, /\.page:not\(\.menu-active\)\s*>\s*\.source-bar\s*\{[\s\S]*?grid-template-columns:\s*minmax\(84px,\s*1fr\)\s+minmax\(0,\s*1\.35fr\)\s+max-content;[\s\S]*?padding:\s*6px;[\s\S]*?margin-bottom:\s*4px;/);
-  assert.match(css, /\.page:not\(\.menu-active\)\s*>\s*\.source-bar\s*\{[\s\S]*?display:\s*grid;[\s\S]*?grid-template-columns:\s*1fr\s+1fr;/);
+  assert.match(previousCss, /\.page:not\(\.menu-active\)\s*>\s*\.source-bar\s*\{[\s\S]*?display:\s*grid;[\s\S]*?grid-template-columns:\s*1fr\s+1fr;/);
   assert.match(css, /\.source-url\s*\{[\s\S]*?white-space:\s*nowrap;/);
   assert.match(v233, /\.page:not\(\.menu-active\)\s+\.source-url\s*\{[\s\S]*?flex-wrap:\s*nowrap;/);
   assert.match(v233, /\.page:not\(\.menu-active\)\s+\.source-link,[\s\S]*?\.import-question-button,[\s\S]*?\.menu-button\s*\{[\s\S]*?min-height:\s*30px;[\s\S]*?padding:\s*0\s+7px;[\s\S]*?font-size:\s*11px;[\s\S]*?white-space:\s*nowrap;/);

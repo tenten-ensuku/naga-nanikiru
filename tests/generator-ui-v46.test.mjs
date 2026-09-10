@@ -10,7 +10,7 @@ test("renders the v87 scene and half-game generator controls", async () => {
     readFile(indexUrl, "utf8"),
     readFile(generatorUrl, "utf8")
   ]);
-  assert.match(html, /const APP_VERSION = 233/);
+  assert.match(html, /const APP_VERSION = 234/);
   assert.match(html, /function captureGeneratorFormDraftV157\(\)/);
   assert.match(html, /destination: document\.getElementById\("generatorDestinationSelect"\)\?\.value \|\| generatorDestinationV130 \|\| ""/);
   assert.match(html, /function restoreGeneratorFormDraftV157\(draft\)/);
@@ -22,8 +22,15 @@ test("renders the v87 scene and half-game generator controls", async () => {
   assert.match(html, /bindGeneratorV44\(\);\s*restoreGeneratorFormDraftV157\(generatorFormDraftV157\);/);
   assert.match(html, /generatorForm\?\.addEventListener\("input", persistGeneratorFormDraftV157\)/);
   assert.match(html, /generatorForm\?\.addEventListener\("change", persistGeneratorFormDraftV157\)/);
-  assert.match(html, /const storedIsValid = stored === "local" \|\| rows\.some/);
-  assert.match(html, /const defaultValue = generatorDestinationExplicitV157/);
+  assert.match(html, /let generatorDestinationV130 = "";/);
+  const destinationOptions = html.match(/function generatorDestinationOptionsV130\([\s\S]*?\n      \}/)?.[0] || "";
+  assert.match(destinationOptions, /navigationV234\.generatorDefault\(\{ stored, explicit: generatorDestinationExplicitV157,/);
+  assert.match(destinationOptions, /rows, bookSlug: currentSlug, fromBook: generatorEntryV234 === "book"/);
+  assert.match(destinationOptions, /<option value=""[^>]*>保存先を選んでください<\/option>/);
+  const currentDestination = html.match(/function currentGeneratorDestinationV130\([\s\S]*?\n      \}/)?.[0] || "";
+  assert.match(currentDestination, /if \(!selected\) return \{ kind: "unselected", label: "未選択" \}/);
+  const canAdd = html.match(/function canAddGeneratedQuestionV130\([\s\S]*?\n      \}/)?.[0] || "";
+  assert.match(canAdd, /destination\.kind === "unselected"\) return false/);
   assert.doesNotMatch(html, /data-range-session=/);
   assert.doesNotMatch(html, /id="menuRangeActions"/);
   assert.match(html, /range: "この範囲"/);

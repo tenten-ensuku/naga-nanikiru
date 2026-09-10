@@ -411,7 +411,7 @@ test("switching users invalidates old in-flight/cache data", async () => {
 
 test("adapter keeps legacy fallback, controller mount/unmount hooks, and navigation reset contract", async () => {
   const [index, library] = await Promise.all([readFile(INDEX_PATH, "utf8"), readFile(LIBRARY_PATH, "utf8")]);
-  assert.match(index, /library-v214\.js\?v=233/);
+  assert.match(index, /library-v214\.js\?v=234/);
   const renderStart = index.indexOf("function renderCollectionChooserV165");
   const renderEnd = index.indexOf("function renderCollectionSpacePanelV100", renderStart);
   const renderer = index.slice(renderStart, renderEnd);
@@ -591,17 +591,28 @@ async function navigationHarness() {
   const html = await readFile(INDEX_PATH, "utf8");
   const start = html.indexOf("      function navigateToCollectionV106(");
   const end = html.indexOf("      function captureCollectionCreateDraftV114(", start);
+  assert.ok(start >= 0 && end > start, "legacy collection history functions should be bounded");
   const window = { location: { href: "https://example.test/?collection=a" }, history: {} };
   const historyWrites = [];
   for (const kind of ["pushState", "replaceState"]) window.history[kind] = (_state, _title, url) => { historyWrites.push({ kind, url }); window.location.href = url; };
   const loads = [];
+  const navigationCalls = [];
   const sandbox = {
     window, URL, console,
+    navigationCalls,
     document: { querySelector: () => ({ classList: { add() {}, remove() {} } }), querySelectorAll: () => [] },
     __load(slug) { const request = deferred(); loads.push({ slug, ...request }); return request.promise; },
   };
   vm.runInNewContext(`
     let collectionNavigationPendingV165 = false;
+    let navigationRestoringV234 = false;
+    const navigationMemoryV234 = { lastStudy: () => null, route: () => null, accepts: () => false };
+    function navigationScopeV234() { return sharedCollectionV46.share_slug; }
+    function captureNavigationV234(options) { navigationCalls.push({ action: "capture", options }); }
+    function commitNavigationV234(mode) { navigationCalls.push({ action: "commit", mode }); }
+    function restoreNavigationFiltersV234(filters) { navigationCalls.push({ action: "filters", filters }); }
+    function restoreNavigationPositionV234() {}
+    function renderMenuCardsV16() {}
     let sharedCollectionV46 = {share_slug:"a"};
     let menuViewV16 = "collections";
     let questionsV16=[], sharedQuestionRowsV66=[], sharedQuestionPagingV177={}, sharedQuestionDetailsDeferredV170=false;
@@ -617,11 +628,11 @@ async function navigationHarness() {
     globalThis.popstate = handleCollectionHistoryV214;
     globalThis.inspect = () => ({slug:sharedCollectionV46.share_slug,view:menuViewV16,pending:collectionNavigationPendingV165,queued:collectionHistoryPendingV214});
   `, sandbox);
-  return { sandbox, window, loads, historyWrites };
+  return { sandbox, window, loads, historyWrites, navigationCalls };
 }
 
 test("V214 browser Back during a load restores the requested collection after the in-flight load", async () => {
-  const { sandbox, window, loads, historyWrites } = await navigationHarness();
+  const { sandbox, window, loads, historyWrites, navigationCalls } = await navigationHarness();
   const navigating = sandbox.navigate("b");
   assert.equal(loads[0].slug, "b");
   window.location.href = "https://example.test/?collection=a";
@@ -636,6 +647,8 @@ test("V214 browser Back during a load restores the requested collection after th
   assert.equal(sandbox.inspect().queued, null);
   assert.equal(new URL(window.location.href).searchParams.get("collection"), "a");
   assert.equal(historyWrites.filter(item => item.kind === "pushState").length, 1);
+  assert.ok(navigationCalls.some(call => call.action === "capture" && call.options?.replace === false));
+  assert.ok(navigationCalls.some(call => call.action === "commit" && call.mode === "replace"));
 });
 
 test("V214 multiple Back actions use the final destination, including the root chooser URL", async () => {

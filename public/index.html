@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=233">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=233">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=233">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=234">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=234">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=234">
   <title>みん切る｜みんなの何切る問題集</title>
   <meta name="description" content="みん切るは、NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリです。">
   <meta name="theme-color" content="#06131e">
@@ -2189,8 +2189,9 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=233">
-  <link rel="stylesheet" href="library-v214.css?v=233">
+  <link rel="stylesheet" href="ux-v159.css?v=234">
+  <link rel="stylesheet" href="library-v214.css?v=234">
+  <link rel="stylesheet" href="navigation-v234.css?v=234">
 </head>
 <body class="auth-gate-open">
   <main class="page" inert aria-hidden="true">
@@ -2202,30 +2203,34 @@
           <span class="active-collection-status" data-active-collection-status>未選択</span>
           <span class="active-collection-arrow" aria-hidden="true">›</span>
         </button>
-        <nav class="menu-nav" aria-label="問題集メニュー">
-          <button class="menu-nav-button is-active" type="button" data-menu-view="today" title="未回答・苦手・全問題から学習を始める"><span class="menu-nav-icon" aria-hidden="true">▶</span><span>学習する</span></button>
-          <button class="menu-nav-button" type="button" data-menu-view="analysis" title="回答率・習熟度・回答時間など、自分の学習状況を見る"><span class="menu-nav-icon" aria-hidden="true">▥</span><span>成績・履歴</span></button>
-          <button class="menu-nav-button" type="button" data-menu-view="generator" title="NAGA URLから問題を作り、保存先を選ぶ"><span class="menu-nav-icon" aria-hidden="true">＋</span><span>問題生成</span></button>
-          <button class="menu-nav-button" type="button" data-menu-view="settings" title="表示名・表示方法・問題集の設定を変更する"><span class="menu-nav-icon" aria-hidden="true">⚙</span><span>設定</span></button>
-          <button class="menu-nav-button" id="studentHistoryNav" type="button" data-menu-view="students" title="生徒ごとの学習進捗を見る" hidden><span class="menu-nav-icon" aria-hidden="true">◎</span><span>生徒履歴</span></button>
+        <nav class="menu-nav" aria-label="アプリ全体のメニュー">
+          <button class="menu-nav-button" type="button" data-menu-view="collections" title="本棚で学習する問題集を選ぶ"><span class="menu-nav-icon" aria-hidden="true">▦</span><span>本棚</span></button>
+          <button class="menu-nav-button is-active" type="button" data-menu-view="today" title="選択中の本の学習に戻る"><span class="menu-nav-icon" aria-hidden="true">▶</span><span>学ぶ</span></button>
+          <button class="menu-nav-button" type="button" data-menu-view="generator" title="アプリ全体：問題を作り、保存先を選ぶ"><span class="menu-nav-icon" aria-hidden="true">＋</span><span>つくる</span></button>
+          <button class="menu-nav-button" type="button" data-menu-view="settings" title="アカウント・表示・リアクションの共通設定"><span class="menu-nav-icon" aria-hidden="true">⚙</span><span>マイページ</span></button>
         </nav>
+        <button class="menu-nav-button" id="studentHistoryNav" type="button" data-menu-jump="students" title="生徒ごとの学習進捗を見る" hidden><span class="menu-nav-icon" aria-hidden="true">◎</span><span>生徒履歴</span></button>
         <div class="menu-sidebar-progress" id="menuSidebarProgress" aria-live="polite"></div>
         <div class="account-strip" id="accountStrip">
           <span class="account-status sr-only" id="accountStatus">ログイン状態を確認しています…</span>
         </div>
       </aside>
       <div class="menu-content">
-        <button class="mobile-collection-context" type="button" data-open-collection-chooser aria-label="現在の問題集を確認・変更する">
-          <strong class="mobile-collection-context-title" data-active-collection-name>問題集を選ぶ</strong>
-          <span class="mobile-collection-context-status" data-active-collection-status>未選択</span>
-          <span aria-hidden="true">›</span>
-        </button>
+        <section class="book-context-v234" id="bookContextV234" aria-label="選択中の問題集" hidden>
+          <div class="book-context-title-v234"><strong data-active-collection-name>問題集を選ぶ</strong><button type="button" data-open-collection-chooser>本棚へ ›</button></div>
+          <nav class="book-tabs-v234" aria-label="この本のメニュー">
+            <button type="button" data-book-view="today">学習</button>
+            <button type="button" data-book-view="my">問題一覧</button>
+            <button type="button" data-book-view="analysis">この本の成績</button>
+          </nav>
+          <div class="book-actions-v234"><button type="button" data-book-create hidden>この本に追加</button><button type="button" data-book-manage hidden>この本の管理</button></div>
+        </section>
         <div class="menu-heading">
           <h2 id="menuTitle">学習する</h2>
           <div class="menu-summary" id="menuSummary" aria-live="polite"></div>
         </div>
-        <nav class="learning-tabs menu-context-tabs" id="menuContextTabs" aria-label="問題集メニュー" hidden>
-          <button type="button" data-menu-jump="my" aria-pressed="false"><span class="learning-tab-icon" aria-hidden="true">▦</span><span>問題一覧</span><span class="learning-tab-count" data-context-tab-count="my">0</span></button>
+        <nav class="learning-tabs menu-context-tabs" id="menuContextTabs" aria-label="問題一覧の絞り込み" hidden>
+          <button type="button" data-menu-jump="my" aria-pressed="false"><span class="learning-tab-icon" aria-hidden="true">▦</span><span>すべて</span><span class="learning-tab-count" data-context-tab-count="my">0</span></button>
           <button type="button" data-menu-jump="favorites" aria-pressed="false"><span class="learning-tab-icon" aria-hidden="true">☆</span><span>お気に入り</span><span class="learning-tab-count" data-context-tab-count="favorites">0</span></button>
           <button type="button" data-menu-jump="archive" aria-pressed="false"><span class="learning-tab-icon" aria-hidden="true"><span class="menu-archive-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M4 7.5h16v12H4zM3 4h18v3.5H3zM9 12h6"></path></svg></span></span><span>アーカイブ</span><span class="learning-tab-count" data-context-tab-count="archive">0</span></button>
         </nav>
@@ -2292,7 +2297,7 @@
       <div class="source-url"><strong id="sceneProblemTitle">問題249</strong><a class="source-link" id="nagaSourceLink" href="#" target="_blank" rel="noopener noreferrer" aria-label="局面NAGAURLに移動" title="元のNAGA局面を別タブで開きます"><span class="question-toolbar-label-full">局面NAGAURLに移動</span><span class="question-toolbar-label-short" aria-hidden="true">NAGAへ移動</span></a><button class="import-question-button" id="importQuestionButton" type="button" aria-label="自分の問題集にインポート" title="この問題を、自分が編集できる問題集へコピーします" hidden><span class="question-toolbar-label-full">自分の問題集にインポート</span><span class="question-toolbar-label-short" aria-hidden="true">インポート</span></button></div>
       <label class="question-control" title="この問題集の別の問題を選びます">問題を選ぶ <select id="questionSelect" aria-label="問題を選ぶ"></select></label>
       <label class="model-control" title="正誤判定に使うNAGAモデルを選びます">正誤判定基準 <select id="modelSelect" aria-label="正誤判定基準"></select></label>
-      <button class="menu-button" id="menuButton" type="button" aria-label="メニューに戻る" title="問題一覧・問題集選択へ戻ります"><span class="question-toolbar-label-full">メニューに戻る</span><span class="question-toolbar-label-short" aria-hidden="true">戻る</span></button>
+      <button class="menu-button" id="menuButton" type="button" aria-label="問題一覧へ戻る" title="この本の問題一覧へ戻ります"><span class="question-toolbar-label-full">問題一覧へ戻る</span><span class="question-toolbar-label-short" aria-hidden="true">一覧へ</span></button>
       <button class="next-button" id="nextQuestionButton" type="button" title="現在の出題順に従って次の問題へ進みます" hidden>次の問題へ</button>
     </div>
 
@@ -2523,16 +2528,17 @@
   </dialog>
 
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=233"></script>
-  <script defer src="legacy-transfer-v232.js?v=233"></script>
-  <script src="drill-ux-v44.js?v=233"></script>
-  <script src="library-order-v215.js?v=233"></script>
-  <script src="library-v214.js?v=233"></script>
+  <script src="supabase-sync-v48.js?v=234"></script>
+  <script defer src="legacy-transfer-v232.js?v=234"></script>
+  <script src="drill-ux-v44.js?v=234"></script>
+  <script src="navigation-v234.js?v=234"></script>
+  <script src="library-order-v215.js?v=234"></script>
+  <script src="library-v214.js?v=234"></script>
   <script src="naga-generator-v44.js"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 233;
+    const APP_VERSION = 234;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -4290,8 +4296,9 @@
         my: { title: "問題一覧" },
         archive: { title: "アーカイブ" },
         generator: { title: "問題生成" },
-        settings: { title: "設定" },
-        analysis: { title: "自己分析" },
+        settings: { title: "マイページ" },
+        analysis: { title: "この本の成績" },
+        "book-settings": { title: "この本の管理" },
         students: { title: "生徒の進捗" },
         session: { title: "セッション結果" }
       };
@@ -4299,6 +4306,148 @@
         "NAGA URLから作成した問題です。",
         "NAGA URLから追加した問題です。"
       ]);
+
+      const navigationV234 = window.MinkiruNavigationV234;
+      const navigationMemoryV234 = navigationV234.createMemory();
+      let navigationReadyV234 = false;
+      let navigationRestoringV234 = false;
+      let questionOriginViewV234 = "my";
+      let appliedQuestionKeyV234 = "";
+      let generatorEntryV234 = "global";
+      function navigationOwnerV234() { return String(supabaseSessionV46?.user?.id || ""); }
+      function navigationScopeV234() { return String(sharedCollectionV46?.share_slug || ""); }
+      function navigationFiltersV234() {
+        return { search: menuSearchV44, statuses: [...menuStatusFiltersV92], type: menuTypeV44, range: menuRangeV60,
+          favorites: menuFavoritesOnlyV137, limit: menuRenderLimitV119, order: menuOrderV92 };
+      }
+      function restoreNavigationFiltersV234(filters) {
+        if (!filters) return;
+        menuSearchV44 = String(filters.search || "");
+        menuStatusFiltersV92 = Array.isArray(filters.statuses) ? [...filters.statuses] : [];
+        menuTypeV44 = ["all", "discard", "riichi", "call"].includes(filters.type) ? filters.type : "all";
+        menuRangeV60 = String(filters.range || "all");
+        menuFavoritesOnlyV137 = Boolean(filters.favorites);
+        menuRenderLimitV119 = Math.max(MENU_RENDER_BATCH_V119, Math.min(10000, Number(filters.limit) || MENU_RENDER_BATCH_V119));
+        menuOrderV92 = filters.order === "random" ? "random" : "sequential";
+        const search = document.getElementById("menuSearch");
+        if (search) search.value = menuSearchV44;
+        document.querySelectorAll("[data-menu-status]").forEach(input => { input.checked = menuStatusFiltersV92.includes(input.dataset.menuStatus); });
+      }
+      function navigationSnapshotV234() {
+        const questionVisible = !document.querySelector(".page")?.classList.contains("menu-active");
+        const question = questionVisible ? questionsV16[currentQuestionIndexV16] : null;
+        return { version: 234, owner: navigationOwnerV234(), slug: navigationScopeV234(),
+          view: questionVisible ? "question" : menuViewV16, questionKey: question ? questionKeyV16(question) : "",
+          questionId: question?.serverQuestionId || "", originView: questionOriginViewV234,
+          filters: navigationFiltersV234(), scroll: Math.max(0, window.scrollY || 0),
+          contentScroll: document.querySelector(".menu-content")?.scrollTop || 0 };
+      }
+      function saveQuestionNavigationDraftV234() {
+        const question = questionsV16[currentQuestionIndexV16];
+        if (!question || !appliedQuestionKeyV234) return;
+        const fields = ["selected", "selectedIndex", "callDecision", "revealed", "answerRecorded", "answerAttemptId", "sharedAttemptPromise", "judgeModel", "riichi", "commentComposerOpen", "commentEditingId", "commentAttachments"];
+        const draft = Object.fromEntries(fields.map(key => [key, state[key]]));
+        draft.elapsed = Math.max(0, Date.now() - state.questionStartedAt);
+        draft.commentText = document.getElementById("commentInput")?.value || "";
+        draft.originView = questionOriginViewV234;
+        navigationMemoryV234.saveQuestion(navigationScopeV234(), questionKeyV16(question), draft);
+      }
+      function captureNavigationV234({ replace = true } = {}) {
+        if (!navigationReadyV234 || navigationRestoringV234 || collectionNavigationPendingV165) return;
+        const route = navigationSnapshotV234();
+        if (route.view === "question") saveQuestionNavigationDraftV234();
+        navigationMemoryV234.remember(route);
+        if (replace) window.history.replaceState({ ...window.history.state, minkiruNavigationV234: route }, "");
+      }
+      function commitNavigationV234(historyMode = "push") {
+        if (!navigationReadyV234 || navigationRestoringV234 || collectionNavigationPendingV165 || historyMode === "none") return;
+        const route = navigationSnapshotV234();
+        const previous = window.history.state?.minkiruNavigationV234;
+        const same = previous?.owner === route.owner && previous?.slug === route.slug && previous?.view === route.view && previous?.questionKey === route.questionKey;
+        const method = historyMode === "replace" || same || !previous ? "replaceState" : "pushState";
+        window.history[method]({ ...window.history.state, minkiruNavigationV234: route }, "", navigationV234.routeUrl(window.location.href, route));
+        navigationMemoryV234.remember(route);
+      }
+      function restoreNavigationPositionV234(route) {
+        const view = document.querySelector(".page")?.classList.contains("menu-active") ? menuViewV16 : "question";
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+          const currentView = document.querySelector(".page")?.classList.contains("menu-active") ? menuViewV16 : "question";
+          if (currentView !== view || (route?.slug && route.slug !== navigationScopeV234())) return;
+          window.scrollTo({ top: Math.max(0, Number(route?.scroll) || 0), behavior: "instant" });
+          const content = document.querySelector(".menu-content");
+          if (content) content.scrollTop = Math.max(0, Number(route?.contentScroll) || 0);
+        }));
+      }
+      async function restoreNavigationRouteV234(route) {
+        if (!navigationMemoryV234.accepts(route) || !requireLoginForPlayV187()) return false;
+        navigationRestoringV234 = true;
+        try {
+          if (route.slug && route.slug !== navigationScopeV234()) {
+            const loaded = await navigateToCollectionV106(route.slug, { historyMode: "none" });
+            if (!loaded) return false;
+          }
+          restoreNavigationFiltersV234(route.filters);
+          questionOriginViewV234 = route.originView || "my";
+          if (route.view === "question") {
+            const index = questionIndexByKeyV44(route.questionKey);
+            if (index < 0 || !await openQuestionV16(index, { preserveSession: true, resume: true, historyMode: "none" })) {
+              showMenuV16("my", { historyMode: "none" });
+              return false;
+            }
+          } else showMenuV16(route.view, { historyMode: "none", restorePosition: false });
+          restoreNavigationPositionV234(route);
+          return true;
+        } finally { navigationRestoringV234 = false; }
+      }
+      function resumeLearningNavigationV234() {
+        captureNavigationV234();
+        const route = navigationMemoryV234.lastStudy(navigationScopeV234());
+        if (route?.view === "question") {
+          const index = questionIndexByKeyV44(route.questionKey);
+          if (index >= 0) { void openQuestionV16(index, { preserveSession: true, resume: true }); return; }
+        }
+        showMenuV16(route?.view || "today");
+      }
+      function openGeneratorNavigationV234(fromBook = false) {
+        persistGeneratorFormDraftV157();
+        const slug = navigationScopeV234();
+        if (fromBook && !generatorDestinationRowsV130().some(row => String(row.share_slug || "") === slug)) return;
+        const hasDraft = Boolean(generatorFormDraftV157?.url?.trim() || generatorCandidatesV44.length);
+        generatorEntryV234 = fromBook ? "book" : "global";
+        if (fromBook && (!hasDraft || !generatorDestinationV130)) {
+          generatorDestinationV130 = slug;
+          generatorDestinationExplicitV157 = true;
+          if (generatorFormDraftV157) generatorFormDraftV157 = { ...generatorFormDraftV157, destination: slug };
+        }
+        showMenuV16("generator");
+      }
+      function syncGeneratorDestinationCopyV234() {
+        const destination = currentGeneratorDestinationV130();
+        const text = destination.kind === "unselected" ? "保存先を選んでください。学習中の問題集へ自動で追加することはありません。"
+          : destination.kind === "shared" ? `保存先：${destination.label}。追加内容はこの問題集の利用者に反映されます。`
+            : "保存先：この端末のみ。共有問題集には追加されません。";
+        document.querySelectorAll("[data-generator-destination-note], .generator-destination-note").forEach(node => { node.textContent = text; });
+      }
+      function renderBookNavigationV234() {
+        const view = menuViewV16;
+        const hasBook = Boolean(sharedCollectionV46) && !isSeriesParentCollectionV180(sharedCollectionV46);
+        const context = document.getElementById("bookContextV234");
+        context.hidden = !hasBook || !navigationV234.isBookView(view);
+        const panel = document.getElementById("menuPanel");
+        panel.dataset.globalView = navigationV234.globalView(view);
+        context.querySelectorAll("[data-book-view]").forEach(button => {
+          const active = button.dataset.bookView === navigationV234.localView(view);
+          button.classList.toggle("is-active", active); button.setAttribute("aria-pressed", String(active));
+          if (active) button.setAttribute("aria-current", "page"); else button.removeAttribute("aria-current");
+        });
+        context.querySelector("[data-book-create]").hidden = !hasBook || !generatorDestinationRowsV130().some(row => String(row.share_slug || "") === navigationScopeV234());
+        context.querySelector("[data-book-manage]").hidden = !hasBook || !collectionManagementCanManageV197(sharedCollectionV46);
+        const originLabel = questionOriginViewV234 === "today" ? "この本の学習へ" : questionOriginViewV234 === "analysis" ? "この本の成績へ" : questionOriginViewV234 === "archive" ? "アーカイブへ" : questionOriginViewV234 === "session" ? "学習結果へ" : "問題一覧へ戻る";
+        const back = document.getElementById("menuButton");
+        back.setAttribute("aria-label", originLabel); back.title = originLabel;
+        back.querySelector(".question-toolbar-label-full").textContent = originLabel;
+        back.querySelector(".question-toolbar-label-short").textContent = questionOriginViewV234 === "today" ? "学習へ" : questionOriginViewV234 === "analysis" ? "成績へ" : questionOriginViewV234 === "session" ? "結果へ" : "一覧へ";
+      }
 
       function isLegacyGeneratedQuestionCommentV220(message) {
         const attachments = message?.attachments;
@@ -4433,6 +4582,7 @@
       const QUESTION_NOTICE_STORAGE_KEY_V66 = storageKey("question-notices-v1");
         const ANNOUNCEMENT_SEEN_STORAGE_KEY_V65 = storageKey("announcement-seen-v1");
         const APP_ANNOUNCEMENTS_V66 = [
+          { version: 234, date: "2026-09-10", publishedAt: "2026-09-10T21:54:00+09:00", title: "学習中の本とアプリ全体のメニューを分けました", body: "下部メニューを「本棚・学ぶ・つくる・マイページ」に整理しました。学習中の本では「学習・問題一覧・この本の成績」を切り替えられます。本棚や学習への戻り先を明示し、一覧の絞り込み・スクロール位置・選びかけの牌を画面移動後も保持します。問題生成の保存先と、本の管理・個人設定も分けました。" },
           { version: 229, date: "2026-09-04", publishedAt: "2026-09-04T15:00:00+09:00", title: "復旧のお知らせを更新しました", body: "現在、システム調整および復旧対応を進めています。2026年9月6日から順次復旧予定です。" },
           { version: 227, date: "2026-09-04", publishedAt: "2026-09-04T12:55:00+09:00", title: "バックグラウンド通信を軽量化しました", body: "非表示タブと重複タブの定期通信を停止し、問題一覧の周期的な再取得を廃止しました。通知を開いた時は最新のコメントと追加問題を確認できます。" },
           { version: 226, date: "2026-09-04", publishedAt: "2026-09-04T01:46:00+09:00", title: "条件設定を縦画面でも最後まで操作できます", body: "全問カード内の条件設定を開くとカードが自然に展開し、下部ナビに隠れずスクロールしてすべての項目を操作できるようにしました。" },
@@ -5494,7 +5644,7 @@
         document.querySelectorAll("[data-active-collection-status]").forEach(node => { node.textContent = status; });
         document.querySelectorAll("[data-open-collection-chooser]").forEach(button => {
           button.classList.toggle("is-unselected", !sharedCollectionV46);
-          button.setAttribute("aria-label", sharedCollectionV46 ? `${title}を選択中。問題集を確認・変更する` : "学習する問題集を選ぶ");
+          button.setAttribute("aria-label", sharedCollectionV46 ? `本棚へ：${title}を選択中` : "本棚で学習する問題集を選ぶ");
         });
       }
 
@@ -5528,6 +5678,7 @@
       }
 
       function collectionManagementTargetV197() {
+        if (menuViewV16 === "book-settings") return sharedCollectionV46 && collectionManagementCanManageV197(sharedCollectionV46) ? sharedCollectionV46 : null;
         const options = ownedCollectionOptionsV197();
         const requestedSlug = String(collectionManagementSlugV197 || "");
         const selected = options.find(row => String(row.share_slug || "") === requestedSlug);
@@ -5555,15 +5706,17 @@
 
       function currentGeneratorDestinationV130() {
         const select = document.getElementById("generatorDestinationSelect");
-        const selected = String(select?.value || generatorDestinationV130 || "local");
+        const selected = String(select ? select.value : generatorDestinationV130 || "");
+        if (!selected) return { kind: "unselected", label: "未選択" };
         if (selected === "local") return { kind: "local", label: "この端末" };
         const row = generatorDestinationRowsV130().find(item => String(item.share_slug || "") === selected);
-        if (!row) return { kind: "local", label: "この端末" };
+        if (!row) return { kind: "unselected", label: "未選択（権限を確認してください）" };
         return { kind: "shared", shareSlug: selected, row, label: collectionDisplayNameV101(row) };
       }
 
       function canAddGeneratedQuestionV130() {
         const destination = currentGeneratorDestinationV130();
+        if (destination.kind === "unselected") return false;
         if (destination.kind === "local") return true;
         return Boolean(supabaseSessionV46 && (destination.row?.can_edit || destination.row?.can_manage));
       }
@@ -5572,13 +5725,10 @@
         const rows = generatorDestinationRowsV130();
         const currentSlug = String(sharedCollectionV46?.share_slug || "");
         const stored = String(generatorDestinationV130 || "");
-        const currentIsEditable = currentSlug && (sharedCollectionV46?.can_edit || sharedCollectionV46?.can_manage);
-        const storedIsValid = stored === "local" || rows.some(row => String(row.share_slug || "") === stored);
-        const defaultValue = generatorDestinationExplicitV157
-          ? (storedIsValid ? stored : currentIsEditable ? currentSlug : "local")
-          : (currentIsEditable ? currentSlug : storedIsValid ? stored : "local");
+        const defaultValue = navigationV234.generatorDefault({ stored, explicit: generatorDestinationExplicitV157,
+          rows, bookSlug: currentSlug, fromBook: generatorEntryV234 === "book" && !generatorFormDraftV157?.url?.trim() });
         generatorDestinationV130 = defaultValue;
-        return `<option value="local"${defaultValue === "local" ? " selected" : ""}>この端末だけに保存</option>${rows.map(row => {
+        return `<option value=""${!defaultValue ? " selected" : ""}>保存先を選んでください</option><option value="local"${defaultValue === "local" ? " selected" : ""}>この端末だけに保存</option>${rows.map(row => {
           const slug = String(row.share_slug || "");
           const role = row.can_manage ? "所有者" : "編集可";
           const seriesNote = isSeriesParentCollectionV180(row) ? "・番号に応じて巻へ保存" : "";
@@ -5590,12 +5740,14 @@
         const options = generatorDestinationOptionsV130();
         const destination = currentGeneratorDestinationV130();
         const rows = generatorDestinationRowsV130();
-        const note = destination.kind === "shared"
+        const note = destination.kind === "unselected"
+          ? "アプリ全体の問題生成です。保存先を選んでください。学習中の本へ自動で追加することはありません。"
+          : destination.kind === "shared"
           ? `この問題集の編集メンバーとして、問題の追加・編集・整理ができます。追加内容は利用者全員に反映されます。`
           : rows.length
             ? "共有先を選ぶと、その問題集に保存されます。閲覧だけの問題集は保存先に表示されません。"
             : "共有問題集へ追加する場合は、先に問題集を作成するか編集メンバーとして承認されてください。";
-        return `<div class="generator-destination"><label for="generatorDestinationSelect">保存先問題集<select id="generatorDestinationSelect" aria-label="問題生成の保存先">${options}</select></label><p>${escapeHtml(note)}</p></div>`;
+        return `<div class="generator-destination"><label for="generatorDestinationSelect">保存先問題集<select id="generatorDestinationSelect" aria-label="問題生成の保存先" required>${options}</select></label><p data-generator-destination-note>${escapeHtml(note)}</p>${generatorEntryV234 === "book" ? `<p class="navigation-scope-note-v234">「この本に追加」から開いています。入力済みの下書きがある場合は、その保存先を維持しています。</p>` : ""}</div>`;
       }
 
       function renderImportQuestionButtonV115() {
@@ -5753,6 +5905,7 @@
       function navigateToCollectionV106(slug, { historyMode = "push" } = {}) {
         const value = String(slug || "").trim();
         if (!value || collectionNavigationPendingV165) return Promise.resolve(false);
+        captureNavigationV234();
         collectionNavigationPendingV165 = true;
         document.querySelector(".page")?.classList.add("is-collection-switching");
         document.querySelectorAll("[data-active-collection-status]").forEach(node => { node.textContent = "切り替え中…"; });
@@ -5783,10 +5936,17 @@
         if (historyMode === "replace") window.history.replaceState({}, "", url.toString());
         return switchCollectionInPlaceV177(value, previousView, previousUrl, previousState).finally(async () => {
           collectionNavigationPendingV165 = false;
-          document.querySelector(".page")?.classList.remove("is-collection-switching");
-          document.querySelectorAll("[data-collection-slug]").forEach(button => { button.disabled = false; });
           const pendingHistory = collectionHistoryPendingV214;
           collectionHistoryPendingV214 = null;
+          const remembered = navigationMemoryV234.lastStudy(navigationScopeV234()) || navigationMemoryV234.route(navigationScopeV234(), "today");
+          if (!navigationRestoringV234 && !pendingHistory) {
+            restoreNavigationFiltersV234(remembered?.filters || { range: "all" });
+            renderMenuCardsV16();
+            commitNavigationV234("replace");
+            restoreNavigationPositionV234(remembered);
+          }
+          document.querySelector(".page")?.classList.remove("is-collection-switching");
+          document.querySelectorAll("[data-collection-slug]").forEach(button => { button.disabled = false; });
           if (pendingHistory) await restoreCollectionHistoryV214(pendingHistory);
         });
       }
@@ -5796,6 +5956,7 @@
       async function restoreCollectionHistoryV214(requested) {
         if (!requireLoginForPlayV187()) return false;
         if (window.location.href !== requested.url) window.history.replaceState({}, "", requested.url);
+        if (requested.navigation && navigationMemoryV234.accepts(requested.navigation)) return restoreNavigationRouteV234(requested.navigation);
         if (!requested.slug) {
           showMenuV16("collections");
           return true;
@@ -5808,7 +5969,8 @@
       }
 
       function handleCollectionHistoryV214() {
-        const requested = { slug: collectionSlugFromUrlV165(), url: window.location.href };
+        captureNavigationV234({ replace: false });
+        const requested = { slug: collectionSlugFromUrlV165(), url: window.location.href, navigation: window.history.state?.minkiruNavigationV234 };
         if (collectionNavigationPendingV165) {
           collectionHistoryPendingV214 = requested;
           return Promise.resolve(false);
@@ -6153,7 +6315,7 @@
         }
       }
 
-      function renderCollectionManagementV100() {
+      function renderCollectionManagementV100({ bookOnly = false } = {}) {
         const ownedCollections = ownedCollectionOptionsV197();
         const collection = collectionManagementTargetV197();
         const canManage = collectionManagementCanManageV197(collection);
@@ -6169,7 +6331,7 @@
           : `<div class="settings-divider" role="presentation"></div><div class="collection-management"><h3>問題集スペース</h3>${collectionContext}<p>現在の公開範囲：${escapeHtml(collectionVisibility)}。公開範囲の変更と申請の承認は所有者・管理者のみ行えます。</p></div>`)
           : "";
         const create = supabaseSessionV46 ? `<div class="settings-divider" role="presentation"></div><div class="collection-management"><h3>新しい問題集スペースを作る</h3><p>新しく作る問題集は、最初は必ずプライベートです。作成時に公開範囲を選べます。</p>${collectionCreateFormMarkupV106("collectionCreate")}</div>` : "";
-        return `${managementChooser}${management}${create}`;
+        return bookOnly ? management : `${managementChooser}${management}${create}`;
       }
 
       async function loadCollectionManagementDataV100() {
@@ -6201,7 +6363,7 @@
           collectionAccessMembersV100 = [];
           renderMenuCardsV16();
           void loadCollectionManagementDataV100().then(() => {
-            if (menuViewV16 === "settings" && collectionManagementSlugV197 === selectedSlug) renderMenuCardsV16();
+            if (menuViewV16 === "book-settings" && collectionManagementSlugV197 === selectedSlug) renderMenuCardsV16();
           });
         });
         const visibilityForm = document.getElementById("collectionVisibilityForm");
@@ -6434,7 +6596,7 @@
         const syncNote = supabaseSessionV46
           ? "ログイン中：保存すると共有コメントと問題作成にも反映されます。"
           : "未ログイン：この端末に保存されます。共有コメント・問題作成へ反映するにはDiscordログイン後に再保存してください。";
-        return `<section class="settings-section"><h3>表示名の設定</h3><p>コメントや問題作成時に表示する名前を登録できます。読みやすさを保つため、1〜5文字で入力してください。</p><form class="settings-form" id="displayNameForm"><label for="displayNameInput">作成者表示名<input id="displayNameInput" type="text" maxlength="5" minlength="1" value="${escapeHtml(configuredName)}" placeholder="${escapeHtml(fallbackName)}" autocomplete="nickname" required></label><p class="settings-form-note">${escapeHtml(syncNote)}</p><div class="settings-form-actions"><button class="primary" type="submit">表示名を保存</button><span class="settings-form-status" id="displayNameStatus" aria-live="polite"></span></div></form><div class="settings-divider" role="presentation"></div><h3>PCの問題画面</h3><p>PCでは問題とコメントを左右に分けると、局面画像を小さく保ったままコメントを読みやすくできます。スマホでは常に縦配置です。</p><div class="settings-form" id="layoutPreferenceForm"><label for="desktopLayoutSelect">PCレイアウト<select id="desktopLayoutSelect"><option value="split"${desktopLayout === "split" ? " selected" : ""}>左右2ペイン（おすすめ）</option><option value="single"${desktopLayout === "single" ? " selected" : ""}>1列（従来の表示）</option></select></label><p class="settings-form-note">設定はこのブラウザに保存されます。変更は次に問題画面を開いたときから反映されます。</p></div>${customReactionSettingsMarkupV211()}${renderCollectionManagementV100()}</section>`;
+        return `<section class="settings-section"><p class="navigation-scope-note-v234">アカウント・表示・リアクションの共通設定です。問題集の共有・権限は、その本の「この本の管理」から変更できます。</p><h3>表示名の設定</h3><p>コメントや問題作成時に表示する名前を登録できます。読みやすさを保つため、1〜5文字で入力してください。</p><form class="settings-form" id="displayNameForm"><label for="displayNameInput">作成者表示名<input id="displayNameInput" type="text" maxlength="5" minlength="1" value="${escapeHtml(configuredName)}" placeholder="${escapeHtml(fallbackName)}" autocomplete="nickname" required></label><p class="settings-form-note">${escapeHtml(syncNote)}</p><div class="settings-form-actions"><button class="primary" type="submit">表示名を保存</button><span class="settings-form-status" id="displayNameStatus" aria-live="polite"></span></div></form><div class="settings-divider" role="presentation"></div><h3>PCの問題画面</h3><p>PCでは問題とコメントを左右に分けると、局面画像を小さく保ったままコメントを読みやすくできます。スマホでは常に縦配置です。</p><div class="settings-form" id="layoutPreferenceForm"><label for="desktopLayoutSelect">PCレイアウト<select id="desktopLayoutSelect"><option value="split"${desktopLayout === "split" ? " selected" : ""}>左右2ペイン（おすすめ）</option><option value="single"${desktopLayout === "single" ? " selected" : ""}>1列（従来の表示）</option></select></label><p class="settings-form-note">設定はこのブラウザに保存されます。変更は次に問題画面を開いたときから反映されます。</p></div>${customReactionSettingsMarkupV211()}</section>`;
       }
 
       function bindSettingsViewV67() {
@@ -6485,7 +6647,6 @@
           saveUserStateV16();
           applyDesktopLayoutV70();
         });
-        bindCollectionManagementV100();
         bindCustomReactionSettingsV211();
       }
 
@@ -8083,7 +8244,7 @@
         if (breadcrumb) {
           const session = activeSessionV44();
           const location = session ? sessionModeLabelV44(session.mode) : "問題一覧";
-          breadcrumb.textContent = `問題集 › ${collectionDisplayNameV101()} › ${location}`;
+          breadcrumb.innerHTML = `<button type="button" class="question-breadcrumb-button-v234" data-question-shelf>本棚</button> › ${escapeHtml(collectionDisplayNameV101())} › <button type="button" class="question-breadcrumb-button-v234" data-question-home>この本の学習</button> › ${escapeHtml(location)}`;
         }
         if (pageTitle) pageTitle.textContent = `問題${question.number}　${questionTypeV44(question)}`;
         clearCommentDraftV68();
@@ -8126,21 +8287,34 @@
         renderSessionProgressV44();
       }
 
-      function showMenuV16(view = menuViewV16) {
+      function showMenuV16(view = menuViewV16, { historyMode = "push", restorePosition = true } = {}) {
+        captureNavigationV234();
         if (menuViewV16 === "generator") persistGeneratorFormDraftV157();
         const requestedView = view === "favorites" ? "my" : view;
         if (view === "favorites") menuFavoritesOnlyV137 = true;
-        const needsCollection = ["today", "my", "archive", "analysis"].includes(requestedView);
+        const needsCollection = ["today", "my", "archive", "analysis", "book-settings"].includes(requestedView);
         const effectiveView = needsCollection && (!sharedCollectionV46 || isSeriesParentCollectionV180(sharedCollectionV46)) && window.NagaSupabase?.configured ? "collections" : requestedView;
         menuViewV16 = MENU_VIEW_COPY_V16[effectiveView] ? effectiveView : "my";
+        if (menuViewV16 === "book-settings" && !collectionManagementCanManageV197(sharedCollectionV46)) menuViewV16 = "today";
+        const savedRoute = navigationMemoryV234.route(navigationScopeV234(), menuViewV16);
         if (!menuRangeOptionsV60().some(option => option.key === menuRangeV60)) menuRangeV60 = "all";
         applyDesktopLayoutV70();
         document.querySelector(".page").classList.add("menu-active");
         document.getElementById("menuPanel").hidden = false;
+        if (menuViewV16 === "book-settings") {
+          collectionManagementSlugV197 = navigationScopeV234();
+          collectionAccessRequestsV100 = []; collectionAccessMembersV100 = [];
+          const slug = navigationScopeV234();
+          void loadCollectionManagementDataV100().then(() => {
+            if (menuViewV16 === "book-settings" && navigationScopeV234() === slug) renderMenuCardsV16();
+          });
+        }
         renderMenuCardsV16();
+        commitNavigationV234(historyMode);
+        if (navigationReadyV234 && restorePosition) restoreNavigationPositionV234(savedRoute);
       }
 
-      async function openQuestionV16(index, { preserveSession = false } = {}) {
+      async function openQuestionV16(index, { preserveSession = false, resume = false, historyMode = "push" } = {}) {
         if (!requireLoginForPlayV187()) return false;
         const requestedQuestion = questionsV16[index];
         if (!requestedQuestion) return false;
@@ -8166,7 +8340,13 @@
         index = resolvedIndex;
         const question = questionsV16[index];
         if (!question) return false;
-        if (!preserveSession && userStateV16.activeSessionId) {
+        captureNavigationV234();
+        const draft = navigationMemoryV234.question(navigationScopeV234(), requestedKey);
+        const savedQuestionRoute = navigationMemoryV234.route(navigationScopeV234(), "question");
+        const restoreDraft = draft && (resume || !draft.revealed);
+        if (menuWasVisible && navigationV234.isBookView(menuViewV16) && menuViewV16 !== "book-settings") questionOriginViewV234 = menuViewV16;
+        else if (restoreDraft) questionOriginViewV234 = draft.originView || "my";
+        if (!preserveSession && !restoreDraft && userStateV16.activeSessionId) {
           userStateV16.activeSessionId = null;
           saveUserStateV16();
         }
@@ -8174,7 +8354,21 @@
         document.getElementById("menuPanel").hidden = true;
         document.querySelector(".page").classList.remove("menu-active");
         applyDesktopLayoutV70();
-        applyQuestionV16(question, index);
+        const appliedKey = JSON.stringify([navigationOwnerV234(), navigationScopeV234(), requestedKey]);
+        if (!restoreDraft || appliedQuestionKeyV234 !== appliedKey) applyQuestionV16(question, index);
+        else currentQuestionIndexV16 = index;
+        appliedQuestionKeyV234 = appliedKey;
+        if (restoreDraft) {
+          const { elapsed, commentText, originView, ...fields } = draft;
+          Object.assign(state, fields);
+          state.questionStartedAt = Date.now() - Math.max(0, elapsed || 0);
+          document.getElementById("commentInput").value = commentText || "";
+          document.getElementById("modelSelect").value = String(state.judgeModel);
+          syncCommentComposerV75(); renderHandV16(); renderAnswerV16(); renderSessionProgressV44();
+        }
+        renderBookNavigationV234();
+        commitNavigationV234(historyMode);
+        if (navigationReadyV234) restoreNavigationPositionV234(resume && savedQuestionRoute?.questionKey === requestedKey ? savedQuestionRoute : null);
         return true;
       }
 
@@ -8197,7 +8391,6 @@
         syncBasicSequenceThemeV163();
         renderActiveCollectionContextV165();
         const learningMetrics = syncLearningMilestoneSnapshotV172().current;
-        const analytics = window.DrillUxV44?.analytics?.({ questions: questionsV16, state: userStateV16, masteredKeys: personalCollectionStateV131().archived, now: new Date() }) || {};
         const learningQuestions = learningScopeQuestionsV184();
         const counts = {
           collections: collectionCatalogOptionsV100().length,
@@ -8205,12 +8398,14 @@
           archive: questionsV16.filter(question => isArchivedV109(question)).length
         };
         document.querySelectorAll("[data-menu-view]").forEach(button => {
-          const active = button.dataset.menuView === menuViewV16 || (menuViewV16 === "archive" && button.dataset.menuView === "my");
+          const active = button.dataset.menuView === navigationV234.globalView(menuViewV16);
           button.classList.toggle("is-active", active);
           button.setAttribute("aria-pressed", String(active));
+          if (active) button.setAttribute("aria-current", "page"); else button.removeAttribute("aria-current");
         });
         const menuPanel = document.getElementById("menuPanel");
         if (menuPanel) menuPanel.dataset.view = menuViewV16;
+        renderBookNavigationV234();
         document.querySelectorAll("[data-menu-count]").forEach(badge => {
           badge.textContent = String(counts[badge.dataset.menuCount] ?? 0);
         });
@@ -8618,8 +8813,8 @@
       }
 
       function renderAnalysisViewV44() {
-        const stats = window.DrillUxV44?.analytics?.({ questions: questionsV16, state: userStateV16, masteredKeys: personalCollectionStateV131().archived, now: new Date() }) || {};
-        const attempts = stats.totalAttempts ?? userStateV16.answerHistory.length;
+        const stats = window.DrillUxV44?.analytics?.({ scope: "collection", questions: questionsV16, state: userStateV16, masteredKeys: personalCollectionStateV131().archived, now: new Date() }) || {};
+        const attempts = stats.totalAttempts ?? 0;
         const averageSeconds = attempts ? ((stats.averageResponseTimeMs ?? 0) / 1000).toFixed(1) : "0.0";
         const safeCount = (stats.scoreCounts?.["◎"] || 0) + (stats.scoreCounts?.["〇"] || 0);
         const safeRate = attempts ? Math.round(safeCount / attempts * 100) : 0;
@@ -9096,16 +9291,21 @@
           empty.hidden = true;
           bindGeneratorV44();
           restoreGeneratorFormDraftV157(generatorFormDraftV157);
+          syncGeneratorDestinationCopyV234();
           return;
         }
         if (menuViewV16 === "analysis") {
-          grid.innerHTML = renderAnalysisViewV44();
+          const total = sharedQuestionKnownTotalV177();
+          const partial = total !== null && total > questionsV16.length;
+          const scopeNote = partial ? `「${collectionDisplayNameV101()}」の取得済み${questionsV16.length} / ${total}問が対象です。未取得の問題は集計に含みません。`
+            : `「${collectionDisplayNameV101()}」の回答履歴だけを集計しています。他の問題集の回答は含みません。`;
+          grid.innerHTML = `<p class="navigation-scope-note-v234">${escapeHtml(scopeNote)}</p>${renderAnalysisViewV44()}`;
           grid.style.display = "block";
           empty.hidden = true;
           return;
         }
         if (menuViewV16 === "settings") {
-          grid.innerHTML = renderSettingsViewV67();
+          grid.innerHTML = `${canViewStudentDashboardV84() ? `<button class="primary" type="button" data-menu-jump="students">生徒の進捗を見る</button>` : ""}${renderSettingsViewV67()}`;
           grid.style.display = "block";
           empty.hidden = true;
           bindSettingsViewV67();
@@ -9129,6 +9329,13 @@
         if (isPagedSharedList && !questionsV16.length && (sharedQuestionPagingV177.loading || sharedQuestionPagingV177.allRequest || sharedQuestionPagingV177.error)) {
           empty.hidden = true;
           grid.innerHTML = `<div class="menu-placeholder" role="status"><strong>${sharedQuestionPagingV177.error ? "問題範囲を読み込めませんでした" : "問題範囲を読み込んでいます"}</strong>${escapeHtml(sharedQuestionPagingV177.error || "100問単位で必要な問題だけを準備しています。")}</div>`;
+          return;
+        }
+        if (menuViewV16 === "book-settings") {
+          grid.innerHTML = `<section class="settings-section">${renderCollectionManagementV100({ bookOnly: true })}</section>`;
+          grid.style.display = "block";
+          empty.hidden = true;
+          bindCollectionManagementV100();
           return;
         }
         const entries = menuFilteredQuestionsV80().map(question => ({ question, index: questionIndexByKeyV44(questionKeyV16(question)) })).filter(({ index }) => index >= 0).sort((left, right) => menuQuestionSortKeyV99(left.question) - menuQuestionSortKeyV99(right.question) || left.index - right.index);
@@ -9684,12 +9891,15 @@
             setGeneratorStatusV44("共有問題集へ追加するにはDiscordログインが必要です。", true);
             return;
           }
-          if (!confirmSharedImpactV47("add", { title: `${indexes.length}件の問題候補` })) return;
         }
+        if (!window.confirm(`保存先「${destination.label}」へ${indexes.length}問を追加しますか？${destination.kind === "shared" ? "この問題集の利用者に反映されます。" : "この端末だけに保存されます。"}`)) return;
+        const expectedDestinationKey = destination.kind === "shared" ? destination.shareSlug : "local";
         let added = 0;
         for (const index of indexes) {
+          const currentDestination = currentGeneratorDestinationV130();
+          if ((currentDestination.kind === "shared" ? currentDestination.shareSlug : currentDestination.kind) !== expectedDestinationKey) break;
           setGeneratorStatusV44(`${added + 1}/${indexes.length}件目を追加しています…`);
-          if (await addGeneratedQuestionV44(index, { skipConfirm: true, suppressRender: true })) {
+          if (await addGeneratedQuestionV44(index, { skipConfirm: true, suppressRender: true, expectedDestinationKey })) {
             generatorSelectedCandidatesV158.delete(index);
             added += 1;
           }
@@ -9703,7 +9913,7 @@
         setGeneratorStageV159(added ? 4 : 3, false);
       }
 
-      async function addGeneratedQuestionV44(index, { skipConfirm = false, suppressRender = false } = {}) {
+      async function addGeneratedQuestionV44(index, { skipConfirm = false, suppressRender = false, expectedDestinationKey = "" } = {}) {
         const candidate = generatorCandidatesV44[index];
         if (!candidate) return false;
         const destination = currentGeneratorDestinationV130();
@@ -9712,6 +9922,10 @@
           return false;
         }
         const destinationKey = destination.kind === "shared" ? destination.shareSlug : "local";
+        if (expectedDestinationKey && destinationKey !== expectedDestinationKey) {
+          setGeneratorStatusV44("保存先が変更されたため追加を中断しました。未追加の候補は残っています。", true);
+          return false;
+        }
         const sameAsCurrentShared = destination.kind === "shared" && String(destination.shareSlug) === String(sharedCollectionV46?.share_slug || "");
         const duplicateKey = `${candidate.id}::${destinationKey}`;
         const localExisting = (destination.kind === "local" || sameAsCurrentShared)
@@ -9730,9 +9944,8 @@
             setGeneratorStatusV44("共有問題集へ追加するにはDiscordログインが必要です。", true);
             return false;
           }
-          const preview = { ...candidate, title: candidate.title || "生成した問題" };
-          if (!skipConfirm && !confirmSharedImpactV47("add", preview)) return false;
         }
+        if (!skipConfirm && !window.confirm(`保存先「${destination.label}」へこの問題を追加しますか？${destination.kind === "shared" ? "この問題集の利用者に反映されます。" : "この端末だけに保存されます。"}`)) return false;
         const nextNumber = destination.kind === "local" || sameAsCurrentShared
           ? nextQuestionNumberV154(questionsV16)
           : 0;
@@ -9830,8 +10043,10 @@
         generatorForm?.addEventListener("change", persistGeneratorFormDraftV157);
         document.querySelectorAll('input[name="generatorMode"]').forEach(input => input.addEventListener("change", syncGeneratorModeV46));
         document.getElementById("generatorDestinationSelect")?.addEventListener("change", event => {
-          generatorDestinationV130 = String(event.currentTarget.value || "local");
+          generatorDestinationV130 = String(event.currentTarget.value || "");
           generatorDestinationExplicitV157 = true;
+          persistGeneratorFormDraftV157();
+          syncGeneratorDestinationCopyV234();
           const results = document.getElementById("generatorResults");
           if (results) {
             results.innerHTML = renderGeneratorCandidatesV44();
@@ -9846,6 +10061,15 @@
       }
 
       function handleMenuGridClickV16(event) {
+        const bookTab = event.target.closest("[data-book-view]");
+        if (bookTab) { showMenuV16(bookTab.dataset.bookView); return; }
+        if (event.target.closest("[data-book-create]")) { openGeneratorNavigationV234(true); return; }
+        if (event.target.closest("[data-book-manage]")) {
+          if (!collectionManagementCanManageV197(sharedCollectionV46)) return;
+          collectionManagementSlugV197 = navigationScopeV234();
+          showMenuV16("book-settings");
+          return;
+        }
         const collectionChooserButton = event.target.closest("[data-open-collection-chooser]");
         if (collectionChooserButton) {
           showMenuV16("collections");
@@ -9865,12 +10089,10 @@
         if (menuJumpButton) {
           const target = String(menuJumpButton.dataset.menuJump || "my");
           if (target === "favorites") {
-            resetMenuListFiltersV191();
             menuFavoritesOnlyV137 = true;
             showMenuV16("my");
           } else {
-            if (["my", "archive"].includes(target)) resetMenuListFiltersV191();
-            menuFavoritesOnlyV137 = false;
+            if (["my", "archive"].includes(target)) menuFavoritesOnlyV137 = false;
             showMenuV16(target);
           }
           return;
@@ -10219,6 +10441,7 @@
       }
 
       async function refreshAccountBodyV153(session = null) {
+        if (navigationMemoryV234.setOwner(String(session?.user?.id || ""))) appliedQuestionKeyV234 = "";
         syncAuthGateForSessionV187(session);
         if (!session) remoteHistorySyncScopeV135 = "";
         window.nagaCurrentUserIdV75 = String(session?.user?.id || "");
@@ -10705,7 +10928,11 @@
           menuRenderLimitV119 += MENU_RENDER_BATCH_V119;
           renderMenuCardsV16();
         });
-        document.querySelectorAll("[data-menu-view]").forEach(button => button.addEventListener("click", () => showMenuV16(button.dataset.menuView)));
+        document.querySelectorAll("[data-menu-view]").forEach(button => button.addEventListener("click", () => {
+          if (button.dataset.menuView === "today") resumeLearningNavigationV234();
+          else if (button.dataset.menuView === "generator") openGeneratorNavigationV234(false);
+          else showMenuV16(button.dataset.menuView);
+        }));
         document.getElementById("quickStart")?.addEventListener("click", event => {
           const button = event.target.closest("[data-session-mode]");
           if (button) startSessionV44(button.dataset.sessionMode);
@@ -10720,7 +10947,11 @@
           resetMenuRenderLimitV119();
           renderMenuCardsV16();
         }));
-        document.getElementById("menuButton").addEventListener("click", () => showMenuV16("my"));
+        document.getElementById("menuButton").addEventListener("click", () => showMenuV16(questionOriginViewV234));
+        document.getElementById("questionBreadcrumb").addEventListener("click", event => {
+          if (event.target.closest("[data-question-shelf]")) showMenuV16("collections");
+          else if (event.target.closest("[data-question-home]")) showMenuV16("today");
+        });
         document.getElementById("menuRangeAllButton").addEventListener("click", () => { void setMenuRangeV137("all"); });
         document.getElementById("menuRangePreviousButton").addEventListener("click", () => moveMenuRangeV137(-1));
         document.getElementById("menuRangeNextButton").addEventListener("click", () => moveMenuRangeV137(1));
@@ -10762,6 +10993,14 @@
         document.getElementById("markAllCommentsReadButton").addEventListener("click", markAllCommentsReadV65);
         window.addEventListener("resize", applyDesktopLayoutV70, { passive: true });
         window.addEventListener("popstate", () => { void handleCollectionHistoryV214(); });
+        const initialRouteV234 = window.history.state?.minkiruNavigationV234;
+        const initialViewV234 = new URL(window.location.href).searchParams.get("view");
+        if (!requestedExistingQuestionId) {
+          if (navigationMemoryV234.accepts(initialRouteV234)) await restoreNavigationRouteV234(initialRouteV234);
+          else if (initialViewV234 && MENU_VIEW_COPY_V16[initialViewV234]) showMenuV16(initialViewV234, { historyMode: "none" });
+        }
+        navigationReadyV234 = true;
+        commitNavigationV234("replace");
         applyDesktopLayoutV70();
         document.getElementById("commentNotificationList").addEventListener("click", event => {
           const button = event.target.closest("[data-community-notification-question]");

@@ -158,10 +158,12 @@ test("supports private collection spaces and owner-reviewed access requests", as
   assert.match(clientSource, /loadMyCollections|loadCollectionDirectory|requestCollectionAccess|reviewCollectionAccess|revokeCollectionAccess/i);
   assert.match(clientSource, /rpc\("create_collection"/i);
   assert.match(clientSource, /rpc\("import_shared_question"/i);
-  assert.match(html, /const APP_VERSION = 233/);
+  assert.match(html, /const APP_VERSION = 234/);
   assert.match(html, /id="collectionSpacePanel"/);
-  assert.doesNotMatch(html, /data-menu-view="collections"/);
-  assert.match(html, /data-menu-view="today"[^>]*><span class="menu-nav-icon"[^>]*>▶<\/span><span>学習する<\/span>/);
+  const navigation = html.match(/<nav class="menu-nav"[\s\S]*?<\/nav>/)?.[0] || "";
+  assert.match(navigation, /data-menu-view="collections"[^>]*>[\s\S]*?<span>本棚<\/span>/);
+  assert.match(navigation, /data-menu-view="today"[^>]*><span class="menu-nav-icon"[^>]*>▶<\/span><span>学ぶ<\/span>/);
+  assert.doesNotMatch(navigation, /data-menu-view="analysis"/);
   assert.match(html, /collectionCreateFormMarkupV106/);
   assert.match(html, /id="collectionCreateInlinePanel"/);
   assert.match(html, /collectionCreateFormMarkupV106\("collectionCreateInline"\)/);
@@ -206,7 +208,7 @@ test("preassigns the verified Kakisaki Nima account as the collection owner", as
   assert.match(migration, /public\.answer_attempts/);
   assert.match(migration, /title = '垣崎にま問題集'/i);
   assert.match(migration, /set owner_id = target_user_id/i);
-  assert.match(html, /const APP_VERSION = 233/);
+  assert.match(html, /const APP_VERSION = 234/);
   assert.match(html, /垣崎にまさんを問題集オーナーに設定しました/);
 });
 

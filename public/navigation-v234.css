@@ -1,0 +1,44 @@
+/* V234: app navigation and the open book have separate, compact scopes. */
+.book-context-v234 { margin: 0 0 14px; padding: 10px 12px; background: #112b35; border: 1px solid #34545d; border-radius: 10px; }
+.book-context-v234[hidden], .book-actions-v234[hidden], .book-actions-v234 button[hidden] { display: none; }
+.book-context-title-v234 { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.book-context-title-v234 strong { min-width: 0; color: #fff2c8; font-size: 18px; line-height: 1.4; overflow-wrap: anywhere; }
+.book-context-title-v234 button { flex-shrink: 0; min-height: 44px; padding: 5px 8px; border: 0; background: transparent; color: #bfe9ee; font-size: 13px; }
+.book-tabs-v234 { display: grid; grid-template-columns: 1fr 1fr 1.15fr; gap: 4px; margin-top: 7px; padding-top: 7px; border-top: 1px solid #36505a; }
+.book-tabs-v234 button { min-width: 0; min-height: 44px; padding: 7px 5px; font-size: 14px; font-weight: 800; color: #b8dce7; background: transparent; border: 1px solid transparent; border-radius: 7px; }
+.book-tabs-v234 button.is-active { color: #fff4d1; background: #4b3e22; border-color: #b89646; }
+.book-actions-v234 { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 6px; margin-top: 5px; }
+.book-actions-v234 button { min-height: 36px; padding: 4px 8px; font-size: 12px; color: #bcdde2; border: 1px solid #36545e; background: transparent; border-radius: 6px; }
+.book-context-v234 button:focus-visible, .question-breadcrumb-button-v234:focus-visible { outline: 2px solid #ffdb7d; outline-offset: 2px; }
+.question-breadcrumb-button-v234 { display: inline; padding: 0 3px; border: 0; background: transparent; color: inherit; font: inherit; text-decoration: underline; text-underline-offset: 3px; }
+.navigation-scope-note-v234 { margin: 0 0 12px; color: #b4d0da; font-size: 13px; line-height: 1.6; }
+.generator-destination p { min-height: 1.6em; }
+.page.menu-active .menu-panel[data-view="today"] #menuGrid .learning-tabs { display: none; }
+.page.menu-active .menu-panel[data-global-view="settings"] .menu-sidebar-progress,
+.page.menu-active .menu-panel[data-global-view="generator"] .menu-sidebar-progress,
+.page.menu-active .menu-panel[data-global-view="settings"] .active-collection-button,
+.page.menu-active .menu-panel[data-global-view="generator"] .active-collection-button { display: none; }
+.page.menu-active .menu-content .book-context-v234 + .menu-heading { margin-top: 0; }
+.page.menu-active .menu-panel[data-view="book-settings"] .collection-management-picker { display: none; }
+.page.menu-active .menu-panel[data-view="book-settings"] .settings-section > .settings-divider:first-child { display: none; }
+.page.menu-active .menu-panel[data-view="book-settings"] .collection-management { margin-top: 0; }
+@media (max-width: 800px) {
+  /* A 320px viewport can have only 305px after a desktop scrollbar. */
+  body { min-width: 0; }
+  .page.menu-active .menu-sidebar > #studentHistoryNav { display: none; }
+  .page.menu-active .book-context-v234 { position: sticky; top: 0; z-index: 24; margin: -4px 0 10px; padding: 6px 8px; border-radius: 8px; }
+  .book-context-title-v234 { gap: 5px; }
+  .book-context-title-v234 strong { font-size: 15px; }
+  .book-context-title-v234 button { font-size: 12px; padding: 5px; }
+  .book-tabs-v234 { margin-top: 0; padding-top: 4px; gap: 2px; }
+  .book-tabs-v234 button { font-size: 13px; }
+  .book-actions-v234 { margin-top: 3px; }
+  .book-actions-v234 button { min-height: 32px; font-size: 11px; }
+  .page.menu-active .menu-sidebar .menu-nav { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .page.menu-active .menu-sidebar .menu-nav-button { min-width: 0; }
+  .page.menu-active .menu-panel[data-view="my"] .menu-heading,
+  .page.menu-active .menu-panel[data-view="archive"] .menu-heading { gap: 6px; margin-bottom: 8px; }
+  .page.menu-active .menu-panel[data-view="my"] #menuTitle,
+  .page.menu-active .menu-panel[data-view="archive"] #menuTitle { font-size: 26px; }
+  .page.menu-active .menu-context-tabs { margin-top: 0; margin-bottom: 10px; }
+}

@@ -7,10 +7,15 @@ const migrationUrl = new URL("../supabase/migrations/20260903090000_remove_gener
 
 async function cleanupHelpers() {
   const html = await readFile(indexUrl, "utf8");
-  const start = html.indexOf("      const GENERATED_QUESTION_COMMENT_CONTENTS_V220");
-  const end = html.indexOf("      let userStateV16 = loadUserStateV16();", start);
-  assert.ok(start >= 0 && end > start, "V220 comment cleanup helpers should be present");
-  return new Function(`${html.slice(start, end)}\nreturn { isLegacyGeneratedQuestionCommentV220, stripLegacyGeneratedQuestionCommentsV220 };`)();
+  const constant = html.match(/const GENERATED_QUESTION_COMMENT_CONTENTS_V220 = new Set\(\[[\s\S]*?\]\);/)?.[0];
+  assert.ok(constant, "V220 comment allowlist should be present");
+  const helpers = ["isLegacyGeneratedQuestionCommentV220", "stripLegacyGeneratedQuestionCommentsV220"].map(name => {
+    const body = html.match(new RegExp(`      function ${name}\\([^\\n]*\\) \\{[\\s\\S]*?\\n      \\}`))?.[0];
+    assert.ok(body, `${name} should have a bounded function body`);
+    return body;
+  });
+  // Do not evaluate unrelated navigation initialization between the allowlist and helpers.
+  return new Function(`${constant}\n${helpers.join("\n")}\nreturn { isLegacyGeneratedQuestionCommentV220, stripLegacyGeneratedQuestionCommentsV220 };`)();
 }
 
 test("V220 strips only legacy automatic generator comments from local question state", async () => {
@@ -35,13 +40,19 @@ test("V220 strips only legacy automatic generator comments from local question s
   }), false);
 
   const userComment = { id: "comment-789", author: "利用者", content: "残すコメント", attachments: [] };
-  const cleaned = stripLegacyGeneratedQuestionCommentsV220({
+  const original = {
     comments: [
       { id: "generated-123", author: "問題生成", content: "NAGA URLから作成した問題です。", attachments: [] },
       userComment
     ]
-  });
+  };
+  const before = structuredClone(original);
+  const cleaned = stripLegacyGeneratedQuestionCommentsV220(original);
   assert.deepEqual(cleaned.comments, [userComment]);
+  assert.deepEqual(original, before, "cleanup must not mutate the original question or user comments");
+  const withAttachment = { id: "generated-456", author: "問題生成", content: "NAGA URLから作成した問題です。", attachments: [{ id: "keep" }] };
+  assert.equal(isLegacyGeneratedQuestionCommentV220(withAttachment), false);
+  assert.deepEqual(stripLegacyGeneratedQuestionCommentsV220({ comments: [withAttachment] }).comments, [withAttachment]);
 });
 
 test("V220 records the same narrow cleanup predicate for the live Supabase data", async () => {

@@ -709,7 +709,6 @@
     var state = migrateState(settings.state);
     var entries = historyArray(state).slice();
     var masteredKeys = settings.masteredKeys;
-    var summary = summarizeAnswers(entries);
     var questionMap = Object.create(null);
     questions.forEach(function (question) {
       var key = questionKey(question);
@@ -717,6 +716,32 @@
         questionMap[key] = question;
       }
     });
+
+    if (settings.scope === "collection") {
+      // Preserve full key precedence; do not re-key by server id or number.
+      entries = entries.filter(function (entry) {
+        return hasOwn(questionMap, answerKey(entry));
+      });
+      state.answerHistory = entries;
+      // Unscoped study dates cannot establish this collection's streak.
+      state.studyDates = [];
+
+      // Optional [from, to) period, using timestamps or ISO strings. Keep the
+      // all-time scoped history above for current mastery (latest answer or
+      // explicit archived key), rather than rewinding it to the chosen period.
+      var period = isRecord(settings.period) ? settings.period : {};
+      var hasFrom = period.from !== undefined && period.from !== null && period.from !== "";
+      var hasTo = period.to !== undefined && period.to !== null && period.to !== "";
+      var from = hasFrom ? timeMs(period.from) : -Infinity;
+      var to = hasTo ? timeMs(period.to) : Infinity;
+      if (hasFrom || hasTo) {
+        entries = entries.filter(function (entry) {
+          var at = answerAt(entry);
+          return from !== null && to !== null && at !== null && at >= from && at < to;
+        });
+      }
+    }
+    var summary = summarizeAnswers(entries);
 
     var breakdownEntries = { discard: [], call: [], riichi: [] };
     entries.forEach(function (entry) {
