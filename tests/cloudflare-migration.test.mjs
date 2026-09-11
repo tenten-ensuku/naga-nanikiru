@@ -33,7 +33,8 @@ test('D1 batch constraint failure rolls back data and migration marker together'
   assert.equal(await db.prepare('SELECT count(*) n FROM migration_batches').first('n'),0);
 });
 test('source-scene uniqueness preserves PostgreSQL NULLS NOT DISTINCT semantics',t=>{
-  const db=testD1();t.after(()=>db.close());
+  // V232's import contract, before V235 adds independent manual questions.
+  const db=testD1({builder:false});t.after(()=>db.close());
   db.sqlite.exec("INSERT INTO profiles(id) VALUES ('u'); INSERT INTO collections(id,owner_id,title,share_slug) VALUES ('c','u','fixture','fixture')");
   db.sqlite.exec("INSERT INTO questions(id,collection_id,created_by) VALUES ('q','c','u')");
   assert.throws(()=>db.sqlite.exec("INSERT INTO questions(id,collection_id,created_by) VALUES ('q2','c','u')"));

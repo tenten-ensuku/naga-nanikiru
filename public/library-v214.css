@@ -252,6 +252,9 @@
 .library-tone-forest { --book-tint: #3d5235; }
 .library-tone-burgundy { --book-tint: #633333; }
 .library-tone-ivory { --book-tint: #d5cdc1; }
+.library-tone-plum { --book-tint: #62406f; }
+.library-tone-teal { --book-tint: #27635f; }
+.library-tone-ochre { --book-tint: #a17930; }
 .library-tone-ivory .library-spine-art { filter: saturate(.4) brightness(1.45); }
 
 .library-book-title {

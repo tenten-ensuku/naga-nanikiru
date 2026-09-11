@@ -1,0 +1,31 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import vm from 'node:vm';
+import {testD1} from './helpers/cloudflare-d1.mjs';
+import {readRpc} from '../cloudflare/read-api.mjs';
+import {builderRpc} from '../cloudflare/collection-builder-v235.mjs';
+const html=fs.readFileSync(new URL('../public/index.html',import.meta.url),'utf8');
+const context=vm.createContext({});vm.runInContext(fs.readFileSync(new URL('../public/book-builder-v235.js',import.meta.url),'utf8'),context);const ui=context.MinkiruBookBuilderV235;
+test('8 labeled colors, consistent real spine asset, keyboard inputs and no generated tiles',()=>{assert.equal(ui.tones.length,8);assert.equal((ui.palette('test','teal').match(/ checked/g)||[]).length,1);assert.match(ui.appearance('test'),/assets\/library-v214\/spine.webp/);assert.match(ui.appearance('test'),/195問/);});
+test('capacity warning begins at 195, escapes titles, has a 200 cap and permission-aware CTA',()=>{const c={collection_title:'<img src=x>',question_count:194,next_title:'次巻',can_create_volume:true};assert.doesNotMatch(ui.capacityMarkup(c),/data-next-volume/);const warning=ui.capacityMarkup({...c,question_count:195});assert.match(warning,/あと5問/);assert.match(warning,/data-next-volume/);assert.ok(!warning.includes('<img'));assert.doesNotMatch(ui.capacityMarkup({...c,question_count:200,can_create_volume:false}),/data-next-volume/);assert.match(ui.capacityMarkup(null),/確認できません/);});
+test('page integrates builder, keeps explicit destination and resets draft across accounts',()=>{assert.match(html,/const APP_VERSION = 235/);assert.match(html,/renderCreateHubV235\(\) \+ renderGeneratorViewV44/);assert.match(html,/bookCreateDraftV235 = null; capacityRequestV235 \+= 1/);assert.match(html,/bookTone, requestId:form.dataset.requestId/);assert.match(html,/if \(result\?\.capacity_reached\)/);assert.match(html,/sameAsCurrentShared = question.sharedCollectionSlug === sharedCollectionV46\?\.share_slug/);});
+test('broken historical rows read consistently across pages and details, and next insert is 4',async t=>{
+  const db=testD1();t.after(()=>db.close());db.sqlite.exec(`INSERT INTO profiles(id,display_name) VALUES('owner','所有者');INSERT INTO collections(id,owner_id,title,share_slug) VALUES('c','owner','いのっち型','book');`);
+  const payload=JSON.stringify({number:null,title:'問題-Infinity',answer:'保持'});
+  for(let i=1;i<=3;i++)db.sqlite.prepare("INSERT INTO questions(id,collection_id,created_by,title,sort_order,payload,created_at) VALUES(?,'c','owner','問題-Infinity',0,?,?)").run('q'+i,payload,'2026-01-0'+i);
+  const ctx={db,actor:{id:'owner'}};
+  const page1=await readRpc('get_shared_question_index_page',{p_share_slug:'book',p_limit:2},ctx),page2=await readRpc('get_shared_question_index_page',{p_share_slug:'book',p_limit:2,p_offset:2},ctx);
+  assert.deepEqual([...page1,...page2].map(q=>q.question_number),[1,2,3]);assert.deepEqual([...page1,...page2].map(q=>q.title),['問題1','問題2','問題3']);
+  const detail=(await readRpc('get_shared_question_detail',{p_share_slug:'book',p_question_id:'q3'},ctx))[0];assert.equal(detail.payload.number,3);assert.equal(detail.payload.title,'問題3');assert.equal(detail.payload.answer,'保持');
+  assert.equal(db.sqlite.prepare("SELECT payload FROM questions WHERE id='q3'").get().payload,payload);
+  const created=await builderRpc('create_shared_question',{p_share_slug:'book',p_title:'生成候補',p_payload:{id:'next'}},ctx);assert.equal(created.question_number,4);
+  const after=await readRpc('get_shared_question_index_page',{p_share_slug:'book'},ctx);assert.deepEqual(after.map(q=>q.question_number),[1,2,3,4]);
+});
+test('new series remains visible with its colors in private catalog and volumes',async t=>{
+  const db=testD1();t.after(()=>db.close());db.sqlite.exec(`INSERT INTO profiles(id,display_name) VALUES('owner','所有者');INSERT INTO collections(id,owner_id,title,share_slug,book_tone) VALUES('c','owner','自分の本','book','plum');`);
+  for(let i=0;i<195;i++)db.sqlite.prepare("INSERT INTO questions(id,collection_id,created_by,payload) VALUES(?,'c','owner',?)").run('q'+i,JSON.stringify({number:i+1}));
+  const ctx={db,actor:{id:'owner'}},next=await builderRpc('create_collection_volume',{p_share_slug:'book'},ctx);
+  const mine=await readRpc('list_my_collections',{},ctx),root=mine.find(c=>c.is_series_parent);assert.ok(root);assert.equal(root.volume_count,2);assert.equal(mine.find(c=>c.id===next.id).book_tone,'plum');assert.equal(mine.find(c=>c.id==='c').series_parent_slug,root.share_slug);
+  assert.equal((await readRpc('get_collection_volumes',{p_share_slug:root.share_slug},ctx)).length,2);
+});

@@ -31,6 +31,17 @@ test('request bodies are streamed with a strict byte bound and content type',asy
   await assert.rejects(jsonBody(req('/',{body:'x'.repeat(9000)}),1024),e=>e.status===413);
   await assert.rejects(jsonBody(new Request(origin,{method:'POST',body:'[]',headers:{'Content-Type':'application/json'}})),e=>e.status===400);
 });
+
+test('V235 builder uses the same session, CSRF and rate limit boundary',async t=>{
+  const env=await setup(t);env.COLLECTION_BUILDER_ENABLED='true';
+  const args={p_title:'ローカル検証',p_book_tone:'navy',p_request_id:crypto.randomUUID()};
+  assert.equal((await worker.fetch(req('/api/rpc/create_collection',args,{'X-Minkiru-CSRF':'wrong'}),env)).status,403);
+  const created=await worker.fetch(req('/api/rpc/create_collection',args),env);
+  assert.equal(created.status,200);const body=await created.json();assert.equal(body.data.owner_id,'student');assert.equal(body.data.book_tone,'navy');
+  const replay=await (await worker.fetch(req('/api/rpc/create_collection',args),env)).json();assert.equal(replay.data.id,body.data.id);
+  env.WRITE_LIMIT={limit:async()=>({success:false})};assert.equal((await worker.fetch(req('/api/rpc/create_collection',{...args,p_request_id:crypto.randomUUID()}),env)).status,429);
+  assert.equal((await worker.fetch(req('/v1/upload',{}),env)).status,503);
+});
 test('interrupted browser OAuth has a readable safe return page',async t=>{
   const env=await setup(t);
   const response=await worker.fetch(new Request(origin+'/auth/discord/callback?code=do-not-echo',{headers:{Accept:'text/html'}}),env);

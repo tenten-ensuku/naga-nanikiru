@@ -19,9 +19,9 @@ function functionBlock(source, name, nextName) {
 
 test("V233 aligns the mobile toolbar version, labels, and accessible names", async () => {
   const html = await readFile(indexPath, "utf8");
-  assert.match(html, /const APP_VERSION = 234;/);
-  assert.match(html, /ux-v159\.css\?v=234/);
-  assert.match(html, /legacy-transfer-v232\.js\?v=234/);
+  assert.match(html, /const APP_VERSION = 235;/);
+  assert.match(html, /ux-v159\.css\?v=235/);
+  assert.match(html, /legacy-transfer-v232\.js\?v=235/);
 
   const sourceBar = html.match(/<div class="source-bar">[\s\S]*?<\/div>\s*\n\s*<div class="session-strip"/)?.[0] || "";
   assert.ok(sourceBar, "question source bar should remain a single toolbar block");

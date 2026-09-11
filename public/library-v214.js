@@ -26,6 +26,7 @@
     ? `<span>${escape(title.slice(0, -3))}</span><small>問題集</small>` : escape(title);
 
   function bookTone(row) {
+    if (["walnut", "navy", "forest", "burgundy", "ivory", "plum", "teal", "ochre"].includes(row?.book_tone)) return row.book_tone;
     const title = String(row?.series_title || row?.display_title || row?.title || "");
     if (/基本序列/.test(title)) return "ivory";
     if (/ピエール/.test(title)) return "walnut";

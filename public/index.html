@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=234">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=234">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=234">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=235">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=235">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=235">
   <title>みん切る｜みんなの何切る問題集</title>
   <meta name="description" content="みん切るは、NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリです。">
   <meta name="theme-color" content="#06131e">
@@ -2189,9 +2189,10 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=234">
-  <link rel="stylesheet" href="library-v214.css?v=234">
-  <link rel="stylesheet" href="navigation-v234.css?v=234">
+  <link rel="stylesheet" href="ux-v159.css?v=235">
+  <link rel="stylesheet" href="library-v214.css?v=235">
+  <link rel="stylesheet" href="navigation-v234.css?v=235">
+  <link rel="stylesheet" href="book-builder-v235.css?v=235">
 </head>
 <body class="auth-gate-open">
   <main class="page" inert aria-hidden="true">
@@ -2528,17 +2529,18 @@
   </dialog>
 
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=234"></script>
-  <script defer src="legacy-transfer-v232.js?v=234"></script>
-  <script src="drill-ux-v44.js?v=234"></script>
-  <script src="navigation-v234.js?v=234"></script>
-  <script src="library-order-v215.js?v=234"></script>
-  <script src="library-v214.js?v=234"></script>
+  <script src="supabase-sync-v48.js?v=235"></script>
+  <script defer src="legacy-transfer-v232.js?v=235"></script>
+  <script src="drill-ux-v44.js?v=235"></script>
+  <script src="navigation-v234.js?v=235"></script>
+  <script src="book-builder-v235.js?v=235"></script>
+  <script src="library-order-v215.js?v=235"></script>
+  <script src="library-v214.js?v=235"></script>
   <script src="naga-generator-v44.js"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 234;
+    const APP_VERSION = 235;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -4582,6 +4584,7 @@
       const QUESTION_NOTICE_STORAGE_KEY_V66 = storageKey("question-notices-v1");
         const ANNOUNCEMENT_SEEN_STORAGE_KEY_V65 = storageKey("announcement-seen-v1");
         const APP_ANNOUNCEMENTS_V66 = [
+          { version: 235, date: "2026-09-12", publishedAt: "2026-09-12T06:00:00+09:00", title: "自分らしい色の問題集をつくれます", body: "「つくる」に背表紙プレビュー付きの問題集作成を追加。8色から選べて、後から変更もできます。1冊200問まで、195問から次巻をご案内します。いのっち問題集の番号表示も修正しました。NAGAの新規解析と画像アップロードは別途移行確認中です。" },
           { version: 234, date: "2026-09-10", publishedAt: "2026-09-10T21:54:00+09:00", title: "学習中の本とアプリ全体のメニューを分けました", body: "下部メニューを「本棚・学ぶ・つくる・マイページ」に整理しました。学習中の本では「学習・問題一覧・この本の成績」を切り替えられます。本棚や学習への戻り先を明示し、一覧の絞り込み・スクロール位置・選びかけの牌を画面移動後も保持します。問題生成の保存先と、本の管理・個人設定も分けました。" },
           { version: 229, date: "2026-09-04", publishedAt: "2026-09-04T15:00:00+09:00", title: "復旧のお知らせを更新しました", body: "現在、システム調整および復旧対応を進めています。2026年9月6日から順次復旧予定です。" },
           { version: 227, date: "2026-09-04", publishedAt: "2026-09-04T12:55:00+09:00", title: "バックグラウンド通信を軽量化しました", body: "非表示タブと重複タブの定期通信を停止し、問題一覧の周期的な再取得を廃止しました。通知を開いた時は最新のコメントと追加問題を確認できます。" },
@@ -4763,6 +4766,7 @@
       function normalizeQuestionTitleV79(title, number) {
         const fallback = `問題${number ?? ""}`;
         const value = String(title || "").trim() || fallback;
+        if (/^(?:(?:追加)?問題[-‐–—:：\s]*)?[+-]?(?:Infinity|NaN|undefined|null)$/i.test(value)) return fallback;
         return value.replace(/^追加問題(?=\d|$)/, "問題");
       }
 
@@ -5731,8 +5735,10 @@
         return `<option value=""${!defaultValue ? " selected" : ""}>保存先を選んでください</option><option value="local"${defaultValue === "local" ? " selected" : ""}>この端末だけに保存</option>${rows.map(row => {
           const slug = String(row.share_slug || "");
           const role = row.can_manage ? "所有者" : "編集可";
-          const seriesNote = isSeriesParentCollectionV180(row) ? "・番号に応じて巻へ保存" : "";
-          return `<option value="${escapeHtml(slug)}"${slug === defaultValue ? " selected" : ""}>${escapeHtml(row.display_title || collectionDisplayNameV101(row))}（${role}${seriesNote}）</option>`;
+          const seriesNote = isSeriesParentCollectionV180(row) ? "・最新巻へ保存" : "";
+          const baseTitle = row.display_title || collectionDisplayNameV101(row);
+          const title = row.volume_number && !/第\d+巻/.test(baseTitle) ? `${baseTitle} 第${row.volume_number}巻` : baseTitle;
+          return `<option value="${escapeHtml(slug)}"${slug === defaultValue ? " selected" : ""}>${escapeHtml(title)}（${role}${seriesNote}）</option>`;
         }).join("")}`;
       }
 
@@ -5811,8 +5817,16 @@
           status.classList.remove("is-error");
           status.textContent = "インポート中…";
           try {
-            await window.NagaSupabase.importSharedQuestion(question.serverQuestionId, targetSlug);
-            status.textContent = "インポートしました。移行先で問題番号を自動採番しています。";
+            let result = await window.NagaSupabase.importSharedQuestion(question.serverQuestionId, targetSlug);
+            if (result?.capacity_reached) {
+              if (!result.can_create_volume || !window.confirm(`一冊の問題集に収録できるのは200問までです。\n「${result.next_title}」を作成して、そちらへ追加しますか？`)) {
+                status.textContent = "この巻は200問に達しています。次巻を用意して保存先を変更してください。"; button.disabled = false; return;
+              }
+              const next = await window.NagaSupabase.createCollectionVolume(result.share_slug, result.next_volume);
+              result = await window.NagaSupabase.importSharedQuestion(question.serverQuestionId, next.share_slug);
+            }
+            if (result?.capacity_reached) throw new Error("追加先は満杯です。問題は追加していません。");
+            status.textContent = result?.already_exists ? "この問題は保存先に登録済みです。" : `インポートしました。${result?.question_count >= 195 ? "195問を超えました。「つくる」で次巻を作成できます。" : "移行先で問題番号を自動採番しています。"}`;
             await refreshCollectionAccessStateV100();
             window.setTimeout(() => document.getElementById("importQuestionDialog")?.close(), 900);
           } catch (error) {
@@ -5824,7 +5838,46 @@
       }
 
       function collectionCreateFormMarkupV106(prefix = "collectionCreate") {
-        return `<form class="settings-form collection-create-form" id="${prefix}Form"><label for="${prefix}Title">問題集名<input id="${prefix}Title" maxlength="80" required placeholder="例：ピエール問題集"></label><label for="${prefix}Description">説明（任意）<textarea id="${prefix}Description" maxlength="500" rows="3" placeholder="この問題集の説明"></textarea></label><label for="${prefix}Visibility">作成する問題集の公開範囲<select id="${prefix}Visibility"><option value="private" selected>プライベート（自分だけ）</option><option value="request">承認許可制（許可した人だけ）</option><option value="public">全体公開（誰でも閲覧）</option></select></label><p class="settings-form-note">初期値は必ずプライベートです。承認許可制では問題集名だけ公開され、申請が承認されるまで問題は表示されません。</p><div class="settings-form-actions"><button class="primary" type="submit">問題集を作成</button><span class="settings-form-status" id="${prefix}Status" aria-live="polite"></span></div></form>`;
+        return `<form class="settings-form collection-create-form" id="${prefix}Form"><label for="${prefix}Title">問題集名<input id="${prefix}Title" maxlength="80" required placeholder="例：自分の名前＋問題集"></label>${window.MinkiruBookBuilderV235.appearance(prefix)}<label for="${prefix}Description">説明（任意）<textarea id="${prefix}Description" maxlength="500" rows="2" placeholder="どんなことを学べる一冊ですか？"></textarea></label><label for="${prefix}Visibility">作成する問題集の公開範囲<select id="${prefix}Visibility"><option value="private" selected>プライベート（自分だけ）</option><option value="request">承認許可制（許可した人だけ）</option><option value="public">全体公開（誰でも閲覧）</option></select></label><p class="settings-form-note">初期値は必ずプライベートです。承認許可制では問題集名だけ公開され、申請が承認されるまで問題は表示されません。</p><div class="settings-form-actions"><button class="primary" type="submit">問題集を作成</button><span class="settings-form-status" id="${prefix}Status" aria-live="polite"></span></div></form>`;
+      }
+
+      let bookCreateDraftV235 = null;
+      let capacityRequestV235 = 0;
+      function renderCreateHubV235() {
+        return `<section class="create-hub-v235"><h3>自分の一冊をつくる</h3><p>まずは空の問題集を用意。問題を追加すると、選んだ色の本に収録されます。</p><details id="bookCreateDetailsV235"${bookCreateDraftV235?.open ? " open" : ""}><summary>＋ 新しい問題集をつくる</summary>${collectionCreateFormMarkupV106("bookCreateV235")}</details></section>`;
+      }
+      async function refreshBookCapacityV235() {
+        const container = document.getElementById("bookCapacityV235");
+        if (!container || window.NAGA_RUNTIME_CONFIG?.backend !== "cloudflare") return;
+        const destination = currentGeneratorDestinationV130();
+        const request = ++capacityRequestV235;
+        container.hidden = destination.kind !== "shared";
+        if (container.hidden) return;
+        container.textContent = "収録数を確認しています…";
+        try {
+          const info = await window.NagaSupabase.collectionCapacity(destination.shareSlug);
+          if (request !== capacityRequestV235 || !container.isConnected) return;
+          container.innerHTML = window.MinkiruBookBuilderV235.capacityMarkup(info);
+          container.querySelector("[data-next-volume-v235]")?.addEventListener("click", async event => {
+            const button = event.currentTarget;
+            if (!info.next_share_slug && !window.confirm(`「${info.next_title}」を作成して保存先にしますか？\n色・公開範囲・メンバーを引き継ぎます。元の問題はそのまま残ります。`)) return;
+            button.disabled = true;
+            try {
+              const created = info.next_share_slug ? {share_slug: info.next_share_slug} : await window.NagaSupabase.createCollectionVolume(info.share_slug, info.next_volume);
+              const slug = String(created?.share_slug || "");
+              if (!slug) throw new Error("次の巻を確認できませんでした。もう一度お試しください。");
+              await refreshCollectionAccessStateV100();
+              const book = await window.NagaSupabase.collectionInfo(slug);
+              collectionCatalogV100 = [...collectionCatalogV100.filter(row => row.share_slug !== slug), {...book, share_slug:slug}];
+              generatorDestinationV130 = slug; generatorDestinationExplicitV157 = true;
+              persistGeneratorFormDraftV157(); renderMenuCardsV16();
+            } catch (error) {
+              const message = document.createElement("p"); message.textContent = error?.message || "次巻を作成できませんでした。"; container.append(message); button.disabled = false;
+            }
+          });
+        } catch (error) {
+          if (request === capacityRequestV235 && container.isConnected) container.textContent = "収録数を確認できませんでした。保存先を選び直してください。";
+        }
       }
 
       async function switchCollectionInPlaceV177(value, previousView, previousUrl, previousState) {
@@ -5986,6 +6039,8 @@
           open: true,
           title: String(document.getElementById("collectionCreateInlineTitle")?.value || ""),
           description: String(document.getElementById("collectionCreateInlineDescription")?.value || ""),
+          tone: document.querySelector('input[name="collectionCreateInlineTone"]:checked')?.value || "walnut",
+          requestId: document.getElementById("collectionCreateInlineForm")?.dataset.requestId,
           visibility: ["private", "request", "public"].includes(visibility) ? visibility : "private"
         };
       }
@@ -6003,11 +6058,32 @@
         if (title) title.value = draft.title;
         if (description) description.value = draft.description;
         if (visibility) visibility.value = draft.visibility;
+        const form = document.getElementById("collectionCreateInlineForm");
+        const tone = form?.querySelector(`input[name="collectionCreateInlineTone"][value="${window.MinkiruBookBuilderV235.tones.some(row => row[0] === draft.tone) ? draft.tone : "walnut"}"]`);
+        if (tone) tone.checked = true;
+        if (form && draft.requestId) form.dataset.requestId = draft.requestId;
+        if (form) window.MinkiruBookBuilderV235.bindPreview(form, "collectionCreateInline");
       }
 
       function bindCollectionCreateFormV106(prefix = "collectionCreate") {
         const form = document.getElementById(`${prefix}Form`);
         if (!form) return;
+        form.dataset.requestId ||= (prefix === "bookCreateV235" ? bookCreateDraftV235?.requestId : null) || crypto.randomUUID();
+        const updatePreview = window.MinkiruBookBuilderV235.bindPreview(form, prefix);
+        if (prefix === "bookCreateV235" && bookCreateDraftV235) {
+          for (const [field, value] of Object.entries(bookCreateDraftV235)) {
+            const input = document.getElementById(`${prefix}${field}`); if (input) input.value = value;
+          }
+          const color = form.querySelector(`input[name="${prefix}Tone"][value="${bookCreateDraftV235.Tone}"]`); if (color) color.checked = true;
+          updatePreview();
+        }
+        const remember = () => { if (form.isConnected && prefix === "bookCreateV235") bookCreateDraftV235 = {
+          Title:document.getElementById(`${prefix}Title`).value, Description:document.getElementById(`${prefix}Description`).value,
+          Visibility:document.getElementById(`${prefix}Visibility`).value, Tone:form.querySelector(`input[name="${prefix}Tone"]:checked`)?.value || "walnut",
+          requestId:form.dataset.requestId, open:document.getElementById("bookCreateDetailsV235")?.open
+        }; };
+        form.addEventListener("input", remember); form.addEventListener("change", remember);
+        document.getElementById("bookCreateDetailsV235")?.addEventListener("toggle", remember);
         form.addEventListener("submit", async event => {
           event.preventDefault();
           const title = String(document.getElementById(`${prefix}Title`)?.value || "").trim();
@@ -6026,10 +6102,17 @@
           status.classList.remove("is-error");
           status.textContent = "作成中…";
           try {
-            const created = await window.NagaSupabase.createCollection({ title, description, visibility });
+            const bookTone = form.querySelector(`input[name="${prefix}Tone"]:checked`)?.value || "walnut";
+            const created = await window.NagaSupabase.createCollection({ title, description, visibility, bookTone, requestId:form.dataset.requestId });
             const shareSlug = String(created?.share_slug || "").trim();
             if (!shareSlug) throw new Error("問題集は作成されましたが、問題集URLを取得できませんでした。問題集一覧から開き直してください。");
-            navigateToCollectionV106(shareSlug);
+            bookCreateDraftV235 = null;
+            if (prefix === "bookCreateV235") {
+              await refreshCollectionAccessStateV100();
+              generatorDestinationV130 = shareSlug; generatorDestinationExplicitV157 = true;
+              persistGeneratorFormDraftV157(); renderMenuCardsV16();
+              setGeneratorStatusV44(`「${title}」を作成し、保存先に選びました。本棚にも表示されます。`);
+            } else navigateToCollectionV106(shareSlug);
           } catch (error) {
             status.classList.add("is-error");
             const rawMessage = String(error?.message || "");
@@ -6331,7 +6414,8 @@
           : `<div class="settings-divider" role="presentation"></div><div class="collection-management"><h3>問題集スペース</h3>${collectionContext}<p>現在の公開範囲：${escapeHtml(collectionVisibility)}。公開範囲の変更と申請の承認は所有者・管理者のみ行えます。</p></div>`)
           : "";
         const create = supabaseSessionV46 ? `<div class="settings-divider" role="presentation"></div><div class="collection-management"><h3>新しい問題集スペースを作る</h3><p>新しく作る問題集は、最初は必ずプライベートです。作成時に公開範囲を選べます。</p>${collectionCreateFormMarkupV106("collectionCreate")}</div>` : "";
-        return bookOnly ? management : `${managementChooser}${management}${create}`;
+        const appearance = canManage && collection ? `<form class="book-tone-editor-v235" id="bookToneFormV235"><h4>この本の色</h4>${window.MinkiruBookBuilderV235.palette("bookToneV235",window.MinkiruLibraryV214.bookTone(collection))}<button type="submit" class="primary">色を保存</button><p id="bookToneStatusV235" aria-live="polite"></p></form>` : "";
+        return bookOnly ? management + appearance : `${managementChooser}${management}${appearance}${create}`;
       }
 
       async function loadCollectionManagementDataV100() {
@@ -6355,6 +6439,18 @@
       }
 
       function bindCollectionManagementV100() {
+        const toneForm = document.getElementById("bookToneFormV235");
+        toneForm?.addEventListener("submit", async event => {
+          event.preventDefault(); const target = collectionManagementTargetV197(); if (!target) return;
+          const status = document.getElementById("bookToneStatusV235"), button = toneForm.querySelector('button[type="submit"]'); button.disabled = true;
+          try {
+            const selected = toneForm.querySelector('input[name="bookToneV235Tone"]:checked').value;
+            await window.NagaSupabase.setBookTone(target.share_slug, selected);
+            target.book_tone = selected; if (sharedCollectionV46?.share_slug === target.share_slug) sharedCollectionV46.book_tone = selected;
+            collectionCatalogV100 = collectionCatalogV100.map(row => row.share_slug === target.share_slug ? {...row,book_tone:selected} : row);
+            collectionLibraryControllerV214?.invalidate(); status.textContent = "本棚の色を保存しました。";
+          } catch (error) { status.textContent = error?.message || "保存できませんでした。"; } finally { button.disabled = false; }
+        });
         const managementSelect = document.getElementById("collectionManagementSelect");
         if (managementSelect) managementSelect.addEventListener("change", event => {
           const selectedSlug = String(event.target.value || "");
@@ -6784,6 +6880,8 @@
           if (result && typeof result === "object") {
             return {
               id: result.question_id || result.id || null,
+              questionNumber: finiteQuestionNumberV154(result.question_number),
+              shareSlug: result.share_slug || null,
               alreadyExists: result.already_exists === true,
               capacityReached: result.capacity_reached === true || result.requires_volume_confirmation === true,
               nextVolume: Number.isInteger(Number(result.next_volume)) ? Number(result.next_volume) : null,
@@ -9286,12 +9384,21 @@
           return;
         }
         if (menuViewV16 === "generator") {
-          grid.innerHTML = renderGeneratorViewV44();
+          grid.innerHTML = renderCreateHubV235() + renderGeneratorViewV44();
           grid.style.display = "block";
           empty.hidden = true;
           bindGeneratorV44();
           restoreGeneratorFormDraftV157(generatorFormDraftV157);
+          bindCollectionCreateFormV106("bookCreateV235");
           syncGeneratorDestinationCopyV234();
+          const destinationNode = document.querySelector(".generator-destination");
+          destinationNode?.insertAdjacentHTML("beforeend", '<div class="book-capacity-v235" id="bookCapacityV235" aria-live="polite" hidden></div>');
+          void refreshBookCapacityV235();
+          if (window.NAGA_RUNTIME_CONFIG?.backend === "cloudflare" && !window.NAGA_RUNTIME_CONFIG?.heavyOperationsEnabled) {
+            document.querySelector(".generator-heading")?.insertAdjacentHTML("afterend", '<p class="create-status-v235">問題集の作成・既存問題のインポートが利用できます。NAGA URLの新規解析・画像アップロード・大量取込は移行確認中です。</p>');
+            const description = document.querySelector(".generator-heading h3 + p"); if (description) description.textContent = "NAGAからの新規生成は準備中です。既存問題は、問題画面の「自分の問題集にインポート」から追加できます。";
+            const submit = document.querySelector('#generatorForm button[type="submit"]'); if (submit) { submit.disabled = true; submit.title = "NAGA解析は移行確認中です"; }
+          }
           return;
         }
         if (menuViewV16 === "analysis") {
@@ -9926,7 +10033,7 @@
           setGeneratorStatusV44("保存先が変更されたため追加を中断しました。未追加の候補は残っています。", true);
           return false;
         }
-        const sameAsCurrentShared = destination.kind === "shared" && String(destination.shareSlug) === String(sharedCollectionV46?.share_slug || "");
+        let sameAsCurrentShared = destination.kind === "shared" && String(destination.shareSlug) === String(sharedCollectionV46?.share_slug || "");
         const duplicateKey = `${candidate.id}::${destinationKey}`;
         const localExisting = (destination.kind === "local" || sameAsCurrentShared)
           ? questionsV16.find(question => question.id === candidate.id)
@@ -9946,6 +10053,7 @@
           }
         }
         if (!skipConfirm && !window.confirm(`保存先「${destination.label}」へこの問題を追加しますか？${destination.kind === "shared" ? "この問題集の利用者に反映されます。" : "この端末だけに保存されます。"}`)) return false;
+        if (destination.kind === "local" && (userStateV16.customQuestions || []).length >= 200) { setGeneratorStatusV44("この端末の問題集は200問までです。新しい共有問題集を作成して保存先にしてください。", true); return false; }
         const nextNumber = destination.kind === "local" || sameAsCurrentShared
           ? nextQuestionNumberV154(questionsV16)
           : 0;
@@ -9988,11 +10096,14 @@
                 throw new Error("次の巻を作成する保存APIが未接続です。ページを再読み込みしてお試しください。");
               }
               setGeneratorStatusV44(`${nextVolume}巻を準備して、問題を追加しています…`);
-              await window.NagaSupabase.createCollectionVolume(parentShareSlug, nextVolume);
-              remote = await invokeSharedMutationV47("add", { question, shareSlug: parentShareSlug });
+              const nextBook = await window.NagaSupabase.createCollectionVolume(parentShareSlug, nextVolume);
+              remote = await invokeSharedMutationV47("add", { question, shareSlug: nextBook?.share_slug || parentShareSlug });
               if (remote?.capacityReached) throw new Error("次の巻を作成しましたが、問題の追加先を確定できませんでした。問題集を開き直してお試しください。");
             }
             question.serverQuestionId = remote?.id || remote?.question_id || null;
+            if (remote?.questionNumber) { question.number = remote.questionNumber; question.title = `問題${remote.questionNumber}`; }
+            if (remote?.shareSlug) question.sharedCollectionSlug = remote.shareSlug;
+            sameAsCurrentShared = question.sharedCollectionSlug === sharedCollectionV46?.share_slug;
             if (remote?.alreadyExists && question.serverQuestionId) {
               generatorAddedKeysV130.add(duplicateKey);
               generatorDuplicateKeysV153.add(duplicateKey);
@@ -10029,6 +10140,7 @@
           ? `「${destination.label}」へ追加しました。問題番号は移行先で自動採番されます。`
           : `${question.title}をこの端末へ追加しました。`);
         setGeneratorStageV159(4, false);
+        void refreshBookCapacityV235();
         if (!suppressRender) {
           document.getElementById("generatorResults").innerHTML = renderGeneratorCandidatesV44();
           bindGeneratorCandidateInputsV44();
@@ -10047,6 +10159,7 @@
           generatorDestinationExplicitV157 = true;
           persistGeneratorFormDraftV157();
           syncGeneratorDestinationCopyV234();
+          void refreshBookCapacityV235();
           const results = document.getElementById("generatorResults");
           if (results) {
             results.innerHTML = renderGeneratorCandidatesV44();
@@ -10368,6 +10481,7 @@
         const previousUserId = String(supabaseSessionV46?.user?.id || "");
         supabaseSessionV46 = session || null;
         if (window.NAGA_RUNTIME_CONFIG?.backend === "cloudflare" && previousUserId !== String(session?.user?.id || "")) {
+          bookCreateDraftV235 = null; capacityRequestV235 += 1;
           userStateV16 = loadUserStateV16();
           remoteHistorySyncScopeV135 = "";
         }

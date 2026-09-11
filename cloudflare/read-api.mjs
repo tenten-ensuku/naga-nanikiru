@@ -6,6 +6,7 @@ import {
   canViewStudent,
   requireActor,
 } from "./access.mjs";
+import {normalizeQuestionNumbering,toSafeQuestionNumber,isInvalidQuestionTitle} from './question-numbering-v235.mjs';
 
 // This is the complete read-only surface owned by this sidecar.  Any RPC not
 // listed here is rejected before it can become an arbitrary SQL entry point.
@@ -227,7 +228,7 @@ async function findShare(db, shareSlug) {
     `SELECT id, owner_id, workspace_id, title, description, visibility,
             share_slug, allow_comments, allow_contributions, published_at,
             archived_at, series_key, series_parent_id, volume_number,
-            volume_start, volume_end, created_at
+            volume_start, volume_end, created_at, book_tone
        FROM collections
       WHERE share_slug = ? AND archived_at IS NULL
       LIMIT 1`,
@@ -336,7 +337,16 @@ async function sharedQuestionIndex(db, actor, args, includeTotal) {
       LIMIT ? OFFSET ?`,
     [shareSlug, limit, offset],
   );
+  if(rows.some(row => !toSafeQuestionNumber(row.question_number) || isInvalidQuestionTitle(row.title))){
+    const repaired=await numberingForCollectionV235(db,collection);
+    return rows.map(row => mapIndexRow({...row,...repaired.get(row.id)},includeTotal));
+  }
   return rows.map((row) => mapIndexRow(row, includeTotal));
+}
+
+async function numberingForCollectionV235(db,collection){
+  const metadata=await all(db,`SELECT id,title,json_extract(payload,'$.number') question_number FROM questions WHERE collection_id=? AND deleted_at IS NULL ORDER BY sort_order,created_at,id`,[collection.id]);
+  return new Map(normalizeQuestionNumbering(metadata,{numberKey:'question_number',startAt:toSafeQuestionNumber(collection.volume_start)||1}).map(row=>[row.id,{question_number:row.question_number,title:row.title}]));
 }
 
 async function sharedCollection(db, actor, args) {
@@ -350,7 +360,7 @@ async function sharedCollection(db, actor, args) {
     `SELECT c.id, c.owner_id, c.title, c.description, c.visibility,
             c.allow_comments, c.allow_contributions, c.published_at,
             c.series_key, c.series_parent_id, c.share_slug, c.volume_number,
-            c.volume_start, c.volume_end, owner_profile.display_name AS owner_name,
+            c.volume_start, c.volume_end, c.book_tone, owner_profile.display_name AS owner_name,
             parent.share_slug AS parent_share_slug, parent.title AS parent_title
        FROM collections c
        LEFT JOIN profiles owner_profile ON owner_profile.id = c.owner_id
@@ -396,6 +406,7 @@ async function sharedCollection(db, actor, args) {
     owner_name: row.owner_name,
     title: row.title,
     description: row.description,
+    book_tone: row.book_tone,
     visibility: row.visibility,
     allow_comments: boolDb(row.allow_comments),
     allow_contributions: boolDb(row.allow_contributions),
@@ -442,6 +453,11 @@ async function sharedQuestionDetail(db, actor, args) {
   const result = { ...row };
   delete result.selected_collection_id;
   result.payload = asJsonObject(result.payload);
+  if(!toSafeQuestionNumber(result.payload.number)||isInvalidQuestionTitle(result.title)||(typeof result.payload.title==='string'&&isInvalidQuestionTitle(result.payload.title))){
+    const collection=await first(db,'SELECT id,volume_start FROM collections WHERE id=?',[result.collection_id]);
+    const repaired=(await numberingForCollectionV235(db,collection)).get(result.id);
+    if(repaired){result.title=repaired.title;result.payload={...result.payload,number:repaired.question_number,title:isInvalidQuestionTitle(result.payload.title)?repaired.title:result.payload.title};}
+  }
   return [result];
 }
 
@@ -456,7 +472,7 @@ async function collectionVolumes(db, actor, args) {
     db,
     `WITH actor(user_id, is_admin) AS (SELECT ?, ?)
      SELECT c.id, c.share_slug, c.title, c.description, c.owner_id,
-            c.volume_number, c.volume_start, c.volume_end,
+            c.volume_number, c.volume_start, c.volume_end, c.book_tone,
             COUNT(q.id) FILTER (WHERE q.deleted_at IS NULL) AS question_count,
             root.share_slug AS series_parent_slug,
             CASE WHEN ${COLLECTION_ACCESS_EXPR} THEN 1 ELSE 0 END AS can_view,
@@ -479,6 +495,7 @@ async function collectionVolumes(db, actor, args) {
       description: row.description,
       owner_id: row.owner_id,
       volume_number: numericOrNull(row.volume_number),
+      book_tone: row.book_tone,
       volume_start: numericOrNull(row.volume_start),
       volume_end: numericOrNull(row.volume_end),
       question_count: rowCount(row.question_count),
@@ -742,7 +759,9 @@ async function myCollections(db, actor) {
     db,
     `WITH actor(user_id, is_admin) AS (SELECT ?, ?)
      SELECT c.id, c.share_slug, c.title, c.description, c.visibility,
-            c.owner_id, c.created_at,
+            c.owner_id, c.created_at, c.book_tone, c.series_key, c.series_parent_id,
+            c.volume_number,c.volume_start,c.volume_end,parent.share_slug AS series_parent_slug,parent.title AS series_title,
+            (SELECT COUNT(*) FROM collections child WHERE child.series_parent_id=c.id AND child.archived_at IS NULL) AS volume_count,
             (SELECT cm.role FROM collection_members cm
               WHERE cm.collection_id = c.id AND cm.user_id = actor.user_id
               LIMIT 1) AS member_role,
@@ -754,8 +773,8 @@ async function myCollections(db, actor) {
             CASE WHEN ${COLLECTION_MANAGE_EXPR} THEN 1 ELSE 0 END AS can_manage
        FROM collections c
        CROSS JOIN actor
+       LEFT JOIN collections parent ON parent.id=c.series_parent_id
       WHERE c.archived_at IS NULL
-        AND c.series_parent_id IS NULL
         AND ${COLLECTION_ACCESS_EXPR}
       ORDER BY c.created_at DESC`,
     [actor?.id ?? null, actor?.is_admin === true ? 1 : 0],
@@ -766,6 +785,16 @@ async function myCollections(db, actor) {
       title: row.title,
       description: row.description,
       visibility: row.visibility,
+      book_tone: row.book_tone,
+      series_key: row.series_key,
+      is_series_parent: row.series_parent_id === null && row.series_key !== null,
+      volume_count: rowCount(row.volume_count),
+      series_parent_id: row.series_parent_id,
+      series_parent_slug: row.series_parent_slug,
+      series_title: row.series_title,
+      volume_number: numericOrNull(row.volume_number),
+      volume_start: numericOrNull(row.volume_start),
+      volume_end: numericOrNull(row.volume_end),
       owner_id: row.owner_id,
       member_role: row.member_role,
       member_status: row.member_status,
@@ -781,7 +810,7 @@ async function collectionDirectory(db, actor) {
     db,
     `WITH actor(user_id, is_admin) AS (SELECT ?, ?)
      SELECT c.id, c.share_slug, c.title, c.description, c.visibility,
-            c.owner_id, owner_profile.display_name AS owner_name,
+            c.owner_id, c.book_tone, owner_profile.display_name AS owner_name,
             c.created_at, c.series_key, c.series_parent_id,
             (SELECT ar.id
                FROM collection_access_requests ar
@@ -814,6 +843,7 @@ async function collectionDirectory(db, actor) {
       visibility: row.visibility,
       owner_id: row.owner_id,
       owner_name: row.owner_name,
+      book_tone: row.book_tone,
       created_at: row.created_at,
       can_view: boolDb(row.can_view),
       can_edit: boolDb(row.can_edit),

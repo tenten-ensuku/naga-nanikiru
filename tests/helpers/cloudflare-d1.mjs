@@ -1,9 +1,10 @@
 import {DatabaseSync} from 'node:sqlite';
 import fs from 'node:fs';
 // Deterministic local adapter; never connects to a real account or public endpoint.
-export function testD1(){
+export function testD1({builder=true}={}){
   const sqlite=new DatabaseSync(':memory:');
   sqlite.exec(fs.readFileSync(new URL('../../cloudflare/migrations/0001_minkiru.sql',import.meta.url),'utf8'));
+  if(builder)sqlite.exec(fs.readFileSync(new URL('../../cloudflare/migrations/0002_collection_builder_v235.sql',import.meta.url),'utf8'));
   const db={sqlite,close:()=>sqlite.close(),prepare(sql){
     let params=[];
     return {bind(...values){params=values;return this;},async first(column){const row=sqlite.prepare(sql).get(...params);return row?(column?row[column]:{...row}):null;},

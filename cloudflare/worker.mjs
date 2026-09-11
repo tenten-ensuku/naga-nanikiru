@@ -3,12 +3,14 @@ import {startDiscord,finishDiscord,sessionFor,sessionResponse,endSession,require
 import {READ_RPCS,readRpc,readTable} from './read-api.mjs';
 import {WRITE_RPCS,writeRpc,writeTable} from './student-write-api.mjs';
 import {mediaRead} from './media-read.mjs';
+import {BUILDER_RPCS,builderRpc,collectionCapacity} from './collection-builder-v235.mjs';
 
 // Only the verified student flow is enabled. Generation, Bot and bulk content
 // changes remain paused; CUTOVER_READY is an explicit owner-operated switch.
 export const MIGRATION_IMPLEMENTATION_COMPLETE=false;
 export const STUDENT_FLOW_IMPLEMENTATION_COMPLETE=true;
 const readNames=new Set(READ_RPCS),writeNames=new Set(WRITE_RPCS);
+const builderNames=new Set(BUILDER_RPCS);
 const common={'Cache-Control':'no-store','X-Content-Type-Options':'nosniff','Referrer-Policy':'same-origin','X-Frame-Options':'DENY'};
 const ready=env=>env?.CUTOVER_READY==='true'&&!!env.DB&&/^\d{15,22}$/.test(env.DISCORD_CLIENT_ID||'')&&!!env.DISCORD_CLIENT_SECRET;
 const json=(data,status=200)=>Response.json(data,{status,headers:common});
@@ -37,7 +39,7 @@ export default {
   async fetch(request,env={},ctx={}){
     try{
       const url=new URL(request.url);
-      if(url.pathname==='/health'&&request.method==='GET')return json({version:234,backend:'cloudflare',ready:ready(env),studentFlow:ready(env),heavyOperations:false});
+      if(url.pathname==='/health'&&request.method==='GET')return json({version:235,backend:'cloudflare',ready:ready(env),studentFlow:ready(env),heavyOperations:false});
       if(!ready(env))return json({error:'migration_not_ready',message:'移行確認中です。公開切替はまだ完了していません。'},503);
       if(url.origin!==env.APP_ORIGIN)throw new ApiError('origin_denied',403);
       if(url.pathname==='/naga-nanikiru'||url.pathname==='/naga-nanikiru/')return Response.redirect(url.origin+'/'+url.search,302);
@@ -70,6 +72,8 @@ export default {
         const rpc=url.pathname.match(/^\/api\/rpc\/([a-z_]+)$/);
         if(rpc){
           const name=rpc[1];
+          if(name==='get_collection_capacity')return json({data:await collectionCapacity(args,context)});
+          if(builderNames.has(name)&&env.COLLECTION_BUILDER_ENABLED==='true'){await limited(env.WRITE_LIMIT,actor.id);return json({data:await builderRpc(name,args,context)});}
           if(readNames.has(name))return json({data:await readRpc(name,args,context)});
           if(writeNames.has(name)){await limited(env.WRITE_LIMIT,actor.id);return json({data:await writeRpc(name,args,context)});}
           throw new ApiError('heavy_operations_paused',503);

@@ -22,6 +22,7 @@
     {"name":"WRITE_LIMIT","namespace_id":"232002","simple":{"limit":40,"period":60}}
   ],
   "vars": {
+    "COLLECTION_BUILDER_ENABLED": "true",
     "CUTOVER_READY": "true", "UPLOADS_ENABLED": "false", "SIGNUPS_ENABLED":"false",
     "APP_ORIGIN":"https://minkiru.naga-study.workers.dev",
     "DISCORD_CLIENT_ID":"1533072667278835822"

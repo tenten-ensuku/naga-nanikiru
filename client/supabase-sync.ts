@@ -849,6 +849,8 @@ async function createCollection(input: {
   workspaceId?: string | null;
   visibility?: "private" | "request" | "public";
   allowContributions?: boolean;
+  bookTone?: string;
+  requestId?: string;
 }) {
   const session = await currentSession();
   if (!session) throw new Error("Discordログインが必要です。");
@@ -862,6 +864,7 @@ async function createCollection(input: {
     p_workspace_id: input.workspaceId ?? null,
     p_visibility: visibility,
     p_allow_contributions: input.allowContributions ?? true,
+    ...(cloudflareBackend ? {p_book_tone: input.bookTone ?? 'walnut', p_request_id: input.requestId ?? crypto.randomUUID()} : {}),
   });
   if (error) throw error;
   return data;
@@ -878,6 +881,18 @@ async function importSharedQuestion(sourceQuestionId: string, targetShareSlug: s
 
 function buildApi() {
   return {
+    async collectionInfo(shareSlug: string) {
+      const {data,error}=await requireClient().rpc('get_shared_collection',{p_share_slug:shareSlug}).maybeSingle();
+      if(error) throw error; return data;
+    },
+    async collectionCapacity(shareSlug: string) {
+      const {data,error}=await requireClient().rpc('get_collection_capacity',{p_share_slug:shareSlug});
+      if(error) throw error; return data;
+    },
+    async setBookTone(shareSlug: string, bookTone: string) {
+      const {data,error}=await requireClient().rpc('set_collection_book_tone',{p_share_slug:shareSlug,p_book_tone:bookTone});
+      if(error) throw error; return data;
+    },
     serviceAvailable: services.available,
     retryServices: () => services.probe(cloudflareBackend ? "/health" : config.supabaseUrl + "/auth/v1/settings", cloudflareBackend ? undefined : config.supabasePublishableKey),
     configured,
