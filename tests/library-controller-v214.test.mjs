@@ -11,7 +11,7 @@ class FakeResizeObserver {
   disconnect() {}
 }
 
-async function loadLibraryApi() {
+async function loadLibraryApi(hostOverrides = {}) {
   const source = await readFile(LIBRARY_PATH, "utf8");
   const host = {
     document: { createElement: () => new FakeNode(), body: new FakeNode() },
@@ -19,7 +19,8 @@ async function loadLibraryApi() {
     requestAnimationFrame: () => 1,
     cancelAnimationFrame() {},
     setTimeout,
-    clearTimeout
+    clearTimeout,
+    ...hostOverrides
   };
   const sandbox = {
     window: host,
@@ -411,7 +412,7 @@ test("switching users invalidates old in-flight/cache data", async () => {
 
 test("adapter keeps legacy fallback, controller mount/unmount hooks, and navigation reset contract", async () => {
   const [index, library] = await Promise.all([readFile(INDEX_PATH, "utf8"), readFile(LIBRARY_PATH, "utf8")]);
-  assert.match(index, /library-v214\.js\?v=235/);
+  assert.match(index, /library-v214\.js\?v=236/);
   const renderStart = index.indexOf("function renderCollectionChooserV165");
   const renderEnd = index.indexOf("function renderCollectionSpacePanelV100", renderStart);
   const renderer = index.slice(renderStart, renderEnd);
@@ -985,4 +986,73 @@ test("V215 asynchronous current-volume metadata chooses the current book, but ne
   const shelf = mountShelfV215(controller, ctx);
   shelf.root.dispatch("click", { target: shelf.buttons.find(b => b.dataset.libraryBook === "basic") });
   assert.match(controller.render(ctx), /libraryDetailTitleV214">基本序列問題集/);
+});
+
+test("V236 hides partial root/volume layout until all required series settle", async () => {
+  const api = await libraryApi();
+  const a = deferred(), b = deferred();
+  const controller = api.create({canOpen:()=>true,loadSeries:slug=>slug==='a'?a.promise:b.promise});
+  const ctx=context('u',[series('a'),series('b')]);
+  const initial=controller.render(ctx);
+  assert.match(initial,/is-preparing-v236/); assert.match(initial,/aria-busy="true"/);
+  assert.match(initial,/class="library-shelf-total">準備中/);
+  assert.match(initial,/data-library-rail[^>]*inert aria-hidden="true"/);
+  const pa=controller.browseSeries('a'),pb=controller.browseSeries('b');
+  a.resolve({volumes:[volume('a1',1)]});await pa;
+  assert.match(controller.render(ctx),/is-preparing-v236/);
+  b.resolve({volumes:[volume('b1',1)]});await pb;
+  assert.doesNotMatch(controller.render(ctx),/is-preparing-v236/);
+  assert.match(controller.render(ctx),/class="library-shelf-total">2冊/);
+});
+
+test("V236 immediately reuses a complete volume catalogue, but not an incomplete set", async () => {
+  const api=await libraryApi();let calls=0;
+  const controller=api.create({loadSeries:()=>{calls++;return Promise.resolve({volumes:[]});}});
+  const rows=[series('a'),{...volume('a1',1),series_parent_id:'root-a',series_parent_slug:'a'},{...volume('a2',2),series_parent_id:'root-a',series_parent_slug:'a'}];
+  const html=controller.render(context('u',rows,rows[2]));
+  assert.doesNotMatch(html,/is-preparing-v236|data-library-placeholder/);assert.match(html,/data-library-book="a2"/);assert.equal(calls,0);
+  assert.match(api.create().render(context('u',rows.slice(0,2))),/is-preparing-v236/);
+});
+
+test("V236 cached revisit does not collapse, account switch never reuses another user's volumes", async () => {
+  const api=await libraryApi();const controller=api.create({canOpen:()=>true,loadSeries:async()=>({volumes:[volume('a1',1)]})});
+  const ctx=context('first',[series('a')]);controller.render(ctx);await controller.browseSeries('a');controller.unmount();
+  assert.doesNotMatch(controller.render(ctx),/is-preparing-v236/);
+  const other=controller.render(context('second',[series('a')]));
+  assert.match(other,/is-preparing-v236/);assert.doesNotMatch(other,/data-library-book="a1"/);
+});
+
+test("V236 artwork decode completes before the ready shelf is exposed", async () => {
+  const images=[];const decoding=deferred();
+  class Image {constructor(){images.push(this);}decode(){return decoding.promise;}}
+  const api=await loadLibraryApi({Image});const ctx=context('u',v215Books());const controller=api.create();
+  assert.match(controller.render(ctx),/is-preparing-v236/);controller.mount(mountedRoot().root);
+  const artwork=images.filter(image=>/study|spine/.test(image.src));assert.equal(artwork.length,2);
+  const loading=artwork.map(image=>image.onload());await nextTurn();assert.match(controller.render(ctx),/is-preparing-v236/);
+  decoding.resolve();await Promise.all(loading);await nextTurn();assert.doesNotMatch(controller.render(ctx),/is-preparing-v236/);
+});
+
+test("V236 stalled metadata degrades once with retry instead of exposing an endless partial layout", async () => {
+  let expire,calls=0;const api=await loadLibraryApi({setTimeout:(callback,ms)=>{assert.equal(ms,8000);expire=callback;return 1;},clearTimeout(){}});
+  const controller=api.create({canOpen:()=>true,loadSeries:()=>{calls++;return new Promise(()=>{});}}),ctx=context('u',[series('a')]);
+  controller.render(ctx);const loading=controller.browseSeries('a');await nextTurn();expire();assert.equal(await loading,false);
+  const html=controller.render(ctx);assert.doesNotMatch(html,/is-preparing-v236/);assert.match(html,/data-library-retry/);
+  controller.mount(mountedRoot().root);await nextTurn();assert.equal(calls,1);
+});
+
+test("V236 missing artwork uses colored spines without waiting forever or adding more image requests", async () => {
+  const images=[];let expire;
+  const api=await loadLibraryApi({Image:class{constructor(){images.push(this);}},setTimeout:cb=>{expire=cb;return 1;},clearTimeout(){}});
+  const controller=api.create(),ctx=context('u',v215Books());controller.render(ctx);controller.mount(mountedRoot().root);expire();await nextTurn();
+  const html=controller.render(ctx);assert.doesNotMatch(html,/is-preparing-v236/);assert.match(html,/is-art-fallback-v236/);
+  const before=images.length;controller.mount(mountedRoot().root);assert.equal(images.length,before);
+});
+
+test("V236 empty catalogue settles and reduced motion remains supported",async()=>{
+  const api=await libraryApi(),controller=api.create();
+  assert.match(controller.render({...context('u',[]),loading:true}),/is-preparing-v236/);
+  assert.doesNotMatch(controller.render(context('u',[])),/is-preparing-v236/);
+  const css=await readFile(new URL('../public/library-v214.css',import.meta.url),'utf8');
+  assert.match(css,/prefers-reduced-motion:reduce/);
+  assert.match(css,/\.is-preparing-v236 \.library-rail-actions \{ visibility: hidden !important; pointer-events: none/);
 });

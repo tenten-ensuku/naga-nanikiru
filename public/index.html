@@ -1,11 +1,11 @@
 <!doctype html>
-<html lang="ja">
+<html lang="ja" class="app-pending-v236">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=235">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=235">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=235">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=236">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=236">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=236">
   <title>みん切る｜みんなの何切る問題集</title>
   <meta name="description" content="みん切るは、NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリです。">
   <meta name="theme-color" content="#06131e">
@@ -21,6 +21,55 @@
   <script>
     // 障害時は true で静的案内へ切り替え、認証・自動通信を停止します。
     window.NAGA_MAINTENANCE_MODE = false;
+  </script>
+  <style id="startupCriticalV236">
+    html.app-pending-v236 { background:#06131e; }
+    html.app-pending-v236 body { overflow:hidden; }
+    html.app-pending-v236 .page, html.app-pending-v236 .page *,
+    html.app-pending-v236 .auth-gate, html.app-pending-v236 .auth-gate *,
+    body.auth-gate-open > .page, body.auth-gate-open > .page * { visibility:hidden !important; pointer-events:none !important; }
+    .startup-screen-v236 { position:fixed; inset:0; z-index:2000; display:grid; place-items:center; padding:24px; color:#c3d5d9; background:#06131e; text-align:center; font:14px/1.7 system-ui,sans-serif; }
+    .startup-screen-v236[hidden] { display:none; }
+    .startup-inner-v236 { width:min(100%,280px); }
+    .startup-logo-v236 { display:block; width:220px; max-width:100%; height:auto; margin:0 auto 28px; border-radius:9px; }
+    .startup-line-v236 { width:72px; height:2px; margin:0 auto 18px; background:#aa8743; opacity:.8; }
+    .startup-screen-v236 p { margin:0; }
+    .startup-screen-v236 a { display:inline-flex; align-items:center; min-height:44px; margin-top:16px; padding:6px 18px; border:1px solid #c4a264; border-radius:8px; color:#efdab1; text-decoration:none; }
+    .startup-screen-v236 a[hidden] { display:none; }
+  </style>
+  <script>
+    // V236 startup presentation only. Never grants access or fetches user data.
+    window.MinkiruStartupV236 = (() => {
+      let pending = true, fatal = false, slow = false;
+      const showStatus = () => {
+        const status = document.getElementById("startupStatusV236");
+        const retry = document.getElementById("startupRetryV236");
+        if (status) status.textContent = fatal ? "画面を読み込めませんでした。再読み込みをお試しください。" : slow ? "接続に時間がかかっています。もう少しお待ちください。" : "準備しています…";
+        if (retry) retry.hidden = !(fatal || slow);
+      };
+      const timer = window.setTimeout(() => { if (pending) { slow = true; showStatus(); } }, 12000);
+      const fail = () => { if (pending) { fatal = true; window.clearTimeout(timer); showStatus(); } };
+      window.addEventListener("error", event => {
+        const target = event.target;
+        if (pending && (event.error || target?.tagName === "SCRIPT" || target?.tagName === "LINK" && target.rel === "stylesheet")) fail();
+      }, true);
+      document.addEventListener("DOMContentLoaded", showStatus, {once:true});
+      return {
+        get pending() { return pending; },
+        fail,
+        ready() {
+          if (!pending || fatal) return;
+          window.requestAnimationFrame(() => window.requestAnimationFrame(() => {
+            if (!pending || fatal) return;
+            pending = false; window.clearTimeout(timer);
+            document.documentElement.classList.remove("app-pending-v236");
+            const screen = document.getElementById("startupScreenV236"); if (screen) screen.hidden = true;
+            const gate = document.getElementById("authGate");
+            if (gate && !gate.hidden) (document.getElementById("authGateLoginButton")?.disabled ? gate.querySelector(".auth-gate-card") : document.getElementById("authGateLoginButton"))?.focus({preventScroll:true});
+          }));
+        }
+      };
+    })();
   </script>
   <style>
     :root {
@@ -2189,12 +2238,15 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=235">
-  <link rel="stylesheet" href="library-v214.css?v=235">
-  <link rel="stylesheet" href="navigation-v234.css?v=235">
-  <link rel="stylesheet" href="book-builder-v235.css?v=235">
+  <link rel="stylesheet" href="ux-v159.css?v=236">
+  <link rel="stylesheet" href="library-v214.css?v=236">
+  <link rel="stylesheet" href="navigation-v234.css?v=236">
+  <link rel="stylesheet" href="book-builder-v235.css?v=236">
 </head>
 <body class="auth-gate-open">
+  <section class="startup-screen-v236" id="startupScreenV236" aria-label="みん切るを準備中">
+    <div class="startup-inner-v236"><img class="startup-logo-v236" src="assets/min-kiru-header.png" width="590" height="173" alt="みん切る"><div class="startup-line-v236" aria-hidden="true"></div><p id="startupStatusV236" role="status">準備しています…</p><a id="startupRetryV236" href="" hidden>再読み込み</a><noscript><style>#startupStatusV236,.startup-line-v236{display:none}</style><p>みん切るを開くにはJavaScriptを有効にしてください。</p></noscript></div>
+  </section>
   <main class="page" inert aria-hidden="true">
     <section class="menu-panel" id="menuPanel" aria-labelledby="menuTitle">
       <aside class="menu-sidebar" aria-label="問題集ナビゲーション">
@@ -2529,18 +2581,18 @@
   </dialog>
 
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=235"></script>
-  <script defer src="legacy-transfer-v232.js?v=235"></script>
-  <script src="drill-ux-v44.js?v=235"></script>
-  <script src="navigation-v234.js?v=235"></script>
-  <script src="book-builder-v235.js?v=235"></script>
-  <script src="library-order-v215.js?v=235"></script>
-  <script src="library-v214.js?v=235"></script>
+  <script src="supabase-sync-v48.js?v=236"></script>
+  <script defer src="legacy-transfer-v232.js?v=236"></script>
+  <script src="drill-ux-v44.js?v=236"></script>
+  <script src="navigation-v234.js?v=236"></script>
+  <script src="book-builder-v235.js?v=236"></script>
+  <script src="library-order-v215.js?v=236"></script>
+  <script src="library-v214.js?v=236"></script>
   <script src="naga-generator-v44.js"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 235;
+    const APP_VERSION = 236;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -4584,6 +4636,7 @@
       const QUESTION_NOTICE_STORAGE_KEY_V66 = storageKey("question-notices-v1");
         const ANNOUNCEMENT_SEEN_STORAGE_KEY_V65 = storageKey("announcement-seen-v1");
         const APP_ANNOUNCEMENTS_V66 = [
+          { version: 236, date: "2026-09-12", publishedAt: "2026-09-12T18:40:00+09:00", title: "起動時と本棚のちらつきを改善しました", body: "起動時の準備中はロゴと案内だけを表示。本棚も巻数と画像が揃ってから表示し、仮の本が途中で増えたり並び替わったりする表示を抑えました。読み込みが遅い・失敗した場合は再読み込みをご案内します。" },
           { version: 235, date: "2026-09-12", publishedAt: "2026-09-12T06:00:00+09:00", title: "自分らしい色の問題集をつくれます", body: "「つくる」に背表紙プレビュー付きの問題集作成を追加。8色から選べて、後から変更もできます。1冊200問まで、195問から次巻をご案内します。いのっち問題集の番号表示も修正しました。NAGAの新規解析と画像アップロードは別途移行確認中です。" },
           { version: 234, date: "2026-09-10", publishedAt: "2026-09-10T21:54:00+09:00", title: "学習中の本とアプリ全体のメニューを分けました", body: "下部メニューを「本棚・学ぶ・つくる・マイページ」に整理しました。学習中の本では「学習・問題一覧・この本の成績」を切り替えられます。本棚や学習への戻り先を明示し、一覧の絞り込み・スクロール位置・選びかけの牌を画面移動後も保持します。問題生成の保存先と、本の管理・個人設定も分けました。" },
           { version: 229, date: "2026-09-04", publishedAt: "2026-09-04T15:00:00+09:00", title: "復旧のお知らせを更新しました", body: "現在、システム調整および復旧対応を進めています。2026年9月6日から順次復旧予定です。" },
@@ -6588,7 +6641,10 @@
         try {
           return await refreshPromise;
         } finally {
-          if (collectionAccessRefreshInFlightV153 === refreshPromise) collectionAccessRefreshInFlightV153 = null;
+          if (collectionAccessRefreshInFlightV153 === refreshPromise) {
+            collectionAccessRefreshInFlightV153 = null;
+            if (menuViewV16 === "collections") renderMenuCardsV16();
+          }
         }
       }
 
@@ -10470,7 +10526,7 @@
         }
         if (status) status.textContent = message || authGateDefaultMessageV187(state);
         const focusTarget = loginButton && !loginButton.disabled ? loginButton : gate?.querySelector(".auth-gate-card");
-        if (!authenticated && focusTarget && document.visibilityState === "visible" && document.activeElement !== focusTarget) {
+        if (!window.MinkiruStartupV236?.pending && !authenticated && focusTarget && document.visibilityState === "visible" && document.activeElement !== focusTarget) {
           window.setTimeout(() => {
             if (!document.getElementById("authGate")?.hidden) focusTarget.focus();
           }, 0);
@@ -10622,6 +10678,7 @@
         authButton.addEventListener("click", handleDiscordAuthV187);
         document.getElementById("authGateLoginButton")?.addEventListener("click", handleDiscordAuthV187);
         document.addEventListener("keydown", event => {
+          if (window.MinkiruStartupV236?.pending) return;
           const gate = document.getElementById("authGate");
           if (!gate || gate.hidden) return;
           if (!gate.contains(document.activeElement) || event.key === "Tab") {
@@ -11154,7 +11211,7 @@
       selectTile = selectTileV16;
       toggleRiichi = toggleRiichiV16;
       reset = resetV16;
-      initImportedQuestionsV16();
+      initImportedQuestionsV16().then(() => window.MinkiruStartupV236.ready()).catch(() => window.MinkiruStartupV236.fail());
     })();
   </script>
 </body>

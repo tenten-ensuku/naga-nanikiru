@@ -6,6 +6,7 @@
     "node": ">=22.13.0"
   },
   "scripts": {
+    "test:startup": "node --test tests/startup-presentation-v236.test.mjs tests/library-controller-v214.test.mjs tests/auth-gate-v187.test.mjs",
     "test:builder": "node --test tests/collection-builder-v235.test.mjs tests/question-numbering-v235.test.mjs tests/book-builder-ui-v235.test.mjs",
     "test:navigation": "node --test tests/navigation-v234.test.mjs tests/analytics-scope-v234.test.mjs tests/navigation-integration-v234.test.mjs",
     "test:mobile": "node --test tests/mobile-question-toolbar-v233.test.mjs",

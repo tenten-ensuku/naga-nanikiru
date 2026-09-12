@@ -121,9 +121,33 @@
       staleSeries: new Set(), staleSummaries: new Set(), savedOrder: [],
       root: null, abort: null, observer: null, entries: [], opening: false,
       scrollLeft: 0, focusAfterRender: "", error: "", drag: null, needsRender: false,
+      artReady: !host.Image, artFailed: false, artTask: null,
       suppressClick: { slug: "", until: 0 }
     };
     const visible = () => options.isVisible?.() !== false;
+    function boundedMetadata(task) {
+      let timer;
+      return Promise.race([Promise.resolve().then(task), new Promise((_, reject) => {
+        timer = host.setTimeout(() => reject(new Error("読み込みに時間がかかっています。もう一度お試しください。")), 8000);
+      })]).finally(() => host.clearTimeout(timer));
+    }
+    function prepareArtwork() {
+      if (state.artReady || state.artTask) return;
+      let timer;
+      const images = ["study.webp", "spine.webp"].map(file => new Promise(resolve => {
+        const image = new host.Image();
+        image.onload = async () => { try { await image.decode?.(); resolve(true); } catch { resolve(false); } };
+        image.onerror = () => resolve(false);
+        image.src = ASSET_ROOT + file;
+      }));
+      state.artTask = Promise.race([Promise.all(images), new Promise(resolve => {
+        timer = host.setTimeout(() => resolve([false]), 3500);
+      })]).then(results => {
+        host.clearTimeout(timer);
+        state.artReady = true; state.artFailed = results.some(value => !value);
+        if (visible()) requestRender();
+      });
+    }
     function requestRender() {
       if (state.drag) { state.needsRender = true; return; }
       const focused = host.document?.activeElement?.closest?.("[data-library-book]");
@@ -191,6 +215,18 @@
         catch { state.savedOrder = []; }
       }
       const roots = rootsNow();
+      // V235 already returns accessible volume metadata in the catalogue. Reuse
+      // a complete set immediately instead of painting root books then expanding.
+      for (const row of roots) {
+        const slug = String(row.share_slug);
+        if (!isSeries(row) || !permittedRoot(slug) || state.cache.has(slug)) continue;
+        const volumes = (context.collections || []).filter(child => String(child.series_parent_slug || "") === slug)
+          .sort((a, b) => Number(a.volume_number) - Number(b.volume_number));
+        if (count(row.volume_count) > 0 && volumes.length === count(row.volume_count)) {
+          state.cache.set(slug, { volumes, progress: [] });
+          state.staleSeries.add(slug); // Refresh progress in the background without collapsing the shelf.
+        }
+      }
       const currentSlug = currentSlugNow();
       if (currentSlug !== state.currentSlug) {
         state.currentSlug = currentSlug;
@@ -222,13 +258,15 @@
       state.selected = selected?.slug || "";
       if (!state.entries.some(row => row.slug === state.picked)) state.picked = "";
       const notice = state.error || String(context.error || "") || (state.failures.size ? "一部の件数・進捗を読み込めませんでした。表示できる本はそのまま選べます。" : "");
-      return `<section class="collection-chooser library-v214 has-volumes${reorderReady() ? " is-reorder-ready" : ""}" aria-labelledby="collectionChooserHeading">
+      const preparing = (!roots.length && context.loading) || !state.artReady
+        || roots.some(row => isSeries(row) && permittedRoot(String(row.share_slug)) && !state.cache.has(String(row.share_slug)) && !state.failures.has("series:" + row.share_slug));
+      return `<section class="collection-chooser library-v214 has-volumes${reorderReady() ? " is-reorder-ready" : ""}${preparing ? " is-preparing-v236" : ""}${state.artFailed ? " is-art-fallback-v236" : ""}" aria-busy="${preparing}" aria-labelledby="collectionChooserHeading">
         <header class="collection-chooser-header library-header"><div><h3 id="collectionChooserHeading">学習する問題集を選択</h3><p id="libraryBookHintV214">1タップで確認、もう一度で開く。</p></div><button class="collection-chooser-create library-create" type="button" data-menu-jump="settings">${icon("plus")}新しい問題集</button></header>
-        <div class="library-shelf-heading"><div class="library-breadcrumb"><h4>あなたの本棚</h4><span class="library-shelf-total">${state.entries.length}冊</span></div><button type="button" class="library-reset" data-library-reset>標準順に戻す</button><div class="library-rail-actions" data-library-rail-actions><button type="button" data-library-scroll="-1" aria-label="前の本を表示">${icon("left")}</button><button type="button" data-library-scroll="1" aria-label="次の本を表示">${icon("right")}</button></div></div>
+        <div class="library-shelf-heading"><div class="library-breadcrumb"><h4>あなたの本棚</h4><span class="library-shelf-total">${preparing ? "準備中" : `${state.entries.length}冊`}</span></div><button type="button" class="library-reset" data-library-reset${preparing ? " disabled" : ""}>標準順に戻す</button><div class="library-rail-actions" data-library-rail-actions><button type="button" data-library-scroll="-1" aria-label="前の本を表示">${icon("left")}</button><button type="button" data-library-scroll="1" aria-label="次の本を表示">${icon("right")}</button></div></div>
         ${notice ? `<div class="library-notice" role="alert"><span>${escape(notice)}</span>${state.failures.size ? '<button type="button" data-library-retry>もう一度読み込む</button>' : ""}</div>` : ""}
-        <div class="library-stage"><img class="library-study-art" src="${ASSET_ROOT}study.webp" alt="" width="1672" height="941" decoding="async" fetchpriority="high"><div class="library-rail" data-library-rail role="group" aria-label="すべての問題集の本棚">${state.entries.map(book => bookMarkup(book, book.slug === state.selected, { picked: book.slug === state.picked })).join("") || `<p class="library-empty" role="status">${context.loading ? "問題集を本棚に並べています…" : "まだ問題集がありません。新しい問題集を作るか、共有された問題集を開いてください。"}</p>`}</div></div>
+        <div class="library-stage">${preparing ? '<div class="library-preparing-v236" role="status"><span class="library-loading-mark-v236" aria-hidden="true"></span><span>本棚を準備しています…</span></div>' : ""}<img class="library-study-art" src="${ASSET_ROOT}study.webp" alt="" width="1672" height="941" decoding="async" fetchpriority="high"><div class="library-rail" data-library-rail role="group" aria-label="すべての問題集の本棚"${preparing ? ' inert aria-hidden="true"' : ""}>${state.entries.map(book => bookMarkup(book, book.slug === state.selected, { picked: book.slug === state.picked })).join("") || `<p class="library-empty" role="status">${context.loading ? "問題集を本棚に並べています…" : "まだ問題集がありません。新しい問題集を作るか、共有された問題集を開いてください。"}</p>`}</div></div>
         <div class="library-shelf-foot"><span>本をそのままドラッグして並べ替え</span><span>並び順はこのブラウザーに保存</span></div>
-        <section class="library-detail" data-library-detail aria-labelledby="libraryDetailTitleV214">${detail()}</section>
+        <section class="library-detail" data-library-detail aria-labelledby="libraryDetailTitleV214"${preparing ? ' inert aria-hidden="true"' : ""}>${detail()}</section>
         <p class="library-order-status" data-library-status role="status" aria-live="polite"></p>
       </section>`;
     }
@@ -258,7 +296,7 @@
       const revision = state.sessionRevision;
       const task = (async () => {
         try {
-          const result = await Promise.resolve().then(() => options.loadSeries?.(slug));
+          const result = await boundedMetadata(() => options.loadSeries?.(slug));
           if (state.sessionRevision !== revision || !permittedRoot(slug)) return false;
           const volumes = (Array.isArray(result?.volumes) ? result.volumes : []).filter(row => row?.share_slug)
             .sort((a, b) => Number(a.volume_number) - Number(b.volume_number));
@@ -294,7 +332,7 @@
       const task = (async () => {
         try {
           const parentSlug = state.entries.find(book => book.slug === slug)?.seriesParentSlug || "";
-          const summary = await Promise.resolve().then(() => options.loadSummary(slug, parentSlug));
+          const summary = await boundedMetadata(() => options.loadSummary(slug, parentSlug));
           if (state.sessionRevision !== revision || !permittedSummary(slug)) return false;
           if (!summary || count(summary.question_count) === null) throw new Error("件数・進捗を読み込めませんでした。");
           state.summaries.set(slug, summary);
@@ -494,6 +532,7 @@
       state.observer?.disconnect();
       state.root = root;
       if (!root?.querySelector(".library-v214")) return;
+      prepareArtwork();
       if (!state.coverPreload && host.Image) {
         state.coverPreload = new host.Image();
         state.coverPreload.src = ASSET_ROOT + "cover.webp";

@@ -1,4 +1,18 @@
 /* V215 — a compact, reorderable spine-only library. V214 artwork is retained. */
+/* V236: never expose root/volume reshuffles or undecoded decorative artwork. */
+.library-v214.is-preparing-v236 .library-rail,
+.library-v214.is-preparing-v236 .library-study-art,
+.library-v214.is-preparing-v236 .library-detail,
+.library-v214.is-preparing-v236 .library-shelf-foot,
+.library-v214.is-preparing-v236 .library-rail-actions { visibility: hidden !important; pointer-events: none; }
+.library-preparing-v236 { position:absolute; inset:0; z-index:3; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:18px; background:#141611; color:#d7c39f; font-size:14px; letter-spacing:.08em; }
+.library-loading-mark-v236 { width:34px; height:34px; border:2px solid #6e5c3c; border-top-color:#e0be7d; border-radius:50%; animation:library-loading-v236 1.4s linear infinite; }
+.library-v214.is-art-fallback-v236 .library-study-art,
+.library-v214.is-art-fallback-v236 .library-spine-art { visibility:hidden; }
+.library-v214.is-art-fallback-v236 .library-book-surface { background:var(--book-tint,#594029); }
+@keyframes library-loading-v236 { to { transform:rotate(360deg); } }
+@media(prefers-reduced-motion:reduce){.library-loading-mark-v236{animation:none;}}
+
 .page.menu-active:has(.library-v214) .menu-content {
   min-width: 0;
   grid-template-columns: minmax(0, 1fr);
