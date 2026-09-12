@@ -1,5 +1,6 @@
 import {ApiError, requireActor, canEditCollection, canManageCollection, canAccessCollection} from './access.mjs';
 import {isGeneratedQuestionTitle} from './question-numbering-v235.mjs';
+import {validateStoredHand} from './question-validation-v237.mjs';
 
 export const BOOK_TONES=Object.freeze(['walnut','navy','forest','burgundy','ivory','plum','teal','ochre']);
 export const BUILDER_RPCS=Object.freeze(['create_collection','create_collection_volume','set_collection_book_tone','create_shared_question','import_shared_question']);
@@ -77,7 +78,8 @@ async function addQuestion(args,{db,actor},imported=null){
   const serialized=JSON.stringify(payload);
   if(new TextEncoder().encode(serialized).length>100000||/data:image\//i.test(serialized))fail('question_image_upload_required',413);
   const kind=args.p_source_kind??'manual',decision=args.p_decision_type??'discard';
-  if(!['manual','discord','naga_scene','naga_match'].includes(kind)||!['discard','call','riichi','combined'].includes(decision))fail('invalid_question');
+    if(!['manual','discord','naga_scene','naga_match'].includes(kind)||!['discard','call','riichi','combined'].includes(decision))fail('invalid_question');
+    if(Array.isArray(payload.handBeforeDraw)||(!imported&&['naga_scene','naga_match','discord'].includes(kind)))validateStoredHand(payload,decision);
   const report=args.p_source_report_id?text(args.p_source_report_id,240):null;
   const scene=[args.p_scene_tw,args.p_scene_ts,args.p_scene_tv].map((v,i)=>{if(v==null)return null;if(!Number.isSafeInteger(v)||v<0||v>(i===0?3:100000))fail('invalid_question');return v;});
   const key=imported?`import:${imported}`:String(payload.id||'');if(!key||key.length>240)fail('invalid_question');

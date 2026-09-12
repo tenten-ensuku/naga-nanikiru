@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=236">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=236">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=236">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=237">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=237">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=237">
   <title>みん切る｜みんなの何切る問題集</title>
   <meta name="description" content="みん切るは、NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリです。">
   <meta name="theme-color" content="#06131e">
@@ -405,7 +405,7 @@
     .draw-divider { width: 1px; height: 75%; margin: 0 3px 0 4px; background: rgba(244, 198, 87, .75); }
     .riichi-layer { position: absolute; left: calc(var(--hand-mask-left, 11.5%) + var(--hand-mask-width, 67.8%) + 1.5%); top: calc(var(--hand-mask-top, 79.3%) + 6%); z-index: 5; display: flex; align-items: center; justify-content: center; pointer-events: none; }
     .riichi-layer .riichi-button { pointer-events: auto; }
-    .riichi-button { width: clamp(35px, 3.7vw, 47px); min-height: clamp(29px, 4.6vw, 45px); padding: 4px 3px; color: #fff6d4; background: linear-gradient(145deg, #7f262b, #4f151c); border: 1px solid rgba(255, 221, 127, .8); border-radius: 5px; box-shadow: 0 3px 8px rgba(0,0,0,.24); font-size: clamp(9px, 1.05vw, 13px); font-weight: 900; line-height: 1.1; }
+    .riichi-button { width: max-content; min-width: clamp(35px, 3.7vw, 47px); flex: 0 0 auto; white-space: nowrap; word-break: keep-all; min-height: clamp(29px, 4.6vw, 45px); padding: 4px 3px; color: #fff6d4; background: linear-gradient(145deg, #7f262b, #4f151c); border: 1px solid rgba(255, 221, 127, .8); border-radius: 5px; box-shadow: 0 3px 8px rgba(0,0,0,.24); font-size: clamp(9px, 1.05vw, 13px); font-weight: 900; line-height: 1.1; }
     .riichi-button:hover, .riichi-button:focus-visible { background: linear-gradient(145deg, #a63b3f, #681d24); outline: 2px solid rgba(255, 221, 127, .65); outline-offset: 2px; }
     .riichi-button[aria-pressed="true"] { color: #24120e; background: linear-gradient(145deg, #ffe493, #e9a93f); }
     .call-controls { display: flex; align-items: center; justify-content: center; gap: 5px; margin-top: 4px; }
@@ -2238,10 +2238,10 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=236">
-  <link rel="stylesheet" href="library-v214.css?v=236">
-  <link rel="stylesheet" href="navigation-v234.css?v=236">
-  <link rel="stylesheet" href="book-builder-v235.css?v=236">
+  <link rel="stylesheet" href="ux-v159.css?v=237">
+  <link rel="stylesheet" href="library-v214.css?v=237">
+  <link rel="stylesheet" href="navigation-v234.css?v=237">
+  <link rel="stylesheet" href="book-builder-v235.css?v=237">
 </head>
 <body class="auth-gate-open">
   <section class="startup-screen-v236" id="startupScreenV236" aria-label="みん切るを準備中">
@@ -2581,18 +2581,19 @@
   </dialog>
 
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=236"></script>
-  <script defer src="legacy-transfer-v232.js?v=236"></script>
-  <script src="drill-ux-v44.js?v=236"></script>
-  <script src="navigation-v234.js?v=236"></script>
-  <script src="book-builder-v235.js?v=236"></script>
-  <script src="library-order-v215.js?v=236"></script>
-  <script src="library-v214.js?v=236"></script>
-  <script src="naga-generator-v44.js"></script>
+  <script src="supabase-sync-v48.js?v=237"></script>
+  <script defer src="legacy-transfer-v232.js?v=237"></script>
+  <script src="drill-ux-v44.js?v=237"></script>
+  <script src="navigation-v234.js?v=237"></script>
+  <script src="book-builder-v235.js?v=237"></script>
+  <script src="library-order-v215.js?v=237"></script>
+  <script src="library-v214.js?v=237"></script>
+  <script src="naga-generator-v44.js?v=237"></script>
+  <script src="hand-mask-v237.js?v=237"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 236;
+    const APP_VERSION = 237;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -4636,6 +4637,7 @@
       const QUESTION_NOTICE_STORAGE_KEY_V66 = storageKey("question-notices-v1");
         const ANNOUNCEMENT_SEEN_STORAGE_KEY_V65 = storageKey("announcement-seen-v1");
         const APP_ANNOUNCEMENTS_V66 = [
+          { version: 237, date: "2026-09-12", publishedAt: "2026-09-12T22:06:00+09:00", title: "副露・カン後の手牌とマスクを修正しました", body: "全2,217問を元牌譜と照合。カン関連6問と副露直後133問を修正しました。回答後も手牌とマスクの位置を維持し、リーチボタンは文字が途中で改行されない表示にしました。新しい生成候補は共通の手牌検証を通してから登録します。" },
           { version: 236, date: "2026-09-12", publishedAt: "2026-09-12T18:40:00+09:00", title: "起動時と本棚のちらつきを改善しました", body: "起動時の準備中はロゴと案内だけを表示。本棚も巻数と画像が揃ってから表示し、仮の本が途中で増えたり並び替わったりする表示を抑えました。読み込みが遅い・失敗した場合は再読み込みをご案内します。" },
           { version: 235, date: "2026-09-12", publishedAt: "2026-09-12T06:00:00+09:00", title: "自分らしい色の問題集をつくれます", body: "「つくる」に背表紙プレビュー付きの問題集作成を追加。8色から選べて、後から変更もできます。1冊200問まで、195問から次巻をご案内します。いのっち問題集の番号表示も修正しました。NAGAの新規解析と画像アップロードは別途移行確認中です。" },
           { version: 234, date: "2026-09-10", publishedAt: "2026-09-10T21:54:00+09:00", title: "学習中の本とアプリ全体のメニューを分けました", body: "下部メニューを「本棚・学ぶ・つくる・マイページ」に整理しました。学習中の本では「学習・問題一覧・この本の成績」を切り替えられます。本棚や学習への戻り先を明示し、一覧の絞り込み・スクロール位置・選びかけの牌を画面移動後も保持します。問題生成の保存先と、本の管理・個人設定も分けました。" },
@@ -7986,7 +7988,8 @@
           const value = generator.immediateCallPreviousMeldCount(question);
           if (Number.isInteger(value) && value >= 0) return value;
         }
-        const explicit = Number(question?.immediateCallPreviousMeldCount);
+        const rawPrevious = question?.immediateCallPreviousMeldCount;
+        const explicit = rawPrevious == null || rawPrevious === "" ? NaN : Number(rawPrevious);
         if (Number.isInteger(explicit) && explicit >= 0) return explicit;
         const meldCount = Math.max(0, Array.isArray(question?.melds) ? question.melds.length : 0);
         return Math.max(0, meldCount - 1);
@@ -8009,7 +8012,9 @@
 
       function syncImmediateCallLayoutV146(question = SCENE) {
         if (!isImmediateCallDiscardV132(question)) return;
-        const mask = handMaskFallbackV17(question);
+        // Answer confirmation is the same scene; retain its detected panel.
+        const mask = activeHandQuestionV18 && questionKeyV16(activeHandQuestionV18) === questionKeyV16(question) && activeHandMaskV18
+          ? activeHandMaskV18 : handMaskFallbackV17(question);
         sceneFrameV16.classList.toggle("is-immediate-call-discard", true);
         setHandMaskV17(mask);
         setHandLayoutV18(question, mask);
@@ -8031,6 +8036,9 @@
           if (!context) return fallback;
           context.drawImage(image, 0, 0, width, height);
           const pixels = context.getImageData(0, 0, width, height).data;
+          if (isImmediateCallDiscardV132(SCENE) && globalThis.NagaHandMaskV237) {
+            return globalThis.NagaHandMaskV237.detectSourcePanel(pixels, width, height, fallback);
+          }
           const pixel = (x, y) => {
             const safeX = Math.max(0, Math.min(width - 1, x));
             const safeY = Math.max(0, Math.min(height - 1, y));
@@ -8426,8 +8434,8 @@
         sceneImageV16.alt = `問題${SCENE.number}の伏牌スクリーンショット`;
         sceneImageV16.onload = () => {
           if (sceneImageV16.naturalWidth && sceneImageV16.naturalHeight) sceneFrameV16.style.aspectRatio = `${sceneImageV16.naturalWidth} / ${sceneImageV16.naturalHeight}`;
-          const detectedMaskV18 = hasSelfMeldsV17 && !isImmediateCallDiscard ? detectHandMaskV17(sceneImageV16, handMaskV18) : handMaskV18;
-          if (hasSelfMeldsV17 && !isImmediateCallDiscard) setHandMaskV17(detectedMaskV18);
+          const detectedMaskV18 = hasSelfMeldsV17 ? detectHandMaskV17(sceneImageV16, handMaskV18) : handMaskV18;
+          if (hasSelfMeldsV17) setHandMaskV17(detectedMaskV18);
           setHandLayoutV18(question, detectedMaskV18);
         };
         if (sceneImageV16.complete) sceneImageV16.onload();
@@ -9739,9 +9747,17 @@
         });
       }
 
+      function generatedHandIsValidV237(candidate) {
+        const validation = window.NagaGeneratorV44.validateDiscardHand(candidate);
+        if (validation.valid) return true;
+        setGeneratorStatusV44("手牌・副露の整合性を確認できないため、画像取得・登録を止めました。元の局面を確認してください。", true);
+        return false;
+      }
+
       async function captureGeneratorCandidateV51(index) {
         const candidate = generatorCandidatesV44[index];
         if (!candidate) return false;
+        if (!generatedHandIsValidV237(candidate)) return false;
         setGeneratorStageV159(3, true);
         if (!window.NagaSupabase?.configured || !generatorJobIdV51 || typeof window.NagaSupabase.captureNagaScene !== "function") {
           candidate._captureState = "error";
@@ -10079,6 +10095,7 @@
       async function addGeneratedQuestionV44(index, { skipConfirm = false, suppressRender = false, expectedDestinationKey = "" } = {}) {
         const candidate = generatorCandidatesV44[index];
         if (!candidate) return false;
+        if (!generatedHandIsValidV237(candidate)) return false;
         const destination = currentGeneratorDestinationV130();
         if (!canAddGeneratedQuestionV130()) {
           setGeneratorStatusV44("この保存先へ追加するには、問題集の編集メンバー以上の権限が必要です。", true);

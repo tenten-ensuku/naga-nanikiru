@@ -4608,8 +4608,6 @@
         "consumed": [
           "ji5",
           "ji5",
-          "ji5",
-          "ji5",
           "ji5"
         ]
       },
@@ -4652,7 +4650,8 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url",
+    "generationRuleVersion": "meld-replay-v237"
   },
   {
     "id": "016",
@@ -7009,7 +7008,26 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url",
+    "generationRuleVersion": "meld-replay-v237",
+    "handBeforeMeld": [
+      "sou7",
+      "sou7",
+      "sou1",
+      "pin2",
+      "sou5",
+      "pin7",
+      "man6",
+      "pin8",
+      "ji5",
+      "sou3",
+      "pin4",
+      "man6",
+      "ji5"
+    ],
+    "immediateCallDiscard": true,
+    "immediateCallPreviousMeldCount": 0,
+    "handMaskMode": "original-with-meld-overlay"
   },
   {
     "id": "024",
@@ -8764,7 +8782,26 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url",
+    "generationRuleVersion": "meld-replay-v237",
+    "handBeforeMeld": [
+      "ji7",
+      "man9",
+      "sou7",
+      "man9",
+      "sou8",
+      "ji1",
+      "pin4",
+      "pin8",
+      "pin3",
+      "ji7",
+      "pin7",
+      "ji1",
+      "pin2"
+    ],
+    "immediateCallDiscard": true,
+    "immediateCallPreviousMeldCount": 0,
+    "handMaskMode": "original-with-meld-overlay"
   },
   {
     "id": "030",
@@ -22954,7 +22991,26 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url",
+    "generationRuleVersion": "meld-replay-v237",
+    "handBeforeMeld": [
+      "sou6",
+      "pin7",
+      "pin6",
+      "man4",
+      "ji5",
+      "man7",
+      "ji5",
+      "man5",
+      "ji3",
+      "man2",
+      "sou8",
+      "ji7",
+      "ji3"
+    ],
+    "immediateCallDiscard": true,
+    "immediateCallPreviousMeldCount": 0,
+    "handMaskMode": "original-with-meld-overlay"
   },
   {
     "id": "079",
@@ -24222,7 +24278,26 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url",
+    "generationRuleVersion": "meld-replay-v237",
+    "handBeforeMeld": [
+      "man1",
+      "ji1",
+      "ji1",
+      "sou4",
+      "ji2",
+      "pin8",
+      "man6",
+      "man1",
+      "man4",
+      "ji2",
+      "ji6",
+      "sou7",
+      "pin7"
+    ],
+    "immediateCallDiscard": true,
+    "immediateCallPreviousMeldCount": 0,
+    "handMaskMode": "original-with-meld-overlay"
   },
   {
     "id": "083",
@@ -32254,7 +32329,26 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url",
+    "generationRuleVersion": "meld-replay-v237",
+    "handBeforeMeld": [
+      "ji6",
+      "man6",
+      "sou7",
+      "ji6",
+      "pin7",
+      "pin9",
+      "pin3",
+      "man9",
+      "man4",
+      "pin4",
+      "sou4",
+      "man7",
+      "man5"
+    ],
+    "immediateCallDiscard": true,
+    "immediateCallPreviousMeldCount": 0,
+    "handMaskMode": "original-with-meld-overlay"
   },
   {
     "id": "106",
@@ -46108,7 +46202,26 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url",
+    "generationRuleVersion": "meld-replay-v237",
+    "handBeforeMeld": [
+      "pin2",
+      "sou2",
+      "sou2",
+      "man7",
+      "man6",
+      "pin7",
+      "sou5",
+      "pin6",
+      "pin8",
+      "aka2",
+      "pin5",
+      "pin8",
+      "pin3"
+    ],
+    "immediateCallDiscard": true,
+    "immediateCallPreviousMeldCount": 0,
+    "handMaskMode": "original-with-meld-overlay"
   },
   {
     "id": "150",
@@ -48234,7 +48347,26 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url",
+    "generationRuleVersion": "meld-replay-v237",
+    "handBeforeMeld": [
+      "sou9",
+      "pin6",
+      "sou2",
+      "ji7",
+      "sou7",
+      "sou7",
+      "sou1",
+      "sou1",
+      "man6",
+      "sou3",
+      "pin3",
+      "man2",
+      "ji7"
+    ],
+    "immediateCallDiscard": true,
+    "immediateCallPreviousMeldCount": 0,
+    "handMaskMode": "original-with-meld-overlay"
   },
   {
     "id": "157",
@@ -56454,7 +56586,26 @@
     },
     "imageSource": "naga_url",
     "imageSourceRuleVersion": "naga-url-capture-v2",
-    "commentTransferRuleVersion": "v7-starter-author-first-naga-url"
+    "commentTransferRuleVersion": "v7-starter-author-first-naga-url",
+    "generationRuleVersion": "meld-replay-v237",
+    "handBeforeMeld": [
+      "pin4",
+      "pin6",
+      "sou9",
+      "sou1",
+      "man5",
+      "ji5",
+      "man9",
+      "man8",
+      "pin4",
+      "sou9",
+      "man8",
+      "sou3",
+      "ji5"
+    ],
+    "immediateCallDiscard": true,
+    "immediateCallPreviousMeldCount": 0,
+    "handMaskMode": "original-with-meld-overlay"
   },
   {
     "id": "186",

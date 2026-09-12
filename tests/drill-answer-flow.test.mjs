@@ -34,7 +34,7 @@ test("requires explicit confirmation before revealing or recording an answer", a
 
 test("records answer timing and exposes the synchronized drill version", async () => {
   const html = await source();
-  assert.match(html, /const APP_VERSION = 236;/);
+  assert.match(html, /const APP_VERSION = 237;/);
   assert.match(html, /const MODEL_PRIORITY = \["ニシキ", "ヒバカリ", "カガシ", "ガンマ", "オメガ"\];/);
   assert.match(html, /const HAND_BAR_MODEL_NAMES = \["ニシキ", "ヒバカリ", "カガシ"\];/);
   assert.match(html, /const topCallModelIndices = priorityIndicesV16\(3\);/);
@@ -91,7 +91,7 @@ test("detects self-meld hand masks from dark-blue panels and image-bottom panels
   assert.match(html, /0: \{ left: 11\.5, top: 79\.3, width: 67\.8, height: 20\.7/);
   assert.match(html, /const handMaskV18 = handMaskFallbackV17\(question\);/);
   assert.match(html, /sceneFrameV16\.classList\.toggle\("is-immediate-call-discard", isImmediateCallDiscard\)/);
-  assert.match(html, /hasSelfMeldsV17 && !isImmediateCallDiscard \? detectHandMaskV17/);
+  assert.match(html, /hasSelfMeldsV17 \? detectHandMaskV17/);
 });
 
 test("derives riichi controls from NAGA reach data", async () => {

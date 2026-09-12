@@ -31,6 +31,7 @@ jobs:
       - run: npm run test:navigation
       - run: npm run test:builder
       - run: npm run test:startup
+      - run: npm run test:meld
       - run: npm run test:media
       - run: npm run test:offline
       - run: npm run build:supabase-client

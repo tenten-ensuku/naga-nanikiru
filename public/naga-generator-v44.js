@@ -338,7 +338,8 @@
 
   function immediateCallPreviousMeldCount(question) {
     if (!isImmediateCallDiscardQuestion(question)) return null;
-    var explicit = Number(question.immediateCallPreviousMeldCount);
+    var rawPrevious = question.immediateCallPreviousMeldCount;
+    var explicit = rawPrevious == null || rawPrevious === "" ? NaN : Number(rawPrevious);
     if (Number.isSafeInteger(explicit) && explicit >= 0) return explicit;
     var index = immediateCallMeldIndex(question);
     if (index >= 0) return index;
@@ -369,9 +370,11 @@
     // the current meld's own consumed tiles, it is the old pre-call duplicate
     // representation.  A canonical replay snapshot already has the expected
     // count and is returned untouched.
-    var totalMeldTiles = (Array.isArray(question.melds) ? question.melds : [])
-      .reduce(function (total, meld) { return total + meldDisplayTiles(meld).length; }, 0);
-    var expectedClosedCount = Math.max(0, 14 - totalMeldTiles);
+    // A kan occupies one group, not four concealed-hand slots. Its extra
+    // physical tile is balanced by the replacement draw.
+    var meldCount = Array.isArray(question.melds) ? question.melds.length : 0;
+    var kanBeforeReplacementDraw = /^(daiminkan|minkan|ankan|kakan)$/.test(String(question.predictionType || "")) && !question.draw;
+    var expectedClosedCount = Math.max(0, (kanBeforeReplacementDraw ? 13 : 14) - meldCount * 3 - (question.draw ? 1 : 0));
     if (source.length !== expectedClosedCount + consumed.length) return source.slice();
 
     var display = source.slice();
@@ -476,10 +479,6 @@
     if (actor == null || !REPLAY_MELD_TYPES[message.type]) return;
 
     var consumed = appList(message.consumed);
-    consumed.forEach(function (tile) {
-      removeTile(state.hands[actor], tile);
-    });
-
     var called = tileToAppCode(message.pai);
     if (!called && consumed.length) called = consumed[0];
 
@@ -490,12 +489,28 @@
       });
       if (upgradeIndex >= 0) {
         var upgraded = state.melds[actor][upgradeIndex];
+        // NAGA uses consumed=the already exposed pon (3 tiles), pai=the
+        // added fourth tile. Older fixtures use consumed=[added tile].
+        // Neither form creates a second group or removes the exposed pon
+        // from the concealed hand a second time.
+        if (consumed.length === 3) {
+          removeTile(state.hands[actor], called);
+          upgraded.consumed = consumed.slice();
+        } else if (consumed.length === 1) {
+          removeTile(state.hands[actor], consumed[0]);
+          upgraded.consumed = upgraded.consumed.concat(consumed);
+        } else {
+          upgraded.consumed = []; // Invalid evidence is rejected by validation.
+        }
         upgraded.type = "kakan";
         upgraded.pai = called || upgraded.pai;
-        upgraded.consumed = upgraded.consumed.concat(consumed);
         return;
       }
     }
+
+    consumed.forEach(function (tile) {
+      removeTile(state.hands[actor], tile);
+    });
 
     state.melds[actor].push({
       type: message.type,
@@ -915,7 +930,7 @@
 
     var sourceType = message.type;
     var isCallDiscard = Boolean(NAGA_CALL_TYPES[sourceType]);
-    var snapshotTv = sourceType === "chi" || sourceType === "pon" || sourceType === "daiminkan"
+    var snapshotTv = isCallDiscard
       ? sourceTv + 1
       : sourceTv;
     var preCallSnapshot = isCallDiscard ? replayKyoku(entries, sourceTv, seat) : null;
@@ -959,7 +974,36 @@
       : null;
     candidate.handMaskMode = candidate.immediateCallDiscard ? "original-with-meld-overlay" : null;
     candidate.reached = Boolean(message.reached === true || action.reached === true || snapshot.reached);
+    candidate.handValidation = validateDiscardHand(candidate);
+    candidate.manualReviewRequired = candidate.handValidation.errors.slice();
+    candidate.generationRuleVersion = "meld-replay-v237";
     return candidate;
+  }
+
+  function validateDiscardHand(question) {
+    var errors = [];
+    var hand = Array.isArray(question && question.handBeforeDraw) ? question.handBeforeDraw : [];
+    var melds = Array.isArray(question && question.melds) ? question.melds : [];
+    var draw = question && question.draw;
+    var kanBeforeReplacementDraw = /^(daiminkan|minkan|ankan|kakan)$/.test(String(question && question.predictionType || "")) && !draw;
+    var expected = (question && question.decisionType === "call" ? 13 + (draw ? 1 : 0) : kanBeforeReplacementDraw ? 13 : 14) - melds.length * 3;
+    if (melds.length > 4 || hand.length + (draw ? 1 : 0) !== expected) errors.push("concealed-tile-count");
+    var counts = {};
+    var add = function (tile) {
+      var index = tileIndex(tile);
+      if (index == null) { errors.push("unknown-tile"); return; }
+      counts[index] = (counts[index] || 0) + 1;
+    };
+    hand.forEach(add); if (draw) add(draw);
+    melds.forEach(function (meld) {
+      var tiles = meldDisplayTiles(meld);
+      var expectedTiles = /kan$/.test(String(meld.type || "")) ? 4 : 3;
+      if (tiles.length !== expectedTiles) errors.push("meld-tile-count");
+      tiles.forEach(add);
+    });
+    if (Object.keys(counts).some(function (key) { return counts[key] > 4; })) errors.push("tile-more-than-four");
+    if (question && question.actualDiscard && !hand.concat(draw ? [draw] : []).some(function (tile) { return sameTile(tile, question.actualDiscard); })) errors.push("discard-not-in-hand");
+    return {valid: errors.length === 0, errors: Array.from(new Set(errors)), expectedConcealedTiles: expected};
   }
 
   function callCandidate(report, spec, entries, action, message, huro, kan) {
@@ -1015,6 +1059,9 @@
     });
     candidate.reached = Boolean(message.reached === true || action.reached === true || snapshot.reached);
     candidate.predictionType = kanRows.length ? "kan" : "call";
+    candidate.handValidation = validateDiscardHand(candidate);
+    candidate.manualReviewRequired = candidate.handValidation.errors.slice();
+    candidate.generationRuleVersion = "meld-replay-v237";
     return candidate;
   }
 
@@ -1048,7 +1095,12 @@
       return callCandidate(report, normalized, entries, action, message, action.huro[String(normalized.tw)]);
     }
 
-    if (action && Array.isArray(action.kan) && validSeat(message.actor) === normalized.tw) {
+    // A previously authored discard exercise may deliberately ask for the
+    // discard at a scene which ALSO offers kan. Preserve that explicit mode
+    // when rebuilding; never invent a discard when real_dahai is unknown.
+    var preserveDiscard = spec && (spec.decisionType === "discard" || spec.decisionType === "combined")
+      && tileToAppCode(message.real_dahai) != null;
+    if (action && Array.isArray(action.kan) && validSeat(message.actor) === normalized.tw && !preserveDiscard) {
       return kanCandidate(report, normalized, entries, action, message);
     }
 
@@ -1226,6 +1278,8 @@
     displayConcealedHand: displayConcealedHand,
     displayConcealedHandSlots: displayConcealedHandSlots,
     immediateCallPreviousMeldCount: immediateCallPreviousMeldCount,
+    validateDiscardHand: validateDiscardHand,
+    meldDisplayTiles: meldDisplayTiles,
     modelNames: modelNames,
     getModelNames: modelNames,
     replayKyoku: replayKyoku,

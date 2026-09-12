@@ -2,6 +2,7 @@ import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import vm from "node:vm";
 import { fileURLToPath } from "node:url";
+import {verifiedSceneCandidate} from './naga-generator-runtime.mjs';
 
 const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const dataPath = path.join(projectRoot, "public", "question-data", "selected-questions.json");
@@ -26,11 +27,12 @@ const DERIVED_FIELDS = [
   "probabilities", "reach", "hasRiichiJudgment", "actualReach", "callTile", "actualCall", "actualCallCode",
   "actualCallType", "actualDecision", "callOptions", "callProbabilities", "callRecommended",
   "callActionOptions", "callActionProbabilities", "callRecommendedActions", "actualCallAction",
-  "actualCallProbability", "actualCallProbabilityRaw", "melds", "reached", "sourceTv", "predictionType", "immediateCallDiscard", "immediateCallPreviousMeldCount", "handMaskMode",
+  "actualCallProbability", "actualCallProbabilityRaw", "melds", "reached", "sourceTv", "predictionType", "immediateCallDiscard", "immediateCallPreviousMeldCount", "handMaskMode", "handBeforeMeld", "handValidation", "manualReviewRequired", "generationRuleVersion",
 ];
 
 function applyCandidate(question, candidate, spec) {
   const next = { ...question };
+  delete next.displayHandSlots;
   for (const field of DERIVED_FIELDS) {
     if (Object.prototype.hasOwnProperty.call(candidate, field)) next[field] = candidate[field];
   }
@@ -106,13 +108,8 @@ async function main() {
     }
     const report = cache.get(spec.reportId);
     if (!report) return question;
-    const candidate = generator.sceneCandidate(report, {
-      reportId: spec.reportId,
-      tw: spec.tw,
-      ts: spec.ts,
-      tv: spec.tv,
-      canonicalSceneUrl: question.nagaUrl,
-    });
+    const candidate = verifiedSceneCandidate(report, question.nagaUrl, {decisionType:question.decisionType});
+    if(candidate.tv!==spec.tv)throw new Error(`問題${question.number}: 元画像の再撮影を確認するまで座標変更は保留します`);
     if (!candidate) {
       failedCandidates.push({ number: question.number, reportId: spec.reportId, ts: spec.ts, tv: spec.tv });
       return question;
