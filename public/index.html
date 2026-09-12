@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=237">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=237">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=237">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=238">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=238">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=238">
   <title>みん切る｜みんなの何切る問題集</title>
   <meta name="description" content="みん切るは、NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリです。">
   <meta name="theme-color" content="#06131e">
@@ -2238,10 +2238,11 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=237">
-  <link rel="stylesheet" href="library-v214.css?v=237">
-  <link rel="stylesheet" href="navigation-v234.css?v=237">
-  <link rel="stylesheet" href="book-builder-v235.css?v=237">
+  <link rel="stylesheet" href="ux-v159.css?v=238">
+  <link rel="stylesheet" href="library-v214.css?v=238">
+  <link rel="stylesheet" href="navigation-v234.css?v=238">
+  <link rel="stylesheet" href="book-builder-v235.css?v=238">
+  <link rel="stylesheet" href="menu-polish-v238.css?v=238">
 </head>
 <body class="auth-gate-open">
   <section class="startup-screen-v236" id="startupScreenV236" aria-label="みん切るを準備中">
@@ -2581,19 +2582,19 @@
   </dialog>
 
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=237"></script>
-  <script defer src="legacy-transfer-v232.js?v=237"></script>
-  <script src="drill-ux-v44.js?v=237"></script>
-  <script src="navigation-v234.js?v=237"></script>
-  <script src="book-builder-v235.js?v=237"></script>
-  <script src="library-order-v215.js?v=237"></script>
-  <script src="library-v214.js?v=237"></script>
-  <script src="naga-generator-v44.js?v=237"></script>
-  <script src="hand-mask-v237.js?v=237"></script>
+  <script src="supabase-sync-v48.js?v=238"></script>
+  <script defer src="legacy-transfer-v232.js?v=238"></script>
+  <script src="drill-ux-v44.js?v=238"></script>
+  <script src="navigation-v234.js?v=238"></script>
+  <script src="book-builder-v235.js?v=238"></script>
+  <script src="library-order-v215.js?v=238"></script>
+  <script src="library-v214.js?v=238"></script>
+  <script src="naga-generator-v44.js?v=238"></script>
+  <script src="hand-mask-v237.js?v=238"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 237;
+    const APP_VERSION = 238;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -4637,6 +4638,7 @@
       const QUESTION_NOTICE_STORAGE_KEY_V66 = storageKey("question-notices-v1");
         const ANNOUNCEMENT_SEEN_STORAGE_KEY_V65 = storageKey("announcement-seen-v1");
         const APP_ANNOUNCEMENTS_V66 = [
+          { version: 238, date: "2026-09-13", publishedAt: "2026-09-13T00:35:00+09:00", title: "学習メニューを見やすく、押しやすくしました", body: "大きな「学習する」見出しを省き、明朝系の文字と輪郭のあるボタンに整えました。選択中のタブは明るいゴールドで表示し、問題集の帯は本棚の色に連動します。レインボー進捗バーと学習の流れはそのままです。" },
           { version: 237, date: "2026-09-12", publishedAt: "2026-09-12T22:06:00+09:00", title: "副露・カン後の手牌とマスクを修正しました", body: "全2,217問を元牌譜と照合。カン関連6問と副露直後133問を修正しました。回答後も手牌とマスクの位置を維持し、リーチボタンは文字が途中で改行されない表示にしました。新しい生成候補は共通の手牌検証を通してから登録します。" },
           { version: 236, date: "2026-09-12", publishedAt: "2026-09-12T18:40:00+09:00", title: "起動時と本棚のちらつきを改善しました", body: "起動時の準備中はロゴと案内だけを表示。本棚も巻数と画像が揃ってから表示し、仮の本が途中で増えたり並び替わったりする表示を抑えました。読み込みが遅い・失敗した場合は再読み込みをご案内します。" },
           { version: 235, date: "2026-09-12", publishedAt: "2026-09-12T06:00:00+09:00", title: "自分らしい色の問題集をつくれます", body: "「つくる」に背表紙プレビュー付きの問題集作成を追加。8色から選べて、後から変更もできます。1冊200問まで、195問から次巻をご案内します。いのっち問題集の番号表示も修正しました。NAGAの新規解析と画像アップロードは別途移行確認中です。" },
@@ -5705,6 +5707,20 @@
           button.classList.toggle("is-unselected", !sharedCollectionV46);
           button.setAttribute("aria-label", sharedCollectionV46 ? `本棚へ：${title}を選択中` : "本棚で学習する問題集を選ぶ");
         });
+        syncBookToneV238();
+      }
+
+      function syncBookToneV238(collection = sharedCollectionV46) {
+        const tone = collection ? window.MinkiruLibraryV214?.bookTone?.(collection) || "" : "";
+        document.querySelectorAll("#bookContextV234, .active-collection-button").forEach(node => {
+          for (const name of Array.from(node.classList)) {
+            if (name.startsWith("library-tone-")) node.classList.remove(name);
+          }
+          if (tone) {
+            node.dataset.bookTone = tone;
+            node.classList.add(`library-tone-${tone}`);
+          } else delete node.dataset.bookTone;
+        });
       }
 
       function editableCollectionOptionsV130({ excludeCurrent = false } = {}) {
@@ -6504,6 +6520,7 @@
             target.book_tone = selected; if (sharedCollectionV46?.share_slug === target.share_slug) sharedCollectionV46.book_tone = selected;
             collectionCatalogV100 = collectionCatalogV100.map(row => row.share_slug === target.share_slug ? {...row,book_tone:selected} : row);
             collectionLibraryControllerV214?.invalidate(); status.textContent = "本棚の色を保存しました。";
+            syncBookToneV238();
           } catch (error) { status.textContent = error?.message || "保存できませんでした。"; } finally { button.disabled = false; }
         });
         const managementSelect = document.getElementById("collectionManagementSelect");

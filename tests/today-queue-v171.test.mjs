@@ -7,7 +7,7 @@ const indexUrl = new URL("../public/index.html", import.meta.url);
 test("V180 replaces the daily queue entry point with recent history", async () => {
   const html = await readFile(indexUrl, "utf8");
 
-  assert.match(html, /const APP_VERSION = 237;/);
+  assert.match(html, /const APP_VERSION = 238;/);
   const navigation = html.match(/<nav class="menu-nav"[\s\S]*?<\/nav>/)?.[0] || "";
   assert.match(navigation, /data-menu-view="today"[^>]*title="選択中の本の学習に戻る"/);
   assert.match(navigation, /data-menu-view="today"[^>]*>[\s\S]*?<span>学ぶ<\/span>/);

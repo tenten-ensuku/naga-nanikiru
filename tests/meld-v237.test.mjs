@@ -75,7 +75,7 @@ test('detects the source panel through to the bottom, independently of opponent 
 
 test('input and answer keep detected geometry, normal post-call detection stays in place, generation stops invalid candidates',async()=>{
   const html=await fs.readFile(new URL('../public/index.html',import.meta.url),'utf8');
-  assert.match(html,/const APP_VERSION = 237/);
+  assert.match(html,/const APP_VERSION = 238/);
   assert.match(html,/questionKeyV16\(activeHandQuestionV18\) === questionKeyV16\(question\) && activeHandMaskV18/);
   assert.match(html,/if \(isImmediateCallDiscardV132\(SCENE\) && globalThis\.NagaHandMaskV237\)/);
   assert.match(html,/hasSelfMeldsV17 \? detectHandMaskV17/);

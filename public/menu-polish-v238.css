@@ -1,0 +1,300 @@
+/* V238: menu-only polish. Keep the existing category palette and progress bar. */
+.page.menu-active #menuPanel {
+  --menu-serif-v238: "Yu Mincho", "Hiragino Mincho ProN", "Noto Serif JP", serif;
+  --menu-sans-v238: system-ui, -apple-system, "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+  --menu-selected-v238: #f4cb63;
+  --menu-selected-ink-v238: #15212b;
+  --menu-selected-edge-v238: #ffe7a5;
+}
+
+/* Keep the common heading as the accessible name; only the home hides it. */
+.page.menu-active #menuPanel[data-view="today"] #menuTitle {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+.page.menu-active #menuPanel[data-view="today"] .menu-heading {
+  display: block;
+  margin: 0 0 14px;
+  padding: 0;
+}
+.page.menu-active #menuPanel[data-view="today"] .learning-header-progress {
+  grid-template-columns: auto minmax(28px, 1fr) auto;
+  gap: 8px;
+}
+
+/* Display labels use the bookshelf's existing local serif stack. */
+.page.menu-active #menuPanel :is(.book-context-title-v234 strong, .active-collection-title,
+  .book-context-v234 button, .menu-nav-button, .menu-notice-button, .menu-auth-button),
+.page.menu-active #menuPanel[data-view="today"] :is(.learning-action-title, .learning-action-link,
+  .learning-custom-settings > summary, .today-section-heading h3, .today-section-heading > button, .learning-resume button) {
+  font-family: var(--menu-serif-v238);
+  font-weight: 600;
+  letter-spacing: .025em;
+}
+.page.menu-active #menuPanel[data-view="today"] :is(.learning-action-count, .learning-action-description,
+  .learning-header-progress, .learning-custom-settings-body, .learning-recent-row) {
+  font-family: var(--menu-sans-v238);
+}
+
+/* Book identity is independent of navigation selection. Tints come from library-v214.css. */
+.page.menu-active #menuPanel :is(.book-context-v234, .active-collection-button) {
+  --book-band-ink-v238: #fff5dd;
+}
+.page.menu-active #menuPanel :is(.book-context-v234, .active-collection-button):is([data-book-tone="ivory"], [data-book-tone="ochre"]) {
+  --book-band-ink-v238: #071721;
+}
+.page.menu-active #menuPanel .book-context-v234 {
+  padding: 0;
+  border-radius: 10px;
+  border-color: #496671;
+  background: #0b2632;
+}
+.page.menu-active #menuPanel .book-context-title-v234 {
+  padding: 12px 14px;
+  gap: 12px;
+  border-radius: 9px 9px 0 0;
+  border-bottom: 1px solid rgba(222, 218, 191, .3);
+  background: var(--book-tint, #112b35);
+  color: var(--book-band-ink-v238);
+}
+.page.menu-active #menuPanel .book-context-title-v234 strong {
+  color: inherit;
+  font-size: clamp(18px, 1.7vw, 23px);
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+.page.menu-active #menuPanel .book-context-title-v234 button {
+  min-height: 44px;
+  padding: 6px 12px;
+  color: inherit;
+  border: 1px solid currentColor;
+  background: transparent;
+  white-space: nowrap;
+}
+.page.menu-active #menuPanel .book-tabs-v234 {
+  margin: 0;
+  padding: 8px;
+  gap: 6px;
+  border: 0;
+}
+.page.menu-active #menuPanel .book-tabs-v234 button {
+  min-height: 44px;
+  padding: 7px 6px;
+  color: #d5e8ec;
+  font-size: 15px;
+  line-height: 1.4;
+  border: 1px solid #40606c;
+  background: #0c2430;
+}
+.page.menu-active #menuPanel .book-actions-v234 {
+  margin: 0;
+  padding: 0 8px 8px;
+  gap: 8px;
+}
+.page.menu-active #menuPanel .book-actions-v234:not(:has(button:not([hidden]))) {
+  display: none;
+}
+.page.menu-active #menuPanel .book-actions-v234 button {
+  min-height: 44px;
+  padding: 6px 12px;
+  color: #d5e8ec;
+  font-size: 13px;
+  border-color: #547783;
+}
+.page.menu-active #menuPanel .active-collection-button[data-book-tone] {
+  color: var(--book-band-ink-v238);
+  background: var(--book-tint);
+  border-color: rgba(222, 218, 191, .45);
+  border-radius: 8px;
+}
+.page.menu-active #menuPanel .active-collection-button[data-book-tone] :is(strong, .active-collection-status, .active-collection-arrow) {
+  color: inherit;
+}
+.page.menu-active #menuPanel .active-collection-button strong {
+  font-size: 18px;
+  line-height: 1.5;
+}
+.page.menu-active #menuPanel .active-collection-status {
+  font-size: 12px;
+}
+
+/* Clearly shaped controls, without changing their routes or click handlers. */
+.page.menu-active #menuPanel :is(.book-context-v234 button, .menu-nav-button, .menu-notice-button, .menu-auth-button),
+.page.menu-active #menuPanel[data-view="today"] :is(.today-section-heading > button, .learning-recent-action, .learning-resume button) {
+  min-height: 44px;
+  border-radius: 8px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .08), 0 2px 3px rgba(0, 0, 0, .16);
+  transition: background-color .12s ease, border-color .12s ease, box-shadow .12s ease;
+}
+.page.menu-active #menuPanel .menu-nav-button {
+  border: 1px solid #365966;
+  color: #d5e8ec;
+}
+.page.menu-active #menuPanel :is(.book-tabs-v234 button, .menu-nav-button).is-active {
+  color: var(--menu-selected-ink-v238);
+  background: var(--menu-selected-v238);
+  border: 1px solid var(--menu-selected-edge-v238);
+  box-shadow: inset 0 -3px 0 var(--menu-selected-ink-v238), inset 0 1px 0 #fff0c6, 0 2px 4px rgba(0, 0, 0, .22);
+}
+.page.menu-active #menuPanel .menu-nav-button.is-active :is(.menu-nav-icon, .menu-nav-badge) {
+  color: var(--menu-selected-ink-v238);
+  filter: none;
+}
+.page.menu-active #menuPanel :is(.book-context-v234 button, .menu-nav-button, .menu-notice-button, .menu-auth-button):active:not(:disabled),
+.page.menu-active #menuPanel[data-view="today"] :is(.today-section-heading > button, .learning-recent-action, .learning-resume button):active:not(:disabled) {
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, .3);
+}
+.page.menu-active #menuPanel :is(.book-tabs-v234 button, .menu-nav-button).is-active:active:not(:disabled) {
+  box-shadow: inset 0 -3px 0 var(--menu-selected-ink-v238), inset 0 2px 4px rgba(0, 0, 0, .25);
+}
+.page.menu-active #menuPanel :is(.book-context-v234 button, .active-collection-button, .menu-nav-button, .menu-notice-button, .menu-auth-button):focus-visible,
+.page.menu-active #menuPanel[data-view="today"] :is(.learning-action-card, .learning-custom-settings > summary, .today-section-heading > button, .learning-recent-action, .learning-resume button):focus-visible {
+  outline: 2px solid #f6fbff;
+  outline-offset: 3px;
+}
+
+/* Keep the three categories and single-button card semantics. */
+.page.menu-active #menuPanel[data-view="today"] .learning-action-grid {
+  align-items: start;
+}
+.page.menu-active #menuPanel[data-view="today"] :is(.learning-action-card, .learning-all-action) {
+  height: auto;
+  min-height: 132px;
+  border-radius: 8px;
+}
+.page.menu-active #menuPanel[data-view="today"] .learning-all-action::before {
+  border-radius: 8px 0 0 8px;
+}
+.page.menu-active #menuPanel[data-view="today"] .learning-action-title {
+  font-size: 20px;
+  line-height: 1.4;
+}
+.page.menu-active #menuPanel[data-view="today"] .learning-action-count {
+  font-weight: 650;
+}
+.page.menu-active #menuPanel[data-view="today"] .learning-action-description {
+  font-size: 13px;
+  line-height: 1.5;
+  color: #c0d3dc;
+  font-weight: 400;
+}
+.page.menu-active #menuPanel[data-view="today"] .learning-all-action > .learning-action-card {
+  min-height: 76px;
+  padding-bottom: 4px;
+}
+.page.menu-active #menuPanel[data-view="today"] .learning-all-action > .learning-custom-settings > summary {
+  min-height: 44px;
+  padding: 8px 12px;
+  font-size: 14px;
+  border-radius: 8px;
+  line-height: 1.4;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .08), 0 2px 3px rgba(0, 0, 0, .16);
+}
+.page.menu-active #menuPanel[data-view="today"] .learning-all-action > .learning-custom-settings[open] {
+  width: calc(100% - 36px);
+}
+.page.menu-active #menuPanel[data-view="today"] .learning-all-action > .learning-custom-settings[open] .learning-custom-settings-body {
+  position: static;
+  width: 100%;
+  max-width: 100%;
+  max-height: none;
+  margin-top: 8px;
+  overflow: visible;
+  grid-template-columns: minmax(0, 1fr);
+  font-size: 12px;
+  line-height: 1.6;
+}
+.page.menu-active #menuPanel[data-view="today"] .learning-custom-settings-body :is(legend, .learning-check) {
+  font-size: 12px;
+}
+.page.menu-active #menuPanel[data-view="today"] .learning-check {
+  min-height: 44px;
+}
+.page.menu-active #menuPanel[data-view="today"] .learning-action-card:active:not(:disabled) {
+  transform: translateY(1px);
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, .28);
+}
+.page.menu-active #menuPanel[data-view="today"] .learning-recent-action {
+  min-width: 44px;
+}
+.page.menu-active #menuPanel[data-view="today"] .today-section-heading h3 {
+  font-size: 23px;
+  line-height: 1.5;
+}
+.page.menu-active #menuPanel[data-view="today"] .today-section-heading > button {
+  padding: 8px 12px;
+  border: 1px solid #547783;
+  background: #0b2632;
+  font-size: 14px;
+}
+
+@media (max-width: 800px) {
+  .page.menu-active #menuPanel .book-context-v234 { margin-bottom: 12px; }
+  .page.menu-active #menuPanel .book-context-title-v234 { padding: 8px 10px; gap: 8px; }
+  .page.menu-active #menuPanel .book-context-title-v234 button { padding-inline: 8px; font-size: 13px; }
+  .page.menu-active #menuPanel .book-tabs-v234 { gap: 4px; padding: 6px; }
+  .page.menu-active #menuPanel .book-tabs-v234 button { font-size: 14px; letter-spacing: 0; }
+  .page.menu-active #menuPanel .book-actions-v234 { padding: 0 6px 6px; gap: 6px; }
+  .page.menu-active #menuPanel .book-actions-v234 button { padding-inline: 10px; font-size: 12px; }
+  .page.menu-active #menuPanel .menu-nav-button { font-size: 13px; letter-spacing: 0; }
+  .page.menu-active #menuPanel[data-view="today"] .learning-action-grid { gap: 8px; }
+  .page.menu-active #menuPanel[data-view="today"] .learning-action-card {
+    min-height: 76px;
+    padding: 10px 12px 10px 15px;
+    gap: 3px 8px;
+  }
+  .page.menu-active #menuPanel[data-view="today"] .learning-action-title { font-size: 18px; }
+  .page.menu-active #menuPanel[data-view="today"] .learning-action-count { font-size: 25px; }
+  .page.menu-active #menuPanel[data-view="today"] .learning-action-description { font-size: 12px; }
+  .page.menu-active #menuPanel[data-view="today"] .learning-action-card .learning-action-link {
+    min-width: 70px;
+    min-height: 44px;
+    padding: 6px 10px;
+    border-radius: 8px;
+    border-width: 1px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .1), 0 2px 3px rgba(0, 0, 0, .16);
+  }
+  .page.menu-active #menuPanel[data-view="today"] .learning-action-link > span:first-child {
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 600;
+  }
+  .page.menu-active #menuPanel[data-view="today"] .learning-all-action { min-height: 132px; }
+  .page.menu-active #menuPanel[data-view="today"] .learning-all-action > .learning-action-card {
+    min-height: 76px;
+    padding: 10px 12px 4px 15px;
+  }
+  .page.menu-active #menuPanel[data-view="today"] .learning-all-action > .learning-custom-settings {
+    margin: 0 0 10px 15px;
+    max-width: calc(100% - 30px);
+  }
+  .page.menu-active #menuPanel[data-view="today"] .learning-all-action > .learning-custom-settings[open] {
+    width: calc(100% - 30px);
+  }
+  .page.menu-active #menuPanel[data-view="today"] .today-section-heading { flex-wrap: wrap; gap: 8px; }
+  .page.menu-active #menuPanel[data-view="today"] .today-section-heading h3 { font-size: 21px; }
+  .page.menu-active #menuPanel[data-view="today"] .today-section-heading > button { padding: 6px 8px; font-size: 12px; }
+}
+
+@media (max-width: 360px) {
+  .page.menu-active #menuPanel .book-tabs-v234 button {
+    padding-inline: 4px;
+    font-size: 13px;
+    white-space: nowrap;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page.menu-active #menuPanel :is(.book-context-v234 button, .menu-nav-button, .menu-notice-button, .menu-auth-button),
+  .page.menu-active #menuPanel[data-view="today"] :is(.learning-action-card, .learning-recent-action, .today-section-heading > button, .learning-resume button) {
+    transition: none;
+  }
+}
