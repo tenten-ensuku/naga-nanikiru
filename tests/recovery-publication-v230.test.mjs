@@ -15,6 +15,6 @@ test('canary keeps the ordinary page stopped but uses the identical authenticate
 });
 test('canary rejects an unexpected flag or source version',()=>{
   assert.throws(()=>recoveryPublication(source,'1'));
-  assert.throws(()=>recoveryPublication(source.replace('const APP_VERSION = 238;','const APP_VERSION = 229;'),'true'));
+  assert.throws(()=>recoveryPublication(source.replace('const APP_VERSION = 239;','const APP_VERSION = 229;'),'true'));
   assert.throws(()=>recoveryPublication(source.replace('window.NAGA_MAINTENANCE_MODE = false;','window.NAGA_MAINTENANCE_MODE = true;'),'true'));
 });

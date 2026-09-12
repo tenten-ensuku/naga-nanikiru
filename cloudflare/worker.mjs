@@ -39,7 +39,7 @@ export default {
   async fetch(request,env={},ctx={}){
     try{
       const url=new URL(request.url);
-      if(url.pathname==='/health'&&request.method==='GET')return json({version:238,backend:'cloudflare',ready:ready(env),studentFlow:ready(env),heavyOperations:false});
+      if(url.pathname==='/health'&&request.method==='GET')return json({version:239,backend:'cloudflare',ready:ready(env),studentFlow:ready(env),heavyOperations:false});
       if(!ready(env))return json({error:'migration_not_ready',message:'移行確認中です。公開切替はまだ完了していません。'},503);
       if(url.origin!==env.APP_ORIGIN)throw new ApiError('origin_denied',403);
       if(url.pathname==='/naga-nanikiru'||url.pathname==='/naga-nanikiru/')return Response.redirect(url.origin+'/'+url.search,302);

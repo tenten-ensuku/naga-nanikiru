@@ -22,9 +22,9 @@ function fixture() {
   return { nodes, context };
 }
 
-test('V238 is loaded last and keeps question CSS and data out of the menu change', () => {
-  assert.match(html, /const APP_VERSION = 238;/);
-  assert.match(html, /book-builder-v235\.css\?v=238[\s\S]*menu-polish-v238\.css\?v=238/);
+test('V238 base menu styles follow builder CSS and keep question CSS and data out of the menu change', () => {
+  assert.match(html, /const APP_VERSION = 239;/);
+  assert.match(html, /book-builder-v235\.css\?v=239[\s\S]*menu-polish-v238\.css\?v=239/);
   assert.doesNotMatch(css, /@import|@font-face|https?:|\.scene-frame|\.hand-mask|\.riichi|--ux-gold\s*:/);
   assert.doesNotMatch(css, /\.learning-header-progress-track/);
 });
@@ -89,7 +89,8 @@ test('whole-card interaction and disabled/permissions rules are unchanged', () =
   const card = source('renderLearningActionButtonV194');
   assert.equal((card.match(/<button/g) || []).length, 1);
   assert.match(card, /\$\{disabled\}/);
-  assert.match(card, /<span class="learning-action-link"><span>プレイ<\/span><\/span>/);
+  assert.match(card, /<span class="learning-action-link" aria-hidden="true">\$\{icon\("chevron-right"\)\}<\/span>/);
+  assert.doesNotMatch(card, /プレイ/);
   assert.match(source('renderBookNavigationV234'), /collectionManagementCanManageV197/);
   assert.match(html, /<div class="learning-all-action">[\s\S]*?<details class="learning-custom-settings"/);
   assert.doesNotMatch(css, /position:\s*fixed|\.learning-custom-settings[^}]*position:\s*absolute/);

@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=238">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=238">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=238">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=239">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=239">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=239">
   <title>みん切る｜みんなの何切る問題集</title>
   <meta name="description" content="みん切るは、NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリです。">
   <meta name="theme-color" content="#06131e">
@@ -2238,11 +2238,12 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=238">
-  <link rel="stylesheet" href="library-v214.css?v=238">
-  <link rel="stylesheet" href="navigation-v234.css?v=238">
-  <link rel="stylesheet" href="book-builder-v235.css?v=238">
-  <link rel="stylesheet" href="menu-polish-v238.css?v=238">
+  <link rel="stylesheet" href="ux-v159.css?v=239">
+  <link rel="stylesheet" href="library-v214.css?v=239">
+  <link rel="stylesheet" href="navigation-v234.css?v=239">
+  <link rel="stylesheet" href="book-builder-v235.css?v=239">
+  <link rel="stylesheet" href="menu-polish-v238.css?v=239">
+  <link rel="stylesheet" href="menu-sections-v239.css?v=239">
 </head>
 <body class="auth-gate-open">
   <section class="startup-screen-v236" id="startupScreenV236" aria-label="みん切るを準備中">
@@ -2271,13 +2272,22 @@
       </aside>
       <div class="menu-content">
         <section class="book-context-v234" id="bookContextV234" aria-label="選択中の問題集" hidden>
-          <div class="book-context-title-v234"><strong data-active-collection-name>問題集を選ぶ</strong><button type="button" data-open-collection-chooser>本棚へ ›</button></div>
+          <div class="book-context-title-v234">
+            <span class="book-band-icon-v239" data-book-icon-v239 aria-hidden="true"></span>
+            <strong data-active-collection-name>問題集を選ぶ</strong>
+            <div class="book-title-actions-v239">
+              <button type="button" data-open-collection-chooser>本棚へ ›</button>
+              <details class="book-more-v239" id="bookActionsMenuV239" hidden>
+                <summary aria-label="この本の操作" title="この本への追加・管理"></summary>
+                <div class="book-actions-v234" role="group" aria-label="この本への追加・管理"><button type="button" data-book-create hidden>この本に追加</button><button type="button" data-book-manage hidden>この本の管理</button></div>
+              </details>
+            </div>
+          </div>
           <nav class="book-tabs-v234" aria-label="この本のメニュー">
             <button type="button" data-book-view="today">学習</button>
             <button type="button" data-book-view="my">問題一覧</button>
             <button type="button" data-book-view="analysis">この本の成績</button>
           </nav>
-          <div class="book-actions-v234"><button type="button" data-book-create hidden>この本に追加</button><button type="button" data-book-manage hidden>この本の管理</button></div>
         </section>
         <div class="menu-heading">
           <h2 id="menuTitle">学習する</h2>
@@ -2582,19 +2592,20 @@
   </dialog>
 
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=238"></script>
-  <script defer src="legacy-transfer-v232.js?v=238"></script>
-  <script src="drill-ux-v44.js?v=238"></script>
-  <script src="navigation-v234.js?v=238"></script>
-  <script src="book-builder-v235.js?v=238"></script>
-  <script src="library-order-v215.js?v=238"></script>
-  <script src="library-v214.js?v=238"></script>
-  <script src="naga-generator-v44.js?v=238"></script>
-  <script src="hand-mask-v237.js?v=238"></script>
+  <script src="supabase-sync-v48.js?v=239"></script>
+  <script defer src="legacy-transfer-v232.js?v=239"></script>
+  <script src="drill-ux-v44.js?v=239"></script>
+  <script src="navigation-v234.js?v=239"></script>
+  <script src="book-builder-v235.js?v=239"></script>
+  <script src="library-order-v215.js?v=239"></script>
+  <script src="library-v214.js?v=239"></script>
+  <script src="naga-generator-v44.js?v=239"></script>
+  <script src="hand-mask-v237.js?v=239"></script>
+  <script src="menu-sections-v239.js?v=239"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 238;
+    const APP_VERSION = 239;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -4498,6 +4509,7 @@
         });
         context.querySelector("[data-book-create]").hidden = !hasBook || !generatorDestinationRowsV130().some(row => String(row.share_slug || "") === navigationScopeV234());
         context.querySelector("[data-book-manage]").hidden = !hasBook || !collectionManagementCanManageV197(sharedCollectionV46);
+        window.MinkiruMenuV239?.syncActions(context);
         const originLabel = questionOriginViewV234 === "today" ? "この本の学習へ" : questionOriginViewV234 === "analysis" ? "この本の成績へ" : questionOriginViewV234 === "archive" ? "アーカイブへ" : questionOriginViewV234 === "session" ? "学習結果へ" : "問題一覧へ戻る";
         const back = document.getElementById("menuButton");
         back.setAttribute("aria-label", originLabel); back.title = originLabel;
@@ -4638,6 +4650,7 @@
       const QUESTION_NOTICE_STORAGE_KEY_V66 = storageKey("question-notices-v1");
         const ANNOUNCEMENT_SEEN_STORAGE_KEY_V65 = storageKey("announcement-seen-v1");
         const APP_ANNOUNCEMENTS_V66 = [
+          { version: 239, date: "2026-09-13", publishedAt: "2026-09-13T02:10:00+09:00", title: "この本の3つのページを、もっとわかりやすく", body: "学習・問題一覧・この本の成績を一体型のタブに整えました。本への追加・管理は問題集名の横の操作メニューへ。学習メニューはアイコンと矢印のコンパクトな行になり、画面全体を落ち着いた配色に調整しました。" },
           { version: 238, date: "2026-09-13", publishedAt: "2026-09-13T00:35:00+09:00", title: "学習メニューを見やすく、押しやすくしました", body: "大きな「学習する」見出しを省き、明朝系の文字と輪郭のあるボタンに整えました。選択中のタブは明るいゴールドで表示し、問題集の帯は本棚の色に連動します。レインボー進捗バーと学習の流れはそのままです。" },
           { version: 237, date: "2026-09-12", publishedAt: "2026-09-12T22:06:00+09:00", title: "副露・カン後の手牌とマスクを修正しました", body: "全2,217問を元牌譜と照合。カン関連6問と副露直後133問を修正しました。回答後も手牌とマスクの位置を維持し、リーチボタンは文字が途中で改行されない表示にしました。新しい生成候補は共通の手牌検証を通してから登録します。" },
           { version: 236, date: "2026-09-12", publishedAt: "2026-09-12T18:40:00+09:00", title: "起動時と本棚のちらつきを改善しました", body: "起動時の準備中はロゴと案内だけを表示。本棚も巻数と画像が揃ってから表示し、仮の本が途中で増えたり並び替わったりする表示を抑えました。読み込みが遅い・失敗した場合は再読み込みをご案内します。" },
@@ -9368,8 +9381,10 @@
 
       function renderLearningActionButtonV194({ mode, title, count, description, tone, disabled = "" }) {
         const countText = String(count);
-        const actionLabel = `${title} ${countText}問をプレイ`;
-        return `<button class="learning-action-card is-${tone}" type="button" data-learning-action="${escapeHtml(mode)}" aria-label="${escapeHtml(actionLabel)}"${disabled}><span class="learning-action-main"><strong class="learning-action-title">${escapeHtml(title)}</strong><span class="learning-action-count">${escapeHtml(countText)}<small>問</small></span></span><small class="learning-action-description">${escapeHtml(description)}</small><span class="learning-action-link"><span>プレイ</span></span></button>`;
+        const actionLabel = `${title} ${countText}問の学習を開始`;
+        const icon = window.MinkiruMenuV239?.icon || (() => "");
+        const categoryIcon = tone === "weak" ? "arrow-path" : tone === "all" ? "book-open" : "question-mark-circle";
+        return `<button class="learning-action-card is-${tone}" type="button" data-learning-action="${escapeHtml(mode)}" aria-label="${escapeHtml(actionLabel)}"${disabled}><span class="learning-category-icon-v239" aria-hidden="true">${icon(categoryIcon)}</span><span class="learning-action-main"><strong class="learning-action-title">${escapeHtml(title)}</strong><span class="learning-action-count">${escapeHtml(countText)}<small>問</small></span></span><small class="learning-action-description">${escapeHtml(description)}</small><span class="learning-action-link" aria-hidden="true">${icon("chevron-right")}</span></button>`;
       }
 
       function renderRecentHistoryViewV180() {
