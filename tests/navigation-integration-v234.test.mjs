@@ -84,7 +84,7 @@ test('book management never falls back to another owned book', () => {
 });
 test('personal settings do not render book permission or membership forms', () => {
   const context = load(['renderSettingsViewV67'], {
-    userStateV16: { settings: {} }, currentUserDisplayNameV47: () => 'テスト',
+    window: {}, userStateV16: { settings: {} }, currentUserDisplayNameV47: () => 'テスト',
     supabaseSessionV46: {}, escapeHtml: String, customReactionSettingsMarkupV211: () => '<section>共通リアクション</section>'
   });
   const output = context.renderSettingsViewV67();

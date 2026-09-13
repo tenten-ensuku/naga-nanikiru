@@ -246,7 +246,7 @@
 
   function ensurePanel(root) {
     const doc = root.document;
-    const settings = doc.querySelector('#menuPanel[data-view="settings"] .settings-section');
+    const settings = doc.querySelector('#menuPanel[data-view="settings"] [data-settings-transfer-v240]') || doc.querySelector('#menuPanel[data-view="settings"] .settings-section');
     if (!settings || settings.querySelector("[data-legacy-transfer-v232]")) return;
     addStyles(root);
     const panel = doc.createElement("section");

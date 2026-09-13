@@ -14,7 +14,7 @@ const syncClient = read("client/supabase-sync.ts");
 const migration = read("supabase/migrations/20260830172600_custom_reaction_images_and_tiles_v213.sql");
 
 test("V213 adds the 37 approved tile reactions between standard and custom", () => {
-  assert.match(html, /const APP_VERSION = 239;/);
+  assert.match(html, /const APP_VERSION = 240;/);
   assert.match(html, /data-reaction-tab="standard"[\s\S]*data-reaction-tab="tiles"[\s\S]*data-reaction-tab="custom"/);
   assert.match(html, /id="reactionPickerTilePanelV213"/);
   assert.match(html, /id="reactionTilePickerOptionsV213"/);
@@ -32,7 +32,7 @@ test("V213 adds the 37 approved tile reactions between standard and custom", () 
 
 test("V213 accepts either an emoji or a shared image for custom reactions", () => {
   assert.match(html, /id="customReactionImageV213" type="file" accept="image\/png,image\/jpeg,image\/webp,image\/gif"/);
-  assert.match(html, /絵文字または画像のどちらかを指定してください/);
+  assert.match(html, /絵文字または画像のどちらかと、1〜24文字の表示名を指定してください/);
   assert.match(html, /createCustomReaction\(label, icon, imageFile\)/);
   assert.match(html, /normalizeReactionAssetPathV213/);
   assert.match(html, /iconType: imagePath \? "image" : "emoji"/);

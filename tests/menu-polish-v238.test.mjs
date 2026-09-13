@@ -23,8 +23,8 @@ function fixture() {
 }
 
 test('V238 base menu styles follow builder CSS and keep question CSS and data out of the menu change', () => {
-  assert.match(html, /const APP_VERSION = 239;/);
-  assert.match(html, /book-builder-v235\.css\?v=239[\s\S]*menu-polish-v238\.css\?v=239/);
+  assert.match(html, /const APP_VERSION = 240;/);
+  assert.match(html, /book-builder-v235\.css\?v=240[\s\S]*menu-polish-v238\.css\?v=240/);
   assert.doesNotMatch(css, /@import|@font-face|https?:|\.scene-frame|\.hand-mask|\.riichi|--ux-gold\s*:/);
   assert.doesNotMatch(css, /\.learning-header-progress-track/);
 });

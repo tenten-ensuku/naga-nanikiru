@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=239">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=239">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=239">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=240">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=240">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=240">
   <title>みん切る｜みんなの何切る問題集</title>
   <meta name="description" content="みん切るは、NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリです。">
   <meta name="theme-color" content="#06131e">
@@ -2238,12 +2238,13 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=239">
-  <link rel="stylesheet" href="library-v214.css?v=239">
-  <link rel="stylesheet" href="navigation-v234.css?v=239">
-  <link rel="stylesheet" href="book-builder-v235.css?v=239">
-  <link rel="stylesheet" href="menu-polish-v238.css?v=239">
-  <link rel="stylesheet" href="menu-sections-v239.css?v=239">
+  <link rel="stylesheet" href="ux-v159.css?v=240">
+  <link rel="stylesheet" href="library-v214.css?v=240">
+  <link rel="stylesheet" href="navigation-v234.css?v=240">
+  <link rel="stylesheet" href="book-builder-v235.css?v=240">
+  <link rel="stylesheet" href="menu-polish-v238.css?v=240">
+  <link rel="stylesheet" href="menu-sections-v239.css?v=240">
+  <link rel="stylesheet" href="workspace-ui-v240.css?v=240">
 </head>
 <body class="auth-gate-open">
   <section class="startup-screen-v236" id="startupScreenV236" aria-label="みん切るを準備中">
@@ -2592,20 +2593,21 @@
   </dialog>
 
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=239"></script>
-  <script defer src="legacy-transfer-v232.js?v=239"></script>
-  <script src="drill-ux-v44.js?v=239"></script>
-  <script src="navigation-v234.js?v=239"></script>
-  <script src="book-builder-v235.js?v=239"></script>
-  <script src="library-order-v215.js?v=239"></script>
-  <script src="library-v214.js?v=239"></script>
-  <script src="naga-generator-v44.js?v=239"></script>
-  <script src="hand-mask-v237.js?v=239"></script>
-  <script src="menu-sections-v239.js?v=239"></script>
+  <script src="supabase-sync-v48.js?v=240"></script>
+  <script defer src="legacy-transfer-v232.js?v=240"></script>
+  <script src="drill-ux-v44.js?v=240"></script>
+  <script src="navigation-v234.js?v=240"></script>
+  <script src="book-builder-v235.js?v=240"></script>
+  <script src="library-order-v215.js?v=240"></script>
+  <script src="library-v214.js?v=240"></script>
+  <script src="naga-generator-v44.js?v=240"></script>
+  <script src="hand-mask-v237.js?v=240"></script>
+  <script src="menu-sections-v239.js?v=240"></script>
+  <script src="workspace-ui-v240.js?v=240"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 239;
+    const APP_VERSION = 240;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -3763,6 +3765,7 @@
           event.preventDefault();
           closeReactionPickerV208();
           document.querySelector('[data-menu-view="settings"]')?.click();
+          window.MinkiruWorkspaceV240?.openSettings("reactions", { focus: true });
           return;
         }
         const favoriteToggle = target.closest("[data-reaction-favorite-toggle]");
@@ -4257,6 +4260,7 @@
         if (!input) return null;
         return {
           url: input.value,
+          mode: document.querySelector('input[name="generatorMode"]:checked')?.value || generatorModeV46,
           destination: document.getElementById("generatorDestinationSelect")?.value || generatorDestinationV130 || "",
           seat: document.getElementById("generatorSeat")?.value || "",
           threshold: document.getElementById("generatorThreshold")?.value || "5",
@@ -4271,6 +4275,10 @@
       function restoreGeneratorFormDraftV157(draft) {
         if (!draft) return;
         generatorFormDraftV157 = { ...draft };
+        if (draft.mode === "scene" || draft.mode === "match") {
+          document.querySelectorAll('input[name="generatorMode"]').forEach(input => { input.checked = input.value === draft.mode; });
+          syncGeneratorModeV46();
+        }
         const destinationSelect = document.getElementById("generatorDestinationSelect");
         const destination = String(draft.destination || "");
         if (destinationSelect && destination && [...destinationSelect.options].some(option => option.value === destination)) {
@@ -4362,7 +4370,7 @@
         today: { title: "学習する" },
         my: { title: "問題一覧" },
         archive: { title: "アーカイブ" },
-        generator: { title: "問題生成" },
+        generator: { title: "つくる" },
         settings: { title: "マイページ" },
         analysis: { title: "この本の成績" },
         "book-settings": { title: "この本の管理" },
@@ -4650,6 +4658,7 @@
       const QUESTION_NOTICE_STORAGE_KEY_V66 = storageKey("question-notices-v1");
         const ANNOUNCEMENT_SEEN_STORAGE_KEY_V65 = storageKey("announcement-seen-v1");
         const APP_ANNOUNCEMENTS_V66 = [
+          { version: 240, date: "2026-09-14", publishedAt: "2026-09-14T01:54:00+09:00", title: "つくる・マイページを、すっきり使いやすく", body: "問題の追加と新しい一冊の作成を整理しました。マイページは目的別に開ける設定に変更し、ログアウトもアカウント設定へ移しました。文字とボタンを落ち着いた配色に統一しています。NAGA新規解析・画像アップロードは引き続き準備中です。" },
           { version: 239, date: "2026-09-13", publishedAt: "2026-09-13T02:10:00+09:00", title: "この本の3つのページを、もっとわかりやすく", body: "学習・問題一覧・この本の成績を一体型のタブに整えました。本への追加・管理は問題集名の横の操作メニューへ。学習メニューはアイコンと矢印のコンパクトな行になり、画面全体を落ち着いた配色に調整しました。" },
           { version: 238, date: "2026-09-13", publishedAt: "2026-09-13T00:35:00+09:00", title: "学習メニューを見やすく、押しやすくしました", body: "大きな「学習する」見出しを省き、明朝系の文字と輪郭のあるボタンに整えました。選択中のタブは明るいゴールドで表示し、問題集の帯は本棚の色に連動します。レインボー進捗バーと学習の流れはそのままです。" },
           { version: 237, date: "2026-09-12", publishedAt: "2026-09-12T22:06:00+09:00", title: "副露・カン後の手牌とマスクを修正しました", body: "全2,217問を元牌譜と照合。カン関連6問と副露直後133問を修正しました。回答後も手牌とマスクの位置を維持し、リーチボタンは文字が途中で改行されない表示にしました。新しい生成候補は共通の手牌検証を通してから登録します。" },
@@ -5928,7 +5937,8 @@
       let bookCreateDraftV235 = null;
       let capacityRequestV235 = 0;
       function renderCreateHubV235() {
-        return `<section class="create-hub-v235"><h3>自分の一冊をつくる</h3><p>まずは空の問題集を用意。問題を追加すると、選んだ色の本に収録されます。</p><details id="bookCreateDetailsV235"${bookCreateDraftV235?.open ? " open" : ""}><summary>＋ 新しい問題集をつくる</summary>${collectionCreateFormMarkupV106("bookCreateV235")}</details></section>`;
+        const icon = window.MinkiruMenuV239?.icon || (() => "");
+        return `<section class="create-hub-v235"><details id="bookCreateDetailsV235"${bookCreateDraftV235?.open ? " open" : ""}><summary>${icon("book-open")}<span><strong>新しい問題集をつくる</strong><small>名前と色を決めて、空の一冊を用意します。</small></span>${icon("chevron-right")}</summary>${collectionCreateFormMarkupV106("bookCreateV235")}</details></section>`;
       }
       async function refreshBookCapacityV235() {
         const container = document.getElementById("bookCapacityV235");
@@ -6703,7 +6713,8 @@
       }
 
       function customReactionSettingsMarkupV213() {
-        return `<div class="settings-divider" role="presentation"></div><section class="custom-reaction-settings-v211 custom-reaction-settings-v213"><h3>カスタムリアクション</h3><p>絵文字または画像と短い表示名を追加できます。追加したリアクションは、共有問題で他のログイン利用者も使えます。</p><form class="settings-form custom-reaction-form-v211 custom-reaction-form-v213" id="customReactionFormV213"><div class="custom-reaction-input-grid-v211 custom-reaction-input-grid-v213"><label for="customReactionIconV213">絵文字（任意）<input id="customReactionIconV213" type="text" maxlength="8" placeholder="🔥" autocomplete="off"></label><label for="customReactionLabelV213">表示名<input id="customReactionLabelV213" type="text" maxlength="24" required placeholder="ここ大事" autocomplete="off"></label></div><label for="customReactionImageV213">画像（任意）<input id="customReactionImageV213" type="file" accept="image/png,image/jpeg,image/webp,image/gif"></label><p class="settings-form-note">絵文字または画像のどちらかを指定してください。画像を指定した場合は、リアクション上では画像を優先して表示します（1MB以内）。</p><div class="settings-form-actions"><button class="primary" type="submit">カスタムリアクションを追加</button><span class="settings-form-status" id="customReactionStatusV213" aria-live="polite"></span></div></form><div id="customReactionListV213">${customReactionSettingsListMarkupV213()}</div></section>`;
+        const imagesUnavailable = window.NAGA_RUNTIME_CONFIG?.backend === "cloudflare" && !window.NAGA_RUNTIME_CONFIG?.heavyOperationsEnabled;
+        return `<section class="custom-reaction-settings-v211 custom-reaction-settings-v213"><h3>カスタムリアクションを追加</h3><p>絵文字と短い表示名をセットにします。追加したリアクションは、他のログイン利用者も使えます。</p><form class="settings-form custom-reaction-form-v211 custom-reaction-form-v213" id="customReactionFormV213"><div class="custom-reaction-input-grid-v211 custom-reaction-input-grid-v213"><label for="customReactionIconV213">絵文字<input id="customReactionIconV213" type="text" maxlength="8" placeholder="🔥" autocomplete="off"></label><label for="customReactionLabelV213">表示名<input id="customReactionLabelV213" type="text" maxlength="24" required placeholder="ここ大事" autocomplete="off"></label></div><details class="reaction-image-options-v240" id="reactionImageOptionsV240"><summary>絵文字の代わりに画像を使う${imagesUnavailable ? '<span class="workspace-status-v240">準備中</span>' : ""}</summary>${imagesUnavailable ? '<p>画像の追加は準備中です。絵文字は利用できます。</p>' : ""}<fieldset${imagesUnavailable ? " disabled" : ""}><label for="customReactionImageV213">画像（任意）<input id="customReactionImageV213" type="file" accept="image/png,image/jpeg,image/webp,image/gif" aria-describedby="reactionImageHelpV240"></label><p class="settings-form-note" id="reactionImageHelpV240">PNG・JPEG・WebP・GIF、1MB以内。絵文字と画像の両方を指定した場合は画像を表示します。</p></fieldset></details><div class="settings-form-actions"><button class="primary" type="submit">リアクションを追加</button><span class="settings-form-status" id="customReactionStatusV213" aria-live="polite"></span></div></form><div id="customReactionListV213">${customReactionSettingsListMarkupV213()}</div></section>`;
       }
 
       function customReactionSettingsMarkupV211() {
@@ -6735,6 +6746,7 @@
           if (imageFile && (!COMMENT_IMAGE_TYPES_V68.has(imageFile.type) || imageFile.size > 1 * 1024 * 1024)) {
             status?.classList.add("is-error");
             if (status) status.textContent = "画像はPNG・JPEG・WebP・GIFのいずれか、1MB以内で指定してください。";
+            const imageOptions = document.getElementById("reactionImageOptionsV240"); if (imageOptions) imageOptions.open = true;
             imageInput?.focus();
             return;
           }
@@ -6763,7 +6775,7 @@
           } finally {
             if (button) {
               button.disabled = false;
-              button.textContent = "カスタムリアクションを追加";
+              button.textContent = "リアクションを追加";
             }
           }
         });
@@ -6780,10 +6792,16 @@
         const syncNote = supabaseSessionV46
           ? "ログイン中：保存すると共有コメントと問題作成にも反映されます。"
           : "未ログイン：この端末に保存されます。共有コメント・問題作成へ反映するにはDiscordログイン後に再保存してください。";
-        return `<section class="settings-section"><p class="navigation-scope-note-v234">アカウント・表示・リアクションの共通設定です。問題集の共有・権限は、その本の「この本の管理」から変更できます。</p><h3>表示名の設定</h3><p>コメントや問題作成時に表示する名前を登録できます。読みやすさを保つため、1〜5文字で入力してください。</p><form class="settings-form" id="displayNameForm"><label for="displayNameInput">作成者表示名<input id="displayNameInput" type="text" maxlength="5" minlength="1" value="${escapeHtml(configuredName)}" placeholder="${escapeHtml(fallbackName)}" autocomplete="nickname" required></label><p class="settings-form-note">${escapeHtml(syncNote)}</p><div class="settings-form-actions"><button class="primary" type="submit">表示名を保存</button><span class="settings-form-status" id="displayNameStatus" aria-live="polite"></span></div></form><div class="settings-divider" role="presentation"></div><h3>PCの問題画面</h3><p>PCでは問題とコメントを左右に分けると、局面画像を小さく保ったままコメントを読みやすくできます。スマホでは常に縦配置です。</p><div class="settings-form" id="layoutPreferenceForm"><label for="desktopLayoutSelect">PCレイアウト<select id="desktopLayoutSelect"><option value="split"${desktopLayout === "split" ? " selected" : ""}>左右2ペイン（おすすめ）</option><option value="single"${desktopLayout === "single" ? " selected" : ""}>1列（従来の表示）</option></select></label><p class="settings-form-note">設定はこのブラウザに保存されます。変更は次に問題画面を開いたときから反映されます。</p></div>${customReactionSettingsMarkupV211()}</section>`;
+        const icon = window.MinkiruWorkspaceV240?.icon || window.MinkiruMenuV239?.icon || (() => "");
+        const group = (key, title, description, symbol, content) => `<details class="settings-group-v240" data-settings-group-v240="${key}"><summary>${icon(symbol)}<span><strong>${title}</strong><small>${description}</small></span>${icon("chevron-right")}</summary><div class="settings-group-body-v240">${content}</div></details>`;
+        const account = `<p>コメントや問題作成で使う表示名を、1〜5文字で設定できます。</p><form class="settings-form" id="displayNameForm"><label for="displayNameInput">表示名<input id="displayNameInput" type="text" maxlength="5" minlength="1" value="${escapeHtml(configuredName)}" placeholder="${escapeHtml(fallbackName)}" autocomplete="nickname" required></label><p class="settings-form-note">${escapeHtml(syncNote)}</p><div class="settings-form-actions"><button class="primary" type="submit">表示名を保存</button><span class="settings-form-status" id="displayNameStatus" aria-live="polite"></span></div></form><div class="account-signout-v240"><button id="accountAuthButtonV240" type="button">${supabaseSessionV46?.user?.id ? "ログアウト" : "Discordでログイン"}</button><p class="settings-form-status" id="accountActionStatusV240" aria-live="polite"></p></div>`;
+        const display = `<div class="settings-form" id="layoutPreferenceForm"><label for="desktopLayoutSelect">PCの問題画面<select id="desktopLayoutSelect"><option value="split"${desktopLayout === "split" ? " selected" : ""}>問題とコメントを左右に表示</option><option value="single"${desktopLayout === "single" ? " selected" : ""}>縦1列に表示</option></select></label><p class="settings-form-note">スマホは常に縦配置です。このブラウザに保存され、次に問題を開くと反映されます。</p></div>`;
+        return `<section class="settings-section settings-workspace-v240"><p class="settings-intro-v240">使い方に合わせて、必要な設定を開いてください。</p>${group("account", "アカウント", "表示名・ログアウト", "user-circle", account)}${group("display", "表示・学習", "PCの問題画面のレイアウト", "cog-6-tooth", display)}${group("reactions", "リアクション", "絵文字や画像を使ったリアクションの追加", "face-smile", customReactionSettingsMarkupV211())}${group("transfer", "以前のデータを引き継ぐ", "旧サイトのお気に入り・アーカイブ・本棚順", "arrow-path", '<div data-settings-transfer-v240></div>')}<p class="settings-form-note">問題集の共有・権限は、その本の「この本の管理」から変更できます。</p></section>`;
       }
 
       function bindSettingsViewV67() {
+        window.MinkiruWorkspaceV240?.bindSettings();
+        document.getElementById("accountAuthButtonV240")?.addEventListener("click", handleDiscordAuthV187);
         const form = document.getElementById("displayNameForm");
         if (form) form.addEventListener("submit", async event => {
           event.preventDefault();
@@ -9078,7 +9096,7 @@
       }
 
       function generatorProgressMarkupV159() {
-        const steps = ["URLを入力", "解析", "候補を確認", "追加完了"];
+        const steps = ["入力", "解析", "確認", "追加"];
         return `<ol class="generator-progress" aria-label="問題生成の進捗">${steps.map((label, index) => {
           const step = index + 1;
           const stateClass = step < generatorStageV159 ? " is-complete" : step === generatorStageV159 ? " is-current" : "";
@@ -9098,12 +9116,16 @@
 
       function renderGeneratorViewV44() {
         const sceneMode = generatorModeV46 === "scene";
-        generatorDestinationOptionsV130();
-        const destination = currentGeneratorDestinationV130();
-        const destinationNote = destination.kind === "shared"
-          ? `共有問題集「${escapeHtml(destination.label)}」へ保存します。追加内容は利用者全員に反映され、問題番号は保存先で自動採番されます。`
-          : "この端末だけに保存します。共有問題集へ追加する場合は、上の保存先を切り替えてください。";
-        return `<section class="generator-panel" aria-busy="${generatorBusyV159}"><div class="generator-heading"><div><p class="generator-kicker">QUESTION BUILDER</p><h3>NAGA URLから問題生成</h3><p>URLを解析し、候補を確認してから追加します。盤面プレビューは順番に自動取得できます。</p></div></div>${generatorProgressMarkupV159()}<div class="generator-setup">${renderGeneratorDestinationV130()}<form class="generator-form generator-form-v46" id="generatorForm"><fieldset class="generator-mode-field"><legend>入力種類</legend><label><input type="radio" name="generatorMode" value="scene"${sceneMode ? " checked" : ""}> 局面URL（1問）</label><label><input type="radio" name="generatorMode" value="match"${sceneMode ? "" : " checked"}> 半荘URL（候補を一括抽出）</label></fieldset><label class="generator-url-field">NAGA URL<input id="generatorUrl" type="url" required inputmode="url" autocomplete="off" placeholder="https://naga.dmv.nico/htmls/..."></label><label id="generatorSeatLabel">対象プレイヤー<select id="generatorSeat">${generatorSeatOptionsV46()}</select></label><button class="generator-button" type="submit">${sceneMode ? "1問を生成" : "候補を抽出"}</button><details class="generator-custom-settings" id="generatorCustomSettings"${sceneMode ? " hidden" : ""}><summary>抽出条件をカスタム設定</summary><div class="generator-settings-grid"><label>悪手閾値（%）<input id="generatorThreshold" type="number" min="0.1" max="50" step="0.1" value="5"></label><label>対象判断<select id="generatorDecisionType"><option value="all">すべて</option><option value="discard">打牌</option><option value="call">副露</option><option value="reach">リーチ</option></select></label><label>最大抽出数<input id="generatorMaxCandidates" type="number" min="1" max="500" step="1" value="100"></label></div>${generatorModelFilterMarkupV46()}<p class="generator-settings-note">悪手は選択した打牌・副露の実際の選択率が閾値以下の候補です。リーチ判断を含む局面も対象にできます。モデルを変更すると、解析済みデータだけで候補を再抽出します。</p></details></form><p class="generator-destination-note">${destinationNote}</p></div><div class="generator-status" id="generatorStatus" aria-live="polite"></div><div class="generator-results" id="generatorResults">${renderGeneratorCandidatesV44()}</div></section>`;
+        const unavailable = window.NAGA_RUNTIME_CONFIG?.backend === "cloudflare" && !window.NAGA_RUNTIME_CONFIG?.heavyOperationsEnabled;
+        const destinationMarkup = renderGeneratorDestinationV130();
+        const builder = `${generatorProgressMarkupV159()}<div class="generator-setup">${unavailable ? "" : destinationMarkup}<form class="generator-form generator-form-v46" id="generatorForm"><label class="generator-url-field">NAGA URL<input id="generatorUrl" type="url" required inputmode="url" autocomplete="off" placeholder="https://naga.dmv.nico/htmls/..."></label><label id="generatorSeatLabel">対象プレイヤー<select id="generatorSeat">${generatorSeatOptionsV46()}</select></label><fieldset class="generator-mode-field"><legend>作成する問題</legend><label><input type="radio" name="generatorMode" value="scene"${sceneMode ? " checked" : ""}> この局面から1問</label><label><input type="radio" name="generatorMode" value="match"${sceneMode ? "" : " checked"}> 半荘からまとめて抽出</label></fieldset><details class="generator-custom-settings" id="generatorCustomSettings"${sceneMode ? " hidden" : ""}><summary>抽出条件を調整する</summary><div class="generator-settings-grid"><label>悪手閾値（%）<input id="generatorThreshold" type="number" min="0.1" max="50" step="0.1" value="5"></label><label>対象判断<select id="generatorDecisionType"><option value="all">すべて</option><option value="discard">打牌</option><option value="call">副露</option><option value="reach">リーチ</option></select></label><label>最大抽出数<input id="generatorMaxCandidates" type="number" min="1" max="500" step="1" value="100"></label></div>${generatorModelFilterMarkupV46()}<p class="generator-settings-note">選択率が閾値以下の候補を抽出します。リーチ判断も対象にできます。モデルは解析済みのものだけを使用します。</p></details><button class="generator-button" type="submit"${unavailable ? ' disabled title="NAGA解析は準備中です"' : ""}>${sceneMode ? "1問を生成" : "候補を抽出"}</button></form></div><div class="generator-status" id="generatorStatus" aria-live="polite"></div><div class="generator-results" id="generatorResults">${renderGeneratorCandidatesV44()}</div>`;
+        const content = unavailable
+          ? `<div class="create-import-entry-v240"><button type="button" data-menu-jump="collections">本棚から問題を選ぶ</button></div><details class="generator-destination-disclosure-v240"${generatorEntryV234 === "book" ? " open" : ""}><summary>保存先の収録数を確認する</summary>${destinationMarkup}</details><details class="generator-unavailable-v240"><summary>NAGA URLから追加<span class="workspace-status-v240">準備中</span></summary><p>新規解析・画像アップロード・大量取込は準備中です。入力フォームは確認用の表示で、まだ使用できません。</p><fieldset class="generator-locked-v240" disabled aria-label="準備中のNAGA問題生成">${builder}</fieldset></details>`
+          : builder;
+        const description = unavailable
+          ? '既存の問題は、問題画面の「自分の問題集にインポート」から、保存先の本を選んで追加できます。'
+          : "保存先とNAGA URLを指定し、候補を確認してから追加します。";
+        return `<section class="generator-panel" aria-busy="${generatorBusyV159}"><div class="generator-heading"><div><h3>問題を追加する</h3><p>${description}</p></div></div>${content}</section>`;
       }
 
       function generatorCandidateChoiceMarkupV158(candidate) {
@@ -9480,7 +9502,7 @@
           return;
         }
         if (menuViewV16 === "generator") {
-          grid.innerHTML = renderCreateHubV235() + renderGeneratorViewV44();
+          grid.innerHTML = renderGeneratorViewV44() + renderCreateHubV235();
           grid.style.display = "block";
           empty.hidden = true;
           bindGeneratorV44();
@@ -9490,11 +9512,6 @@
           const destinationNode = document.querySelector(".generator-destination");
           destinationNode?.insertAdjacentHTML("beforeend", '<div class="book-capacity-v235" id="bookCapacityV235" aria-live="polite" hidden></div>');
           void refreshBookCapacityV235();
-          if (window.NAGA_RUNTIME_CONFIG?.backend === "cloudflare" && !window.NAGA_RUNTIME_CONFIG?.heavyOperationsEnabled) {
-            document.querySelector(".generator-heading")?.insertAdjacentHTML("afterend", '<p class="create-status-v235">問題集の作成・既存問題のインポートが利用できます。NAGA URLの新規解析・画像アップロード・大量取込は移行確認中です。</p>');
-            const description = document.querySelector(".generator-heading h3 + p"); if (description) description.textContent = "NAGAからの新規生成は準備中です。既存問題は、問題画面の「自分の問題集にインポート」から追加できます。";
-            const submit = document.querySelector('#generatorForm button[type="submit"]'); if (submit) { submit.disabled = true; submit.title = "NAGA解析は移行確認中です"; }
-          }
           return;
         }
         if (menuViewV16 === "analysis") {
@@ -9508,7 +9525,11 @@
           return;
         }
         if (menuViewV16 === "settings") {
-          grid.innerHTML = `${canViewStudentDashboardV84() ? `<button class="primary" type="button" data-menu-jump="students">生徒の進捗を見る</button>` : ""}${renderSettingsViewV67()}`;
+          grid.innerHTML = renderSettingsViewV67();
+          if (canViewStudentDashboardV84()) {
+            const icon = window.MinkiruMenuV239?.icon || (() => "");
+            grid.querySelector(".settings-workspace-v240")?.insertAdjacentHTML("beforeend", `<details class="settings-group-v240" data-settings-group-v240="teaching"><summary>${icon("chart-bar")}<span><strong>講師用ツール</strong><small>担当する生徒の学習状況</small></span>${icon("chevron-right")}</summary><div class="settings-group-body-v240"><button type="button" data-menu-jump="students">生徒の進捗を見る</button></div></details>`);
+          }
           grid.style.display = "block";
           empty.hidden = true;
           bindSettingsViewV67();
@@ -10258,6 +10279,7 @@
         generatorForm?.addEventListener("submit", analyzeGeneratorUrlV44);
         generatorForm?.addEventListener("input", persistGeneratorFormDraftV157);
         generatorForm?.addEventListener("change", persistGeneratorFormDraftV157);
+        document.getElementById("generatorCustomSettings")?.addEventListener("toggle", persistGeneratorFormDraftV157);
         document.querySelectorAll('input[name="generatorMode"]').forEach(input => input.addEventListener("change", syncGeneratorModeV46));
         document.getElementById("generatorDestinationSelect")?.addEventListener("change", event => {
           generatorDestinationV130 = String(event.currentTarget.value || "");
@@ -10616,12 +10638,16 @@
         }
         const authButton = document.getElementById("discordAuthButton");
         const signingOut = Boolean(supabaseSessionV46?.user?.id);
+        const accountButton = document.getElementById("accountAuthButtonV240");
+        const accountMessage = document.getElementById("accountActionStatusV240");
+        if (accountMessage) accountMessage.textContent = "";
         authPendingV46 = true;
         if (!signingOut) setAuthGateStateV187("signing-in");
         if (authButton) {
           authButton.disabled = true;
           authButton.textContent = signingOut ? "ログアウト中…" : "ログイン中…";
         }
+        if (accountButton) { accountButton.disabled = true; accountButton.textContent = signingOut ? "ログアウト中…" : "ログイン中…"; }
         try {
           if (signingOut) {
             if (typeof window.NagaSupabase.signOut !== "function") throw new Error("ログアウト機能を利用できません。");
@@ -10632,10 +10658,12 @@
           }
         } catch (error) {
           const message = error?.message || "ログイン処理に失敗しました。もう一度お試しください。";
+          if (accountMessage) { accountMessage.textContent = message; accountMessage.classList.add("is-error"); }
           console.warn("Discord認証に失敗しました", error);
           setAuthGateStateV187(supabaseSessionV46?.user?.id ? "authenticated" : "unauthenticated", message);
         } finally {
           authPendingV46 = false;
+          if (accountButton) { accountButton.disabled = false; accountButton.textContent = supabaseSessionV46?.user?.id ? "ログアウト" : "Discordでログイン"; }
           await refreshAccountV46(supabaseSessionV46);
         }
       }
@@ -10671,6 +10699,7 @@
         const status = document.getElementById("accountStatus");
         const authButton = document.getElementById("discordAuthButton");
         const studentNav = document.getElementById("studentHistoryNav");
+        authButton.hidden = Boolean(session?.user?.id);
         if (!window.NagaSupabase?.configured) {
           status.textContent = "ログイン機能を利用できません。管理者にSupabase設定を確認してください。";
           authButton.textContent = "ログイン準備中";
