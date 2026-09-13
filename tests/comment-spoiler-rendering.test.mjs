@@ -32,3 +32,10 @@ test("中継時の全角パイプとHTMLエンコードされたパイプもス�
   assert.match(rendered, /全角の秘密/);
   assert.match(rendered, /数値の秘密/);
 });
+
+test("Discord spoiler attachments are collapsed until explicitly opened", async()=>{
+  const html=await readFile(htmlUrl,'utf8'),start=html.indexOf('    function renderCommentAttachmentV242('),end=html.indexOf('    function renderCommentEntryV65(',start);
+  const render=new Function('escapeHtml',html.slice(start,end)+'; return renderCommentAttachmentV242;')(value=>String(value).replaceAll('"','&quot;'));
+  const normal=render({src:'https://fixture/image.png',alt:'image'}),hidden=render({src:'https://fixture/image.png',alt:'image',spoiler:true});
+  assert.doesNotMatch(normal,/<details/);assert.match(hidden,/<details class="comment-image-spoiler-v242"><summary>/);assert.doesNotMatch(hidden,/<details[^>]*\bopen\b/);
+});

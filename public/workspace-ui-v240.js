@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const keys = new Set(["account", "display", "reactions", "transfer", "teaching"]);
+  const keys = new Set(["account", "display", "reactions", "teaching"]);
   // Heroicons v2.2.0, MIT. Same vendor/license as menu-sections-v239.js.
   // https://github.com/tailwindlabs/heroicons/tree/v2.2.0/optimized/24/outline
   const paths = Object.freeze({

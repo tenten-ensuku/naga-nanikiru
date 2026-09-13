@@ -41,8 +41,7 @@ test("GitHub entry is static, responsive, and contains no authenticated request 
   assert.doesNotMatch(html, /supabase/i);
   assert.doesNotMatch(html, /fetch\s*\(/i);
   assert.doesNotMatch(html, /XMLHttpRequest|Authorization|access_token|refresh_token/i);
-  assert.match(html, /<script defer src="\/naga-nanikiru\/legacy-transfer-v232\.js/);
-  assert.match(html, /id="legacyExportButton"/);
+  assert.doesNotMatch(html, /<script[^>]+legacy-transfer|id="legacyExportButton"|旧サイトの設定を引き継ぐ/);
 });
 
 test("GitHub entry keeps only approved URL parameters and drops hash", async () => {

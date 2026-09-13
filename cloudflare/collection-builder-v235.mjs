@@ -92,7 +92,9 @@ async function addQuestion(args,{db,actor,origin},imported=null){
   const profile=await first(db,'SELECT display_name FROM profiles WHERE id=?',actor.id);
   // Assign in the INSERT itself: two concurrent inserts cannot select the same number.
   const validNumberSql=`CASE WHEN json_type(payload,'$.number') IN ('integer','text') AND CAST(json_extract(payload,'$.number') AS TEXT) NOT GLOB '*[^0-9]*' AND CAST(json_extract(payload,'$.number') AS INTEGER) BETWEEN 1 AND 9007199254740000 THEN CAST(json_extract(payload,'$.number') AS INTEGER) END`;
-  const numberSql=`(SELECT MAX(COALESCE(MAX(valid),0),?)+COUNT(*)-COUNT(DISTINCT valid)+1 FROM (SELECT ${validNumberSql} valid FROM questions WHERE collection_id=?))`;
+  // Legacy duplicate/invalid labels must not add another gap on every insert.
+  // Keep all existing numbers and advance from the highest allocated position.
+  const numberSql=`(SELECT MAX(COALESCE(MAX(valid),0),COALESCE(MAX(sort_order),0),?)+1 FROM (SELECT ${validNumberSql} valid,sort_order FROM questions WHERE collection_id=?))`;
   const normalized={...payload};for(const k of ['serverQuestionId','sharedCollectionSlug','createdById','createdByName','updatedById','updatedByName','_sharedIndexOnlyV170'])delete normalized[k];
   await questionMediaKeys(normalized,{db,actor,origin},c.id);
   try{

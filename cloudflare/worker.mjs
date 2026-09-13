@@ -7,11 +7,13 @@ import {BUILDER_RPCS,builderRpc,collectionCapacity} from './collection-builder-v
 import {imageUpload} from './media-write-v241.mjs';
 import {createGenerationApi} from './generation-api-v241.mjs';
 import {reconcileMediaBudget} from './generation-capacity-v241.mjs';
+import {authenticateDiscordBot,createDiscordSyncApi} from './discord-sync-v242.mjs';
+const discordSyncApi=createDiscordSyncApi();
 const generationApi=createGenerationApi({cache:globalThis.caches?.default??null});
 const generationEnabled=env=>env.GENERATION_ENABLED==='true'&&env.UPLOADS_ENABLED==='true';
 
-// Generation and image uploads have separate explicit switches. Bot, legacy
-// bulk imports and new account signup remain separately paused.
+// Generation, image uploads and the two scoped Discord sources have separate
+// switches. Legacy bulk imports and new account signup remain paused.
 export const MIGRATION_IMPLEMENTATION_COMPLETE=false;
 export const STUDENT_FLOW_IMPLEMENTATION_COMPLETE=true;
 const readNames=new Set(READ_RPCS),writeNames=new Set(WRITE_RPCS);
@@ -44,7 +46,7 @@ export default {
   async fetch(request,env={},ctx={}){
     try{
       const url=new URL(request.url);
-      if(url.pathname==='/health'&&request.method==='GET')return json({version:241,backend:'cloudflare',ready:ready(env),studentFlow:ready(env),heavyOperations:generationEnabled(env),generation:generationEnabled(env),uploads:env.UPLOADS_ENABLED==='true',bulkImport:false,bot:false});
+      if(url.pathname==='/health'&&request.method==='GET')return json({version:242,backend:'cloudflare',ready:ready(env),studentFlow:ready(env),heavyOperations:generationEnabled(env),generation:generationEnabled(env),uploads:env.UPLOADS_ENABLED==='true',bulkImport:false,bot:env.DISCORD_SYNC_ENABLED==='true'&&!!env.DISCORD_SYNC_TOKEN});
       if(!ready(env))return json({error:'migration_not_ready',message:'移行確認中です。公開切替はまだ完了していません。'},503);
       if(url.origin!==env.APP_ORIGIN)throw new ApiError('origin_denied',403);
       if(url.pathname==='/naga-nanikiru'||url.pathname==='/naga-nanikiru/')return Response.redirect(url.origin+'/'+url.search,302);
@@ -59,6 +61,12 @@ export default {
       }
       if(url.pathname==='/auth/discord/callback'&&request.method==='GET')return await finishDiscord(request,env);
       if(url.pathname.startsWith('/v1/public/')&&['GET','HEAD'].includes(request.method))return await mediaRead(request,env,{actor:null})||json({error:'not_found'},404);
+      if(url.pathname.startsWith('/api/bot/')){
+        await authenticateDiscordBot(request,env);await limited(env.BOT_LIMIT,'discord-sync');
+        const input=url.pathname==='/api/bot/assets'?{}:await jsonBody(request);
+        const result=await discordSyncApi(request,env,input);
+        return result instanceof Response?result:json(result);
+      }
       if(url.pathname.startsWith('/api/')||url.pathname.startsWith('/v1/')){
         const session=await sessionFor(request,env);
         if(url.pathname==='/api/session'&&request.method==='GET')return sessionResponse(session);

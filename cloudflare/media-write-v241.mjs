@@ -12,7 +12,7 @@ export async function boundedBytes(source,maximum){
   finally{reader.releaseLock();}
   const bytes=new Uint8Array(length);let offset=0;for(const part of parts){bytes.set(part,offset);offset+=part.length;}return bytes;
 }
-export async function imageUpload(request,env,actor){
+export async function imageUpload(request,env,actor,{purpose='question'}={}){
   requireActor(actor);if(env.UPLOADS_ENABLED!=='true')throw new ApiError('heavy_operations_paused',503);
   const bucket=request.headers.get('x-asset-bucket');if(!Object.hasOwn(rules,bucket))throw new ApiError('media_bucket_invalid',400);
   const slug=request.headers.get('x-collection-slug'),id=request.headers.get('x-collection-id');let collection=null;
@@ -25,7 +25,7 @@ export async function imageUpload(request,env,actor){
       if(!await canEditCollection(env.DB,actor,collection.id))throw new ApiError('collection_not_editable',403);
     }
     const count=await env.DB.prepare('SELECT COUNT(*) n FROM questions WHERE collection_id=? AND deleted_at IS NULL').bind(collection.id).first();
-    if(count.n>=200)throw new ApiError('collection_capacity_reached',409);
+    if(count.n>=200&&purpose!=='comment')throw new ApiError('collection_capacity_reached',409);
   }else if(bucket==='comment-assets'&&(!collection||!collection.allow_comments||!await canAccessCollection(env.DB,actor,collection.id)))throw new ApiError('collection_not_accessible',403);
   await requireGenerationCapacity(env);
   const bytes=await boundedBytes(request,rules[bucket]),type=imageType(bytes);

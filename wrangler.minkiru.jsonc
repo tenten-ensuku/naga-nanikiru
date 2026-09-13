@@ -22,11 +22,13 @@
   "ratelimits": [
     {"name":"AUTH_LIMIT","namespace_id":"232001","simple":{"limit":12,"period":60}},
     {"name":"WRITE_LIMIT","namespace_id":"232002","simple":{"limit":40,"period":60}},
-    {"name":"GENERATION_LIMIT","namespace_id":"241001","simple":{"limit":4,"period":60}}
+    {"name":"GENERATION_LIMIT","namespace_id":"241001","simple":{"limit":4,"period":60}},
+    {"name":"BOT_LIMIT","namespace_id":"242001","simple":{"limit":30,"period":60}}
   ],
   "vars": {
     "COLLECTION_BUILDER_ENABLED": "true",
     "MEDIA_LINKS_ENABLED": "true",
+    "DISCORD_SYNC_ENABLED": "true",
     "CUTOVER_READY": "true", "UPLOADS_ENABLED": "true", "GENERATION_ENABLED":"true", "SIGNUPS_ENABLED":"false",
     "APP_ORIGIN":"https://minkiru.naga-study.workers.dev",
     "DISCORD_CLIENT_ID":"1533072667278835822"

@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=241">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=241">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=241">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=242">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=242">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=242">
   <title>みん切る｜みんなの何切る問題集</title>
   <meta name="description" content="みん切るは、NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリです。">
   <meta name="theme-color" content="#06131e">
@@ -618,6 +618,8 @@
     .comment-attachment-button { display: block; max-width: min(100%, 560px); margin-top: 5px; padding: 0; overflow: hidden; border: 1px solid rgba(255,255,255,.12); border-radius: 5px; background: #031521; cursor: zoom-in; }
     .comment-attachment-button:hover, .comment-attachment-button:focus-visible { border-color: rgba(155,232,216,.9); outline: 2px solid rgba(155,232,216,.25); outline-offset: 2px; }
     .comment-attachment { display: block; width: 100%; max-height: 150px; object-fit: contain; }
+    .comment-image-spoiler-v242 { margin-top: 6px; }
+    .comment-image-spoiler-v242 > summary { cursor: pointer; padding: 10px; border: 1px solid #486371; border-radius: 5px; color: #d5edf0; background: #19323f; }
     .comment-image-viewer { position: fixed; inset: 0; z-index: 30; display: flex; align-items: center; justify-content: center; padding: 46px 24px 28px; background: rgba(2, 10, 17, .92); }
     .comment-image-viewer[hidden] { display: none; }
     .comment-image-viewer-image { display: block; max-width: min(96vw, 1500px); max-height: 88vh; object-fit: contain; border: 1px solid rgba(255,255,255,.22); border-radius: 8px; box-shadow: 0 16px 70px rgba(0,0,0,.6); }
@@ -2240,13 +2242,13 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=241">
-  <link rel="stylesheet" href="library-v214.css?v=241">
-  <link rel="stylesheet" href="navigation-v234.css?v=241">
-  <link rel="stylesheet" href="book-builder-v235.css?v=241">
-  <link rel="stylesheet" href="menu-polish-v238.css?v=241">
-  <link rel="stylesheet" href="menu-sections-v239.css?v=241">
-  <link rel="stylesheet" href="workspace-ui-v240.css?v=241">
+  <link rel="stylesheet" href="ux-v159.css?v=242">
+  <link rel="stylesheet" href="library-v214.css?v=242">
+  <link rel="stylesheet" href="navigation-v234.css?v=242">
+  <link rel="stylesheet" href="book-builder-v235.css?v=242">
+  <link rel="stylesheet" href="menu-polish-v238.css?v=242">
+  <link rel="stylesheet" href="menu-sections-v239.css?v=242">
+  <link rel="stylesheet" href="workspace-ui-v240.css?v=242">
 </head>
 <body class="auth-gate-open">
   <section class="startup-screen-v236" id="startupScreenV236" aria-label="みん切るを準備中">
@@ -2603,22 +2605,21 @@
   </dialog>
 
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=241"></script>
-  <script defer src="legacy-transfer-v232.js?v=241"></script>
-  <script src="drill-ux-v44.js?v=241"></script>
-  <script src="navigation-v234.js?v=241"></script>
-  <script src="book-builder-v235.js?v=241"></script>
-  <script src="library-order-v215.js?v=241"></script>
-  <script src="library-v214.js?v=241"></script>
-  <script src="naga-generator-v44.js?v=241"></script>
-  <script src="hand-mask-v237.js?v=241"></script>
-  <script src="menu-sections-v239.js?v=241"></script>
-  <script src="workspace-ui-v240.js?v=241"></script>
-  <script src="generation-confirm-v241.js?v=241"></script>
+  <script src="supabase-sync-v48.js?v=242"></script>
+  <script src="drill-ux-v44.js?v=242"></script>
+  <script src="navigation-v234.js?v=242"></script>
+  <script src="book-builder-v235.js?v=242"></script>
+  <script src="library-order-v215.js?v=242"></script>
+  <script src="library-v214.js?v=242"></script>
+  <script src="naga-generator-v44.js?v=242"></script>
+  <script src="hand-mask-v237.js?v=242"></script>
+  <script src="menu-sections-v239.js?v=242"></script>
+  <script src="workspace-ui-v240.js?v=242"></script>
+  <script src="generation-confirm-v241.js?v=242"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 241;
+    const APP_VERSION = 242;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -3881,10 +3882,16 @@
       return `<span class="comment-entry-actions"><button class="comment-action-button" type="button" data-comment-action="edit" data-comment-id="${id}" aria-label="このコメントを編集">編集</button><button class="comment-action-button danger" type="button" data-comment-action="delete" data-comment-id="${id}" aria-label="このコメントを削除">削除</button></span>`;
     }
 
+    function renderCommentAttachmentV242(attachment) {
+      const alt = attachment.alt || "添付画像";
+      const button = `<button class="comment-attachment-button" type="button" data-comment-image-src="${escapeHtml(attachment.src)}" data-comment-image-alt="${escapeHtml(alt)}" aria-label="${escapeHtml(alt)}を拡大"><img class="comment-attachment" src="${escapeHtml(attachment.src)}" alt="${escapeHtml(alt)}" loading="lazy"></button>`;
+      return attachment.spoiler === true ? `<details class="comment-image-spoiler-v242"><summary>伏せ字の画像を表示</summary>${button}</details>` : button;
+    }
+
     function renderCommentEntryV65(message) {
       const editingClass = state.commentEditingId === message.id ? " is-editing" : "";
       const commentId = String(message.id || "");
-      return `<div class="comment-entry${editingClass}" data-comment-id="${escapeHtml(commentId)}"><div class="comment-card-meta"><time class="comment-time" datetime="${escapeHtml(message.createdAt)}">${formatCommentTime(message.createdAt)}</time>${commentActionMarkupV75(message)}</div>${message.content ? `<div class="comment-body">${formatCommentContent(message.content, message.embeds)}</div>` : ""}${renderCommentEmbedPlaceholdersV96(message)}${(message.attachments || []).map(attachment => `<button class="comment-attachment-button" type="button" data-comment-image-src="${escapeHtml(attachment.src)}" data-comment-image-alt="${escapeHtml(attachment.alt)}" aria-label="${escapeHtml(attachment.alt)}を拡大"><img class="comment-attachment" src="${escapeHtml(attachment.src)}" alt="${escapeHtml(attachment.alt)}" loading="lazy"></button>`).join("")}${renderReactionBarV208("comment", commentId)}</div>`;
+      return `<div class="comment-entry${editingClass}" data-comment-id="${escapeHtml(commentId)}"><div class="comment-card-meta"><time class="comment-time" datetime="${escapeHtml(message.createdAt)}">${formatCommentTime(message.createdAt)}</time>${commentActionMarkupV75(message)}</div>${message.content ? `<div class="comment-body">${formatCommentContent(message.content, message.embeds)}</div>` : ""}${renderCommentEmbedPlaceholdersV96(message)}${(message.attachments || []).map(renderCommentAttachmentV242).join("")}${renderReactionBarV208("comment", commentId)}</div>`;
     }
 
     function renderComments({ scrollToBottom = false } = {}) {
@@ -4669,6 +4676,7 @@
       const QUESTION_NOTICE_STORAGE_KEY_V66 = storageKey("question-notices-v1");
         const ANNOUNCEMENT_SEEN_STORAGE_KEY_V65 = storageKey("announcement-seen-v1");
         const APP_ANNOUNCEMENTS_V66 = [
+          { version: 242, date: "2026-09-14", publishedAt: "2026-09-14T04:20:00+09:00", title: "ピエール・垣崎にまのDiscord転送を再開", body: "ピエール問題集と垣崎にま問題集の新着・変更分を、Cloudflare D1・R2へ転送するようにしました。既存問題の手牌・番号は維持し、コメントの伏せ字とアイコン情報も引き継ぎます。容量上限や要確認の局面は保留し、重複登録を防ぎます。不要になった旧サイトの設定引き継ぎ案内は削除しました。" },
           { version: 241, date: "2026-09-14", publishedAt: "2026-09-14T03:32:00+09:00", title: "問題生成・画像保存を再開しました", body: "NAGA URLの読み込み、局面画像の作成、問題集への保存を再開しました。画像はCloudflare R2へ保存し、保存後の問題を開き直せることを確認しています。副露・カン後の手牌とマスクは承認済みの生成ロジックを維持。保存前には追加先と件数を確認できます。容量・処理量の上限に達した場合は新規作成だけを止め、学習の操作は維持します。大量取込とBot転送は引き続き停止中です。" },
           { version: 240, date: "2026-09-14", publishedAt: "2026-09-14T01:54:00+09:00", title: "つくる・マイページを、すっきり使いやすく", body: "問題の追加と新しい一冊の作成を整理しました。マイページは目的別に開ける設定に変更し、ログアウトもアカウント設定へ移しました。文字とボタンを落ち着いた配色に統一しています。NAGA新規解析・画像アップロードは引き続き準備中です。" },
           { version: 239, date: "2026-09-13", publishedAt: "2026-09-13T02:10:00+09:00", title: "この本の3つのページを、もっとわかりやすく", body: "学習・問題一覧・この本の成績を一体型のタブに整えました。本への追加・管理は問題集名の横の操作メニューへ。学習メニューはアイコンと矢印のコンパクトな行になり、画面全体を落ち着いた配色に調整しました。" },
@@ -6808,7 +6816,7 @@
         const group = (key, title, description, symbol, content) => `<details class="settings-group-v240" data-settings-group-v240="${key}"><summary>${icon(symbol)}<span><strong>${title}</strong><small>${description}</small></span>${icon("chevron-right")}</summary><div class="settings-group-body-v240">${content}</div></details>`;
         const account = `<p>コメントや問題作成で使う表示名を、1〜5文字で設定できます。</p><form class="settings-form" id="displayNameForm"><label for="displayNameInput">表示名<input id="displayNameInput" type="text" maxlength="5" minlength="1" value="${escapeHtml(configuredName)}" placeholder="${escapeHtml(fallbackName)}" autocomplete="nickname" required></label><p class="settings-form-note">${escapeHtml(syncNote)}</p><div class="settings-form-actions"><button class="primary" type="submit">表示名を保存</button><span class="settings-form-status" id="displayNameStatus" aria-live="polite"></span></div></form><div class="account-signout-v240"><button id="accountAuthButtonV240" type="button">${supabaseSessionV46?.user?.id ? "ログアウト" : "Discordでログイン"}</button><p class="settings-form-status" id="accountActionStatusV240" aria-live="polite"></p></div>`;
         const display = `<div class="settings-form" id="layoutPreferenceForm"><label for="desktopLayoutSelect">PCの問題画面<select id="desktopLayoutSelect"><option value="split"${desktopLayout === "split" ? " selected" : ""}>問題とコメントを左右に表示</option><option value="single"${desktopLayout === "single" ? " selected" : ""}>縦1列に表示</option></select></label><p class="settings-form-note">スマホは常に縦配置です。このブラウザに保存され、次に問題を開くと反映されます。</p></div>`;
-        return `<section class="settings-section settings-workspace-v240"><p class="settings-intro-v240">使い方に合わせて、必要な設定を開いてください。</p>${group("account", "アカウント", "表示名・ログアウト", "user-circle", account)}${group("display", "表示・学習", "PCの問題画面のレイアウト", "cog-6-tooth", display)}${group("reactions", "リアクション", "絵文字や画像を使ったリアクションの追加", "face-smile", customReactionSettingsMarkupV211())}${group("transfer", "以前のデータを引き継ぐ", "旧サイトのお気に入り・アーカイブ・本棚順", "arrow-path", '<div data-settings-transfer-v240></div>')}<p class="settings-form-note">問題集の共有・権限は、その本の「この本の管理」から変更できます。</p></section>`;
+        return `<section class="settings-section settings-workspace-v240"><p class="settings-intro-v240">使い方に合わせて、必要な設定を開いてください。</p>${group("account", "アカウント", "表示名・ログアウト", "user-circle", account)}${group("display", "表示・学習", "PCの問題画面のレイアウト", "cog-6-tooth", display)}${group("reactions", "リアクション", "絵文字や画像を使ったリアクションの追加", "face-smile", customReactionSettingsMarkupV211())}<p class="settings-form-note">問題集の共有・権限は、その本の「この本の管理」から変更できます。</p></section>`;
       }
 
       function bindSettingsViewV67() {
@@ -10683,10 +10691,23 @@
       async function openRequestedQuestionAfterAuthV187() {
         const questionId = String(pendingExistingQuestionIdV187 || "").trim();
         if (!questionId || !supabaseSessionV46?.user?.id || pendingExistingQuestionOpeningV187) return false;
-        const index = questionsV16.findIndex(question => String(question.serverQuestionId || "") === questionId);
-        if (index < 0) return false;
+        let index = questionsV16.findIndex(question => String(question.serverQuestionId || "") === questionId);
         pendingExistingQuestionOpeningV187 = true;
         try {
+          if (index < 0) {
+            const shareSlug = String(sharedCollectionV46?.share_slug || "");
+            const owner = String(supabaseSessionV46.user.id);
+            const generation = sharedQuestionPagingV177.generation;
+            if (!shareSlug || !/^[a-f0-9-]{36}$/i.test(questionId) || typeof window.NagaSupabase?.loadSharedQuestionDetail !== "function") return false;
+            const row = await window.NagaSupabase.loadSharedQuestionDetail(shareSlug, questionId);
+            if (shareSlug !== String(sharedCollectionV46?.share_slug || "") || owner !== String(supabaseSessionV46?.user?.id || "") || generation !== sharedQuestionPagingV177.generation) return false;
+            const normalized = normalizeSharedQuestionV66(row, questionsV16.length, shareSlug);
+            if (!normalized?.question || normalized.id !== questionId) return false;
+            index = questionsV16.findIndex(question => String(question.serverQuestionId || "") === questionId);
+            if (index < 0) { index = questionsV16.length; questionsV16.push(normalized.question); }
+            rememberSharedQuestionRowsV177([normalized]);
+            renderQuestionOptionsV16();
+          }
           const opened = await openQuestionV16(index);
           if (!opened) return false;
           const cleanUrl = new URL(window.location.href);
@@ -10694,6 +10715,9 @@
           window.history.replaceState({}, "", cleanUrl.toString());
           pendingExistingQuestionIdV187 = "";
           return true;
+        } catch (error) {
+          console.warn("指定された問題を開けませんでした", error?.message || "取得失敗");
+          return false;
         } finally {
           pendingExistingQuestionOpeningV187 = false;
         }
@@ -11102,7 +11126,8 @@
             attachments: (Array.isArray(comment.attachments) ? comment.attachments : []).map(attachment => ({
               path: attachment?.path || "",
               src: attachment?.src || window.NagaSupabase.publicCommentAssetUrl(attachment?.path || ""),
-              alt: attachment?.alt || "添付画像"
+              alt: attachment?.alt || "添付画像",
+              spoiler: attachment?.spoiler === true
             })).filter(attachment => attachment.src)
           }));
           const base = (SCENE.comments || []).map(message => ({ ...message, attachments: [...(message.attachments || [])] }));
@@ -11167,11 +11192,8 @@
         if (loadedSharedCollection && questionsV16.length) void startCommentNotificationPollingV65();
         const requestedExistingQuestionId = new URL(window.location.href).searchParams.get("existing_question")?.trim() || "";
         if (requestedExistingQuestionId) {
-          const existingIndex = questionsV16.findIndex(question => String(question.serverQuestionId || "") === requestedExistingQuestionId);
-          if (existingIndex >= 0) {
-            pendingExistingQuestionIdV187 = requestedExistingQuestionId;
-            await openRequestedQuestionAfterAuthV187();
-          }
+          pendingExistingQuestionIdV187 = requestedExistingQuestionId;
+          await openRequestedQuestionAfterAuthV187();
         }
         document.getElementById("questionSelect").addEventListener("change", event => openQuestionV16(Number(event.target.value)));
         document.getElementById("menuPanel").addEventListener("click", handleMenuGridClickV16);
