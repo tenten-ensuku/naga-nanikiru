@@ -6,11 +6,12 @@ export function createCloudflareClient({fetchImpl=globalThis.fetch,location=glob
   const errorResult=(message,status=0,code='request_failed')=>({data:null,error:{message,status,code}});
   const csrf=()=>String(document?.cookie||'').split(';').map(s=>s.trim()).find(s=>s.startsWith('__Host-minkiru_csrf='))?.slice('__Host-minkiru_csrf='.length)||'';
   function emit(event,value){session=value;for(const fn of listeners)fn(event,value);}
-  async function request(path,body) {
+  async function request(path,body,binary=false) {
     try {
       const options={method:body===undefined?'GET':'POST',credentials:'same-origin',cache:'no-store',headers:{Accept:'application/json'}};
       if(body!==undefined){options.headers['Content-Type']='application/json';options.headers['X-Minkiru-CSRF']=csrf();options.body=JSON.stringify(body);}
       const response=await fetchImpl(path,options);
+      if(response.ok&&binary)return {data:await response.blob(),error:null};
       const json=await response.json();
       if(!response.ok){
         if(response.status===401){checkedAt=now();emit('SIGNED_OUT',null);}
@@ -60,7 +61,9 @@ export function createCloudflareClient({fetchImpl=globalThis.fetch,location=glob
   return {
     rpc:(name,args={})=>query('/api/rpc/'+encodeURIComponent(name),args),
     from:name=>query('/api/table/'+encodeURIComponent(name)),
-    functions:{invoke:async()=>errorResult('問題生成は移行確認中です。学習・回答保存はご利用いただけます。',503,'heavy_operations_paused')},
+    functions:{invoke:async(name,{body={}}={})=>['naga-report','naga-capture'].includes(name)
+      ?request('/api/functions/'+name,body,name==='naga-capture')
+      :errorResult('この処理は利用できません。',403,'function_not_allowed')},
     auth:{getSession,stopAutoRefresh(){},
       onAuthStateChange(fn){listeners.add(fn);return {data:{subscription:{unsubscribe:()=>listeners.delete(fn)}}};},
       async signInWithOAuth({provider,options={}}){

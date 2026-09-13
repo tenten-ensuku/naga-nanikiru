@@ -138,7 +138,7 @@ class FakeNode {
   getBoundingClientRect() {
     const index = this.parentElement ? this.parentElement.children.indexOf(this) : 0;
     const left = 10 + index * 40;
-    return { left, right: left + 36, top: 100, bottom: 340, width: 36, height: 240 };
+    return { left, right: left + 36, top: 100, bottom: 340, width: 36, height: 241 };
   }
   cloneNode() { return new FakeNode({ className: this.className, dataset: this.dataset }); }
   remove() { if (this.parentElement) this.parentElement.children = this.parentElement.children.filter(child => child !== this); this.parentElement = null; }
@@ -412,7 +412,7 @@ test("switching users invalidates old in-flight/cache data", async () => {
 
 test("adapter keeps legacy fallback, controller mount/unmount hooks, and navigation reset contract", async () => {
   const [index, library] = await Promise.all([readFile(INDEX_PATH, "utf8"), readFile(LIBRARY_PATH, "utf8")]);
-  assert.match(index, /library-v214\.js\?v=240/);
+  assert.match(index, /library-v214\.js\?v=241/);
   const renderStart = index.indexOf("function renderCollectionChooserV165");
   const renderEnd = index.indexOf("function renderCollectionSpacePanelV100", renderStart);
   const renderer = index.slice(renderStart, renderEnd);

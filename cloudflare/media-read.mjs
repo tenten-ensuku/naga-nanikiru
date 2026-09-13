@@ -258,7 +258,7 @@ async function resolvePrivate(request, env, actor, body) {
   const byKey = new Map(rows.map((row) => [row.object_key, row]));
   for (const key of requested) {
     const asset = byKey.get(key);
-    if (!asset || (asset.owner_id !== actor.id && !(await canAccessCollection(env.DB, actor, asset.collection_id)))) {
+    if (!asset || !(await canReadPrivateAsset(env,actor,asset))) {
       mediaError("media_access_denied", 403);
     }
   }
@@ -273,6 +273,15 @@ async function resolvePrivate(request, env, actor, body) {
     })}?expires=${expires}&signature=cookie`;
   }
   return jsonResponse({ urls });
+}
+
+export async function canReadPrivateAsset(env,actor,asset){
+  if(asset.owner_id===actor.id||await canAccessCollection(env.DB,actor,asset.collection_id))return true;
+  // Turning off new generation must not revoke existing imported questions.
+  if(env.MEDIA_LINKS_ENABLED!=='true')return false;
+  const links=(await env.DB.prepare('SELECT q.collection_id FROM media_question_links l JOIN questions q ON q.id=l.question_id WHERE l.object_key=? AND q.deleted_at IS NULL LIMIT 200').bind(asset.object_key).all()).results||[];
+  for(const link of links)if(await canAccessCollection(env.DB,actor,link.collection_id))return true;
+  return false;
 }
 
 async function serve(request, env, actor, isPrivate) {
@@ -291,7 +300,7 @@ async function serve(request, env, actor, isPrivate) {
   const db = requireDb(env);
   const asset = await readyAsset(db, parsed);
   if (!asset) mediaError("media_not_found", 404);
-  if (isPrivate && asset.owner_id !== actor.id && !(await canAccessCollection(db, actor, asset.collection_id))) {
+  if (isPrivate && !(await canReadPrivateAsset(env,actor,asset))) {
     mediaError("media_access_denied", 403);
   }
   return serveObject(request, env, parsed, asset, isPrivate);

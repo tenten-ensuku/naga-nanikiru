@@ -1,6 +1,7 @@
 import {ApiError, requireActor, canEditCollection, canManageCollection, canAccessCollection} from './access.mjs';
 import {isGeneratedQuestionTitle} from './question-numbering-v235.mjs';
 import {validateStoredHand} from './question-validation-v237.mjs';
+import {questionMediaKeys} from './media-write-v241.mjs';
 
 export const BOOK_TONES=Object.freeze(['walnut','navy','forest','burgundy','ivory','plum','teal','ochre']);
 export const BUILDER_RPCS=Object.freeze(['create_collection','create_collection_volume','set_collection_book_tone','create_shared_question','import_shared_question']);
@@ -72,7 +73,7 @@ async function setTone(args,{db,actor}){
 }
 // Content uploads and NAGA retrieval remain separately gated. This small RPC only
 // accepts already prepared structured questions, never embedded image bytes.
-async function addQuestion(args,{db,actor},imported=null){
+async function addQuestion(args,{db,actor,origin},imported=null){
   const c=await targetOf(db,actor,await editable(db,actor,String(args.p_share_slug||'')));
   const payload=args.p_payload;if(!payload||typeof payload!=='object'||Array.isArray(payload))fail('invalid_question');
   const serialized=JSON.stringify(payload);
@@ -93,6 +94,7 @@ async function addQuestion(args,{db,actor},imported=null){
   const validNumberSql=`CASE WHEN json_type(payload,'$.number') IN ('integer','text') AND CAST(json_extract(payload,'$.number') AS TEXT) NOT GLOB '*[^0-9]*' AND CAST(json_extract(payload,'$.number') AS INTEGER) BETWEEN 1 AND 9007199254740000 THEN CAST(json_extract(payload,'$.number') AS INTEGER) END`;
   const numberSql=`(SELECT MAX(COALESCE(MAX(valid),0),?)+COUNT(*)-COUNT(DISTINCT valid)+1 FROM (SELECT ${validNumberSql} valid FROM questions WHERE collection_id=?))`;
   const normalized={...payload};for(const k of ['serverQuestionId','sharedCollectionSlug','createdById','createdByName','updatedById','updatedByName','_sharedIndexOnlyV170'])delete normalized[k];
+  await questionMediaKeys(normalized,{db,actor,origin},c.id);
   try{
     const inserted=await first(db,`WITH next(n) AS (SELECT ${numberSql}) INSERT INTO questions(id,collection_id,created_by,created_by_name,title,legacy_key,sort_order,source_kind,source_report_id,source_url,scene_tw,scene_ts,scene_tv,decision_type,payload,created_at,updated_at)
       SELECT ?,?,?,?,CASE WHEN ?='' THEN '問題'||n ELSE ? END,?,n,?,?,?,?,?,?,?,json_set(?,'$.number',n,'$.id',?,'$.title',CASE WHEN ?='' THEN '問題'||n ELSE ? END),?,? FROM next

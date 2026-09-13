@@ -10,7 +10,7 @@ async function source() {
 
 test("exposes v65 ownership-aware problem management controls", async () => {
   const html = await source();
-  assert.match(html, /const APP_VERSION = 240;/);
+  assert.match(html, /const APP_VERSION = 241;/);
   assert.match(html, /id="questionManageEditForm"/);
   assert.match(html, /id="questionManageProposeDeleteButton"[^>]*data-manage-action="propose-delete"/);
   assert.match(html, /id="questionManageDeleteButton"[^>]*data-manage-action="delete"/);
@@ -49,13 +49,11 @@ test("records local ownership metadata and makes shared generator scope explicit
   for (const add of [singleAdd, batchAdd]) {
     assert.match(add, /const destination = currentGeneratorDestinationV130\(\)/);
     assert.match(add, /if \(!canAddGeneratedQuestionV130\(\)\)/);
-    assert.match(add, /window\.confirm\(`保存先「\$\{destination\.label\}」/);
-    assert.match(add, /この問題集の利用者に反映されます。/);
-    assert.match(add, /この端末だけに保存されます。/);
+    assert.match(add, /await window\.NagaGenerationConfirmV241\.ask\(document, destination,/);
     assert.doesNotMatch(add, /confirmSharedImpactV47\("add"/);
   }
-  assert.match(singleAdd, /if \(!skipConfirm && !window\.confirm\([^\n]+\)\) return false;/);
-  assert.match(batchAdd, /if \(!window\.confirm\([^\n]+\)\) return;/);
+  assert.match(singleAdd, /if \(!skipConfirm && !await window\.NagaGenerationConfirmV241\.ask\([^\n]+\)\) return false;/);
+  assert.match(batchAdd, /if \(!await window\.NagaGenerationConfirmV241\.ask\([^\n]+\)\) return;/);
   assert.match(html, /共有問題集の保存APIが未接続です/);
 });
 

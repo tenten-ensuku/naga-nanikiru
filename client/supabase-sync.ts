@@ -722,7 +722,12 @@ async function captureNagaScene(input: {
   ts: number;
   tv: number;
 }) {
-  if (cloudflareBackend) throw new Error("問題生成は移行確認中です。学習・回答保存はご利用いただけます。");
+  if (cloudflareBackend) {
+    const { data, error } = await requireClient().functions.invoke("naga-capture", { body: input });
+    if (error) throw error;
+    if (!(data instanceof Blob) || !data.size || !data.type.startsWith("image/")) throw new Error("局面画像の取得を確認できませんでした。");
+    return data;
+  }
   const session = await currentSession();
   if (!session) throw new Error("Discordログインが必要です。");
   const response = await fetch(`${config.supabaseUrl}/functions/v1/naga-capture`, {

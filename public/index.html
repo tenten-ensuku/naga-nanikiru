@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=240">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=240">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=240">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=241">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=241">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=241">
   <title>みん切る｜みんなの何切る問題集</title>
   <meta name="description" content="みん切るは、NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリです。">
   <meta name="theme-color" content="#06131e">
@@ -231,6 +231,8 @@
     .import-question-dialog-actions button.primary:hover, .import-question-dialog-actions button.primary:focus-visible { background: #d6fff5; }
     .import-question-dialog-status { min-height: 18px; color: #bde7e0 !important; font-size: 11px !important; }
     .import-question-dialog-status.is-error { color: #ff8790 !important; }
+    #generatorSaveDialogV241 .import-question-dialog-actions button { min-height: 44px; font-size: 14px; }
+    #generatorSaveDialogV241 p { font-size: 14px; overflow-wrap: anywhere; }
     .notice-item-body { color: #e6f4f7; font-size: 13px; line-height: 1.55; overflow-wrap: anywhere; white-space: pre-wrap; }
     .notice-dialog-actions { display: flex; justify-content: flex-end; gap: 7px; padding-top: 7px; border-top: 1px solid rgba(255, 255, 255, .1); }
     .notice-dialog-action { min-height: 38px; padding: 7px 10px; color: #10211e; background: #bde7e0; border: 1px solid #d6fff5; border-radius: 6px; font-size: 10px; font-weight: 900; }
@@ -2238,13 +2240,13 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=240">
-  <link rel="stylesheet" href="library-v214.css?v=240">
-  <link rel="stylesheet" href="navigation-v234.css?v=240">
-  <link rel="stylesheet" href="book-builder-v235.css?v=240">
-  <link rel="stylesheet" href="menu-polish-v238.css?v=240">
-  <link rel="stylesheet" href="menu-sections-v239.css?v=240">
-  <link rel="stylesheet" href="workspace-ui-v240.css?v=240">
+  <link rel="stylesheet" href="ux-v159.css?v=241">
+  <link rel="stylesheet" href="library-v214.css?v=241">
+  <link rel="stylesheet" href="navigation-v234.css?v=241">
+  <link rel="stylesheet" href="book-builder-v235.css?v=241">
+  <link rel="stylesheet" href="menu-polish-v238.css?v=241">
+  <link rel="stylesheet" href="menu-sections-v239.css?v=241">
+  <link rel="stylesheet" href="workspace-ui-v240.css?v=241">
 </head>
 <body class="auth-gate-open">
   <section class="startup-screen-v236" id="startupScreenV236" aria-label="みん切るを準備中">
@@ -2592,22 +2594,31 @@
     </div>
   </dialog>
 
+  <dialog class="import-question-dialog" id="generatorSaveDialogV241" aria-labelledby="generatorSaveTitleV241" aria-describedby="generatorSaveDescriptionV241">
+    <form method="dialog" class="import-question-dialog-inner">
+      <h3 id="generatorSaveTitleV241">問題を追加しますか？</h3>
+      <p id="generatorSaveDescriptionV241"></p>
+      <div class="import-question-dialog-actions"><button type="submit" value="cancel" autofocus>キャンセル</button><button type="submit" class="primary" value="add">この保存先へ追加</button></div>
+    </form>
+  </dialog>
+
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=240"></script>
-  <script defer src="legacy-transfer-v232.js?v=240"></script>
-  <script src="drill-ux-v44.js?v=240"></script>
-  <script src="navigation-v234.js?v=240"></script>
-  <script src="book-builder-v235.js?v=240"></script>
-  <script src="library-order-v215.js?v=240"></script>
-  <script src="library-v214.js?v=240"></script>
-  <script src="naga-generator-v44.js?v=240"></script>
-  <script src="hand-mask-v237.js?v=240"></script>
-  <script src="menu-sections-v239.js?v=240"></script>
-  <script src="workspace-ui-v240.js?v=240"></script>
+  <script src="supabase-sync-v48.js?v=241"></script>
+  <script defer src="legacy-transfer-v232.js?v=241"></script>
+  <script src="drill-ux-v44.js?v=241"></script>
+  <script src="navigation-v234.js?v=241"></script>
+  <script src="book-builder-v235.js?v=241"></script>
+  <script src="library-order-v215.js?v=241"></script>
+  <script src="library-v214.js?v=241"></script>
+  <script src="naga-generator-v44.js?v=241"></script>
+  <script src="hand-mask-v237.js?v=241"></script>
+  <script src="menu-sections-v239.js?v=241"></script>
+  <script src="workspace-ui-v240.js?v=241"></script>
+  <script src="generation-confirm-v241.js?v=241"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 240;
+    const APP_VERSION = 241;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -4658,6 +4669,7 @@
       const QUESTION_NOTICE_STORAGE_KEY_V66 = storageKey("question-notices-v1");
         const ANNOUNCEMENT_SEEN_STORAGE_KEY_V65 = storageKey("announcement-seen-v1");
         const APP_ANNOUNCEMENTS_V66 = [
+          { version: 241, date: "2026-09-14", publishedAt: "2026-09-14T03:32:00+09:00", title: "問題生成・画像保存を再開しました", body: "NAGA URLの読み込み、局面画像の作成、問題集への保存を再開しました。画像はCloudflare R2へ保存し、保存後の問題を開き直せることを確認しています。副露・カン後の手牌とマスクは承認済みの生成ロジックを維持。保存前には追加先と件数を確認できます。容量・処理量の上限に達した場合は新規作成だけを止め、学習の操作は維持します。大量取込とBot転送は引き続き停止中です。" },
           { version: 240, date: "2026-09-14", publishedAt: "2026-09-14T01:54:00+09:00", title: "つくる・マイページを、すっきり使いやすく", body: "問題の追加と新しい一冊の作成を整理しました。マイページは目的別に開ける設定に変更し、ログアウトもアカウント設定へ移しました。文字とボタンを落ち着いた配色に統一しています。NAGA新規解析・画像アップロードは引き続き準備中です。" },
           { version: 239, date: "2026-09-13", publishedAt: "2026-09-13T02:10:00+09:00", title: "この本の3つのページを、もっとわかりやすく", body: "学習・問題一覧・この本の成績を一体型のタブに整えました。本への追加・管理は問題集名の横の操作メニューへ。学習メニューはアイコンと矢印のコンパクトな行になり、画面全体を落ち着いた配色に調整しました。" },
           { version: 238, date: "2026-09-13", publishedAt: "2026-09-13T00:35:00+09:00", title: "学習メニューを見やすく、押しやすくしました", body: "大きな「学習する」見出しを省き、明朝系の文字と輪郭のあるボタンに整えました。選択中のタブは明るいゴールドで表示し、問題集の帯は本棚の色に連動します。レインボー進捗バーと学習の流れはそのままです。" },
@@ -10124,7 +10136,7 @@
             return;
           }
         }
-        if (!window.confirm(`保存先「${destination.label}」へ${indexes.length}問を追加しますか？${destination.kind === "shared" ? "この問題集の利用者に反映されます。" : "この端末だけに保存されます。"}`)) return;
+        if (!await window.NagaGenerationConfirmV241.ask(document, destination, indexes.length)) return;
         const expectedDestinationKey = destination.kind === "shared" ? destination.shareSlug : "local";
         let added = 0;
         for (const index of indexes) {
@@ -10178,7 +10190,7 @@
             return false;
           }
         }
-        if (!skipConfirm && !window.confirm(`保存先「${destination.label}」へこの問題を追加しますか？${destination.kind === "shared" ? "この問題集の利用者に反映されます。" : "この端末だけに保存されます。"}`)) return false;
+        if (!skipConfirm && !await window.NagaGenerationConfirmV241.ask(document, destination, 1)) return false;
         if (destination.kind === "local" && (userStateV16.customQuestions || []).length >= 200) { setGeneratorStatusV44("この端末の問題集は200問までです。新しい共有問題集を作成して保存先にしてください。", true); return false; }
         const nextNumber = destination.kind === "local" || sameAsCurrentShared
           ? nextQuestionNumberV154(questionsV16)

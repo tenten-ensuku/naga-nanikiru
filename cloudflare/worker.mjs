@@ -4,9 +4,14 @@ import {READ_RPCS,readRpc,readTable} from './read-api.mjs';
 import {WRITE_RPCS,writeRpc,writeTable} from './student-write-api.mjs';
 import {mediaRead} from './media-read.mjs';
 import {BUILDER_RPCS,builderRpc,collectionCapacity} from './collection-builder-v235.mjs';
+import {imageUpload} from './media-write-v241.mjs';
+import {createGenerationApi} from './generation-api-v241.mjs';
+import {reconcileMediaBudget} from './generation-capacity-v241.mjs';
+const generationApi=createGenerationApi({cache:globalThis.caches?.default??null});
+const generationEnabled=env=>env.GENERATION_ENABLED==='true'&&env.UPLOADS_ENABLED==='true';
 
-// Only the verified student flow is enabled. Generation, Bot and bulk content
-// changes remain paused; CUTOVER_READY is an explicit owner-operated switch.
+// Generation and image uploads have separate explicit switches. Bot, legacy
+// bulk imports and new account signup remain separately paused.
 export const MIGRATION_IMPLEMENTATION_COMPLETE=false;
 export const STUDENT_FLOW_IMPLEMENTATION_COMPLETE=true;
 const readNames=new Set(READ_RPCS),writeNames=new Set(WRITE_RPCS);
@@ -27,7 +32,7 @@ export async function jsonBody(request,maximum=131072){
 function failure(error,request){
   const code=error instanceof ApiError?error.code:'service_unavailable';
   const status=error instanceof ApiError?error.status:503;
-  const messages={login_required:'Discordログインが必要です。',csrf_denied:'認証状態が変わりました。ページを再読み込みしてください。',origin_denied:'この画面からは操作できません。',rate_limited:'短時間に操作が集中しています。少し待ってからお試しください。',heavy_operations_paused:'問題生成・大量取込は移行確認中です。学習と回答保存はご利用いただけます。',signup_temporarily_closed:'現在は登録済みの生徒さんから順次再開しています。管理者にお問い合わせください。'};
+  const messages={login_required:'Discordログインが必要です。',csrf_denied:'認証状態が変わりました。ページを再読み込みしてください。',origin_denied:'この画面からは操作できません。',rate_limited:'短時間に操作が集中しています。少し待ってからお試しください。',heavy_operations_paused:'この追加処理は確認中です。学習と回答保存はご利用いただけます。',signup_temporarily_closed:'現在は登録済みの生徒さんから順次再開しています。管理者にお問い合わせください。',media_capacity_unavailable:'画像容量の最新確認ができないため、新しい画像の保存を停止しています。学習は利用できます。',media_storage_limit:'画像保存の安全上限に達しました。学習は利用できます。',generation_daily_limit:'本日の追加処理の安全上限に達しました。翌朝9時以降にお試しください。学習は利用できます。',capture_daily_limit:'自動撮影の無料枠または短時間の撮影上限に達しました。自動再試行は行いません。手動画像を指定するか、時間をおいてお試しください。',capture_failed:'局面画像の自動撮影に失敗しました。手動画像を指定するか、時間をおいてお試しください。',naga_report_missing:'指定のNAGAレポートが見つかりません。',naga_report_unavailable:'NAGAレポートを取得できませんでした。URLと接続を確認してください。',collection_capacity_reached:'この巻は200問に達しています。次の巻を選択してください。'};
   const message=messages[code]||(status>=500?'接続を確認できませんでした。入力内容は消さずに、少し待ってから再度お試しください。':'操作を受け付けられませんでした。内容とアクセス権を確認してください。');
   if(request?.headers.get('Accept')?.includes('text/html')&&new URL(request.url).pathname.startsWith('/auth/')){
     const explanation=code==='oauth_state_invalid'?'ログインの有効時間が過ぎたか、認証が中断されました。入口からもう一度お試しください。':message;
@@ -39,12 +44,12 @@ export default {
   async fetch(request,env={},ctx={}){
     try{
       const url=new URL(request.url);
-      if(url.pathname==='/health'&&request.method==='GET')return json({version:240,backend:'cloudflare',ready:ready(env),studentFlow:ready(env),heavyOperations:false});
+      if(url.pathname==='/health'&&request.method==='GET')return json({version:241,backend:'cloudflare',ready:ready(env),studentFlow:ready(env),heavyOperations:generationEnabled(env),generation:generationEnabled(env),uploads:env.UPLOADS_ENABLED==='true',bulkImport:false,bot:false});
       if(!ready(env))return json({error:'migration_not_ready',message:'移行確認中です。公開切替はまだ完了していません。'},503);
       if(url.origin!==env.APP_ORIGIN)throw new ApiError('origin_denied',403);
       if(url.pathname==='/naga-nanikiru'||url.pathname==='/naga-nanikiru/')return Response.redirect(url.origin+'/'+url.search,302);
       if(url.pathname.startsWith('/naga-nanikiru/')){url.pathname=url.pathname.slice('/naga-nanikiru'.length);return this.fetch(new Request(url,request),env,ctx);}
-      if(url.pathname==='/runtime-config.js'&&request.method==='GET')return new Response('window.NAGA_RUNTIME_CONFIG=Object.freeze('+JSON.stringify({backend:'cloudflare',supabaseUrl:'https://akabzpfknwsdmabavcqz.supabase.co',mediaApiUrl:env.APP_ORIGIN,legacyMediaApiUrl:'https://minkiru-media.naga-study.workers.dev',mediaReadyBuckets:['naga-question-assets','comment-assets','reaction-assets'],heavyOperationsEnabled:false})+');',{headers:{...common,'Content-Type':'text/javascript; charset=utf-8'}});
+      if(url.pathname==='/runtime-config.js'&&request.method==='GET')return new Response('window.NAGA_RUNTIME_CONFIG=Object.freeze('+JSON.stringify({backend:'cloudflare',supabaseUrl:'https://akabzpfknwsdmabavcqz.supabase.co',mediaApiUrl:env.APP_ORIGIN,legacyMediaApiUrl:'https://minkiru-media.naga-study.workers.dev',mediaReadyBuckets:['naga-question-assets','comment-assets','reaction-assets'],heavyOperationsEnabled:generationEnabled(env),imageUploadsEnabled:env.UPLOADS_ENABLED==='true',bulkImportEnabled:false})+');',{headers:{...common,'Content-Type':'text/javascript; charset=utf-8'}});
       if(url.pathname==='/manifest.webmanifest'&&request.method==='GET'){
         const response=await env.ASSETS.fetch(new Request(url,request));const manifest=await response.json();manifest.id='/';manifest.start_url='/';manifest.scope='/';for(const icon of manifest.icons||[])icon.src=icon.src.replace('/naga-nanikiru/','/');return json(manifest);
       }
@@ -60,6 +65,10 @@ export default {
         const actor=requireActor(session?.actor);
         if(url.pathname==='/api/logout'&&request.method==='POST')return await endSession(request,env,session);
         if(url.pathname.startsWith('/v1/')){
+          if(url.pathname==='/v1/assets'&&request.method==='POST'){
+            await requireCsrf(request,env,session);await limited(env.WRITE_LIMIT,actor.id);
+            return json(await imageUpload(request,env,actor));
+          }
           if(request.method==='POST'&&['/v1/resolve-public','/v1/resolve'].includes(url.pathname)){
             await requireCsrf(request,env,session);return await mediaRead(request,env,{actor,body:await jsonBody(request,32768)});
           }
@@ -68,7 +77,13 @@ export default {
         }
         if(request.method!=='POST')throw new ApiError('method_not_allowed',405);
         await requireCsrf(request,env,session);
-        const args=await jsonBody(request),context={db:env.DB,actor};
+        const args=await jsonBody(request),context={db:env.DB,actor,origin:env.APP_ORIGIN};
+        if(['/api/functions/naga-report','/api/functions/naga-capture'].includes(url.pathname)){
+          await limited(env.GENERATION_LIMIT,actor.id);
+          const response=await generationApi(url.pathname.split('/').at(-1),args,env,actor);
+          const headers=new Headers(response.headers);for(const [key,value] of Object.entries(common))headers.set(key,value);
+          return new Response(response.body,{status:response.status,headers});
+        }
         const rpc=url.pathname.match(/^\/api\/rpc\/([a-z_]+)$/);
         if(rpc){
           const name=rpc[1];
@@ -96,4 +111,5 @@ export default {
       return json({error:'not_found'},404);
     }catch(error){return failure(error,request);}
   },
+  async scheduled(event,env,ctx){ctx.waitUntil(reconcileMediaBudget(env));},
 };
