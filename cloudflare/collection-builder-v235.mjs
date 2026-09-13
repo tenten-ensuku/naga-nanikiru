@@ -1,5 +1,5 @@
 import {ApiError, requireActor, canEditCollection, canManageCollection, canAccessCollection} from './access.mjs';
-import {isGeneratedQuestionTitle} from './question-numbering-v235.mjs';
+import {isGeneratedQuestionTitle,isInvalidQuestionTitle,toSafeQuestionNumber,nextQuestionNumberV235} from './question-numbering-v235.mjs';
 import {validateStoredHand} from './question-validation-v237.mjs';
 import {questionMediaKeys} from './media-write-v241.mjs';
 
@@ -90,6 +90,13 @@ async function addQuestion(args,{db,actor,origin},imported=null){
   const id=crypto.randomUUID(),now=new Date().toISOString(),originalTitle=text(args.p_title??'',160);
   const title=isGeneratedQuestionTitle(originalTitle)||originalTitle==='生成候補'?'':originalTitle;
   const profile=await first(db,'SELECT display_name FROM profiles WHERE id=?',actor.id);
+  // Match the read API's virtual repair for malformed legacy labels, without
+  // rewriting the original rows. Only this book's <=200 small metadata rows
+  // are read; question bodies/images are never fetched for numbering.
+  const startAt=toSafeQuestionNumber(c.volume_start)||1;
+  const numbering=await rows(db,"SELECT id,title,json_extract(payload,'$.number') number FROM questions WHERE collection_id=? AND deleted_at IS NULL ORDER BY sort_order,created_at,id",c.id);
+  const allocationFloor=numbering.some(row=>!toSafeQuestionNumber(row.number)||isInvalidQuestionTitle(row.title))
+    ? Math.max(startAt-1,nextQuestionNumberV235(numbering,{startAt})-1) : startAt-1;
   // Assign in the INSERT itself: two concurrent inserts cannot select the same number.
   const validNumberSql=`CASE WHEN json_type(payload,'$.number') IN ('integer','text') AND CAST(json_extract(payload,'$.number') AS TEXT) NOT GLOB '*[^0-9]*' AND CAST(json_extract(payload,'$.number') AS INTEGER) BETWEEN 1 AND 9007199254740000 THEN CAST(json_extract(payload,'$.number') AS INTEGER) END`;
   // Legacy duplicate/invalid labels must not add another gap on every insert.
@@ -100,7 +107,7 @@ async function addQuestion(args,{db,actor,origin},imported=null){
   try{
     const inserted=await first(db,`WITH next(n) AS (SELECT ${numberSql}) INSERT INTO questions(id,collection_id,created_by,created_by_name,title,legacy_key,sort_order,source_kind,source_report_id,source_url,scene_tw,scene_ts,scene_tv,decision_type,payload,created_at,updated_at)
       SELECT ?,?,?,?,CASE WHEN ?='' THEN '問題'||n ELSE ? END,?,n,?,?,?,?,?,?,?,json_set(?,'$.number',n,'$.id',?,'$.title',CASE WHEN ?='' THEN '問題'||n ELSE ? END),?,? FROM next
-      WHERE (SELECT COUNT(*) FROM questions WHERE collection_id=? AND deleted_at IS NULL)<200 RETURNING id,sort_order`,Number(c.volume_start||1)-1,c.id,id,c.id,actor.id,String(profile?.display_name||'プレイヤー').slice(0,80),title,title,key,kind,report,args.p_source_url?text(args.p_source_url,2000):null,...scene,decision,JSON.stringify(normalized),id,title,title,now,now,c.id);
+      WHERE (SELECT COUNT(*) FROM questions WHERE collection_id=? AND deleted_at IS NULL)<200 RETURNING id,sort_order`,allocationFloor,c.id,id,c.id,actor.id,String(profile?.display_name||'プレイヤー').slice(0,80),title,title,key,kind,report,args.p_source_url?text(args.p_source_url,2000):null,...scene,decision,JSON.stringify(normalized),id,title,title,now,now,c.id);
     if(!inserted)return {...await collectionCapacity({p_share_slug:c.share_slug},{db,actor}),requires_volume_confirmation:true};
     return {question_id:inserted.id,question_number:inserted.sort_order,share_slug:c.share_slug,question_count:await count(db,c.id),collection_title:c.title};
   }catch(error){
