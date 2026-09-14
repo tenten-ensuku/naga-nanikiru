@@ -2,12 +2,39 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
 import vm from "node:vm";
+import { createHash } from "node:crypto";
 
 const html = await readFile(new URL("../public/index.html", import.meta.url), "utf8");
 const normalizedHtml = html.replace(/\r\n/g, "\n");
 const startupController = normalizedHtml.match(/<script>\s*(\/\/ V236 startup presentation only[\s\S]*?)\s*<\/script>/i)?.[1];
 
 assert.ok(startupController, "V236 startup controller must be extractable from the head");
+
+test("V243 uses the exact user-supplied loading artwork without altering existing app icons", async () => {
+  const image = await readFile(new URL("../public/assets/loading-screen-v243.png", import.meta.url));
+  assert.equal(createHash("sha256").update(image).digest("hex"), "40cf974a99cc60fad80d5b3f045e690744d44e2f38dbdbbb5a66d798c82e3058");
+  assert.equal(image.readUInt32BE(16), 1402);
+  assert.equal(image.readUInt32BE(20), 1122);
+  assert.match(normalizedHtml, /<link rel="preload" as="image" href="assets\/loading-screen-v243\.png" fetchpriority="high">/);
+  const loader = normalizedHtml.match(/<section class="startup-screen-v236"[\s\S]*?<\/section>/)?.[0];
+  assert.ok(loader);
+  assert.match(loader, /src="assets\/loading-screen-v243\.png" width="1402" height="1122"/);
+  assert.match(loader, /alt="みん切る — みんなの何切る問題集" loading="eager" fetchpriority="high"/);
+  assert.doesNotMatch(loader, /min-kiru-header\.png|startup-line-v236/);
+  assert.match(normalizedHtml, /rel="icon"[^>]*icons\/favicon-32\.png\?v=243/);
+  assert.match(normalizedHtml, /rel="apple-touch-icon"[^>]*icons\/apple-touch-icon-180\.png\?v=243/);
+});
+
+test("V243 white loading shell contains artwork on small screens and keeps retry accessible", () => {
+  const critical = normalizedHtml.match(/<style id="startupCriticalV236">([\s\S]*?)<\/style>/)?.[1];
+  assert.match(critical, /html\.app-pending-v236, html\.app-pending-v236 body \{ background:#fff;/);
+  assert.match(critical, /\.startup-screen-v236 \{[^}]*overflow:auto;[^}]*background:#fff;/);
+  assert.match(critical, /\.startup-logo-v236 \{[^}]*max-height:calc\(100svh - 152px\); object-fit:contain;/);
+  assert.match(critical, /\.startup-screen-v236 a \{[^}]*min-height:44px;/);
+  assert.match(critical, /\.startup-screen-v236 a:focus-visible/);
+  assert.match(normalizedHtml, /id="startupStatusV236" role="status"/);
+  assert.match(normalizedHtml, /<noscript>[\s\S]*?JavaScriptを有効にしてください。/);
+});
 
 function createControllerHarness({ gateHidden = true, loginDisabled = true } = {}) {
   const classNames = new Set(["app-pending-v236"]);

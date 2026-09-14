@@ -3,10 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=242">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=242">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=242">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=243">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=243">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=243">
   <title>みん切る｜みんなの何切る問題集</title>
+  <link rel="preload" as="image" href="assets/loading-screen-v243.png" fetchpriority="high">
   <meta name="description" content="みん切るは、NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリです。">
   <meta name="theme-color" content="#06131e">
   <meta property="og:type" content="website">
@@ -23,18 +24,18 @@
     window.NAGA_MAINTENANCE_MODE = false;
   </script>
   <style id="startupCriticalV236">
-    html.app-pending-v236 { background:#06131e; }
+    html.app-pending-v236, html.app-pending-v236 body { background:#fff; }
     html.app-pending-v236 body { overflow:hidden; }
     html.app-pending-v236 .page, html.app-pending-v236 .page *,
     html.app-pending-v236 .auth-gate, html.app-pending-v236 .auth-gate *,
     body.auth-gate-open > .page, body.auth-gate-open > .page * { visibility:hidden !important; pointer-events:none !important; }
-    .startup-screen-v236 { position:fixed; inset:0; z-index:2000; display:grid; place-items:center; padding:24px; color:#c3d5d9; background:#06131e; text-align:center; font:14px/1.7 system-ui,sans-serif; }
+    .startup-screen-v236 { position:fixed; inset:0; z-index:2000; display:grid; place-items:center; overflow:auto; padding:clamp(12px,3vw,24px); color:#243b50; background:#fff; text-align:center; font:14px/1.7 system-ui,sans-serif; }
     .startup-screen-v236[hidden] { display:none; }
-    .startup-inner-v236 { width:min(100%,280px); }
-    .startup-logo-v236 { display:block; width:220px; max-width:100%; height:auto; margin:0 auto 28px; border-radius:9px; }
-    .startup-line-v236 { width:72px; height:2px; margin:0 auto 18px; background:#aa8743; opacity:.8; }
+    .startup-inner-v236 { width:min(100%,1040px); min-width:0; }
+    .startup-logo-v236 { display:block; width:100%; height:auto; max-height:calc(100vh - 152px); max-height:calc(100svh - 152px); object-fit:contain; margin:0 auto 8px; }
     .startup-screen-v236 p { margin:0; }
-    .startup-screen-v236 a { display:inline-flex; align-items:center; min-height:44px; margin-top:16px; padding:6px 18px; border:1px solid #c4a264; border-radius:8px; color:#efdab1; text-decoration:none; }
+    .startup-screen-v236 a { display:inline-flex; align-items:center; justify-content:center; min-height:44px; margin-top:12px; padding:6px 18px; border:1px solid #aa8743; border-radius:8px; color:#102b43; background:#fffaf0; font-weight:700; text-decoration:none; }
+    .startup-screen-v236 a:focus-visible { outline:3px solid #2b7184; outline-offset:3px; }
     .startup-screen-v236 a[hidden] { display:none; }
   </style>
   <script>
@@ -2242,17 +2243,17 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=242">
-  <link rel="stylesheet" href="library-v214.css?v=242">
-  <link rel="stylesheet" href="navigation-v234.css?v=242">
-  <link rel="stylesheet" href="book-builder-v235.css?v=242">
-  <link rel="stylesheet" href="menu-polish-v238.css?v=242">
-  <link rel="stylesheet" href="menu-sections-v239.css?v=242">
-  <link rel="stylesheet" href="workspace-ui-v240.css?v=242">
+  <link rel="stylesheet" href="ux-v159.css?v=243">
+  <link rel="stylesheet" href="library-v214.css?v=243">
+  <link rel="stylesheet" href="navigation-v234.css?v=243">
+  <link rel="stylesheet" href="book-builder-v235.css?v=243">
+  <link rel="stylesheet" href="menu-polish-v238.css?v=243">
+  <link rel="stylesheet" href="menu-sections-v239.css?v=243">
+  <link rel="stylesheet" href="workspace-ui-v240.css?v=243">
 </head>
 <body class="auth-gate-open">
   <section class="startup-screen-v236" id="startupScreenV236" aria-label="みん切るを準備中">
-    <div class="startup-inner-v236"><img class="startup-logo-v236" src="assets/min-kiru-header.png" width="590" height="173" alt="みん切る"><div class="startup-line-v236" aria-hidden="true"></div><p id="startupStatusV236" role="status">準備しています…</p><a id="startupRetryV236" href="" hidden>再読み込み</a><noscript><style>#startupStatusV236,.startup-line-v236{display:none}</style><p>みん切るを開くにはJavaScriptを有効にしてください。</p></noscript></div>
+    <div class="startup-inner-v236"><img class="startup-logo-v236" src="assets/loading-screen-v243.png" width="1402" height="1122" alt="みん切る — みんなの何切る問題集" loading="eager" fetchpriority="high"><p id="startupStatusV236" role="status">準備しています…</p><a id="startupRetryV236" href="" hidden>再読み込み</a><noscript><style>#startupStatusV236{display:none}</style><p>みん切るを開くにはJavaScriptを有効にしてください。</p></noscript></div>
   </section>
   <main class="page" inert aria-hidden="true">
     <section class="menu-panel" id="menuPanel" aria-labelledby="menuTitle">
@@ -2605,21 +2606,21 @@
   </dialog>
 
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=242"></script>
-  <script src="drill-ux-v44.js?v=242"></script>
-  <script src="navigation-v234.js?v=242"></script>
-  <script src="book-builder-v235.js?v=242"></script>
-  <script src="library-order-v215.js?v=242"></script>
-  <script src="library-v214.js?v=242"></script>
-  <script src="naga-generator-v44.js?v=242"></script>
-  <script src="hand-mask-v237.js?v=242"></script>
-  <script src="menu-sections-v239.js?v=242"></script>
-  <script src="workspace-ui-v240.js?v=242"></script>
-  <script src="generation-confirm-v241.js?v=242"></script>
+  <script src="supabase-sync-v48.js?v=243"></script>
+  <script src="drill-ux-v44.js?v=243"></script>
+  <script src="navigation-v234.js?v=243"></script>
+  <script src="book-builder-v235.js?v=243"></script>
+  <script src="library-order-v215.js?v=243"></script>
+  <script src="library-v214.js?v=243"></script>
+  <script src="naga-generator-v44.js?v=243"></script>
+  <script src="hand-mask-v237.js?v=243"></script>
+  <script src="menu-sections-v239.js?v=243"></script>
+  <script src="workspace-ui-v240.js?v=243"></script>
+  <script src="generation-confirm-v241.js?v=243"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 242;
+    const APP_VERSION = 243;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -4676,6 +4677,7 @@
       const QUESTION_NOTICE_STORAGE_KEY_V66 = storageKey("question-notices-v1");
         const ANNOUNCEMENT_SEEN_STORAGE_KEY_V65 = storageKey("announcement-seen-v1");
         const APP_ANNOUNCEMENTS_V66 = [
+          { version: 243, date: "2026-09-14", publishedAt: "2026-09-14T20:06:00+09:00", title: "ローディング画面を新しいロゴ画像に", body: "起動中は、白背景に本と麻雀卓を描いたロゴ画像を表示します。スマホや横画面でも画像全体が収まるようにしました。読み込み完了・接続遅延・失敗時の案内は従来どおりです。" },
           { version: 242, date: "2026-09-14", publishedAt: "2026-09-14T04:20:00+09:00", title: "ピエール・垣崎にまのDiscord転送を再開", body: "ピエール問題集と垣崎にま問題集の新着・変更分を、Cloudflare D1・R2へ転送するようにしました。既存問題の手牌・番号は維持し、コメントの伏せ字とアイコン情報も引き継ぎます。容量上限や要確認の局面は保留し、重複登録を防ぎます。不要になった旧サイトの設定引き継ぎ案内は削除しました。" },
           { version: 241, date: "2026-09-14", publishedAt: "2026-09-14T03:32:00+09:00", title: "問題生成・画像保存を再開しました", body: "NAGA URLの読み込み、局面画像の作成、問題集への保存を再開しました。画像はCloudflare R2へ保存し、保存後の問題を開き直せることを確認しています。副露・カン後の手牌とマスクは承認済みの生成ロジックを維持。保存前には追加先と件数を確認できます。容量・処理量の上限に達した場合は新規作成だけを止め、学習の操作は維持します。大量取込とBot転送は引き続き停止中です。" },
           { version: 240, date: "2026-09-14", publishedAt: "2026-09-14T01:54:00+09:00", title: "つくる・マイページを、すっきり使いやすく", body: "問題の追加と新しい一冊の作成を整理しました。マイページは目的別に開ける設定に変更し、ログアウトもアカウント設定へ移しました。文字とボタンを落ち着いた配色に統一しています。NAGA新規解析・画像アップロードは引き続き準備中です。" },
