@@ -886,6 +886,14 @@ async function importSharedQuestion(sourceQuestionId: string, targetShareSlug: s
 
 function buildApi() {
   return {
+    async previewCollectionDeletion(shareSlug: string) {
+      const {data,error}=await requireClient().rpc('preview_collection_deletion',{p_share_slug:shareSlug});
+      if(error) throw error; return data;
+    },
+    async deleteCollection(shareSlug: string, confirmationToken: string) {
+      const {data,error}=await requireClient().rpc('delete_collection',{p_share_slug:shareSlug,p_confirmed:true,p_confirmation_token:confirmationToken});
+      if(error) throw error; return data;
+    },
     async collectionInfo(shareSlug: string) {
       const {data,error}=await requireClient().rpc('get_shared_collection',{p_share_slug:shareSlug}).maybeSingle();
       if(error) throw error; return data;

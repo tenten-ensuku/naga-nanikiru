@@ -20,9 +20,17 @@ async function targetOf(db,actor,c){
   if(c.series_key&&!c.series_parent_id){const children=await rows(db,'SELECT * FROM collections WHERE series_parent_id=? AND archived_at IS NULL ORDER BY volume_number DESC',c.id);if(children.length)c=children[0];}
   if(!await canEditCollection(db,actor,c.id))fail('collection_not_editable',403);return c;
 }
+async function nextVolumeNumber(db,c,root){
+  const current=Number(c.volume_number||1);
+  const following=await first(db,'SELECT volume_number FROM collections WHERE series_parent_id=? AND volume_number>? AND archived_at IS NULL ORDER BY volume_number LIMIT 1',root.id,current);
+  if(following)return Number(following.volume_number);
+  // Deleted volumes keep their numbers, IDs and retained data. Never reuse them.
+  const latest=Number((await first(db,'SELECT MAX(volume_number) n FROM collections WHERE series_parent_id=?',root.id))?.n||1);
+  return Math.max(current,latest)+1;
+}
 export async function collectionCapacity(args,{db,actor}){
   requireActor(actor);const selected=await editable(db,actor,String(args.p_share_slug||''));const c=await targetOf(db,actor,selected);const root=await rootOf(db,c);
-  const total=await count(db,c.id),next=Number(c.volume_number||1)+1;
+  const total=await count(db,c.id),next=await nextVolumeNumber(db,c,root);
   const existing=await first(db,'SELECT share_slug,title FROM collections WHERE series_parent_id=? AND volume_number=? AND archived_at IS NULL',root.id,next);
   return {share_slug:c.share_slug,collection_title:c.title,question_count:total,limit:200,remaining:Math.max(0,200-total),near_capacity:total>=195,capacity_reached:total>=200,
     parent_share_slug:root.share_slug,volume_number:Number(c.volume_number||1),next_volume:next,next_title:existing?.title||`${root.title.replace(/\s*第\d+巻$/,'')} 第${next}巻`,next_share_slug:existing?.share_slug||null,
@@ -34,7 +42,7 @@ async function create(args,{db,actor}){
   const request=args.p_request_id;
   if(typeof request!=='string'||!/^[\da-f-]{36}$/i.test(request))fail('invalid_request_id');
   const id=await stableId(`book:${actor.id}:${request}`),share=slug(id);
-  const prior=await first(db,'SELECT * FROM collections WHERE id=?',id);if(prior)return prior;
+  const prior=await first(db,'SELECT * FROM collections WHERE id=?',id);if(prior){if(prior.archived_at)fail('collection_already_deleted',409);return prior;}
   const created=await first(db,`INSERT INTO collections(id,owner_id,title,description,visibility,share_slug,published_at,allow_contributions,book_tone)
     VALUES(?,?,?,?,?,?,?, ?,?) ON CONFLICT(id) DO NOTHING RETURNING *`,id,actor.id,title,description,visibility,share,visibility==='private'?null:new Date().toISOString(),args.p_allow_contributions===false?0:1,bookTone);
   return created||await first(db,'SELECT * FROM collections WHERE id=?',id);
@@ -43,11 +51,11 @@ async function createVolume(args,{db,actor}){
   let c=await editable(db,actor,String(args.p_share_slug||''));let root=await rootOf(db,c);
   if(!await canManageCollection(db,actor,root.id))fail('collection_not_manageable',403);
   c=await targetOf(db,actor,c);
-  const next=Number(args.p_volume_number??(Number(c.volume_number||1)+1));
+  const next=Number(args.p_volume_number??await nextVolumeNumber(db,c,root));
   if(!Number.isInteger(next)||next<2||next>10000)fail('invalid_volume_number');
   // Retries and two open tabs must return the same volume, not produce duplicates.
-  if(root.series_key){const prior=await first(db,'SELECT * FROM collections WHERE series_parent_id=? AND volume_number=?',root.id,next);if(prior)return prior;}
-  const latest=Number((await first(db,'SELECT MAX(volume_number) n FROM collections WHERE series_parent_id=? AND archived_at IS NULL',root.id))?.n||1);
+  if(root.series_key){const prior=await first(db,'SELECT * FROM collections WHERE series_parent_id=? AND volume_number=?',root.id,next);if(prior){if(prior.archived_at)fail('collection_already_deleted',409);return prior;}}
+  const latest=Number((await first(db,'SELECT MAX(volume_number) n FROM collections WHERE series_parent_id=?',root.id))?.n||1);
   if(next!==latest+1||await count(db,c.id)<195)fail('volume_not_ready',409);
   const standalone=!root.series_key&&!root.series_parent_id;
   const rootId=standalone?await stableId(`series:${root.id}`):root.id;

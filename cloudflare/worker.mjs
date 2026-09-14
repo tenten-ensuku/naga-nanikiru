@@ -4,6 +4,7 @@ import {READ_RPCS,readRpc,readTable} from './read-api.mjs';
 import {WRITE_RPCS,writeRpc,writeTable} from './student-write-api.mjs';
 import {mediaRead} from './media-read.mjs';
 import {BUILDER_RPCS,builderRpc,collectionCapacity} from './collection-builder-v235.mjs';
+import {previewCollectionDeletion,deleteCollection} from './collection-deletion-v244.mjs';
 import {imageUpload} from './media-write-v241.mjs';
 import {createGenerationApi} from './generation-api-v241.mjs';
 import {reconcileMediaBudget} from './generation-capacity-v241.mjs';
@@ -35,6 +36,14 @@ function failure(error,request){
   const code=error instanceof ApiError?error.code:'service_unavailable';
   const status=error instanceof ApiError?error.status:503;
   const messages={login_required:'Discordログインが必要です。',csrf_denied:'認証状態が変わりました。ページを再読み込みしてください。',origin_denied:'この画面からは操作できません。',rate_limited:'短時間に操作が集中しています。少し待ってからお試しください。',heavy_operations_paused:'この追加処理は確認中です。学習と回答保存はご利用いただけます。',signup_temporarily_closed:'現在は登録済みの生徒さんから順次再開しています。管理者にお問い合わせください。',media_capacity_unavailable:'画像容量の最新確認ができないため、新しい画像の保存を停止しています。学習は利用できます。',media_storage_limit:'画像保存の安全上限に達しました。学習は利用できます。',generation_daily_limit:'本日の追加処理の安全上限に達しました。翌朝9時以降にお試しください。学習は利用できます。',capture_daily_limit:'自動撮影の無料枠または短時間の撮影上限に達しました。自動再試行は行いません。手動画像を指定するか、時間をおいてお試しください。',capture_failed:'局面画像の自動撮影に失敗しました。手動画像を指定するか、時間をおいてお試しください。',naga_report_missing:'指定のNAGAレポートが見つかりません。',naga_report_unavailable:'NAGAレポートを取得できませんでした。URLと接続を確認してください。',collection_capacity_reached:'この巻は200問に達しています。次の巻を選択してください。'};
+  Object.assign(messages,{
+    collection_confirmation_required:'削除する前に確認画面で対象を確認してください。',
+    collection_deletion_changed:'確認後に問題集の内容が変わりました。確認画面を閉じて、もう一度削除対象を確認してください。',
+    collection_not_manageable:'この問題集を削除できるのは、所有者またはアプリ管理者だけです。',
+    collection_deletion_mixed_owners:'このシリーズには別の所有者の巻が含まれるため、まとめて削除できません。',
+    collection_already_deleted:'この問題集はすでに削除されています。本棚へ戻って確認してください。',
+    collection_deletion_too_large:'削除対象が多いため、一冊ずつ確認するか、管理者へご相談ください。'
+  });
   const message=messages[code]||(status>=500?'接続を確認できませんでした。入力内容は消さずに、少し待ってから再度お試しください。':'操作を受け付けられませんでした。内容とアクセス権を確認してください。');
   if(request?.headers.get('Accept')?.includes('text/html')&&new URL(request.url).pathname.startsWith('/auth/')){
     const explanation=code==='oauth_state_invalid'?'ログインの有効時間が過ぎたか、認証が中断されました。入口からもう一度お試しください。':message;
@@ -46,7 +55,7 @@ export default {
   async fetch(request,env={},ctx={}){
     try{
       const url=new URL(request.url);
-      if(url.pathname==='/health'&&request.method==='GET')return json({version:243,backend:'cloudflare',ready:ready(env),studentFlow:ready(env),heavyOperations:generationEnabled(env),generation:generationEnabled(env),uploads:env.UPLOADS_ENABLED==='true',bulkImport:false,bot:env.DISCORD_SYNC_ENABLED==='true'&&!!env.DISCORD_SYNC_TOKEN});
+      if(url.pathname==='/health'&&request.method==='GET')return json({version:244,backend:'cloudflare',ready:ready(env),studentFlow:ready(env),heavyOperations:generationEnabled(env),generation:generationEnabled(env),uploads:env.UPLOADS_ENABLED==='true',bulkImport:false,bot:env.DISCORD_SYNC_ENABLED==='true'&&!!env.DISCORD_SYNC_TOKEN});
       if(!ready(env))return json({error:'migration_not_ready',message:'移行確認中です。公開切替はまだ完了していません。'},503);
       if(url.origin!==env.APP_ORIGIN)throw new ApiError('origin_denied',403);
       if(url.pathname==='/naga-nanikiru'||url.pathname==='/naga-nanikiru/')return Response.redirect(url.origin+'/'+url.search,302);
@@ -95,6 +104,8 @@ export default {
         const rpc=url.pathname.match(/^\/api\/rpc\/([a-z_]+)$/);
         if(rpc){
           const name=rpc[1];
+          if(name==='preview_collection_deletion')return json({data:await previewCollectionDeletion(args,context)});
+          if(name==='delete_collection'){await limited(env.WRITE_LIMIT,actor.id);return json({data:await deleteCollection(args,context)});}
           if(name==='get_collection_capacity')return json({data:await collectionCapacity(args,context)});
           if(builderNames.has(name)&&env.COLLECTION_BUILDER_ENABLED==='true'){await limited(env.WRITE_LIMIT,actor.id);return json({data:await builderRpc(name,args,context)});}
           if(readNames.has(name))return json({data:await readRpc(name,args,context)});

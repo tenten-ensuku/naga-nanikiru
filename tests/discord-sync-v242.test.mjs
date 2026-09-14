@@ -56,6 +56,16 @@ test('unverified payload, source mismatch, capacity outage and foreign images ar
  await assert.rejects(api(request(),env,input),e=>e.status===507);
  assert.equal(env.DB.sqlite.prepare('SELECT count(*) n FROM questions').get().n,0);
 });
+
+test('V244 a deleted volume is not updated or recreated by Discord sync',async t=>{
+ const {env,api,input}=setup(t);const result=await api(request(),env,input);
+ env.DB.sqlite.exec("INSERT INTO collections(id,owner_id,title,share_slug,series_parent_id,archived_at) VALUES('deleted-volume','real-owner','削除した巻','deleted-volume','book','2026-09-14')");
+ env.DB.sqlite.prepare("UPDATE questions SET collection_id='deleted-volume' WHERE id=?").run(result.question_id);
+ const before=env.DB.sqlite.prepare('SELECT * FROM questions WHERE id=?').get(result.question_id);
+ await assert.rejects(api(request(),env,{...input,payload:undefined,expectedUpdatedAt:before.updated_at,fingerprint:'c'.repeat(64)}),e=>e.code==='bot_question_deleted');
+ assert.deepEqual(env.DB.sqlite.prepare('SELECT * FROM questions WHERE id=?').get(result.question_id),before);
+ assert.equal(env.DB.sqlite.prepare('SELECT count(*) n FROM questions').get().n,1);
+});
 test('index contains lightweight source metadata but no question bodies or authors',async t=>{
  const {env,api,input}=setup(t);await api(request(),env,input);const result=await api(request('index'),env,{target:'nima'});
  assert.equal(result.questions.length,1);assert.equal(result.capacity.remaining,199);assert.equal('payload' in result.questions[0],false);assert.equal('comments' in result.questions[0],false);

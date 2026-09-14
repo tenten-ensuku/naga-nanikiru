@@ -35,7 +35,7 @@ async function context(env,key,targets){
 }
 async function lookup(ctx,threadId){
  const key=ctx.target.legacyPrefix+'-'+threadId;
- return ctx.db.prepare(`SELECT q.*,c.share_slug FROM questions q JOIN collections c ON c.id=q.collection_id
+ return ctx.db.prepare(`SELECT q.*,c.share_slug,c.archived_at AS collection_archived_at FROM questions q JOIN collections c ON c.id=q.collection_id
  WHERE q.legacy_key=? AND (c.id=? OR c.series_parent_id=?) LIMIT 1`).bind(key,ctx.root.id,ctx.root.id).first();
 }
 async function writeReceipt(ctx,input,qId){
@@ -73,7 +73,7 @@ export function createDiscordSyncApi({targets=DISCORD_TARGETS,generation=createG
   if(op==='naga-report'||op==='naga-capture')return generation(op,input,env,actor);
   if(op!=='upsert')fail('bot_operation_denied',403);
   checkSource(input,target);const old=await lookup(ctx,input.threadId);
-  if(old?.deleted_at)fail('bot_question_deleted',409);
+  if(old?.deleted_at||old?.collection_archived_at)fail('bot_question_deleted',409);
   const receipt=await db.prepare('SELECT fingerprint FROM private_discord_sync WHERE target=? AND thread_id=?').bind(key,input.threadId).first();
   if(old&&receipt?.fingerprint===input.fingerprint)return {question_id:old.id,share_slug:old.share_slug,unchanged:true};
   if(old&&(typeof input.expectedUpdatedAt!=='string'||old.updated_at!==input.expectedUpdatedAt))fail('bot_question_conflict',409);
@@ -92,7 +92,7 @@ export function createDiscordSyncApi({targets=DISCORD_TARGETS,generation=createG
    const changed=JSON.stringify(payload)!==old.payload;const stamp=now();
    if(changed){
     if(new TextEncoder().encode(JSON.stringify(payload)).length>120000)fail('bot_payload_too_large',413);
-    const updated=await db.prepare('UPDATE questions SET payload=?,updated_at=?,updated_by=?,updated_by_name=? WHERE id=? AND updated_at=? AND deleted_at IS NULL RETURNING id')
+    const updated=await db.prepare('UPDATE questions SET payload=?,updated_at=?,updated_by=?,updated_by_name=? WHERE id=? AND updated_at=? AND deleted_at IS NULL AND EXISTS(SELECT 1 FROM collections c WHERE c.id=questions.collection_id AND c.archived_at IS NULL) RETURNING id')
      .bind(JSON.stringify(payload),stamp,actor.id,'Discord Bot',old.id,input.expectedUpdatedAt).first();
     if(!updated)fail('bot_question_conflict',409);
     await db.prepare(`INSERT OR IGNORE INTO media_question_links(object_key,question_id) SELECT m.object_key,q.id FROM questions q,json_tree(q.payload) j JOIN media_assets m ON m.object_key=substr(j.value,instr(j.value,'/v1/private/')+12) WHERE q.id=? AND j.type='text' AND instr(j.value,'/v1/private/')>0 AND m.state='ready'`).bind(old.id).run();

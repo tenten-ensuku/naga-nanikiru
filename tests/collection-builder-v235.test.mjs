@@ -2,9 +2,33 @@ import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {testD1} from './helpers/cloudflare-d1.mjs';
 import {builderRpc,collectionCapacity} from '../cloudflare/collection-builder-v235.mjs';
+import {previewCollectionDeletion,deleteCollection} from '../cloudflare/collection-deletion-v244.mjs';
 const actor={id:'owner'};
 function fixture(t,n=0){const db=testD1();t.after(()=>db.close());db.sqlite.exec(`INSERT INTO profiles(id,display_name) VALUES ('owner','所有者'),('viewer','閲覧者'),('editor','編集者');INSERT INTO collections(id,owner_id,title,share_slug,book_tone) VALUES ('c','owner','テスト問題集','book','teal');INSERT INTO collection_members(collection_id,user_id,role) VALUES ('c','editor','editor'),('c','viewer','viewer');`);for(let i=1;i<=n;i++)db.sqlite.prepare(`INSERT INTO questions(id,collection_id,created_by,legacy_key,sort_order,source_report_id,payload,title) VALUES (?,'c','owner',?,?,?,?,?)`).run(`q${i}`,`legacy${i}`,i,`report${i}`,JSON.stringify({number:i,id:`q${i}`,answer:'fixture'}),`問題${i}`);return {db,actor};}
 const question=i=>({p_share_slug:'book',p_title:'生成候補',p_payload:{id:`new${i}`,handBeforeDraw:['man1','man2','man3','man4','man5','man6','man7','man8','man9','pin1','pin2','pin3','ji1'],draw:'ji1',actualDiscard:'ji1',melds:[]},p_source_kind:'naga_scene',p_source_report_id:`new${i}`,p_scene_tw:0,p_scene_ts:0,p_scene_tv:i});
+
+test('deleting the last volume reserves its number and allows the next new volume',async t=>{
+  const ctx=fixture(t,195);
+  const second=await builderRpc('create_collection_volume',{p_share_slug:'book'},ctx);
+  const preview=await previewCollectionDeletion({p_share_slug:second.share_slug},ctx);
+  await deleteCollection({p_share_slug:second.share_slug,p_confirmed:true,p_confirmation_token:preview.confirmation_token},ctx);
+  const capacity=await collectionCapacity({p_share_slug:'book'},ctx);
+  assert.equal(capacity.next_volume,3);assert.equal(capacity.next_share_slug,null);
+  await assert.rejects(builderRpc('create_collection_volume',{p_share_slug:'book',p_volume_number:2},ctx),e=>e.code==='collection_already_deleted');
+  const third=await builderRpc('create_collection_volume',{p_share_slug:'book'},ctx);
+  assert.equal(third.volume_number,3);assert.notEqual(third.id,second.id);
+  assert.ok(ctx.db.sqlite.prepare('SELECT archived_at FROM collections WHERE id=?').get(second.id).archived_at);
+  assert.equal((await collectionCapacity({p_share_slug:'book'},ctx)).next_share_slug,third.share_slug);
+  assert.equal((await builderRpc('create_collection_volume',{p_share_slug:'book'},ctx)).id,third.id);
+});
+test('retrying creation of a deleted standalone book cannot resurrect it',async t=>{
+  const ctx=fixture(t);const args={p_title:'削除する本',p_request_id:crypto.randomUUID()};
+  const book=await builderRpc('create_collection',args,ctx);
+  const preview=await previewCollectionDeletion({p_share_slug:book.share_slug},ctx);
+  await deleteCollection({p_share_slug:book.share_slug,p_confirmed:true,p_confirmation_token:preview.confirmation_token},ctx);
+  await assert.rejects(builderRpc('create_collection',args,ctx),e=>e.code==='collection_already_deleted');
+  assert.ok(ctx.db.sqlite.prepare('SELECT archived_at FROM collections WHERE id=?').get(book.id).archived_at);
+});
 
 test('old duplicate numbers do not add repeated gaps to new questions',async t=>{const ctx=fixture(t,3);ctx.db.sqlite.prepare("UPDATE questions SET payload=json_set(payload,'$.number',2) WHERE id='q3'").run();const a=await builderRpc('create_shared_question',question(41),ctx),b=await builderRpc('create_shared_question',question(42),ctx);assert.equal(a.question_number,4);assert.equal(b.question_number,5);assert.equal(JSON.parse(ctx.db.sqlite.prepare("SELECT payload FROM questions WHERE id='q3'").get().payload).number,2);});
 test('mixed malformed and duplicate legacy labels reserve their virtual numbers only once',async t=>{const ctx=fixture(t,3);ctx.db.sqlite.exec("UPDATE questions SET sort_order=0;UPDATE questions SET payload=json_set(payload,'$.number',1) WHERE id='q2';UPDATE questions SET payload=json_set(payload,'$.number',NULL),title='問題-Infinity' WHERE id='q3'");const a=await builderRpc('create_shared_question',question(43),ctx),b=await builderRpc('create_shared_question',question(44),ctx);assert.equal(a.question_number,4);assert.equal(b.question_number,5);assert.equal(JSON.parse(ctx.db.sqlite.prepare("SELECT payload FROM questions WHERE id='q3'").get().payload).number,null);});

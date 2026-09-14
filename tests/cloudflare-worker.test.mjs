@@ -49,3 +49,19 @@ test('interrupted browser OAuth has a readable safe return page',async t=>{
   assert.match(response.headers.get('Content-Type'),/text\/html/);
   const html=await response.text();assert.match(html,/みん切るの入口へ/);assert.ok(!html.includes('do-not-echo'));
 });
+
+test('V244 book deletion requires the same session, CSRF, ownership, explicit confirmation and write limit',async t=>{
+  const env=await setup(t);env.DB.sqlite.exec("INSERT INTO collections(id,owner_id,title,share_slug) VALUES('owned','student','削除テスト','owned')");
+  const path='/api/rpc/preview_collection_deletion';
+  assert.equal((await worker.fetch(new Request(origin+path,{method:'POST'}),env)).status,401);
+  assert.equal((await worker.fetch(req(path,{p_share_slug:'owned'},{'X-Minkiru-CSRF':'wrong'}),env)).status,403);
+  assert.equal((await worker.fetch(req(path,{p_share_slug:'one'}),env)).status,403);
+  assert.equal((await worker.fetch(req('/api/rpc/delete_collection',{p_share_slug:'owned'}),env)).status,400);
+  const preview=await (await worker.fetch(req(path,{p_share_slug:'owned'}),env)).json();
+  const args={p_share_slug:'owned',p_confirmed:true,p_confirmation_token:preview.data.confirmation_token};
+  assert.equal((await worker.fetch(req('/api/rpc/delete_collection',args,{Origin:'https://other.test'}),env)).status,403);
+  env.WRITE_LIMIT={limit:async()=>({success:false})};assert.equal((await worker.fetch(req('/api/rpc/delete_collection',args),env)).status,429);
+  env.WRITE_LIMIT={limit:async()=>({success:true})};const result=await worker.fetch(req('/api/rpc/delete_collection',args),env);
+  assert.equal(result.status,200);assert.equal((await result.json()).data.deleted,true);
+  assert.equal(env.DB.sqlite.prepare("SELECT archived_at FROM collections WHERE id='c'").get().archived_at,null);
+});

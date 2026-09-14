@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=243">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=243">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=243">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=244">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=244">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=244">
   <title>みん切る｜みんなの何切る問題集</title>
   <link rel="preload" as="image" href="assets/loading-screen-v243.png" fetchpriority="high">
   <meta name="description" content="みん切るは、NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリです。">
@@ -2243,13 +2243,14 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=243">
-  <link rel="stylesheet" href="library-v214.css?v=243">
-  <link rel="stylesheet" href="navigation-v234.css?v=243">
-  <link rel="stylesheet" href="book-builder-v235.css?v=243">
-  <link rel="stylesheet" href="menu-polish-v238.css?v=243">
-  <link rel="stylesheet" href="menu-sections-v239.css?v=243">
-  <link rel="stylesheet" href="workspace-ui-v240.css?v=243">
+  <link rel="stylesheet" href="ux-v159.css?v=244">
+  <link rel="stylesheet" href="library-v214.css?v=244">
+  <link rel="stylesheet" href="navigation-v234.css?v=244">
+  <link rel="stylesheet" href="book-builder-v235.css?v=244">
+  <link rel="stylesheet" href="menu-polish-v238.css?v=244">
+  <link rel="stylesheet" href="menu-sections-v239.css?v=244">
+  <link rel="stylesheet" href="workspace-ui-v240.css?v=244">
+  <link rel="stylesheet" href="collection-deletion-v244.css?v=244">
 </head>
 <body class="auth-gate-open">
   <section class="startup-screen-v236" id="startupScreenV236" aria-label="みん切るを準備中">
@@ -2606,21 +2607,22 @@
   </dialog>
 
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=243"></script>
-  <script src="drill-ux-v44.js?v=243"></script>
-  <script src="navigation-v234.js?v=243"></script>
-  <script src="book-builder-v235.js?v=243"></script>
-  <script src="library-order-v215.js?v=243"></script>
-  <script src="library-v214.js?v=243"></script>
-  <script src="naga-generator-v44.js?v=243"></script>
-  <script src="hand-mask-v237.js?v=243"></script>
-  <script src="menu-sections-v239.js?v=243"></script>
-  <script src="workspace-ui-v240.js?v=243"></script>
-  <script src="generation-confirm-v241.js?v=243"></script>
+  <script src="supabase-sync-v48.js?v=244"></script>
+  <script src="drill-ux-v44.js?v=244"></script>
+  <script src="navigation-v234.js?v=244"></script>
+  <script src="book-builder-v235.js?v=244"></script>
+  <script src="library-order-v215.js?v=244"></script>
+  <script src="library-v214.js?v=244"></script>
+  <script src="naga-generator-v44.js?v=244"></script>
+  <script src="hand-mask-v237.js?v=244"></script>
+  <script src="menu-sections-v239.js?v=244"></script>
+  <script src="workspace-ui-v240.js?v=244"></script>
+  <script src="generation-confirm-v241.js?v=244"></script>
+  <script src="collection-deletion-v244.js?v=244"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 243;
+    const APP_VERSION = 244;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -4677,6 +4679,7 @@
       const QUESTION_NOTICE_STORAGE_KEY_V66 = storageKey("question-notices-v1");
         const ANNOUNCEMENT_SEEN_STORAGE_KEY_V65 = storageKey("announcement-seen-v1");
         const APP_ANNOUNCEMENTS_V66 = [
+          { version: 244, date: "2026-09-14", publishedAt: "2026-09-14T20:34:00+09:00", title: "問題集を確認して削除できるようにしました", body: "所有者・管理者は「この本の管理」から問題集を削除できます。問題集名・収録問題数・共有利用者への影響を確認してから実行します。一つの巻だけを削除する場合、他の巻は残ります。誤削除に備え、問題や回答履歴・画像のデータは保管します。" },
           { version: 243, date: "2026-09-14", publishedAt: "2026-09-14T20:06:00+09:00", title: "ローディング画面を新しいロゴ画像に", body: "起動中は、白背景に本と麻雀卓を描いたロゴ画像を表示します。スマホや横画面でも画像全体が収まるようにしました。読み込み完了・接続遅延・失敗時の案内は従来どおりです。" },
           { version: 242, date: "2026-09-14", publishedAt: "2026-09-14T04:20:00+09:00", title: "ピエール・垣崎にまのDiscord転送を再開", body: "ピエール問題集と垣崎にま問題集の新着・変更分を、Cloudflare D1・R2へ転送するようにしました。既存問題の手牌・番号は維持し、コメントの伏せ字とアイコン情報も引き継ぎます。容量上限や要確認の局面は保留し、重複登録を防ぎます。不要になった旧サイトの設定引き継ぎ案内は削除しました。" },
           { version: 241, date: "2026-09-14", publishedAt: "2026-09-14T03:32:00+09:00", title: "問題生成・画像保存を再開しました", body: "NAGA URLの読み込み、局面画像の作成、問題集への保存を再開しました。画像はCloudflare R2へ保存し、保存後の問題を開き直せることを確認しています。副露・カン後の手牌とマスクは承認済みの生成ロジックを維持。保存前には追加先と件数を確認できます。容量・処理量の上限に達した場合は新規作成だけを止め、学習の操作は維持します。大量取込とBot転送は引き続き停止中です。" },
@@ -6526,12 +6529,13 @@
           ? `<div class="settings-divider" role="presentation"></div><div class="collection-management collection-management-picker"><h3>問題集の権限変更</h3><label class="collection-management-selector" for="collectionManagementSelect"><span>管理する問題集</span><select id="collectionManagementSelect" aria-label="権限を変更する問題集">${ownedCollections.map(row => { const slug = String(row.share_slug || ""); const title = collectionChooserTitleV186(row); return `<option value="${escapeHtml(slug)}"${String(collection?.share_slug || "") === slug ? " selected" : ""}>${escapeHtml(title)}</option>`; }).join("")}</select><small>所有者として作成した問題集だけを選べます。ここで選んでも、学習中の問題集は変わりません。</small></label></div>`
           : "";
         const management = collection ? (canManage
-          ? `<div class="settings-divider" role="presentation"></div><div class="collection-management"><h3>この問題集スペースの管理</h3>${collectionContext}<p>メンバー管理・公開範囲・完全削除は、アプリ所有者またはこの問題集のオーナーだけが行えます。編集メンバーは、問題の追加・インポート・編集・整理を担当できます。</p><form class="settings-form" id="collectionVisibilityForm"><label for="collectionVisibilitySelect">公開範囲<select id="collectionVisibilitySelect"><option value="private"${currentVisibility === "private" ? " selected" : ""}>プライベート（所有者・管理者のみ）</option><option value="request"${currentVisibility === "request" ? " selected" : ""}>承認許可制（承認した利用者のみ）</option><option value="public"${currentVisibility === "public" ? " selected" : ""}>全体公開（誰でも閲覧可能）</option></select></label><div class="settings-form-actions"><button class="primary" type="submit">公開範囲を保存</button><span class="settings-form-status" id="collectionVisibilityStatus" aria-live="polite"></span></div></form><h4>閲覧申請</h4><div class="collection-access-list" id="collectionAccessRequests"><span class="collection-access-empty">読み込み中…</span></div><h4>現在のメンバー</h4><p class="collection-space-note">申請を承認するときに「閲覧」または「編集」を選べます。編集メンバーは問題の生成・インポート・編集・整理ができ、公開範囲やメンバー管理は行えません。</p><div class="collection-access-list" id="collectionAccessMembers"><span class="collection-access-empty">読み込み中…</span></div></div>`
+          ? `<div class="settings-divider" role="presentation"></div><div class="collection-management"><h3>この問題集スペースの管理</h3>${collectionContext}<p>メンバー管理・公開範囲・問題集の削除は、アプリ所有者またはこの問題集のオーナーだけが行えます。編集メンバーは、問題の追加・インポート・編集・整理を担当できます。</p><form class="settings-form" id="collectionVisibilityForm"><label for="collectionVisibilitySelect">公開範囲<select id="collectionVisibilitySelect"><option value="private"${currentVisibility === "private" ? " selected" : ""}>プライベート（所有者・管理者のみ）</option><option value="request"${currentVisibility === "request" ? " selected" : ""}>承認許可制（承認した利用者のみ）</option><option value="public"${currentVisibility === "public" ? " selected" : ""}>全体公開（誰でも閲覧可能）</option></select></label><div class="settings-form-actions"><button class="primary" type="submit">公開範囲を保存</button><span class="settings-form-status" id="collectionVisibilityStatus" aria-live="polite"></span></div></form><h4>閲覧申請</h4><div class="collection-access-list" id="collectionAccessRequests"><span class="collection-access-empty">読み込み中…</span></div><h4>現在のメンバー</h4><p class="collection-space-note">申請を承認するときに「閲覧」または「編集」を選べます。編集メンバーは問題の生成・インポート・編集・整理ができ、公開範囲やメンバー管理は行えません。</p><div class="collection-access-list" id="collectionAccessMembers"><span class="collection-access-empty">読み込み中…</span></div></div>`
           : `<div class="settings-divider" role="presentation"></div><div class="collection-management"><h3>問題集スペース</h3>${collectionContext}<p>現在の公開範囲：${escapeHtml(collectionVisibility)}。公開範囲の変更と申請の承認は所有者・管理者のみ行えます。</p></div>`)
           : "";
         const create = supabaseSessionV46 ? `<div class="settings-divider" role="presentation"></div><div class="collection-management"><h3>新しい問題集スペースを作る</h3><p>新しく作る問題集は、最初は必ずプライベートです。作成時に公開範囲を選べます。</p>${collectionCreateFormMarkupV106("collectionCreate")}</div>` : "";
         const appearance = canManage && collection ? `<form class="book-tone-editor-v235" id="bookToneFormV235"><h4>この本の色</h4>${window.MinkiruBookBuilderV235.palette("bookToneV235",window.MinkiruLibraryV214.bookTone(collection))}<button type="submit" class="primary">色を保存</button><p id="bookToneStatusV235" aria-live="polite"></p></form>` : "";
-        return bookOnly ? management + appearance : `${managementChooser}${management}${appearance}${create}`;
+        const deletion = canManage && collection ? window.MinkiruCollectionDeletionV244.markup() : "";
+        return bookOnly ? management + appearance + deletion : `${managementChooser}${management}${appearance}${deletion}${create}`;
       }
 
       async function loadCollectionManagementDataV100() {
@@ -6555,6 +6559,23 @@
       }
 
       function bindCollectionManagementV100() {
+        const deletionTarget = collectionManagementTargetV197();
+        if (deletionTarget && collectionManagementCanManageV197(deletionTarget)) {
+          window.MinkiruCollectionDeletionV244.bind({
+            target: {share_slug:deletionTarget.share_slug,title:deletionTarget.title},
+            api: window.NagaSupabase,
+            getActor: () => supabaseSessionV46?.user?.id || "",
+            onDeleted: () => {
+              rememberCollectionSlugV165("");
+              collectionLibraryControllerV214?.invalidate();
+              // A fresh shelf clears in-flight reads and stale question state.
+              const url = new URL(window.location.href);
+              for (const key of ["collection", "q", "question", "source", "range"]) url.searchParams.delete(key);
+              url.searchParams.set("view", "collections"); url.hash = "";
+              window.location.replace(url.toString());
+            }
+          });
+        }
         const toneForm = document.getElementById("bookToneFormV235");
         toneForm?.addEventListener("submit", async event => {
           event.preventDefault(); const target = collectionManagementTargetV197(); if (!target) return;
