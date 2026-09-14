@@ -1,4 +1,30 @@
-# NAGA question generation and R2 uploads — V241
+# NAGA question generation and R2 uploads — V248
+
+## JSON boards (V248)
+
+The interactive app now generates `boardScene` (schema version 1) from the
+already-fetched report. `public/naga-generator-v44.js` remains the single
+concealed-hand replay/validator. `naga-board-state-v248.js` projects visible
+rivers, meld orientation, scores and dora; `naga-board-v248.js` renders SVG with
+the existing approved tile assets. Opponents' concealed tile values are not
+stored in `boardScene`. Unsupported or inconsistent scenes cannot be saved.
+
+New interactive questions store JSON and `image:null`, without invoking
+`naga-capture`, Browser Run, or image upload. Report fetch/write safeguards still
+apply; this is not unlimited API capacity. Server inserts validate the board
+against the question's source coordinates, hand slots and melds. Existing
+screenshot questions, private-image permissions, and Bot/import capture paths
+are preserved. No existing questions or R2 objects are rewritten/deleted.
+
+The renderer is read-compatible before enabling new generation. Rolling back
+must preserve these renderer assets and server validation while any JSON-board
+questions exist; do not deploy an older screenshot-only frontend over them.
+
+Regression: `node --test tests/json-board-v248.test.mjs`. Seven cached-source
+meld scenes and an isolated app/Worker/SQLite save/reopen/answer flow were
+checked without production data writes. Review builders/outputs remain local.
+
+The following describes the retained V241 server capture/upload path.
 
 ## Scope
 

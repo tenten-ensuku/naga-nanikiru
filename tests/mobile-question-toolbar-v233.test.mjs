@@ -19,8 +19,8 @@ function functionBlock(source, name, nextName) {
 
 test("V233 aligns the mobile toolbar version, labels, and accessible names", async () => {
   const html = await readFile(indexPath, "utf8");
-  assert.match(html, /const APP_VERSION = 247;/);
-  assert.match(html, /ux-v159\.css\?v=247/);
+  assert.match(html, /const APP_VERSION = 248;/);
+  assert.match(html, /ux-v159\.css\?v=248/);
   assert.doesNotMatch(html, /<script[^>]+legacy-transfer-v232\.js/);
 
   const sourceBar = html.match(/<div class="source-bar">[\s\S]*?<\/div>\s*\n\s*<div class="session-strip"/)?.[0] || "";
@@ -67,7 +67,7 @@ test("V233 keeps the compact mobile source bar override intact alongside later r
 
 test("V233 preserves the hand display and answer interaction contracts", async () => {
   const html = normalizeNewlines(await readFile(indexPath, "utf8"));
-  assert.match(html, /<section class="scene-card"[^>]*aria-label="NAGA局面スクリーンショット">/);
+  assert.match(html, /<section class="scene-card"[^>]*aria-label="NAGA局面">/);
   assert.match(html, /<div class="hand-layer" id="handLayer" aria-label="選択できる自分の手牌"><\/div>/);
   assert.match(html, /<div class="hand-score" id="handScoreBadge" aria-live="polite" hidden><\/div>/);
   assert.match(html, /<div class="answer-confirmation-choice" id="answerConfirmationChoice"><\/div>/);

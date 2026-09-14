@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=247">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=247">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=247">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=248">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=248">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=248">
   <title>みん切る｜みんなの何切る問題集</title>
   <link rel="preload" as="image" href="assets/loading-screen-v243.png" fetchpriority="high">
   <meta name="description" content="みん切るは、NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリです。">
@@ -2243,16 +2243,16 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=247">
-  <link rel="stylesheet" href="library-v214.css?v=247">
-  <link rel="stylesheet" href="navigation-v234.css?v=247">
-  <link rel="stylesheet" href="book-builder-v235.css?v=247">
-  <link rel="stylesheet" href="menu-polish-v238.css?v=247">
-  <link rel="stylesheet" href="menu-sections-v239.css?v=247">
-  <link rel="stylesheet" href="workspace-ui-v240.css?v=247">
-  <link rel="stylesheet" href="collection-deletion-v244.css?v=247">
-  <link rel="stylesheet" href="menu-simplify-v245.css?v=247">
-  <link rel="stylesheet" href="content-dates-v246.css?v=247">
+  <link rel="stylesheet" href="ux-v159.css?v=248">
+  <link rel="stylesheet" href="library-v214.css?v=248">
+  <link rel="stylesheet" href="navigation-v234.css?v=248">
+  <link rel="stylesheet" href="book-builder-v235.css?v=248">
+  <link rel="stylesheet" href="menu-polish-v238.css?v=248">
+  <link rel="stylesheet" href="menu-sections-v239.css?v=248">
+  <link rel="stylesheet" href="workspace-ui-v240.css?v=248">
+  <link rel="stylesheet" href="collection-deletion-v244.css?v=248">
+  <link rel="stylesheet" href="menu-simplify-v245.css?v=248">
+  <link rel="stylesheet" href="content-dates-v246.css?v=248">
 </head>
 <body class="auth-gate-open">
   <section class="startup-screen-v236" id="startupScreenV236" aria-label="みん切るを準備中">
@@ -2378,9 +2378,10 @@
       <button class="session-exit" id="sessionExitButton" type="button">中断して保存</button>
     </div>
 
-    <section class="scene-card" aria-label="NAGA局面スクリーンショット">
+    <section class="scene-card" aria-label="NAGA局面">
       <div class="scene-frame">
         <img class="scene-image" id="sceneImage" src="question-images/q249.webp" alt="指定NAGA局面の伏牌スクリーンショット">
+        <div id="jsonBoardV248" class="naga-json-board" hidden></div>
         <div class="hand-mask" aria-hidden="true"></div>
         <div class="hand-layer" id="handLayer" aria-label="選択できる自分の手牌"></div>
       </div>
@@ -2606,23 +2607,26 @@
   </dialog>
 
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=247"></script>
-  <script src="drill-ux-v44.js?v=247"></script>
-  <script src="navigation-v234.js?v=247"></script>
-  <script src="book-builder-v235.js?v=247"></script>
-  <script src="library-order-v215.js?v=247"></script>
-  <script src="content-dates-v246.js?v=247"></script>
-  <script src="library-v214.js?v=247"></script>
-  <script src="naga-generator-v44.js?v=247"></script>
-  <script src="hand-mask-v237.js?v=247"></script>
-  <script src="menu-sections-v239.js?v=247"></script>
-  <script src="workspace-ui-v240.js?v=247"></script>
-  <script src="generation-confirm-v241.js?v=247"></script>
-  <script src="collection-deletion-v244.js?v=247"></script>
+  <script src="supabase-sync-v48.js?v=248"></script>
+  <script src="drill-ux-v44.js?v=248"></script>
+  <script src="navigation-v234.js?v=248"></script>
+  <script src="book-builder-v235.js?v=248"></script>
+  <script src="library-order-v215.js?v=248"></script>
+  <script src="content-dates-v246.js?v=248"></script>
+  <script src="library-v214.js?v=248"></script>
+  <script src="naga-generator-v44.js?v=248"></script>
+  <link rel="stylesheet" href="naga-board-v248.css?v=248">
+  <script src="naga-board-state-v248.js?v=248"></script>
+  <script src="naga-board-v248.js?v=248"></script>
+  <script src="hand-mask-v237.js?v=248"></script>
+  <script src="menu-sections-v239.js?v=248"></script>
+  <script src="workspace-ui-v240.js?v=248"></script>
+  <script src="generation-confirm-v241.js?v=248"></script>
+  <script src="collection-deletion-v244.js?v=248"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 247;
+    const APP_VERSION = 248;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -4677,6 +4681,7 @@
       const QUESTION_NOTICE_STORAGE_KEY_V66 = storageKey("question-notices-v1");
         const ANNOUNCEMENT_SEEN_STORAGE_KEY_V65 = storageKey("announcement-seen-v1");
         const APP_ANNOUNCEMENTS_V66 = [
+          {"version":248,"date":"2026-09-15","publishedAt":"2026-09-14T18:25:23.350Z","title":"NAGA問題を画像撮影なしで生成","body":"新しく生成するNAGA問題は局面データから盤面を再現します。撮影待ちや問題画像のアップロードが不要になりました。既存の画像問題は引き続き利用できます。"},
           {"version":247,"date":"2026-09-15","publishedAt":"2026-09-14T15:56:47.218Z","title":"時刻表記をすっきり整えました","body":"問題集の最終更新日時と生成日の補足表示からJSTの表記を取り除きました。引き続き日本時間で表示します。"},
           { version: 246, date: "2026-09-14", publishedAt: "2026-09-14T23:32:00+09:00", title: "問題の生成日と、本棚の更新状況がわかるようになりました", body: "問題一覧と問題画面に生成日を表示します。本棚では選択した本の最終更新日を確認でき、7日以内に更新された本には「更新」マークが付きます。問題の追加・編集や問題集情報の変更が対象で、回答・閲覧は含みません。日付の記録がない場合は「不明」と表示します。" },
           { version: 245, date: "2026-09-14", publishedAt: "2026-09-14T21:00:00+09:00", title: "アーカイブとサイドバーの進捗欄を整理しました", body: "アーカイブ機能とPCサイドバーの学習進捗を取り除きました。アーカイブ済みの問題も通常の学習対象になり、習熟度は回答履歴から計算します。お気に入り・回答履歴・学習画面上部の進捗バーはそのまま利用できます。" },
@@ -7594,6 +7599,7 @@
       }
 
       function displayHandSlotsV212(question = SCENE) {
+        if (hasJsonBoardV248(question)) return question.boardScene.hand.tiles.slice();
         // Use the canonical call-slot resolver during both discard selection
         // and the answer-confirmed view.  This preserves the original slot
         // positions and the consumed-tile holes after a call.
@@ -7624,6 +7630,9 @@
         sceneFrameV16.classList.toggle("is-call-decision", SCENE.decisionType === "call");
         sceneFrameV16.classList.remove("has-external-immediate-melds");
         handLayer.innerHTML = `<div class="hand-controls"><div class="hand-row"><div class="closed-hand">${closed}</div>${draw ? `<span class="draw-divider" aria-hidden="true"></span>${draw}` : ""}</div></div>`;
+        if (hasJsonBoardV248(SCENE)) {
+          handLayer.innerHTML = window.NagaBoardV248.handPositions(SCENE.boardScene).map(position => `<div class="json-hand-position-v248" style="left:${position.x / 7}%;top:${position.y / 6.5}%;width:${29.3 / 7}%;height:${40 / 6.5}%">${tileButtonV16(position.tile, position.index, position.draw)}</div>`).join("");
+        } else if (SCENE.boardScene) { handLayer.innerHTML = ""; return; }
         if (riichiButton) sceneFrameV16.insertAdjacentHTML("beforeend", `<div class="riichi-layer" aria-label="リーチ判断">${riichiButton}</div>`);
         if (SCENE.decisionType === "call") {
           const callTarget = SCENE.callTile ? `<span class="call-target-label">対象牌</span><span class="call-target-tile" title="${tileLabel(SCENE.callTile)}への副露判断" aria-label="副露対象牌 ${tileLabel(SCENE.callTile)}">${tileImage(SCENE.callTile)}</span>` : "";
@@ -8050,6 +8059,7 @@
       }
 
       function syncImmediateCallLayoutV146(question = SCENE) {
+        if (question?.boardScene) return;
         if (!isImmediateCallDiscardV132(question)) return;
         // Answer confirmation is the same scene; retain its detected panel.
         const mask = activeHandQuestionV18 && questionKeyV16(activeHandQuestionV18) === questionKeyV16(question) && activeHandMaskV18
@@ -8174,6 +8184,7 @@
       }
 
       function setHandLayoutV18(question, mask) {
+        if (question?.boardScene) return;
         activeHandQuestionV18 = question;
         activeHandMaskV18 = mask;
         const frameWidth = sceneFrameV16.clientWidth || sceneImageV16.clientWidth;
@@ -8430,7 +8441,7 @@
         sceneFrameV16.classList.toggle("is-immediate-call-discard", isImmediateCallDiscard);
         clearHandMaskV17();
         clearHandLayoutV18();
-        setHandMaskV17(handMaskV18);
+        if (!SCENE.boardScene) setHandMaskV17(handMaskV18);
         setHandLayoutV18(question, handMaskV18);
         document.getElementById("modelSelect").innerHTML = SCENE.models.map((model, index) => `<option value="${index}">${model.name}（正誤基準）</option>`).join("");
         document.getElementById("modelSelect").value = String(state.judgeModel);
@@ -8438,6 +8449,16 @@
         document.getElementById("nagaSourceLink").href = SCENE.nagaUrl;
         syncThreadLinkV222(SCENE);
         renderImportQuestionButtonV115();
+        const jsonBoardHost = document.getElementById("jsonBoardV248");
+        sceneFrameV16.classList.toggle("is-json-board-v248", Boolean(SCENE.boardScene));
+        jsonBoardHost.hidden = !SCENE.boardScene;
+        sceneImageV16.onload = null;
+        if (SCENE.boardScene) {
+          sceneImageV16.removeAttribute("src");
+          sceneFrameV16.style.aspectRatio = "700 / 650";
+          jsonBoardHost.innerHTML = hasJsonBoardV248(SCENE) ? window.NagaBoardV248.markup(SCENE.boardScene, { showHand: false }) : '<div class="naga-board-error" role="alert">盤面データの整合性を確認できません。回答せず、管理者へお知らせください。</div>';
+        } else {
+        jsonBoardHost.innerHTML = "";
         sceneImageV16.src = SCENE.image || SCENE.images?.off;
         sceneImageV16.alt = `問題${SCENE.number}の伏牌スクリーンショット`;
         sceneImageV16.onload = () => {
@@ -8447,6 +8468,7 @@
           setHandLayoutV18(question, detectedMaskV18);
         };
         if (sceneImageV16.complete) sceneImageV16.onload();
+        }
         renderHandV16();
         renderAnswerV16();
         renderComments();
@@ -9097,6 +9119,9 @@
 
       function renderGeneratorCandidatesV44() {
         if (!generatorCandidatesV44.length) return "";
+        generatorCandidatesV44.forEach(candidate => {
+          if (!candidate.boardScene && !candidate._captureError && generatorReportV44) prepareJsonBoardV248(candidate);
+        });
         return `${renderGeneratorBatchToolbarV158()}<div class="generator-candidate-grid">${generatorCandidatesV44.map((candidate, index) => {
           const destination = currentGeneratorDestinationV130();
           const destinationKey = destination.kind === "shared" ? destination.shareSlug : "local";
@@ -9107,13 +9132,14 @@
           const canAdd = canAddGeneratedQuestionV130();
           const addLabel = !canAdd ? "編集権限が必要" : destination.kind === "shared" ? `${escapeHtml(destination.label)}へ追加` : "この端末へ追加";
           const duplicateLabel = generatorDuplicateKeysV153.has(duplicateKey) ? "既に登録済み" : "追加済み";
-          const preview = candidate._imageData ? `<div class="candidate-preview"><img src="${candidate._imageData}" alt="自動取得したNAGA局面"></div>` : `<div class="candidate-preview candidate-preview-empty">プレビュー未取得</div>`;
-          const captureState = candidate._captureState === "loading" ? "取得中…" : candidate._imageData ? "プレビュー取得済み" : candidate._captureError || "画像なしでも追加できます";
-          const captureErrorClass = candidate._captureError && !candidate._imageData ? " is-error" : "";
-          const captureLabel = candidate._imageData ? "盤面画像を再取得" : "盤面画像を自動取得";
-          const addDisabled = duplicate || !canAdd;
+          const boardReady = hasJsonBoardV248(candidate);
+          const preview = boardReady ? `<div class="candidate-preview"><div class="naga-json-board">${window.NagaBoardV248.markup(candidate.boardScene)}</div></div>` : `<div class="candidate-preview candidate-preview-empty">盤面の確認が必要です</div>`;
+          const captureState = boardReady ? "JSON盤面・画像撮影なし" : candidate._captureError || "盤面を再現してください";
+          const captureErrorClass = candidate._captureError && !boardReady ? " is-error" : "";
+          const captureLabel = boardReady ? "盤面を再描画" : "盤面を再現";
+          const addDisabled = duplicate || !canAdd || !boardReady;
           const checked = generatorSelectedCandidatesV158.has(index) ? " checked" : "";
-          const selectionDisabled = duplicate || !canAdd ? " disabled" : "";
+          const selectionDisabled = duplicate || !canAdd || !boardReady ? " disabled" : "";
           return `<article class="generator-candidate${duplicate ? " is-duplicate" : ""}"><div class="candidate-header"><label class="candidate-select"><input type="checkbox" data-generator-select="${index}"${checked}${selectionDisabled}><span>選択</span></label><div><div class="candidate-title">${escapeHtml(candidate.playerName || `プレイヤー${Number(candidate.playerSeat ?? candidate.tw ?? 0) + 1}`)}<span class="candidate-title-sub">${escapeHtml(candidate.title || `局${Number(candidate.ts || 0) + 1}・操作${candidate.tv}`)} ／ ${escapeHtml(questionTypeV44(candidate))}</span></div>${candidate.isBadMove ? `<div class="candidate-meta">悪手候補${badModels}</div>` : ""}</div></div><div class="candidate-body"><div class="candidate-preview-column"><div class="candidate-controls">${preview}<span class="candidate-capture-state${captureErrorClass}">${escapeHtml(captureState)}</span><div class="candidate-actions"><button class="generator-button secondary" type="button" data-generator-capture="${index}"${candidate._captureState === "loading" ? " disabled" : ""}>${captureLabel}</button><button class="generator-button${duplicate || !canAdd ? " secondary" : ""}" type="button" data-generator-add="${index}"${addDisabled ? " disabled" : ""}>${duplicate ? duplicateLabel : addLabel}</button></div></div></div><div class="candidate-analysis-column"><div class="candidate-analysis-heading">プレイヤーとAIの選択</div><div class="candidate-choice-row">${generatorCandidateChoiceMarkupV158(candidate)}${generatorCandidateModelsMarkupV158(candidate)}</div></div></div></article>`;
         }).join("")}</div>`;
       }
@@ -9730,42 +9756,29 @@
         const candidate = generatorCandidatesV44[index];
         if (!candidate) return false;
         if (!generatedHandIsValidV237(candidate)) return false;
-        setGeneratorStageV159(3, true);
-        if (!window.NagaSupabase?.configured || !generatorJobIdV51 || typeof window.NagaSupabase.captureNagaScene !== "function") {
-          candidate._captureState = "error";
-          candidate._captureError = "自動プレビュー取得は未設定です。画像なしでも追加できます。";
-          document.getElementById("generatorResults").innerHTML = renderGeneratorCandidatesV44();
-          bindGeneratorCandidateInputsV44();
-          setGeneratorStageV159(3, false);
-          return false;
-        }
-        candidate._captureState = "loading";
-        candidate._captureError = "";
+        const ready = prepareJsonBoardV248(candidate);
         document.getElementById("generatorResults").innerHTML = renderGeneratorCandidatesV44();
         bindGeneratorCandidateInputsV44();
-        setGeneratorStatusV44("NAGA本家の盤面画像を自動取得しています…");
+        setGeneratorStageV159(3, false);
+        setGeneratorStatusV44(ready ? "JSONから盤面を再現しました。撮影・画像アップロードは不要です。" : candidate._captureError, !ready);
+        return ready;
+      }
+
+      function hasJsonBoardV248(question) {
+        return Boolean(question?.boardScene && window.NagaBoardStateV248?.validate(question.boardScene, question).valid);
+      }
+
+      function prepareJsonBoardV248(candidate) {
         try {
-          const blob = await window.NagaSupabase.captureNagaScene({
-            jobId: generatorJobIdV51,
-            reportId: candidate.sourceReportId,
-            tw: candidate.tw,
-            ts: candidate.ts,
-            tv: candidate.tv
-          });
-          candidate._imageData = await compressImageFileV44(new File([blob], "naga-scene.webp", { type: blob.type || "image/webp" }));
+          if (!hasJsonBoardV248(candidate)) candidate.boardScene = window.NagaBoardStateV248.project(generatorReportV44, candidate);
+          delete candidate._imageData;
           candidate._captureState = "ready";
           candidate._captureError = "";
-          setGeneratorStatusV44("問題候補が完成しました。内容を確認して問題集へ追加してください。");
           return true;
         } catch (error) {
           candidate._captureState = "error";
-          candidate._captureError = error?.message || "自動取得に失敗しました。";
-          setGeneratorStatusV44(`${candidate._captureError} 画像なしでも候補を追加できます。`, true);
+          candidate._captureError = `${error?.message || "盤面を再現できませんでした"}。誤った問題を保存しないため追加を停止しています。`;
           return false;
-        } finally {
-          document.getElementById("generatorResults").innerHTML = renderGeneratorCandidatesV44();
-          bindGeneratorCandidateInputsV44();
-          setGeneratorStageV159(3, false);
         }
       }
 
@@ -9995,7 +10008,7 @@
         if (generatorPreviewBatchBusyV158 || generatorCandidatesV44.length < 2) return;
         generatorPreviewBatchBusyV158 = true;
         setGeneratorStageV159(3, true);
-        const indexes = generatorCandidatesV44.map((candidate, index) => candidate?._imageData ? null : index).filter(index => index != null);
+        const indexes = generatorCandidatesV44.map((candidate, index) => hasJsonBoardV248(candidate) ? null : index).filter(index => index != null);
         const total = indexes.length;
         const results = document.getElementById("generatorResults");
         if (results) {
@@ -10010,9 +10023,8 @@
         }
         let completed = 0;
         for (const index of indexes) {
-          completed += 1;
-          setGeneratorStatusV44(`プレビューを順番に取得しています… ${completed}/${total}`);
-          await captureGeneratorCandidateV51(index);
+          setGeneratorStatusV44(`JSON盤面を再現しています… ${completed}/${total}`);
+          if (await captureGeneratorCandidateV51(index)) completed += 1;
         }
         generatorPreviewBatchBusyV158 = false;
         const finalResults = document.getElementById("generatorResults");
@@ -10020,7 +10032,7 @@
           finalResults.innerHTML = renderGeneratorCandidatesV44();
           bindGeneratorCandidateInputsV44();
         }
-        setGeneratorStatusV44(`プレビュー取得が完了しました。${completed}件を確認できます。`);
+        setGeneratorStatusV44(`JSON盤面を${completed}/${total}件再現しました。${completed < total ? "未対応の候補は保存できません。" : "撮影APIは使用していません。"}`, completed < total);
         setGeneratorStageV159(3, false);
       }
 
@@ -10068,6 +10080,7 @@
         const candidate = generatorCandidatesV44[index];
         if (!candidate) return false;
         if (!generatedHandIsValidV237(candidate)) return false;
+        if (!prepareJsonBoardV248(candidate)) { setGeneratorStatusV44(candidate._captureError, true); return false; }
         const destination = currentGeneratorDestinationV130();
         if (!canAddGeneratedQuestionV130()) {
           setGeneratorStatusV44("この保存先へ追加するには、問題集の編集メンバー以上の権限が必要です。", true);
@@ -10109,11 +10122,11 @@
           ...candidate,
           number: nextNumber,
           title: nextNumber ? `問題${nextNumber}` : "生成候補",
-          image: candidate._imageData || null,
+          image: null,
           comments: [],
           threadUrl: normalizeDiscordThreadUrlV222(candidate.threadUrl),
           localGenerated: true,
-          needsScreenshot: !candidate._imageData,
+          needsScreenshot: false,
           createdById: creatorId,
           createdByName: creatorName,
           updatedById: creatorId,
@@ -10123,6 +10136,9 @@
           sharedCollectionSlug: destination.kind === "shared" ? destination.shareSlug : null,
           visibility: destination.kind === "shared" ? "unlisted" : "private"
         };
+        delete question._imageData;
+        delete question._captureState;
+        delete question._captureError;
         if (destination.kind === "shared") {
           let remote;
           try {
@@ -10146,6 +10162,8 @@
               if (remote?.capacityReached) throw new Error("次の巻を作成しましたが、問題の追加先を確定できませんでした。問題集を開き直してお試しください。");
             }
             question.serverQuestionId = remote?.id || remote?.question_id || null;
+            if (question.serverQuestionId) question.id = String(question.serverQuestionId);
+            question.__sharedDetailLoaded = true;
             if (remote?.questionNumber) { question.number = remote.questionNumber; question.title = `問題${remote.questionNumber}`; }
             if (remote?.shareSlug) question.sharedCollectionSlug = remote.shareSlug;
             sameAsCurrentShared = question.sharedCollectionSlug === sharedCollectionV46?.share_slug;
@@ -11059,7 +11077,7 @@
           if (selectedCollectionSlug || window.NagaSupabase?.configured) {
             questionsV16 = [];
           } else {
-            questionsV16 = questionsV16.concat((userStateV16.customQuestions || []).filter(question => question?.id && question?.image).map(question => ({
+            questionsV16 = questionsV16.concat((userStateV16.customQuestions || []).filter(question => question?.id && (question?.image || hasJsonBoardV248(question))).map(question => ({
             ...question,
             images: question.images || { off: question.image, open: question.image },
             hasRiichiJudgment: question.decisionType !== "call" && (question.hasRiichiJudgment === true || Array.isArray(question.reach) && question.reach.some(value => Number(value) > 0))

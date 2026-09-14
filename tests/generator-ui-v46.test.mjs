@@ -10,7 +10,7 @@ test("renders the v87 scene and half-game generator controls", async () => {
     readFile(indexUrl, "utf8"),
     readFile(generatorUrl, "utf8")
   ]);
-  assert.match(html, /const APP_VERSION = 247/);
+  assert.match(html, /const APP_VERSION = 248/);
   assert.match(html, /function captureGeneratorFormDraftV157\(\)/);
   assert.match(html, /destination: document\.getElementById\("generatorDestinationSelect"\)\?\.value \|\| generatorDestinationV130 \|\| ""/);
   assert.match(html, /function restoreGeneratorFormDraftV157\(draft\)/);
@@ -169,17 +169,17 @@ test("renders the v87 scene and half-game generator controls", async () => {
   assert.match(html, /function addSelectedGeneratorQuestionsV158\(\)/);
   assert.match(html, /function captureGeneratorCandidatesSequentiallyV158\(\)/);
   assert.match(html, /data-generator-capture-all/);
-  assert.match(html, /captureNagaScene/);
-  assert.match(html, /問題候補が完成しました/);
+  assert.doesNotMatch(html, /captureNagaScene/);
+  assert.match(html, /JSON盤面・画像撮影なし/);
   assert.doesNotMatch(html, /candidate-file-label/);
   assert.doesNotMatch(html, /data-candidate-image/);
   assert.doesNotMatch(html, /手動画像を使用/);
   assert.doesNotMatch(html, /手動でスクリーンショットを指定/);
   assert.doesNotMatch(html, /if \(!candidate\._imageData\)/);
-  assert.match(html, /image: candidate\._imageData \|\| null/);
-  assert.match(html, /image: candidate\._imageData \|\| null,\s*comments: \[\]/);
+  assert.match(html, /prepareJsonBoardV248/);
+  assert.match(html, /image: null,\s*comments: \[\]/);
   assert.doesNotMatch(html, /comments:\s*\[\{[^}]*NAGA URLから作成した問題です/);
-  assert.match(html, /needsScreenshot: !candidate\._imageData/);
+  assert.match(html, /needsScreenshot: false/);
   assert.doesNotMatch(html, /id="surroundingsToggle"/);
   assert.doesNotMatch(html, /SCENE_IMAGES/);
   assert.doesNotMatch(html, /images: \{ off: candidate\._imageData, open: candidate\._imageData \}/);
