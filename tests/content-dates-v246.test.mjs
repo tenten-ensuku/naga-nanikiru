@@ -10,9 +10,10 @@ const dateSource=read('public/content-dates-v246.js'),html=read('public/index.ht
 function datesContext(){const ctx=vm.createContext({window:{},Date,Intl});vm.runInContext(dateSource,ctx);return ctx;}
 const dates=datesContext().window.MinkiruContentDatesV246;
 
-test('recorded dates use JST, reject invalid values and never invent a current date',()=>{
+test('recorded dates stay in Japan time without a timezone suffix, reject invalid values and never invent a current date',()=>{
   assert.equal(dates.timestamp('2026-09-13T16:05:00Z').date,'2026/09/14');
-  assert.equal(dates.timestamp('2026-09-14T01:05:00+09:00').full,'2026/09/14 01:05 JST');
+  assert.equal(dates.timestamp('2026-09-14T01:05:00+09:00').full,'2026/09/14 01:05');
+  assert.equal(dates.timestamp('2026-09-13T16:05:00Z').full,'2026/09/14 01:05');
   assert.equal(dates.timestamp('2026-09-14').date,'2026/09/14');
   for(const value of [null,undefined,'',0,{},'invalid','2026-02-30','2026-02-30T10:00:00Z','2026-09-14T01:00:00'])assert.equal(dates.timestamp(value),null);
   assert.equal(dates.questionCreated({}),null);
@@ -92,13 +93,14 @@ test('bookshelf displays recent content badges, exact dates and unknown values w
   assert.equal((recent.match(/class="library-update-marker-v246"/g)||[]).length,1);
   assert.match(recent,/最終更新日/);assert.match(recent,/7日以内に更新/);
   assert.ok(recent.indexOf('data-library-book="new"')<recent.indexOf('data-library-book="old"'));
-  assert.match(render('old'),/2020\/01\/01 09:00 JST/);
+  assert.match(render('old'),/2020\/01\/01 09:00<\/time>/);
+  assert.doesNotMatch(render('old'),/JST/);
   assert.match(render('unknown'),/最終更新日<\/span><span>不明<\/span>/);
   assert.equal(ctx.window.MinkiruLibraryV214.normaliseBook(collections[3]).contentUpdated,null);
 });
 
 test('app wiring renders dates in lists and questions without polls or guessed timestamps',()=>{
-  assert.match(html,/content-dates-v246\.js\?v=246/);assert.match(html,/content-dates-v246\.css\?v=246/);
+  assert.match(html,/content-dates-v246\.js\?v=247/);assert.match(html,/content-dates-v246\.css\?v=247/);
   assert.match(html,/id="questionCreatedDateV246"/);
   assert.match(html,/class="question-created-v246">\$\{questionCreatedMarkupV246\(question\)\}/);
   const normalize=html.match(/      function normalizeSharedQuestionV66\([^]*?\n      \}/)[0];

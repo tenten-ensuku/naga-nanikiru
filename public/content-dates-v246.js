@@ -16,7 +16,7 @@
     const milliseconds = Date.parse(dateOnly ? source + "T00:00:00+09:00" : source);
     if (!Number.isFinite(milliseconds)) return null;
     if (dateOnly && dateFormat.format(milliseconds).replaceAll("/", "-") !== source) return null;
-    return {iso:new Date(milliseconds).toISOString(), milliseconds, dateOnly, date:dateFormat.format(milliseconds), full:dateOnly ? dateFormat.format(milliseconds) : timeFormat.format(milliseconds) + " JST"};
+    return {iso:new Date(milliseconds).toISOString(), milliseconds, dateOnly, date:dateFormat.format(milliseconds), full:dateOnly ? dateFormat.format(milliseconds) : timeFormat.format(milliseconds)};
   }
   const first = (...values) => values.map(timestamp).find(Boolean) || null;
   function questionCreated(question) {
