@@ -10,7 +10,7 @@ test("renders the v87 scene and half-game generator controls", async () => {
     readFile(indexUrl, "utf8"),
     readFile(generatorUrl, "utf8")
   ]);
-  assert.match(html, /const APP_VERSION = 244/);
+  assert.match(html, /const APP_VERSION = 245/);
   assert.match(html, /function captureGeneratorFormDraftV157\(\)/);
   assert.match(html, /destination: document\.getElementById\("generatorDestinationSelect"\)\?\.value \|\| generatorDestinationV130 \|\| ""/);
   assert.match(html, /function restoreGeneratorFormDraftV157\(draft\)/);
@@ -87,12 +87,12 @@ test("renders the v87 scene and half-game generator controls", async () => {
   assert.match(html, /menu-card-latest/);
   assert.match(html, /data-menu-action="favorite"/);
   assert.doesNotMatch(html, /data-menu-action="trash"/);
-  assert.match(html, /data-menu-action="unarchive"/);
-  assert.match(html, /id="archiveQuestionButton"[^>]*>アーカイブに移す<\/button>/);
+  assert.doesNotMatch(html, /data-menu-action="unarchive"/);
+  assert.doesNotMatch(html, /id="archiveQuestionButton"/);
   assert.match(html, /id="menuRangeSelect"/);
   assert.match(html, /id="menuRangeAllButton"/);
   assert.match(html, /id="menuFavoritesToggle"/);
-  assert.match(html, /id="menuArchiveViewButton"/);
+  assert.doesNotMatch(html, /id="menuArchiveViewButton"/);
   assert.doesNotMatch(html, /id="menuRangeTabs"/);
   assert.match(html, /id="menuRangeHeading">[\s\S]*問題範囲/);
   assert.match(html, /id="menuTypeFilters"/);

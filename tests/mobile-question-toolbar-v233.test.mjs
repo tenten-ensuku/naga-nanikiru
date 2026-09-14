@@ -19,8 +19,8 @@ function functionBlock(source, name, nextName) {
 
 test("V233 aligns the mobile toolbar version, labels, and accessible names", async () => {
   const html = await readFile(indexPath, "utf8");
-  assert.match(html, /const APP_VERSION = 244;/);
-  assert.match(html, /ux-v159\.css\?v=244/);
+  assert.match(html, /const APP_VERSION = 245;/);
+  assert.match(html, /ux-v159\.css\?v=245/);
   assert.doesNotMatch(html, /<script[^>]+legacy-transfer-v232\.js/);
 
   const sourceBar = html.match(/<div class="source-bar">[\s\S]*?<\/div>\s*\n\s*<div class="session-strip"/)?.[0] || "";
@@ -37,7 +37,8 @@ test("V233 aligns the mobile toolbar version, labels, and accessible names", asy
   const navigation = functionBlock(html, "renderBookNavigationV234", "isLegacyGeneratedQuestionCommentV220");
   assert.match(navigation, /back\.setAttribute\("aria-label", originLabel\)/);
   assert.match(navigation, /back\.querySelector\("\.question-toolbar-label-full"\)\.textContent = originLabel/);
-  for (const label of ["この本の学習へ", "この本の成績へ", "アーカイブへ", "問題一覧へ戻る"]) assert.ok(navigation.includes(`"${label}"`), label);
+  for (const label of ["この本の学習へ", "この本の成績へ", "問題一覧へ戻る"]) assert.ok(navigation.includes(`"${label}"`), label);
+  assert.ok(!navigation.includes('"アーカイブへ"'));
   assert.match(html, /getElementById\("menuButton"\)\.addEventListener\("click", \(\) => showMenuV16\(questionOriginViewV234\)\)/);
   assert.match(sourceBar, /id="questionSelect" aria-label="問題を選ぶ"/);
   assert.match(sourceBar, /id="modelSelect" aria-label="正誤判定基準"/);

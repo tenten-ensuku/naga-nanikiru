@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=244">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=244">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=244">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=245">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=245">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=245">
   <title>みん切る｜みんなの何切る問題集</title>
   <link rel="preload" as="image" href="assets/loading-screen-v243.png" fetchpriority="high">
   <meta name="description" content="みん切るは、NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリです。">
@@ -2243,14 +2243,15 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=244">
-  <link rel="stylesheet" href="library-v214.css?v=244">
-  <link rel="stylesheet" href="navigation-v234.css?v=244">
-  <link rel="stylesheet" href="book-builder-v235.css?v=244">
-  <link rel="stylesheet" href="menu-polish-v238.css?v=244">
-  <link rel="stylesheet" href="menu-sections-v239.css?v=244">
-  <link rel="stylesheet" href="workspace-ui-v240.css?v=244">
-  <link rel="stylesheet" href="collection-deletion-v244.css?v=244">
+  <link rel="stylesheet" href="ux-v159.css?v=245">
+  <link rel="stylesheet" href="library-v214.css?v=245">
+  <link rel="stylesheet" href="navigation-v234.css?v=245">
+  <link rel="stylesheet" href="book-builder-v235.css?v=245">
+  <link rel="stylesheet" href="menu-polish-v238.css?v=245">
+  <link rel="stylesheet" href="menu-sections-v239.css?v=245">
+  <link rel="stylesheet" href="workspace-ui-v240.css?v=245">
+  <link rel="stylesheet" href="collection-deletion-v244.css?v=245">
+  <link rel="stylesheet" href="menu-simplify-v245.css?v=245">
 </head>
 <body class="auth-gate-open">
   <section class="startup-screen-v236" id="startupScreenV236" aria-label="みん切るを準備中">
@@ -2272,7 +2273,6 @@
           <button class="menu-nav-button" type="button" data-menu-view="settings" title="アカウント・表示・リアクションの共通設定"><span class="menu-nav-icon" aria-hidden="true">⚙</span><span>マイページ</span></button>
         </nav>
         <button class="menu-nav-button" id="studentHistoryNav" type="button" data-menu-jump="students" title="生徒ごとの学習進捗を見る" hidden><span class="menu-nav-icon" aria-hidden="true">◎</span><span>生徒履歴</span></button>
-        <div class="menu-sidebar-progress" id="menuSidebarProgress" aria-live="polite"></div>
         <div class="account-strip" id="accountStrip">
           <span class="account-status sr-only" id="accountStatus">ログイン状態を確認しています…</span>
         </div>
@@ -2303,7 +2303,6 @@
         <nav class="learning-tabs menu-context-tabs" id="menuContextTabs" aria-label="問題一覧の絞り込み" hidden>
           <button type="button" data-menu-jump="my" aria-pressed="false"><span class="learning-tab-icon" aria-hidden="true">▦</span><span>すべて</span><span class="learning-tab-count" data-context-tab-count="my">0</span></button>
           <button type="button" data-menu-jump="favorites" aria-pressed="false"><span class="learning-tab-icon" aria-hidden="true">☆</span><span>お気に入り</span><span class="learning-tab-count" data-context-tab-count="favorites">0</span></button>
-          <button type="button" data-menu-jump="archive" aria-pressed="false"><span class="learning-tab-icon" aria-hidden="true"><span class="menu-archive-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M4 7.5h16v12H4zM3 4h18v3.5H3zM9 12h6"></path></svg></span></span><span>アーカイブ</span><span class="learning-tab-count" data-context-tab-count="archive">0</span></button>
         </nav>
         <section class="collection-space-panel" id="collectionSpacePanel" aria-live="polite" hidden></section>
         <div class="menu-filter-stack" id="menuFilters">
@@ -2321,7 +2320,6 @@
             <span class="menu-range-count" id="menuRangeCount" aria-live="polite"></span>
             <div class="menu-range-inline-actions" role="group" aria-label="問題集の表示操作">
               <button class="menu-attribute-toggle" id="menuFavoritesToggle" type="button" aria-pressed="false" title="お気に入りに登録した問題だけを表示します">☆ お気に入りのみ</button>
-              <button class="menu-archive-view-button" id="menuArchiveViewButton" type="button" title="完全正解して退避した問題を表示します"><span class="menu-archive-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M4 7.5h16v12H4zM3 4h18v3.5H3zM9 12h6"></path></svg></span><span>アーカイブを見る</span></button>
             </div>
           </section>
           <section class="menu-filter-row menu-genre-row" aria-labelledby="menuGenreHeading">
@@ -2350,7 +2348,7 @@
           </div>
           <div class="menu-active-filters" id="menuActiveFilters" aria-live="polite" hidden></div>
          </div>
-         <div class="menu-list-header" id="menuListHeader" aria-hidden="true"><span title="問題のタイトル">問題</span><span title="直近5回の採点履歴">最近の成績</span><span title="この問題集でのログインユーザー個人のお気に入り">お気に入り</span><span title="直近の結果が◎の問題だけ、ここからアーカイブに移せます">アーカイブ</span></div>
+         <div class="menu-list-header" id="menuListHeader" aria-hidden="true"><span title="問題のタイトル">問題</span><span title="直近5回の採点履歴">最近の成績</span><span title="この問題集でのログインユーザー個人のお気に入り">お気に入り</span></div>
         <div class="menu-grid" id="menuGrid"></div>
         <div class="menu-load-more" id="menuLoadMore" hidden></div>
         <div class="menu-empty" id="menuEmpty" hidden></div>
@@ -2409,7 +2407,6 @@
       </div>
       <div class="answer-actions">
         <button class="next-button" id="nextQuestionBottomButton" type="button" hidden>次の問題へ</button>
-        <button class="archive-next-button" id="archiveQuestionButton" type="button" title="直近の結果が◎の問題を、この問題集のあなた専用アーカイブへ移します" hidden>アーカイブに移す</button>
         <button class="answer-organize-button" id="currentFavoriteButton" type="button" title="この問題集でお気に入りに登録します">☆ お気に入り</button>
         <button class="answer-organize-button" id="currentManageButton" type="button" title="この問題を整理・編集します">整理</button>
       </div>
@@ -2607,22 +2604,22 @@
   </dialog>
 
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=244"></script>
-  <script src="drill-ux-v44.js?v=244"></script>
-  <script src="navigation-v234.js?v=244"></script>
-  <script src="book-builder-v235.js?v=244"></script>
-  <script src="library-order-v215.js?v=244"></script>
-  <script src="library-v214.js?v=244"></script>
-  <script src="naga-generator-v44.js?v=244"></script>
-  <script src="hand-mask-v237.js?v=244"></script>
-  <script src="menu-sections-v239.js?v=244"></script>
-  <script src="workspace-ui-v240.js?v=244"></script>
-  <script src="generation-confirm-v241.js?v=244"></script>
-  <script src="collection-deletion-v244.js?v=244"></script>
+  <script src="supabase-sync-v48.js?v=245"></script>
+  <script src="drill-ux-v44.js?v=245"></script>
+  <script src="navigation-v234.js?v=245"></script>
+  <script src="book-builder-v235.js?v=245"></script>
+  <script src="library-order-v215.js?v=245"></script>
+  <script src="library-v214.js?v=245"></script>
+  <script src="naga-generator-v44.js?v=245"></script>
+  <script src="hand-mask-v237.js?v=245"></script>
+  <script src="menu-sections-v239.js?v=245"></script>
+  <script src="workspace-ui-v240.js?v=245"></script>
+  <script src="generation-confirm-v241.js?v=245"></script>
+  <script src="collection-deletion-v244.js?v=245"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 244;
+    const APP_VERSION = 245;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -2713,7 +2710,6 @@
     const REACTION_DEFINITION_MAP_V209 = new Map([...REACTION_DEFINITIONS_V209, ...MAHJONG_TILE_REACTION_DEFINITIONS_V213].map(definition => [definition.id, definition]));
     const REACTION_STORAGE_KEY_MAP_V209 = new Map([...REACTION_DEFINITIONS_V209, ...MAHJONG_TILE_REACTION_DEFINITIONS_V213].flatMap(definition => [[definition.id, definition], [definition.storageKey, definition]]));
     const state = { selected: null, selectedIndex: null, callDecision: null, revealed: false, answerRecorded: false, answerAttemptId: null, sharedAttemptPromise: null, questionStartedAt: Date.now(), judgeModel: 2, riichi: false, commentComposerOpen: false, commentEditingId: null, commentAttachments: [], comments: THREAD_MESSAGES.map(message => ({ ...message, attachments: [...message.attachments] })), reactionEnabled: false, reactionShareSlug: "", reactionQuestionId: "", reactionSummary: { question: {}, comments: {} }, reactionPending: new Set(), customReactions: [] };
-    let archiveActionStateV161 = { questionKey: "", phase: "idle" };
 
     function tileLabel(tile) {
       if (TILE_NAMES[tile]) return TILE_NAMES[tile];
@@ -4390,7 +4386,6 @@
         collections: { title: "問題集を選ぶ" },
         today: { title: "学習する" },
         my: { title: "問題一覧" },
-        archive: { title: "アーカイブ" },
         generator: { title: "つくる" },
         settings: { title: "マイページ" },
         analysis: { title: "この本の成績" },
@@ -4539,7 +4534,7 @@
         context.querySelector("[data-book-create]").hidden = !hasBook || !generatorDestinationRowsV130().some(row => String(row.share_slug || "") === navigationScopeV234());
         context.querySelector("[data-book-manage]").hidden = !hasBook || !collectionManagementCanManageV197(sharedCollectionV46);
         window.MinkiruMenuV239?.syncActions(context);
-        const originLabel = questionOriginViewV234 === "today" ? "この本の学習へ" : questionOriginViewV234 === "analysis" ? "この本の成績へ" : questionOriginViewV234 === "archive" ? "アーカイブへ" : questionOriginViewV234 === "session" ? "学習結果へ" : "問題一覧へ戻る";
+        const originLabel = questionOriginViewV234 === "today" ? "この本の学習へ" : questionOriginViewV234 === "analysis" ? "この本の成績へ" : questionOriginViewV234 === "session" ? "学習結果へ" : "問題一覧へ戻る";
         const back = document.getElementById("menuButton");
         back.setAttribute("aria-label", originLabel); back.title = originLabel;
         back.querySelector(".question-toolbar-label-full").textContent = originLabel;
@@ -4679,6 +4674,7 @@
       const QUESTION_NOTICE_STORAGE_KEY_V66 = storageKey("question-notices-v1");
         const ANNOUNCEMENT_SEEN_STORAGE_KEY_V65 = storageKey("announcement-seen-v1");
         const APP_ANNOUNCEMENTS_V66 = [
+          { version: 245, date: "2026-09-14", publishedAt: "2026-09-14T21:00:00+09:00", title: "アーカイブとサイドバーの進捗欄を整理しました", body: "アーカイブ機能とPCサイドバーの学習進捗を取り除きました。アーカイブ済みの問題も通常の学習対象になり、習熟度は回答履歴から計算します。お気に入り・回答履歴・学習画面上部の進捗バーはそのまま利用できます。" },
           { version: 244, date: "2026-09-14", publishedAt: "2026-09-14T20:34:00+09:00", title: "問題集を確認して削除できるようにしました", body: "所有者・管理者は「この本の管理」から問題集を削除できます。問題集名・収録問題数・共有利用者への影響を確認してから実行します。一つの巻だけを削除する場合、他の巻は残ります。誤削除に備え、問題や回答履歴・画像のデータは保管します。" },
           { version: 243, date: "2026-09-14", publishedAt: "2026-09-14T20:06:00+09:00", title: "ローディング画面を新しいロゴ画像に", body: "起動中は、白背景に本と麻雀卓を描いたロゴ画像を表示します。スマホや横画面でも画像全体が収まるようにしました。読み込み完了・接続遅延・失敗時の案内は従来どおりです。" },
           { version: 242, date: "2026-09-14", publishedAt: "2026-09-14T04:20:00+09:00", title: "ピエール・垣崎にまのDiscord転送を再開", body: "ピエール問題集と垣崎にま問題集の新着・変更分を、Cloudflare D1・R2へ転送するようにしました。既存問題の手牌・番号は維持し、コメントの伏せ字とアイコン情報も引き継ぎます。容量上限や要確認の局面は保留し、重複登録を防ぎます。不要になった旧サイトの設定引き継ぎ案内は削除しました。" },
@@ -5231,7 +5227,7 @@
       }
 
       function menuRangeMatchesForNotificationV65(question, rangeKey) {
-        if (rangeKey === "archive") return isArchivedV109(question);
+        if (rangeKey === "archive") return true; // Retired range links show normal questions.
         if (rangeKey === "favorites") return isFavoriteV16(question) && isPlayableV16(question);
         const [start, end] = String(rangeKey).split("-").map(Number);
         const number = menuQuestionNumberV60(question);
@@ -6359,11 +6355,9 @@
             if (!userId || String(supabaseSessionV46?.user?.id || "") !== userId) return;
             window.localStorage.setItem(storageKey(`library-order-v215:${userId}`), JSON.stringify(ids));
           },
-          loadSummary: async (slug, parentSlug = "") => {
+          loadSummary: async slug => {
             if (!supabaseSessionV46?.user?.id) throw new Error("Discordログインが必要です。");
-            const scopeKey = `${supabaseSessionV46.user.id}::${parentSlug || slug}`;
-            const archived = userStateV16.collectionPersonal?.[scopeKey]?.archived;
-            return await window.NagaSupabase.loadCollectionLibrarySummary(slug, Array.isArray(archived) ? archived : []);
+            return await window.NagaSupabase.loadCollectionLibrarySummary(slug);
           },
           loadSeries: async slug => {
             if (!supabaseSessionV46?.user?.id) throw new Error("Discordログインが必要です。");
@@ -7093,10 +7087,6 @@
         return userStateV16.trashed.includes(questionKeyV16(question)) && !isHiddenV16(question);
       }
 
-      function isArchivedV109(question) {
-        return personalCollectionStateV131().archived.includes(questionKeyV16(question)) && !isHiddenV16(question);
-      }
-
       function isFavoriteV16(question) {
         return personalCollectionStateV131().favorites.includes(questionKeyV16(question)) && !isHiddenV16(question);
       }
@@ -7104,10 +7094,11 @@
       function isPlayableV16(question) {
         const key = questionKeyV16(question);
         const snoozed = window.DrillUxV44?.isSnoozed?.(userStateV16, key, new Date()) || false;
-        return !isHiddenV16(question) && !isTrashedV16(question) && !isArchivedV109(question) && !snoozed;
+        return !isHiddenV16(question) && !isTrashedV16(question) && !snoozed;
       }
 
-      // アーカイブは出題対象から外れるが、問題集の総数と習熟判定からは外さない。
+      // V245: retired personal archive flags are retained, but no longer exclude
+      // questions or imply an answer/mastery. Collection deletion is separate.
       function isLearningScopeQuestionV184(question) {
         return !isHiddenV16(question) && !isTrashedV16(question);
       }
@@ -7117,30 +7108,11 @@
       }
 
       function isMasteredForLearningV184(question) {
-        return isArchivedV109(question)
-          || Boolean(window.DrillUxV44?.isMasteredByRecentAnswers?.(userStateV16, questionKeyV16(question)));
+        return Boolean(window.DrillUxV44?.isMasteredByRecentAnswers?.(userStateV16, questionKeyV16(question)));
       }
 
       function isAnsweredForLearningV184(question) {
-        return isArchivedV109(question) || Boolean(latestAnswerV44(question));
-      }
-
-      function archiveQuestionV109(question) {
-        const key = questionKeyV16(question);
-        const scoped = personalCollectionStateV131();
-        if (!scoped.archived.includes(key)) scoped.archived.push(key);
-        userStateV16.trashed = (userStateV16.trashed || []).filter(value => value !== key);
-        delete userStateV16.snoozed?.[key];
-      }
-
-      function canArchiveCurrentQuestionV109() {
-        const question = questionsV16[currentQuestionIndexV16];
-        const latest = question ? latestAnswerV44(question) : null;
-        return Boolean(canUsePersonalCollectionStateV131() && state.revealed && isPerfectScoreMarkV159(latest?.scoreMark) && !isArchivedV109(question));
-      }
-
-      function canArchiveFromMenuV131(question) {
-        return Boolean(canUsePersonalCollectionStateV131() && isPerfectScoreMarkV159(latestAnswerV44(question)?.scoreMark) && !isArchivedV109(question));
+        return Boolean(latestAnswerV44(question));
       }
 
       function updateUserStateV16(mutator) {
@@ -7310,7 +7282,7 @@
       }
 
       function todayQueueCandidatesV172() {
-        const queue = window.DrillUxV44?.buildQueue?.({ questions: questionsV16, state: userStateV16, archivedKeys: personalCollectionStateV131().archived, mode: "today", limit: 10, now: new Date() });
+        const queue = window.DrillUxV44?.buildQueue?.({ questions: questionsV16, state: userStateV16, mode: "today", limit: 10, now: new Date() });
         return (Array.isArray(queue) ? queue : []).filter(question => question && isPlayableV16(question)).slice(0, 10);
       }
 
@@ -7894,7 +7866,6 @@
         const commentsPanel = document.getElementById("commentsPanel");
         const nextButton = document.getElementById("nextQuestionButton");
         const nextBottomButton = document.getElementById("nextQuestionBottomButton");
-        const archiveButton = document.getElementById("archiveQuestionButton");
         const setNextButtonState = (hidden, text = "次の問題へ") => {
           [nextButton, nextBottomButton].forEach(button => {
             if (!button) return;
@@ -7902,39 +7873,12 @@
             button.textContent = text;
           });
         };
-        const setArchiveButtonState = () => {
-          if (!archiveButton) return;
-          const question = questionsV16[currentQuestionIndexV16];
-          const questionKey = question ? questionKeyV16(question) : "";
-          const actionState = archiveActionStateV161.questionKey === questionKey ? archiveActionStateV161.phase : "idle";
-          const keepActionSlot = ["saving", "archived", "error"].includes(actionState);
-          const canArchive = canArchiveCurrentQuestionV109();
-          archiveButton.hidden = !(canArchive || keepActionSlot);
-          archiveButton.disabled = actionState === "saving" || actionState === "archived";
-          archiveButton.dataset.archiveState = actionState;
-          archiveButton.setAttribute("aria-busy", String(actionState === "saving"));
-          archiveButton.textContent = actionState === "saving"
-            ? "保存中…"
-            : actionState === "archived"
-            ? "アーカイブ済み"
-            : actionState === "error"
-            ? "再試行"
-            : "アーカイブに移す";
-          archiveButton.title = actionState === "archived"
-            ? "この問題はアーカイブ済みです。次の問題へ進めます"
-            : actionState === "saving"
-            ? "アーカイブ状態を保存しています"
-            : actionState === "error"
-            ? "保存に失敗しました。もう一度お試しください"
-            : "直近の結果が◎の問題を、この問題集のあなた専用アーカイブへ移します";
-        };
         renderAnswerConfirmationV41();
         if (!state.revealed) {
           clearQuestionPollStatsV110();
           answerStrip.hidden = true;
           commentsPanel.hidden = true;
           setNextButtonState(true);
-          setArchiveButtonState();
           renderChoiceScoreV16();
           return;
         }
@@ -7966,7 +7910,6 @@
           answerStrip.hidden = false;
           commentsPanel.hidden = false;
           setNextButtonState(false, nextButtonLabelV44());
-          setArchiveButtonState();
           renderComments();
           void refreshQuestionPollStatsV110();
           return;
@@ -7990,7 +7933,6 @@
         answerStrip.hidden = false;
         commentsPanel.hidden = false;
         setNextButtonState(false, nextButtonLabelV44());
-        setArchiveButtonState();
         renderComments();
         void refreshQuestionPollStatsV110();
       }
@@ -8349,7 +8291,7 @@
           return;
         }
         const unansweredOnly = mode === "unanswered" || mode === "range-unanswered";
-        const requested = explicitQuestions || window.DrillUxV44?.buildQueue?.({ questions: questionsV16, state: userStateV16, archivedKeys: personalCollectionStateV131().archived, mode, limit: 10, now: new Date() }) || questionsV16.filter(isPlayableV16).slice(0, 10);
+        const requested = explicitQuestions || window.DrillUxV44?.buildQueue?.({ questions: questionsV16, state: userStateV16, mode, limit: 10, now: new Date() }) || questionsV16.filter(isPlayableV16).slice(0, 10);
         const built = unansweredOnly ? requested.filter(question => isPlayableV16(question) && !latestAnswerV44(question)) : requested;
         const questionKeys = normalizedQueueKeysV44(built).slice(0, 10);
         if (!questionKeys.length) {
@@ -8438,47 +8380,10 @@
         else advanceQuestionV44();
       }
 
-      function archiveCurrentQuestionV110() {
-        const question = questionsV16[currentQuestionIndexV16];
-        if (!question || !canArchiveCurrentQuestionV109()) return;
-        const questionKey = questionKeyV16(question);
-        if (archiveActionStateV161.questionKey === questionKey && ["saving", "archived"].includes(archiveActionStateV161.phase)) return;
-        const scoped = personalCollectionStateV131();
-        const previousArchived = [...scoped.archived];
-        const previousTrashed = [...(userStateV16.trashed || [])];
-        const previousSnoozed = userStateV16.snoozed?.[questionKey];
-        archiveActionStateV161 = { questionKey, phase: "saving" };
-        const button = document.getElementById("archiveQuestionButton");
-        if (button) {
-          button.hidden = false;
-          button.disabled = true;
-          button.dataset.archiveState = "saving";
-          button.setAttribute("aria-busy", "true");
-          button.textContent = "保存中…";
-        }
-        archiveQuestionV109(question);
-        if (!saveUserStateV16()) {
-          scoped.archived = previousArchived;
-          userStateV16.trashed = previousTrashed;
-          if (previousSnoozed === undefined) {
-            delete userStateV16.snoozed?.[questionKey];
-          } else {
-            userStateV16.snoozed ||= {};
-            userStateV16.snoozed[questionKey] = previousSnoozed;
-          }
-          archiveActionStateV161 = { questionKey, phase: "error" };
-          renderAnswerV16();
-          return;
-        }
-        archiveActionStateV161 = { questionKey, phase: "archived" };
-        renderAnswerV16();
-      }
-
       function applyQuestionV16(question, index = questionsV16.indexOf(question)) {
         currentQuestionIndexV16 = index >= 0 ? index : 0;
         for (const key of Object.keys(SCENE)) delete SCENE[key];
         Object.assign(SCENE, question);
-        archiveActionStateV161 = { questionKey: questionKeyV16(question), phase: "idle" };
         state.selected = null;
         state.selectedIndex = null;
         state.callDecision = null;
@@ -8543,9 +8448,9 @@
       function showMenuV16(view = menuViewV16, { historyMode = "push", restorePosition = true } = {}) {
         captureNavigationV234();
         if (menuViewV16 === "generator") persistGeneratorFormDraftV157();
-        const requestedView = view === "favorites" ? "my" : view;
+        const requestedView = ["favorites", "archive"].includes(view) ? "my" : view;
         if (view === "favorites") menuFavoritesOnlyV137 = true;
-        const needsCollection = ["today", "my", "archive", "analysis", "book-settings"].includes(requestedView);
+        const needsCollection = ["today", "my", "analysis", "book-settings"].includes(requestedView);
         const effectiveView = needsCollection && (!sharedCollectionV46 || isSeriesParentCollectionV180(sharedCollectionV46)) && window.NagaSupabase?.configured ? "collections" : requestedView;
         menuViewV16 = MENU_VIEW_COPY_V16[effectiveView] ? effectiveView : "my";
         if (menuViewV16 === "book-settings" && !collectionManagementCanManageV197(sharedCollectionV46)) menuViewV16 = "today";
@@ -8643,12 +8548,11 @@
       function renderMenuNavigationV16() {
         syncBasicSequenceThemeV163();
         renderActiveCollectionContextV165();
-        const learningMetrics = syncLearningMilestoneSnapshotV172().current;
+        syncLearningMilestoneSnapshotV172();
         const learningQuestions = learningScopeQuestionsV184();
         const counts = {
           collections: collectionCatalogOptionsV100().length,
-          my: learningQuestions.length,
-          archive: questionsV16.filter(question => isArchivedV109(question)).length
+          my: learningQuestions.length
         };
         document.querySelectorAll("[data-menu-view]").forEach(button => {
           const active = button.dataset.menuView === navigationV234.globalView(menuViewV16);
@@ -8663,7 +8567,7 @@
           badge.textContent = String(counts[badge.dataset.menuCount] ?? 0);
         });
         const summary = document.getElementById("menuSummary");
-        const listView = ["my", "archive"].includes(menuViewV16);
+        const listView = (menuViewV16 === "my");
         const rangeLearningQuestions = menuLearningSummaryQuestionsV184();
         const rangeAnswered = rangeLearningQuestions.filter(isAnsweredForLearningV184);
         const rangeUnanswered = rangeLearningQuestions.filter(question => !isAnsweredForLearningV184(question)).length;
@@ -8675,20 +8579,18 @@
         const contextTabs = document.getElementById("menuContextTabs");
         if (contextTabs) {
           const contextTabsVisible = Boolean(sharedCollectionV46)
-            && ["my", "archive"].includes(menuViewV16)
+            && (menuViewV16 === "my")
             && !isSeriesParentCollectionV180(sharedCollectionV46);
           contextTabs.hidden = !contextTabsVisible;
           const contextCounts = {
             my: partialAll ? String(sharedTotal) : String(learningQuestions.length),
-            favorites: partialAll ? "…" : String(learningQuestions.filter(isFavoriteV16).length),
-            archive: String(counts.archive)
+            favorites: partialAll ? "…" : String(learningQuestions.filter(isFavoriteV16).length)
           };
           contextTabs.querySelectorAll("[data-menu-jump]").forEach(button => {
             const target = String(button.dataset.menuJump || "my");
             const active = contextTabsVisible && (
               target === "my" && menuViewV16 === "my" && !menuFavoritesOnlyV137
               || target === "favorites" && menuViewV16 === "my" && menuFavoritesOnlyV137
-              || target === "archive" && menuViewV16 === "archive"
             );
             button.classList.toggle("is-active", active);
             button.setAttribute("aria-pressed", String(active));
@@ -8712,7 +8614,6 @@
         if (rangeCount) rangeCount.textContent = partialAll ? `全${sharedTotal}問` : menuRangeV60 === "all" ? `全${rangeLearningQuestions.length}問` : `${rangeLearningQuestions.length}問`;
         const allLearningQuestions = learningScopeQuestionsV184();
         const allAnswered = allLearningQuestions.filter(isAnsweredForLearningV184).length;
-        const progress = allLearningQuestions.length ? Math.round(allAnswered / allLearningQuestions.length * 100) : 0;
         const progressPending = sharedTotal !== null
           && !sharedQuestionPagingV177.allLoaded
           && sharedTotal > allLearningQuestions.length;
@@ -8726,9 +8627,6 @@
           summary.hidden = false;
           summary.innerHTML = `<div class="learning-header-progress" aria-label="${escapeHtml(collectionLabel)}の回答進捗"><div class="learning-header-progress-copy"><span>回答済み</span><strong>${progressAnswered}<small> / ${progressTotal}問</small></strong></div><span class="learning-header-progress-track" aria-hidden="true"><span style="width:${progressPercent}%"></span></span><small>未回答 ${progressUnanswered}問</small></div>`;
         }
-        const masteredCount = learningMetrics.mastered;
-        const mastery = allLearningQuestions.length ? Math.round(masteredCount / allLearningQuestions.length * 100) : 0;
-        document.getElementById("menuSidebarProgress").innerHTML = `<span class="menu-sidebar-progress-title">学習の進捗</span><div class="menu-progress-metric"><div class="menu-progress-metric-head"><span class="menu-progress-metric-label">回答率</span><strong class="menu-progress-metric-value">${progress}%</strong></div><span class="menu-progress-metric-note">${allAnswered} / ${allLearningQuestions.length}問を回答済み</span><span class="menu-sidebar-progress-track" aria-hidden="true"><span class="menu-sidebar-progress-fill" style="width:${progress}%"></span></span></div><div class="menu-progress-metric menu-progress-mastery"><div class="menu-progress-metric-head"><span class="menu-progress-metric-label">習熟度</span><strong class="menu-progress-metric-value">${mastery}%</strong></div><span class="menu-progress-metric-note">${masteredCount} / ${allLearningQuestions.length}問が習熟（直近1回が〇以上またはアーカイブ）</span><span class="menu-sidebar-progress-track" aria-hidden="true"><span class="menu-sidebar-progress-fill is-mastery" style="width:${mastery}%"></span></span></div>`;
         const copy = MENU_VIEW_COPY_V16[menuViewV16];
         const menuOrderSelect = document.getElementById("menuOrderSelect");
         const isBasicSequence = isBasicSequenceCollectionV163();
@@ -8745,7 +8643,7 @@
           resumeButton.hidden = !resume;
           if (resume) document.getElementById("resumeSessionNote").textContent = `${Number(resume.cursor || 0) + 1} / ${resume.questionKeys.length} から再開`;
         }
-        document.getElementById("menuFilters").hidden = menuViewV16 !== "archive";
+        document.getElementById("menuFilters").hidden = true;
         document.getElementById("menuListHeader").hidden = !listView;
         document.getElementById("menuListHeader").setAttribute("aria-hidden", String(!listView));
         renderMenuRangeControlsV137();
@@ -8826,7 +8724,7 @@
         if (typeof filterQuestions !== "function") return null;
         const statuses = menuStatusFiltersV92.length ? menuStatusFiltersV92 : ["all"];
         const allowedKeys = new Set();
-        const options = { questions: questionsV16, state: userStateV16, masteredKeys: personalCollectionStateV131().archived, view: ["my", "archive"].includes(menuViewV16) ? "all" : menuViewV16, query: menuSearchV44, type: menuTypeV44, now: new Date() };
+        const options = { questions: questionsV16, state: userStateV16, view: (menuViewV16 === "my") ? "all" : menuViewV16, query: menuSearchV44, type: menuTypeV44, now: new Date() };
         statuses.forEach(status => {
           const filtered = filterQuestions({ ...options, status });
           if (Array.isArray(filtered)) filtered.forEach(question => allowedKeys.add(questionKeyV16(question)));
@@ -8839,16 +8737,12 @@
         const sourceQuestions = (Array.isArray(filteredByHelper) ? filteredByHelper : questionsV16).filter(isLearningScopeQuestionV184);
         return sourceQuestions
           .filter(menuRangeMatchesV60)
-          .filter(question => menuViewV16 !== "archive" || isArchivedV109(question))
           .filter(question => !menuFavoritesOnlyV137 || isFavoriteV16(question));
       }
 
       function menuFilteredQuestionsV80() {
         const filteredByHelper = menuStatusFilteredQuestionsV92();
-        const sourceQuestions = (Array.isArray(filteredByHelper) ? filteredByHelper : questionsV16).filter(question => {
-          if (menuViewV16 === "archive") return isArchivedV109(question);
-          return isPlayableV16(question);
-        });
+        const sourceQuestions = (Array.isArray(filteredByHelper) ? filteredByHelper : questionsV16).filter(isPlayableV16);
         return sourceQuestions.filter(menuRangeMatchesV60).filter(question => !menuFavoritesOnlyV137 || isFavoriteV16(question));
       }
 
@@ -8945,8 +8839,7 @@
         const previousButton = document.getElementById("menuRangePreviousButton");
         const nextButton = document.getElementById("menuRangeNextButton");
         const favoriteButton = document.getElementById("menuFavoritesToggle");
-        const archiveButton = document.getElementById("menuArchiveViewButton");
-        if (!select || !allButton || !previousButton || !nextButton || !favoriteButton || !archiveButton) return;
+        if (!select || !allButton || !previousButton || !nextButton || !favoriteButton) return;
         const options = menuNumericRangeOptionsV137();
         const selectedIndex = options.findIndex(option => option.key === menuRangeV60);
         const isAll = menuRangeV60 === "all" || selectedIndex < 0;
@@ -8961,10 +8854,6 @@
         favoriteButton.classList.toggle("is-active", menuFavoritesOnlyV137);
         favoriteButton.setAttribute("aria-pressed", String(menuFavoritesOnlyV137));
         favoriteButton.textContent = menuFavoritesOnlyV137 ? "★ お気に入りのみ" : "☆ お気に入りのみ";
-        const archiveActive = menuViewV16 === "archive";
-        archiveButton.classList.toggle("is-active", archiveActive);
-        archiveButton.innerHTML = archiveActive ? "問題一覧に戻る" : `${menuArchiveIconV109()}<span>アーカイブを見る</span>`;
-        archiveButton.title = archiveActive ? "通常の問題一覧へ戻ります" : "完全正解して退避した問題を表示します";
       }
 
       function renderMenuTypeFiltersV83() {
@@ -8983,7 +8872,6 @@
 
       function menuActiveFilterItemsV138() {
         const items = [];
-        if (menuViewV16 === "archive") items.push({ key: "archive", label: "アーカイブ表示中" });
         if (menuRangeV60 !== "all") {
           const option = menuNumericRangeOptionsV137().find(item => item.key === menuRangeV60);
           if (option) items.push({ key: "range", label: `範囲 ${option.label}` });
@@ -9001,7 +8889,7 @@
         const panel = document.getElementById("menuActiveFilters");
         if (!panel) return;
         const items = menuActiveFilterItemsV138();
-        const filterView = menuViewV16 === "my" || menuViewV16 === "archive";
+        const filterView = menuViewV16 === "my";
         panel.hidden = !filterView || items.length === 0;
         document.querySelectorAll("[data-menu-status]").forEach(input => {
           input.checked = menuStatusFiltersV92.includes(input.dataset.menuStatus);
@@ -9015,10 +8903,6 @@
       }
 
       function clearMenuFilterV138(filterKey) {
-        if (filterKey === "archive") {
-          showMenuV16("my");
-          return;
-        }
         if (filterKey === "range") menuRangeV60 = "all";
         if (filterKey === "type") menuTypeV44 = "all";
         if (filterKey === "favorites") menuFavoritesOnlyV137 = false;
@@ -9035,7 +8919,6 @@
         menuTypeV44 = "all";
         menuStatusFiltersV92 = [];
         menuFavoritesOnlyV137 = false;
-        if (menuViewV16 === "archive") menuViewV16 = "my";
         resetMenuRenderLimitV119();
         renderMenuCardsV16();
       }
@@ -9066,7 +8949,7 @@
       }
 
       function renderAnalysisViewV44() {
-        const stats = window.DrillUxV44?.analytics?.({ scope: "collection", questions: questionsV16, state: userStateV16, masteredKeys: personalCollectionStateV131().archived, now: new Date() }) || {};
+        const stats = window.DrillUxV44?.analytics?.({ scope: "collection", questions: questionsV16, state: userStateV16, now: new Date() }) || {};
         const attempts = stats.totalAttempts ?? 0;
         const averageSeconds = attempts ? ((stats.averageResponseTimeMs ?? 0) / 1000).toFixed(1) : "0.0";
         const safeCount = (stats.scoreCounts?.["◎"] || 0) + (stats.scoreCounts?.["〇"] || 0);
@@ -9267,10 +9150,6 @@
 
       function menuTrashIconV63() {
         return `<span class="menu-trash-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M8 7v12m4-12v12m4-12v12M5 7h14M9 4h6l1 3H8l1-3Zm-2 3 1 14h8l1-14"></path></svg></span>`;
-      }
-
-      function menuArchiveIconV109() {
-        return `<span class="menu-archive-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M4 7.5h16v12H4zM3 4h18v3.5H3zM9 12h6"></path></svg></span>`;
       }
 
       function resetMenuRenderLimitV119() {
@@ -9488,18 +9367,8 @@
                   }).join("")
                 : `<span class="learning-history-empty">—</span>`;
               const favorite = isFavoriteV16(question);
-              const archived = isArchivedV109(question);
-              const archiveEligible = canArchiveFromMenuV131(question);
               const favoriteLabel = favorite ? `問題${question.number}のお気に入りを解除` : `問題${question.number}をお気に入りに追加`;
-              const archiveLabel = archived
-                ? `問題${question.number}をアーカイブから戻す`
-                : archiveEligible
-                ? `問題${question.number}をアーカイブに追加`
-                : `問題${question.number}は直近の回答が◎のときにアーカイブへ追加できます`;
-              const archiveAction = archived
-                ? `<button class="learning-recent-action is-archived" type="button" data-menu-action="unarchive" data-question-index="${index}" aria-label="${escapeHtml(archiveLabel)}" title="${escapeHtml(archiveLabel)}">${menuArchiveIconV109()}<span class="sr-only">アーカイブ済み</span></button>`
-                : `<button class="learning-recent-action${archiveEligible ? "" : " is-unavailable"}" type="button" data-menu-action="archive" data-question-index="${index}" aria-label="${escapeHtml(archiveLabel)}" title="${escapeHtml(archiveLabel)}"${archiveEligible ? "" : " disabled aria-disabled=\"true\""}>${menuArchiveIconV109()}<span class="sr-only">アーカイブに追加</span></button>`;
-              return `<article class="today-recent-row learning-recent-row"><button class="learning-recent-open" type="button" data-question-index="${index}" title="${escapeHtml(question.title || `問題${question.number}`)}を開く"><span class="learning-recent-question"><strong>${escapeHtml(question.title || `問題${question.number}`)}</strong><small>${escapeHtml(questionTypeV44(question))}</small></span><span class="learning-history-marks" aria-label="${escapeHtml(historyLabel)}" title="${escapeHtml(historyLabel)}">${history}</span><span class="today-recent-arrow" aria-hidden="true">›</span></button><span class="learning-recent-actions" role="group" aria-label="問題${escapeHtml(String(question.number))}の整理"><button class="learning-recent-action${favorite ? " is-active" : ""}" type="button" data-menu-action="favorite" data-question-index="${index}" aria-pressed="${favorite}" aria-label="${escapeHtml(favoriteLabel)}" title="${escapeHtml(favoriteLabel)}">${favorite ? "★" : "☆"}<span class="sr-only">${escapeHtml(favoriteLabel)}</span></button>${archiveAction}</span></article>`;
+              return `<article class="today-recent-row learning-recent-row"><button class="learning-recent-open" type="button" data-question-index="${index}" title="${escapeHtml(question.title || `問題${question.number}`)}を開く"><span class="learning-recent-question"><strong>${escapeHtml(question.title || `問題${question.number}`)}</strong><small>${escapeHtml(questionTypeV44(question))}</small></span><span class="learning-history-marks" aria-label="${escapeHtml(historyLabel)}" title="${escapeHtml(historyLabel)}">${history}</span><span class="today-recent-arrow" aria-hidden="true">›</span></button><span class="learning-recent-actions" role="group" aria-label="問題${escapeHtml(String(question.number))}の整理"><button class="learning-recent-action${favorite ? " is-active" : ""}" type="button" data-menu-action="favorite" data-question-index="${index}" aria-pressed="${favorite}" aria-label="${escapeHtml(favoriteLabel)}" title="${escapeHtml(favoriteLabel)}">${favorite ? "★" : "☆"}<span class="sr-only">${escapeHtml(favoriteLabel)}</span></button></span></article>`;
             }).join("")
           : `<p class="today-empty-note">この巻の問題を解くと、ここに直近の回答履歴が表示されます。</p>`;
         const resumeMarkup = session
@@ -9512,7 +9381,7 @@
           renderLearningActionButtonV194({ mode: "weak", title: "苦手克服", count: displayedWeak, description: "直近×・△を中心に復習", tone: "weak", disabled: actionDisabled(Number(displayedWeak)) }),
           `<div class="learning-all-action">${renderLearningActionButtonV194({ mode: "all", title: "全問", count: displayedAll, description: "選択した条件で学習", tone: "all", disabled: actionDisabled(Number(displayedAll)) })}<details class="learning-custom-settings" id="learningCustomSettings"><summary aria-label="全問を解くの設定"><span><span class="learning-settings-icon" aria-hidden="true">⚙</span>条件設定</span><span data-learning-settings-summary>${escapeHtml(learningSettingsSummaryV189())}</span></summary><div class="learning-custom-settings-body"><fieldset class="learning-setting-group"><legend>出題順 <small>1つ選択</small></legend><div class="learning-check-grid learning-check-grid-order"><label class="learning-check"><input type="checkbox" data-learning-setting="order" data-learning-value="sequential"${learningOrderV189 === "sequential" ? " checked" : ""}><span>順番${isBasicSequence ? "（推奨）" : ""}</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="order" data-learning-value="random"${learningOrderV189 === "random" ? " checked" : ""}><span>ランダム</span></label></div></fieldset><fieldset class="learning-setting-group"><legend>ジャンル <small>複数選択可</small></legend><div class="learning-check-grid"><label class="learning-check"><input type="checkbox" data-learning-setting="genre" data-learning-value="discard"${learningGenresV189.has("discard") ? " checked" : ""}><span>打牌判断</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="genre" data-learning-value="riichi"${learningGenresV189.has("riichi") ? " checked" : ""}><span>リーチ判断</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="genre" data-learning-value="call"${learningGenresV189.has("call") ? " checked" : ""}><span>副露判断</span></label></div></fieldset><fieldset class="learning-setting-group"><legend>直近履歴 <small>複数選択可</small></legend><div class="learning-check-grid learning-check-grid-history"><label class="learning-check"><input type="checkbox" data-learning-setting="history" data-learning-value="unanswered"${learningHistoryFiltersV189.has("unanswered") ? " checked" : ""}><span>未回答</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="history" data-learning-value="×"${learningHistoryFiltersV189.has("×") ? " checked" : ""}><span class="learning-status-mark is-miss">×</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="history" data-learning-value="△"${learningHistoryFiltersV189.has("△") ? " checked" : ""}><span class="learning-status-mark is-review">△</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="history" data-learning-value="〇"${learningHistoryFiltersV189.has("〇") ? " checked" : ""}><span class="learning-status-mark is-safe">〇</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="history" data-learning-value="◎"${learningHistoryFiltersV189.has("◎") ? " checked" : ""}><span class="learning-status-mark is-excellent">◎</span></label></div></fieldset><p>この設定は「全問を解く」にのみ適用されます。未回答を解く・苦手克服は固定ルールです。</p></div></details></div>`
         ].join("");
-        return `<section class="learning-dashboard today-dashboard" aria-labelledby="menuTitle"><nav class="learning-tabs" aria-label="学習メニュー"><button type="button" data-menu-jump="my"><span class="learning-tab-icon" aria-hidden="true">▦</span><span>問題一覧</span><span class="learning-tab-count">${displayedTotal}</span></button><button type="button" data-menu-jump="favorites"><span class="learning-tab-icon" aria-hidden="true">☆</span><span>お気に入り</span><span class="learning-tab-count">${displayedFavorites}</span></button><button type="button" data-menu-jump="archive"><span class="learning-tab-icon" aria-hidden="true">${menuArchiveIconV109()}</span><span>アーカイブ</span></button></nav>${resumeMarkup}<section class="learning-action-grid" aria-label="学習を始める">${actionMarkup}</section><section class="today-recent learning-recent-section"><div class="today-section-heading"><h3>直近回答履歴</h3><button type="button" data-menu-jump="my">問題一覧を見る <span aria-hidden="true">→</span></button></div><div class="today-recent-list">${recentMarkup}</div></section></section>`;
+        return `<section class="learning-dashboard today-dashboard" aria-labelledby="menuTitle"><nav class="learning-tabs" aria-label="学習メニュー"><button type="button" data-menu-jump="my"><span class="learning-tab-icon" aria-hidden="true">▦</span><span>問題一覧</span><span class="learning-tab-count">${displayedTotal}</span></button><button type="button" data-menu-jump="favorites"><span class="learning-tab-icon" aria-hidden="true">☆</span><span>お気に入り</span><span class="learning-tab-count">${displayedFavorites}</span></button></nav>${resumeMarkup}<section class="learning-action-grid" aria-label="学習を始める">${actionMarkup}</section><section class="today-recent learning-recent-section"><div class="today-section-heading"><h3>直近回答履歴</h3><button type="button" data-menu-jump="my">問題一覧を見る <span aria-hidden="true">→</span></button></div><div class="today-recent-list">${recentMarkup}</div></section></section>`;
       }
 
       // 旧セッションや外部リンクとの互換性を保つため、内部名だけ残す。
@@ -9592,7 +9461,7 @@
           return;
         }
         grid.style.display = "grid";
-        const isPagedSharedList = sharedQuestionPagingIsCurrentV177() && ["my", "archive"].includes(menuViewV16);
+        const isPagedSharedList = sharedQuestionPagingIsCurrentV177() && (menuViewV16 === "my");
         if (isPagedSharedList && !questionsV16.length && (sharedQuestionPagingV177.loading || sharedQuestionPagingV177.allRequest || sharedQuestionPagingV177.error)) {
           empty.hidden = true;
           grid.innerHTML = `<div class="menu-placeholder" role="status"><strong>${sharedQuestionPagingV177.error ? "問題範囲を読み込めませんでした" : "問題範囲を読み込んでいます"}</strong>${escapeHtml(sharedQuestionPagingV177.error || "100問単位で必要な問題だけを準備しています。")}</div>`;
@@ -9607,7 +9476,7 @@
         }
         const entries = menuFilteredQuestionsV80().map(question => ({ question, index: questionIndexByKeyV44(questionKeyV16(question)) })).filter(({ index }) => index >= 0).sort((left, right) => menuQuestionSortKeyV99(left.question) - menuQuestionSortKeyV99(right.question) || left.index - right.index);
         empty.hidden = entries.length > 0;
-        empty.textContent = menuViewV16 === "archive" ? "アーカイブした問題はまだありません。" : menuFavoritesOnlyV137 ? "お気に入り登録した問題はまだありません。" : "出題できる問題がありません。";
+        empty.textContent = menuFavoritesOnlyV137 ? "お気に入り登録した問題はまだありません。" : "出題できる問題がありません。";
         const visibleEntries = entries.length > MENU_RENDER_THRESHOLD_V119 ? entries.slice(0, menuRenderLimitV119) : entries;
         renderMenuLoadMoreV119(entries.length, visibleEntries.length);
         grid.innerHTML = visibleEntries.map(({ question, index }) => {
@@ -9620,12 +9489,7 @@
           const favoriteLabel = favorite ? `問題${question.number}のお気に入りを解除` : `問題${question.number}をお気に入りに追加`;
           const commentNoticeCount = commentNotificationCountForQuestionV65(question);
           const commentNotice = notificationBadgeMarkupV65(commentNoticeCount, `問題${question.number}の新着コメント${commentNoticeCount}件`, `data-menu-question-notification="${escapeHtml(questionKeyV16(question))}"`);
-          const archiveMarkup = menuViewV16 === "archive"
-            ? `<button class="menu-card-icon-action is-archived" type="button" data-menu-action="unarchive" data-question-index="${index}" aria-label="問題${question.number}をアーカイブから戻す" title="アーカイブから戻す">${menuArchiveIconV109()}</button>`
-            : canArchiveFromMenuV131(question)
-            ? `<button class="menu-card-icon-action is-archived" type="button" data-menu-action="archive" data-question-index="${index}" aria-label="問題${question.number}をアーカイブに移す" title="直近の結果が◎です。問題集ごとのアーカイブに移します">${menuArchiveIconV109()}</button>`
-            : `<span class="menu-card-icon-placeholder" aria-hidden="true"></span>`;
-          return `<article class="menu-card"><button class="menu-card-open" type="button" data-question-index="${index}" title="問題${question.number}（${escapeHtml(typeMetadata)}）を開く"><span class="menu-card-heading"><span class="menu-card-title">${title}</span><span class="menu-card-meta">${escapeHtml(typeMetadata)}</span><span class="menu-card-notification">${commentNotice}</span></span></button><span class="menu-card-latest${scores.length ? "" : " is-empty"}" aria-label="${escapeHtml(historyLabel)}" title="${escapeHtml(historyLabel)}">${history}</span><button class="menu-card-icon-action${favorite ? " is-active" : ""}" type="button" data-menu-action="favorite" data-question-index="${index}" aria-pressed="${favorite}" aria-label="${escapeHtml(favoriteLabel)}" title="${escapeHtml(favoriteLabel)}">${favorite ? "★" : "☆"}</button>${archiveMarkup}</article>`;
+          return `<article class="menu-card"><button class="menu-card-open" type="button" data-question-index="${index}" title="問題${question.number}（${escapeHtml(typeMetadata)}）を開く"><span class="menu-card-heading"><span class="menu-card-title">${title}</span><span class="menu-card-meta">${escapeHtml(typeMetadata)}</span><span class="menu-card-notification">${commentNotice}</span></span></button><span class="menu-card-latest${scores.length ? "" : " is-empty"}" aria-label="${escapeHtml(historyLabel)}" title="${escapeHtml(historyLabel)}">${history}</span><button class="menu-card-icon-action${favorite ? " is-active" : ""}" type="button" data-menu-action="favorite" data-question-index="${index}" aria-pressed="${favorite}" aria-label="${escapeHtml(favoriteLabel)}" title="${escapeHtml(favoriteLabel)}">${favorite ? "★" : "☆"}</button></article>`;
         }).join("");
       }
 
@@ -10375,7 +10239,7 @@
             menuFavoritesOnlyV137 = true;
             showMenuV16("my");
           } else {
-            if (["my", "archive"].includes(target)) menuFavoritesOnlyV137 = false;
+            if (target === "my") menuFavoritesOnlyV137 = false;
             showMenuV16(target);
           }
           return;
@@ -10415,19 +10279,6 @@
           if (action === "favorite") updatePersonalCollectionStateV131(scoped => {
             const key = questionKeyV16(question);
             scoped.favorites = scoped.favorites.includes(key) ? scoped.favorites.filter(value => value !== key) : [...scoped.favorites, key];
-            renderMenuCardsV16();
-          });
-          if (action === "archive") {
-            if (!canArchiveFromMenuV131(question)) return;
-            updatePersonalCollectionStateV131(scoped => {
-              const key = questionKeyV16(question);
-              if (!scoped.archived.includes(key)) scoped.archived.push(key);
-              renderMenuCardsV16();
-            });
-          }
-          if (action === "unarchive") updatePersonalCollectionStateV131(scoped => {
-            const key = questionKeyV16(question);
-            scoped.archived = scoped.archived.filter(value => value !== key);
             renderMenuCardsV16();
           });
           if (action === "trash" && !isSharedQuestionV47(question)) updateUserStateV16(userState => {
@@ -11022,8 +10873,7 @@
       function scheduleSharedQuestionIndexPreparationV177() {
         if (!sharedQuestionPagingV177.shareSlug || sharedQuestionPagingV177.allLoaded) return;
         const knownTotal = sharedQuestionKnownTotalV177();
-        const needsAll = menuViewV16 === "archive"
-          || (menuViewV16 === "my" && menuRangeV60 === "all")
+        const needsAll = (menuViewV16 === "my" && menuRangeV60 === "all")
           || (menuViewV16 === "today" && Number.isFinite(knownTotal) && knownTotal <= 200);
         if (needsAll) void ensureSharedQuestionIndexAllV177();
       }
@@ -11267,11 +11117,9 @@
           resetMenuRenderLimitV119();
           renderMenuCardsV16();
         });
-        document.getElementById("menuArchiveViewButton").addEventListener("click", () => showMenuV16(menuViewV16 === "archive" ? "my" : "archive"));
         bindImportQuestionDialogV115();
         document.getElementById("nextQuestionButton").addEventListener("click", advanceQuestionV44);
         document.getElementById("nextQuestionBottomButton").addEventListener("click", advanceQuestionV44);
-        document.getElementById("archiveQuestionButton").addEventListener("click", archiveCurrentQuestionV110);
         document.getElementById("currentFavoriteButton").addEventListener("click", () => {
           const question = questionsV16[currentQuestionIndexV16];
           if (!question) return;
@@ -11300,7 +11148,7 @@
         window.addEventListener("resize", applyDesktopLayoutV70, { passive: true });
         window.addEventListener("popstate", () => { void handleCollectionHistoryV214(); });
         const initialRouteV234 = window.history.state?.minkiruNavigationV234;
-        const initialViewV234 = new URL(window.location.href).searchParams.get("view");
+        const initialViewV234 = navigationV234.normalizeView(new URL(window.location.href).searchParams.get("view"));
         if (!requestedExistingQuestionId) {
           if (navigationMemoryV234.accepts(initialRouteV234)) await restoreNavigationRouteV234(initialRouteV234);
           else if (initialViewV234 && MENU_VIEW_COPY_V16[initialViewV234]) showMenuV16(initialViewV234, { historyMode: "none" });

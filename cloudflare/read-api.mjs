@@ -573,9 +573,7 @@ async function collectionLibrarySummary(db, actor, args) {
   const authenticated = requireActor(actor);
   const source = argsObject(args);
   const shareSlug = textArg(source, "p_share_slug", "shareSlug", "share_slug");
-  const rawArchived = source.p_archived_keys ?? source.archivedKeys ?? [];
-  const archivedKeys = Array.isArray(rawArchived) ? rawArchived.map(String) : [];
-  if (archivedKeys.length > 20_000) throw new ApiError("too_many_archive_keys", 422);
+  // V245: personal archive flags are retired; only actual answers count.
   const collection = await first(
     db,
     `SELECT c.id
@@ -610,14 +608,12 @@ async function collectionLibrarySummary(db, actor, args) {
       WHERE q.collection_id = ? AND q.deleted_at IS NULL`,
     [authenticated.id, authenticated.id, collection.id],
   );
-  const archiveSet = new Set(archivedKeys);
   let answeredCount = 0;
   let masteredCount = 0;
   let lastActivityAt = null;
   for (const row of rows) {
-    const archived = archiveSet.has(String(row.id));
-    if (row.latest_answered_at !== null || archived) answeredCount += 1;
-    if (["〇", "◎", "💮"].includes(row.latest_grade) || archived) masteredCount += 1;
+    if (row.latest_answered_at !== null) answeredCount += 1;
+    if (["〇", "◎", "💮"].includes(row.latest_grade)) masteredCount += 1;
     const candidate = row.latest_answered_at && row.latest_answered_at > row.updated_at
       ? row.latest_answered_at
       : row.updated_at;

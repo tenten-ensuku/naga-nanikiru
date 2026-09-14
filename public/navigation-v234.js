@@ -1,11 +1,12 @@
 /* Navigation-only state. No network, persistent question data, or answer writes. */
 (function (root) {
   "use strict";
-  const bookViews = new Set(["today", "my", "archive", "analysis", "session", "book-settings", "question"]);
+  const normalizeView = view => view === "archive" ? "my" : view;
+  const bookViews = new Set(["today", "my", "analysis", "session", "book-settings", "question"]);
   const views = new Set(["collections", "generator", "settings", "students", ...bookViews]);
-  const isBookView = view => bookViews.has(view);
+  const isBookView = view => bookViews.has(normalizeView(view));
   const globalView = view => isBookView(view) ? "today" : view === "students" ? "settings" : view;
-  const localView = view => ["my", "archive", "question"].includes(view) ? "my" : view === "analysis" ? "analysis" : "today";
+  const localView = view => ["my", "question"].includes(normalizeView(view)) ? "my" : view === "analysis" ? "analysis" : "today";
   function generatorDefault({ stored = "", explicit = false, rows = [], bookSlug = "", fromBook = false } = {}) {
     const valid = value => value === "local" || rows.some(row => String(row.share_slug || "") === value);
     if (explicit) return valid(stored) ? stored : "";
@@ -16,7 +17,8 @@
     const url = new URL(href);
     if (route.slug) url.searchParams.set("collection", route.slug);
     else url.searchParams.delete("collection");
-    url.searchParams.set("view", views.has(route.view) ? route.view : "collections");
+    const view = normalizeView(route.view);
+    url.searchParams.set("view", views.has(view) ? view : "collections");
     url.searchParams.delete("existing_question");
     url.searchParams.delete("study_question");
     if (route.view === "question" && route.questionId) url.searchParams.set("existing_question", route.questionId);
@@ -38,17 +40,19 @@
         if (next === owner) return false;
         owner = next; routes.clear(); questions.clear(); study.clear(); return true;
       },
-      accepts(route) { return Boolean(route && route.version === 234 && route.owner === owner && views.has(route.view)); },
+      accepts(route) { return Boolean(route && route.version === 234 && route.owner === owner && views.has(normalizeView(route.view))); },
       remember(route) {
         if (!this.accepts(route)) return;
-        keep(routes, key(isBookView(route.view) ? route.slug : "", route.view), structuredClone(route));
-        if (isBookView(route.view) && route.view !== "book-settings") keep(study, String(route.slug || ""), structuredClone(route));
+        const current = {...structuredClone(route), view: normalizeView(route.view)};
+        if (current.originView === "archive") current.originView = "my";
+        keep(routes, key(isBookView(current.view) ? current.slug : "", current.view), current);
+        if (isBookView(current.view) && current.view !== "book-settings") keep(study, String(current.slug || ""), current);
       },
-      route(slug, view) { const value = routes.get(key(isBookView(view) ? slug : "", view)); return value ? structuredClone(value) : null; },
+      route(slug, view) { const value = routes.get(key(isBookView(view) ? slug : "", normalizeView(view))); return value ? structuredClone(value) : null; },
       lastStudy(slug) { const value = study.get(String(slug || "")); return value ? structuredClone(value) : null; },
       saveQuestion(slug, questionKey, draft) { keep(questions, key(slug, questionKey), draft); },
       question(slug, questionKey) { return questions.get(key(slug, questionKey)) || null; }
     };
   }
-  root.MinkiruNavigationV234 = Object.freeze({ isBookView, globalView, localView, generatorDefault, routeUrl, createMemory });
+  root.MinkiruNavigationV234 = Object.freeze({ normalizeView, isBookView, globalView, localView, generatorDefault, routeUrl, createMemory });
 })(typeof window === "undefined" ? globalThis : window);

@@ -133,7 +133,7 @@ test("leaving a question removes both deep-link forms for every non-question vie
   const { routeUrl } = loadApi();
   for (const view of [...BOOK_VIEWS, ...GLOBAL_VIEWS].filter(view => view !== "question")) {
     const result = new URL(routeUrl(OLD_URL, { view, slug: "book-a", questionId: "stale", questionKey: "stale" }));
-    assert.equal(result.searchParams.get("view"), view);
+    assert.equal(result.searchParams.get("view"), view === "archive" ? "my" : view);
     assert.equal(result.searchParams.get("collection"), "book-a");
     assert.equal(result.searchParams.has("existing_question"), false, view);
     assert.equal(result.searchParams.has("study_question"), false, view);
@@ -255,7 +255,7 @@ test("global route snapshots are shared across book contexts but management neve
   assert.equal(memory.route("book-b", "book-settings"), null);
   for (const view of BOOK_VIEWS.filter(view => view !== "book-settings")) {
     memory.remember(route({ view }));
-    assert.equal(memory.lastStudy("book-a").view, view);
+    assert.equal(memory.lastStudy("book-a").view, view === "archive" ? "my" : view);
   }
 });
 

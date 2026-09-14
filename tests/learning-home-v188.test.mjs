@@ -15,10 +15,10 @@ test("V210 keeps the learning actions usable and stable on desktop and mobile", 
     readFile(packageUrl, "utf8")
   ]);
 
-  assert.match(html, /const APP_VERSION = 244;/);
-  assert.match(identity, /APP_VERSION = 244/);
+  assert.match(html, /const APP_VERSION = 245;/);
+  assert.match(identity, /APP_VERSION = 245/);
   for (const asset of ["ux-v159\\.css", "supabase-sync-v48\\.js", "drill-ux-v44\\.js"]) {
-    assert.match(html, new RegExp(`${asset}\\?v=244`));
+    assert.match(html, new RegExp(`${asset}\\?v=245`));
   }
   assert.match(html, /問題集を変更する/);
   assert.doesNotMatch(html, /class="active-collection-label"/);
@@ -45,13 +45,15 @@ test("V210 keeps the learning actions usable and stable on desktop and mobile", 
   for (const action of ["unanswered", "weak", "all"]) {
     assert.match(html, new RegExp(`renderLearningActionButtonV194\\(\\{ mode: "${action}"`));
   }
-  assert.match(learningView, /data-menu-jump="my"[\s\S]*data-menu-jump="favorites"[\s\S]*data-menu-jump="archive"/);
+  assert.match(learningView, /data-menu-jump="my"[\s\S]*data-menu-jump="favorites"/);
+  assert.doesNotMatch(learningView, /data-menu-jump="archive"/);
   assert.doesNotMatch(learningView, /data-menu-jump="today"/);
   const contextTabs = html.match(/<nav class="learning-tabs menu-context-tabs"[\s\S]*?<\/nav>/)?.[0] || "";
   assert.ok(contextTabs, "problem-list context tabs should be present outside the learning dashboard");
   assert.match(contextTabs, /id="menuContextTabs"/);
-  assert.match(contextTabs, /data-menu-jump="my"[\s\S]*data-menu-jump="favorites"[\s\S]*data-menu-jump="archive"/);
-  assert.match(html, /document\.getElementById\("menuFilters"\)\.hidden = menuViewV16 !== "archive"/);
+  assert.match(contextTabs, /data-menu-jump="my"[\s\S]*data-menu-jump="favorites"/);
+  assert.doesNotMatch(contextTabs, /data-menu-jump="archive"/);
+  assert.match(html, /document\.getElementById\("menuFilters"\)\.hidden = true/);
   assert.match(learningView, /class="learning-all-action"/);
   assert.doesNotMatch(learningView, /learning-hero|learning-path-note|learning-action-step|LEARNING PATH|RECENT ANSWERS|\bSTEP\b/);
   assert.match(html, /class="learning-header-progress"/);
@@ -114,7 +116,7 @@ test("V210 keeps the learning actions usable and stable on desktop and mobile", 
   assert.match(css, /\.learning-action-card \.learning-action-link \{\s*display: none;/);
   assert.match(css, /\.learning-action-card \.learning-action-description \{[\s\S]*white-space: normal;/);
   assert.match(learningView, /data-menu-action="favorite"/);
-  assert.match(learningView, /data-menu-action="archive"/);
+  assert.doesNotMatch(learningView, /data-menu-action="archive"/);
   assert.match(learningView, /aria-label="問題\$\{escapeHtml\(String\(question\.number\)\)\}の整理"/);
   assert.match(html, /publishedAt: "2026-08-30T12:00:00\+09:00"/);
   assert.match(html, /function formatAnnouncementDateV111\(/);

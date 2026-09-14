@@ -14,9 +14,9 @@ test("V180 exposes the recent-history shell and synchronized release assets", as
     readFile(identityUrl, "utf8"),
   ]);
 
-  assert.match(html, /const APP_VERSION = 244;/);
-  assert.match(identity, /APP_VERSION = 244/);
-  assert.match(html, /ux-v159\.css\?v=244/);
+  assert.match(html, /const APP_VERSION = 245;/);
+  assert.match(identity, /APP_VERSION = 245/);
+  assert.match(html, /ux-v159\.css\?v=245/);
   assert.match(html, /\.comment-form textarea \{ display: block; width: 100%; min-width: 0;/);
   assert.match(html, /data-menu-view="today"/);
   assert.match(html, /data-menu-view="today"[^>]*>[\s\S]*?<span>学ぶ<\/span>/);
@@ -91,32 +91,23 @@ test("V161 removes decorative outer rings while preserving result glyph styling"
   assert.match(css, /\.page\.menu-active \.menu-card-latest-mark\.is-miss\s*\{[\s\S]*var\(--ux-coral\)/);
 });
 
-test("V161 keeps the archive action stable after saving", async () => {
+test("V245 removes archive post-answer actions while retaining next-question controls", async () => {
   const html = await readFile(indexUrl, "utf8");
-  const css = await readFile(cssUrl, "utf8");
-  const archiveFlow = html.match(/function archiveCurrentQuestionV110\(\)[\s\S]*?\n      function applyQuestionV16\(/)?.[0] || "";
-  assert.match(html, /let archiveActionStateV161 = \{ questionKey: "", phase: "idle" \};/);
-  assert.match(html, /archiveButton\.textContent = actionState === "saving"[\s\S]*?"アーカイブ済み"/);
-  assert.match(archiveFlow, /archiveActionStateV161 = \{ questionKey, phase: "saving" \};/);
-  assert.match(archiveFlow, /archiveActionStateV161 = \{ questionKey, phase: "archived" \};/);
-  assert.doesNotMatch(archiveFlow, /renderQuestionOptionsV16\(\);/);
-  assert.doesNotMatch(archiveFlow, /renderMenuCardsV16\(\);/);
-  assert.match(css, /V161: archive feedback stays in the action column/);
+  assert.doesNotMatch(html, /archiveActionStateV161|archiveCurrentQuestionV110|id="archiveQuestionButton"/);
+  assert.match(html, /id="nextQuestionButton"/);
+  assert.match(html, /id="nextQuestionBottomButton"/);
 });
 
-test("V173 uses the archive-tray icon in the archive-view control", async () => {
-  const [html, css] = await Promise.all([readFile(indexUrl, "utf8"), readFile(cssUrl, "utf8")]);
-  assert.match(html, /id="menuArchiveViewButton"[^>]*>[\s\S]*class="menu-archive-icon"[\s\S]*<svg[^>]*>[\s\S]*<path d="M4 7\.5h16v12H4zM3 4h18v3\.5H3zM9 12h6"/);
-  assert.doesNotMatch(html, /📦 アーカイブを見る/);
-  assert.match(html, /archiveButton\.innerHTML = archiveActive \? "問題一覧に戻る" : `\$\{menuArchiveIconV109\(\)\}<span>アーカイブを見る<\/span>`/);
-  assert.match(css, /V173: use the quiet archive-tray icon consistently/);
-  assert.match(css, /\.menu-archive-view-button \.menu-archive-icon svg[\s\S]*stroke: currentColor/);
+test("V245 removes archive view controls and retains favorites", async () => {
+  const html = await readFile(indexUrl, "utf8");
+  assert.doesNotMatch(html, /id="menuArchiveViewButton"|data-menu-jump="archive"|menuArchiveIconV109/);
+  assert.match(html, /id="menuFavoritesToggle"/);
 });
 
 test("V176 presents range, genre, and answer-state filters in one scan-friendly panel", async () => {
   const [html, css] = await Promise.all([readFile(indexUrl, "utf8"), readFile(cssUrl, "utf8")]);
   assert.match(html, /class="menu-filter-heading-icon"[\s\S]*問題範囲/);
-  assert.match(html, /class="menu-range-inline-actions"[\s\S]*id="menuFavoritesToggle"[\s\S]*id="menuArchiveViewButton"/);
+  assert.match(html, /class="menu-range-inline-actions"[\s\S]*id="menuFavoritesToggle"/);
   assert.match(html, /class="menu-filters menu-filters-advanced menu-status-row"[^>]*id="menuAdvancedFilters"/);
   assert.doesNotMatch(html, /id="menuAdvancedToggle"/);
   assert.match(css, /V176: present range, genre, and answer-state filters as one scan-friendly panel/);

@@ -48,7 +48,7 @@
     const answeredRaw = count(progress?.answered_count);
     const masteredRaw = count(progress?.mastered_count);
     const answered = answeredRaw === null ? null : Math.min(total ?? answeredRaw, answeredRaw);
-    // Archives are mastered too, so mastery is not bounded by answered count.
+    // Keep unavailable counts distinct from zero; server totals use actual answers.
     const mastered = masteredRaw === null ? null : Math.min(total ?? masteredRaw, masteredRaw);
     const canView = row?.can_view === true || row?.can_edit === true || row?.can_manage === true
       || (slug === currentSlug && row?.can_view !== false);
@@ -107,7 +107,7 @@
     const action = book.series && book.canView ? "巻を読み込む" : book.canView ? "この本で学ぶ" : "閲覧権限を確認する";
     const description = book.description || (book.series ? "巻ごとに、一歩ずつ学習を進めましょう。" : "一問ずつ考えて、判断の引き出しを増やしましょう。");
     return `<div class="library-detail-copy"><span class="library-detail-eyebrow">${picked ? "この本で学びますか？" : book.isCurrent ? "学習中の一冊" : "本をタップして選択"}</span><h4 id="libraryDetailTitleV214">${escape(title)}</h4><p>${escape(description)}</p>${hasRange ? `<span class="library-detail-range">問題 ${book.volume_start}–${book.volume_end}</span>` : ""}</div>
-      <dl class="library-detail-metrics"><div><dt>${icon("book")}${quantityLabel}</dt><dd>${quantityValue}<small>${quantityValue === "—" ? "" : unit}</small></dd></div><div><dt>${icon("check")}回答済み</dt><dd>${formatted(answered)}<small>${answered === null ? "" : "問"}</small></dd></div><div><dt title="直近の正解、またはアーカイブ済みの問題の割合"><span class="library-progress-ring" aria-hidden="true"></span>やりこみ度</dt><dd>${formatted(mastery)}<small>${mastery === null ? "" : "%"}</small></dd></div></dl>
+      <dl class="library-detail-metrics"><div><dt>${icon("book")}${quantityLabel}</dt><dd>${quantityValue}<small>${quantityValue === "—" ? "" : unit}</small></dd></div><div><dt>${icon("check")}回答済み</dt><dd>${formatted(answered)}<small>${answered === null ? "" : "問"}</small></dd></div><div><dt title="直近の回答が〇以上の問題の割合"><span class="library-progress-ring" aria-hidden="true"></span>やりこみ度</dt><dd>${formatted(mastery)}<small>${mastery === null ? "" : "%"}</small></dd></div></dl>
       <div class="library-detail-action"><button type="button" class="library-start" data-library-open="${escape(book.slug)}">${action}${icon("right")}</button><small>${!book.canView ? escape(book.accessLabel) : picked ? "本をもう1回タップしても開けます" : "回答記録はそのまま引き継ぎます"}</small></div>`;
   }
 
@@ -648,7 +648,7 @@
       state.inflight.clear();
       state.failures.clear();
       for (const slug of state.cache.keys()) state.staleSeries.add(slug);
-      // Local archives or answers may change while learning. Never prefer an old
+      // Local answers may change while learning. Never prefer an old
       // summary over refreshed volume progress on the next visit.
       state.summaries.clear();
       state.staleSummaries.clear();

@@ -271,15 +271,11 @@ async function loadCollectionVolumeProgress(shareSlug: string) {
   return data ?? [];
 }
 
-async function loadCollectionLibrarySummary(shareSlug: string, archivedKeys: unknown[] = []) {
+async function loadCollectionLibrarySummary(shareSlug: string) {
   const normalizedSlug = String(shareSlug ?? "").trim();
   if (!normalizedSlug) throw new Error("問題集を選択してください。");
-  const keys = [...new Set((Array.isArray(archivedKeys) ? archivedKeys : [])
-    .filter((value): value is string => typeof value === "string" && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(value))
-    .map(value => value.toLowerCase()))].slice(0, 20000);
   const { data, error } = await requireClient().rpc("get_collection_library_summary", {
     p_share_slug: normalizedSlug,
-    p_archived_keys: keys,
   });
   if (error) throw error;
   const summary = Array.isArray(data) ? data[0] : data;

@@ -42,7 +42,7 @@ test('V215 preview returns four aggregates, using latest grades and only in-scop
   assert.match(migration, /cardinality\(p_archived_keys\).*20000/);
 });
 
-test('V215 client normalizes archive ids and uses a single aggregate request', async () => {
+test('V245 client omits retired archive ids and uses a single aggregate request', async () => {
   const { api, calls } = clientApi({ data: [{ question_count: 89, answered_count: 2, mastered_count: 1 }], error: null });
   const id = '12345678-1234-1234-ABCD-1234567890AB';
   const result = await api(' book ', [id, id.toLowerCase(), null, {}, 'not-a-uuid']);
@@ -50,25 +50,25 @@ test('V215 client normalizes archive ids and uses a single aggregate request', a
   assert.equal(calls.length, 1);
   assert.equal(calls[0].name, 'get_collection_library_summary');
   assert.equal(calls[0].args.p_share_slug, 'book');
-  assert.deepEqual(Array.from(calls[0].args.p_archived_keys), [id.toLowerCase()]);
+  assert.equal('p_archived_keys' in calls[0].args, false);
 });
 
-test('V215 client bounds archive input and does not reinterpret a denied request as zero', async () => {
+test('V245 client ignores legacy archive input and does not reinterpret a denied request as zero', async () => {
   const { api, calls } = clientApi({ data: [{ question_count: 0 }], error: null });
   const ids = Array.from({ length: 20005 }, (_, i) => '00000000-0000-0000-0000-' + i.toString(16).padStart(12, '0'));
   await api('book', ids);
-  assert.equal(calls[0].args.p_archived_keys.length, 20000);
+  assert.equal('p_archived_keys' in calls[0].args, false);
   const denied = new Error('denied');
   await assert.rejects(clientApi({ error: denied }).api('book'), error => error === denied);
   await assert.rejects(clientApi({ data: [], error: null }).api('book'), /取得できません/);
   await assert.rejects(api(' '), /問題集を選択/);
 });
 
-test('V215 adapter reuses the current account and series archive scope without modifying its state', () => {
-  const section = html.slice(html.indexOf('loadSummary: async (slug'), html.indexOf('loadSeries: async slug'));
+test('V245 adapter uses the current account without sending or modifying retained archive state', () => {
+  const section = html.slice(html.indexOf('loadSummary: async slug'), html.indexOf('loadSeries: async slug'));
   assert.match(section, /supabaseSessionV46\?\.user\?\.id/);
-  assert.match(section, /parentSlug \|\| slug/);
-  assert.match(section, /userStateV16\.collectionPersonal\?\.\[scopeKey\]\?\.archived/);
+  assert.match(section, /loadCollectionLibrarySummary\(slug\)/);
+  assert.doesNotMatch(section, /archived|collectionPersonal/);
   assert.doesNotMatch(section, /saveUserState|setItem|push\(/);
-  assert.match(html, /library-order-v215\.js\?v=244/);
+  assert.match(html, /library-order-v215\.js\?v=245/);
 });

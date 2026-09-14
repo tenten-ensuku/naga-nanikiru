@@ -513,14 +513,13 @@
     var state = migrateState(settings.state);
     var mode = normalizedMode(settings.mode);
     var now = settings.now;
-    var archivedKeys = settings.archivedKeys;
     var latest = latestAnswerMap(state);
     var seen = Object.create(null);
     var candidates = [];
 
     questions.forEach(function (question, index) {
       var key = questionKey(question);
-      if (!key || seen[key] || hasKey(archivedKeys, key) || !isPlayable(state, question, now)) {
+      if (!key || seen[key] || !isPlayable(state, question, now)) {
         return;
       }
       seen[key] = true;

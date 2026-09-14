@@ -1,0 +1,19 @@
+/* V245: three useful columns, without an empty retired archive column. */
+.page.menu-active #menuPanel .menu-list-header,
+.page.menu-active #menuPanel .menu-card {
+  grid-template-columns: minmax(0, 1fr) minmax(120px, 190px) 64px;
+  grid-template-rows: none;
+  grid-template-areas: none;
+}
+.page.menu-active #menuPanel .menu-card-icon-action,
+.page.menu-active #menuPanel .learning-recent-action {
+  width: 44px;
+  min-height: 44px;
+}
+.page.menu-active #menuPanel .menu-card-icon-action { grid-area: auto; }
+@media (max-width: 800px) {
+  .page.menu-active #menuPanel .menu-list-header,
+  .page.menu-active #menuPanel .menu-card {
+    grid-template-columns: minmax(0, 1fr) max-content 44px;
+  }
+}

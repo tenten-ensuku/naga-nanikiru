@@ -17,7 +17,7 @@ async function loadUxApi() {
   return context.DrillUxV44;
 }
 
-test("V184 treats archived questions as mastered without making them playable", async () => {
+test("V245 ignores retired archive exclusions while keeping explicit mastery input separate", async () => {
   const api = await loadUxApi();
   const questions = [{ id: "archived" }, { id: "open" }];
   const state = { answerHistory: [] };
@@ -35,15 +35,15 @@ test("V184 treats archived questions as mastered without making them playable", 
   assert.deepEqual(mastered.map(question => question.id), ["archived"]);
 
   const queue = api.buildQueue({ questions, state, mode: "today", limit: 10, archivedKeys: ["archived"] });
-  assert.equal(queue.map(question => question.id).join(","), "open");
+  assert.equal(queue.map(question => question.id).join(","), "archived,open");
 });
 
-test("V184 keeps archive-inclusive totals and genre in the compact question row", async () => {
+test("V245 totals and genre keep all questions without archive-based mastery", async () => {
   const [html, css] = await Promise.all([read("public/index.html"), read("public/ux-v159.css")]);
   assert.match(html, /function isLearningScopeQuestionV184\(/);
   assert.match(html, /const rangeLearningQuestions = menuLearningSummaryQuestionsV184\(\)/);
   assert.match(html, /isAnsweredForLearningV184/);
-  assert.match(html, /masteredKeys: personalCollectionStateV131\(\)\.archived/);
+  assert.doesNotMatch(html, /masteredKeys: personalCollectionStateV131\(\)\.archived/);
   assert.match(html, /const displayedTotal = summaryPending \? knownTotal : metrics\.total/);
   assert.match(html, /menuViewV16 === "today" && Number\.isFinite\(knownTotal\) && knownTotal <= 200/);
   assert.match(html, /menu-card-heading"><span class="menu-card-title">\$\{title\}<\/span><span class="menu-card-meta">\$\{escapeHtml\(typeMetadata\)\}<\/span>/);
