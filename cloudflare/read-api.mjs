@@ -8,6 +8,14 @@ import {
 } from "./access.mjs";
 import {normalizeQuestionNumbering,toSafeQuestionNumber,isInvalidQuestionTitle} from './question-numbering-v235.mjs';
 
+// Metadata-only, scoped to this book. Answers and views do not update content.
+// julianday normalizes legacy offsets before comparing timestamps.
+const CONTENT_UPDATED_AT_SQL = `strftime('%Y-%m-%dT%H:%M:%fZ', NULLIF(MAX(
+  COALESCE(julianday(c.created_at), 0), COALESCE(julianday(c.updated_at), 0),
+  COALESCE((SELECT MAX(MAX(COALESCE(julianday(content_question.created_at), 0), COALESCE(julianday(content_question.updated_at), 0)))
+    FROM questions content_question WHERE content_question.collection_id = c.id AND content_question.deleted_at IS NULL), 0)
+), 0))`;
+
 // This is the complete read-only surface owned by this sidecar.  Any RPC not
 // listed here is rejected before it can become an arbitrary SQL entry point.
 export const READ_RPCS = Object.freeze([
@@ -126,6 +134,12 @@ const QUESTION_INDEX_COLUMNS = `
     THEN 1
     ELSE 0
   END AS has_riichi_judgment,
+  COALESCE(
+    CASE WHEN json_type(q.payload, '$.generatedAt') = 'text' AND length(json_extract(q.payload, '$.generatedAt')) BETWEEN 10 AND 64
+      AND julianday(json_extract(q.payload, '$.generatedAt')) IS NOT NULL THEN json_extract(q.payload, '$.generatedAt') END,
+    CASE WHEN json_type(q.payload, '$.createdAt') = 'text' AND length(json_extract(q.payload, '$.createdAt')) BETWEEN 10 AND 64
+      AND julianday(json_extract(q.payload, '$.createdAt')) IS NOT NULL THEN json_extract(q.payload, '$.createdAt') END,
+    q.created_at) AS generated_at,
   q.created_at,
   q.updated_at`;
 
@@ -309,6 +323,7 @@ function mapIndexRow(row, includeTotal) {
     has_riichi_judgment: boolDb(row.has_riichi_judgment),
     created_at: row.created_at,
     updated_at: row.updated_at,
+    generated_at: row.generated_at,
   };
   if (includeTotal) mapped.total_count = rowCount(row.total_count);
   return mapped;
@@ -473,6 +488,7 @@ async function collectionVolumes(db, actor, args) {
     `WITH actor(user_id, is_admin) AS (SELECT ?, ?)
      SELECT c.id, c.share_slug, c.title, c.description, c.owner_id,
             c.volume_number, c.volume_start, c.volume_end, c.book_tone,
+            ${CONTENT_UPDATED_AT_SQL} AS content_updated_at,
             COUNT(q.id) FILTER (WHERE q.deleted_at IS NULL) AS question_count,
             root.share_slug AS series_parent_slug,
             CASE WHEN ${COLLECTION_ACCESS_EXPR} THEN 1 ELSE 0 END AS can_view,
@@ -499,6 +515,7 @@ async function collectionVolumes(db, actor, args) {
       volume_start: numericOrNull(row.volume_start),
       volume_end: numericOrNull(row.volume_end),
       question_count: rowCount(row.question_count),
+      content_updated_at: row.content_updated_at,
       can_view: boolDb(row.can_view),
       can_edit: boolDb(row.can_edit),
       can_manage: boolDb(row.can_manage),
@@ -576,7 +593,7 @@ async function collectionLibrarySummary(db, actor, args) {
   // V245: personal archive flags are retired; only actual answers count.
   const collection = await first(
     db,
-    `SELECT c.id
+    `SELECT c.id, ${CONTENT_UPDATED_AT_SQL} AS content_updated_at
        FROM collections c
       WHERE c.share_slug = ?
         AND c.archived_at IS NULL
@@ -624,6 +641,7 @@ async function collectionLibrarySummary(db, actor, args) {
     answered_count: answeredCount,
     mastered_count: masteredCount,
     last_activity_at: lastActivityAt,
+    content_updated_at: collection.content_updated_at,
   }];
 }
 
@@ -756,6 +774,7 @@ async function myCollections(db, actor) {
     `WITH actor(user_id, is_admin) AS (SELECT ?, ?)
      SELECT c.id, c.share_slug, c.title, c.description, c.visibility,
             c.owner_id, c.created_at, c.book_tone, c.series_key, c.series_parent_id,
+            ${CONTENT_UPDATED_AT_SQL} AS content_updated_at,
             c.volume_number,c.volume_start,c.volume_end,parent.share_slug AS series_parent_slug,parent.title AS series_title,
             (SELECT COUNT(*) FROM collections child WHERE child.series_parent_id=c.id AND child.archived_at IS NULL) AS volume_count,
             (SELECT cm.role FROM collection_members cm
@@ -798,6 +817,7 @@ async function myCollections(db, actor) {
       can_edit: boolDb(row.can_edit),
       can_manage: boolDb(row.can_manage),
       created_at: row.created_at,
+      content_updated_at: row.content_updated_at,
     }));
 }
 

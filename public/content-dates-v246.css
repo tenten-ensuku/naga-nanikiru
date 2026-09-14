@@ -1,0 +1,15 @@
+/* Secondary dates preserve the existing book colors and main action hierarchy. */
+.page .question-created-v246 { margin: 4px 0 0; color: #b0c4ce; font: 13px/1.5 "Yu Gothic", sans-serif; }
+.page.menu-active #menuPanel .menu-card-heading { flex-wrap:wrap; row-gap:0; }
+.page.menu-active #menuPanel .menu-card-heading .question-created-v246 { display:block; flex-basis:100%; font-size:12px; margin-top:2px; white-space:normal; }
+.library-v214 .library-update-marker-v246 { position:absolute; z-index:2; top:7px; left:50%; transform:translateX(-50%); padding:3px 4px; border:1px solid #d0bc83; border-radius:3px; background:#183c39; color:#fff2c6; font:600 11px/1.2 "Yu Gothic",sans-serif; white-space:nowrap; pointer-events:none; }
+.library-v214 .library-book:has(.library-update-marker-v246) .library-book-title { top:max(11%, 34px); }
+.library-v214 .library-updated-v246 { display:flex; flex-wrap:wrap; align-items:center; gap:4px 9px; margin:10px 0 0; color:#cfc5b2; font:13px/1.6 "Yu Gothic",sans-serif; }
+.library-v214 .library-updated-v246 time { color:#f3e4c6; font-variant-numeric:tabular-nums; }
+.library-v214 .library-updated-v246 small { flex-basis:100%; font-size:12px; color:#bdb4a4; }
+.library-v214 .library-recent-label-v246 { padding:1px 6px; border:1px solid #73968d; border-radius:3px; color:#d1efe4; font-size:12px; }
+.library-v214 .library-update-legend-v246 { margin:5px 0 0; font:12px/1.5 "Yu Gothic",sans-serif; color:#c6c0b2; }
+@media(max-width:480px) {
+  .page.menu-active #menuPanel .menu-card-heading .question-created-v246 { font-size:11px; }
+  .library-v214 .library-updated-v246 { gap:3px 7px; }
+}

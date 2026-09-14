@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=245">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=245">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=245">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=246">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=246">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=246">
   <title>みん切る｜みんなの何切る問題集</title>
   <link rel="preload" as="image" href="assets/loading-screen-v243.png" fetchpriority="high">
   <meta name="description" content="みん切るは、NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリです。">
@@ -2243,15 +2243,16 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=245">
-  <link rel="stylesheet" href="library-v214.css?v=245">
-  <link rel="stylesheet" href="navigation-v234.css?v=245">
-  <link rel="stylesheet" href="book-builder-v235.css?v=245">
-  <link rel="stylesheet" href="menu-polish-v238.css?v=245">
-  <link rel="stylesheet" href="menu-sections-v239.css?v=245">
-  <link rel="stylesheet" href="workspace-ui-v240.css?v=245">
-  <link rel="stylesheet" href="collection-deletion-v244.css?v=245">
-  <link rel="stylesheet" href="menu-simplify-v245.css?v=245">
+  <link rel="stylesheet" href="ux-v159.css?v=246">
+  <link rel="stylesheet" href="library-v214.css?v=246">
+  <link rel="stylesheet" href="navigation-v234.css?v=246">
+  <link rel="stylesheet" href="book-builder-v235.css?v=246">
+  <link rel="stylesheet" href="menu-polish-v238.css?v=246">
+  <link rel="stylesheet" href="menu-sections-v239.css?v=246">
+  <link rel="stylesheet" href="workspace-ui-v240.css?v=246">
+  <link rel="stylesheet" href="collection-deletion-v244.css?v=246">
+  <link rel="stylesheet" href="menu-simplify-v245.css?v=246">
+  <link rel="stylesheet" href="content-dates-v246.css?v=246">
 </head>
 <body class="auth-gate-open">
   <section class="startup-screen-v236" id="startupScreenV236" aria-label="みん切るを準備中">
@@ -2358,6 +2359,7 @@
       <div>
         <p class="eyebrow" id="questionBreadcrumb">問題集 › 最近の回答履歴</p>
         <h1 id="questionPageTitle">何切る？</h1>
+        <p class="question-created-v246" id="questionCreatedDateV246"></p>
       </div>
       <div class="version" id="versionLabel"></div>
     </header>
@@ -2604,22 +2606,23 @@
   </dialog>
 
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=245"></script>
-  <script src="drill-ux-v44.js?v=245"></script>
-  <script src="navigation-v234.js?v=245"></script>
-  <script src="book-builder-v235.js?v=245"></script>
-  <script src="library-order-v215.js?v=245"></script>
-  <script src="library-v214.js?v=245"></script>
-  <script src="naga-generator-v44.js?v=245"></script>
-  <script src="hand-mask-v237.js?v=245"></script>
-  <script src="menu-sections-v239.js?v=245"></script>
-  <script src="workspace-ui-v240.js?v=245"></script>
-  <script src="generation-confirm-v241.js?v=245"></script>
-  <script src="collection-deletion-v244.js?v=245"></script>
+  <script src="supabase-sync-v48.js?v=246"></script>
+  <script src="drill-ux-v44.js?v=246"></script>
+  <script src="navigation-v234.js?v=246"></script>
+  <script src="book-builder-v235.js?v=246"></script>
+  <script src="library-order-v215.js?v=246"></script>
+  <script src="content-dates-v246.js?v=246"></script>
+  <script src="library-v214.js?v=246"></script>
+  <script src="naga-generator-v44.js?v=246"></script>
+  <script src="hand-mask-v237.js?v=246"></script>
+  <script src="menu-sections-v239.js?v=246"></script>
+  <script src="workspace-ui-v240.js?v=246"></script>
+  <script src="generation-confirm-v241.js?v=246"></script>
+  <script src="collection-deletion-v244.js?v=246"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 245;
+    const APP_VERSION = 246;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -4674,6 +4677,7 @@
       const QUESTION_NOTICE_STORAGE_KEY_V66 = storageKey("question-notices-v1");
         const ANNOUNCEMENT_SEEN_STORAGE_KEY_V65 = storageKey("announcement-seen-v1");
         const APP_ANNOUNCEMENTS_V66 = [
+          { version: 246, date: "2026-09-14", publishedAt: "2026-09-14T23:32:00+09:00", title: "問題の生成日と、本棚の更新状況がわかるようになりました", body: "問題一覧と問題画面に生成日を表示します。本棚では選択した本の最終更新日を確認でき、7日以内に更新された本には「更新」マークが付きます。問題の追加・編集や問題集情報の変更が対象で、回答・閲覧は含みません。日付の記録がない場合は「不明」と表示します。" },
           { version: 245, date: "2026-09-14", publishedAt: "2026-09-14T21:00:00+09:00", title: "アーカイブとサイドバーの進捗欄を整理しました", body: "アーカイブ機能とPCサイドバーの学習進捗を取り除きました。アーカイブ済みの問題も通常の学習対象になり、習熟度は回答履歴から計算します。お気に入り・回答履歴・学習画面上部の進捗バーはそのまま利用できます。" },
           { version: 244, date: "2026-09-14", publishedAt: "2026-09-14T20:34:00+09:00", title: "問題集を確認して削除できるようにしました", body: "所有者・管理者は「この本の管理」から問題集を削除できます。問題集名・収録問題数・共有利用者への影響を確認してから実行します。一つの巻だけを削除する場合、他の巻は残ります。誤削除に備え、問題や回答履歴・画像のデータは保管します。" },
           { version: 243, date: "2026-09-14", publishedAt: "2026-09-14T20:06:00+09:00", title: "ローディング画面を新しいロゴ画像に", body: "起動中は、白背景に本と麻雀卓を描いたロゴ画像を表示します。スマホや横画面でも画像全体が収まるようにしました。読み込み完了・接続遅延・失敗時の案内は従来どおりです。" },
@@ -5019,6 +5023,7 @@
           legacyKey: row?.legacy_key || payload.legacyKey,
           number,
           title,
+          createdAt: window.MinkiruContentDatesV246.first(payload.generatedAt, row?.generated_at, payload.createdAt, row?.created_at, row?.createdAt)?.iso || null,
           decisionType: payload.decisionType || row?.decision_type || "discard",
           hasRiichiJudgment: payload.decisionType !== "call" && (payload.hasRiichiJudgment === true || row?.has_riichi_judgment === true || Array.isArray(payload.reach) && payload.reach.some(value => Number(value) > 0)),
           sharedCollectionSlug: shareSlug,
@@ -5035,7 +5040,7 @@
           title,
           author: String(createdByName || "利用者"),
           createdById: createdById ? String(createdById) : "",
-          createdAt: row?.created_at || row?.createdAt || new Date().toISOString(),
+          createdAt: window.MinkiruContentDatesV246.first(row?.created_at, row?.createdAt, question.createdAt)?.iso || null,
           question
         };
       }
@@ -8380,6 +8385,11 @@
         else advanceQuestionV44();
       }
 
+      function questionCreatedMarkupV246(question) {
+        const date = window.MinkiruContentDatesV246.questionCreated(question);
+        return date ? `生成日 <time datetime="${escapeHtml(date.iso)}" title="${escapeHtml(date.full)}">${escapeHtml(date.date)}</time>` : "生成日 不明";
+      }
+
       function applyQuestionV16(question, index = questionsV16.indexOf(question)) {
         currentQuestionIndexV16 = index >= 0 ? index : 0;
         for (const key of Object.keys(SCENE)) delete SCENE[key];
@@ -8405,6 +8415,7 @@
           breadcrumb.innerHTML = `<button type="button" class="question-breadcrumb-button-v234" data-question-shelf>本棚</button> › ${escapeHtml(collectionDisplayNameV101())} › <button type="button" class="question-breadcrumb-button-v234" data-question-home>この本の学習</button> › ${escapeHtml(location)}`;
         }
         if (pageTitle) pageTitle.textContent = `問題${question.number}　${questionTypeV44(question)}`;
+        document.getElementById("questionCreatedDateV246").innerHTML = questionCreatedMarkupV246(question);
         clearCommentDraftV68();
         syncCommentComposerV75();
         const localCommentsV44 = userStateV16.localComments?.[questionKeyV16(question)] || [];
@@ -9489,7 +9500,7 @@
           const favoriteLabel = favorite ? `問題${question.number}のお気に入りを解除` : `問題${question.number}をお気に入りに追加`;
           const commentNoticeCount = commentNotificationCountForQuestionV65(question);
           const commentNotice = notificationBadgeMarkupV65(commentNoticeCount, `問題${question.number}の新着コメント${commentNoticeCount}件`, `data-menu-question-notification="${escapeHtml(questionKeyV16(question))}"`);
-          return `<article class="menu-card"><button class="menu-card-open" type="button" data-question-index="${index}" title="問題${question.number}（${escapeHtml(typeMetadata)}）を開く"><span class="menu-card-heading"><span class="menu-card-title">${title}</span><span class="menu-card-meta">${escapeHtml(typeMetadata)}</span><span class="menu-card-notification">${commentNotice}</span></span></button><span class="menu-card-latest${scores.length ? "" : " is-empty"}" aria-label="${escapeHtml(historyLabel)}" title="${escapeHtml(historyLabel)}">${history}</span><button class="menu-card-icon-action${favorite ? " is-active" : ""}" type="button" data-menu-action="favorite" data-question-index="${index}" aria-pressed="${favorite}" aria-label="${escapeHtml(favoriteLabel)}" title="${escapeHtml(favoriteLabel)}">${favorite ? "★" : "☆"}</button></article>`;
+          return `<article class="menu-card"><button class="menu-card-open" type="button" data-question-index="${index}" title="問題${question.number}（${escapeHtml(typeMetadata)}）を開く"><span class="menu-card-heading"><span class="menu-card-title">${title}</span><span class="menu-card-meta">${escapeHtml(typeMetadata)}</span><span class="menu-card-notification">${commentNotice}</span><span class="question-created-v246">${questionCreatedMarkupV246(question)}</span></span></button><span class="menu-card-latest${scores.length ? "" : " is-empty"}" aria-label="${escapeHtml(historyLabel)}" title="${escapeHtml(historyLabel)}">${history}</span><button class="menu-card-icon-action${favorite ? " is-active" : ""}" type="button" data-menu-action="favorite" data-question-index="${index}" aria-pressed="${favorite}" aria-label="${escapeHtml(favoriteLabel)}" title="${escapeHtml(favoriteLabel)}">${favorite ? "★" : "☆"}</button></article>`;
         }).join("");
       }
 

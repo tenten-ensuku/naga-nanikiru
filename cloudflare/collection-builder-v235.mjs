@@ -127,7 +127,10 @@ async function addQuestion(args,{db,actor,origin},imported=null){
 async function importQuestion(args,ctx){
   const source=await first(ctx.db,'SELECT * FROM questions WHERE id=? AND deleted_at IS NULL',String(args.p_source_question_id||''));
   if(!source||!await canAccessCollection(ctx.db,ctx.actor,source.collection_id))fail('question_not_found',404);
-  return addQuestion({p_share_slug:args.p_target_share_slug,p_title:source.title,p_payload:JSON.parse(source.payload),p_source_kind:source.source_kind,p_source_report_id:source.source_report_id,p_source_url:source.source_url,p_scene_tw:source.scene_tw,p_scene_ts:source.scene_ts,p_scene_tv:source.scene_tv,p_decision_type:source.decision_type},ctx,source.id);
+  const payload=JSON.parse(source.payload);
+  // Copying into another book must not replace the original question's date.
+  payload.createdAt ||= source.created_at;
+  return addQuestion({p_share_slug:args.p_target_share_slug,p_title:source.title,p_payload:payload,p_source_kind:source.source_kind,p_source_report_id:source.source_report_id,p_source_url:source.source_url,p_scene_tw:source.scene_tw,p_scene_ts:source.scene_ts,p_scene_tv:source.scene_tv,p_decision_type:source.decision_type},ctx,source.id);
 }
 export async function builderRpc(name,args,ctx){
   requireActor(ctx.actor);await allowed(ctx.db);

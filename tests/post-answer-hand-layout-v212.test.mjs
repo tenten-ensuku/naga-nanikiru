@@ -23,7 +23,7 @@ function functionBody(source, functionName, nextFunctionName) {
 test("V212 reuses the canonical call-slot layout after answer confirmation", async () => {
   const html = await readFile(indexUrl, "utf8");
 
-  assert.match(html, /const APP_VERSION = 245;/);
+  assert.match(html, /const APP_VERSION = 246;/);
   assert.match(html, /function displayHandSlotsV212\(question = SCENE\)/);
   assert.match(html, /const displaySlots = displayHandSlotsV212\(SCENE\)/);
   assert.match(html, /const displaySlots = displayHandSlotsV212\(question\)/);

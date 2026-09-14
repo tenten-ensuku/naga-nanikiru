@@ -259,6 +259,7 @@ test("shared collection permissions, comments, and read-only reaction summary fo
 test("library, attempts, poll stats, and direct table reads parse JSON and booleans explicitly", async () => {
   const db = await fixture();
   try {
+    await exec(db, "UPDATE collections SET created_at='2026-09-01T00:00:00Z',updated_at='2026-09-01T00:00:00Z' WHERE id='collection-public'");
     const summary = await readRpc(
       "get_collection_library_summary",
       { p_share_slug: "public-fixture", p_archived_keys: [] },
@@ -269,6 +270,7 @@ test("library, attempts, poll stats, and direct table reads parse JSON and boole
       answered_count: 1,
       mastered_count: 1,
       last_activity_at: "2026-09-10T00:02:00.000Z",
+      content_updated_at: "2026-09-10T00:00:01.000Z",
     });
 
     const attempts = await readRpc(
