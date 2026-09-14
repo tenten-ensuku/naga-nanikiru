@@ -19,18 +19,16 @@ function functionBlock(source, name, nextName) {
 
 test("V233 aligns the mobile toolbar version, labels, and accessible names", async () => {
   const html = await readFile(indexPath, "utf8");
-  assert.match(html, /const APP_VERSION = 249;/);
-  assert.match(html, /ux-v159\.css\?v=249/);
+  assert.match(html, /const APP_VERSION = 250;/);
+  assert.match(html, /ux-v159\.css\?v=250/);
   assert.doesNotMatch(html, /<script[^>]+legacy-transfer-v232\.js/);
 
   const sourceBar = html.match(/<div class="source-bar">[\s\S]*?<\/div>\s*\n\s*<div class="session-strip"/)?.[0] || "";
   assert.ok(sourceBar, "question source bar should remain a single toolbar block");
   assert.match(sourceBar, /id="nagaSourceLink"[^>]*aria-label="局面NAGAURLに移動"/);
-  assert.match(sourceBar, /<span class="question-toolbar-label-full">局面NAGAURLに移動<\/span>/);
-  assert.match(sourceBar, /<span class="question-toolbar-label-short" aria-hidden="true">NAGAへ移動<\/span>/);
+  assert.match(sourceBar, /<details class="question-more-v250"[\s\S]*局面NAGAURLに移動/);
   assert.match(sourceBar, /id="importQuestionButton"[^>]*aria-label="自分の問題集にインポート"/);
-  assert.match(sourceBar, /<span class="question-toolbar-label-full">自分の問題集にインポート<\/span>/);
-  assert.match(sourceBar, /<span class="question-toolbar-label-short" aria-hidden="true">インポート<\/span>/);
+  assert.match(sourceBar, /hidden>自分の問題集にインポート<\/button>/);
   assert.match(sourceBar, /id="menuButton"[^>]*aria-label="問題一覧へ戻る"/);
   assert.match(sourceBar, /<span class="question-toolbar-label-full">問題一覧へ戻る<\/span>/);
   assert.match(sourceBar, /<span class="question-toolbar-label-short" aria-hidden="true">一覧へ<\/span>/);
@@ -40,7 +38,8 @@ test("V233 aligns the mobile toolbar version, labels, and accessible names", asy
   for (const label of ["この本の学習へ", "この本の成績へ", "問題一覧へ戻る"]) assert.ok(navigation.includes(`"${label}"`), label);
   assert.ok(!navigation.includes('"アーカイブへ"'));
   assert.match(html, /getElementById\("menuButton"\)\.addEventListener\("click", \(\) => showMenuV16\(questionOriginViewV234\)\)/);
-  assert.match(sourceBar, /id="questionSelect" aria-label="問題を選ぶ"/);
+  assert.doesNotMatch(sourceBar, /id="questionSelect"/);
+  assert.match(html, /<h1 id="questionPageTitle"[\s\S]*?id="questionSelect" aria-label="問題を選ぶ"[\s\S]*?<\/h1>/);
   assert.match(sourceBar, /id="modelSelect" aria-label="正誤判定基準"/);
 });
 
