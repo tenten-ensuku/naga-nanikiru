@@ -34,6 +34,7 @@ jobs:
       - run: npm run test:startup
       - run: npm run test:meld
       - run: node --test tests/json-board-v248.test.mjs
+      - run: node --test tests/generator-selection-v249.test.mjs
       - run: node --test tests/generation-v241.test.mjs tests/generation-confirm-v241.test.mjs
       - run: node --test tests/discord-sync-v242.test.mjs tests/question-deep-link-v242.test.mjs
       - run: npm run test:media

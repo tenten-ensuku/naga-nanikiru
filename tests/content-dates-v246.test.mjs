@@ -100,7 +100,7 @@ test('bookshelf displays recent content badges, exact dates and unknown values w
 });
 
 test('app wiring renders dates in lists and questions without polls or guessed timestamps',()=>{
-  assert.match(html,/content-dates-v246\.js\?v=248/);assert.match(html,/content-dates-v246\.css\?v=248/);
+  assert.match(html,/content-dates-v246\.js\?v=249/);assert.match(html,/content-dates-v246\.css\?v=249/);
   assert.match(html,/id="questionCreatedDateV246"/);
   assert.match(html,/class="question-created-v246">\$\{questionCreatedMarkupV246\(question\)\}/);
   const normalize=html.match(/      function normalizeSharedQuestionV66\([^]*?\n      \}/)[0];

@@ -157,6 +157,7 @@ test('bulk generation stops if the destination changes after confirming, retaini
   const selected = new Set([0, 1]);
   const context = load(['addSelectedGeneratorQuestionsV158'], {
     generatorSelectedCandidatesV158: selected, generatorCandidatesV44: [{ id: 'q1' }, { id: 'q2' }],
+    selectedGeneratorCandidateIndexesV249: () => [...selected],
     canAddGeneratedQuestionV130: () => true, currentGeneratorDestinationV130: () => destination,
     supabaseSessionV46: {}, window: { NagaGenerationConfirmV241: { ask: async (_document, destination, count) => { assert.equal(destination.label, '本A'); assert.equal(count, 2); return true; } } },
     setGeneratorStatusV44() {}, setGeneratorStageV159() {}, document: { getElementById: () => null },

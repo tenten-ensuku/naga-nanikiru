@@ -1,0 +1,97 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import vm from 'node:vm';
+
+const html = fs.readFileSync(new URL('../public/index.html', import.meta.url), 'utf8');
+const names = ['currentGeneratorDestinationV130', 'canAddGeneratedQuestionV130',
+  'explainGeneratorSaveBlockedV249', 'generatorCandidateStateV249',
+  'selectedGeneratorCandidateIndexesV249', 'renderGeneratorBatchToolbarV158',
+  'renderGeneratorCandidatesV44', 'addSelectedGeneratorQuestionsV158', 'addGeneratedQuestionV44'];
+const source = names.map(name => {
+  const match = html.match(new RegExp(`(?:async )?function ${name}\\([\\s\\S]*?\\n      \\}`));
+  assert.ok(match, name); return match[0];
+}).join('\n');
+
+function harness() {
+  const events = [], select = { value: '', scrollIntoView: () => events.push('scroll'), focus: () => events.push('focus') };
+  const context = vm.createContext({
+    document: { getElementById: id => id === 'generatorDestinationSelect' ? select : null },
+    generatorDestinationV130: '', generatorDestinationRowsV130: () => [
+      {share_slug:'editable',can_edit:true,title:'編集できる本'},
+      {share_slug:'readonly',can_edit:false,title:'閲覧だけの本'}],
+    collectionDisplayNameV101: row => row.title, supabaseSessionV46: {user:{id:'owner'}},
+    sharedCollectionV46: {share_slug:'editable'}, questionsV16: [],
+    generatorCandidatesV44: [{id:'a',boardScene:{},playerName:'確認用',tv:1},{id:'b',boardScene:{},tv:2}],
+    generatorSelectedCandidatesV158: new Set(), generatorAddedKeysV130: new Set(), generatorDuplicateKeysV153: new Set(),
+    generatorPreviewBatchBusyV158: false, generatorReportV44: {},
+    hasJsonBoardV248: candidate => Boolean(candidate.boardScene) && !candidate.invalid,
+    prepareJsonBoardV248: candidate => !candidate.invalid, generatedHandIsValidV237: () => true,
+    escapeHtml: value => String(value), questionTypeV44: () => '打牌判断',
+    generatorCandidateChoiceMarkupV158: () => '', generatorCandidateModelsMarkupV158: () => '',
+    window: {NagaBoardV248:{markup:()=>'<svg></svg>'},NagaGenerationConfirmV241:{ask:async()=>{events.push('confirm');return true;}}},
+    setGeneratorStatusV44: message => events.push(message), setGeneratorStageV159: () => {},
+    bindGeneratorCandidateInputsV44: () => {}, invokeSharedMutationV47: () => {throw Error('unexpected write');},
+  });
+  vm.runInContext(source, context);
+  return {context, select, events, run: code => vm.runInContext(code, context)};
+}
+
+test('candidate selection is enabled without a destination; save action asks for one', () => {
+  const h = harness(); h.context.generatorAddedKeysV130.add('a::local');
+  const markup = h.run('renderGeneratorCandidatesV44()');
+  assert.doesNotMatch(markup.match(/<input[^>]+data-generator-select="0"[^>]*>/)[0], /disabled/);
+  assert.match(markup, /保存先を選ぶ/); assert.doesNotMatch(markup, /編集権限が必要/);
+  h.context.generatorSelectedCandidatesV158.add(0);
+  const toolbar = h.run('renderGeneratorBatchToolbarV158()');
+  assert.match(toolbar, /保存先を選んで1問を追加/);
+  assert.doesNotMatch(toolbar.match(/<button[^>]+data-generator-add-selected[^>]*>/)[0], /disabled/);
+});
+
+test('single and batch save without destination focus picker, preserve selection, never confirm/write', async () => {
+  const h = harness(); h.context.generatorSelectedCandidatesV158.add(0);
+  await h.run('addSelectedGeneratorQuestionsV158()'); await h.run('addGeneratedQuestionV44(0)');
+  assert.equal(h.context.generatorSelectedCandidatesV158.has(0), true);
+  assert.equal(h.events.filter(e => e === 'focus').length, 2);
+  assert.ok(h.events.some(e => e.includes('保存先を選んで')));
+  assert.ok(!h.events.includes('confirm')); assert.ok(!h.events.some(e => e.includes('権限')));
+});
+
+test('unauthorized destination allows drafting but denies both save paths', async () => {
+  const h = harness(); h.select.value = 'readonly'; h.context.generatorSelectedCandidatesV158.add(0);
+  const markup = h.run('renderGeneratorCandidatesV44()');
+  assert.doesNotMatch(markup.match(/<input[^>]+data-generator-select="0"[^>]*>/)[0], /disabled/);
+  assert.match(markup, /編集権限が必要/);
+  await h.run('addSelectedGeneratorQuestionsV158()'); await h.run('addGeneratedQuestionV44(0)');
+  assert.equal(h.events.filter(e => e.includes('権限')).length, 2); assert.ok(!h.events.includes('confirm'));
+  h.select.value = 'editable'; h.context.supabaseSessionV46 = null;
+  await h.run('addSelectedGeneratorQuestionsV158()'); assert.ok(!h.events.includes('confirm'));
+});
+
+test('destination changes preserve draft selections and exclude duplicate/invalid candidates from counts', () => {
+  const h = harness(); h.context.generatorSelectedCandidatesV158.add(0); h.context.generatorSelectedCandidatesV158.add(1);
+  h.context.generatorAddedKeysV130.add('a::editable'); h.context.generatorCandidatesV44[1].invalid = true;
+  assert.equal(h.run('selectedGeneratorCandidateIndexesV249().length'), 1);
+  h.select.value = 'editable'; assert.equal(h.run('selectedGeneratorCandidateIndexesV249().length'), 0);
+  const markup = h.run('renderGeneratorCandidatesV44()');
+  for (const input of markup.matchAll(/<input[^>]+data-generator-select="\d+"[^>]*>/g)) assert.match(input[0], /disabled/);
+  h.select.value = 'local'; assert.equal(h.run('selectedGeneratorCandidateIndexesV249().length'), 1);
+  assert.equal(h.context.generatorSelectedCandidatesV158.size, 2);
+});
+
+test('authorized batch confirms only eligible candidates and clears only successfully saved selections', async () => {
+  const h = harness(); h.select.value = 'editable';
+  h.context.generatorSelectedCandidatesV158.add(0); h.context.generatorSelectedCandidatesV158.add(1);
+  h.context.generatorDuplicateKeysV153.add('b::editable'); const saved = [];
+  h.context.window.NagaGenerationConfirmV241.ask = async (_document,destination,count) => {assert.equal(count,1);assert.equal(destination.shareSlug,'editable');return true;};
+  h.context.addGeneratedQuestionV44 = async (index,options) => {saved.push(index);assert.equal(options.expectedDestinationKey,'editable');return true;};
+  await h.run('addSelectedGeneratorQuestionsV158()'); assert.deepEqual(saved,[0]);
+  assert.equal(h.context.generatorSelectedCandidatesV158.has(0),false); assert.equal(h.context.generatorSelectedCandidatesV158.has(1),true);
+});
+
+test('destination event re-renders without clearing selections and checkbox keeps keyboard focus', () => {
+  const handler = html.slice(html.indexOf('document.getElementById("generatorDestinationSelect")?.addEventListener("change"'), html.indexOf('function handleMenuGridClickV16'));
+  assert.doesNotMatch(handler, /generatorSelectedCandidatesV158\.clear/);
+  assert.match(handler, /renderGeneratorCandidatesV44\(\)/);
+  assert.match(html, /results\.querySelector\(`\[data-generator-select="\$\{index\}"\]`\)\?\.focus\(\{ preventScroll: true \}\)/);
+});

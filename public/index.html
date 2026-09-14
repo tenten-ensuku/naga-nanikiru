@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=248">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=248">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=248">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=249">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=249">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=249">
   <title>みん切る｜みんなの何切る問題集</title>
   <link rel="preload" as="image" href="assets/loading-screen-v243.png" fetchpriority="high">
   <meta name="description" content="みん切るは、NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリです。">
@@ -2243,16 +2243,16 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=248">
-  <link rel="stylesheet" href="library-v214.css?v=248">
-  <link rel="stylesheet" href="navigation-v234.css?v=248">
-  <link rel="stylesheet" href="book-builder-v235.css?v=248">
-  <link rel="stylesheet" href="menu-polish-v238.css?v=248">
-  <link rel="stylesheet" href="menu-sections-v239.css?v=248">
-  <link rel="stylesheet" href="workspace-ui-v240.css?v=248">
-  <link rel="stylesheet" href="collection-deletion-v244.css?v=248">
-  <link rel="stylesheet" href="menu-simplify-v245.css?v=248">
-  <link rel="stylesheet" href="content-dates-v246.css?v=248">
+  <link rel="stylesheet" href="ux-v159.css?v=249">
+  <link rel="stylesheet" href="library-v214.css?v=249">
+  <link rel="stylesheet" href="navigation-v234.css?v=249">
+  <link rel="stylesheet" href="book-builder-v235.css?v=249">
+  <link rel="stylesheet" href="menu-polish-v238.css?v=249">
+  <link rel="stylesheet" href="menu-sections-v239.css?v=249">
+  <link rel="stylesheet" href="workspace-ui-v240.css?v=249">
+  <link rel="stylesheet" href="collection-deletion-v244.css?v=249">
+  <link rel="stylesheet" href="menu-simplify-v245.css?v=249">
+  <link rel="stylesheet" href="content-dates-v246.css?v=249">
 </head>
 <body class="auth-gate-open">
   <section class="startup-screen-v236" id="startupScreenV236" aria-label="みん切るを準備中">
@@ -2607,26 +2607,26 @@
   </dialog>
 
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=248"></script>
-  <script src="drill-ux-v44.js?v=248"></script>
-  <script src="navigation-v234.js?v=248"></script>
-  <script src="book-builder-v235.js?v=248"></script>
-  <script src="library-order-v215.js?v=248"></script>
-  <script src="content-dates-v246.js?v=248"></script>
-  <script src="library-v214.js?v=248"></script>
-  <script src="naga-generator-v44.js?v=248"></script>
-  <link rel="stylesheet" href="naga-board-v248.css?v=248">
-  <script src="naga-board-state-v248.js?v=248"></script>
-  <script src="naga-board-v248.js?v=248"></script>
-  <script src="hand-mask-v237.js?v=248"></script>
-  <script src="menu-sections-v239.js?v=248"></script>
-  <script src="workspace-ui-v240.js?v=248"></script>
-  <script src="generation-confirm-v241.js?v=248"></script>
-  <script src="collection-deletion-v244.js?v=248"></script>
+  <script src="supabase-sync-v48.js?v=249"></script>
+  <script src="drill-ux-v44.js?v=249"></script>
+  <script src="navigation-v234.js?v=249"></script>
+  <script src="book-builder-v235.js?v=249"></script>
+  <script src="library-order-v215.js?v=249"></script>
+  <script src="content-dates-v246.js?v=249"></script>
+  <script src="library-v214.js?v=249"></script>
+  <script src="naga-generator-v44.js?v=249"></script>
+  <link rel="stylesheet" href="naga-board-v248.css?v=249">
+  <script src="naga-board-state-v248.js?v=249"></script>
+  <script src="naga-board-v248.js?v=249"></script>
+  <script src="hand-mask-v237.js?v=249"></script>
+  <script src="menu-sections-v239.js?v=249"></script>
+  <script src="workspace-ui-v240.js?v=249"></script>
+  <script src="generation-confirm-v241.js?v=249"></script>
+  <script src="collection-deletion-v244.js?v=249"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 248;
+    const APP_VERSION = 249;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -4521,7 +4521,7 @@
       }
       function syncGeneratorDestinationCopyV234() {
         const destination = currentGeneratorDestinationV130();
-        const text = destination.kind === "unselected" ? "保存先を選んでください。学習中の問題集へ自動で追加することはありません。"
+        const text = destination.kind === "unselected" ? "候補は先に選べます。追加するときに保存先を指定してください。学習中の問題集へ自動で追加することはありません。"
           : destination.kind === "shared" ? `保存先：${destination.label}。追加内容はこの問題集の利用者に反映されます。`
             : "保存先：この端末のみ。共有問題集には追加されません。";
         document.querySelectorAll("[data-generator-destination-note], .generator-destination-note").forEach(node => { node.textContent = text; });
@@ -4681,6 +4681,7 @@
       const QUESTION_NOTICE_STORAGE_KEY_V66 = storageKey("question-notices-v1");
         const ANNOUNCEMENT_SEEN_STORAGE_KEY_V65 = storageKey("announcement-seen-v1");
         const APP_ANNOUNCEMENTS_V66 = [
+          {"version":249,"date":"2026-09-15","publishedAt":"2026-09-14T19:15:50.424Z","title":"候補を選んでから保存先を指定できます","body":"問題生成の候補は、保存先を決める前でも選択できます。未選択の場合は追加時に保存先へ案内し、選択した候補は保持します。追加時の権限・重複・収録上限の確認は引き続き行います。"},
           {"version":248,"date":"2026-09-15","publishedAt":"2026-09-14T18:25:23.350Z","title":"NAGA問題を画像撮影なしで生成","body":"新しく生成するNAGA問題は局面データから盤面を再現します。撮影待ちや問題画像のアップロードが不要になりました。既存の画像問題は引き続き利用できます。"},
           {"version":247,"date":"2026-09-15","publishedAt":"2026-09-14T15:56:47.218Z","title":"時刻表記をすっきり整えました","body":"問題集の最終更新日時と生成日の補足表示からJSTの表記を取り除きました。引き続き日本時間で表示します。"},
           { version: 246, date: "2026-09-14", publishedAt: "2026-09-14T23:32:00+09:00", title: "問題の生成日と、本棚の更新状況がわかるようになりました", body: "問題一覧と問題画面に生成日を表示します。本棚では選択した本の最終更新日を確認でき、7日以内に更新された本には「更新」マークが付きます。問題の追加・編集や問題集情報の変更が対象で、回答・閲覧は含みません。日付の記録がない場合は「不明」と表示します。" },
@@ -5850,6 +5851,17 @@
         return Boolean(supabaseSessionV46 && (destination.row?.can_edit || destination.row?.can_manage));
       }
 
+      function explainGeneratorSaveBlockedV249() {
+        const select = document.getElementById("generatorDestinationSelect");
+        if (currentGeneratorDestinationV130().kind === "unselected" && !select?.value) {
+          setGeneratorStatusV44("選択した候補はそのまま残っています。追加する保存先を選んでください。", true);
+          select?.scrollIntoView({ block: "center" });
+          select?.focus({ preventScroll: true });
+          return;
+        }
+        setGeneratorStatusV44("この保存先へ追加するには、問題集の編集メンバー以上の権限が必要です。保存先を確認してください。", true);
+      }
+
       function generatorDestinationOptionsV130() {
         const rows = generatorDestinationRowsV130();
         const currentSlug = String(sharedCollectionV46?.share_slug || "");
@@ -5872,7 +5884,7 @@
         const destination = currentGeneratorDestinationV130();
         const rows = generatorDestinationRowsV130();
         const note = destination.kind === "unselected"
-          ? "アプリ全体の問題生成です。保存先を選んでください。学習中の本へ自動で追加することはありません。"
+          ? "候補は先に選べます。追加するときに保存先を指定してください。学習中の本へ自動で追加することはありません。"
           : destination.kind === "shared"
           ? `この問題集の編集メンバーとして、問題の追加・編集・整理ができます。追加内容は利用者全員に反映されます。`
           : rows.length
@@ -9084,7 +9096,7 @@
           : builder;
         const description = unavailable
           ? '既存の問題は、問題画面の「自分の問題集にインポート」から、保存先の本を選んで追加できます。'
-          : "保存先とNAGA URLを指定し、候補を確認してから追加します。";
+          : "NAGA URLから候補を確認・選択し、保存先を指定して追加します。保存先は先に選ぶこともできます。";
         return `<section class="generator-panel" aria-busy="${generatorBusyV159}"><div class="generator-heading"><div><h3>問題を追加する</h3><p>${description}</p></div></div>${content}</section>`;
       }
 
@@ -9108,13 +9120,34 @@
         }).join("");
       }
 
+      function generatorCandidateStateV249(candidate, destination = currentGeneratorDestinationV130()) {
+        const destinationKey = destination.kind === "shared" ? destination.shareSlug : destination.kind;
+        const sameAsCurrentShared = destination.kind === "shared" && String(destination.shareSlug) === String(sharedCollectionV46?.share_slug || "");
+        const duplicateKey = `${candidate.id}::${destinationKey}`;
+        const duplicate = ((destination.kind === "local" || sameAsCurrentShared) && questionsV16.some(question => question.id === candidate.id)) || generatorAddedKeysV130.has(duplicateKey) || generatorDuplicateKeysV153.has(duplicateKey);
+        return { duplicate, duplicateKey, boardReady: hasJsonBoardV248(candidate) };
+      }
+
+      function selectedGeneratorCandidateIndexesV249() {
+        return [...generatorSelectedCandidatesV158].filter(index => {
+          const candidate = generatorCandidatesV44[index];
+          if (!candidate) return false;
+          const state = generatorCandidateStateV249(candidate);
+          return state.boardReady && !state.duplicate;
+        }).sort((left, right) => left - right);
+      }
+
       function renderGeneratorBatchToolbarV158() {
+        const destination = currentGeneratorDestinationV130();
         const canAdd = canAddGeneratedQuestionV130();
-        const selectedCount = [...generatorSelectedCandidatesV158].filter(index => generatorCandidatesV44[index]).length;
+        const selectedCount = selectedGeneratorCandidateIndexesV249().length;
         const hasBatch = generatorCandidatesV44.length > 1;
         const previewButton = hasBatch ? `<button class="generator-button secondary" type="button" data-generator-capture-all${generatorPreviewBatchBusyV158 ? " disabled" : ""}>${generatorPreviewBatchBusyV158 ? "プレビューを読込中…" : "プレビューを読み込む"}</button>` : "";
-        const addButton = `<button class="generator-button" type="button" data-generator-add-selected${selectedCount === 0 || !canAdd ? " disabled" : ""}>選択した${selectedCount}問を追加</button>`;
-        return `<div class="generator-results-toolbar"><span><strong>${generatorCandidatesV44.length}件</strong>の候補</span><div class="generator-results-actions">${previewButton}${addButton}</div></div>`;
+        const needsDestination = destination.kind === "unselected";
+        const addLabel = needsDestination && selectedCount > 0 ? `保存先を選んで${selectedCount}問を追加` : `選択した${selectedCount}問を追加`;
+        const addButton = `<button class="generator-button" type="button" data-generator-add-selected${selectedCount === 0 || (!needsDestination && !canAdd) ? " disabled" : ""}>${addLabel}</button>`;
+        const note = needsDestination ? '<p class="generator-destination-note">候補は先に選べます。追加するときに保存先を指定してください。</p>' : "";
+        return `<div class="generator-results-toolbar"><span><strong>${generatorCandidatesV44.length}件</strong>の候補</span><div class="generator-results-actions">${previewButton}${addButton}</div></div>${note}`;
       }
 
       function renderGeneratorCandidatesV44() {
@@ -9124,22 +9157,19 @@
         });
         return `${renderGeneratorBatchToolbarV158()}<div class="generator-candidate-grid">${generatorCandidatesV44.map((candidate, index) => {
           const destination = currentGeneratorDestinationV130();
-          const destinationKey = destination.kind === "shared" ? destination.shareSlug : "local";
-          const sameAsCurrentShared = destination.kind === "shared" && String(destination.shareSlug) === String(sharedCollectionV46?.share_slug || "");
-          const duplicateKey = `${candidate.id}::${destinationKey}`;
-          const duplicate = ((destination.kind === "local" || sameAsCurrentShared) && questionsV16.some(question => question.id === candidate.id)) || generatorAddedKeysV130.has(duplicateKey) || generatorDuplicateKeysV153.has(duplicateKey);
+          const { duplicate, duplicateKey, boardReady } = generatorCandidateStateV249(candidate, destination);
           const badModels = candidate.badMoveModels?.length ? ` ／ ${candidate.badMoveModels.map(escapeHtml).join("・")}が${Number(candidate.badMoveThresholdPercent || 5)}%以下` : "";
           const canAdd = canAddGeneratedQuestionV130();
-          const addLabel = !canAdd ? "編集権限が必要" : destination.kind === "shared" ? `${escapeHtml(destination.label)}へ追加` : "この端末へ追加";
+          const needsDestination = destination.kind === "unselected";
+          const addLabel = needsDestination ? "保存先を選ぶ" : !canAdd ? "編集権限が必要" : destination.kind === "shared" ? `${escapeHtml(destination.label)}へ追加` : "この端末へ追加";
           const duplicateLabel = generatorDuplicateKeysV153.has(duplicateKey) ? "既に登録済み" : "追加済み";
-          const boardReady = hasJsonBoardV248(candidate);
           const preview = boardReady ? `<div class="candidate-preview"><div class="naga-json-board">${window.NagaBoardV248.markup(candidate.boardScene)}</div></div>` : `<div class="candidate-preview candidate-preview-empty">盤面の確認が必要です</div>`;
           const captureState = boardReady ? "JSON盤面・画像撮影なし" : candidate._captureError || "盤面を再現してください";
           const captureErrorClass = candidate._captureError && !boardReady ? " is-error" : "";
           const captureLabel = boardReady ? "盤面を再描画" : "盤面を再現";
-          const addDisabled = duplicate || !canAdd || !boardReady;
+          const addDisabled = duplicate || (!needsDestination && !canAdd) || !boardReady;
           const checked = generatorSelectedCandidatesV158.has(index) ? " checked" : "";
-          const selectionDisabled = duplicate || !canAdd || !boardReady ? " disabled" : "";
+          const selectionDisabled = duplicate || !boardReady ? " disabled" : "";
           return `<article class="generator-candidate${duplicate ? " is-duplicate" : ""}"><div class="candidate-header"><label class="candidate-select"><input type="checkbox" data-generator-select="${index}"${checked}${selectionDisabled}><span>選択</span></label><div><div class="candidate-title">${escapeHtml(candidate.playerName || `プレイヤー${Number(candidate.playerSeat ?? candidate.tw ?? 0) + 1}`)}<span class="candidate-title-sub">${escapeHtml(candidate.title || `局${Number(candidate.ts || 0) + 1}・操作${candidate.tv}`)} ／ ${escapeHtml(questionTypeV44(candidate))}</span></div>${candidate.isBadMove ? `<div class="candidate-meta">悪手候補${badModels}</div>` : ""}</div></div><div class="candidate-body"><div class="candidate-preview-column"><div class="candidate-controls">${preview}<span class="candidate-capture-state${captureErrorClass}">${escapeHtml(captureState)}</span><div class="candidate-actions"><button class="generator-button secondary" type="button" data-generator-capture="${index}"${candidate._captureState === "loading" ? " disabled" : ""}>${captureLabel}</button><button class="generator-button${duplicate || !canAdd ? " secondary" : ""}" type="button" data-generator-add="${index}"${addDisabled ? " disabled" : ""}>${duplicate ? duplicateLabel : addLabel}</button></div></div></div><div class="candidate-analysis-column"><div class="candidate-analysis-heading">プレイヤーとAIの選択</div><div class="candidate-choice-row">${generatorCandidateChoiceMarkupV158(candidate)}${generatorCandidateModelsMarkupV158(candidate)}</div></div></div></article>`;
         }).join("")}</div>`;
       }
@@ -9996,6 +10026,7 @@
           if (results) {
             results.innerHTML = renderGeneratorCandidatesV44();
             bindGeneratorCandidateInputsV44();
+            results.querySelector(`[data-generator-select="${index}"]`)?.focus({ preventScroll: true });
           }
         }));
         document.querySelectorAll("[data-generator-capture]").forEach(button => button.addEventListener("click", () => captureGeneratorCandidateV51(Number(button.dataset.generatorCapture))));
@@ -10037,15 +10068,13 @@
       }
 
       async function addSelectedGeneratorQuestionsV158() {
-        const indexes = [...generatorSelectedCandidatesV158]
-          .filter(index => generatorCandidatesV44[index])
-          .sort((left, right) => left - right);
+        const indexes = selectedGeneratorCandidateIndexesV249();
         if (!indexes.length) {
           setGeneratorStatusV44("追加する候補を選択してください。", true);
           return;
         }
         if (!canAddGeneratedQuestionV130()) {
-          setGeneratorStatusV44("この保存先へ追加するには、問題集の編集メンバー以上の権限が必要です。", true);
+          explainGeneratorSaveBlockedV249();
           return;
         }
         const destination = currentGeneratorDestinationV130();
@@ -10083,7 +10112,7 @@
         if (!prepareJsonBoardV248(candidate)) { setGeneratorStatusV44(candidate._captureError, true); return false; }
         const destination = currentGeneratorDestinationV130();
         if (!canAddGeneratedQuestionV130()) {
-          setGeneratorStatusV44("この保存先へ追加するには、問題集の編集メンバー以上の権限が必要です。", true);
+          explainGeneratorSaveBlockedV249();
           return false;
         }
         const destinationKey = destination.kind === "shared" ? destination.shareSlug : "local";
