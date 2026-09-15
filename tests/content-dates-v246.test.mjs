@@ -7,7 +7,7 @@ import {readRpc} from '../cloudflare/read-api.mjs';
 import {builderRpc} from '../cloudflare/collection-builder-v235.mjs';
 const read = file => fs.readFileSync(new URL('../'+file,import.meta.url),'utf8');
 const dateSource=read('public/content-dates-v246.js'),html=read('public/index.html');
-function datesContext(){const ctx=vm.createContext({window:{},Date,Intl});vm.runInContext(dateSource,ctx);return ctx;}
+function datesContext(){const ctx=vm.createContext({window:{},Date,Intl,queueMicrotask});vm.runInContext(dateSource,ctx);return ctx;}
 const dates=datesContext().window.MinkiruContentDatesV246;
 
 test('recorded dates stay in Japan time without a timezone suffix, reject invalid values and never invent a current date',()=>{
@@ -91,6 +91,7 @@ test('bookshelf displays recent content badges, exact dates and unknown values w
   const render=current=>library.render({collections,userId:'owner',current:{share_slug:current}});
   const recent=render('new');
   assert.equal((recent.match(/class="library-update-marker-v246"/g)||[]).length,1);
+  assert.doesNotMatch(recent,/class="library-current-marker"/,'one marker above the current spine, without overlapping labels');
   assert.match(recent,/最終更新日/);assert.match(recent,/7日以内に更新/);
   assert.ok(recent.indexOf('data-library-book="new"')<recent.indexOf('data-library-book="old"'));
   assert.match(render('old'),/2020\/01\/01 09:00<\/time>/);
@@ -100,7 +101,7 @@ test('bookshelf displays recent content badges, exact dates and unknown values w
 });
 
 test('app wiring renders dates in lists and questions without polls or guessed timestamps',()=>{
-  assert.match(html,/content-dates-v246\.js\?v=256/);assert.match(html,/content-dates-v246\.css\?v=256/);
+  assert.match(html,/content-dates-v246\.js\?v=257/);assert.match(html,/content-dates-v246\.css\?v=257/);
   assert.match(html,/id="questionCreatedDateV246"/);
   assert.match(html,/class="question-created-v246">\$\{questionCreatedMarkupV246\(question\)\}/);
   const normalize=html.match(/      function normalizeSharedQuestionV66\([^]*?\n      \}/)[0];
@@ -114,4 +115,43 @@ test('app wiring renders dates in lists and questions without polls or guessed t
   assert.equal(full.question.createdAt,index.question.createdAt);
   assert.equal(ctx.normalizeSharedQuestionV66({id:'unknown'}).question.createdAt,null);
   assert.doesNotMatch(dateSource,/fetch\(|setInterval\(|localStorage|sessionStorage/);
+});
+
+test('V257 opening acknowledges only that book revision, persists across reload and shows later updates again',async()=>{
+  const ctx=datesContext();vm.runInContext(read('public/library-v214.js'),ctx);
+  const stored=new Map();const now=Date.now();
+  const collections=['a','b'].map(share_slug=>({share_slug,title:share_slug,can_view:true,content_updated_at:new Date(now-60000).toISOString()}));
+  const options={onOpen:async()=>true,loadSeenUpdates:user=>stored.get(user)||[],saveSeenUpdates:(user,entries)=>stored.set(user,JSON.parse(JSON.stringify(entries)))};
+  let library=ctx.window.MinkiruLibraryV214.create(options);
+  const render=(user='owner')=>library.render({collections,userId:user});
+  const badges=markup=>(markup.match(/class="library-update-marker-v246"/g)||[]).length;
+  assert.equal(badges(render()),2);assert.equal(stored.size,0,'render/selection does not acknowledge');
+  assert.equal(await library.openBook('a'),true);assert.equal(badges(render()),1);
+  assert.doesNotMatch(render().match(/<section class="library-detail"[^]*?<\/section>/)[0],/7日以内に更新/);
+  library=ctx.window.MinkiruLibraryV214.create(options);assert.equal(badges(render()),1);
+  assert.equal(badges(render('other-user')),2);assert.equal(badges(render()),1);
+  collections[0].content_updated_at=new Date(now-1000).toISOString();assert.equal(badges(render()),2);
+  assert.equal(stored.get('owner')[0][1],now-60000,'record observed content timestamp, not wall-clock time');
+});
+
+test('V257 failed or forbidden opens and account changes do not clear an update marker',async()=>{
+  const ctx=datesContext();vm.runInContext(read('public/library-v214.js'),ctx);
+  const row={share_slug:'a',title:'a',can_view:true,content_updated_at:new Date(Date.now()-60000).toISOString()};
+  for(const onOpen of [()=>false,()=>{throw Error('failed');}]){
+    let writes=0;const library=ctx.window.MinkiruLibraryV214.create({onOpen,saveSeenUpdates:()=>writes++});
+    library.render({collections:[row],userId:'owner'});assert.equal(await library.openBook('a'),false);
+    assert.match(library.render({collections:[row],userId:'owner'}),/library-update-marker-v246/);assert.equal(writes,0);
+  }
+  let finish,writes=0;const library=ctx.window.MinkiruLibraryV214.create({onOpen:()=>new Promise(resolve=>finish=resolve),saveSeenUpdates:()=>writes++});
+  library.render({collections:[row],userId:'owner'});const opening=library.openBook('a');
+  library.render({collections:[row],userId:'other'});finish(true);await opening;assert.equal(writes,0);
+  assert.match(library.render({collections:[row],userId:'other'}),/library-update-marker-v246/);
+});
+
+test('V257 update marker sits above the spine without moving its title, and storage is account-scoped',()=>{
+  const css=read('public/content-dates-v246.css');
+  assert.match(css,/bottom:calc\(100% \+ 7px\)/);
+  assert.doesNotMatch(css,/\.library-book:has\(.library-update-marker/);
+  assert.match(html,/library-seen-updates-v257:\$\{userId\}/);
+  assert.match(html,/saveSeenUpdates: \(userId, entries\) => \{\s*if \(!userId \|\| String\(supabaseSessionV46\?\.user\?\.id \|\| ""\) !== userId\) return;/);
 });
