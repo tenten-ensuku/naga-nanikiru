@@ -38,6 +38,7 @@ jobs:
       - run: node --test tests/question-header-v250.test.mjs
       - run: node --test tests/announcement-v251.test.mjs
       - run: node --test tests/study-session-v253.test.mjs
+      - run: node --test tests/create-book-v255.test.mjs
       - run: node --test tests/generation-v241.test.mjs tests/generation-confirm-v241.test.mjs
       - run: node --test tests/discord-sync-v242.test.mjs tests/question-deep-link-v242.test.mjs
       - run: npm run test:media

@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=254">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=254">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=254">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=255">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=255">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=255">
   <title>みん切る｜みんなの何切る問題集</title>
   <link rel="preload" as="image" href="assets/loading-screen-v243.png" fetchpriority="high">
   <meta name="description" content="みん切るは、NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリです。">
@@ -2244,17 +2244,18 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=254">
-  <link rel="stylesheet" href="library-v214.css?v=254">
-  <link rel="stylesheet" href="navigation-v234.css?v=254">
-  <link rel="stylesheet" href="book-builder-v235.css?v=254">
-  <link rel="stylesheet" href="menu-polish-v238.css?v=254">
-  <link rel="stylesheet" href="menu-sections-v239.css?v=254">
-  <link rel="stylesheet" href="workspace-ui-v240.css?v=254">
-  <link rel="stylesheet" href="collection-deletion-v244.css?v=254">
-  <link rel="stylesheet" href="menu-simplify-v245.css?v=254">
-  <link rel="stylesheet" href="content-dates-v246.css?v=254">
-  <link rel="stylesheet" href="question-header-v250.css?v=254">
+  <link rel="stylesheet" href="ux-v159.css?v=255">
+  <link rel="stylesheet" href="library-v214.css?v=255">
+  <link rel="stylesheet" href="navigation-v234.css?v=255">
+  <link rel="stylesheet" href="book-builder-v235.css?v=255">
+  <link rel="stylesheet" href="menu-polish-v238.css?v=255">
+  <link rel="stylesheet" href="menu-sections-v239.css?v=255">
+  <link rel="stylesheet" href="workspace-ui-v240.css?v=255">
+  <link rel="stylesheet" href="collection-deletion-v244.css?v=255">
+  <link rel="stylesheet" href="menu-simplify-v245.css?v=255">
+  <link rel="stylesheet" href="content-dates-v246.css?v=255">
+  <link rel="stylesheet" href="question-header-v250.css?v=255">
+  <link rel="stylesheet" href="question-toolbar-v255.css?v=255">
 </head>
 <body class="auth-gate-open">
   <section class="startup-screen-v236" id="startupScreenV236" aria-label="みん切るを準備中">
@@ -2360,17 +2361,20 @@
     <header class="header">
       <div>
         <p class="eyebrow" id="questionBreadcrumb">問題集 › 最近の回答履歴</p>
-        <h1 id="questionPageTitle" aria-label="何切る？"><span class="question-title-picker-v250" title="問題番号を選んで移動"><span id="questionTitleNumberV250" aria-hidden="true">問題</span><span class="question-title-chevron-v250" aria-hidden="true">▾</span><select id="questionSelect" aria-label="問題を選ぶ"></select></span><span id="questionTitleTypeV250">何切る？</span></h1>
         <p class="question-created-v246" id="questionCreatedDateV246"></p>
       </div>
       <div class="version" id="versionLabel"></div>
     </header>
 
     <div class="source-bar">
-      <label class="model-control" title="正誤判定に使うNAGAモデルを選びます">正誤判定基準 <select id="modelSelect" aria-label="正誤判定基準"></select></label>
-      <button class="menu-button" id="menuButton" type="button" aria-label="問題一覧へ戻る" title="この本の問題一覧へ戻ります"><span class="question-toolbar-label-full">問題一覧へ戻る</span><span class="question-toolbar-label-short" aria-hidden="true">一覧へ</span></button>
-      <details class="question-more-v250" id="questionMoreV250"><summary aria-label="その他の操作" title="NAGA URL・インポート"><span aria-hidden="true">…</span></summary><div class="question-more-panel-v250"><a class="source-link" id="nagaSourceLink" href="#" target="_blank" rel="noopener noreferrer" aria-label="局面NAGAURLに移動" title="元のNAGA局面を別タブで開きます">局面NAGAURLに移動 <span aria-hidden="true">↗</span></a><button class="import-question-button" id="importQuestionButton" type="button" aria-label="自分の問題集にインポート" title="この問題を、自分が編集できる問題集へコピーします" hidden>自分の問題集にインポート</button></div></details>
+      <div class="question-toolbar-v255" role="group" aria-label="問題の操作（狭い画面では横にスクロールできます）">
+      <h1 id="questionPageTitle" aria-label="何切る？"><span class="question-title-picker-v250" title="問題番号を選んで移動"><span id="questionTitleNumberV250" aria-hidden="true">問題</span><span class="question-title-chevron-v250" aria-hidden="true">▾</span><select id="questionSelect" aria-label="問題を選ぶ"></select></span><span id="questionTitleTypeV250">何切る？</span></h1>
+      <label class="model-control" title="正誤判定に使うNAGAモデルを選びます"><span class="sr-only">正誤基準</span><select id="modelSelect" aria-label="正誤判定基準"></select></label>
+      <a class="source-link" id="nagaSourceLink" href="#" target="_blank" rel="noopener noreferrer" aria-label="局面NAGAURLに移動" title="元のNAGA局面を別タブで開きます"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6m0-6L10 14M10 5H5v14h14v-5"/></svg><span>NAGA URL</span></a>
+      <button class="import-question-button" id="importQuestionButton" type="button" aria-label="自分の問題集にインポート" title="この問題を、自分が編集できる問題集へコピーします" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H4v14h3m1-9h12v13H8zM11 13h6m-6 4h4"/></svg><span>インポート</span></button>
+      <button class="menu-button" id="menuButton" type="button" aria-label="問題一覧へ戻る" title="この本の問題一覧へ戻ります"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m10 6-6 6 6 6M4 12h16"/></svg><span class="question-toolbar-label-full sr-only">問題一覧へ戻る</span><span class="question-toolbar-label-short" aria-hidden="true">戻る</span></button>
       <button class="next-button" id="nextQuestionButton" type="button" title="現在の出題順に従って次の問題へ進みます" hidden>次の問題へ</button>
+      </div>
     </div>
 
     <div class="session-strip" id="sessionStrip" aria-live="polite" hidden>
@@ -2608,27 +2612,27 @@
   </dialog>
 
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=254"></script>
-  <script src="drill-ux-v44.js?v=254"></script>
-  <script src="navigation-v234.js?v=254"></script>
-  <script src="book-builder-v235.js?v=254"></script>
-  <script src="library-order-v215.js?v=254"></script>
-  <script src="content-dates-v246.js?v=254"></script>
-  <script src="question-header-v250.js?v=254"></script>
-  <script src="library-v214.js?v=254"></script>
-  <script src="naga-generator-v44.js?v=254"></script>
-  <link rel="stylesheet" href="naga-board-v248.css?v=254">
-  <script src="naga-board-state-v248.js?v=254"></script>
-  <script src="naga-board-v248.js?v=254"></script>
-  <script src="hand-mask-v237.js?v=254"></script>
-  <script src="menu-sections-v239.js?v=254"></script>
-  <script src="workspace-ui-v240.js?v=254"></script>
-  <script src="generation-confirm-v241.js?v=254"></script>
-  <script src="collection-deletion-v244.js?v=254"></script>
+  <script src="supabase-sync-v48.js?v=255"></script>
+  <script src="drill-ux-v44.js?v=255"></script>
+  <script src="navigation-v234.js?v=255"></script>
+  <script src="book-builder-v235.js?v=255"></script>
+  <script src="library-order-v215.js?v=255"></script>
+  <script src="content-dates-v246.js?v=255"></script>
+  <script src="question-header-v250.js?v=255"></script>
+  <script src="library-v214.js?v=255"></script>
+  <script src="naga-generator-v44.js?v=255"></script>
+  <link rel="stylesheet" href="naga-board-v248.css?v=255">
+  <script src="naga-board-state-v248.js?v=255"></script>
+  <script src="naga-board-v248.js?v=255"></script>
+  <script src="hand-mask-v237.js?v=255"></script>
+  <script src="menu-sections-v239.js?v=255"></script>
+  <script src="workspace-ui-v240.js?v=255"></script>
+  <script src="generation-confirm-v241.js?v=255"></script>
+  <script src="collection-deletion-v244.js?v=255"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 254;
+    const APP_VERSION = 255;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -4547,7 +4551,7 @@
         const back = document.getElementById("menuButton");
         back.setAttribute("aria-label", originLabel); back.title = originLabel;
         back.querySelector(".question-toolbar-label-full").textContent = originLabel;
-        back.querySelector(".question-toolbar-label-short").textContent = questionOriginViewV234 === "today" ? "学習へ" : questionOriginViewV234 === "analysis" ? "成績へ" : questionOriginViewV234 === "session" ? "結果へ" : "一覧へ";
+        back.querySelector(".question-toolbar-label-short").textContent = "戻る";
       }
 
       function isLegacyGeneratedQuestionCommentV220(message) {
@@ -4683,6 +4687,7 @@
       const QUESTION_NOTICE_STORAGE_KEY_V66 = storageKey("question-notices-v1");
         const ANNOUNCEMENT_SEEN_STORAGE_KEY_V65 = storageKey("announcement-seen-v1");
         const APP_ANNOUNCEMENTS_V66 = [
+          {"version":255,"date":"2026-09-15","publishedAt":"2026-09-15T11:34:55.391Z","title":"保存先から問題集を作成・問題画面の操作を1行に整理","body":"保存先の横の「＋新しい問題集」から名前と色を設定し、作成した本へそのまま保存できます。問題画面は番号・判断種別・判定モデル・NAGA URL・インポート・戻るを、本棚に揃えた一列にまとめました。狭い画面では操作列を横に送れます。"},
           {"version":254,"date":"2026-09-15","publishedAt":"2026-09-15T10:43:14.808Z","title":"前回の学習カードから、そのまま続きを再開","body":"独立した再開ボタンをなくし、前回使った学習カードに「前回の続き・○問目から」と表示します。そのカードを押すだけで、保存した順番の続きへ戻れます。問題数での区切りはなく、いつでも中断・再開できます。"},
           {"version":253,"date":"2026-09-15","publishedAt":"2026-09-15T09:26:31.099Z","title":"10問の区切りをなくし、いつでも中断・再開できるようにしました","body":"未回答・苦手克服・全問などの学習は、10問で終了せず対象の問題を続けて解けます。「中断して保存」で、この端末に問題集ごとの進捗を保存。日付が変わっても「続きから再開」で戻れます。回答済みの問題は次へ、未回答の問題はその問題から再開します。"},
           {"version":252,"date":"2026-09-15","publishedAt":"2026-09-15T08:58:54.044Z","title":"初めての方もDiscordでログインできるようになりました","body":"復旧作業時に残っていた新規登録の停止設定を解除しました。初めてご利用になる方もDiscordからログインできます。各問題集の公開範囲や閲覧・編集権限はこれまでどおりです。"},
@@ -5897,7 +5902,7 @@
           : rows.length
             ? "共有先を選ぶと、その問題集に保存されます。閲覧だけの問題集は保存先に表示されません。"
             : "共有問題集へ追加する場合は、先に問題集を作成するか編集メンバーとして承認されてください。";
-        return `<div class="generator-destination"><label for="generatorDestinationSelect">保存先問題集<select id="generatorDestinationSelect" aria-label="問題生成の保存先" required>${options}</select></label><p data-generator-destination-note>${escapeHtml(note)}</p>${generatorEntryV234 === "book" ? `<p class="navigation-scope-note-v234">「この本に追加」から開いています。入力済みの下書きがある場合は、その保存先を維持しています。</p>` : ""}</div>`;
+        return `<div class="generator-destination"><div class="generator-destination-choice-v255"><label for="generatorDestinationSelect">保存先問題集<select id="generatorDestinationSelect" aria-label="問題生成の保存先" required>${options}</select></label><button type="button" class="book-create-open-v255" id="bookCreateOpenV255" aria-haspopup="dialog" aria-controls="bookCreateDetailsV235">＋新しい問題集</button></div><p data-generator-destination-note>${escapeHtml(note)}</p>${generatorEntryV234 === "book" ? `<p class="navigation-scope-note-v234">「この本に追加」から開いています。入力済みの下書きがある場合は、その保存先を維持しています。</p>` : ""}${renderCreateHubV235()}</div>`;
       }
 
       function renderImportQuestionButtonV115() {
@@ -5988,8 +5993,22 @@
       let bookCreateDraftV235 = null;
       let capacityRequestV235 = 0;
       function renderCreateHubV235() {
-        const icon = window.MinkiruMenuV239?.icon || (() => "");
-        return `<section class="create-hub-v235"><details id="bookCreateDetailsV235"${bookCreateDraftV235?.open ? " open" : ""}><summary>${icon("book-open")}<span><strong>新しい問題集をつくる</strong><small>名前と色を決めて、空の一冊を用意します。</small></span>${icon("chevron-right")}</summary>${collectionCreateFormMarkupV106("bookCreateV235")}</details></section>`;
+        return `<dialog class="create-hub-v235 book-create-dialog-v255" id="bookCreateDetailsV235" aria-labelledby="bookCreateHeadingV255"><div class="book-create-heading-v255"><h3 id="bookCreateHeadingV255">新しい問題集</h3><button type="button" id="bookCreateCloseV255" aria-label="問題集の作成を閉じる">閉じる</button></div><p>名前と色を決めて一冊をつくります。作成後は、この本が保存先に選ばれます。</p>${collectionCreateFormMarkupV106("bookCreateV235")}</dialog>`;
+      }
+
+      function bindBookCreateDialogV255(remember) {
+        const dialog = document.getElementById("bookCreateDetailsV235");
+        const opener = document.getElementById("bookCreateOpenV255");
+        if (!dialog || !opener) return;
+        const open = () => {
+          if (!dialog.open) dialog.showModal();
+          remember();
+          document.getElementById("bookCreateV235Title")?.focus();
+        };
+        opener.addEventListener("click", open);
+        document.getElementById("bookCreateCloseV255").addEventListener("click", () => dialog.close());
+        dialog.addEventListener("close", () => { remember(); if (opener.isConnected) opener.focus(); });
+        if (bookCreateDraftV235?.open) open();
       }
       async function refreshBookCapacityV235() {
         const container = document.getElementById("bookCapacityV235");
@@ -6229,6 +6248,7 @@
         }; };
         form.addEventListener("input", remember); form.addEventListener("change", remember);
         document.getElementById("bookCreateDetailsV235")?.addEventListener("toggle", remember);
+        if (prefix === "bookCreateV235") bindBookCreateDialogV255(remember);
         form.addEventListener("submit", async event => {
           event.preventDefault();
           const title = String(document.getElementById(`${prefix}Title`)?.value || "").trim();
@@ -6255,8 +6275,14 @@
             if (prefix === "bookCreateV235") {
               await refreshCollectionAccessStateV100();
               generatorDestinationV130 = shareSlug; generatorDestinationExplicitV157 = true;
+              const destinationSelect = document.getElementById("generatorDestinationSelect");
+              if (destinationSelect) {
+                destinationSelect.innerHTML = generatorDestinationOptionsV130();
+                destinationSelect.value = shareSlug;
+              }
               persistGeneratorFormDraftV157(); renderMenuCardsV16();
               setGeneratorStatusV44(`「${title}」を作成し、保存先に選びました。本棚にも表示されます。`);
+              document.getElementById("generatorDestinationSelect")?.focus();
             } else navigateToCollectionV106(shareSlug);
           } catch (error) {
             status.classList.add("is-error");
@@ -8625,7 +8651,6 @@
           saveUserStateV16();
         }
         document.getElementById("questionSelect").value = String(index);
-        questionHeaderV250.close();
         document.getElementById("menuPanel").hidden = true;
         document.querySelector(".page").classList.remove("menu-active");
         applyDesktopLayoutV70();
@@ -9573,7 +9598,7 @@
           return;
         }
         if (menuViewV16 === "generator") {
-          grid.innerHTML = renderGeneratorViewV44() + renderCreateHubV235();
+          grid.innerHTML = renderGeneratorViewV44();
           grid.style.display = "block";
           empty.hidden = true;
           bindGeneratorV44();
