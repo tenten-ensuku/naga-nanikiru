@@ -28,7 +28,7 @@ function setup(count=24){
   context.showMenuV16=view=>context.shown.push(view);
   context.saveUserStateV16=()=>{context.saved=copy(context.userStateV16);return true;};
   vm.runInContext(['sessionQuestionIndexV167','sessionBelongsToCurrentCollectionV167','activeSessionV44',
-    'resumableSessionV253','sessionResumeCursorV253','extendLegacySessionV253','pauseSessionV253',
+    'resumableSessionV253','sessionResumeCursorV253','extendLegacySessionV253','pauseSessionV253','returnFromQuestionV256',
     'normalizedQueueKeysV44','startSessionV44','completeSessionV44','advanceQuestionV44','nextButtonLabelV44',
     'learningCardSessionV254','learningResumeLabelV254','sessionModeLabelV44','startLearningSessionV189',
     'renderLearningActionButtonV194','syncLearningActionCountsV189'].map(source).join('\n'),context);
@@ -112,13 +112,22 @@ test('storage failure does not claim that progress was saved or navigate away',(
   assert.deepEqual(c.shown,[]);assert.match(alerts[0],/保存できませんでした/);
 });
 
-test('the pause action is touch-sized, returns to study home, and does not fetch a whole book',()=>{
-  assert.match(html,/sessionExitButton"\)\.addEventListener\("click", pauseSessionV253\)/);
-  assert.match(html,/\.session-exit \{ min-height: 44px/);
+test('V256 removes the progress strip and uses the existing back action to pause without a new control',()=>{
+  assert.doesNotMatch(html,/sessionStrip|sessionProgressLabel|sessionProgressFill|sessionExitButton|renderSessionProgressV44|class="session-strip"/);
+  assert.match(html,/menuButton"\)\.addEventListener\("click", returnFromQuestionV256\)/);
   assert.match(html,/この端末に保存・日付が変わっても再開できます/);
   assert.match(source('startSessionV44'),/ensureSharedQuestionIndexAllV177/);
   assert.doesNotMatch(source('startSessionV44'),/ensureSharedQuestionDetail/);
   assert.match(source('openQuestionV16'),/await ensureSharedQuestionDetailV170\(requestedQuestion, index\)/);
+});
+
+test('V256 back saves an active run and resumes the next unanswered question, or preserves the non-session origin',()=>{
+  const c=setup();c.startSessionV44('unanswered',c.questionsV16);const session=c.activeSessionV44();
+  session.cursor=3;session.results=[{questionKey:'q-3',scoreMark:'〇'}];
+  c.returnFromQuestionV256();assert.equal(session.status,'paused');assert.equal(session.cursor,4);
+  assert.deepEqual(c.shown,['today']);assert.equal(c.saved.sessions[session.id].cursor,4);
+  c.startLearningSessionV189('unanswered');assert.equal(c.activeSessionV44().id,session.id);assert.equal(c.opened.at(-1).index,4);
+  c.userStateV16.activeSessionId=null;c.questionOriginViewV234='my';c.returnFromQuestionV256();assert.equal(c.shown.at(-1),'my');
 });
 
 test('V254 annotates only the previous card without adding a resume control',()=>{

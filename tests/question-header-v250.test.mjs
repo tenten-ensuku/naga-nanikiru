@@ -25,7 +25,7 @@ function fixture(){
 
 test('V255 one native question selector and all actions share the same toolbar',()=>{
   const title=html.match(/<h1 id="questionPageTitle"[^]*?<\/h1>/)?.[0];
-  const toolbar=html.match(/<div class="source-bar">[^]*?<div class="session-strip"/)?.[0];
+  const toolbar=html.match(/<div class="source-bar">[^]*?<section class="scene-card"/)?.[0];
   assert.match(title,/id="questionSelect" aria-label="問題を選ぶ"/);
   assert.equal((html.match(/id="questionSelect"/g)||[]).length,1);
   assert.doesNotMatch(html,/sceneProblemTitle|sourceTitleV16/);
@@ -68,6 +68,6 @@ test('responsive styles preserve touch targets, permission-hidden actions and re
   assert.match(css,/overflow-x: auto/);assert.match(css,/flex-wrap: nowrap/);
   assert.match(css,/@media \(max-width: 800px\)/);
   assert.doesNotMatch(css,/\.(hand|tile|scene|answer|riichi)[-\w]*\s*\{/);
-  assert.match(html,/question-header-v250\.js\?v=255/);
-  assert.match(html,/question-header-v250\.css\?v=255/);
+  assert.match(html,/question-header-v250\.js\?v=256/);
+  assert.match(html,/question-header-v250\.css\?v=256/);
 });

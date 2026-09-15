@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=255">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=255">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=255">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=256">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=256">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=256">
   <title>みん切る｜みんなの何切る問題集</title>
   <link rel="preload" as="image" href="assets/loading-screen-v243.png" fetchpriority="high">
   <meta name="description" content="みん切るは、NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリです。">
@@ -238,12 +238,6 @@
     .notice-dialog-actions { display: flex; justify-content: flex-end; gap: 7px; padding-top: 7px; border-top: 1px solid rgba(255, 255, 255, .1); }
     .notice-dialog-action { min-height: 38px; padding: 7px 10px; color: #10211e; background: #bde7e0; border: 1px solid #d6fff5; border-radius: 6px; font-size: 10px; font-weight: 900; }
     .notice-dialog-action.secondary { color: #e7f8ff; background: #164862; border-color: rgba(113, 183, 255, .55); }
-    .session-strip { display: grid; grid-template-columns: auto minmax(90px, 1fr) auto; align-items: center; gap: 8px; max-width: 860px; width: 100%; box-sizing: border-box; margin: -4px auto 10px; padding: 7px 10px; color: #dffbfb; background: rgba(7,28,43,.94); border: 1px solid rgba(155,232,216,.28); border-radius: 9px; font-size: 10px; font-weight: 800; }
-    .session-strip[hidden] { display: none; }
-    .session-progress-track { height: 5px; overflow: hidden; background: rgba(255,255,255,.12); border-radius: 999px; }
-    .session-progress-fill { display: block; height: 100%; background: linear-gradient(90deg, var(--gold), #9be8d8); border-radius: inherit; transition: width .2s ease; }
-    .session-exit { min-height: 44px; padding: 7px 10px; color: #dffbfb; background: transparent; border: 1px solid rgba(255,255,255,.32); border-radius: 8px; font-size: 12px; white-space: nowrap; cursor: pointer; }
-    @media (max-width: 480px) { .session-strip { grid-template-columns: minmax(0, 1fr) auto; } .session-progress-track { grid-column: 1; grid-row: 2; } .session-exit { grid-column: 2; grid-row: 1 / 3; } }
     .dashboard-grid, .analysis-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
     .stat-card { min-width: 0; padding: 12px; background: rgba(0,0,0,.18); border: 1px solid rgba(255,255,255,.11); border-radius: 10px; }
     .stat-label { display: block; color: var(--muted); font-size: 9px; }
@@ -2244,18 +2238,18 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=255">
-  <link rel="stylesheet" href="library-v214.css?v=255">
-  <link rel="stylesheet" href="navigation-v234.css?v=255">
-  <link rel="stylesheet" href="book-builder-v235.css?v=255">
-  <link rel="stylesheet" href="menu-polish-v238.css?v=255">
-  <link rel="stylesheet" href="menu-sections-v239.css?v=255">
-  <link rel="stylesheet" href="workspace-ui-v240.css?v=255">
-  <link rel="stylesheet" href="collection-deletion-v244.css?v=255">
-  <link rel="stylesheet" href="menu-simplify-v245.css?v=255">
-  <link rel="stylesheet" href="content-dates-v246.css?v=255">
-  <link rel="stylesheet" href="question-header-v250.css?v=255">
-  <link rel="stylesheet" href="question-toolbar-v255.css?v=255">
+  <link rel="stylesheet" href="ux-v159.css?v=256">
+  <link rel="stylesheet" href="library-v214.css?v=256">
+  <link rel="stylesheet" href="navigation-v234.css?v=256">
+  <link rel="stylesheet" href="book-builder-v235.css?v=256">
+  <link rel="stylesheet" href="menu-polish-v238.css?v=256">
+  <link rel="stylesheet" href="menu-sections-v239.css?v=256">
+  <link rel="stylesheet" href="workspace-ui-v240.css?v=256">
+  <link rel="stylesheet" href="collection-deletion-v244.css?v=256">
+  <link rel="stylesheet" href="menu-simplify-v245.css?v=256">
+  <link rel="stylesheet" href="content-dates-v246.css?v=256">
+  <link rel="stylesheet" href="question-header-v250.css?v=256">
+  <link rel="stylesheet" href="question-toolbar-v255.css?v=256">
 </head>
 <body class="auth-gate-open">
   <section class="startup-screen-v236" id="startupScreenV236" aria-label="みん切るを準備中">
@@ -2375,12 +2369,6 @@
       <button class="menu-button" id="menuButton" type="button" aria-label="問題一覧へ戻る" title="この本の問題一覧へ戻ります"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m10 6-6 6 6 6M4 12h16"/></svg><span class="question-toolbar-label-full sr-only">問題一覧へ戻る</span><span class="question-toolbar-label-short" aria-hidden="true">戻る</span></button>
       <button class="next-button" id="nextQuestionButton" type="button" title="現在の出題順に従って次の問題へ進みます" hidden>次の問題へ</button>
       </div>
-    </div>
-
-    <div class="session-strip" id="sessionStrip" aria-live="polite" hidden>
-      <span id="sessionProgressLabel">1 / 10</span>
-      <span class="session-progress-track" aria-hidden="true"><span class="session-progress-fill" id="sessionProgressFill" style="width:10%"></span></span>
-      <button class="session-exit" id="sessionExitButton" type="button" title="この端末に進捗を保存して学習ホームへ戻る">中断して保存</button>
     </div>
 
     <section class="scene-card" aria-label="NAGA局面">
@@ -2612,27 +2600,27 @@
   </dialog>
 
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=255"></script>
-  <script src="drill-ux-v44.js?v=255"></script>
-  <script src="navigation-v234.js?v=255"></script>
-  <script src="book-builder-v235.js?v=255"></script>
-  <script src="library-order-v215.js?v=255"></script>
-  <script src="content-dates-v246.js?v=255"></script>
-  <script src="question-header-v250.js?v=255"></script>
-  <script src="library-v214.js?v=255"></script>
-  <script src="naga-generator-v44.js?v=255"></script>
-  <link rel="stylesheet" href="naga-board-v248.css?v=255">
-  <script src="naga-board-state-v248.js?v=255"></script>
-  <script src="naga-board-v248.js?v=255"></script>
-  <script src="hand-mask-v237.js?v=255"></script>
-  <script src="menu-sections-v239.js?v=255"></script>
-  <script src="workspace-ui-v240.js?v=255"></script>
-  <script src="generation-confirm-v241.js?v=255"></script>
-  <script src="collection-deletion-v244.js?v=255"></script>
+  <script src="supabase-sync-v48.js?v=256"></script>
+  <script src="drill-ux-v44.js?v=256"></script>
+  <script src="navigation-v234.js?v=256"></script>
+  <script src="book-builder-v235.js?v=256"></script>
+  <script src="library-order-v215.js?v=256"></script>
+  <script src="content-dates-v246.js?v=256"></script>
+  <script src="question-header-v250.js?v=256"></script>
+  <script src="library-v214.js?v=256"></script>
+  <script src="naga-generator-v44.js?v=256"></script>
+  <link rel="stylesheet" href="naga-board-v248.css?v=256">
+  <script src="naga-board-state-v248.js?v=256"></script>
+  <script src="naga-board-v248.js?v=256"></script>
+  <script src="hand-mask-v237.js?v=256"></script>
+  <script src="menu-sections-v239.js?v=256"></script>
+  <script src="workspace-ui-v240.js?v=256"></script>
+  <script src="generation-confirm-v241.js?v=256"></script>
+  <script src="collection-deletion-v244.js?v=256"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 255;
+    const APP_VERSION = 256;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -4687,6 +4675,7 @@
       const QUESTION_NOTICE_STORAGE_KEY_V66 = storageKey("question-notices-v1");
         const ANNOUNCEMENT_SEEN_STORAGE_KEY_V65 = storageKey("announcement-seen-v1");
         const APP_ANNOUNCEMENTS_V66 = [
+          {"version":256,"date":"2026-09-15","publishedAt":"2026-09-15T12:04:22.066Z","title":"問題画面の進捗バーを取り除きました","body":"問題画面の「未回答問題 1/57」などの進捗・中断バーをなくし、盤面の上をすっきりさせました。学習中は上段の「戻る」で進捗を保存し、前回のカードから続けられます。"},
           {"version":255,"date":"2026-09-15","publishedAt":"2026-09-15T11:34:55.391Z","title":"保存先から問題集を作成・問題画面の操作を1行に整理","body":"保存先の横の「＋新しい問題集」から名前と色を設定し、作成した本へそのまま保存できます。問題画面は番号・判断種別・判定モデル・NAGA URL・インポート・戻るを、本棚に揃えた一列にまとめました。狭い画面では操作列を横に送れます。"},
           {"version":254,"date":"2026-09-15","publishedAt":"2026-09-15T10:43:14.808Z","title":"前回の学習カードから、そのまま続きを再開","body":"独立した再開ボタンをなくし、前回使った学習カードに「前回の続き・○問目から」と表示します。そのカードを押すだけで、保存した順番の続きへ戻れます。問題数での区切りはなく、いつでも中断・再開できます。"},
           {"version":253,"date":"2026-09-15","publishedAt":"2026-09-15T09:26:31.099Z","title":"10問の区切りをなくし、いつでも中断・再開できるようにしました","body":"未回答・苦手克服・全問などの学習は、10問で終了せず対象の問題を続けて解けます。「中断して保存」で、この端末に問題集ごとの進捗を保存。日付が変わっても「続きから再開」で戻れます。回答済みの問題は次へ、未回答の問題はその問題から再開します。"},
@@ -8341,17 +8330,9 @@
         return Number(session.cursor || 0) < session.questionKeys.length - 1 ? "次の問題へ" : "結果を見る";
       }
 
-      function renderSessionProgressV44() {
-        const strip = document.getElementById("sessionStrip");
-        const session = activeSessionV44();
-        if (!session || !session.questionKeys?.length) {
-          strip.hidden = true;
-          return;
-        }
-        const current = Math.min(session.questionKeys.length, Number(session.cursor || 0) + 1);
-        document.getElementById("sessionProgressLabel").textContent = `${sessionModeLabelV44(session.mode)}　${current} / ${session.questionKeys.length}`;
-        document.getElementById("sessionProgressFill").style.width = `${current / session.questionKeys.length * 100}%`;
-        strip.hidden = false;
+      function returnFromQuestionV256() {
+        if (activeSessionV44()) return pauseSessionV253();
+        showMenuV16(questionOriginViewV234);
       }
 
       function normalizedQueueKeysV44(items) {
@@ -8584,7 +8565,6 @@
         const favoriteButton = document.getElementById("currentFavoriteButton");
         favoriteButton.classList.toggle("is-active", isFavoriteV16(question));
         favoriteButton.textContent = isFavoriteV16(question) ? "★ お気に入り済" : "☆ お気に入り";
-        renderSessionProgressV44();
       }
 
       function showMenuV16(view = menuViewV16, { historyMode = "push", restorePosition = true } = {}) {
@@ -8664,7 +8644,7 @@
           state.questionStartedAt = Date.now() - Math.max(0, elapsed || 0);
           document.getElementById("commentInput").value = commentText || "";
           document.getElementById("modelSelect").value = String(state.judgeModel);
-          syncCommentComposerV75(); renderHandV16(); renderAnswerV16(); renderSessionProgressV44();
+          syncCommentComposerV75(); renderHandV16(); renderAnswerV16();
         }
         renderBookNavigationV234();
         commitNavigationV234(historyMode);
@@ -11278,7 +11258,7 @@
           resetMenuRenderLimitV119();
           renderMenuCardsV16();
         }));
-        document.getElementById("menuButton").addEventListener("click", () => showMenuV16(questionOriginViewV234));
+        document.getElementById("menuButton").addEventListener("click", returnFromQuestionV256);
         document.getElementById("questionBreadcrumb").addEventListener("click", event => {
           if (event.target.closest("[data-question-shelf]")) showMenuV16("collections");
           else if (event.target.closest("[data-question-home]")) showMenuV16("today");
@@ -11308,7 +11288,6 @@
           button.textContent = active ? "★ お気に入り済" : "☆ お気に入り";
         });
         document.getElementById("currentManageButton").addEventListener("click", () => openQuestionManageV44(currentQuestionIndexV16));
-        document.getElementById("sessionExitButton").addEventListener("click", pauseSessionV253);
         document.getElementById("questionManageDialog").addEventListener("click", event => {
           const button = event.target.closest("[data-manage-action]");
           if (button) manageQuestionV44(button.dataset.manageAction);
