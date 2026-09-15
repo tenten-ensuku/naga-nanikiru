@@ -172,6 +172,24 @@
 .page.menu-active #menuPanel .menu-nav-icon .menu-icon-v239 { width: 20px; height: 20px; }
 .page.menu-active #menuPanel .menu-notice-icon .menu-icon-v239 { width: 17px; height: 17px; }
 
+/* V251: label the announcement explicitly, including the desktop sidebar. */
+.page.menu-active #menuPanel #announcementButton {
+  width: auto;
+  min-height: 44px;
+  padding-inline: 6px;
+  gap: 4px;
+  flex-shrink: 0;
+}
+.page.menu-active #menuPanel #announcementButton .menu-notice-label {
+  display: inline;
+  font-size: 11px;
+  white-space: nowrap;
+}
+.page.menu-active #menuPanel #announcementButton .menu-notice-icon {
+  color: var(--menu-gold-v239, #d9b980);
+  flex-shrink: 0;
+}
+
 /* Entire rows are buttons. The chevron is a cue, never a nested control. */
 .page.menu-active #menuPanel[data-view="today"] .learning-action-grid { gap: 7px; }
 .page.menu-active #menuPanel[data-view="today"] :is(.learning-action-card, .learning-all-action) {

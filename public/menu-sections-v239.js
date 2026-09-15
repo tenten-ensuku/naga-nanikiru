@@ -37,7 +37,7 @@
       ['.menu-nav-button[data-menu-view="today"] .menu-nav-icon', "book-open"],
       ['.menu-nav-button[data-menu-view="generator"] .menu-nav-icon', "pencil-square"],
       ['.menu-nav-button[data-menu-view="settings"] .menu-nav-icon', "cog-6-tooth"],
-      ['#announcementButton .menu-notice-icon', "arrow-path"],
+      // V251 announcement uses its own inline megaphone; do not replace it.
       ['#commentNotificationsButton .menu-notice-icon', "bell"],
       ['[data-book-icon-v239]', "book-open"],
       ['.book-more-v239 > summary', "ellipsis-horizontal"]
