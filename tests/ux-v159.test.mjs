@@ -14,16 +14,16 @@ test("V180 exposes the recent-history shell and synchronized release assets", as
     readFile(identityUrl, "utf8"),
   ]);
 
-  assert.match(html, /const APP_VERSION = 253;/);
-  assert.match(identity, /APP_VERSION = 253/);
-  assert.match(html, /ux-v159\.css\?v=253/);
+  assert.match(html, /const APP_VERSION = 254;/);
+  assert.match(identity, /APP_VERSION = 254/);
+  assert.match(html, /ux-v159\.css\?v=254/);
   assert.match(html, /\.comment-form textarea \{ display: block; width: 100%; min-width: 0;/);
   assert.match(html, /data-menu-view="today"/);
   assert.match(html, /data-menu-view="today"[^>]*>[\s\S]*?<span>学ぶ<\/span>/);
   assert.doesNotMatch(html, /<span class="quick-start-title">今日の10問/);
   assert.match(html, /function renderRecentHistoryViewV180\(/);
   assert.match(html, /function renderTodayViewV159\(/);
-  assert.match(html, /data-today-session="resume"/);
+  assert.match(html, /data-resume-v254="true"/);
   assert.match(css, /\.today-dashboard/);
   assert.match(css, /\.today-primary-action/);
   assert.match(css, /--ux-brown-gold: #b78943/);

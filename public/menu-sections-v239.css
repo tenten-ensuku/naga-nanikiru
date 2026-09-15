@@ -248,6 +248,12 @@
   line-height: 1.5;
   padding: 0;
 }
+/* V254: the existing card itself resumes; the note is not another control. */
+.page.menu-active #menuPanel[data-view="today"] .learning-action-card[data-resume-v254] .learning-action-description {
+  color: #f4cb63;
+  font-weight: 700;
+}
+
 .page.menu-active #menuPanel[data-view="today"] .learning-action-card .learning-action-link {
   display: grid;
   grid-area: cta;

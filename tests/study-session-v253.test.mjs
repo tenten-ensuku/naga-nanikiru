@@ -18,6 +18,7 @@ function setup(count=24){
     requireLoginForPlayV187:()=>true,sharedQuestionPagingIsCurrentV177:()=>false,
     isPlayableV16:q=>!q.disabled,questionKeyV16:q=>q.id,latestAnswerV44:()=>null,
     menuRangeV60:'all',state:{},menuFilterActiveV80:()=>false,captureNavigationV234(){},
+    escapeHtml:value=>String(value).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('"','&quot;'),
     document:{getElementById:()=>({setAttribute(){},removeAttribute(){}})}});
   vm.runInContext(ux,context);
   context.currentCollectionScopeKeyV167=()=>context.scope;
@@ -28,7 +29,9 @@ function setup(count=24){
   context.saveUserStateV16=()=>{context.saved=copy(context.userStateV16);return true;};
   vm.runInContext(['sessionQuestionIndexV167','sessionBelongsToCurrentCollectionV167','activeSessionV44',
     'resumableSessionV253','sessionResumeCursorV253','extendLegacySessionV253','pauseSessionV253',
-    'normalizedQueueKeysV44','startSessionV44','completeSessionV44','advanceQuestionV44','nextButtonLabelV44'].map(source).join('\n'),context);
+    'normalizedQueueKeysV44','startSessionV44','completeSessionV44','advanceQuestionV44','nextButtonLabelV44',
+    'learningCardSessionV254','learningResumeLabelV254','sessionModeLabelV44','startLearningSessionV189',
+    'renderLearningActionButtonV194','syncLearningActionCountsV189'].map(source).join('\n'),context);
   return context;
 }
 
@@ -116,4 +119,58 @@ test('the pause action is touch-sized, returns to study home, and does not fetch
   assert.match(source('startSessionV44'),/ensureSharedQuestionIndexAllV177/);
   assert.doesNotMatch(source('startSessionV44'),/ensureSharedQuestionDetail/);
   assert.match(source('openQuestionV16'),/await ensureSharedQuestionDetailV170\(requestedQuestion, index\)/);
+});
+
+test('V254 annotates only the previous card without adding a resume control',()=>{
+  const c=setup();c.startSessionV44('weak',c.questionsV16);c.activeSessionV44().cursor=11;c.pauseSessionV253();
+  const cards=['unanswered','weak','all'].map(mode=>c.renderLearningActionButtonV194({mode,title:mode,count:24,description:'説明',tone:mode}));
+  assert.equal((cards.join('').match(/<button /g)||[]).length,3);
+  assert.equal((cards.join('').match(/data-resume-v254=/g)||[]).length,1);
+  assert.match(cards[1],/前回の続き・12問目から/);
+  assert.match(cards[1],/aria-label="weak 前回の続き・12問目から"/);
+  assert.doesNotMatch(cards[0]+cards[2],/前回の続き/);
+  assert.doesNotMatch(source('renderRecentHistoryViewV180'),/learning-resume|data-today-session="resume"|resumeMarkup/);
+});
+
+test('V254 clicking the previous card resumes its saved queue, not a newly filtered list',()=>{
+  for(const [savedMode,cardMode] of [['all','all'],['weak','weak'],['unanswered','unanswered'],['range','all'],['range-unanswered','unanswered'],['favorites','all']]){
+    const c=setup();c.startSessionV44(savedMode,[...c.questionsV16].reverse());
+    const session=c.activeSessionV44();session.cursor=5;c.pauseSessionV253();
+    c.learningCandidatesV189=()=>[];
+    c.startLearningSessionV189(cardMode);
+    assert.equal(c.activeSessionV44().id,session.id,savedMode);
+    assert.equal(c.opened.at(-1).index,18,savedMode);
+    assert.equal(c.activeSessionV44().mode,savedMode);
+    assert.equal(c.activeSessionV44().questionKeys.length,24);
+  }
+});
+
+test('V254 the resume note points past an answered question and never says a nonexistent question',()=>{
+  const c=setup(2);c.startSessionV44('unanswered',c.questionsV16);const session=c.activeSessionV44();
+  session.results=[{questionKey:'q-0'}];
+  assert.equal(c.learningResumeLabelV254(session),'前回の続き・2問目から');
+  session.results.push({questionKey:'q-1'});
+  assert.equal(c.learningResumeLabelV254(session),'前回の学習結果を確認');
+  c.startLearningSessionV189('unanswered');assert.equal(session.status,'completed');
+  assert.equal(c.learningCardSessionV254('unanswered'),null);
+});
+
+test('V254 zero current candidates do not disable the card holding a saved run or its results',()=>{
+  const c=setup();c.startSessionV44('weak',c.questionsV16);c.pauseSessionV253();
+  const card=c.renderLearningActionButtonV194({mode:'weak',title:'苦手克服',count:0,description:'説明',tone:'weak',disabled:' disabled aria-disabled="true"'});
+  assert.doesNotMatch(card,/ disabled|aria-disabled="true"/);
+  c.sharedQuestionKnownTotalV177=()=>null;c.learningLatestAnswersV189=()=>new Map();c.learningCandidatesV189=()=>[];
+  const buttons=['weak','all'].map(mode=>({dataset:{learningAction:mode},attrs:{},querySelector:selector=>selector==='.learning-action-title'?{textContent:mode}:{innerHTML:''},setAttribute(name,value){this.attrs[name]=value;}}));
+  c.document.querySelectorAll=()=>buttons;c.syncLearningActionCountsV189();
+  assert.equal(buttons[0].disabled,false);assert.equal(buttons[1].disabled,true);
+  assert.match(buttons[0].attrs['aria-label'],/前回の続き/);
+  assert.equal(buttons[1].attrs['aria-label'],'all 0問の学習を開始');
+});
+
+test('V254 other cards still start their own mode and finished runs have no resume annotation',()=>{
+  const c=setup();c.startSessionV44('weak',c.questionsV16);const previous=c.activeSessionV44();c.pauseSessionV253();
+  c.startLearningSessionV189('all');assert.equal(c.activeSessionV44().mode,'all');assert.equal(previous.status,'replaced');
+  c.completeSessionV44(c.activeSessionV44());
+  assert.equal(c.learningCardSessionV254('all'),null);
+  assert.doesNotMatch(c.renderLearningActionButtonV194({mode:'all',title:'全問',count:24,description:'説明',tone:'all'}),/data-resume-v254/);
 });

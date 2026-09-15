@@ -23,8 +23,8 @@ function fixture() {
 }
 
 test('V238 base menu styles follow builder CSS and keep question CSS and data out of the menu change', () => {
-  assert.match(html, /const APP_VERSION = 253;/);
-  assert.match(html, /book-builder-v235\.css\?v=253[\s\S]*menu-polish-v238\.css\?v=253/);
+  assert.match(html, /const APP_VERSION = 254;/);
+  assert.match(html, /book-builder-v235\.css\?v=254[\s\S]*menu-polish-v238\.css\?v=254/);
   assert.doesNotMatch(css, /@import|@font-face|https?:|\.scene-frame|\.hand-mask|\.riichi|--ux-gold\s*:/);
   assert.doesNotMatch(css, /\.learning-header-progress-track/);
 });
@@ -88,7 +88,7 @@ test('gold navigation selection stays separate from categories and keyboard focu
 test('whole-card interaction and disabled/permissions rules are unchanged', () => {
   const card = source('renderLearningActionButtonV194');
   assert.equal((card.match(/<button/g) || []).length, 1);
-  assert.match(card, /\$\{disabled\}/);
+  assert.match(card, /\$\{session \? "" : disabled\}/);
   assert.match(card, /<span class="learning-action-link" aria-hidden="true">\$\{icon\("chevron-right"\)\}<\/span>/);
   assert.doesNotMatch(card, /プレイ/);
   assert.match(source('renderBookNavigationV234'), /collectionManagementCanManageV197/);
