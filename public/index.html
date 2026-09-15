@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=252">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=252">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=252">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=253">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=253">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=253">
   <title>みん切る｜みんなの何切る問題集</title>
   <link rel="preload" as="image" href="assets/loading-screen-v243.png" fetchpriority="high">
   <meta name="description" content="みん切るは、NAGAの局面を解き、習熟度や苦手を分析し、URLから問題を生成できる麻雀学習アプリです。">
@@ -242,7 +242,8 @@
     .session-strip[hidden] { display: none; }
     .session-progress-track { height: 5px; overflow: hidden; background: rgba(255,255,255,.12); border-radius: 999px; }
     .session-progress-fill { display: block; height: 100%; background: linear-gradient(90deg, var(--gold), #9be8d8); border-radius: inherit; transition: width .2s ease; }
-    .session-exit { padding: 4px 7px; color: #dffbfb; background: transparent; border: 1px solid rgba(255,255,255,.16); border-radius: 6px; font-size: 9px; }
+    .session-exit { min-height: 44px; padding: 7px 10px; color: #dffbfb; background: transparent; border: 1px solid rgba(255,255,255,.32); border-radius: 8px; font-size: 12px; white-space: nowrap; cursor: pointer; }
+    @media (max-width: 480px) { .session-strip { grid-template-columns: minmax(0, 1fr) auto; } .session-progress-track { grid-column: 1; grid-row: 2; } .session-exit { grid-column: 2; grid-row: 1 / 3; } }
     .dashboard-grid, .analysis-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
     .stat-card { min-width: 0; padding: 12px; background: rgba(0,0,0,.18); border: 1px solid rgba(255,255,255,.11); border-radius: 10px; }
     .stat-label { display: block; color: var(--muted); font-size: 9px; }
@@ -2243,17 +2244,17 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=252">
-  <link rel="stylesheet" href="library-v214.css?v=252">
-  <link rel="stylesheet" href="navigation-v234.css?v=252">
-  <link rel="stylesheet" href="book-builder-v235.css?v=252">
-  <link rel="stylesheet" href="menu-polish-v238.css?v=252">
-  <link rel="stylesheet" href="menu-sections-v239.css?v=252">
-  <link rel="stylesheet" href="workspace-ui-v240.css?v=252">
-  <link rel="stylesheet" href="collection-deletion-v244.css?v=252">
-  <link rel="stylesheet" href="menu-simplify-v245.css?v=252">
-  <link rel="stylesheet" href="content-dates-v246.css?v=252">
-  <link rel="stylesheet" href="question-header-v250.css?v=252">
+  <link rel="stylesheet" href="ux-v159.css?v=253">
+  <link rel="stylesheet" href="library-v214.css?v=253">
+  <link rel="stylesheet" href="navigation-v234.css?v=253">
+  <link rel="stylesheet" href="book-builder-v235.css?v=253">
+  <link rel="stylesheet" href="menu-polish-v238.css?v=253">
+  <link rel="stylesheet" href="menu-sections-v239.css?v=253">
+  <link rel="stylesheet" href="workspace-ui-v240.css?v=253">
+  <link rel="stylesheet" href="collection-deletion-v244.css?v=253">
+  <link rel="stylesheet" href="menu-simplify-v245.css?v=253">
+  <link rel="stylesheet" href="content-dates-v246.css?v=253">
+  <link rel="stylesheet" href="question-header-v250.css?v=253">
 </head>
 <body class="auth-gate-open">
   <section class="startup-screen-v236" id="startupScreenV236" aria-label="みん切るを準備中">
@@ -2375,7 +2376,7 @@
     <div class="session-strip" id="sessionStrip" aria-live="polite" hidden>
       <span id="sessionProgressLabel">1 / 10</span>
       <span class="session-progress-track" aria-hidden="true"><span class="session-progress-fill" id="sessionProgressFill" style="width:10%"></span></span>
-      <button class="session-exit" id="sessionExitButton" type="button">中断して保存</button>
+      <button class="session-exit" id="sessionExitButton" type="button" title="この端末に進捗を保存して学習ホームへ戻る">中断して保存</button>
     </div>
 
     <section class="scene-card" aria-label="NAGA局面">
@@ -2607,27 +2608,27 @@
   </dialog>
 
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=252"></script>
-  <script src="drill-ux-v44.js?v=252"></script>
-  <script src="navigation-v234.js?v=252"></script>
-  <script src="book-builder-v235.js?v=252"></script>
-  <script src="library-order-v215.js?v=252"></script>
-  <script src="content-dates-v246.js?v=252"></script>
-  <script src="question-header-v250.js?v=252"></script>
-  <script src="library-v214.js?v=252"></script>
-  <script src="naga-generator-v44.js?v=252"></script>
-  <link rel="stylesheet" href="naga-board-v248.css?v=252">
-  <script src="naga-board-state-v248.js?v=252"></script>
-  <script src="naga-board-v248.js?v=252"></script>
-  <script src="hand-mask-v237.js?v=252"></script>
-  <script src="menu-sections-v239.js?v=252"></script>
-  <script src="workspace-ui-v240.js?v=252"></script>
-  <script src="generation-confirm-v241.js?v=252"></script>
-  <script src="collection-deletion-v244.js?v=252"></script>
+  <script src="supabase-sync-v48.js?v=253"></script>
+  <script src="drill-ux-v44.js?v=253"></script>
+  <script src="navigation-v234.js?v=253"></script>
+  <script src="book-builder-v235.js?v=253"></script>
+  <script src="library-order-v215.js?v=253"></script>
+  <script src="content-dates-v246.js?v=253"></script>
+  <script src="question-header-v250.js?v=253"></script>
+  <script src="library-v214.js?v=253"></script>
+  <script src="naga-generator-v44.js?v=253"></script>
+  <link rel="stylesheet" href="naga-board-v248.css?v=253">
+  <script src="naga-board-state-v248.js?v=253"></script>
+  <script src="naga-board-v248.js?v=253"></script>
+  <script src="hand-mask-v237.js?v=253"></script>
+  <script src="menu-sections-v239.js?v=253"></script>
+  <script src="workspace-ui-v240.js?v=253"></script>
+  <script src="generation-confirm-v241.js?v=253"></script>
+  <script src="collection-deletion-v244.js?v=253"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 252;
+    const APP_VERSION = 253;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -4682,6 +4683,7 @@
       const QUESTION_NOTICE_STORAGE_KEY_V66 = storageKey("question-notices-v1");
         const ANNOUNCEMENT_SEEN_STORAGE_KEY_V65 = storageKey("announcement-seen-v1");
         const APP_ANNOUNCEMENTS_V66 = [
+          {"version":253,"date":"2026-09-15","publishedAt":"2026-09-15T09:26:31.099Z","title":"10問の区切りをなくし、いつでも中断・再開できるようにしました","body":"未回答・苦手克服・全問などの学習は、10問で終了せず対象の問題を続けて解けます。「中断して保存」で、この端末に問題集ごとの進捗を保存。日付が変わっても「続きから再開」で戻れます。回答済みの問題は次へ、未回答の問題はその問題から再開します。"},
           {"version":252,"date":"2026-09-15","publishedAt":"2026-09-15T08:58:54.044Z","title":"初めての方もDiscordでログインできるようになりました","body":"復旧作業時に残っていた新規登録の停止設定を解除しました。初めてご利用になる方もDiscordからログインできます。各問題集の公開範囲や閲覧・編集権限はこれまでどおりです。"},
           {"version":251,"date":"2026-09-15","publishedAt":"2026-09-15T03:33:44.043Z","title":"「更新」を「アナウンス」に変更しました","body":"運営からのお知らせを開くボタンを「アナウンス」に変更し、ゴールドのメガホンアイコンに揃えました。未読のお知らせは、これまでどおり赤い印で確認できます。"},
           {"version":250,"date":"2026-09-15","publishedAt":"2026-09-14T19:53:10.588Z","title":"問題画面の上部をすっきり整理しました","body":"問題番号の表示を見出しにまとめました。見出しの番号から別の問題を選べます。NAGA URLへの移動とインポートは「…」メニューから利用できます。"},
@@ -7309,8 +7311,8 @@
       }
 
       function todayQueueCandidatesV172() {
-        const queue = window.DrillUxV44?.buildQueue?.({ questions: questionsV16, state: userStateV16, mode: "today", limit: 10, now: new Date() });
-        return (Array.isArray(queue) ? queue : []).filter(question => question && isPlayableV16(question)).slice(0, 10);
+        const queue = window.DrillUxV44?.buildQueue?.({ questions: questionsV16, state: userStateV16, mode: "today", now: new Date() });
+        return (Array.isArray(queue) ? queue : []).filter(question => question && isPlayableV16(question));
       }
 
       function showLearningCelebrationV172({ lap = false, mastery = false } = {}) {
@@ -7359,15 +7361,15 @@
           : metrics.masteryComplete
           ? "習熟度100％達成。完全習得おめでとうございます！"
           : metrics.total > 0 && metrics.unanswered === 0
-          ? "一周達成！今日の10問はお休み中です。"
+          ? "一周達成！苦手な問題を復習できます。"
           : metrics.total === 0
           ? "この問題集に出題できる問題がありません。"
-          : "未回答8問＋直近×2問を基本に出題";
+          : "未回答と苦手な問題を続けて学習。いつでも中断できます。";
         button.disabled = sharedIndexLoading || noCandidates;
         button.classList.toggle("is-complete", !sharedIndexLoading && noCandidates && achievement);
         button.classList.toggle("is-unavailable", sharedIndexLoading || noCandidates && !achievement);
         button.setAttribute("aria-disabled", String(sharedIndexLoading || noCandidates));
-        button.title = sharedIndexLoading || noCandidates ? message : "未回答8問と直近の回答が×の問題を最大2問出題します";
+        button.title = sharedIndexLoading || noCandidates ? message : "問題数の区切りなく学習し、いつでも中断・再開できます";
         if (note) note.textContent = message;
       }
 
@@ -7383,7 +7385,7 @@
       }
 
       function sessionBelongsToCurrentCollectionV167(session) {
-        if (!session || session.status === "completed") return false;
+        if (!session || ["completed", "replaced"].includes(session.status)) return false;
         const currentScope = currentCollectionScopeKeyV167();
         const storedScope = String(session.collectionSlug || session.shareSlug || session.sharedCollectionSlug || "").trim();
         if (storedScope && currentScope && storedScope !== currentScope) return false;
@@ -7394,6 +7396,63 @@
       function activeSessionV44() {
         const session = userStateV16.activeSessionId ? userStateV16.sessions?.[userStateV16.activeSessionId] || null : null;
         return sessionBelongsToCurrentCollectionV167(session) ? session : null;
+      }
+
+      function resumableSessionV253() {
+        return activeSessionV44() || Object.values(userStateV16.sessions || {})
+          .filter(sessionBelongsToCurrentCollectionV167)
+          .sort((left, right) => String(right.updatedAt || "").localeCompare(String(left.updatedAt || "")))[0] || null;
+      }
+
+      function sessionResumeCursorV253(session) {
+        const keys = session.questionKeys || [];
+        const answered = new Set((session.results || []).map(result => {
+          const index = sessionQuestionIndexV167(result.questionKey);
+          return index >= 0 ? questionKeyV16(questionsV16[index]) : String(result.questionKey);
+        }));
+        let cursor = Math.max(0, Number(session.cursor) || 0);
+        while (cursor < keys.length) {
+          const index = sessionQuestionIndexV167(keys[cursor]);
+          if (index >= 0 && isPlayableV16(questionsV16[index]) && !answered.has(questionKeyV16(questionsV16[index]))) break;
+          cursor += 1;
+        }
+        return cursor;
+      }
+
+      function extendLegacySessionV253(session) {
+        if (session.queueVersion === 253) return;
+        // Preserve the old order and answers. Only modes with recoverable scope can be extended.
+        const mode = session.mode;
+        const candidates = ["all", "weak", "unanswered"].includes(mode)
+          ? learningCandidatesV189(mode)
+          : ["today", "recommended", "favorites", "call", "riichi"].includes(mode)
+          ? window.DrillUxV44?.buildQueue?.({ questions: questionsV16, state: userStateV16, mode, now: new Date() }) || []
+          : [];
+        session.questionKeys = [...new Set([...(session.questionKeys || []), ...normalizedQueueKeysV44(candidates)])];
+        session.queueVersion = 253;
+      }
+
+      function pauseSessionV253() {
+        if (!requireLoginForPlayV187()) return;
+        const session = activeSessionV44();
+        if (!session) return showMenuV16("today");
+        captureNavigationV234();
+        extendLegacySessionV253(session);
+        const previousCursor = session.cursor;
+        session.cursor = sessionResumeCursorV253(session);
+        if (session.cursor >= session.questionKeys.length) return completeSessionV44(session);
+        session.status = "paused";
+        session.updatedAt = new Date().toISOString();
+        const activeId = userStateV16.activeSessionId;
+        userStateV16.activeSessionId = null;
+        if (!saveUserStateV16()) {
+          userStateV16.activeSessionId = activeId;
+          session.status = "active";
+          session.cursor = previousCursor;
+          window.alert("この端末に進捗を保存できませんでした。画面を閉じず、ブラウザーの保存領域を確認してください。");
+          return;
+        }
+        showMenuV16("today");
       }
 
       function localDateKeyV44(value = new Date()) {
@@ -7426,7 +7485,7 @@
           callDecision: state.callDecision,
           riichi: state.riichi,
           judgeModel: SCENE.models?.[state.judgeModel]?.name || "ニシキ",
-          sessionId: userStateV16.activeSessionId || null,
+          sessionId: activeSessionV44()?.id || null,
           scoreRuleVersion: 2,
           scoreMark: score.mark,
           scoreLabel: score.label
@@ -8304,8 +8363,11 @@
           return;
         }
         if (mode === "resume") {
-          const current = activeSessionV44();
+          const current = resumableSessionV253();
           if (!current) return;
+          extendLegacySessionV253(current);
+          current.cursor = sessionResumeCursorV253(current);
+          if (current.cursor >= current.questionKeys.length) return completeSessionV44(current);
           const resolvedEntries = (Array.isArray(current.questionKeys) ? current.questionKeys : [])
             .map((key, sourceIndex) => {
               const index = sessionQuestionIndexV167(key);
@@ -8319,14 +8381,16 @@
           current.cursor = Math.max(0, current.questionKeys.indexOf(target.key));
           current.collectionSlug ||= currentCollectionScopeKeyV167();
           current.updatedAt = new Date().toISOString();
+          current.status = "active";
+          userStateV16.activeSessionId = current.id;
           saveUserStateV16();
           openQuestionV16(questionIndexByKeyV44(target.key), { preserveSession: true });
           return;
         }
         const unansweredOnly = mode === "unanswered" || mode === "range-unanswered";
-        const requested = explicitQuestions || window.DrillUxV44?.buildQueue?.({ questions: questionsV16, state: userStateV16, mode, limit: 10, now: new Date() }) || questionsV16.filter(isPlayableV16).slice(0, 10);
+        const requested = explicitQuestions || window.DrillUxV44?.buildQueue?.({ questions: questionsV16, state: userStateV16, mode, now: new Date() }) || questionsV16.filter(isPlayableV16);
         const built = unansweredOnly ? requested.filter(question => isPlayableV16(question) && !latestAnswerV44(question)) : requested;
-        const questionKeys = normalizedQueueKeysV44(built).slice(0, 10);
+        const questionKeys = normalizedQueueKeysV44(built);
         if (!questionKeys.length) {
           if (mode === "today" || mode === "recommended") {
             showMenuV16("today");
@@ -8336,15 +8400,18 @@
           return;
         }
         const now = new Date().toISOString();
-        const fallbackSession = { id: `session-${Date.now()}`, mode, questionKeys, cursor: 0, status: "active", startedAt: now, updatedAt: now, completedAt: null, results: [] };
+        const fallbackSession = { id: `session-${crypto.randomUUID()}`, mode, questionKeys, cursor: 0, status: "active", startedAt: now, updatedAt: now, completedAt: null, results: [] };
         const session = window.DrillUxV44?.createSession?.(mode, questionKeys, new Date(now)) || fallbackSession;
-        session.id ||= fallbackSession.id;
+        // A compact ID avoids copying hundreds of question IDs into every answer record.
+        session.id = session.sessionId = fallbackSession.id;
+        session.queueVersion = 253;
         session.questionKeys = questionKeys;
         session.cursor = 0;
         session.status = "active";
         session.collectionSlug = currentCollectionScopeKeyV167();
         session.results ||= [];
         userStateV16.sessions ||= {};
+        Object.values(userStateV16.sessions).filter(sessionBelongsToCurrentCollectionV167).forEach(previous => { previous.status = "replaced"; });
         userStateV16.sessions[session.id] = session;
         userStateV16.activeSessionId = session.id;
         saveUserStateV16();
@@ -8552,7 +8619,7 @@
         const restoreDraft = draft && (resume || !draft.revealed);
         if (menuWasVisible && navigationV234.isBookView(menuViewV16) && menuViewV16 !== "book-settings") questionOriginViewV234 = menuViewV16;
         else if (restoreDraft) questionOriginViewV234 = draft.originView || "my";
-        if (!preserveSession && !restoreDraft && userStateV16.activeSessionId) {
+        if (!preserveSession && userStateV16.activeSessionId) {
           userStateV16.activeSessionId = null;
           saveUserStateV16();
         }
@@ -8686,7 +8753,7 @@
           menuOrderSelect.title = isBasicSequence ? "基本序列問題集はストーリーに沿った順番出題を推奨します" : "次の問題へ進む順序を選びます";
         }
         document.getElementById("menuTitle").textContent = copy.title;
-        const resume = activeSessionV44();
+        const resume = resumableSessionV253();
         const resumeButton = document.getElementById("resumeSessionButton");
         if (resumeButton) {
           resumeButton.hidden = !resume;
@@ -9416,7 +9483,7 @@
         const displayedWeak = summaryPending ? "…" : learningCandidatesV189("weak", { ordered: false, latestAnswers }).length;
         const displayedAll = summaryPending ? "…" : learningCandidatesV189("all", { ordered: false, latestAnswers }).length;
         const displayedFavorites = summaryPending ? "…" : favoriteCount;
-        const session = activeSessionV44();
+        const session = resumableSessionV253();
         const sessionTotal = Number(session?.questionKeys?.length || 0);
         const sessionCurrent = session ? Math.min(sessionTotal, Number(session.cursor || 0) + 1) : 0;
         const seen = new Set();
@@ -9443,7 +9510,7 @@
             }).join("")
           : `<p class="today-empty-note">この巻の問題を解くと、ここに直近の回答履歴が表示されます。</p>`;
         const resumeMarkup = session
-          ? `<section class="learning-resume"><div><span>途中の学習</span><strong>${escapeHtml(sessionModeLabelV44(session.mode))}</strong><small>${sessionCurrent} / ${sessionTotal}問から再開できます</small></div><button type="button" data-today-session="resume">続きから再開<span aria-hidden="true">→</span></button></section>`
+          ? `<section class="learning-resume"><div><span>途中の学習</span><strong>${escapeHtml(sessionModeLabelV44(session.mode))}</strong><small>${sessionCurrent} / ${sessionTotal}問から再開できます</small><small>この端末に保存・日付が変わっても再開できます</small></div><button type="button" data-today-session="resume">続きから再開<span aria-hidden="true">→</span></button></section>`
           : "";
         const isBasicSequence = isBasicSequenceCollectionV163();
         const actionDisabled = (count) => summaryPending ? "" : count === 0 ? " disabled aria-disabled=\"true\"" : "";
@@ -11195,7 +11262,7 @@
           button.textContent = active ? "★ お気に入り済" : "☆ お気に入り";
         });
         document.getElementById("currentManageButton").addEventListener("click", () => openQuestionManageV44(currentQuestionIndexV16));
-        document.getElementById("sessionExitButton").addEventListener("click", () => showMenuV16("my"));
+        document.getElementById("sessionExitButton").addEventListener("click", pauseSessionV253);
         document.getElementById("questionManageDialog").addEventListener("click", event => {
           const button = event.target.closest("[data-manage-action]");
           if (button) manageQuestionV44(button.dataset.manageAction);

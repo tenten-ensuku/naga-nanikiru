@@ -76,6 +76,6 @@ test('responsive styles preserve touch targets, permission-hidden actions and re
   assert.match(css,/max-width: calc\(100vw - 24px\)/);
   assert.match(css,/@media \(max-width: 800px\)/);
   assert.doesNotMatch(css,/\.(hand|tile|scene|answer|riichi)[-\w]*\s*\{/);
-  assert.match(html,/question-header-v250\.js\?v=252/);
-  assert.match(html,/question-header-v250\.css\?v=252/);
+  assert.match(html,/question-header-v250\.js\?v=253/);
+  assert.match(html,/question-header-v250\.css\?v=253/);
 });
