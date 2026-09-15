@@ -14,7 +14,7 @@ const generationApi=createGenerationApi({cache:globalThis.caches?.default??null}
 const generationEnabled=env=>env.GENERATION_ENABLED==='true'&&env.UPLOADS_ENABLED==='true';
 
 // Generation, image uploads and the two scoped Discord sources have separate
-// switches. Legacy bulk imports and new account signup remain paused.
+// switches. New accounts use ordinary student permissions; legacy bulk imports remain paused.
 export const MIGRATION_IMPLEMENTATION_COMPLETE=false;
 export const STUDENT_FLOW_IMPLEMENTATION_COMPLETE=true;
 const readNames=new Set(READ_RPCS),writeNames=new Set(WRITE_RPCS);
@@ -55,7 +55,7 @@ export default {
   async fetch(request,env={},ctx={}){
     try{
       const url=new URL(request.url);
-      if(url.pathname==='/health'&&request.method==='GET')return json({version:251,backend:'cloudflare',ready:ready(env),studentFlow:ready(env),heavyOperations:generationEnabled(env),generation:generationEnabled(env),uploads:env.UPLOADS_ENABLED==='true',bulkImport:false,bot:env.DISCORD_SYNC_ENABLED==='true'&&!!env.DISCORD_SYNC_TOKEN});
+      if(url.pathname==='/health'&&request.method==='GET')return json({version:252,backend:'cloudflare',ready:ready(env),studentFlow:ready(env),signups:ready(env)&&env.SIGNUPS_ENABLED==='true',heavyOperations:generationEnabled(env),generation:generationEnabled(env),uploads:env.UPLOADS_ENABLED==='true',bulkImport:false,bot:env.DISCORD_SYNC_ENABLED==='true'&&!!env.DISCORD_SYNC_TOKEN});
       if(!ready(env))return json({error:'migration_not_ready',message:'移行確認中です。公開切替はまだ完了していません。'},503);
       if(url.origin!==env.APP_ORIGIN)throw new ApiError('origin_denied',403);
       if(url.pathname==='/naga-nanikiru'||url.pathname==='/naga-nanikiru/')return Response.redirect(url.origin+'/'+url.search,302);

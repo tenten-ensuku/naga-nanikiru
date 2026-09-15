@@ -29,7 +29,7 @@
     "COLLECTION_BUILDER_ENABLED": "true",
     "MEDIA_LINKS_ENABLED": "true",
     "DISCORD_SYNC_ENABLED": "true",
-    "CUTOVER_READY": "true", "UPLOADS_ENABLED": "true", "GENERATION_ENABLED":"true", "SIGNUPS_ENABLED":"false",
+    "CUTOVER_READY": "true", "UPLOADS_ENABLED": "true", "GENERATION_ENABLED":"true", "SIGNUPS_ENABLED":"true",
     "APP_ORIGIN":"https://minkiru.naga-study.workers.dev",
     "DISCORD_CLIENT_ID":"1533072667278835822"
   },
