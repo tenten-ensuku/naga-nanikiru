@@ -6387,17 +6387,9 @@ body.auth-gate-open {
 .reaction-section-heading-v208 {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   gap: 8px;
   min-width: 0;
-}
-
-.reaction-section-heading-v208 h3 {
-  min-width: 0;
-  margin: 0;
-  color: #dffbfb;
-  font-size: 11px;
-  font-weight: 900;
 }
 
 .reaction-add-button-v208,
@@ -6436,10 +6428,8 @@ body.auth-gate-open {
   min-width: 0;
 }
 
-.reaction-chips-v208:empty::before {
-  content: "まだリアクションはありません";
-  color: var(--muted);
-  font-size: 9px;
+.reaction-chips-v208:empty {
+  display: none;
 }
 
 .reaction-chip-group-v208 {
@@ -6582,8 +6572,11 @@ body.auth-gate-open {
 }
 
 .reaction-entry-bar-v208 .reaction-add-button-v208 {
-  min-height: 27px;
+  min-width: 40px;
+  min-height: 32px;
   padding: 4px 8px;
+  font-size: 14px;
+  line-height: 1;
 }
 
 .reaction-picker-v208,
