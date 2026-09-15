@@ -30,6 +30,7 @@ jobs:
       - run: npm run test:mobile
       - run: npm run test:navigation
       - run: npm run test:menu
+      - run: node --test tests/theme-v259.test.mjs
       - run: npm run test:builder
       - run: npm run test:startup
       - run: npm run test:meld
