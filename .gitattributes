@@ -1,0 +1,2 @@
+# Preserve the published PDF byte-for-byte on Windows and CI.
+public/guide/*.pdf binary

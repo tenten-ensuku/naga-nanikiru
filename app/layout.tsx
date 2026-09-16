@@ -4,13 +4,13 @@ import "./globals.css";
 import { APP_BASE_PATH, APP_VERSION } from "./lib/appIdentity";
 
 const title = "みん切る｜みんなの何切る問題集";
-const description = "みん切るは、NAGAの局面を解き、復習予定・苦手分析・URLからの問題生成まで行える麻雀学習アプリです。";
+const description = "みん切るは、NAGA URLから問題をつくり、解いて、仲間と共有できる麻雀学習アプリです。";
 
 export async function generateMetadata(): Promise<Metadata> {
   const requestHeaders = await headers();
   const host = requestHeaders.get("x-forwarded-host") ?? requestHeaders.get("host") ?? "tenten-ensuku.github.io";
   const protocol = requestHeaders.get("x-forwarded-proto") ?? (host.includes("localhost") ? "http" : "https");
-  const image = `${protocol}://${host}/og-v44.png`;
+  const image = `${protocol}://${host}/og-v266.png`;
   return {
     title,
     description,
@@ -20,7 +20,7 @@ export async function generateMetadata(): Promise<Metadata> {
       shortcut: `${APP_BASE_PATH}icons/favicon-32.png?v=${APP_VERSION}`,
       apple: `${APP_BASE_PATH}icons/apple-touch-icon-180.png?v=${APP_VERSION}`,
     },
-    openGraph: { title, description, type: "website", images: [{ url: image, width: 1730, height: 907, alt: "みん切る｜みんなの何切る問題集" }] },
+    openGraph: { title, description, type: "website", images: [{ url: image, width: 1200, height: 630, alt: "みん切る｜みんなの何切る問題集" }] },
     twitter: { card: "summary_large_image", title, description, images: [image] },
   };
 }

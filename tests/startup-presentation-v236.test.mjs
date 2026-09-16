@@ -10,7 +10,7 @@ const startupController = normalizedHtml.match(/<script>\s*(\/\/ V236 startup pr
 
 assert.ok(startupController, "V236 startup controller must be extractable from the head");
 
-test("V243 uses the exact user-supplied loading artwork without altering existing app icons", async () => {
+test("V243 uses the exact user-supplied loading artwork with the approved brand identity", async () => {
   const image = await readFile(new URL("../public/assets/loading-screen-v243.png", import.meta.url));
   assert.equal(createHash("sha256").update(image).digest("hex"), "40cf974a99cc60fad80d5b3f045e690744d44e2f38dbdbbb5a66d798c82e3058");
   assert.equal(image.readUInt32BE(16), 1402);
@@ -21,8 +21,8 @@ test("V243 uses the exact user-supplied loading artwork without altering existin
   assert.match(loader, /src="assets\/loading-screen-v243\.png" width="1402" height="1122"/);
   assert.match(loader, /alt="みん切る — みんなの何切る問題集" loading="eager" fetchpriority="high"/);
   assert.doesNotMatch(loader, /min-kiru-header\.png|startup-line-v236/);
-  assert.match(normalizedHtml, /rel="icon"[^>]*icons\/favicon-32\.png\?v=265/);
-  assert.match(normalizedHtml, /rel="apple-touch-icon"[^>]*icons\/apple-touch-icon-180\.png\?v=265/);
+  assert.match(normalizedHtml, /rel="icon"[^>]*icons\/favicon-32\.png\?v=266/);
+  assert.match(normalizedHtml, /rel="apple-touch-icon"[^>]*icons\/apple-touch-icon-180\.png\?v=266/);
 });
 
 test("V243 white loading shell contains artwork on small screens and keeps retry accessible", () => {
