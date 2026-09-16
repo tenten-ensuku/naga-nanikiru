@@ -34,7 +34,7 @@ jobs:
       - run: npm run test:builder
       - run: npm run test:startup
       - run: npm run test:meld
-      - run: node --test tests/json-board-v248.test.mjs
+      - run: node --test tests/json-board-v248.test.mjs tests/json-board-migration-v260.test.mjs
       - run: node --test tests/generator-selection-v249.test.mjs
       - run: node --test tests/question-header-v250.test.mjs
       - run: node --test tests/announcement-v251.test.mjs
