@@ -24,9 +24,9 @@ function fixture() {
   return {api: context.window.MinkiruMenuV239, context, events, replacements, menu, summary, buttons};
 }
 test('V239 is an additive menu-only layer, with no external font or backend work', () => {
-  assert.match(html, /const APP_VERSION = 263;/);
-  assert.match(html, /menu-polish-v238\.css\?v=263[\s\S]*menu-sections-v239\.css\?v=263/);
-  assert.match(html, /menu-sections-v239\.js\?v=263/);
+  assert.match(html, /const APP_VERSION = 264;/);
+  assert.match(html, /menu-polish-v238\.css\?v=264[\s\S]*menu-sections-v239\.css\?v=264/);
+  assert.match(html, /menu-sections-v239\.js\?v=264/);
   assert.doesNotMatch(css, /@import|@font-face|https?:|\.scene-frame|\.hand-mask|\.riichi|learning-header-progress-track/);
   assert.doesNotMatch(js, /fetch\(|localStorage|sessionStorage|NagaSupabase|XMLHttpRequest/);
 });
