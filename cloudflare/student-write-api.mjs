@@ -4,6 +4,7 @@ import {
   canEditCollection,
   requireActor,
 } from "./access.mjs";
+import {retiredImageCondition} from './retired-image-write-v265.mjs';
 
 // These are the authenticated write RPCs currently called by client/supabase-sync.ts.
 // Profile display-name editing stays in the table surface because the client
@@ -307,12 +308,14 @@ async function postSharedComment(db, actor, args) {
       if (!question) fail("question_not_in_collection", 400);
     }
     const id = newId();
-    await run(
+    const imageGuard=retiredImageCondition(body);
+    const inserted=await first(
       db,
       `INSERT INTO comments(id,collection_id,question_id,user_id,body,attachments)
-       VALUES (?,?,?,?,?,'[]')`,
-      [id, collection.id, questionId, actor.id, body],
+       SELECT ?,?,?,?,?,'[]' WHERE ${imageGuard.sql} RETURNING id`,
+      [id, collection.id, questionId, actor.id, body,...imageGuard.params],
     );
+    if(!inserted)fail('question_image_retired',409);
     return id;
   }
 
@@ -337,12 +340,14 @@ async function postSharedComment(db, actor, args) {
     if (!question) fail("question_not_in_collection", 400);
   }
   const id = newId();
-  await run(
+  const imageGuard=retiredImageCondition({body,attachments});
+  const inserted=await first(
     db,
     `INSERT INTO comments(id,collection_id,question_id,user_id,body,attachments)
-     VALUES (?,?,?,?,?,?)`,
-    [id, collection.id, questionId, actor.id, body, jsonText(attachments, [])],
+     SELECT ?,?,?,?,?,? WHERE ${imageGuard.sql} RETURNING id`,
+    [id, collection.id, questionId, actor.id, body, jsonText(attachments, []),...imageGuard.params],
   );
+  if(!inserted)fail('question_image_retired',409);
   return id;
 }
 
@@ -357,13 +362,15 @@ async function updateSharedComment(db, actor, args) {
   if (!row || row.user_id !== actor.id) fail("comment_not_editable", 403);
   const attachments = await validateCommentAttachments(db, actor, source.p_attachments ?? []);
   const body = await validateCommentBody(source.p_body, attachments);
-  await run(
+  const imageGuard=retiredImageCondition({body,attachments});
+  const updated=await first(
     db,
     `UPDATE comments
         SET body = ?, attachments = ?, updated_at = ?
-      WHERE id = ? AND user_id = ? AND deleted_at IS NULL`,
-    [body, jsonText(attachments, []), new Date().toISOString(), commentId, actor.id],
+      WHERE id = ? AND user_id = ? AND deleted_at IS NULL AND ${imageGuard.sql} RETURNING id`,
+    [body, jsonText(attachments, []), new Date().toISOString(), commentId, actor.id,...imageGuard.params],
   );
+  if(!updated)fail('question_image_retired',409);
 }
 
 async function deleteSharedComment(db, actor, args) {

@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
+import { boardState } from "../scripts/naga-board-runtime.mjs";
 
 const sourceUrl = new URL("../public/index.html", import.meta.url);
 
@@ -34,7 +35,7 @@ test("requires explicit confirmation before revealing or recording an answer", a
 
 test("records answer timing and exposes the synchronized drill version", async () => {
   const html = await source();
-  assert.match(html, /const APP_VERSION = 264;/);
+  assert.match(html, /const APP_VERSION = 265;/);
   assert.match(html, /const MODEL_PRIORITY = \["ニシキ", "ヒバカリ", "カガシ", "ガンマ", "オメガ"\];/);
   assert.match(html, /const HAND_BAR_MODEL_NAMES = \["ニシキ", "ヒバカリ", "カガシ"\];/);
   assert.match(html, /const topCallModelIndices = priorityIndicesV16\(3\);/);
@@ -112,7 +113,12 @@ test("derives riichi controls from NAGA reach data", async () => {
   const question158 = questions.find(question => question.number === 158);
   assert.equal(question158?.decisionType, "call");
   assert.equal(question158?.nagaUrl, "https://naga.dmv.nico/htmls/acd736f52c73f007190f3e9f8391be6ca1693750a555b6a66bb18b2e174ca8ccv2_2.html?tw=0&ts=4&tv=24");
-  assert.equal(question158?.image, "question-images/q158.webp");
+  assert.equal(question158?.image, null);
+  assert.equal(question158?.needsScreenshot, false);
+  assert.deepEqual(question158?.boardScene?.source, {
+    reportId: "acd736f52c73f007190f3e9f8391be6ca1693750a555b6a66bb18b2e174ca8ccv2_2", tw: 0, ts: 4, tv: 24
+  });
+  assert.equal(boardState.validate(question158?.boardScene, question158).valid, true);
   assert.equal(question158?.callTile, "pin1");
   assert.deepEqual(question158?.callRecommended, [true, true, true]);
   assert.deepEqual(question158?.callProbabilities?.call, [91.11, 84.83, 53.76]);

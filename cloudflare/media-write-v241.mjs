@@ -2,6 +2,7 @@ import {ApiError,requireActor,canEditCollection,canAccessCollection} from './acc
 import {imageType} from '../worker/media.mjs';
 import {requireGenerationCapacity,reserveUsage,nowIso} from './generation-capacity-v241.mjs';
 import {canReadPrivateAsset} from './media-read.mjs';
+import {retiredImageCondition} from './retired-image-write-v265.mjs';
 const rules={'question-assets':10485760,'comment-assets':5242880,'reaction-assets':1048576};
 const extensions={'image/png':'png','image/jpeg':'jpg','image/webp':'webp','image/gif':'gif'};
 export async function boundedBytes(source,maximum){
@@ -34,19 +35,41 @@ export async function imageUpload(request,env,actor,{purpose='question'}={}){
   if(request.headers.get('x-asset-sha256')!==sha256)throw new ApiError('media_hash_mismatch',422);
   const folder=bucket==='question-assets'?'questions/'+collection.id:bucket==='comment-assets'?'comments':'reactions';
   const path=actor.id+'/'+folder+'/'+sha256+'.'+extensions[type],key=bucket+'/'+path;
-  let asset=await env.DB.prepare('SELECT * FROM media_assets WHERE object_key=?').bind(key).first();
+  const imageGuard=retiredImageCondition(key),claimAt=nowIso();
+  const asset=await env.DB.prepare('SELECT * FROM media_assets WHERE object_key=?').bind(key).first();
   if(asset&&(!['pending','ready'].includes(asset.state)||asset.owner_id!==actor.id||asset.sha256!==sha256||asset.size_bytes!==bytes.length))throw new ApiError('media_asset_conflict',409);
+  // A pending row belongs to one in-flight PUT. Blind retry could revive an
+  // object after another request completed and the operator deleted it.
+  // Interrupted pending rows remain reserved for explicit operator recovery.
+  if(asset?.state==='pending')throw new ApiError('media_upload_pending',409);
+  let claimed=false;
   if(!asset){
     await reserveUsage(env.DB,'uploads','all',1,150);
-    try{await env.DB.prepare(`INSERT INTO media_assets(object_key,bucket,path,owner_id,collection_id,size_bytes,sha256,content_type,state) VALUES(?,?,?,?,?,?,?,?,'pending') ON CONFLICT(object_key) DO NOTHING`)
-      .bind(key,bucket,path,actor.id,collection?.id??null,bytes.length,sha256,type).run();}
+    try{claimed=!!await env.DB.prepare(`INSERT INTO media_assets(object_key,bucket,path,owner_id,collection_id,size_bytes,sha256,content_type,state,updated_at) SELECT ?,?,?,?,?,?,?,?,'pending',? WHERE ${imageGuard.sql} ON CONFLICT(object_key) DO NOTHING RETURNING object_key`)
+      .bind(key,bucket,path,actor.id,collection?.id??null,bytes.length,sha256,type,claimAt,...imageGuard.params).first();}
     catch(error){if(String(error.message).includes('media_capacity_unavailable'))throw new ApiError('media_capacity_unavailable',507);throw error;}
+    if(!claimed)throw new ApiError('media_upload_pending',409);
   }
   let object=await env.IMAGES.head(key);const reused=!!object;
   if(object&&(object.size!==bytes.length||object.customMetadata?.sha256!==sha256))throw new ApiError('media_object_mismatch',409);
-  if(!object){object=await env.IMAGES.put(key,bytes,{sha256,onlyIf:{etagDoesNotMatch:'*'},storageClass:'Standard',httpMetadata:{contentType:type},customMetadata:{sha256}});object||=await env.IMAGES.head(key);}
+  if(!object){
+    if(!claimed){
+      // Deletion claims only ready rows. This same-statement retirement check
+      // and ready->pending claim keep deletion and a replacement PUT exclusive.
+      claimed=!!await env.DB.prepare(`UPDATE media_assets SET state='pending',updated_at=? WHERE object_key=? AND state='ready' AND updated_at=? AND ${imageGuard.sql} RETURNING object_key`)
+        .bind(claimAt,key,asset.updated_at,...imageGuard.params).first();
+      if(!claimed)throw new ApiError('media_asset_conflict',409);
+    }
+    object=await env.IMAGES.put(key,bytes,{sha256,onlyIf:{etagDoesNotMatch:'*'},storageClass:'Standard',httpMetadata:{contentType:type},customMetadata:{sha256}});object||=await env.IMAGES.head(key);
+  }
   if(!object||object.size!==bytes.length||object.customMetadata?.sha256!==sha256)throw new ApiError('media_object_mismatch',409);
-  await env.DB.prepare("UPDATE media_assets SET state='ready',updated_at=? WHERE object_key=? AND state='pending'").bind(nowIso(),key).run();
+  if(claimed){
+    const completed=await env.DB.prepare("UPDATE media_assets SET state='ready',updated_at=? WHERE object_key=? AND state='pending' AND updated_at=? RETURNING object_key").bind(nowIso(),key,claimAt).first();
+    if(!completed)throw new ApiError('media_asset_conflict',409);
+  }else{
+    const current=await env.DB.prepare(`SELECT object_key FROM media_assets WHERE object_key=? AND state='ready' AND ${imageGuard.sql}`).bind(key,...imageGuard.params).first();
+    if(!current)throw new ApiError('media_asset_conflict',409);
+  }
   const route=bucket==='question-assets'?'private':'public';
   return {bucket,path,src:new URL(request.url).origin+'/v1/'+route+'/'+key,size:bytes.length,sha256,reused};
 }

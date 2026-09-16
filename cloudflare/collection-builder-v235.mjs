@@ -2,6 +2,7 @@ import {ApiError, requireActor, canEditCollection, canManageCollection, canAcces
 import {isGeneratedQuestionTitle,isInvalidQuestionTitle,toSafeQuestionNumber,nextQuestionNumberV235} from './question-numbering-v235.mjs';
 import {validateStoredHand} from './question-validation-v237.mjs';
 import {questionMediaKeys} from './media-write-v241.mjs';
+import {retiredImageCondition} from './retired-image-write-v265.mjs';
 
 export const BOOK_TONES=Object.freeze(['walnut','navy','forest','burgundy','ivory','plum','teal','ochre']);
 export const BUILDER_RPCS=Object.freeze(['create_collection','create_collection_volume','set_collection_book_tone','create_shared_question','import_shared_question']);
@@ -112,11 +113,12 @@ async function addQuestion(args,{db,actor,origin},imported=null){
   const numberSql=`(SELECT MAX(COALESCE(MAX(valid),0),COALESCE(MAX(sort_order),0),?)+1 FROM (SELECT ${validNumberSql} valid,sort_order FROM questions WHERE collection_id=?))`;
   const normalized={...payload};for(const k of ['serverQuestionId','sharedCollectionSlug','createdById','createdByName','updatedById','updatedByName','_sharedIndexOnlyV170'])delete normalized[k];
   await questionMediaKeys(normalized,{db,actor,origin},c.id);
+  const imageGuard=retiredImageCondition({payload:normalized,sourceUrl:args.p_source_url});
   try{
     const inserted=await first(db,`WITH next(n) AS (SELECT ${numberSql}) INSERT INTO questions(id,collection_id,created_by,created_by_name,title,legacy_key,sort_order,source_kind,source_report_id,source_url,scene_tw,scene_ts,scene_tv,decision_type,payload,created_at,updated_at)
       SELECT ?,?,?,?,CASE WHEN ?='' THEN '問題'||n ELSE ? END,?,n,?,?,?,?,?,?,?,json_set(?,'$.number',n,'$.id',?,'$.title',CASE WHEN ?='' THEN '問題'||n ELSE ? END),?,? FROM next
-      WHERE (SELECT COUNT(*) FROM questions WHERE collection_id=? AND deleted_at IS NULL)<200 RETURNING id,sort_order`,allocationFloor,c.id,id,c.id,actor.id,String(profile?.display_name||'プレイヤー').slice(0,80),title,title,key,kind,report,args.p_source_url?text(args.p_source_url,2000):null,...scene,decision,JSON.stringify(normalized),id,title,title,now,now,c.id);
-    if(!inserted)return {...await collectionCapacity({p_share_slug:c.share_slug},{db,actor}),requires_volume_confirmation:true};
+      WHERE (SELECT COUNT(*) FROM questions WHERE collection_id=? AND deleted_at IS NULL)<200 AND ${imageGuard.sql} RETURNING id,sort_order`,allocationFloor,c.id,id,c.id,actor.id,String(profile?.display_name||'プレイヤー').slice(0,80),title,title,key,kind,report,args.p_source_url?text(args.p_source_url,2000):null,...scene,decision,JSON.stringify(normalized),id,title,title,now,now,c.id,...imageGuard.params);
+    if(!inserted){const capacity=await collectionCapacity({p_share_slug:c.share_slug},{db,actor});if(capacity.capacity_reached)return {...capacity,requires_volume_confirmation:true};fail('question_image_retired',409);}
     return {question_id:inserted.id,question_number:inserted.sort_order,share_slug:c.share_slug,question_count:await count(db,c.id),collection_title:c.title};
   }catch(error){
     if(String(error.message).includes('collection_capacity_reached'))return {...await collectionCapacity({p_share_slug:c.share_slug},{db,actor}),requires_volume_confirmation:true};

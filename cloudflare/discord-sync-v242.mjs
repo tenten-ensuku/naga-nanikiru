@@ -3,6 +3,7 @@ import {sha256} from './auth.mjs';
 import {DISCORD_TARGETS} from './discord-targets-v242.mjs';
 import {builderRpc,collectionCapacity} from './collection-builder-v235.mjs';
 import {imageUpload,questionMediaKeys} from './media-write-v241.mjs';
+import {retiredImageCondition} from './retired-image-write-v265.mjs';
 import {createGenerationApi} from './generation-api-v241.mjs';
 import {requireGenerationCapacity,reserveUsage} from './generation-capacity-v241.mjs';
 const fail=(code,status=400)=>{throw new ApiError(code,status);};
@@ -92,8 +93,9 @@ export function createDiscordSyncApi({targets=DISCORD_TARGETS,generation=createG
    const changed=JSON.stringify(payload)!==old.payload;const stamp=now();
    if(changed){
     if(new TextEncoder().encode(JSON.stringify(payload)).length>120000)fail('bot_payload_too_large',413);
-    const updated=await db.prepare('UPDATE questions SET payload=?,updated_at=?,updated_by=?,updated_by_name=? WHERE id=? AND updated_at=? AND deleted_at IS NULL AND EXISTS(SELECT 1 FROM collections c WHERE c.id=questions.collection_id AND c.archived_at IS NULL) RETURNING id')
-     .bind(JSON.stringify(payload),stamp,actor.id,'Discord Bot',old.id,input.expectedUpdatedAt).first();
+    const imageGuard=retiredImageCondition(payload);
+    const updated=await db.prepare('UPDATE questions SET payload=?,updated_at=?,updated_by=?,updated_by_name=? WHERE id=? AND updated_at=? AND deleted_at IS NULL AND EXISTS(SELECT 1 FROM collections c WHERE c.id=questions.collection_id AND c.archived_at IS NULL) AND '+imageGuard.sql+' RETURNING id')
+     .bind(JSON.stringify(payload),stamp,actor.id,'Discord Bot',old.id,input.expectedUpdatedAt,...imageGuard.params).first();
     if(!updated)fail('bot_question_conflict',409);
     await db.prepare(`INSERT OR IGNORE INTO media_question_links(object_key,question_id) SELECT m.object_key,q.id FROM questions q,json_tree(q.payload) j JOIN media_assets m ON m.object_key=substr(j.value,instr(j.value,'/v1/private/')+12) WHERE q.id=? AND j.type='text' AND instr(j.value,'/v1/private/')>0 AND m.state='ready'`).bind(old.id).run();
    }

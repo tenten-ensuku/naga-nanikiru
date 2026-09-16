@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import fs from "node:fs";
 import { createMediaWorker, imageType, validKey } from "../worker/media.mjs";
 
 const USER_ID = "11111111-1111-4111-8111-111111111111";
@@ -268,6 +269,22 @@ test("V230 returns upload-disabled 503 before contacting Supabase", async () => 
   assert.equal(supabase.calls.length, 0);
   assert.equal(r2.calls.head.length, 0);
   assert.equal(r2.calls.put.length, 0);
+});
+
+test("V265 legacy configuration blocks user and bot uploads while keeping public and signed reads", async () => {
+  const config=JSON.parse(fs.readFileSync(new URL('../wrangler.media.jsonc',import.meta.url),'utf8'));
+  assert.equal(config.vars.UPLOADS_ENABLED,'false');
+  const r2=makeR2({get:async()=>imageObject()});
+  const supabase=makeSupabaseFetch();
+  const worker=createMediaWorker({fetchImpl:supabase.fetchImpl,now:()=>NOW});
+  const env=makeEnv(r2,{UPLOADS_ENABLED:config.vars.UPLOADS_ENABLED});
+  for(const path of ['/v1/assets','/v1/bot/assets'])assert.equal((await worker.fetch(request(path,{method:'POST'}),env,makeContext())).status,503,path);
+  const publicKey=`comment-assets/${USER_ID}/comments/retained.png`;
+  const privateKey=`question-assets/${USER_ID}/${COLLECTION_ID}/${'a'.repeat(64)}.png`;
+  const expires=Math.floor(NOW/1000)+300;
+  const readPaths=[`/v1/public/${publicKey}`,`/v1/private/${privateKey}?expires=${expires}&signature=${await signature(privateKey,expires)}`];
+  for(const path of readPaths){const response=await worker.fetch(request(path),env,makeContext());assert.equal(response.status,200);assert.deepEqual(new Uint8Array(await response.arrayBuffer()),PNG);}
+  assert.equal(supabase.calls.length,0);assert.equal(r2.calls.put.length,0);
 });
 
 test("V230 serves public GET from R2 with metadata and never calls Supabase", async () => {
