@@ -5,8 +5,8 @@ import {fileURLToPath} from 'node:url';
 
 export function recoveryPublication(html, setting='') {
   if (!['','false','true'].includes(setting)) throw new Error('Invalid RECOVERY_PREVIEW_ONLY');
-  if (!/const APP_VERSION = (230|231|232|233|234|235|236|237|238|239|240|241|242|243|244|245|246|247|248|249|250|251|252|253|254|255|256|257|258|259|260);/.test(html) || (html.match(/window\.NAGA_MAINTENANCE_MODE = false;/g)||[]).length!==1) {
-    throw new Error('Expected the reviewed V230-V260 source');
+  if (!/const APP_VERSION = (230|231|232|233|234|235|236|237|238|239|240|241|242|243|244|245|246|247|248|249|250|251|252|253|254|255|256|257|258|259|260|261);/.test(html) || (html.match(/window\.NAGA_MAINTENANCE_MODE = false;/g)||[]).length!==1) {
+    throw new Error('Expected the reviewed V230-V261 source');
   }
   return setting==='true'
     ? {main:html.replace('window.NAGA_MAINTENANCE_MODE = false;','window.NAGA_MAINTENANCE_MODE = true;'),preview:html}
