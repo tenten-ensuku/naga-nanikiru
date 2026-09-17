@@ -109,7 +109,7 @@ test('list filters restore search, marks, type, range, favorites, count and orde
   const search = { value: '' };
   const context = load(['restoreNavigationFiltersV234', 'navigationFiltersV234'], {
     menuSearchV44: '', menuCommentTagV270: '', menuStatusFiltersV92: [], menuTypeV44: 'all', menuRangeV60: 'all',
-    window: { MinkiruCommentTagsV270: { TAGS: ['押し引き'] } },
+    window: { MinkiruCommentTagsV270: { normalizeTag: value => String(value || '') } },
     menuFavoritesOnlyV137: false, menuRenderLimitV119: 40, menuOrderV92: 'sequential', MENU_RENDER_BATCH_V119: 40,
     document: { getElementById: () => search, querySelectorAll: () => [] }
   });

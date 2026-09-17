@@ -1,5 +1,16 @@
 .comment-tags-v270 { display: flex; flex-wrap: wrap; gap: 8px; }
-.comment-form > .comment-tags-v270, .comment-form > .comment-tag-label-v270 { grid-column: 1 / -1; min-width: 0; }
+.comment-tag-picker-v271 { grid-column: 1 / -1; min-width: 0; }
+.comment-tag-picker-v271 > summary { width: fit-content; max-width: 100%; padding: 6px 10px; border: 1px solid var(--line, #466574); border-radius: 7px; color: var(--ink, #e5f2f4); font-size: 12px; cursor: pointer; }
+.comment-tag-picker-v271 > summary:focus-visible { outline: 3px solid #50bab0; outline-offset: 2px; }
+.comment-tag-picker-body-v271 { padding: 10px 0 2px; }
+.comment-tag-picker-v271:not([open]) > .comment-tag-picker-body-v271 { display: none; }
+.comment-tag-picker-body-v271 .comment-tags-v270, #commentTagFiltersV270 { max-height: 176px; overflow-y: auto; padding: 3px; }
+.comment-custom-tag-v271 { margin-top: 10px; }
+.comment-form .comment-custom-tag-v271 label { display: block; margin-bottom: 5px; color: var(--ink, #e5f2f4); }
+.comment-custom-tag-row-v271 { display: flex; flex-wrap: wrap; gap: 6px; }
+.comment-custom-tag-row-v271 input { flex: 1 1 170px; min-width: 0; padding: 8px; border-radius: 6px; border: 1px solid var(--line, #466574); background: var(--panel-2, #14303e); color: var(--ink, #e5f2f4); font: inherit; font-size: 13px; }
+.comment-custom-tag-row-v271 button { padding: 8px 12px; border-radius: 6px; border: 1px solid #54b9ab; background: #196960; color: #fff; font: inherit; font-size: 12px; cursor: pointer; }
+.comment-custom-tag-note-v271, .comment-custom-tag-status-v271 { margin: 6px 0 0; font-size: 11px; color: var(--muted, #acc0c6); }
 .comment-tag-v270 { min-height: 36px; padding: 6px 12px; border: 1px solid var(--line, #466574); border-radius: 20px; background: var(--panel-2, #14303e); color: var(--ink, #e5f2f4); font: inherit; font-size: 13px; cursor: pointer; }
 .comment-tag-v270:hover { border-color: #50bab0; }
 .comment-tag-v270:focus-visible { outline: 3px solid #50bab0; outline-offset: 3px; }
@@ -9,5 +20,4 @@
 .comment-tag-search-v270[hidden] { display: none; }
 .comment-tag-search-v270 h3 { margin: 0 0 10px; font-size: 14px; }
 .comment-tag-search-v270 p { margin: 9px 0 0; font-size: 12px; color: var(--muted, #acc0c6); }
-.comment-tag-label-v270 { margin: 4px 0; font-size: 12px; color: var(--muted, #acc0c6); }
 @media (max-width: 480px) { .comment-tag-v270 { min-height: 40px; } }

@@ -2,19 +2,29 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
-import { TAGS, extractTags, tagsFromComments, appendTag } from '../public/comment-tags-v270.mjs';
+import { TAGS, extractTags, tagsFromComments, appendTag, normalizeTag, tagSuggestions } from '../public/comment-tags-v270.mjs';
 import { testD1 } from './helpers/cloudflare-d1.mjs';
 import { readRpc } from '../cloudflare/read-api.mjs';
 import { writeRpc } from '../cloudflare/student-write-api.mjs';
 
-test('five canonical hashtags accept fullwidth hashes and reject URL fragments and longer words', () => {
+test('preset and custom hashtags accept fullwidth hashes and exclude URL fragments', () => {
   assert.deepEqual(extractTags(TAGS.map(tag => '＃' + tag).join('\n')), TAGS);
   assert.deepEqual(extractTags('復習：#押し引き、#安全度比較\n#押し引き'), ['押し引き','安全度比較']);
-  assert.deepEqual(extractTags('https://example.com/#基本序列 #押し引き応用 #セオリー集2 #自由'), []);
+  assert.deepEqual(new Set(extractTags('https://example.com/#基本序列 #押し引き応用 #セオリー集2 #自由')), new Set(['押し引き応用','セオリー集2','自由']));
   assert.equal(appendTag('解説を残す', '押し引き'), '解説を残す\n#押し引き');
   assert.equal(appendTag('＃押し引き', '押し引き'), '＃押し引き');
   assert.equal(appendTag('a'.repeat(1999), '押し引き'), null);
   assert.deepEqual(tagsFromComments([{content:'#押し引き',showInComments:false},{body:'#安全度比較',deleted_at:'now'},'#基本序列']), ['基本序列']);
+});
+
+test('custom tag creation normalizes names, validates length and never duplicates an existing tag', () => {
+  assert.equal(normalizeTag(' ＃ＮＡＮＡリーグ検討 '),'NANAリーグ検討');
+  assert.equal(appendTag('考え方を残す','＃ＮＡＮＡリーグ検討'),'考え方を残す\n#NANAリーグ検討');
+  assert.equal(appendTag('＃ＮＡＮＡリーグ検討','NANAリーグ検討'),'＃ＮＡＮＡリーグ検討');
+  for(const name of ['', '#', '空 白', '<img>', 'タグ" onclick="alert(1)', '長'.repeat(31)]) assert.equal(normalizeTag(name),'');
+  assert.equal(normalizeTag('長'.repeat(30)),'長'.repeat(30));
+  assert.deepEqual(extractTags('#'+'長'.repeat(31)),[]);
+  assert.deepEqual(tagSuggestions(['NANAリーグ検討','ＮＡＮＡリーグ検討','#基本序列']),[...TAGS,'NANAリーグ検討']);
 });
 
 function fixture() {
@@ -66,11 +76,27 @@ test('tags on later pages remain searchable, private books do not leak and looku
   } finally { db.close(); }
 });
 
+test('custom tags persist, appear on later pages and disappear after the last tagged comment is removed', async () => {
+  const ctx=fixture(), {db}=ctx;
+  try {
+    const id=await post(ctx,'q101','元のメモ\n＃ＮＡＮＡリーグ検討');
+    assert.deepEqual((await read(ctx,100))[0].comment_tags,['NANAリーグ検討']);
+    const again=await read(ctx,100);
+    assert.ok(tagSuggestions(again.flatMap(row=>row.comment_tags)).includes('NANAリーグ検討'));
+    await writeRpc('update_shared_comment',{p_comment_id:id,p_body:'元のメモ\n#チーム復習',p_attachments:[]},ctx);
+    assert.deepEqual((await read(ctx,100))[0].comment_tags,['チーム復習']);
+    await writeRpc('delete_shared_comment',{p_comment_id:id},ctx);
+    assert.deepEqual((await read(ctx,100))[0].comment_tags,[]);
+    db.sqlite.prepare('UPDATE questions SET payload=? WHERE id=?').run(JSON.stringify({number:1,comments:[{content:'#非公開の独自タグ'}]}),'private-q');
+    assert.deepEqual(await read({db,actor:{id:'tag-other'}},0,'tag-private'),[]);
+  } finally { db.close(); }
+});
+
 test('inline app parses and tag selection, paging and return-navigation are connected', () => {
   const html=readFileSync(new URL('../public/index.html',import.meta.url),'utf8');
   for(const [,source] of html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g)) if(source.trim()) new vm.Script(source);
   assert.match(html,/commentTag: menuCommentTagV270/);
-  assert.match(html,/filters\.commentTag\) \? filters\.commentTag : ""/);
+  assert.match(html,/normalizeTag\(filters\.commentTag\)/);
   assert.match(html,/allowedKeys\.has\(questionKeyV16\(question\)\) && matchesCommentTagV270/);
   assert.match(html,/menuViewV16 === "my" && menuRangeV60 === "all"/);
   assert.match(html,/commentTagFiltersV270[\s\S]*menuCommentTagV270 = tag;[\s\S]*showMenuV16\("my"/);

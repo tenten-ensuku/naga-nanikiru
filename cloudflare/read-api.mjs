@@ -330,7 +330,7 @@ function mapIndexRow(row, includeTotal) {
     created_at: row.created_at,
     updated_at: row.updated_at,
     generated_at: row.generated_at,
-    // Only the five tag names cross the network; comment bodies/attachments do not.
+    // Only tag names cross the network; comment bodies/attachments do not.
     comment_tags: tagsFromComments([...asJsonArray(row.comment_tag_bodies), ...asJsonArray(row.embedded_tag_comments)]),
   };
   if (includeTotal) mapped.total_count = rowCount(row.total_count);
