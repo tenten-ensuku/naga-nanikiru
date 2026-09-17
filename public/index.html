@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=271">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=271">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=271">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=272">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=272">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=272">
   <title>みん切る｜みんなの何切る問題集</title>
   <link rel="preload" as="image" href="assets/loading-screen-v243.png" fetchpriority="high">
   <meta name="description" content="みん切るは、NAGA URLから問題をつくり、解いて、仲間と共有できる麻雀学習アプリです。">
   <meta name="theme-color" content="#06131e">
-  <script src="theme-v259.js?v=271"></script>
+  <script src="theme-v259.js?v=272"></script>
   <meta property="og:type" content="website">
   <meta property="og:title" content="みん切る｜みんなの何切る問題集">
   <meta property="og:description" content="みん切るは、NAGA URLから問題をつくり、解いて、仲間と共有できる麻雀学習アプリです。">
@@ -2249,19 +2249,19 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=271">
-  <link rel="stylesheet" href="library-v214.css?v=271">
-  <link rel="stylesheet" href="navigation-v234.css?v=271">
-  <link rel="stylesheet" href="book-builder-v235.css?v=271">
-  <link rel="stylesheet" href="menu-polish-v238.css?v=271">
-  <link rel="stylesheet" href="menu-sections-v239.css?v=271">
-  <link rel="stylesheet" href="workspace-ui-v240.css?v=271">
-  <link rel="stylesheet" href="collection-deletion-v244.css?v=271">
-  <link rel="stylesheet" href="menu-simplify-v245.css?v=271">
-  <link rel="stylesheet" href="content-dates-v246.css?v=271">
-  <link rel="stylesheet" href="question-header-v250.css?v=271">
-  <link rel="stylesheet" href="question-toolbar-v255.css?v=271">
-  <link rel="stylesheet" href="theme-v259.css?v=271">
+  <link rel="stylesheet" href="ux-v159.css?v=272">
+  <link rel="stylesheet" href="library-v214.css?v=272">
+  <link rel="stylesheet" href="navigation-v234.css?v=272">
+  <link rel="stylesheet" href="book-builder-v235.css?v=272">
+  <link rel="stylesheet" href="menu-polish-v238.css?v=272">
+  <link rel="stylesheet" href="menu-sections-v239.css?v=272">
+  <link rel="stylesheet" href="workspace-ui-v240.css?v=272">
+  <link rel="stylesheet" href="collection-deletion-v244.css?v=272">
+  <link rel="stylesheet" href="menu-simplify-v245.css?v=272">
+  <link rel="stylesheet" href="content-dates-v246.css?v=272">
+  <link rel="stylesheet" href="question-header-v250.css?v=272">
+  <link rel="stylesheet" href="question-toolbar-v255.css?v=272">
+  <link rel="stylesheet" href="theme-v259.css?v=272">
 </head>
 <body class="auth-gate-open">
   <section class="startup-screen-v236" id="startupScreenV236" aria-label="みん切るを準備中">
@@ -2315,11 +2315,13 @@
           <button type="button" data-menu-jump="favorites" aria-pressed="false"><span class="learning-tab-icon" aria-hidden="true">☆</span><span>お気に入り</span><span class="learning-tab-count" data-context-tab-count="favorites">0</span></button>
         </nav>
         <section class="collection-space-panel" id="collectionSpacePanel" aria-live="polite" hidden></section>
-        <section class="comment-tag-search-v270" id="commentTagSearchV270" aria-labelledby="commentTagSearchTitleV270" hidden>
-          <h3 id="commentTagSearchTitleV270">この問題集をタグで検索</h3>
-          <div class="comment-tags-v270" id="commentTagFiltersV270" role="group" aria-label="コメントのタグで絞り込み"></div>
-          <p id="commentTagResultV270" role="status"></p>
-        </section>
+        <details class="comment-tag-search-v270" id="commentTagSearchV270" aria-labelledby="commentTagSearchTitleV270" hidden>
+          <summary id="commentTagSearchTitleV270"><span>ハッシュタグで検索</span><span class="comment-tag-active-v272" id="commentTagActiveV272" hidden></span></summary>
+          <div class="comment-tag-search-body-v272">
+            <div class="comment-tags-v270" id="commentTagFiltersV270" role="group" aria-label="コメントのタグで絞り込み"></div>
+            <p id="commentTagResultV270" role="status"></p>
+          </div>
+        </details>
         <div class="menu-filter-stack" id="menuFilters">
           <section class="menu-filter-row menu-range-row" aria-labelledby="menuRangeHeading">
             <div class="menu-filter-heading-block menu-range-heading-block">
@@ -2631,29 +2633,29 @@
     </form>
   </dialog>
 
-  <link rel="stylesheet" href="comment-tags-v270.css?v=271">
+  <link rel="stylesheet" href="comment-tags-v270.css?v=272">
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=271"></script>
-  <script src="drill-ux-v44.js?v=271"></script>
-  <script src="navigation-v234.js?v=271"></script>
-  <script src="book-builder-v235.js?v=271"></script>
-  <script src="library-order-v215.js?v=271"></script>
-  <script src="content-dates-v246.js?v=271"></script>
-  <script src="question-header-v250.js?v=271"></script>
-  <script src="library-v214.js?v=271"></script>
-  <script src="naga-generator-v44.js?v=271"></script>
-  <link rel="stylesheet" href="naga-board-v248.css?v=271">
-  <script src="naga-board-state-v248.js?v=271"></script>
-  <script src="naga-board-v248.js?v=271"></script>
-  <script src="hand-mask-v237.js?v=271"></script>
-  <script src="menu-sections-v239.js?v=271"></script>
-  <script src="workspace-ui-v240.js?v=271"></script>
-  <script src="generation-confirm-v241.js?v=271"></script>
-  <script src="collection-deletion-v244.js?v=271"></script>
+  <script src="supabase-sync-v48.js?v=272"></script>
+  <script src="drill-ux-v44.js?v=272"></script>
+  <script src="navigation-v234.js?v=272"></script>
+  <script src="book-builder-v235.js?v=272"></script>
+  <script src="library-order-v215.js?v=272"></script>
+  <script src="content-dates-v246.js?v=272"></script>
+  <script src="question-header-v250.js?v=272"></script>
+  <script src="library-v214.js?v=272"></script>
+  <script src="naga-generator-v44.js?v=272"></script>
+  <link rel="stylesheet" href="naga-board-v248.css?v=272">
+  <script src="naga-board-state-v248.js?v=272"></script>
+  <script src="naga-board-v248.js?v=272"></script>
+  <script src="hand-mask-v237.js?v=272"></script>
+  <script src="menu-sections-v239.js?v=272"></script>
+  <script src="workspace-ui-v240.js?v=272"></script>
+  <script src="generation-confirm-v241.js?v=272"></script>
+  <script src="collection-deletion-v244.js?v=272"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 271;
+    const APP_VERSION = 272;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -4767,6 +4769,7 @@
       const QUESTION_NOTICE_STORAGE_KEY_V66 = storageKey("question-notices-v1");
         const ANNOUNCEMENT_SEEN_STORAGE_KEY_V65 = storageKey("announcement-seen-v1");
         const APP_ANNOUNCEMENTS_V66 = [
+          {"version":272,"date":"2026-09-17","publishedAt":"2026-09-17T12:03:21.286Z","title":"学習画面をコンパクトにしました","body":"「条件設定」を全問の右に配置しました。「ハッシュタグで検索」を開くとタグ候補を選べます。"},
           {"version":271,"date":"2026-09-17","publishedAt":"2026-09-17T11:44:16.782Z","title":"ハッシュタグをコンパクトにしました","body":"「ハッシュタグを追加」を開くと候補が表示されます。オリジナルタグも作成でき、コメントを投稿すると問題集内の検索に使えます。"},
           {"version":270,"date":"2026-09-17","publishedAt":"2026-09-17T11:16:45.223Z","title":"コメントのタグで問題を探せます","body":"コメントに5種類のハッシュタグをボタンで追加できます。問題集内でタグを選ぶと、そのタグが付いた問題だけを表示します。"},
           {"version":269,"date":"2026-09-17","publishedAt":"2026-09-17T09:54:08.608Z","title":"本棚から新しい問題集を作成できます","body":"本棚の「＋新しい問題集」で作成フォームが開くように修正しました。名前・色・公開範囲を設定し、作成した本をそのまま問題の保存先に選べます。"},
@@ -8984,6 +8987,9 @@
         const panel = document.getElementById("commentTagSearchV270");
         panel.hidden = !["today", "my"].includes(menuViewV16) || isSeriesParentCollectionV180(sharedCollectionV46);
         if (panel.hidden) return;
+        const activeTag = document.getElementById("commentTagActiveV272");
+        activeTag.hidden = !menuCommentTagV270;
+        activeTag.textContent = menuCommentTagV270 ? "#" + menuCommentTagV270 : "";
         const choices = window.MinkiruCommentTagsV270.tagSuggestions([...window.commentTagSuggestionsV271(), menuCommentTagV270]);
         document.getElementById("commentTagFiltersV270").innerHTML = ["", ...choices].map(tag =>
           `<button type="button" class="comment-tag-v270" data-comment-tag-filter="${escapeHtml(tag)}" aria-pressed="${menuCommentTagV270 === tag}">${tag ? "#" + escapeHtml(tag) : "すべて"}</button>`).join("");

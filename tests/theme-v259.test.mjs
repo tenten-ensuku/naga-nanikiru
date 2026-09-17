@@ -111,7 +111,7 @@ test('accessible My Page controls reflect current theme and early restoration pr
     assert.match(result, /id="themePreferenceStatusV259" role="status"/);
     assert.match(result, /id="desktopLayoutSelect"/);
   }
-  assert.ok(html.indexOf('<script src="theme-v259.js?v=271"></script>') < html.indexOf('<style'));
+  assert.ok(html.indexOf('<script src="theme-v259.js?v=272"></script>') < html.indexOf('<style'));
   assert.match(html, /window\.MinkiruThemeV259\?\.bind\(\)/);
-  assert.ok(html.indexOf('theme-v259.css?v=271') > html.indexOf('question-toolbar-v255.css'));
+  assert.ok(html.indexOf('theme-v259.css?v=272') > html.indexOf('question-toolbar-v255.css'));
 });
