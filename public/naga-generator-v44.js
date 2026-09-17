@@ -874,10 +874,14 @@
     // NAGA records the player's real reach as a separate event immediately
     // after the prediction-bearing action and before the following discard.
     // Keep the window short so a later unrelated reach is never attached.
-    return entries.slice(index + 1, index + 4).some(function (entry) {
-      var message = getMessage(entry);
-      return message && message.type === "reach" && validSeat(message.actor) === seat;
-    });
+    for (var next = index + 1; next < Math.min(entries.length, index + 4); next += 1) {
+      var message = getMessage(entries[next]);
+      if (!message) continue;
+      if (message.type === "reach" && validSeat(message.actor) === seat) return true;
+      // A later turn's declaration must never become this discard's choice.
+      if (message.type === "dahai" || message.type === "tsumo") return false;
+    }
+    return false;
   }
 
   function commonCandidate(reportId, seat, ts, tv, decisionType, report, snapshot) {
@@ -1045,6 +1049,11 @@
       call: (hasCallAction ? actionProbabilities.call : actionProbabilities.kan).slice()
     };
     candidate.callRecommendedActions = actionRecommendations;
+    candidate.callPredictionAvailable = Array.from({ length: count }, function (_, i) {
+      return [rows[i], kanRows[i]].some(function (row) {
+        return row && Object.values(row).some(function (value) { return Number.isFinite(Number(value)) && Number(value) > 0; });
+      });
+    });
     candidate.callRecommended = actionRecommendations.map(function (recommendation) { return recommendation !== "pass"; });
     candidate.actualCallProbability = Array.from({ length: count }, function (_unused, modelIndex) {
       var action = candidate.actualCallAction || "pass";
@@ -1219,6 +1228,17 @@
       : candidate.actualDiscardProbability;
   }
 
+  function decisionMismatchIndices(candidate, indices) {
+    return indices.filter(function (i) {
+      if (candidate.decisionType === "call") {
+        return candidate.callPredictionAvailable[i] && candidate.callRecommendedActions[i] !== candidate.actualCallAction;
+      }
+      var value = candidate.reach[i];
+      return candidate.hasRiichiJudgment && !candidate.reached && value != null && Number.isFinite(Number(value))
+        && Boolean(candidate.actualReach) !== (Number(value) >= 5000);
+    });
+  }
+
   function extractBadMoves(report, seat, options) {
     var targetSeat = validSeat(seat);
     if (targetSeat == null) throw new RangeError("seat must be 0..3");
@@ -1230,6 +1250,7 @@
     reportId = String(reportId);
     var results = [];
     var seen = {};
+    var filteredCount = 0;
 
     for (var ts = 0; ts < report.pred.length; ts += 1) {
       var entries = report.pred[ts];
@@ -1242,16 +1263,27 @@
           tv: tv,
           canonicalSceneUrl: sceneUrl(reportId, targetSeat, ts, tv)
         });
-        if (!candidate || seen[candidate.id]) continue;
-        if (!candidateMatchesDecision(candidate, settings.decisionType)) continue;
-        var probabilities = candidateProbabilityValues(candidate);
+        if (!candidate) continue;
+        var sceneKey = reportId + "|" + targetSeat + "|" + ts + "|" + candidate.tv;
+        if (seen[sceneKey]) continue;
         var analyzedModelNames = modelNames(report);
         var requestedModelIndices = settings.modelNames.length
           ? settings.modelNames.map(function (name) { return analyzedModelNames.indexOf(name); }).filter(function (modelIndex) { return modelIndex >= 0; })
           : [];
         var consideredModelIndices = settings.modelNames.length
           ? requestedModelIndices
-          : (Array.isArray(probabilities) ? probabilities.map(function (_value, modelIndex) { return modelIndex; }) : []);
+          : candidate.models.map(function (_value, modelIndex) { return modelIndex; });
+        var mismatchIndices = decisionMismatchIndices(candidate, consideredModelIndices);
+        // A draw can offer both kan and riichi. If kan agrees, keep a riichi
+        // disagreement at the same scene rather than letting kan mask it.
+        if (!mismatchIndices.length && candidate.predictionType === "kan" && candidate.actualCallAction === "pass") {
+          var alternate = sceneCandidate(report, {reportId:reportId,tw:targetSeat,ts:ts,tv:tv,decisionType:"combined"});
+          if (alternate && alternate.decisionType === "discard") {
+            var alternateMismatch = decisionMismatchIndices(alternate, consideredModelIndices);
+            if (alternateMismatch.length) { candidate = alternate; mismatchIndices = alternateMismatch; }
+          }
+        }
+        var probabilities = candidateProbabilityValues(candidate);
         var badModelIndices = Array.isArray(probabilities)
           ? consideredModelIndices.filter(function (modelIndex) {
             var value = probabilities[modelIndex];
@@ -1260,11 +1292,16 @@
           : [];
         var bad = badModelIndices.length > 0
           && (settings.modelMode === "any" || badModelIndices.length === consideredModelIndices.length);
-        if (!bad) continue;
+        // Decision disagreements are independent of all extraction filters.
+        // Use the same first-choice rule as question grading (riichi >= 50%).
+        var forced = mismatchIndices.length > 0;
+        if (!forced && (!bad || !candidateMatchesDecision(candidate, settings.decisionType) || filteredCount >= settings.maxCandidates)) continue;
         if (candidate.decisionType === "discard"
           && (candidate.reached || candidate.actualDiscardNaga === "?")) {
           continue;
         }
+        if (!forced) filteredCount += 1;
+        candidate.decisionMismatchModels = mismatchIndices.map(function (i) { return candidate.models[i].name; });
         candidate.isBadMove = true;
         candidate.badMoveThresholdPercent = settings.thresholdPercent;
         candidate.badMoveModelMode = settings.modelMode;
@@ -1274,11 +1311,9 @@
         candidate.badMoveModels = badModelIndices.map(function (modelIndex) {
           return candidate.models[modelIndex] && candidate.models[modelIndex].name;
         }).filter(Boolean);
-        seen[candidate.id] = true;
+        seen[sceneKey] = true;
         results.push(candidate);
-        if (results.length >= settings.maxCandidates) break;
       }
-      if (results.length >= settings.maxCandidates) break;
     }
     return results;
   }

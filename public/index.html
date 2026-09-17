@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=273">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=273">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=273">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=274">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=274">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=274">
   <title>みん切る｜みんなの何切る問題集</title>
   <link rel="preload" as="image" href="assets/loading-screen-v243.png" fetchpriority="high">
   <meta name="description" content="みん切るは、NAGA URLから問題をつくり、解いて、仲間と共有できる麻雀学習アプリです。">
   <meta name="theme-color" content="#06131e">
-  <script src="theme-v259.js?v=273"></script>
+  <script src="theme-v259.js?v=274"></script>
   <meta property="og:type" content="website">
   <meta property="og:title" content="みん切る｜みんなの何切る問題集">
   <meta property="og:description" content="みん切るは、NAGA URLから問題をつくり、解いて、仲間と共有できる麻雀学習アプリです。">
@@ -2249,19 +2249,19 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=273">
-  <link rel="stylesheet" href="library-v214.css?v=273">
-  <link rel="stylesheet" href="navigation-v234.css?v=273">
-  <link rel="stylesheet" href="book-builder-v235.css?v=273">
-  <link rel="stylesheet" href="menu-polish-v238.css?v=273">
-  <link rel="stylesheet" href="menu-sections-v239.css?v=273">
-  <link rel="stylesheet" href="workspace-ui-v240.css?v=273">
-  <link rel="stylesheet" href="collection-deletion-v244.css?v=273">
-  <link rel="stylesheet" href="menu-simplify-v245.css?v=273">
-  <link rel="stylesheet" href="content-dates-v246.css?v=273">
-  <link rel="stylesheet" href="question-header-v250.css?v=273">
-  <link rel="stylesheet" href="question-toolbar-v255.css?v=273">
-  <link rel="stylesheet" href="theme-v259.css?v=273">
+  <link rel="stylesheet" href="ux-v159.css?v=274">
+  <link rel="stylesheet" href="library-v214.css?v=274">
+  <link rel="stylesheet" href="navigation-v234.css?v=274">
+  <link rel="stylesheet" href="book-builder-v235.css?v=274">
+  <link rel="stylesheet" href="menu-polish-v238.css?v=274">
+  <link rel="stylesheet" href="menu-sections-v239.css?v=274">
+  <link rel="stylesheet" href="workspace-ui-v240.css?v=274">
+  <link rel="stylesheet" href="collection-deletion-v244.css?v=274">
+  <link rel="stylesheet" href="menu-simplify-v245.css?v=274">
+  <link rel="stylesheet" href="content-dates-v246.css?v=274">
+  <link rel="stylesheet" href="question-header-v250.css?v=274">
+  <link rel="stylesheet" href="question-toolbar-v255.css?v=274">
+  <link rel="stylesheet" href="theme-v259.css?v=274">
 </head>
 <body class="auth-gate-open">
   <section class="startup-screen-v236" id="startupScreenV236" aria-label="みん切るを準備中">
@@ -2443,6 +2443,8 @@
       <div class="comments-scroll" id="commentsScroll" tabindex="0" aria-label="スレッド内のコメント一覧"></div>
       <form class="comment-form" id="commentForm" hidden>
         <label for="commentInput">コメントを追加</label>
+        <details class="comment-tag-picker-v271 comment-tools-v274" id="commentTagPickerV271">
+          <summary>文字装飾・画像・タグ</summary>
         <div class="comment-compose-toolbar" role="toolbar" aria-label="コメントの書式設定">
           <button class="comment-format-button" type="button" data-comment-format="bold" title="選択範囲を太字にする"><strong>B</strong> 太字</button>
           <button class="comment-format-button" type="button" data-comment-format="spoiler" title="選択範囲を伏せ字にする">|| 伏せ字</button>
@@ -2461,8 +2463,6 @@
           <button class="comment-image-button" id="commentImageButton" type="button">画像を追加</button>
           <input class="comment-file-input" id="commentImageInput" type="file" accept="image/png,image/jpeg,image/webp,image/gif" multiple>
         </div>
-        <details class="comment-tag-picker-v271" id="commentTagPickerV271">
-          <summary>ハッシュタグを追加</summary>
           <div class="comment-tag-picker-body-v271">
             <div class="comment-tags-v270" id="commentTagChoicesV270" role="group" aria-label="コメントにハッシュタグを追加"></div>
             <div class="comment-custom-tag-v271">
@@ -2633,30 +2633,32 @@
     </form>
   </dialog>
 
-  <link rel="stylesheet" href="comment-tags-v270.css?v=273">
+  <link rel="stylesheet" href="comment-tags-v270.css?v=274">
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=273"></script>
-  <script src="drill-ux-v44.js?v=273"></script>
-  <script src="navigation-v234.js?v=273"></script>
-  <script src="book-builder-v235.js?v=273"></script>
-  <script src="library-order-v215.js?v=273"></script>
-  <script src="content-dates-v246.js?v=273"></script>
-  <script src="question-header-v250.js?v=273"></script>
-  <script src="library-v214.js?v=273"></script>
-  <script src="naga-generator-v44.js?v=273"></script>
-  <link rel="stylesheet" href="naga-board-v248.css?v=273">
-  <link rel="stylesheet" href="refinements-v273.css?v=273">
-  <script src="naga-board-state-v248.js?v=273"></script>
-  <script src="naga-board-v248.js?v=273"></script>
-  <script src="hand-mask-v237.js?v=273"></script>
-  <script src="menu-sections-v239.js?v=273"></script>
-  <script src="workspace-ui-v240.js?v=273"></script>
-  <script src="generation-confirm-v241.js?v=273"></script>
-  <script src="collection-deletion-v244.js?v=273"></script>
+  <script src="supabase-sync-v48.js?v=274"></script>
+  <script src="drill-ux-v44.js?v=274"></script>
+  <script src="navigation-v234.js?v=274"></script>
+  <script src="book-builder-v235.js?v=274"></script>
+  <script src="library-order-v215.js?v=274"></script>
+  <script src="content-dates-v246.js?v=274"></script>
+  <script src="question-header-v250.js?v=274"></script>
+  <script src="library-v214.js?v=274"></script>
+  <script src="naga-generator-v44.js?v=274"></script>
+  <link rel="stylesheet" href="naga-board-v248.css?v=274">
+  <link rel="stylesheet" href="refinements-v273.css?v=274">
+  <link rel="stylesheet" href="generator-tools-v274.css?v=274">
+  <script src="comment-tools-v274.js?v=274"></script>
+  <script src="naga-board-state-v248.js?v=274"></script>
+  <script src="naga-board-v248.js?v=274"></script>
+  <script src="hand-mask-v237.js?v=274"></script>
+  <script src="menu-sections-v239.js?v=274"></script>
+  <script src="workspace-ui-v240.js?v=274"></script>
+  <script src="generation-confirm-v241.js?v=274"></script>
+  <script src="collection-deletion-v244.js?v=274"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 273;
+    const APP_VERSION = 274;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -3141,8 +3143,7 @@
       if (state.commentAttachments.length) setCommentFormStatusV68(`${state.commentAttachments.length}枚の画像を添付しています。`);
     }
 
-    function applyCommentFormatV68(kind, value = "") {
-      const input = document.getElementById("commentInput");
+    function applyCommentFormatV68(kind, value = "", input = document.getElementById("commentInput")) {
       if (!input) return;
       const wrappers = {
         bold: ["**", "**"],
@@ -3156,7 +3157,9 @@
       const end = input.selectionEnd ?? start;
       const selected = input.value.slice(start, end) || "ここに文字";
       const replacement = `${wrapper[0]}${selected}${wrapper[1]}`;
+      if (input.maxLength > 0 && input.value.length - (end - start) + replacement.length > input.maxLength) return;
       input.setRangeText(replacement, start, end, "select");
+      input.dispatchEvent(new Event("input", { bubbles: true }));
       input.focus();
     }
 
@@ -4772,6 +4775,7 @@
       const QUESTION_NOTICE_STORAGE_KEY_V66 = storageKey("question-notices-v1");
         const ANNOUNCEMENT_SEEN_STORAGE_KEY_V65 = storageKey("announcement-seen-v1");
         const APP_ANNOUNCEMENTS_V66 = [
+          {"version":274,"date":"2026-09-17","publishedAt":"2026-09-17T14:05:31.409Z","title":"コメント作成と問題抽出を改善しました","body":"生成時のコメントに文字装飾・画像・タグを追加しました。選択欄を見やすくし、候補の下部にも一括追加ボタンを設置。副露・リーチの判断不一致を抽出条件に関わらず検出します。"},
           {"version":273,"date":"2026-09-17","publishedAt":"2026-09-17T12:43:20.973Z","title":"学習画面と問題生成を改善しました","body":"加槓推奨を修正し、盤面の表示サイズを調整しました。生成時コメント、見やすい学習カード、条件設定内のタグ検索と習熟度バーを追加しました。"},
           {"version":272,"date":"2026-09-17","publishedAt":"2026-09-17T12:03:21.286Z","title":"学習画面をコンパクトにしました","body":"「条件設定」を全問の右に配置しました。「ハッシュタグで検索」を開くとタグ候補を選べます。"},
           {"version":271,"date":"2026-09-17","publishedAt":"2026-09-17T11:44:16.782Z","title":"ハッシュタグをコンパクトにしました","body":"「ハッシュタグを追加」を開くと候補が表示されます。オリジナルタグも作成でき、コメントを投稿すると問題集内の検索に使えます。"},
@@ -7194,7 +7198,8 @@
             sceneTs: question.ts ?? null,
             sceneTv: question.tv ?? null,
             decisionType: question.decisionType || "discard",
-            initialComment: payload.initialComment || ""
+            initialComment: payload.initialComment || "",
+            initialAttachments: payload.initialAttachments || []
           });
           if (result && typeof result === "object") {
             return {
@@ -9338,7 +9343,7 @@
         const sceneMode = generatorModeV46 === "scene";
         const unavailable = window.NAGA_RUNTIME_CONFIG?.backend === "cloudflare" && !window.NAGA_RUNTIME_CONFIG?.heavyOperationsEnabled;
         const destinationMarkup = renderGeneratorDestinationV130();
-        const builder = `${generatorProgressMarkupV159()}<div class="generator-setup">${unavailable ? "" : destinationMarkup}<form class="generator-form generator-form-v46" id="generatorForm"><label class="generator-url-field">NAGA URL<input id="generatorUrl" type="url" required inputmode="url" autocomplete="off" placeholder="https://naga.dmv.nico/htmls/..."></label><label id="generatorSeatLabel">対象プレイヤー<select id="generatorSeat">${generatorSeatOptionsV46()}</select></label><fieldset class="generator-mode-field"><legend>作成する問題</legend><label><input type="radio" name="generatorMode" value="scene"${sceneMode ? " checked" : ""}> この局面から1問</label><label><input type="radio" name="generatorMode" value="match"${sceneMode ? "" : " checked"}> 半荘からまとめて抽出</label></fieldset><details class="generator-custom-settings" id="generatorCustomSettings"${sceneMode ? " hidden" : ""}><summary>抽出条件を調整する</summary><div class="generator-settings-grid"><label>悪手閾値（%）<input id="generatorThreshold" type="number" min="0.1" max="50" step="0.1" value="5"></label><label>対象判断<select id="generatorDecisionType"><option value="all">すべて</option><option value="discard">打牌</option><option value="call">副露</option><option value="reach">リーチ</option></select></label><label>最大抽出数<input id="generatorMaxCandidates" type="number" min="1" max="500" step="1" value="100"></label></div>${generatorModelFilterMarkupV46()}<p class="generator-settings-note">選択率が閾値以下の候補を抽出します。リーチ判断も対象にできます。モデルは解析済みのものだけを使用します。</p></details><button class="generator-button" type="submit"${unavailable ? ' disabled title="NAGA解析は準備中です"' : ""}>${sceneMode ? "1問を生成" : "候補を抽出"}</button></form></div><div class="generator-status" id="generatorStatus" aria-live="polite"></div><div class="generator-results" id="generatorResults">${renderGeneratorCandidatesV44()}</div>`;
+        const builder = `${generatorProgressMarkupV159()}<div class="generator-setup">${unavailable ? "" : destinationMarkup}<form class="generator-form generator-form-v46" id="generatorForm"><label class="generator-url-field">NAGA URL<input id="generatorUrl" type="url" required inputmode="url" autocomplete="off" placeholder="https://naga.dmv.nico/htmls/..."></label><label id="generatorSeatLabel">対象プレイヤー<select id="generatorSeat">${generatorSeatOptionsV46()}</select></label><fieldset class="generator-mode-field"><legend>作成する問題</legend><label><input type="radio" name="generatorMode" value="scene"${sceneMode ? " checked" : ""}> この局面から1問</label><label><input type="radio" name="generatorMode" value="match"${sceneMode ? "" : " checked"}> 半荘からまとめて抽出</label></fieldset><details class="generator-custom-settings" id="generatorCustomSettings"${sceneMode ? " hidden" : ""}><summary>抽出条件を調整する</summary><div class="generator-settings-grid"><label>悪手閾値（%）<input id="generatorThreshold" type="number" min="0.1" max="50" step="0.1" value="5"></label><label>対象判断<select id="generatorDecisionType"><option value="all">すべて</option><option value="discard">打牌</option><option value="call">副露</option><option value="reach">リーチ</option></select></label><label>最大抽出数<input id="generatorMaxCandidates" type="number" min="1" max="500" step="1" value="100"></label></div>${generatorModelFilterMarkupV46()}<p class="generator-settings-note">副露・リーチで、選択モデルのいずれかの第一推奨と異なる判断は、閾値・対象判断・最大抽出数に関係なく全件追加します。それ以外の候補には上の条件を使います。</p></details><button class="generator-button" type="submit"${unavailable ? ' disabled title="NAGA解析は準備中です"' : ""}>${sceneMode ? "1問を生成" : "候補を抽出"}</button></form></div><div class="generator-status" id="generatorStatus" aria-live="polite"></div><div class="generator-results" id="generatorResults">${renderGeneratorCandidatesV44()}</div>`;
         const content = unavailable
           ? `<div class="create-import-entry-v240"><button type="button" data-menu-jump="collections">本棚から問題を選ぶ</button></div><details class="generator-destination-disclosure-v240"${generatorEntryV234 === "book" ? " open" : ""}><summary>保存先の収録数を確認する</summary>${destinationMarkup}</details><details class="generator-unavailable-v240"><summary>NAGA URLから追加<span class="workspace-status-v240">準備中</span></summary><p>新規解析・画像アップロード・大量取込は準備中です。入力フォームは確認用の表示で、まだ使用できません。</p><fieldset class="generator-locked-v240" disabled aria-label="準備中のNAGA問題生成">${builder}</fieldset></details>`
           : builder;
@@ -9350,7 +9355,7 @@
 
       function generatorCommentMarkupV273(candidate, index, disabled) {
         const draft = generatorCommentDraftsV273.get(candidate.id) || "";
-        return `<div class="generator-comment-v273"><label for="generatorCommentV273-${index}">コメント・解説 <small>任意</small></label><textarea id="generatorCommentV273-${index}" data-generator-comment-v273="${index}" rows="3" maxlength="4000" placeholder="この局面の考え方など。問題と一緒にコメント欄へ保存されます。"${disabled ? " disabled" : ""}>${escapeHtml(draft)}</textarea><small>解かなくても記入できます。#ハッシュタグも使えます。</small></div>`;
+        return window.MinkiruCommentToolsV274.markup(candidate.id, index, draft, disabled);
       }
 
       function generatorCandidateChoiceMarkupV158(candidate) {
@@ -9390,17 +9395,17 @@
         }).sort((left, right) => left - right);
       }
 
-      function renderGeneratorBatchToolbarV158() {
+      function renderGeneratorBatchToolbarV158(bottom = false) {
         const destination = currentGeneratorDestinationV130();
         const canAdd = canAddGeneratedQuestionV130();
         const selectedCount = selectedGeneratorCandidateIndexesV249().length;
-        const hasBatch = generatorCandidatesV44.length > 1;
+        const hasBatch = !bottom && generatorCandidatesV44.length > 1;
         const previewButton = hasBatch ? `<button class="generator-button secondary" type="button" data-generator-capture-all${generatorPreviewBatchBusyV158 ? " disabled" : ""}>${generatorPreviewBatchBusyV158 ? "プレビューを読込中…" : "プレビューを読み込む"}</button>` : "";
         const needsDestination = destination.kind === "unselected";
         const addLabel = needsDestination && selectedCount > 0 ? `保存先を選んで${selectedCount}問を追加` : `選択した${selectedCount}問を追加`;
         const addButton = `<button class="generator-button" type="button" data-generator-add-selected${selectedCount === 0 || (!needsDestination && !canAdd) ? " disabled" : ""}>${addLabel}</button>`;
         const note = needsDestination ? '<p class="generator-destination-note">候補は先に選べます。追加するときに保存先を指定してください。</p>' : "";
-        return `<div class="generator-results-toolbar"><span><strong>${generatorCandidatesV44.length}件</strong>の候補</span><div class="generator-results-actions">${previewButton}${addButton}</div></div>${note}`;
+        return `<div class="generator-results-toolbar${bottom ? " generator-results-footer-v274" : ""}"><span><strong>${generatorCandidatesV44.length}件</strong>の候補</span><div class="generator-results-actions">${previewButton}${addButton}</div></div>${note}`;
       }
 
       function renderGeneratorCandidatesV44() {
@@ -9423,8 +9428,8 @@
           const addDisabled = duplicate || (!needsDestination && !canAdd) || !boardReady;
           const checked = generatorSelectedCandidatesV158.has(index) ? " checked" : "";
           const selectionDisabled = duplicate || !boardReady ? " disabled" : "";
-          return `<article class="generator-candidate${duplicate ? " is-duplicate" : ""}"><div class="candidate-header"><label class="candidate-select"><input type="checkbox" data-generator-select="${index}"${checked}${selectionDisabled}><span>選択</span></label><div><div class="candidate-title">${escapeHtml(candidate.playerName || `プレイヤー${Number(candidate.playerSeat ?? candidate.tw ?? 0) + 1}`)}<span class="candidate-title-sub">${escapeHtml(candidate.title || `局${Number(candidate.ts || 0) + 1}・操作${candidate.tv}`)} ／ ${escapeHtml(questionTypeV44(candidate))}</span></div>${candidate.isBadMove ? `<div class="candidate-meta">悪手候補${badModels}</div>` : ""}</div></div><div class="candidate-body"><div class="candidate-preview-column"><div class="candidate-controls">${preview}<span class="candidate-capture-state${captureErrorClass}">${escapeHtml(captureState)}</span><div class="candidate-actions"><button class="generator-button secondary" type="button" data-generator-capture="${index}"${candidate._captureState === "loading" ? " disabled" : ""}>${captureLabel}</button><button class="generator-button${duplicate || !canAdd ? " secondary" : ""}" type="button" data-generator-add="${index}"${addDisabled ? " disabled" : ""}>${duplicate ? duplicateLabel : addLabel}</button></div></div></div><div class="candidate-analysis-column"><div class="candidate-analysis-heading">プレイヤーとAIの選択</div><div class="candidate-choice-row">${generatorCandidateChoiceMarkupV158(candidate)}${generatorCandidateModelsMarkupV158(candidate)}</div>${generatorCommentMarkupV273(candidate, index, duplicate)}</div></div></article>`;
-        }).join("")}</div>`;
+          return `<article class="generator-candidate${duplicate ? " is-duplicate" : ""}"><div class="candidate-header"><label class="candidate-select"><input type="checkbox" data-generator-select="${index}"${checked}${selectionDisabled}><span>選択</span></label><div><div class="candidate-title">${escapeHtml(candidate.playerName || `プレイヤー${Number(candidate.playerSeat ?? candidate.tw ?? 0) + 1}`)}<span class="candidate-title-sub">${escapeHtml(candidate.title || `局${Number(candidate.ts || 0) + 1}・操作${candidate.tv}`)} ／ ${escapeHtml(questionTypeV44(candidate))}</span></div>${candidate.isBadMove ? `<div class="candidate-meta">${candidate.decisionMismatchModels?.length ? `${candidate.decisionType === "call" ? "副露" : "リーチ"}判断が不一致 ／ ${candidate.decisionMismatchModels.map(escapeHtml).join("・")}` : `悪手候補${badModels}`}</div>` : ""}</div></div><div class="candidate-body"><div class="candidate-preview-column"><div class="candidate-controls">${preview}<span class="candidate-capture-state${captureErrorClass}">${escapeHtml(captureState)}</span><div class="candidate-actions"><button class="generator-button secondary" type="button" data-generator-capture="${index}"${candidate._captureState === "loading" ? " disabled" : ""}>${captureLabel}</button><button class="generator-button${duplicate || !canAdd ? " secondary" : ""}" type="button" data-generator-add="${index}"${addDisabled ? " disabled" : ""}>${duplicate ? duplicateLabel : addLabel}</button></div></div></div><div class="candidate-analysis-column"><div class="candidate-analysis-heading">プレイヤーとAIの選択</div><div class="candidate-choice-row">${generatorCandidateChoiceMarkupV158(candidate)}${generatorCandidateModelsMarkupV158(candidate)}</div>${generatorCommentMarkupV273(candidate, index, duplicate)}</div></div></article>`;
+        }).join("")}</div>${renderGeneratorBatchToolbarV158(true)}`;
       }
 
       async function renderStudentDashboardV46() {
@@ -10302,6 +10307,14 @@
       }
 
       function bindGeneratorCandidateInputsV44() {
+        document.querySelectorAll("[data-comment-composer-v274]").forEach(container => {
+          const candidate = generatorCandidatesV44[Number(container.dataset.commentComposerV274)];
+          if (candidate) window.MinkiruCommentToolsV274.bind(container, candidate.id, {
+            tags: window.MinkiruCommentTagsV270, suggestions: () => window.commentTagSuggestionsV271?.() || [],
+            applyFormat: applyCommentFormatV68, renderContent: formatCommentContent, readFile: readCommentFileV68,
+            saveText: text => generatorCommentDraftsV273.set(candidate.id, text)
+          });
+        });
         document.querySelectorAll("[data-generator-comment-v273]").forEach(input => input.addEventListener("input", () => {
           const candidate = generatorCandidatesV44[Number(input.dataset.generatorCommentV273)];
           if (candidate) generatorCommentDraftsV273.set(candidate.id, input.value);
@@ -10310,17 +10323,19 @@
           const index = Number(event.currentTarget.dataset.generatorSelect);
           if (event.currentTarget.checked) generatorSelectedCandidatesV158.add(index);
           else generatorSelectedCandidatesV158.delete(index);
-          const results = document.getElementById("generatorResults");
-          if (results) {
-            results.innerHTML = renderGeneratorCandidatesV44();
-            bindGeneratorCandidateInputsV44();
-            results.querySelector(`[data-generator-select="${index}"]`)?.focus({ preventScroll: true });
-          }
+          // Update both actions without replacing the focused checkbox or comment drafts.
+          const template = document.createElement("template");
+          template.innerHTML = renderGeneratorBatchToolbarV158();
+          const next = template.content.querySelector("[data-generator-add-selected]");
+          document.querySelectorAll("[data-generator-add-selected]").forEach(button => {
+            button.textContent = next.textContent;
+            button.disabled = next.disabled;
+          });
         }));
         document.querySelectorAll("[data-generator-capture]").forEach(button => button.addEventListener("click", () => captureGeneratorCandidateV51(Number(button.dataset.generatorCapture))));
         document.querySelectorAll("[data-generator-capture-all]").forEach(button => button.addEventListener("click", () => captureGeneratorCandidatesSequentiallyV158()));
-        document.querySelectorAll("[data-generator-add]").forEach(button => button.addEventListener("click", () => addGeneratedQuestionV44(Number(button.dataset.generatorAdd))));
-        document.querySelectorAll("[data-generator-add-selected]").forEach(button => button.addEventListener("click", () => addSelectedGeneratorQuestionsV158()));
+        document.querySelectorAll("[data-generator-add]").forEach(button => button.addEventListener("click", () => window.MinkiruCommentToolsV274.saveOnce(() => addGeneratedQuestionV44(Number(button.dataset.generatorAdd)))));
+        document.querySelectorAll("[data-generator-add-selected]").forEach(button => button.addEventListener("click", () => window.MinkiruCommentToolsV274.saveOnce(() => addSelectedGeneratorQuestionsV158())));
       }
 
       async function captureGeneratorCandidatesSequentiallyV158() {
@@ -10375,6 +10390,7 @@
         if (!await window.NagaGenerationConfirmV241.ask(document, destination, indexes.length)) return;
         const expectedDestinationKey = destination.kind === "shared" ? destination.shareSlug : "local";
         let added = 0;
+        let lastFailure = "";
         for (const index of indexes) {
           const currentDestination = currentGeneratorDestinationV130();
           if ((currentDestination.kind === "shared" ? currentDestination.shareSlug : currentDestination.kind) !== expectedDestinationKey) break;
@@ -10382,14 +10398,15 @@
           if (await addGeneratedQuestionV44(index, { skipConfirm: true, suppressRender: true, expectedDestinationKey })) {
             generatorSelectedCandidatesV158.delete(index);
             added += 1;
-          }
+          } else lastFailure = document.getElementById("generatorStatus")?.textContent || "";
         }
         const results = document.getElementById("generatorResults");
         if (results) {
           results.innerHTML = renderGeneratorCandidatesV44();
           bindGeneratorCandidateInputsV44();
         }
-        setGeneratorStatusV44(added ? `${added}件を「${destination.label}」へ追加しました。` : "選択した候補は追加されませんでした。", added === 0);
+        const remaining = indexes.length - added;
+        setGeneratorStatusV44((added ? `${added}件を「${destination.label}」へ追加しました。` : "") + (remaining ? `追加できなかった${remaining}件は候補に残っています。${lastFailure}` : ""), remaining > 0);
         setGeneratorStageV159(added ? 4 : 3, false);
       }
 
@@ -10435,6 +10452,7 @@
         const now = new Date().toISOString();
         const creatorId = supabaseSessionV46?.user?.id || null;
         const creatorName = currentUserDisplayNameV47();
+        const initialAttachments = await window.MinkiruCommentToolsV274.getAttachments(candidate.id);
         const initialComment = (generatorCommentDraftsV273.get(candidate.id) || "").trim();
         const question = {
           ...candidate,
@@ -10460,7 +10478,7 @@
         if (destination.kind === "shared") {
           let remote;
           try {
-            remote = await invokeSharedMutationV47("add", { question, shareSlug: destination.shareSlug, initialComment });
+            remote = await invokeSharedMutationV47("add", { question, shareSlug: destination.shareSlug, initialComment, initialAttachments });
             if (remote?.capacityReached) {
               const nextVolume = Number.isInteger(remote.nextVolume) && remote.nextVolume > 0 ? remote.nextVolume : 2;
               const parentShareSlug = String(remote.parentShareSlug || destination.row?.series_parent_slug || destination.shareSlug || "");
@@ -10476,7 +10494,7 @@
               }
               setGeneratorStatusV44(`${nextVolume}巻を準備して、問題を追加しています…`);
               const nextBook = await window.NagaSupabase.createCollectionVolume(parentShareSlug, nextVolume);
-              remote = await invokeSharedMutationV47("add", { question, shareSlug: nextBook?.share_slug || parentShareSlug, initialComment });
+              remote = await invokeSharedMutationV47("add", { question, shareSlug: nextBook?.share_slug || parentShareSlug, initialComment, initialAttachments });
               if (remote?.capacityReached) throw new Error("次の巻を作成しましたが、問題の追加先を確定できませんでした。問題集を開き直してお試しください。");
             }
             question.serverQuestionId = remote?.id || remote?.question_id || null;
@@ -10511,14 +10529,14 @@
           userStateV16.customQuestions ||= [];
           userStateV16.customQuestions.push(question);
           questionsV16.push(question);
-          if (destination.kind === "local" && initialComment) {
+          if (destination.kind === "local" && (initialComment || initialAttachments.length)) {
             userStateV16.localComments ||= {};
-            userStateV16.localComments[questionKeyV16(question)] = [{ id: crypto.randomUUID(), author: creatorName, authorId: creatorId, content: initialComment, time: now, createdAt: now, attachments: [] }];
+            userStateV16.localComments[questionKeyV16(question)] = [{ id: crypto.randomUUID(), author: creatorName, authorId: creatorId, content: initialComment, time: now, createdAt: now, attachments: initialAttachments.map(({src,alt}) => ({src,alt})) }];
           }
           if (!saveUserStateV16()) {
             userStateV16.customQuestions.pop();
             questionsV16.pop();
-            if (destination.kind === "local" && initialComment) delete userStateV16.localComments[questionKeyV16(question)];
+            if (destination.kind === "local" && (initialComment || initialAttachments.length)) delete userStateV16.localComments[questionKeyV16(question)];
             generatorAddedKeysV130.delete(`${candidate.id}::${destinationKey}`);
             setGeneratorStatusV44("端末の保存容量が不足しています。画像を小さくして再度お試しください。", true);
             return false;
@@ -11555,7 +11573,7 @@
           openQuestionV16(index);
         });
         document.addEventListener("keydown", event => {
-          if (["INPUT", "TEXTAREA", "SELECT"].includes(document.activeElement?.tagName)) return;
+          if (["INPUT", "TEXTAREA", "SELECT", "BUTTON", "SUMMARY"].includes(document.activeElement?.tagName)) return;
           if (event.key === "Enter" && !state.revealed && !document.getElementById("answerConfirmation").hidden) {
             event.preventDefault();
             confirmAnswerV41();

@@ -53,3 +53,26 @@ test('two tabs submitting the same scene create only one question and one commen
   assert.equal(ctx.db.sqlite.prepare('SELECT count(*) n FROM questions').get().n,1);
   assert.equal(ctx.db.sqlite.prepare('SELECT count(*) n FROM comments').get().n,1);
 });
+
+function readyImage(db,owner='owner',state='ready'){
+  const path=`${owner}/comments/initial.png`;
+  db.sqlite.prepare('INSERT INTO media_assets(object_key,bucket,path,owner_id,collection_id,size_bytes,sha256,content_type,state) VALUES(?,?,?,?,?,?,?,?,?)').run(`comment-assets/${path}`,'comment-assets',path,owner,'book-id',128,'a'.repeat(64),'image/png',state);
+  return {path,alt:'解説の画像'};
+}
+test('initial image-only explanation saves atomically and reloads with the normal comment attachment',async t=>{
+  const {ctx,args}=setup(t),attachment=readyImage(ctx.db);
+  const saved=await builderRpc('create_shared_question',{...args,p_initial_comment:'',p_initial_comment_attachments:[attachment]},ctx);
+  const comments=await readRpc('get_shared_comments',{p_share_slug:'book',p_question_id:saved.question_id},{...ctx,actor:{id:'viewer'}});
+  assert.equal(comments.length,1);assert.equal(comments[0].body,'');assert.deepEqual(comments[0].attachments,[attachment]);
+  assert.equal(ctx.db.sqlite.prepare('SELECT count(*) n FROM answer_attempts').get().n,0);
+  assert.equal(ctx.db.sqlite.prepare('SELECT count(*) n FROM media_assets').get().n,1);
+});
+test('initial attachments enforce ownership, ready state, max count and comments permission before saving',async t=>{
+  const {ctx,args}=setup(t),attachment=readyImage(ctx.db,'viewer');
+  const attempt=attachments=>builderRpc('create_shared_question',{...args,p_initial_comment:'',p_initial_comment_attachments:attachments},ctx);
+  await assert.rejects(attempt([attachment]));
+  const own=readyImage(ctx.db,'owner','pending');await assert.rejects(attempt([own]),e=>e.code==='comment_attachment_not_owned_or_ready');
+  ctx.db.sqlite.exec("UPDATE media_assets SET state='ready'");await assert.rejects(attempt(Array(5).fill(own)));
+  ctx.db.sqlite.exec('UPDATE collections SET allow_comments=0');await assert.rejects(attempt([own]),e=>e.code==='comments_disabled');
+  assert.equal(ctx.db.sqlite.prepare('SELECT count(*) n FROM questions').get().n,0);
+});

@@ -615,6 +615,30 @@ async function getMyCapabilities() {
   return { isAdmin: Boolean(data?.[0]?.is_admin) };
 }
 
+// Retain a successful upload for a retry with the same draft. A lost RPC response
+// can mean the comment was committed, so never delete its image on an uncertain failure.
+const initialCommentUploadsV274 = new WeakMap<File, Map<string, Promise<{path: string; src: string; alt: string}>>>();
+async function prepareInitialAttachmentsV274(items: Array<{file: File}>, shareSlug: string) {
+  if (items.length > 4) throw new Error("comment_content_invalid");
+  if (!items.length) return [];
+  const session = await currentSession();
+  if (!session) throw new Error("ログインしてください。");
+  const uploaded = [];
+  for (const item of items) {
+    const key = `${session.user.id}:${shareSlug}`;
+    let cache = initialCommentUploadsV274.get(item.file);
+    if (!cache) { cache = new Map(); initialCommentUploadsV274.set(item.file, cache); }
+    let pending = cache.get(key);
+    if (!pending) {
+      pending = uploadCommentAttachment(item.file, shareSlug).catch(error => { cache!.delete(key); throw error; });
+      cache.set(key, pending);
+    }
+    const attachment = await pending;
+    uploaded.push({path: attachment.path, alt: attachment.alt.slice(0,180)});
+  }
+  return uploaded;
+}
+
 async function createSharedQuestion(input: {
   shareSlug: string;
   title: string;
@@ -627,7 +651,9 @@ async function createSharedQuestion(input: {
   sceneTv?: number | null;
   decisionType?: "discard" | "call" | "riichi" | "combined";
   initialComment?: string;
+  initialAttachments?: Array<{file: File}>;
 }) {
+  const attachments = cloudflareBackend ? await prepareInitialAttachmentsV274(input.initialAttachments || [], input.shareSlug) : [];
   const payload = await media.externalizePayload(input.payload, { shareSlug: input.shareSlug });
   const { data, error } = await requireClient().rpc("create_shared_question", {
     p_share_slug: input.shareSlug,
@@ -640,7 +666,7 @@ async function createSharedQuestion(input: {
     p_scene_ts: input.sceneTs ?? null,
     p_scene_tv: input.sceneTv ?? null,
     p_decision_type: input.decisionType ?? "discard",
-    ...(cloudflareBackend ? { p_initial_comment: input.initialComment ?? "" } : {}),
+    ...(cloudflareBackend ? { p_initial_comment: input.initialComment ?? "", p_initial_comment_attachments: attachments } : {}),
   });
   if (error) throw error;
   return data as unknown;

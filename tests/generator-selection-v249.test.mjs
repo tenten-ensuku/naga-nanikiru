@@ -33,6 +33,8 @@ function harness() {
     setGeneratorStatusV44: message => events.push(message), setGeneratorStageV159: () => {},
     bindGeneratorCandidateInputsV44: () => {}, invokeSharedMutationV47: () => {throw Error('unexpected write');},
   });
+  vm.runInContext(fs.readFileSync(new URL('../public/comment-tools-v274.js', import.meta.url), 'utf8'), context);
+  context.window.MinkiruCommentToolsV274 = context.MinkiruCommentToolsV274;
   vm.runInContext(source, context);
   return {context, select, events, run: code => vm.runInContext(code, context)};
 }
@@ -96,5 +98,8 @@ test('destination event re-renders without clearing selections and checkbox keep
   const handler = html.slice(html.indexOf('document.getElementById("generatorDestinationSelect")?.addEventListener("change"'), html.indexOf('function handleMenuGridClickV16'));
   assert.doesNotMatch(handler, /generatorSelectedCandidatesV158\.clear/);
   assert.match(handler, /renderGeneratorCandidatesV44\(\)/);
-  assert.match(html, /results\.querySelector\(`\[data-generator-select="\$\{index\}"\]`\)\?\.focus\(\{ preventScroll: true \}\)/);
+  const selection=html.slice(html.indexOf('document.querySelectorAll("[data-generator-select]").forEach'),html.indexOf('document.querySelectorAll("[data-generator-capture]").forEach'));
+  assert.doesNotMatch(selection,/results\.innerHTML|renderGeneratorCandidatesV44|bindGeneratorCandidateInputsV44/);
+  assert.match(selection,/button\.textContent = next\.textContent/);
+  assert.match(selection,/button\.disabled = next\.disabled/);
 });

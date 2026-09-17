@@ -9,7 +9,7 @@
     "test:menu": "node --test tests/menu-polish-v238.test.mjs tests/menu-sections-v239.test.mjs tests/workspace-ui-v240.test.mjs tests/menu-simplify-v245.test.mjs tests/content-dates-v246.test.mjs",
     "test:meld": "node --test tests/meld-v237.test.mjs tests/naga-generator-v44.test.mjs tests/post-answer-hand-layout-v212.test.mjs",
     "test:startup": "node --test tests/startup-presentation-v236.test.mjs tests/library-controller-v214.test.mjs tests/auth-gate-v187.test.mjs",
-    "test:builder": "node --test tests/collection-builder-v235.test.mjs tests/question-numbering-v235.test.mjs tests/book-builder-ui-v235.test.mjs tests/collection-deletion-v244.test.mjs tests/collection-deletion-ui-v244.test.mjs tests/generator-comment-v273.test.mjs",
+    "test:builder": "node --test tests/collection-builder-v235.test.mjs tests/question-numbering-v235.test.mjs tests/book-builder-ui-v235.test.mjs tests/collection-deletion-v244.test.mjs tests/collection-deletion-ui-v244.test.mjs tests/generator-comment-v273.test.mjs tests/comment-tools-v274.test.mjs",
     "test:navigation": "node --test tests/navigation-v234.test.mjs tests/analytics-scope-v234.test.mjs tests/navigation-integration-v234.test.mjs",
     "test:mobile": "node --test tests/mobile-question-toolbar-v233.test.mjs",
     "test:ops": "node --test tests/ops-*.test.mjs",

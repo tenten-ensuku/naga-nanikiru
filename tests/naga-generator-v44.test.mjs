@@ -712,9 +712,9 @@ test("supports custom extraction decision, model, threshold, and max-count filte
     "custom-report|0|0|2|discard"
   ]);
   assert.deepEqual(Array.from(api.extractBadMoves(report, 0, { decisionType: "discard" }).map(item => item.id)), [
-    "custom-report|0|0|1|discard"
+    "custom-report|0|0|1|discard", "custom-report|0|0|2|discard"
   ]);
-  assert.equal(api.extractBadMoves(report, 0, { maxCandidates: 1 }).length, 1);
+  assert.equal(api.extractBadMoves(report, 0, { maxCandidates: 1 }).length, 2);
   assert.equal(api.extractBadMoves(report, 0, { thresholdPercent: 4 }).length, 2);
   assert.throws(() => api.normalizeExtractionOptions({ thresholdPercent: 0 }), /between 0.1 and 50/);
   assert.throws(() => api.normalizeExtractionOptions({ thresholdPercent: 51 }), /between 0.1 and 50/);
@@ -744,4 +744,45 @@ test("canonicalizes post-discard fallback URLs to the prediction-bearing pre-dis
   assert.equal(two.tv, 1);
   assert.equal(two.sourceTv, 1);
   assert.equal(new URL(two.nagaUrl).searchParams.get("tv"), "1");
+});
+
+test("all selected-model call and riichi disagreements survive threshold, genre, all-model and count filters", async () => {
+  const api=await loadApi(), rows=[Array(34).fill(0),Array(34).fill(0)];
+  rows[0][4]=rows[1][4]=9000;
+  const low=rows.map(r=>r.map((v,i)=>i===4?100:v));
+  const report={reportId:'forced-decisions',naga_types:{0:'M0',1:'M1'},pred:[[
+    startKyoku(),discardPrediction(0,'5m',['4m','4m'],low),
+    {info:{msg:{type:'dahai',actor:1,pai:'5p'}},huro:{0:[{0:6000,4:4000},{0:2000,4:8000}]}},
+    msg('pon',{actor:0,kind:4,target:1,pai:'5p',consumed:['5p','5p']}),
+    msg('tsumo',{actor:2,pai:'1p'}),
+    discardPrediction(0,'5m',['5m','5m'],rows,{reach:[7000,1000]}),
+    msg('dahai',{actor:0,pai:'5m'}),
+    discardPrediction(0,'5m',['5m','5m'],rows,{reach:[3000,9000]}),
+    msg('reach',{actor:0}),msg('dahai',{actor:0,pai:'5m'})
+  ]]};
+  const found=api.extractBadMoves(report,0,{maxCandidates:1,thresholdPercent:1,decisionType:'discard',modelMode:'all',modelNames:['M0','M1']});
+  assert.deepEqual(Array.from(found.map(c=>c.tv)),[1,2,5,7]);
+  for(const c of found.slice(1))assert.deepEqual(Array.from(c.decisionMismatchModels),['M0']);
+  assert.deepEqual(Array.from(api.extractBadMoves(report,0,{modelNames:['M1'],thresholdPercent:1,maxCandidates:1}).map(c=>c.tv)),[1]);
+  assert.equal(api.extractBadMoves(report,0,{modelNames:['unknown']}).length,0);
+});
+
+test("kan disagreement is detected above threshold and missing predictions are not treated as a model vote",async()=>{
+  const api=await loadApi();
+  const report={reportId:'forced-kan',naga_types:{0:'M0',1:'M1'},pred:[[
+    startKyoku(),{info:{msg:{type:'tsumo',actor:0,pai:'5p'}},kan:[{0:4000,2:6000}]},
+    msg('dahai',{actor:0,pai:'5p'}),msg('tsumo',{actor:1,pai:'1m'})
+  ]]};
+  const [c]=api.extractBadMoves(report,0,{decisionType:'reach',thresholdPercent:0.1,modelMode:'all',modelNames:['M0','M1']});
+  assert.equal(c.actualCallAction,'pass');assert.deepEqual(Array.from(c.decisionMismatchModels),['M0']);
+  assert.equal(api.extractBadMoves(report,0,{decisionType:'reach',thresholdPercent:0.1,modelNames:['M1']}).length,0);
+});
+
+test("a matching kan decision cannot hide a riichi disagreement at the same scene",async()=>{
+  const api=await loadApi(),row=Array(34).fill(0);row[4]=9000;
+  const draw=discardPrediction(0,'5m',['5m'],[row],{reach:[9000]});draw.kan=[{0:8000,1:2000}];
+  const report={reportId:'kan-and-riichi',naga_types:{0:'M0'},pred:[[startKyoku(),draw,msg('dahai',{actor:0,pai:'5m'}),msg('tsumo',{actor:1,pai:'1m'})]]};
+  const found=api.extractBadMoves(report,0,{decisionType:'call',thresholdPercent:0.1,maxCandidates:1});
+  assert.equal(found.length,1);assert.equal(found[0].decisionType,'discard');assert.equal(found[0].hasRiichiJudgment,true);
+  assert.deepEqual(Array.from(found[0].decisionMismatchModels),['M0']);assert.equal(found[0].tv,1);
 });

@@ -251,7 +251,7 @@ async function requireOwnedReadyMedia(db, actor, bucket, path, maxBytes, code) {
   }
 }
 
-async function validateCommentAttachments(db, actor, value) {
+export async function validateCommentAttachments(db, actor, value) {
   const attachments = attachmentItems(value, actor, "comments");
   for (const attachment of attachments) {
     await requireOwnedReadyMedia(
