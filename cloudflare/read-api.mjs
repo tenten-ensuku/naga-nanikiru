@@ -6,6 +6,7 @@ import {
   canViewStudent,
   requireActor,
 } from "./access.mjs";
+import {tagsFromComments} from "../public/comment-tags-v270.mjs";
 import {normalizeQuestionNumbering,toSafeQuestionNumber,isInvalidQuestionTitle} from './question-numbering-v235.mjs';
 
 // Metadata-only, scoped to this book. Answers and views do not update content.
@@ -141,7 +142,12 @@ const QUESTION_INDEX_COLUMNS = `
       AND julianday(json_extract(q.payload, '$.createdAt')) IS NOT NULL THEN json_extract(q.payload, '$.createdAt') END,
     q.created_at) AS generated_at,
   q.created_at,
-  q.updated_at`;
+  q.updated_at,
+  (SELECT json_group_array(tag_comment.body) FROM comments tag_comment INDEXED BY comments_question_time
+    WHERE tag_comment.question_id = q.id AND tag_comment.collection_id = q.collection_id
+      AND tag_comment.deleted_at IS NULL) AS comment_tag_bodies,
+  CASE WHEN json_type(q.payload, '$.comments') = 'array'
+    THEN json_extract(q.payload, '$.comments') ELSE '[]' END AS embedded_tag_comments`;
 
 function requireDb(ctx) {
   const db = ctx?.db;
@@ -324,6 +330,8 @@ function mapIndexRow(row, includeTotal) {
     created_at: row.created_at,
     updated_at: row.updated_at,
     generated_at: row.generated_at,
+    // Only the five tag names cross the network; comment bodies/attachments do not.
+    comment_tags: tagsFromComments([...asJsonArray(row.comment_tag_bodies), ...asJsonArray(row.embedded_tag_comments)]),
   };
   if (includeTotal) mapped.total_count = rowCount(row.total_count);
   return mapped;

@@ -2,6 +2,7 @@ import { createClient, type Session, type SupabaseClient } from "@supabase/supab
 import { createMediaClient } from "./media-assets.mjs";
 import { createServiceGuard } from "./service-guard.mjs";
 import { createCloudflareClient } from "./cloudflare-transport.mjs";
+import * as CommentTagsV270 from "../public/comment-tags-v270.mjs";
 
 type RuntimeConfig = {
   backend?: "cloudflare" | "supabase";
@@ -39,9 +40,11 @@ declare global {
     NAGA_RUNTIME_CONFIG?: RuntimeConfig;
     NAGA_MAINTENANCE_MODE?: boolean;
     NagaSupabase?: ReturnType<typeof buildApi>;
+    MinkiruCommentTagsV270?: typeof CommentTagsV270;
   }
 }
 
+window.MinkiruCommentTagsV270 = CommentTagsV270;
 const config = window.NAGA_RUNTIME_CONFIG ?? {};
 const cloudflareBackend = config.backend === "cloudflare";
 let mediaSessionV230: Session | null = null;

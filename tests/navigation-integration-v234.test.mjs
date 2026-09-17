@@ -108,11 +108,12 @@ test('analytics explicitly asks for only the loaded collection', () => {
 test('list filters restore search, marks, type, range, favorites, count and order', () => {
   const search = { value: '' };
   const context = load(['restoreNavigationFiltersV234', 'navigationFiltersV234'], {
-    menuSearchV44: '', menuStatusFiltersV92: [], menuTypeV44: 'all', menuRangeV60: 'all',
+    menuSearchV44: '', menuCommentTagV270: '', menuStatusFiltersV92: [], menuTypeV44: 'all', menuRangeV60: 'all',
+    window: { MinkiruCommentTagsV270: { TAGS: ['押し引き'] } },
     menuFavoritesOnlyV137: false, menuRenderLimitV119: 40, menuOrderV92: 'sequential', MENU_RENDER_BATCH_V119: 40,
     document: { getElementById: () => search, querySelectorAll: () => [] }
   });
-  const filters = { search: '16', statuses: ['wrong'], type: 'discard', range: '1-50', favorites: true, limit: 80, order: 'random' };
+  const filters = { search: '16', commentTag: '押し引き', statuses: ['wrong'], type: 'discard', range: '1-50', favorites: true, limit: 80, order: 'random' };
   context.restoreNavigationFiltersV234(filters);
   assert.deepEqual(JSON.parse(JSON.stringify(context.navigationFiltersV234())), filters);
   assert.equal(search.value, '16');
