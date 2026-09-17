@@ -139,6 +139,69 @@ html[data-theme="light"] .page.menu-active #menuPanel[data-view="today"] :is(.le
 }
 html[data-theme="light"] .page.menu-active #menuPanel[data-view="today"] .learning-all-action > .learning-action-card { background: transparent; }
 html[data-theme="light"] .page.menu-active #menuPanel[data-view="today"] .learning-action-card .learning-action-link { background: linear-gradient(145deg, color-mix(in srgb, var(--row-accent-v239) 65%, white), var(--row-accent-v239)); }
+
+/* V278: foil-stamped double frames from the selected book-cover proposal.
+   Frame only the outer row; the all-question button shares its wrapper's frame. */
+.page.menu-active #menuPanel[data-view="today"] .learning-action-grid > :is(.learning-action-card, .learning-all-action) {
+  --learning-frame-v278: #d3ad69;
+  --learning-inset-v278: #b8975f;
+  position: relative;
+  border: 3px solid var(--learning-frame-v278);
+  border-radius: 12px;
+  box-shadow: 0 4px 10px #0000001a, inset 0 1px #ffffff12;
+}
+.page.menu-active #menuPanel[data-view="today"] .learning-action-grid > .learning-action-card.is-weak {
+  --learning-frame-v278: #b29ad0;
+  --learning-inset-v278: #8d70b4;
+}
+.page.menu-active #menuPanel[data-view="today"] .learning-action-grid > .learning-all-action {
+  --learning-frame-v278: #78c6bf;
+  --learning-inset-v278: #49a5a8;
+}
+html[data-theme="light"] .page.menu-active #menuPanel[data-view="today"] .learning-action-grid > :is(.learning-action-card, .learning-all-action) {
+  --learning-frame-v278: #c79850;
+  --learning-inset-v278: #b08343;
+  border-color: var(--learning-frame-v278);
+  box-shadow: 0 4px 10px #17313d14, inset 0 1px #ffffffb3;
+}
+html[data-theme="light"] .page.menu-active #menuPanel[data-view="today"] .learning-action-grid > .learning-action-card.is-weak {
+  --learning-frame-v278: #aa8ccb;
+  --learning-inset-v278: #8b67ac;
+}
+html[data-theme="light"] .page.menu-active #menuPanel[data-view="today"] .learning-action-grid > .learning-all-action {
+  --learning-frame-v278: #37adb0;
+  --learning-inset-v278: #078991;
+}
+.page.menu-active #menuPanel[data-view="today"] .learning-action-grid > :is(.learning-action-card, .learning-all-action)::after {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  border: 1px solid var(--learning-inset-v278);
+  border-radius: 6px;
+  pointer-events: none;
+}
+.page.menu-active #menuPanel[data-view="today"] .learning-all-action > .learning-action-card {
+  min-height: calc(var(--entry-height-v273) - 6px);
+  border-radius: 9px;
+}
+.page.menu-active #menuPanel[data-view="today"] .learning-action-grid .learning-action-card {
+  padding-block: 8px;
+}
+.page.menu-active #menuPanel[data-view="today"] .learning-all-action > .learning-action-card:hover:not(:disabled) {
+  background: transparent;
+}
+.page.menu-active #menuPanel[data-view="today"] .learning-action-grid > .learning-action-card:focus-visible,
+.page.menu-active #menuPanel[data-view="today"] .learning-action-grid > .learning-all-action:has(:focus-visible) {
+  outline: 2px solid var(--row-accent-v239);
+  outline-offset: 3px;
+}
+@container (max-width: 330px) {
+  .page.menu-active #menuPanel[data-view="today"] .learning-action-grid .learning-action-card {
+    padding-inline: 6px;
+    column-gap: 3px;
+  }
+}
+
 @container (min-width: 480px) {
   .page.menu-active #menuPanel[data-view="today"] :is(.learning-action-card, .learning-all-action > .learning-action-card) { grid-template-columns: 54px minmax(120px, 1.2fr) minmax(90px, 1fr) 112px 38px; gap: 10px; padding-inline: 16px; }
   .page.menu-active #menuPanel[data-view="today"] .learning-action-card .learning-action-title { font-size: 22px; }
