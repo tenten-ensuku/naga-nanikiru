@@ -124649,19 +124649,22 @@
         "name": "ニシキ",
         "recommendation": "カン",
         "recommendationCode": 5,
-        "label": "カン"
+        "label": "カン",
+        "callAction": "kan"
       },
       {
         "name": "ヒバカリ",
         "recommendation": null,
         "recommendationCode": 0,
-        "label": "鳴かない"
+        "label": "スルー",
+        "callAction": "pass"
       },
       {
         "name": "カガシ",
         "recommendation": null,
         "recommendationCode": 0,
-        "label": "鳴かない"
+        "label": "スルー",
+        "callAction": "pass"
       }
     ],
     "probabilities": {},
@@ -124675,7 +124678,7 @@
     "callOptions": [
       {
         "code": 0,
-        "label": "鳴かない",
+        "label": "スルー",
         "values": [
           43.93,
           93.48,
@@ -124708,9 +124711,9 @@
         53.36
       ],
       "call": [
-        56.05,
-        6.5,
-        46.62
+        0.01,
+        0.02,
+        0.01
       ]
     },
     "callRecommended": [
@@ -125190,7 +125193,78 @@
     "image": null,
     "images": null,
     "imageOff": null,
-    "imageOpen": null
+    "imageOpen": null,
+    "callActionOptions": [
+      {
+        "action": "pass",
+        "label": "スルー",
+        "rawCodes": [
+          0
+        ],
+        "values": [
+          43.93,
+          93.48,
+          53.36
+        ]
+      },
+      {
+        "action": "call",
+        "label": "鳴く",
+        "rawCodes": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "values": [
+          0.01,
+          0.02,
+          0.01
+        ]
+      },
+      {
+        "action": "kan",
+        "label": "カン",
+        "rawCodes": [
+          5,
+          6,
+          7
+        ],
+        "values": [
+          56.04,
+          6.48,
+          46.61
+        ]
+      }
+    ],
+    "callActionProbabilities": {
+      "pass": [
+        43.93,
+        93.48,
+        53.36
+      ],
+      "call": [
+        0.01,
+        0.02,
+        0.01
+      ],
+      "kan": [
+        56.04,
+        6.48,
+        46.61
+      ]
+    },
+    "callRecommendedActions": [
+      "kan",
+      "pass",
+      "pass"
+    ],
+    "callPredictionAvailable": [
+      true,
+      true,
+      true
+    ],
+    "predictionType": "call"
   },
   {
     "id": "214",

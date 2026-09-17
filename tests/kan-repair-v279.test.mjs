@@ -73,3 +73,10 @@ test('legacy Nima display fallback retains the original nonzero pass rates',asyn
   const p=context.normalizeNimaKanQuestionV112({nagaUrl:'cfa1b6c5a93e9abd18f73b6c2cc0df6c26c6354e06d60f69854e6b3140f264e8v2_2'},17,'nima');
   assert.deepEqual(Array.from(p.callOptions.find(x=>x.code===0).values),[.88,27.35]);
 });
+test('the bundled copy of question 233 also separates daiminkan from pon',async()=>{
+  const questions=JSON.parse(await readFile(new URL('../public/question-data/selected-questions.json',import.meta.url),'utf8'));
+  const q=questions.find(row=>row.number===233);
+  assert.deepEqual(q.callActionProbabilities,{pass:[43.93,93.48,53.36],call:[.01,.02,.01],kan:[56.04,6.48,46.61]});
+  assert.deepEqual(q.callRecommendedActions,['kan','pass','pass']);
+  assert.equal(q.models[0].recommendationCode,5);
+});
