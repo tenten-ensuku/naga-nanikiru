@@ -84,6 +84,10 @@ async function setTone(args,{db,actor}){
 // accepts already prepared structured questions, never embedded image bytes.
 async function addQuestion(args,{db,actor,origin},imported=null){
   const c=await targetOf(db,actor,await editable(db,actor,String(args.p_share_slug||'')));
+  const commentInput=args.p_initial_comment??'';
+  if(typeof commentInput!=='string'||Array.from(commentInput.trim()).length>4000)fail('comment_content_invalid');
+  const initialComment=commentInput.trim();
+  if(initialComment&&!c.allow_comments)fail('comments_disabled',403);
   const payload=args.p_payload;if(!payload||typeof payload!=='object'||Array.isArray(payload))fail('invalid_question');
   const serialized=JSON.stringify(payload);
   if(new TextEncoder().encode(serialized).length>100000||/data:image\//i.test(serialized))fail('question_image_upload_required',413);
@@ -113,13 +117,20 @@ async function addQuestion(args,{db,actor,origin},imported=null){
   const numberSql=`(SELECT MAX(COALESCE(MAX(valid),0),COALESCE(MAX(sort_order),0),?)+1 FROM (SELECT ${validNumberSql} valid,sort_order FROM questions WHERE collection_id=?))`;
   const normalized={...payload};for(const k of ['serverQuestionId','sharedCollectionSlug','createdById','createdByName','updatedById','updatedByName','_sharedIndexOnlyV170'])delete normalized[k];
   await questionMediaKeys(normalized,{db,actor,origin},c.id);
-  const imageGuard=retiredImageCondition({payload:normalized,sourceUrl:args.p_source_url});
+  const imageGuard=retiredImageCondition({payload:normalized,sourceUrl:args.p_source_url,initialComment});
   try{
-    const inserted=await first(db,`WITH next(n) AS (SELECT ${numberSql}) INSERT INTO questions(id,collection_id,created_by,created_by_name,title,legacy_key,sort_order,source_kind,source_report_id,source_url,scene_tw,scene_ts,scene_tv,decision_type,payload,created_at,updated_at)
+    const insertQuestion=db.prepare(`WITH next(n) AS (SELECT ${numberSql}) INSERT INTO questions(id,collection_id,created_by,created_by_name,title,legacy_key,sort_order,source_kind,source_report_id,source_url,scene_tw,scene_ts,scene_tv,decision_type,payload,created_at,updated_at)
       SELECT ?,?,?,?,CASE WHEN ?='' THEN '問題'||n ELSE ? END,?,n,?,?,?,?,?,?,?,json_set(?,'$.number',n,'$.id',?,'$.title',CASE WHEN ?='' THEN '問題'||n ELSE ? END),?,? FROM next
-      WHERE (SELECT COUNT(*) FROM questions WHERE collection_id=? AND deleted_at IS NULL)<200 AND ${imageGuard.sql} RETURNING id,sort_order`,allocationFloor,c.id,id,c.id,actor.id,String(profile?.display_name||'プレイヤー').slice(0,80),title,title,key,kind,report,args.p_source_url?text(args.p_source_url,2000):null,...scene,decision,JSON.stringify(normalized),id,title,title,now,now,c.id,...imageGuard.params);
+      WHERE (SELECT COUNT(*) FROM questions WHERE collection_id=? AND deleted_at IS NULL)<200 AND ${imageGuard.sql} RETURNING id,sort_order`).bind(allocationFloor,c.id,id,c.id,actor.id,String(profile?.display_name||'プレイヤー').slice(0,80),title,title,key,kind,report,args.p_source_url?text(args.p_source_url,2000):null,...scene,decision,JSON.stringify(normalized),id,title,title,now,now,c.id,...imageGuard.params);
+    const commentId=initialComment?crypto.randomUUID():null;
+    // One transaction: a rejected comment must not leave a question without
+    // its explanation. A duplicate/capacity failure cannot post a comment.
+    const inserted=initialComment
+      ? (await db.batch([insertQuestion,db.prepare(`INSERT INTO comments(id,collection_id,question_id,user_id,body,attachments,created_at,updated_at)
+          SELECT ?,collection_id,id,?,?, '[]',?,? FROM questions WHERE id=?`).bind(commentId,actor.id,initialComment,now,now,id)]))[0].results?.[0]
+      : await insertQuestion.first();
     if(!inserted){const capacity=await collectionCapacity({p_share_slug:c.share_slug},{db,actor});if(capacity.capacity_reached)return {...capacity,requires_volume_confirmation:true};fail('question_image_retired',409);}
-    return {question_id:inserted.id,question_number:inserted.sort_order,share_slug:c.share_slug,question_count:await count(db,c.id),collection_title:c.title};
+    return {question_id:inserted.id,question_number:inserted.sort_order,share_slug:c.share_slug,question_count:await count(db,c.id),collection_title:c.title,initial_comment_id:commentId};
   }catch(error){
     if(String(error.message).includes('collection_capacity_reached'))return {...await collectionCapacity({p_share_slug:c.share_slug},{db,actor}),requires_volume_confirmation:true};
     if(String(error.message).includes('UNIQUE constraint')){const prior=await first(db,`SELECT id FROM questions WHERE collection_id=? AND (legacy_key=? OR (source_report_id IS NOT NULL AND source_report_id=? AND scene_tw IS ? AND scene_ts IS ? AND scene_tv IS ?)) AND deleted_at IS NULL`,c.id,key,report,...scene);if(prior)return {question_id:prior.id,already_exists:true,share_slug:c.share_slug};}

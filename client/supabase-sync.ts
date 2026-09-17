@@ -626,6 +626,7 @@ async function createSharedQuestion(input: {
   sceneTs?: number | null;
   sceneTv?: number | null;
   decisionType?: "discard" | "call" | "riichi" | "combined";
+  initialComment?: string;
 }) {
   const payload = await media.externalizePayload(input.payload, { shareSlug: input.shareSlug });
   const { data, error } = await requireClient().rpc("create_shared_question", {
@@ -639,6 +640,7 @@ async function createSharedQuestion(input: {
     p_scene_ts: input.sceneTs ?? null,
     p_scene_tv: input.sceneTv ?? null,
     p_decision_type: input.decisionType ?? "discard",
+    ...(cloudflareBackend ? { p_initial_comment: input.initialComment ?? "" } : {}),
   });
   if (error) throw error;
   return data as unknown;

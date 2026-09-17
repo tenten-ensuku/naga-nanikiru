@@ -671,7 +671,8 @@
       for (var code = 1; code <= 4; code += 1) total += huroValue(row, code);
     } else {
       for (var huroCode = 5; huroCode <= 99; huroCode += 1) total += huroValue(row, huroCode);
-      total += huroValue(kanRow, 1);
+      // The NAGA viewer uses 1 for ankan and 2 for kakan.
+      total += huroValue(kanRow, 1) + huroValue(kanRow, 2);
     }
     return total;
   }
@@ -680,7 +681,7 @@
     var huroCodeList = huroCodes(rows);
     var hasCall = huroCodeList.some(function (code) { return code >= 1 && code <= 4; });
     var hasKan = huroCodeList.some(function (code) { return code >= 5; })
-      || (Array.isArray(kanRows) && kanRows.some(function (row) { return huroValue(row, 1) > 0 || own(row, "1"); }));
+      || (Array.isArray(kanRows) && kanRows.some(function (row) { return own(row, "1") || own(row, "2"); }));
     var actions = ["pass"];
     if (hasCall) actions.push("call");
     if (hasKan) actions.push("kan");
@@ -721,20 +722,20 @@
         code: code,
         label: callLabel(code),
         values: Array.from({ length: count }, function (_unused, modelIndex) {
-          return percentFromBasisPoints(huroValue(Array.isArray(rows) ? rows[modelIndex] : null, code));
+          return percentFromBasisPoints(code === 0 ? callActionValue(rows, kanRows, modelIndex, "pass") : huroValue(Array.isArray(rows) ? rows[modelIndex] : null, code));
         })
       };
     });
-    var hasKan = Array.isArray(kanRows) && kanRows.some(function (row) { return huroValue(row, 1) > 0 || own(row, "1"); });
-    if (hasKan) {
+    [1, 2].forEach(function (kanCode) {
+      if (!Array.isArray(kanRows) || !kanRows.some(function (row) { return own(row, String(kanCode)); })) return;
       options.push({
-        code: 6,
+        code: kanCode === 1 ? 6 : 7,
         label: "カン",
         values: Array.from({ length: count }, function (_unused, modelIndex) {
-          return percentFromBasisPoints(huroValue(kanRows[modelIndex], 1));
+          return percentFromBasisPoints(huroValue(kanRows[modelIndex], kanCode));
         })
       });
-    }
+    });
     return options;
   }
 
@@ -744,6 +745,7 @@
       if (!nextMessage) continue;
       if ((nextMessage.type === "ankan" || nextMessage.type === "minkan" || nextMessage.type === "daiminkan" || nextMessage.type === "kakan")
         && validSeat(nextMessage.actor) === seat) {
+        if (nextMessage.type === "kakan" && nextMessage.pai) return tileToAppCode(nextMessage.pai);
         var consumed = appList(nextMessage.consumed);
         if (consumed.length) return consumed[0];
         return tileToAppCode(nextMessage.pai);
@@ -760,6 +762,14 @@
       if (drawnIndex != null) counts[drawnIndex] = (counts[drawnIndex] || 0) + 1;
     }
     var kanIndex = Object.keys(counts).find(function (key) { return counts[key] >= 4; });
+    if (kanIndex == null) {
+      // A passed kakan has no following call event. Match a held tile to an
+      // existing pon; do not invent a target when several pons are eligible.
+      var added = (snapshot && snapshot.melds || []).filter(function (meld) {
+        return meld.type === "pon" && counts[tileIndex(meld.pai)] > 0;
+      });
+      if (added.length === 1) kanIndex = tileIndex(added[0].pai);
+    }
     return kanIndex == null ? null : standardAppCode(Number(kanIndex));
   }
 
@@ -1049,6 +1059,12 @@
     })).slice(0, count).map(function (name, modelIndex) {
       var bestAction = actionRecommendations[modelIndex] || "pass";
       var recommendationCode = bestAction === "pass" ? 0 : bestAction === "kan" ? 6 : (codes.find(function (code) { return code >= 1 && code <= 4; }) || 1);
+      if (bestAction !== "pass") {
+        var rawBest = candidate.callOptions.filter(function (option) { return callActionForCode(option.code) === bestAction; }).reduce(function (best, option) {
+          return !best || Number(option.values[modelIndex] || 0) > Number(best.values[modelIndex] || 0) ? option : best;
+        }, null);
+        if (rawBest) recommendationCode = rawBest.code;
+      }
       return {
         name: name,
         recommendation: bestAction === "pass" ? null : callActionLabel(bestAction),

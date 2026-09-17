@@ -7,7 +7,7 @@ const html = fs.readFileSync(new URL('../public/index.html', import.meta.url), '
 const names = ['currentGeneratorDestinationV130', 'canAddGeneratedQuestionV130',
   'explainGeneratorSaveBlockedV249', 'generatorCandidateStateV249',
   'selectedGeneratorCandidateIndexesV249', 'renderGeneratorBatchToolbarV158',
-  'renderGeneratorCandidatesV44', 'addSelectedGeneratorQuestionsV158', 'addGeneratedQuestionV44'];
+  'renderGeneratorCandidatesV44', 'generatorCommentMarkupV273', 'addSelectedGeneratorQuestionsV158', 'addGeneratedQuestionV44'];
 const source = names.map(name => {
   const match = html.match(new RegExp(`(?:async )?function ${name}\\([\\s\\S]*?\\n      \\}`));
   assert.ok(match, name); return match[0];
@@ -23,7 +23,7 @@ function harness() {
     collectionDisplayNameV101: row => row.title, supabaseSessionV46: {user:{id:'owner'}},
     sharedCollectionV46: {share_slug:'editable'}, questionsV16: [],
     generatorCandidatesV44: [{id:'a',boardScene:{},playerName:'確認用',tv:1},{id:'b',boardScene:{},tv:2}],
-    generatorSelectedCandidatesV158: new Set(), generatorAddedKeysV130: new Set(), generatorDuplicateKeysV153: new Set(),
+    generatorSelectedCandidatesV158: new Set(), generatorAddedKeysV130: new Set(), generatorDuplicateKeysV153: new Set(), generatorCommentDraftsV273: new Map(),
     generatorPreviewBatchBusyV158: false, generatorReportV44: {},
     hasJsonBoardV248: candidate => Boolean(candidate.boardScene) && !candidate.invalid,
     prepareJsonBoardV248: candidate => !candidate.invalid, generatedHandIsValidV237: () => true,
@@ -59,9 +59,12 @@ test('single and batch save without destination focus picker, preserve selection
 
 test('unauthorized destination allows drafting but denies both save paths', async () => {
   const h = harness(); h.select.value = 'readonly'; h.context.generatorSelectedCandidatesV158.add(0);
+  h.context.generatorCommentDraftsV273.set('a', '保存先を選ぶ前の解説');
   const markup = h.run('renderGeneratorCandidatesV44()');
   assert.doesNotMatch(markup.match(/<input[^>]+data-generator-select="0"[^>]*>/)[0], /disabled/);
   assert.match(markup, /編集権限が必要/);
+  assert.match(markup, /保存先を選ぶ前の解説/);
+  assert.doesNotMatch(markup.match(/<textarea[^>]+data-generator-comment-v273="0"[^>]*>/)[0], /disabled/);
   await h.run('addSelectedGeneratorQuestionsV158()'); await h.run('addGeneratedQuestionV44(0)');
   assert.equal(h.events.filter(e => e.includes('権限')).length, 2); assert.ok(!h.events.includes('confirm'));
   h.select.value = 'editable'; h.context.supabaseSessionV46 = null;

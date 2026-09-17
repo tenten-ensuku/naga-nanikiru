@@ -508,6 +508,41 @@ test("builds kan choices from the separate kan prediction rows", async () => {
   assert.equal(candidate.actualCallCode, 6);
 });
 
+test("kakan code 2 preserves every model's probability, pass choice, and added red tile", async () => {
+  const api = await loadApi();
+  // Synthetic replay fixture. Code 2 is the NAGA viewer's added-kan row.
+  const report = { reportId: "kakan-regression", naga_types: {0:"ニシキ",1:"ヒバカリ",2:"カガシ"}, pred: [[
+    startKyoku([["1m","2m","3m","4m","5m","6m","7m","8m","9m","5p","5p","P","P"]]),
+    msg("dahai", {actor:1,pai:"5p"}),
+    msg("pon", {actor:0,target:1,pai:"5p",consumed:["5p","5p"]}),
+    msg("dahai", {actor:0,pai:"P"}),
+    {...msg("tsumo", {actor:0,pai:"5pr",real_dahai:"?"}),kan:[{0:1500,2:8500},{0:9973,2:26},{0:7961,2:2038}]},
+    msg("kakan", {actor:0,pai:"5pr",consumed:["5p","5p","5p"]})
+  ]] };
+  const spec={reportId:report.reportId,tw:0,ts:0,tv:4};
+  const c=api.sceneCandidate(report,spec);
+  assert.deepEqual(Array.from(c.callActionProbabilities.kan),[85,.26,20.38]);
+  assert.deepEqual(Array.from(c.callActionProbabilities.pass),[15,99.73,79.61]);
+  assert.deepEqual(Array.from(c.callOptions.find(x=>x.code===0).values),[15,99.73,79.61]);
+  assert.deepEqual(Array.from(c.callRecommendedActions),["kan","pass","pass"]);
+  assert.equal(c.models[0].recommendationCode,7);
+  assert.equal(c.callTile,"aka2");
+  assert.equal(c.handValidation.valid,true);
+  assert.deepEqual(Array.from(c.actualCallProbability),[85,.26,20.38]);
+  // Declining the kan must not make it vanish as a choice.
+  report.pred[0][5]=msg("dahai",{actor:0,pai:"5pr"});
+  const passed=api.sceneCandidate(report,spec);
+  assert.equal(passed.actualCallAction,"pass");
+  assert.equal(passed.callTile,"pin5");
+  assert.deepEqual(Array.from(passed.callActionOptions,x=>x.action),["pass","kan"]);
+  // A saved discard question at this same event remains a discard question.
+  report.pred[0][4].info.msg.real_dahai="5pr";
+  report.pred[0][4].info.msg.pred_dahai=["5pr","5pr","5pr"];
+  report.pred[0][4].dahai_pred=Array.from({length:3},()=>Array(34).fill(0));
+  const discard=api.sceneCandidate(report,{...spec,decisionType:"discard"});
+  assert.equal(discard.decisionType,"discard");
+});
+
 test("uses tw as the seat and never as the pred/model index", async () => {
   const api = await loadApi();
   const rows = [Array(34).fill(0), Array(34).fill(0)];
