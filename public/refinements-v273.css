@@ -71,7 +71,7 @@
 .page.menu-active #menuPanel[data-view="today"] .learning-action-card .learning-action-count {
   grid-area: count;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: baseline;
   gap: 3px;
   color: var(--row-accent-v239);
