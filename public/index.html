@@ -6044,7 +6044,7 @@
         generatorDestinationV130 = defaultValue;
         return `<option value=""${!defaultValue ? " selected" : ""}>保存先を選んでください</option><option value="local"${defaultValue === "local" ? " selected" : ""}>この端末だけに保存</option>${rows.map(row => {
           const slug = String(row.share_slug || "");
-          const role = row.can_manage ? "所有者" : "編集可";
+          const role = collectionRoleLabelV130(row);
           const seriesNote = isSeriesParentCollectionV180(row) ? "・最新巻へ保存" : "";
           const baseTitle = row.display_title || collectionDisplayNameV101(row);
           const title = row.volume_number && !/第\d+巻/.test(baseTitle) ? `${baseTitle} 第${row.volume_number}巻` : baseTitle;
@@ -6082,7 +6082,7 @@
         status.classList.remove("is-error");
         status.textContent = "";
         const targets = ownedCollectionOptionsV115();
-        select.innerHTML = targets.map(row => `<option value="${escapeHtml(row.share_slug)}">${escapeHtml(row.display_title || collectionDisplayNameV101(row))}（${row.can_manage ? "所有者" : "編集可"}）</option>`).join("");
+        select.innerHTML = targets.map(row => `<option value="${escapeHtml(row.share_slug)}">${escapeHtml(row.display_title || collectionDisplayNameV101(row))}（${escapeHtml(collectionRoleLabelV130(row))}）</option>`).join("");
         const remembered = importDestinationPreferenceV288();
         if (targets.some(row => String(row.share_slug) === remembered)) select.value = remembered;
         const hasTarget = targets.length > 0;
