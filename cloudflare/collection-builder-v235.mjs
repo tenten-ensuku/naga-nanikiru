@@ -6,7 +6,7 @@ import {retiredImageCondition} from './retired-image-write-v265.mjs';
 import {validateCommentAttachments} from './student-write-api.mjs';
 
 export const BOOK_TONES=Object.freeze(['walnut','navy','forest','burgundy','ivory','plum','teal','ochre']);
-export const BUILDER_RPCS=Object.freeze(['create_collection','create_collection_volume','set_collection_book_tone','create_shared_question','import_shared_question']);
+export const BUILDER_RPCS=Object.freeze(['create_collection','create_collection_volume','set_collection_book_tone','update_collection_details','create_shared_question','import_shared_question']);
 const first=(db,sql,...args)=>db.prepare(sql).bind(...args).first();
 const rows=async(db,sql,...args)=>(await db.prepare(sql).bind(...args).all()).results||[];
 const count=async(db,id)=>Number((await first(db,'SELECT COUNT(*) n FROM questions WHERE collection_id=? AND deleted_at IS NULL',id)).n);
@@ -81,6 +81,12 @@ async function setTone(args,{db,actor}){
   const c=await editable(db,actor,String(args.p_share_slug||''));if(!await canManageCollection(db,actor,c.id))fail('collection_not_manageable',403);
   return first(db,'UPDATE collections SET book_tone=?,updated_at=? WHERE id=? RETURNING share_slug,book_tone',tone(args.p_book_tone),new Date().toISOString(),c.id);
 }
+async function updateDetails(args,{db,actor}){
+  const c=await editable(db,actor,String(args.p_share_slug||''));
+  if(!await canManageCollection(db,actor,c.id))fail('collection_not_manageable',403);
+  const title=text(args.p_title,120,true),description=text(args.p_description,3000);
+  return first(db,'UPDATE collections SET title=?,description=?,updated_at=? WHERE id=? AND archived_at IS NULL RETURNING id,share_slug,title,description,updated_at',title,description,new Date().toISOString(),c.id);
+}
 // Content uploads and NAGA retrieval remain separately gated. This small RPC only
 // accepts already prepared structured questions, never embedded image bytes.
 async function addQuestion(args,{db,actor,origin},imported=null){
@@ -126,14 +132,21 @@ async function addQuestion(args,{db,actor,origin},imported=null){
       SELECT ?,?,?,?,CASE WHEN ?='' THEN '問題'||n ELSE ? END,?,n,?,?,?,?,?,?,?,json_set(?,'$.number',n,'$.id',?,'$.title',CASE WHEN ?='' THEN '問題'||n ELSE ? END),?,? FROM next
       WHERE (SELECT COUNT(*) FROM questions WHERE collection_id=? AND deleted_at IS NULL)<200 AND ${imageGuard.sql} RETURNING id,sort_order`).bind(allocationFloor,c.id,id,c.id,actor.id,String(profile?.display_name||'プレイヤー').slice(0,80),title,title,key,kind,report,args.p_source_url?text(args.p_source_url,2000):null,...scene,decision,JSON.stringify(normalized),id,title,title,now,now,c.id,...imageGuard.params);
     const commentId=hasInitialComment?crypto.randomUUID():null;
-    // One transaction: a rejected comment must not leave a question without
-    // its explanation. A duplicate/capacity failure cannot post a comment.
-    const inserted=hasInitialComment
-      ? (await db.batch([insertQuestion,db.prepare(`INSERT INTO comments(id,collection_id,question_id,user_id,body,attachments,created_at,updated_at)
-          SELECT ?,collection_id,id,?,?,?,?,? FROM questions WHERE id=?`).bind(commentId,actor.id,initialComment,JSON.stringify(initialAttachments),now,now,id)]))[0].results?.[0]
-      : await insertQuestion.first();
+    // One transaction: preserve both embedded explanations and posted comments.
+    // Fresh comment IDs keep edits/reactions independent of the original book;
+    // author, timestamps, formatting and attachment references remain intact.
+    // A duplicate/capacity failure cannot create any destination comments.
+    const statements=[insertQuestion];
+    if(hasInitialComment)statements.push(db.prepare(`INSERT INTO comments(id,collection_id,question_id,user_id,body,attachments,created_at,updated_at)
+      SELECT ?,collection_id,id,?,?,?,?,? FROM questions WHERE id=?`).bind(commentId,actor.id,initialComment,JSON.stringify(initialAttachments),now,now,id));
+    if(imported)statements.push(db.prepare(`INSERT INTO comments(collection_id,question_id,user_id,body,attachments,created_at,updated_at)
+      SELECT q.collection_id,q.id,cm.user_id,cm.body,cm.attachments,cm.created_at,cm.updated_at
+      FROM comments cm JOIN questions q ON q.id=?
+      WHERE cm.question_id=? AND cm.deleted_at IS NULL ORDER BY cm.created_at,cm.id RETURNING id`).bind(id,imported));
+    const results=statements.length>1?await db.batch(statements):null;
+    const inserted=results?results[0].results?.[0]:await insertQuestion.first();
     if(!inserted){const capacity=await collectionCapacity({p_share_slug:c.share_slug},{db,actor});if(capacity.capacity_reached)return {...capacity,requires_volume_confirmation:true};fail('question_image_retired',409);}
-    return {question_id:inserted.id,question_number:inserted.sort_order,share_slug:c.share_slug,question_count:await count(db,c.id),collection_title:c.title,initial_comment_id:commentId};
+    return {question_id:inserted.id,question_number:inserted.sort_order,share_slug:c.share_slug,question_count:await count(db,c.id),collection_title:c.title,initial_comment_id:commentId,...(imported?{imported_comment_count:results.at(-1).results?.length||0}:{})};
   }catch(error){
     if(String(error.message).includes('collection_capacity_reached'))return {...await collectionCapacity({p_share_slug:c.share_slug},{db,actor}),requires_volume_confirmation:true};
     if(String(error.message).includes('UNIQUE constraint')){const prior=await first(db,`SELECT id FROM questions WHERE collection_id=? AND (legacy_key=? OR (source_report_id IS NOT NULL AND source_report_id=? AND scene_tw IS ? AND scene_ts IS ? AND scene_tv IS ?)) AND deleted_at IS NULL`,c.id,key,report,...scene);if(prior)return {question_id:prior.id,already_exists:true,share_slug:c.share_slug};}
@@ -150,5 +163,5 @@ async function importQuestion(args,ctx){
 }
 export async function builderRpc(name,args,ctx){
   requireActor(ctx.actor);await allowed(ctx.db);
-  switch(name){case 'create_collection':return create(args,ctx);case 'create_collection_volume':return createVolume(args,ctx);case 'set_collection_book_tone':return setTone(args,ctx);case 'create_shared_question':return addQuestion(args,ctx);case 'import_shared_question':return importQuestion(args,ctx);default:fail('rpc_not_allowed',403);}
+  switch(name){case 'create_collection':return create(args,ctx);case 'create_collection_volume':return createVolume(args,ctx);case 'set_collection_book_tone':return setTone(args,ctx);case 'update_collection_details':return updateDetails(args,ctx);case 'create_shared_question':return addQuestion(args,ctx);case 'import_shared_question':return importQuestion(args,ctx);default:fail('rpc_not_allowed',403);}
 }

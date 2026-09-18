@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=286">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=286">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=286">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=287">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=287">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=287">
   <title>みん切る｜みんなの何切る問題集</title>
   <link rel="preload" as="image" href="assets/loading-screen-v243.png" fetchpriority="high">
   <meta name="description" content="みん切るは、NAGA URLから問題をつくり、解いて、仲間と共有できる麻雀学習アプリです。">
   <meta name="theme-color" content="#06131e">
-  <script src="theme-v259.js?v=286"></script>
+  <script src="theme-v259.js?v=287"></script>
   <meta property="og:type" content="website">
   <meta property="og:title" content="みん切る｜みんなの何切る問題集">
   <meta property="og:description" content="みん切るは、NAGA URLから問題をつくり、解いて、仲間と共有できる麻雀学習アプリです。">
@@ -253,7 +253,14 @@
     .settings-section p { margin: 0; color: var(--muted); font-size: 11px; line-height: 1.6; }
     .settings-form { display: grid; gap: 8px; max-width: 460px; }
     .settings-form label { display: grid; gap: 5px; color: #dffbfb; font-size: 11px; font-weight: 800; }
-    .settings-form input { width: 100%; box-sizing: border-box; padding: 10px 11px; color: var(--ink); background: #061c2c; border: 1px solid rgba(255,255,255,.18); border-radius: 7px; font: inherit; font-size: 15px; }
+    .settings-form input, #collectionDetailsFormV287 textarea { width: 100%; box-sizing: border-box; padding: 10px 11px; color: var(--ink); background: #061c2c; border: 1px solid rgba(255,255,255,.18); border-radius: 7px; font: inherit; font-size: 15px; }
+    #collectionDetailsFormV287 textarea { resize: vertical; line-height: 1.6; }
+    #collectionDetailsFormV287 { max-width: 640px; min-width: 0; gap: 12px; margin-top: 12px; }
+    #collectionDetailsFormV287 label { color: var(--ink); font-size: 16px; font-weight: 400; }
+    #collectionDetailsFormV287 :is(input, textarea) { font-size: 16px; font-weight: 400; }
+    #collectionDetailsFormV287 button { min-height: 44px; padding: 10px 16px; color: #fff; background: #176b68; border: 1px solid #438a86; border-radius: 7px; font: inherit; font-size: 16px; cursor: pointer; }
+    #collectionDetailsFormV287 button:disabled { opacity: .6; cursor: wait; }
+    #collectionDetailsStatusV287 { font-size: 15px; }
     .settings-form select { width: 100%; box-sizing: border-box; padding: 10px 11px; color: var(--ink); background: #061c2c; border: 1px solid rgba(255,255,255,.18); border-radius: 7px; font: inherit; font-size: 15px; }
     .settings-form input:focus { border-color: rgba(113,183,255,.8); outline: 2px solid rgba(113,183,255,.16); }
     .settings-form select:focus { border-color: rgba(113,183,255,.8); outline: 2px solid rgba(113,183,255,.16); }
@@ -2249,19 +2256,19 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=286">
-  <link rel="stylesheet" href="library-v214.css?v=286">
-  <link rel="stylesheet" href="navigation-v234.css?v=286">
-  <link rel="stylesheet" href="book-builder-v235.css?v=286">
-  <link rel="stylesheet" href="menu-polish-v238.css?v=286">
-  <link rel="stylesheet" href="menu-sections-v239.css?v=286">
-  <link rel="stylesheet" href="workspace-ui-v240.css?v=286">
-  <link rel="stylesheet" href="collection-deletion-v244.css?v=286">
-  <link rel="stylesheet" href="menu-simplify-v245.css?v=286">
-  <link rel="stylesheet" href="content-dates-v246.css?v=286">
-  <link rel="stylesheet" href="question-header-v250.css?v=286">
-  <link rel="stylesheet" href="question-toolbar-v255.css?v=286">
-  <link rel="stylesheet" href="theme-v259.css?v=286">
+  <link rel="stylesheet" href="ux-v159.css?v=287">
+  <link rel="stylesheet" href="library-v214.css?v=287">
+  <link rel="stylesheet" href="navigation-v234.css?v=287">
+  <link rel="stylesheet" href="book-builder-v235.css?v=287">
+  <link rel="stylesheet" href="menu-polish-v238.css?v=287">
+  <link rel="stylesheet" href="menu-sections-v239.css?v=287">
+  <link rel="stylesheet" href="workspace-ui-v240.css?v=287">
+  <link rel="stylesheet" href="collection-deletion-v244.css?v=287">
+  <link rel="stylesheet" href="menu-simplify-v245.css?v=287">
+  <link rel="stylesheet" href="content-dates-v246.css?v=287">
+  <link rel="stylesheet" href="question-header-v250.css?v=287">
+  <link rel="stylesheet" href="question-toolbar-v255.css?v=287">
+  <link rel="stylesheet" href="theme-v259.css?v=287">
 </head>
 <body class="auth-gate-open">
   <section class="startup-screen-v236" id="startupScreenV236" aria-label="みん切るを準備中">
@@ -2622,7 +2629,7 @@
   <dialog class="import-question-dialog" id="importQuestionDialog" aria-labelledby="importQuestionDialogTitle">
     <div class="import-question-dialog-inner">
       <h3 id="importQuestionDialogTitle">自分の問題集にインポート</h3>
-      <p id="importQuestionDialogDescription">この問題の画像・解説・NAGA局面情報を、選択した問題集へコピーします。問題番号は移行先で自動採番されます。</p>
+      <p id="importQuestionDialogDescription">問題とコメントを、選択した問題集へコピーします。解説・添付画像・投稿者・投稿日時も引き継ぎます。</p>
       <label for="importTargetCollectionSelect">インポート先<select id="importTargetCollectionSelect" aria-label="インポート先"></select></label>
       <p class="import-question-dialog-status" id="importQuestionDialogStatus" aria-live="polite"></p>
       <div class="import-question-dialog-actions"><button type="button" id="importQuestionCreateButton">問題集を作る</button><button type="button" id="importQuestionDialogCancel">キャンセル</button><button class="primary" type="button" id="importQuestionConfirmButton">インポート</button></div>
@@ -2637,33 +2644,33 @@
     </form>
   </dialog>
 
-  <link rel="stylesheet" href="comment-tags-v270.css?v=286">
+  <link rel="stylesheet" href="comment-tags-v270.css?v=287">
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=286"></script>
-  <script src="drill-ux-v44.js?v=286"></script>
-  <script src="navigation-v234.js?v=286"></script>
-  <script src="book-builder-v235.js?v=286"></script>
-  <script src="library-order-v215.js?v=286"></script>
-  <script src="content-dates-v246.js?v=286"></script>
-  <script src="question-header-v250.js?v=286"></script>
-  <script src="library-v214.js?v=286"></script>
-  <script src="naga-generator-v44.js?v=286"></script>
-  <link rel="stylesheet" href="naga-board-v248.css?v=286">
-  <link rel="stylesheet" href="refinements-v273.css?v=286">
-  <link rel="stylesheet" href="generator-tools-v274.css?v=286">
-  <link rel="stylesheet" href="book-pages-v281.css?v=286">
-  <script src="comment-tools-v274.js?v=286"></script>
-  <script src="naga-board-state-v248.js?v=286"></script>
-  <script src="naga-board-v248.js?v=286"></script>
-  <script src="hand-mask-v237.js?v=286"></script>
-  <script src="menu-sections-v239.js?v=286"></script>
-  <script src="workspace-ui-v240.js?v=286"></script>
-  <script src="generation-confirm-v241.js?v=286"></script>
-  <script src="collection-deletion-v244.js?v=286"></script>
+  <script src="supabase-sync-v48.js?v=287"></script>
+  <script src="drill-ux-v44.js?v=287"></script>
+  <script src="navigation-v234.js?v=287"></script>
+  <script src="book-builder-v235.js?v=287"></script>
+  <script src="library-order-v215.js?v=287"></script>
+  <script src="content-dates-v246.js?v=287"></script>
+  <script src="question-header-v250.js?v=287"></script>
+  <script src="library-v214.js?v=287"></script>
+  <script src="naga-generator-v44.js?v=287"></script>
+  <link rel="stylesheet" href="naga-board-v248.css?v=287">
+  <link rel="stylesheet" href="refinements-v273.css?v=287">
+  <link rel="stylesheet" href="generator-tools-v274.css?v=287">
+  <link rel="stylesheet" href="book-pages-v281.css?v=287">
+  <script src="comment-tools-v274.js?v=287"></script>
+  <script src="naga-board-state-v248.js?v=287"></script>
+  <script src="naga-board-v248.js?v=287"></script>
+  <script src="hand-mask-v237.js?v=287"></script>
+  <script src="menu-sections-v239.js?v=287"></script>
+  <script src="workspace-ui-v240.js?v=287"></script>
+  <script src="generation-confirm-v241.js?v=287"></script>
+  <script src="collection-deletion-v244.js?v=287"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 286;
+    const APP_VERSION = 287;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -4791,6 +4798,7 @@
       const QUESTION_NOTICE_STORAGE_KEY_V66 = storageKey("question-notices-v1");
         const ANNOUNCEMENT_SEEN_STORAGE_KEY_V65 = storageKey("announcement-seen-v1");
         const APP_ANNOUNCEMENTS_V66 = [
+          {"version":287,"date":"2026-09-18","publishedAt":"2026-09-18T11:02:08.867Z","title":"問題集の名前・説明の編集とコメントのインポートに対応しました","body":"「この本の管理」で問題集名と説明を変更できます。インポートでは問題と一緒にコメントも引き継ぎます。"},
           {"version":286,"date":"2026-09-18","publishedAt":"2026-09-18T10:47:26.772Z","title":"苦手カードの説明を見直しました","body":"「苦手」にカーソルを合わせると、直近の回答が△または×の問題であることを表示します。"},
           {"version":285,"date":"2026-09-18","publishedAt":"2026-09-18T10:34:58.898Z","title":"学習カードの表記を短くしました","body":"学習カードの「苦手克服」を「苦手」に変更しました。"},
           {"version":284,"date":"2026-09-18","publishedAt":"2026-09-18T09:13:33.577Z","title":"コメント検索と絞り込み表示を改善しました","body":"ハッシュタグのないコメントもキーワードで検索できるようになりました。タグ候補の「すべて」を削除し、選択中の候補をもう一度押すと解除できます。ライトモードの条件見出しも見やすくしました。"},
@@ -5845,8 +5853,7 @@
 
       function collectionDisplayNameV101(collection = sharedCollectionV46) {
         const title = String(collection?.title || "").trim();
-        if (String(collection?.share_slug || "") === DEFAULT_COLLECTION_SLUG || /くにたそ|クニタソ/i.test(title)) return "くにたそ問題集";
-        return title || "問題集";
+        return title || (String(collection?.share_slug || "") === DEFAULT_COLLECTION_SLUG ? "くにたそ問題集" : "問題集");
       }
 
       function collectionChooserTitleV186(row) {
@@ -6733,9 +6740,10 @@
           : `<div class="settings-divider" role="presentation"></div><div class="collection-management"><h3>問題集スペース</h3>${collectionContext}<p>現在の公開範囲：${escapeHtml(collectionVisibility)}。公開範囲の変更と申請の承認は所有者・管理者のみ行えます。</p></div>`)
           : "";
         const create = supabaseSessionV46 ? `<div class="settings-divider" role="presentation"></div><div class="collection-management"><h3>新しい問題集スペースを作る</h3><p>新しく作る問題集は、最初は必ずプライベートです。作成時に公開範囲を選べます。</p>${collectionCreateFormMarkupV106("collectionCreate")}</div>` : "";
+        const details = canManage && collection ? `<div class="collection-management"><h3>名前・説明を編集</h3><form class="settings-form" id="collectionDetailsFormV287"><label for="collectionDetailsTitleV287">問題集名<input id="collectionDetailsTitleV287" maxlength="120" required value="${escapeHtml(collection.title || "")}"></label><label for="collectionDetailsDescriptionV287">説明（任意）<textarea id="collectionDetailsDescriptionV287" maxlength="3000" rows="3">${escapeHtml(collection.description || "")}</textarea></label><div class="settings-form-actions"><button class="primary" type="submit">名前・説明を保存</button><span class="settings-form-status" id="collectionDetailsStatusV287" role="status"></span></div></form></div>` : "";
         const appearance = canManage && collection ? `<form class="book-tone-editor-v235" id="bookToneFormV235"><h4>この本の色</h4>${window.MinkiruBookBuilderV235.palette("bookToneV235",window.MinkiruLibraryV214.bookTone(collection))}<button type="submit" class="primary">色を保存</button><p id="bookToneStatusV235" aria-live="polite"></p></form>` : "";
         const deletion = canManage && collection ? window.MinkiruCollectionDeletionV244.markup() : "";
-        return bookOnly ? management + appearance + deletion : `${managementChooser}${management}${appearance}${deletion}${create}`;
+        return bookOnly ? details + management + appearance + deletion : `${managementChooser}${details}${management}${appearance}${deletion}${create}`;
       }
 
       async function loadCollectionManagementDataV100() {
@@ -6759,6 +6767,37 @@
       }
 
       function bindCollectionManagementV100() {
+        const detailsForm = document.getElementById("collectionDetailsFormV287");
+        detailsForm?.addEventListener("submit", async event => {
+          event.preventDefault();
+          const target = collectionManagementTargetV197();
+          if (!target || !collectionManagementCanManageV197(target)) return;
+          const titleInput = detailsForm.querySelector("#collectionDetailsTitleV287");
+          const title = titleInput.value.trim();
+          titleInput.setCustomValidity(title ? "" : "問題集名を入力してください。");
+          if (!detailsForm.reportValidity()) return;
+          const description = detailsForm.querySelector("#collectionDetailsDescriptionV287").value.trim();
+          const button = detailsForm.querySelector('button[type="submit"]');
+          const status = detailsForm.querySelector("#collectionDetailsStatusV287");
+          button.disabled = true; status.classList.remove("is-error"); status.textContent = "保存中…";
+          try {
+            const saved = await window.NagaSupabase.updateCollectionDetails(target.share_slug, title, description);
+            const patch = {title:saved.title,description:saved.description,updated_at:saved.updated_at};
+            const update = row => row?.share_slug === target.share_slug ? {...row,...patch,display_title:collectionDisplayNameV101({...row,...patch})} : row;
+            Object.assign(target, patch);
+            sharedCollectionV46 = update(sharedCollectionV46);
+            collectionCatalogV100 = collectionCatalogV100.map(update);
+            collectionVolumesV180 = collectionVolumesV180.map(update);
+            collectionLibraryControllerV214?.invalidate();
+            renderActiveCollectionContextV165();
+            if (document.getElementById("collectionDetailsFormV287") === detailsForm) {
+              renderMenuCardsV16();
+              document.getElementById("collectionDetailsStatusV287").textContent = "名前・説明を保存しました。";
+            }
+          } catch (error) { status.classList.add("is-error"); status.textContent = error?.message || "保存できませんでした。"; }
+          finally { button.disabled = false; }
+        });
+        detailsForm?.querySelector("#collectionDetailsTitleV287")?.addEventListener("input", event => event.target.setCustomValidity(""));
         const deletionTarget = collectionManagementTargetV197();
         if (deletionTarget && collectionManagementCanManageV197(deletionTarget)) {
           window.MinkiruCollectionDeletionV244.bind({

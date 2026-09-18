@@ -933,6 +933,10 @@ function buildApi() {
       const {data,error}=await requireClient().rpc('set_collection_book_tone',{p_share_slug:shareSlug,p_book_tone:bookTone});
       if(error) throw error; return data;
     },
+    async updateCollectionDetails(shareSlug: string, title: string, description: string) {
+      const {data,error}=await requireClient().rpc('update_collection_details',{p_share_slug:shareSlug,p_title:title,p_description:description});
+      if(error) throw error; return data;
+    },
     serviceAvailable: services.available,
     retryServices: () => services.probe(cloudflareBackend ? "/health" : config.supabaseUrl + "/auth/v1/settings", cloudflareBackend ? undefined : config.supabasePublishableKey),
     configured,

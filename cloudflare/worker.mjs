@@ -41,7 +41,8 @@ function failure(error,request){
     question_image_retired:'この画像は使用を終了しました。ページを再読み込みして、最新の問題を開き直してください。',
     collection_confirmation_required:'削除する前に確認画面で対象を確認してください。',
     collection_deletion_changed:'確認後に問題集の内容が変わりました。確認画面を閉じて、もう一度削除対象を確認してください。',
-    collection_not_manageable:'この問題集を削除できるのは、所有者またはアプリ管理者だけです。',
+    collection_not_manageable:'この問題集の管理は、所有者またはアプリ管理者だけが行えます。',
+    invalid_collection_input:'問題集名は1〜120文字、説明は3000文字以内で入力してください。',
     collection_deletion_mixed_owners:'このシリーズには別の所有者の巻が含まれるため、まとめて削除できません。',
     collection_already_deleted:'この問題集はすでに削除されています。本棚へ戻って確認してください。',
     collection_deletion_too_large:'削除対象が多いため、一冊ずつ確認するか、管理者へご相談ください。'
@@ -57,7 +58,7 @@ export default {
   async fetch(request,env={},ctx={}){
     try{
       const url=new URL(request.url);
-      if(url.pathname==='/health'&&request.method==='GET')return json({version:286,backend:'cloudflare',ready:ready(env),studentFlow:ready(env),signups:ready(env)&&env.SIGNUPS_ENABLED==='true',heavyOperations:generationEnabled(env),generation:generationEnabled(env),uploads:env.UPLOADS_ENABLED==='true',bulkImport:false,bot:env.DISCORD_SYNC_ENABLED==='true'&&!!env.DISCORD_SYNC_TOKEN});
+      if(url.pathname==='/health'&&request.method==='GET')return json({version:287,backend:'cloudflare',ready:ready(env),studentFlow:ready(env),signups:ready(env)&&env.SIGNUPS_ENABLED==='true',heavyOperations:generationEnabled(env),generation:generationEnabled(env),uploads:env.UPLOADS_ENABLED==='true',bulkImport:false,bot:env.DISCORD_SYNC_ENABLED==='true'&&!!env.DISCORD_SYNC_TOKEN});
       if(!ready(env))return json({error:'migration_not_ready',message:'移行確認中です。公開切替はまだ完了していません。'},503);
       if(url.origin!==env.APP_ORIGIN)throw new ApiError('origin_denied',403);
       if(url.pathname==='/naga-nanikiru'||url.pathname==='/naga-nanikiru/')return Response.redirect(url.origin+'/'+url.search,302);
