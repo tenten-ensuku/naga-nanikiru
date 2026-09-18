@@ -5,6 +5,8 @@ import {WRITE_RPCS,writeRpc,writeTable} from './student-write-api.mjs';
 import {mediaRead} from './media-read.mjs';
 import {BUILDER_RPCS,builderRpc,collectionCapacity} from './collection-builder-v235.mjs';
 import {previewCollectionDeletion,deleteCollection} from './collection-deletion-v244.mjs';
+import {MANAGER_READ_RPCS,MANAGER_WRITE_RPCS,managerRpc} from './collection-managers-v290.mjs';
+import {QUESTION_MANAGEMENT_RPCS,questionManagementRpc} from './question-management-v290.mjs';
 import {imageUpload} from './media-write-v241.mjs';
 import {createGenerationApi} from './generation-api-v241.mjs';
 import {reconcileMediaBudget} from './generation-capacity-v241.mjs';
@@ -41,7 +43,14 @@ function failure(error,request){
     question_image_retired:'この画像は使用を終了しました。ページを再読み込みして、最新の問題を開き直してください。',
     collection_confirmation_required:'削除する前に確認画面で対象を確認してください。',
     collection_deletion_changed:'確認後に問題集の内容が変わりました。確認画面を閉じて、もう一度削除対象を確認してください。',
-    collection_not_manageable:'この問題集の管理は、所有者またはアプリ管理者だけが行えます。',
+    collection_not_manageable:'この問題集の管理権限が必要です。',
+    collection_owner_required:'この操作は問題集の作成者またはアプリ管理者だけが行えます。',
+    invalid_manager_selection:'管理メンバーを20人以内で選択してください。',
+    manager_account_unavailable:'選択したアカウントを確認できません。ユーザーを検索し直してください。',
+    collection_owner_unchanged:'作成者の権限はここでは変更できません。',
+    question_not_editable:'この問題の編集・整理権限がありません。',
+    invalid_question_input:'問題名と参照URLを確認してください。',
+    question_changed:'問題が更新されています。開き直してからお試しください。',
     invalid_collection_input:'問題集名は1〜120文字、説明は3000文字以内で入力してください。',
     collection_deletion_mixed_owners:'このシリーズには別の所有者の巻が含まれるため、まとめて削除できません。',
     collection_already_deleted:'この問題集はすでに削除されています。本棚へ戻って確認してください。',
@@ -58,7 +67,7 @@ export default {
   async fetch(request,env={},ctx={}){
     try{
       const url=new URL(request.url);
-      if(url.pathname==='/health'&&request.method==='GET')return json({version:289,backend:'cloudflare',ready:ready(env),studentFlow:ready(env),signups:ready(env)&&env.SIGNUPS_ENABLED==='true',heavyOperations:generationEnabled(env),generation:generationEnabled(env),uploads:env.UPLOADS_ENABLED==='true',bulkImport:false,bot:env.DISCORD_SYNC_ENABLED==='true'&&!!env.DISCORD_SYNC_TOKEN});
+      if(url.pathname==='/health'&&request.method==='GET')return json({version:290,backend:'cloudflare',ready:ready(env),studentFlow:ready(env),signups:ready(env)&&env.SIGNUPS_ENABLED==='true',heavyOperations:generationEnabled(env),generation:generationEnabled(env),uploads:env.UPLOADS_ENABLED==='true',bulkImport:false,bot:env.DISCORD_SYNC_ENABLED==='true'&&!!env.DISCORD_SYNC_TOKEN});
       if(!ready(env))return json({error:'migration_not_ready',message:'移行確認中です。公開切替はまだ完了していません。'},503);
       if(url.origin!==env.APP_ORIGIN)throw new ApiError('origin_denied',403);
       if(url.pathname==='/naga-nanikiru'||url.pathname==='/naga-nanikiru/')return Response.redirect(url.origin+'/'+url.search,302);
@@ -107,6 +116,14 @@ export default {
         const rpc=url.pathname.match(/^\/api\/rpc\/([a-z_]+)$/);
         if(rpc){
           const name=rpc[1];
+          if(MANAGER_READ_RPCS.has(name)||MANAGER_WRITE_RPCS.has(name)){
+            await limited(env.WRITE_LIMIT,actor.id);
+            return json({data:await managerRpc(name,args,context)});
+          }
+          if(QUESTION_MANAGEMENT_RPCS.has(name)){
+            await limited(env.WRITE_LIMIT,actor.id);
+            return json({data:await questionManagementRpc(name,args,context)});
+          }
           if(name==='preview_collection_deletion')return json({data:await previewCollectionDeletion(args,context)});
           if(name==='delete_collection'){await limited(env.WRITE_LIMIT,actor.id);return json({data:await deleteCollection(args,context)});}
           if(name==='get_collection_capacity')return json({data:await collectionCapacity(args,context)});

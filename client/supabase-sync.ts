@@ -347,6 +347,22 @@ async function loadCollectionMembers(collectionId: string) {
   return data ?? [];
 }
 
+async function searchCollectionManagers(query: string, shareSlug = "") {
+  const { data, error } = await requireClient().rpc("search_collection_manager_candidates", {p_query:query,p_share_slug:shareSlug});
+  if (error) throw error;
+  return data ?? [];
+}
+async function loadCollectionManagers(shareSlug: string) {
+  const { data, error } = await requireClient().rpc("list_collection_managers", {p_share_slug:shareSlug});
+  if (error) throw error;
+  return data ?? [];
+}
+async function setCollectionManager(shareSlug: string, userId: string, enabled: boolean) {
+  const { data, error } = await requireClient().rpc("set_collection_manager", {p_share_slug:shareSlug,p_user_id:userId,p_enabled:enabled});
+  if (error) throw error;
+  return data;
+}
+
 async function reviewCollectionAccess(requestId: string, approve: boolean, role = "viewer") {
   const { error } = await requireClient().rpc("review_collection_access", {
     p_request_id: requestId,
@@ -883,6 +899,7 @@ async function createCollection(input: {
   allowContributions?: boolean;
   bookTone?: string;
   requestId?: string;
+  managerIds?: string[];
 }) {
   const session = await currentSession();
   if (!session) throw new Error("Discordログインが必要です。");
@@ -896,7 +913,7 @@ async function createCollection(input: {
     p_workspace_id: input.workspaceId ?? null,
     p_visibility: visibility,
     p_allow_contributions: input.allowContributions ?? true,
-    ...(cloudflareBackend ? {p_book_tone: input.bookTone ?? 'walnut', p_request_id: input.requestId ?? crypto.randomUUID()} : {}),
+    ...(cloudflareBackend ? {p_book_tone: input.bookTone ?? 'walnut', p_request_id: input.requestId ?? crypto.randomUUID(), p_manager_ids: input.managerIds ?? []} : {}),
   });
   if (error) throw error;
   return data;
@@ -957,6 +974,9 @@ function buildApi() {
     requestCollectionAccess,
     loadCollectionAccessRequests,
     loadCollectionMembers,
+    searchCollectionManagers,
+    loadCollectionManagers,
+    setCollectionManager,
     reviewCollectionAccess,
     revokeCollectionAccess,
     setCollectionVisibility,

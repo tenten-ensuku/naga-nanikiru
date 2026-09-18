@@ -8,20 +8,30 @@ const admin=actor=>actor?.is_admin===true?1:0;
 export async function canAccessCollection(db,actor,id){
   const row=await db.prepare(`SELECT 1 AS ok FROM collections c WHERE c.id=? AND c.archived_at IS NULL AND (
     c.owner_id=? OR ?=1 OR (c.published_at IS NOT NULL AND c.visibility IN ('public','unlisted'))
+    OR EXISTS(SELECT 1 FROM collection_managers m WHERE m.collection_id=c.id AND m.user_id=? AND m.status='active')
     OR (c.visibility='workspace' AND EXISTS(SELECT 1 FROM workspace_members w WHERE w.workspace_id=c.workspace_id AND w.user_id=? AND w.status='active'))
     OR (c.visibility IN ('private','limited','request') AND EXISTS(SELECT 1 FROM collection_members m WHERE m.collection_id=c.id AND m.user_id=? AND m.status='active'))
-  )`).bind(id,actor?.id??null,admin(actor),actor?.id??null,actor?.id??null).first();
+  )`).bind(id,actor?.id??null,admin(actor),actor?.id??null,actor?.id??null,actor?.id??null).first();
   return !!row;
 }
 export async function canManageCollection(db,actor,id){
   if(!actor?.id)return false;
   return !!await db.prepare('SELECT 1 AS ok FROM collections WHERE id=? AND (owner_id=? OR ?=1)').bind(id,actor.id,admin(actor)).first();
 }
+// Content managers may edit the book's contents and appearance. Ownership-only
+// controls (membership, visibility, deletion, transfer) keep the function above.
+export async function canManageCollectionContent(db,actor,id){
+  if(!actor?.id)return false;
+  return !!await db.prepare(`SELECT 1 AS ok FROM collections c WHERE c.id=? AND c.archived_at IS NULL AND (c.owner_id=? OR ?=1
+    OR EXISTS(SELECT 1 FROM collection_managers m WHERE m.collection_id=c.id AND m.user_id=? AND m.status='active'))`)
+    .bind(id,actor.id,admin(actor),actor.id).first();
+}
 export async function canEditCollection(db,actor,id){
   if(!actor?.id)return false;
   return !!await db.prepare(`SELECT 1 AS ok FROM collections c WHERE c.id=? AND c.archived_at IS NULL AND (c.owner_id=? OR ?=1
+    OR EXISTS(SELECT 1 FROM collection_managers m WHERE m.collection_id=c.id AND m.user_id=? AND m.status='active')
     OR EXISTS(SELECT 1 FROM collection_members m WHERE m.collection_id=c.id AND m.user_id=? AND m.status='active' AND m.role='editor'))`)
-    .bind(id,actor.id,admin(actor),actor.id).first();
+    .bind(id,actor.id,admin(actor),actor.id,actor.id).first();
 }
 export async function canEditQuestion(db,actor,id){
   if(!actor?.id)return false;

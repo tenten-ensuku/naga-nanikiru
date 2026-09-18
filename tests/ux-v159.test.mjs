@@ -14,9 +14,9 @@ test("V180 exposes the recent-history shell and synchronized release assets", as
     readFile(identityUrl, "utf8"),
   ]);
 
-  assert.match(html, /const APP_VERSION = 289;/);
-  assert.match(identity, /APP_VERSION = 289/);
-  assert.match(html, /ux-v159\.css\?v=289/);
+  assert.match(html, /const APP_VERSION = 290;/);
+  assert.match(identity, /APP_VERSION = 290/);
+  assert.match(html, /ux-v159\.css\?v=290/);
   assert.match(html, /\.comment-form textarea \{ display: block; width: 100%; min-width: 0;/);
   assert.match(html, /data-menu-view="today"/);
   assert.match(html, /data-menu-view="today"[^>]*>[\s\S]*?<span>学ぶ<\/span>/);
@@ -29,10 +29,14 @@ test("V180 exposes the recent-history shell and synchronized release assets", as
   assert.match(css, /--ux-brown-gold: #b78943/);
 });
 
-test("V197 separates global tool context and owner-only collection management", async () => {
+test("V290 separates global context, book content management and owner-only administration", async () => {
   const html = await readFile(indexUrl, "utf8");
   assert.match(html, /function ownedCollectionOptionsV197\(\)/);
-  assert.match(html, /filter\(row => String\(row\?\.owner_id \|\| ""\) === userId\)/);
+  assert.match(html, /filter\(row => String\(row\?\.owner_id \|\| ""\) === userId \|\| Boolean\(row\?\.can_manage\)\)/);
+  const administer = html.match(/function collectionManagementCanAdministerV290\([\s\S]*?\n      \}/)?.[0] || "";
+  assert.match(administer, /collection\.can_administer === true/);
+  assert.doesNotMatch(administer, /collection\.can_manage/);
+  assert.match(html, /const deletion = canAdminister && collection/);
   assert.match(html, /id="collectionManagementSelect"/);
   assert.match(html, /function collectionManagementTargetV197\(\)/);
   assert.match(html, /collectionManagementSlugV197/);

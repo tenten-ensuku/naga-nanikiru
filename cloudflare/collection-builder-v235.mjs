@@ -1,4 +1,5 @@
-import {ApiError, requireActor, canEditCollection, canManageCollection, canAccessCollection} from './access.mjs';
+import {ApiError, requireActor, canEditCollection, canManageCollection, canManageCollectionContent, canAccessCollection} from './access.mjs';
+import {validatedManagerIds} from './collection-managers-v290.mjs';
 import {isGeneratedQuestionTitle,isInvalidQuestionTitle,toSafeQuestionNumber,nextQuestionNumberV235} from './question-numbering-v235.mjs';
 import {validateStoredHand} from './question-validation-v237.mjs';
 import {questionMediaKeys} from './media-write-v241.mjs';
@@ -45,9 +46,24 @@ async function create(args,{db,actor}){
   if(typeof request!=='string'||!/^[\da-f-]{36}$/i.test(request))fail('invalid_request_id');
   const id=await stableId(`book:${actor.id}:${request}`),share=slug(id);
   const prior=await first(db,'SELECT * FROM collections WHERE id=?',id);if(prior){if(prior.archived_at)fail('collection_already_deleted',409);return prior;}
-  const created=await first(db,`INSERT INTO collections(id,owner_id,title,description,visibility,share_slug,published_at,allow_contributions,book_tone)
-    VALUES(?,?,?,?,?,?,?, ?,?) ON CONFLICT(id) DO NOTHING RETURNING *`,id,actor.id,title,description,visibility,share,visibility==='private'?null:new Date().toISOString(),args.p_allow_contributions===false?0:1,bookTone);
-  return created||await first(db,'SELECT * FROM collections WHERE id=?',id);
+  const managers=await validatedManagerIds(db,actor.id,args.p_manager_ids);
+  const now=new Date().toISOString();
+  // Atomic creation: a failed member grant must not leave a half-created book.
+  // Plain INSERT makes concurrent replays roll back; the existing book is then returned.
+  try {
+    await db.batch([
+      db.prepare(`INSERT INTO collections(id,owner_id,title,description,visibility,share_slug,published_at,allow_contributions,book_tone)
+        VALUES(?,?,?,?,?,?,?,?,?)`).bind(id,actor.id,title,description,visibility,share,visibility==='private'?null:now,args.p_allow_contributions===false?0:1,bookTone),
+      ...managers.map(userId=>db.prepare(`INSERT INTO collection_managers(collection_id,user_id,granted_by,granted_at)
+        VALUES(?,?,?,?)`).bind(id,userId,actor.id,now))
+    ]);
+  } catch(error) {
+    const existing=await first(db,'SELECT * FROM collections WHERE id=?',id);
+    if(!existing)throw error;
+    if(existing.archived_at)fail('collection_already_deleted',409);
+    return existing;
+  }
+  return first(db,'SELECT * FROM collections WHERE id=?',id);
 }
 async function createVolume(args,{db,actor}){
   let c=await editable(db,actor,String(args.p_share_slug||''));let root=await rootOf(db,c);
@@ -69,21 +85,23 @@ async function createVolume(args,{db,actor}){
       ON CONFLICT(id) DO NOTHING`).bind(rootId,slug(rootId),`series-${rootId}`,root.id));
     statements.push(db.prepare(`UPDATE collections SET series_parent_id=?,series_key=?,volume_number=1,volume_start=1,volume_end=200,title=?,updated_at=? WHERE id=? AND series_parent_id IS NULL`).bind(rootId,`series-${rootId}`,`${base} 第1巻`,new Date().toISOString(),root.id));
     statements.push(db.prepare(`INSERT INTO collection_members(collection_id,user_id,role,status,granted_by,granted_at,revoked_at) SELECT ?,user_id,role,status,granted_by,granted_at,revoked_at FROM collection_members WHERE collection_id=? ON CONFLICT(collection_id,user_id) DO NOTHING`).bind(rootId,root.id));
+    statements.push(db.prepare(`INSERT INTO collection_managers(collection_id,user_id,status,granted_by,granted_at,revoked_at) SELECT ?,user_id,status,granted_by,granted_at,revoked_at FROM collection_managers WHERE collection_id=? ON CONFLICT(collection_id,user_id) DO NOTHING`).bind(rootId,root.id));
   }
   statements.push(db.prepare(`INSERT INTO collections(id,owner_id,workspace_id,title,description,visibility,share_slug,allow_comments,allow_contributions,published_at,series_key,series_parent_id,volume_number,volume_start,volume_end,book_tone)
     SELECT ?,owner_id,workspace_id,?,description,visibility,?,allow_comments,allow_contributions,published_at,series_key,id,?,?,?,book_tone FROM collections WHERE id=?
     ON CONFLICT(series_parent_id,volume_number) WHERE series_parent_id IS NOT NULL AND volume_number IS NOT NULL DO NOTHING`).bind(newId,`${base} 第${next}巻`,slug(newId),next,(next-1)*200+1,next*200,rootId));
   statements.push(db.prepare(`INSERT INTO collection_members(collection_id,user_id,role,status,granted_by,granted_at,revoked_at) SELECT ?,user_id,role,status,granted_by,granted_at,revoked_at FROM collection_members WHERE collection_id=? ON CONFLICT(collection_id,user_id) DO NOTHING`).bind(newId,rootId));
+  statements.push(db.prepare(`INSERT INTO collection_managers(collection_id,user_id,status,granted_by,granted_at,revoked_at) SELECT ?,user_id,status,granted_by,granted_at,revoked_at FROM collection_managers WHERE collection_id=? ON CONFLICT(collection_id,user_id) DO NOTHING`).bind(newId,rootId));
   await db.batch(statements);
   return first(db,'SELECT * FROM collections WHERE series_parent_id=? AND volume_number=?',rootId,next);
 }
 async function setTone(args,{db,actor}){
-  const c=await editable(db,actor,String(args.p_share_slug||''));if(!await canManageCollection(db,actor,c.id))fail('collection_not_manageable',403);
+  const c=await editable(db,actor,String(args.p_share_slug||''));if(!await canManageCollectionContent(db,actor,c.id))fail('collection_not_manageable',403);
   return first(db,'UPDATE collections SET book_tone=?,updated_at=? WHERE id=? RETURNING share_slug,book_tone',tone(args.p_book_tone),new Date().toISOString(),c.id);
 }
 async function updateDetails(args,{db,actor}){
   const c=await editable(db,actor,String(args.p_share_slug||''));
-  if(!await canManageCollection(db,actor,c.id))fail('collection_not_manageable',403);
+  if(!await canManageCollectionContent(db,actor,c.id))fail('collection_not_manageable',403);
   const title=text(args.p_title,120,true),description=text(args.p_description,3000);
   return first(db,'UPDATE collections SET title=?,description=?,updated_at=? WHERE id=? AND archived_at IS NULL RETURNING id,share_slug,title,description,updated_at',title,description,new Date().toISOString(),c.id);
 }

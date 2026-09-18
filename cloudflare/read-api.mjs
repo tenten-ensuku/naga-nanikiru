@@ -2,6 +2,7 @@ import {
   ApiError,
   canAccessCollection,
   canManageCollection,
+  canManageCollectionContent,
   canEditCollection,
   canViewStudent,
   requireActor,
@@ -64,6 +65,7 @@ const ZERO_UUID = "00000000-0000-0000-0000-000000000000";
 const COLLECTION_ACCESS_EXPR = `(
   c.owner_id = actor.user_id
   OR actor.is_admin = 1
+  OR EXISTS (SELECT 1 FROM collection_managers cm WHERE cm.collection_id=c.id AND cm.user_id=actor.user_id AND cm.status='active')
   OR (c.published_at IS NOT NULL AND c.visibility IN ('public', 'unlisted'))
   OR (
     c.visibility = 'workspace'
@@ -87,6 +89,7 @@ const COLLECTION_ACCESS_EXPR = `(
 const COLLECTION_EDIT_EXPR = `(
   c.owner_id = actor.user_id
   OR actor.is_admin = 1
+  OR EXISTS (SELECT 1 FROM collection_managers cm WHERE cm.collection_id=c.id AND cm.user_id=actor.user_id AND cm.status='active')
   OR EXISTS (
     SELECT 1 FROM collection_members collection_member
      WHERE collection_member.collection_id = c.id
@@ -95,7 +98,8 @@ const COLLECTION_EDIT_EXPR = `(
        AND collection_member.role = 'editor'
   )
 )`;
-const COLLECTION_MANAGE_EXPR = `(c.owner_id = actor.user_id OR actor.is_admin = 1)`;
+const COLLECTION_ADMINISTER_EXPR = `(c.owner_id = actor.user_id OR actor.is_admin = 1)`;
+const COLLECTION_MANAGE_EXPR = `(${COLLECTION_ADMINISTER_EXPR} OR EXISTS (SELECT 1 FROM collection_managers cm WHERE cm.collection_id=c.id AND cm.user_id=actor.user_id AND cm.status='active'))`;
 const QUESTION_INDEX_COLUMNS = `
   q.id,
   q.created_by,
@@ -398,7 +402,7 @@ async function sharedCollection(db, actor, args) {
   if (!row) return null;
 
   const actorId = actor?.id ?? null;
-  const [member, request, canView, canEdit, canManage] = await Promise.all([
+  const [member, request, canView, canEdit, canManage, canAdminister] = await Promise.all([
     actorId
       ? first(
         db,
@@ -422,6 +426,7 @@ async function sharedCollection(db, actor, args) {
       : null,
     canAccessCollection(db, actor, row.id),
     canEditCollection(db, actor, row.id),
+    canManageCollectionContent(db, actor, row.id),
     canManageCollection(db, actor, row.id),
   ]);
 
@@ -440,8 +445,9 @@ async function sharedCollection(db, actor, args) {
     can_view: Boolean(canView),
     can_edit: Boolean(canEdit),
     can_manage: Boolean(canManage),
+    can_administer: Boolean(canAdminister),
     is_owner: actorId !== null && actorId === row.owner_id,
-    member_role: member?.role ?? null,
+    member_role: canManage && !canAdminister ? "manager" : member?.role ?? null,
     member_status: member?.status ?? null,
     request_id: request?.id ?? null,
     request_status: request?.status ?? null,
@@ -504,7 +510,8 @@ async function collectionVolumes(db, actor, args) {
             root.share_slug AS series_parent_slug,
             CASE WHEN ${COLLECTION_ACCESS_EXPR} THEN 1 ELSE 0 END AS can_view,
             CASE WHEN ${COLLECTION_EDIT_EXPR} THEN 1 ELSE 0 END AS can_edit,
-            CASE WHEN ${COLLECTION_MANAGE_EXPR} THEN 1 ELSE 0 END AS can_manage
+            CASE WHEN ${COLLECTION_MANAGE_EXPR} THEN 1 ELSE 0 END AS can_manage,
+            CASE WHEN ${COLLECTION_ADMINISTER_EXPR} THEN 1 ELSE 0 END AS can_administer
        FROM collections c
        CROSS JOIN actor
        JOIN collections root ON root.id = ?
@@ -530,6 +537,7 @@ async function collectionVolumes(db, actor, args) {
       can_view: boolDb(row.can_view),
       can_edit: boolDb(row.can_edit),
       can_manage: boolDb(row.can_manage),
+      can_administer: boolDb(row.can_administer),
       series_parent_slug: row.series_parent_slug,
     }));
 }
@@ -796,7 +804,8 @@ async function myCollections(db, actor) {
               LIMIT 1) AS member_status,
             CASE WHEN ${COLLECTION_ACCESS_EXPR} THEN 1 ELSE 0 END AS can_view,
             CASE WHEN ${COLLECTION_EDIT_EXPR} THEN 1 ELSE 0 END AS can_edit,
-            CASE WHEN ${COLLECTION_MANAGE_EXPR} THEN 1 ELSE 0 END AS can_manage
+            CASE WHEN ${COLLECTION_MANAGE_EXPR} THEN 1 ELSE 0 END AS can_manage,
+            CASE WHEN ${COLLECTION_ADMINISTER_EXPR} THEN 1 ELSE 0 END AS can_administer
        FROM collections c
        CROSS JOIN actor
        LEFT JOIN collections parent ON parent.id=c.series_parent_id
@@ -822,11 +831,12 @@ async function myCollections(db, actor) {
       volume_start: numericOrNull(row.volume_start),
       volume_end: numericOrNull(row.volume_end),
       owner_id: row.owner_id,
-      member_role: row.member_role,
+      member_role: row.can_manage && !row.can_administer ? "manager" : row.member_role,
       member_status: row.member_status,
       can_view: boolDb(row.can_view),
       can_edit: boolDb(row.can_edit),
       can_manage: boolDb(row.can_manage),
+      can_administer: boolDb(row.can_administer),
       created_at: row.created_at,
       content_updated_at: row.content_updated_at,
     }));
@@ -851,7 +861,8 @@ async function collectionDirectory(db, actor) {
               WHERE child.series_parent_id = c.id AND child.archived_at IS NULL) AS volume_count,
             CASE WHEN ${COLLECTION_ACCESS_EXPR} THEN 1 ELSE 0 END AS can_view,
             CASE WHEN ${COLLECTION_EDIT_EXPR} THEN 1 ELSE 0 END AS can_edit,
-            CASE WHEN ${COLLECTION_MANAGE_EXPR} THEN 1 ELSE 0 END AS can_manage
+            CASE WHEN ${COLLECTION_MANAGE_EXPR} THEN 1 ELSE 0 END AS can_manage,
+            CASE WHEN ${COLLECTION_ADMINISTER_EXPR} THEN 1 ELSE 0 END AS can_administer
        FROM collections c
        CROSS JOIN actor
        LEFT JOIN profiles owner_profile ON owner_profile.id = c.owner_id
@@ -875,6 +886,7 @@ async function collectionDirectory(db, actor) {
       can_view: boolDb(row.can_view),
       can_edit: boolDb(row.can_edit),
       can_manage: boolDb(row.can_manage),
+      can_administer: boolDb(row.can_administer),
       request_id: row.request_id,
       request_status: row.request_status,
       series_key: row.series_key,

@@ -1,0 +1,19 @@
+.collection-managers-v290 { margin: 18px 0; padding: 14px; border: 1px solid var(--border, #668087); border-radius: 8px; color: inherit; background: transparent; }
+.collection-managers-v290 > summary, .create-hub-v235 .collection-managers-v290 > summary { display: list-item; cursor: pointer; font: inherit; font-size: 18px; line-height: 1.5; color: inherit; }
+.collection-managers-v290 summary span { margin-left: 12px; }
+.collection-managers-v290 .manager-help-v290, .collection-managers-v290 .manager-status-v290, .collection-managers-v290 .manager-empty-v290 { font-size: 16px; line-height: 1.7; margin: 12px 0; color: inherit; }
+.manager-search-v290 { display: flex; align-items: flex-end; gap: 10px; margin: 12px 0; }
+.manager-search-v290 label { flex: 1; min-width: 0; display: grid; gap: 8px; font-size: 16px; }
+.manager-search-v290 input { width: 100%; box-sizing: border-box; font: inherit; min-height: 44px; padding: 9px; color: inherit; background: var(--panel, #071e2b); border: 1px solid var(--line, #668087); border-radius: 5px; }
+.manager-search-v290 input::placeholder { color: inherit; opacity: .7; }
+.collection-managers-v290 button { min-height: 44px; padding: 8px 14px; white-space: nowrap; font: inherit; font-size: 16px; color: inherit; background: color-mix(in srgb, #76b8b1 16%, var(--panel, #071e2b)); border: 1px solid var(--line, #668087); border-radius: 5px; cursor: pointer; }
+.collection-managers-v290 button:hover:not(:disabled) { border-color: var(--theme-teal-v259, #9bd8d0); }
+.collection-managers-v290 button:disabled { opacity: .6; cursor: default; }
+.manager-people-v290 { margin: 12px 0; padding: 0; list-style: none; }
+.manager-people-v290 li { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px solid #71828a55; }
+.manager-people-v290 li > span { min-width: 0; overflow-wrap: anywhere; }
+.manager-people-v290 strong { font-size: 18px; font-weight: 600; }
+.manager-people-v290 small { display: block; font-size: 16px; line-height: 1.6; margin-top: 3px; opacity: .85; }
+.manager-status-v290.is-error { color: #ed8585; }
+[data-theme="light"] .manager-status-v290.is-error { color: #9d2538; }
+@media (max-width: 420px) { .collection-managers-v290 { padding: 10px; } .collection-managers-v290 button { padding: 8px 10px; } }

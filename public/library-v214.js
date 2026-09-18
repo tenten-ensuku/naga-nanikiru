@@ -191,7 +191,7 @@
       const book = state.entries.find(item => item.slug === state.selected);
       const position = state.entries.findIndex(item => item.slug === state.selected);
       const picked = Boolean(book && book.slug === state.picked);
-      const management = book && options.canManage?.(book) ? `<button type="button" class="library-manage-v288" data-library-manage="${escape(book.slug)}" aria-label="${escape(book.fullTitle)}の管理" aria-haspopup="dialog" title="名前・説明・カバー色・削除">…</button>` : "";
+      const management = book && options.canManage?.(book) ? `<button type="button" class="library-manage-v288" data-library-manage="${escape(book.slug)}" aria-label="${escape(book.fullTitle)}の管理" aria-haspopup="dialog" title="問題集の管理">…</button>` : "";
       return management + detailMarkup(book, state.context, picked, hasUnreadUpdate(book)) + (picked ? `
         <div class="library-arrange" role="group" aria-label="選んだ本の並べ替え">
           <span>${reorderReady() ? "つかんで移動" : "巻の準備が終わると並べ替えできます"} <small>ドラッグ / Shift＋← →</small></span>
