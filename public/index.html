@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=280">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=280">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=280">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=281">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=281">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=281">
   <title>みん切る｜みんなの何切る問題集</title>
   <link rel="preload" as="image" href="assets/loading-screen-v243.png" fetchpriority="high">
   <meta name="description" content="みん切るは、NAGA URLから問題をつくり、解いて、仲間と共有できる麻雀学習アプリです。">
   <meta name="theme-color" content="#06131e">
-  <script src="theme-v259.js?v=280"></script>
+  <script src="theme-v259.js?v=281"></script>
   <meta property="og:type" content="website">
   <meta property="og:title" content="みん切る｜みんなの何切る問題集">
   <meta property="og:description" content="みん切るは、NAGA URLから問題をつくり、解いて、仲間と共有できる麻雀学習アプリです。">
@@ -2249,19 +2249,19 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=280">
-  <link rel="stylesheet" href="library-v214.css?v=280">
-  <link rel="stylesheet" href="navigation-v234.css?v=280">
-  <link rel="stylesheet" href="book-builder-v235.css?v=280">
-  <link rel="stylesheet" href="menu-polish-v238.css?v=280">
-  <link rel="stylesheet" href="menu-sections-v239.css?v=280">
-  <link rel="stylesheet" href="workspace-ui-v240.css?v=280">
-  <link rel="stylesheet" href="collection-deletion-v244.css?v=280">
-  <link rel="stylesheet" href="menu-simplify-v245.css?v=280">
-  <link rel="stylesheet" href="content-dates-v246.css?v=280">
-  <link rel="stylesheet" href="question-header-v250.css?v=280">
-  <link rel="stylesheet" href="question-toolbar-v255.css?v=280">
-  <link rel="stylesheet" href="theme-v259.css?v=280">
+  <link rel="stylesheet" href="ux-v159.css?v=281">
+  <link rel="stylesheet" href="library-v214.css?v=281">
+  <link rel="stylesheet" href="navigation-v234.css?v=281">
+  <link rel="stylesheet" href="book-builder-v235.css?v=281">
+  <link rel="stylesheet" href="menu-polish-v238.css?v=281">
+  <link rel="stylesheet" href="menu-sections-v239.css?v=281">
+  <link rel="stylesheet" href="workspace-ui-v240.css?v=281">
+  <link rel="stylesheet" href="collection-deletion-v244.css?v=281">
+  <link rel="stylesheet" href="menu-simplify-v245.css?v=281">
+  <link rel="stylesheet" href="content-dates-v246.css?v=281">
+  <link rel="stylesheet" href="question-header-v250.css?v=281">
+  <link rel="stylesheet" href="question-toolbar-v255.css?v=281">
+  <link rel="stylesheet" href="theme-v259.css?v=281">
 </head>
 <body class="auth-gate-open">
   <section class="startup-screen-v236" id="startupScreenV236" aria-label="みん切るを準備中">
@@ -2316,10 +2316,13 @@
         </nav>
         <section class="collection-space-panel" id="collectionSpacePanel" aria-live="polite" hidden></section>
         <details class="comment-tag-search-v270" id="commentTagSearchV270" aria-labelledby="commentTagSearchTitleV270" hidden>
-          <summary id="commentTagSearchTitleV270"><span>ハッシュタグで検索</span><span class="comment-tag-active-v272" id="commentTagActiveV272" hidden></span></summary>
+          <summary id="commentTagSearchTitleV270"><span>条件で絞り込む</span><span class="comment-tag-active-v272" id="commentTagActiveV272" hidden></span></summary>
           <div class="comment-tag-search-body-v272">
+            <div id="bookListFilterGroupsV281"></div>
+            <h3 class="book-list-tag-heading-v281">ハッシュタグ</h3>
             <div class="comment-tags-v270" id="commentTagFiltersV270" role="group" aria-label="コメントのタグで絞り込み"></div>
             <p id="commentTagResultV270" role="status"></p>
+            <button type="button" class="book-list-reset-v281" data-book-filter-reset-v281>条件をリセット</button>
           </div>
         </details>
         <div class="menu-filter-stack" id="menuFilters">
@@ -2365,7 +2368,7 @@
           </div>
           <div class="menu-active-filters" id="menuActiveFilters" aria-live="polite" hidden></div>
          </div>
-         <div class="menu-list-header" id="menuListHeader" aria-hidden="true"><span title="問題のタイトル">問題</span><span title="直近5回の採点履歴">最近の成績</span><span title="この問題集でのログインユーザー個人のお気に入り">お気に入り</span></div>
+         <div class="menu-list-header" id="menuListHeader" aria-hidden="true"><span title="問題のタイトル">問題</span><span title="直近3回の採点履歴。左端が最新">最近の成績</span><span title="この問題集でのログインユーザー個人のお気に入り">お気に入り</span></div>
         <div class="menu-grid" id="menuGrid"></div>
         <div class="menu-load-more" id="menuLoadMore" hidden></div>
         <div class="menu-empty" id="menuEmpty" hidden></div>
@@ -2633,32 +2636,33 @@
     </form>
   </dialog>
 
-  <link rel="stylesheet" href="comment-tags-v270.css?v=280">
+  <link rel="stylesheet" href="comment-tags-v270.css?v=281">
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=280"></script>
-  <script src="drill-ux-v44.js?v=280"></script>
-  <script src="navigation-v234.js?v=280"></script>
-  <script src="book-builder-v235.js?v=280"></script>
-  <script src="library-order-v215.js?v=280"></script>
-  <script src="content-dates-v246.js?v=280"></script>
-  <script src="question-header-v250.js?v=280"></script>
-  <script src="library-v214.js?v=280"></script>
-  <script src="naga-generator-v44.js?v=280"></script>
-  <link rel="stylesheet" href="naga-board-v248.css?v=280">
-  <link rel="stylesheet" href="refinements-v273.css?v=280">
-  <link rel="stylesheet" href="generator-tools-v274.css?v=280">
-  <script src="comment-tools-v274.js?v=280"></script>
-  <script src="naga-board-state-v248.js?v=280"></script>
-  <script src="naga-board-v248.js?v=280"></script>
-  <script src="hand-mask-v237.js?v=280"></script>
-  <script src="menu-sections-v239.js?v=280"></script>
-  <script src="workspace-ui-v240.js?v=280"></script>
-  <script src="generation-confirm-v241.js?v=280"></script>
-  <script src="collection-deletion-v244.js?v=280"></script>
+  <script src="supabase-sync-v48.js?v=281"></script>
+  <script src="drill-ux-v44.js?v=281"></script>
+  <script src="navigation-v234.js?v=281"></script>
+  <script src="book-builder-v235.js?v=281"></script>
+  <script src="library-order-v215.js?v=281"></script>
+  <script src="content-dates-v246.js?v=281"></script>
+  <script src="question-header-v250.js?v=281"></script>
+  <script src="library-v214.js?v=281"></script>
+  <script src="naga-generator-v44.js?v=281"></script>
+  <link rel="stylesheet" href="naga-board-v248.css?v=281">
+  <link rel="stylesheet" href="refinements-v273.css?v=281">
+  <link rel="stylesheet" href="generator-tools-v274.css?v=281">
+  <link rel="stylesheet" href="book-pages-v281.css?v=281">
+  <script src="comment-tools-v274.js?v=281"></script>
+  <script src="naga-board-state-v248.js?v=281"></script>
+  <script src="naga-board-v248.js?v=281"></script>
+  <script src="hand-mask-v237.js?v=281"></script>
+  <script src="menu-sections-v239.js?v=281"></script>
+  <script src="workspace-ui-v240.js?v=281"></script>
+  <script src="generation-confirm-v241.js?v=281"></script>
+  <script src="collection-deletion-v244.js?v=281"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 280;
+    const APP_VERSION = 281;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -4509,7 +4513,8 @@
       function navigationScopeV234() { return String(sharedCollectionV46?.share_slug || ""); }
       function navigationFiltersV234() {
         return { search: menuSearchV44, commentTag: menuCommentTagV270, statuses: [...menuStatusFiltersV92], type: menuTypeV44, range: menuRangeV60,
-          favorites: menuFavoritesOnlyV137, limit: menuRenderLimitV119, order: menuOrderV92 };
+          favorites: menuFavoritesOnlyV137, limit: menuRenderLimitV119, order: menuOrderV92,
+          learning: { order: learningOrderV189, genres: [...learningGenresV189], history: [...learningHistoryFiltersV189], tag: learningCommentTagV273 } };
       }
       function restoreNavigationFiltersV234(filters) {
         if (!filters) return;
@@ -4521,6 +4526,16 @@
         menuFavoritesOnlyV137 = Boolean(filters.favorites);
         menuRenderLimitV119 = Math.max(MENU_RENDER_BATCH_V119, Math.min(10000, Number(filters.limit) || MENU_RENDER_BATCH_V119));
         menuOrderV92 = filters.order === "random" ? "random" : "sequential";
+        const learning = filters.learning;
+        if (learning) {
+          learningOrderV189 = learning.order === "random" ? "random" : "sequential";
+          const genres = Array.isArray(learning.genres) ? learning.genres.filter(value => LEARNING_GENRE_ORDER_V189.includes(value)) : [];
+          const history = Array.isArray(learning.history) ? learning.history.filter(value => LEARNING_HISTORY_ORDER_V189.includes(value)) : [];
+          learningGenresV189 = new Set(genres.length ? genres : LEARNING_GENRE_ORDER_V189);
+          learningHistoryFiltersV189 = new Set(history.length ? history : LEARNING_HISTORY_ORDER_V189);
+          learningCommentTagV273 = window.MinkiruCommentTagsV270.normalizeTag(learning.tag);
+        } else learningCommentTagV273 = menuCommentTagV270;
+        menuCommentTagV270 = learningCommentTagV273;
         const search = document.getElementById("menuSearch");
         if (search) search.value = menuSearchV44;
         document.querySelectorAll("[data-menu-status]").forEach(input => { input.checked = menuStatusFiltersV92.includes(input.dataset.menuStatus); });
@@ -4775,6 +4790,7 @@
       const QUESTION_NOTICE_STORAGE_KEY_V66 = storageKey("question-notices-v1");
         const ANNOUNCEMENT_SEEN_STORAGE_KEY_V65 = storageKey("announcement-seen-v1");
         const APP_ANNOUNCEMENTS_V66 = [
+          {"version":281,"date":"2026-09-18","publishedAt":"2026-09-18T05:15:48.064Z","title":"問題一覧と成績を見やすくしました","body":"問題一覧を隙間のない表形式にし、直近3回の成績を新しい順に表示。絞り込みは学習ページと共通にしました。成績ページも明朝体と配色を揃え、メニューや問題名を読みやすくしています。"},
           {"version":280,"date":"2026-09-18","publishedAt":"2026-09-18T03:36:26.977Z","title":"学習カードの文字を整えました","body":"学習カードを明朝体に揃え、問題数とタイトルを同じ太さにしました。ダークでは白、ライトでは濃紺の文字に統一しています。"},
           {"version":279,"date":"2026-09-18","publishedAt":"2026-09-17T17:31:48.366Z","title":"既存問題のカン推奨データを修正しました","body":"既存問題の暗槓・加槓・大明槓の推奨率を元データと照合し、欠落していた推奨値と選択肢を修正しました。"},
           {"version":278,"date":"2026-09-18","publishedAt":"2026-09-17T16:41:53.095Z","title":"学習カードの枠を見やすくしました","body":"未回答・苦手克服・全問のカードを、箔押し風の二重枠にしました。ライト・ダークの両方に対応しています。"},
@@ -8635,9 +8651,9 @@
         else advanceQuestionV44();
       }
 
-      function questionCreatedMarkupV246(question) {
+      function questionCreatedMarkupV246(question, { label = true } = {}) {
         const date = window.MinkiruContentDatesV246.questionCreated(question);
-        return date ? `生成日 <time datetime="${escapeHtml(date.iso)}" title="${escapeHtml(date.full)}">${escapeHtml(date.date)}</time>` : "生成日 不明";
+        return date ? `${label ? "生成日 " : ""}<time datetime="${escapeHtml(date.iso)}" title="${escapeHtml(date.full)}">${escapeHtml(date.date)}</time>` : label ? "生成日 不明" : "日付不明";
       }
 
       function applyQuestionV16(question, index = questionsV16.indexOf(question)) {
@@ -8873,7 +8889,7 @@
         if (summary) {
           summary.classList.remove("is-learning-progress");
           summary.innerHTML = listView
-            ? `<div class="menu-summary-stat"><small>この範囲の問題</small><strong>${visibleSummary}<em>問</em></strong></div><div class="menu-summary-stat${rangeUnanswered ? " is-alert" : ""}"><small>未回答</small><strong>${rangeUnanswered}<em>問</em></strong></div><div class="menu-summary-stat"><small>回答済み</small><strong>${rangeAnswered.length}<em>問</em></strong></div>`
+            ? `<span class="book-list-count-v281" title="${partialAll ? '取得済み / 全問題数' : 'この範囲の問題数'}"><strong>${visibleSummary}</strong><span>問${partialAll ? ' 取得済み' : ''}</span></span>`
             : "";
           summary.hidden = !listView;
         }
@@ -9007,20 +9023,87 @@
         panel.hidden = menuViewV16 !== "my" || isSeriesParentCollectionV180(sharedCollectionV46);
         if (panel.hidden) return;
         const activeTag = document.getElementById("commentTagActiveV272");
-        activeTag.hidden = !menuCommentTagV270;
-        activeTag.textContent = menuCommentTagV270 ? "#" + menuCommentTagV270 : "";
+        const filterGroups = document.getElementById("bookListFilterGroupsV281");
+        const scope = navigationScopeV234();
+        if (filterGroups.dataset.scope !== scope || !filterGroups.innerHTML) {
+          filterGroups.innerHTML = renderLearningFilterGroupsV281();
+          filterGroups.dataset.scope = scope;
+        }
+        syncLearningSettingsUiV189();
+        activeTag.hidden = !bookListFiltersActiveV281();
+        activeTag.textContent = bookListFilterSummaryV281();
         const choices = window.MinkiruCommentTagsV270.tagSuggestions([...window.commentTagSuggestionsV271(), menuCommentTagV270]);
         document.getElementById("commentTagFiltersV270").innerHTML = ["", ...choices].map(tag =>
           `<button type="button" class="comment-tag-v270" data-comment-tag-filter="${escapeHtml(tag)}" aria-pressed="${menuCommentTagV270 === tag}">${tag ? "#" + escapeHtml(tag) : "すべて"}</button>`).join("");
         const pending = sharedQuestionPagingIsCurrentV177() && !sharedQuestionPagingV177.allLoaded;
         document.getElementById("commentTagResultV270").textContent = menuCommentTagV270
           ? sharedQuestionPagingV177.error ? "検索結果を読み込めませんでした。ページを再読み込みしてください。"
-            : pending ? "この問題集のタグを検索中…" : `#${menuCommentTagV270}：${menuFilteredQuestionsV80().length}問`
+            : pending ? "この問題集の条件を検索中…" : `#${menuCommentTagV270}：${menuFilteredQuestionsV80().length}問`
           : "コメントに付いたタグを選んで、問題を探せます。";
       }
 
+      let bookListShuffleV281 = new Map();
+      let bookListShuffleScopeV281 = "";
+      function bookListFiltersActiveV281() {
+        return learningOrderV189 !== "sequential" || learningGenresV189.size !== LEARNING_GENRE_ORDER_V189.length
+          || learningHistoryFiltersV189.size !== LEARNING_HISTORY_ORDER_V189.length || Boolean(learningCommentTagV273);
+      }
+
+      function bookListFilterSummaryV281() {
+        const parts = [];
+        if (learningOrderV189 === "random") parts.push("ランダム");
+        if (learningGenresV189.size !== LEARNING_GENRE_ORDER_V189.length) parts.push(LEARNING_GENRE_ORDER_V189.filter(key => learningGenresV189.has(key)).map(key => LEARNING_GENRE_LABELS_V189[key]).join("・"));
+        if (learningHistoryFiltersV189.size !== LEARNING_HISTORY_ORDER_V189.length) parts.push(LEARNING_HISTORY_ORDER_V189.filter(key => learningHistoryFiltersV189.has(key)).map(key => LEARNING_HISTORY_LABELS_V189[key]).join("・"));
+        if (learningCommentTagV273) parts.push("#" + learningCommentTagV273);
+        return parts.join(" / ");
+      }
+
+      function bookListFilteredV281(source) {
+        const latest = learningLatestAnswersV189();
+        const filtered = source.filter(question => learningQuestionMatchesGenreV189(question) && learningQuestionMatchesHistoryV189(question, latest)
+          && (!learningCommentTagV273 || questionCommentTagsV270(question).includes(learningCommentTagV273)));
+        if (learningOrderV189 === "random") {
+          const scope = navigationScopeV234();
+          if (scope !== bookListShuffleScopeV281) { bookListShuffleV281.clear(); bookListShuffleScopeV281 = scope; }
+          for (const question of filtered) {
+            const key = questionKeyV16(question);
+            if (!bookListShuffleV281.has(key)) bookListShuffleV281.set(key, Math.random());
+          }
+          return filtered.sort((a, b) => bookListShuffleV281.get(questionKeyV16(a)) - bookListShuffleV281.get(questionKeyV16(b)));
+        }
+        return filtered.sort((a, b) => menuQuestionSortKeyV99(a) - menuQuestionSortKeyV99(b));
+      }
+
+      function refreshBookListConditionsV281() {
+        menuCommentTagV270 = learningCommentTagV273;
+        menuOrderV92 = learningOrderV189;
+        bookListShuffleV281.clear();
+        if (menuViewV16 !== "my") return;
+        const focused = document.activeElement;
+        const setting = focused?.dataset?.learningSetting;
+        const value = focused?.dataset?.learningValue;
+        const tag = focused?.dataset?.commentTagFilter;
+        menuRangeV60 = "all";
+        menuTypeV44 = "all";
+        menuStatusFiltersV92 = [];
+        menuSearchV44 = "";
+        resetMenuRenderLimitV119();
+        renderMenuCardsV16();
+        commitNavigationV234("replace");
+        if (setting && value) document.querySelector(`[data-learning-setting="${setting}"][data-learning-value="${value}"]`)?.focus({ preventScroll: true });
+        else if (tag !== undefined) Array.from(document.querySelectorAll("[data-comment-tag-filter]")).find(button => button.dataset.commentTagFilter === tag)?.focus({ preventScroll: true });
+      }
+
+      function resetBookListConditionsV281() {
+        learningOrderV189 = "sequential";
+        learningGenresV189 = new Set(LEARNING_GENRE_ORDER_V189);
+        learningHistoryFiltersV189 = new Set(LEARNING_HISTORY_ORDER_V189);
+        learningCommentTagV273 = "";
+        refreshBookListConditionsV281();
+      }
+
       function menuFilterActiveV80() {
-        return menuViewV16 !== "my" || menuTypeV44 !== "all" || menuStatusFiltersV92.length > 0 || Boolean(menuSearchV44.trim()) || Boolean(menuCommentTagV270) || menuRangeV60 !== "all" || menuFavoritesOnlyV137;
+        return bookListFiltersActiveV281() || menuViewV16 !== "my" || menuTypeV44 !== "all" || menuStatusFiltersV92.length > 0 || Boolean(menuSearchV44.trim()) || Boolean(menuCommentTagV270) || menuRangeV60 !== "all" || menuFavoritesOnlyV137;
       }
 
       function menuStatusFilteredQuestionsV92() {
@@ -9039,15 +9122,15 @@
       function menuLearningSummaryQuestionsV184() {
         const filteredByHelper = menuStatusFilteredQuestionsV92();
         const sourceQuestions = (Array.isArray(filteredByHelper) ? filteredByHelper : questionsV16).filter(isLearningScopeQuestionV184);
-        return sourceQuestions
-          .filter(menuRangeMatchesV60)
-          .filter(question => !menuFavoritesOnlyV137 || isFavoriteV16(question));
+        const visible = sourceQuestions.filter(menuRangeMatchesV60).filter(question => !menuFavoritesOnlyV137 || isFavoriteV16(question));
+        return menuViewV16 === "my" ? bookListFilteredV281(visible) : visible;
       }
 
       function menuFilteredQuestionsV80() {
         const filteredByHelper = menuStatusFilteredQuestionsV92();
         const sourceQuestions = (Array.isArray(filteredByHelper) ? filteredByHelper : questionsV16).filter(isPlayableV16);
-        return sourceQuestions.filter(menuRangeMatchesV60).filter(question => !menuFavoritesOnlyV137 || isFavoriteV16(question));
+        const visible = sourceQuestions.filter(menuRangeMatchesV60).filter(question => !menuFavoritesOnlyV137 || isFavoriteV16(question));
+        return menuViewV16 === "my" ? bookListFilteredV281(visible) : visible;
       }
 
       function shuffleQuestionsV80(items) {
@@ -9232,7 +9315,7 @@
         menuTypeV44 = "all";
         menuStatusFiltersV92 = [];
         menuSearchV44 = "";
-        menuCommentTagV270 = "";
+        menuCommentTagV270 = learningCommentTagV273;
         resetMenuRenderLimitV119();
       }
 
@@ -9263,8 +9346,20 @@
           ["打牌判断", stats.breakdowns?.discard],
           ["リーチ判断", stats.breakdowns?.riichi],
           ["副露判断", stats.breakdowns?.call]
-        ].map(([label, value]) => `<div class="analysis-breakdown"><strong>${label}</strong><span>${value?.attempts || 0}回答・悪手回避率 ${Math.round(value?.safeRate || 0)}%</span></div>`).join("");
-        return `<section class="analysis-section"><h3>学習の現在地</h3><div class="analysis-grid"><div class="stat-card"><span class="stat-label">回答数</span><span class="stat-value">${attempts}</span></div><div class="stat-card"><span class="stat-label">悪手回避率</span><span class="stat-value">${safeRate}%</span></div><div class="stat-card"><span class="stat-label">平均回答時間</span><span class="stat-value">${averageSeconds}<small>秒</small></span></div><div class="stat-card"><span class="stat-label">連続学習</span><span class="stat-value">${stats.streakDays || 0}<small>日</small></span></div></div><div class="analysis-breakdowns">${breakdowns}</div><div class="drill-actions"><button class="drill-action" type="button" data-analysis-drill="weak">直近×を復習</button><button class="drill-action secondary" type="button" data-analysis-drill="riichi">リーチ判断を復習</button><button class="drill-action secondary" type="button" data-analysis-drill="call">副露判断を復習</button><button class="drill-action secondary" type="button" data-analysis-drill="unanswered">未回答を復習</button></div><p>未ログイン時はこの端末内に保存されます。Discordログイン中は、自分の回答履歴を問題集ごとに同期し、別端末でも復元します。</p></section>`;
+        ].map(([label, value]) => {
+          const count = value?.attempts || 0;
+          const rate = Math.round(value?.safeRate || 0);
+          return `<div class="analysis-breakdown"><div class="analysis-type-v281"><strong>${label}</strong><span>${count}回答</span></div><span class="analysis-rate-track-v281" aria-hidden="true"><span style="width:${count ? rate : 0}%"></span></span><span class="analysis-rate-v281" aria-label="${label}の悪手回避率 ${count ? rate + '%' : '回答なし'}">${count ? rate + '<small>%</small>' : '—'}</span></div>`;
+        }).join("");
+        return `<section class="analysis-section" aria-label="この本の学習記録">
+          <div class="analysis-grid">
+            <div class="stat-card"><span class="stat-label">総回答数</span><div class="analysis-number-v281"><span class="stat-value">${attempts}</span><small>回</small></div><span class="analysis-stat-note-v281">繰り返し解いた分も含む</span></div>
+            <div class="stat-card"><span class="stat-label">悪手回避率</span><div class="analysis-number-v281"><span class="stat-value">${attempts ? safeRate : '—'}</span><small>%</small></div><span class="analysis-stat-note-v281">◎・〇 ${safeCount} / ${attempts}回答</span></div>
+          </div>
+          <div class="analysis-detail-v281"><span>平均回答時間 <strong>${attempts ? averageSeconds : '—'}<small>秒</small></strong></span><span>連続学習 <strong>${stats.streakDays || 0}<small>日</small></strong></span></div>
+          <section class="analysis-types-v281" aria-labelledby="analysisTypesTitleV281"><div class="analysis-section-heading-v281"><h3 id="analysisTypesTitleV281">判断別の成績</h3><span>悪手回避率</span></div><div class="analysis-breakdowns">${breakdowns}</div></section>
+          <section class="analysis-review-v281" aria-labelledby="analysisReviewTitleV281"><h3 id="analysisReviewTitleV281">もう一度、解いてみる</h3><div class="drill-actions"><button class="drill-action" type="button" data-analysis-drill="weak">苦手を復習<span aria-hidden="true">›</span></button><button class="drill-action secondary" type="button" data-analysis-drill="riichi">リーチ判断<span aria-hidden="true">›</span></button><button class="drill-action secondary" type="button" data-analysis-drill="call">副露判断<span aria-hidden="true">›</span></button></div></section>
+        </section>`;
       }
 
       function renderSessionResultV44() {
@@ -9564,6 +9659,11 @@
         return sequential;
       }
 
+      function renderLearningFilterGroupsV281() {
+        const isBasicSequence = isBasicSequenceCollectionV163();
+        return `<fieldset class="learning-setting-group"><legend>出題順 <small>1つ選択</small></legend><div class="learning-check-grid learning-check-grid-order"><label class="learning-check"><input type="checkbox" data-learning-setting="order" data-learning-value="sequential"${learningOrderV189 === "sequential" ? " checked" : ""}><span>順番${isBasicSequence ? "（推奨）" : ""}</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="order" data-learning-value="random"${learningOrderV189 === "random" ? " checked" : ""}><span>ランダム</span></label></div></fieldset><fieldset class="learning-setting-group"><legend>ジャンル <small>複数選択可</small></legend><div class="learning-check-grid"><label class="learning-check"><input type="checkbox" data-learning-setting="genre" data-learning-value="discard"${learningGenresV189.has("discard") ? " checked" : ""}><span>打牌判断</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="genre" data-learning-value="riichi"${learningGenresV189.has("riichi") ? " checked" : ""}><span>リーチ判断</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="genre" data-learning-value="call"${learningGenresV189.has("call") ? " checked" : ""}><span>副露判断</span></label></div></fieldset><fieldset class="learning-setting-group"><legend>直近履歴 <small>複数選択可</small></legend><div class="learning-check-grid learning-check-grid-history"><label class="learning-check"><input type="checkbox" data-learning-setting="history" data-learning-value="unanswered"${learningHistoryFiltersV189.has("unanswered") ? " checked" : ""}><span>未回答</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="history" data-learning-value="×"${learningHistoryFiltersV189.has("×") ? " checked" : ""}><span class="learning-status-mark is-miss">×</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="history" data-learning-value="△"${learningHistoryFiltersV189.has("△") ? " checked" : ""}><span class="learning-status-mark is-review">△</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="history" data-learning-value="〇"${learningHistoryFiltersV189.has("〇") ? " checked" : ""}><span class="learning-status-mark is-safe">〇</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="history" data-learning-value="◎"${learningHistoryFiltersV189.has("◎") ? " checked" : ""}><span class="learning-status-mark is-excellent">◎</span></label></div></fieldset>`;
+      }
+
       function renderLearningTagFilterV273() {
         const choices = window.MinkiruCommentTagsV270.tagSuggestions([...window.commentTagSuggestionsV271(), learningCommentTagV273]);
         return `<fieldset class="learning-setting-group"><legend>ハッシュタグで検索</legend><div class="comment-tags-v270" role="group" aria-label="全問のハッシュタグ条件">${["", ...choices].map(tag => `<button type="button" class="comment-tag-v270" data-learning-tag-v273="${escapeHtml(tag)}" aria-pressed="${tag === learningCommentTagV273}">${tag ? "#" + escapeHtml(tag) : "すべて"}</button>`).join("")}</div><p data-learning-tag-result-v273>${learningCommentTagV273 ? "#" + escapeHtml(learningCommentTagV273) + " の問題に絞り込み" : "コメントに付いたタグから選べます。"}</p></fieldset>`;
@@ -9633,6 +9733,7 @@
         }
         syncLearningSettingsUiV189();
         syncLearningActionCountsV189();
+        refreshBookListConditionsV281();
       }
 
       function startLearningSessionV189(mode, { skipSharedPreparation = false } = {}) {
@@ -9736,7 +9837,7 @@
         const actionMarkup = [
           renderLearningActionButtonV194({ mode: "unanswered", title: "未回答", count: displayedUnanswered, description: "未回答問題を一通り進める", tone: "primary", disabled: actionDisabled(Number(displayedUnanswered)) }),
           renderLearningActionButtonV194({ mode: "weak", title: "苦手克服", count: displayedWeak, description: "直近×・△を中心に復習", tone: "weak", disabled: actionDisabled(Number(displayedWeak)) }),
-          `<div class="learning-all-action">${renderLearningActionButtonV194({ mode: "all", title: "全問", count: displayedAll, description: "選択した条件で学習", tone: "all", disabled: actionDisabled(Number(displayedAll)) })}<details class="learning-custom-settings" id="learningCustomSettings"><summary aria-label="全問を解くの設定"><span><span class="learning-settings-icon" aria-hidden="true">⚙</span>条件設定</span><span data-learning-settings-summary>${escapeHtml(learningSettingsSummaryV189())}</span></summary><div class="learning-custom-settings-body"><fieldset class="learning-setting-group"><legend>出題順 <small>1つ選択</small></legend><div class="learning-check-grid learning-check-grid-order"><label class="learning-check"><input type="checkbox" data-learning-setting="order" data-learning-value="sequential"${learningOrderV189 === "sequential" ? " checked" : ""}><span>順番${isBasicSequence ? "（推奨）" : ""}</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="order" data-learning-value="random"${learningOrderV189 === "random" ? " checked" : ""}><span>ランダム</span></label></div></fieldset><fieldset class="learning-setting-group"><legend>ジャンル <small>複数選択可</small></legend><div class="learning-check-grid"><label class="learning-check"><input type="checkbox" data-learning-setting="genre" data-learning-value="discard"${learningGenresV189.has("discard") ? " checked" : ""}><span>打牌判断</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="genre" data-learning-value="riichi"${learningGenresV189.has("riichi") ? " checked" : ""}><span>リーチ判断</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="genre" data-learning-value="call"${learningGenresV189.has("call") ? " checked" : ""}><span>副露判断</span></label></div></fieldset><fieldset class="learning-setting-group"><legend>直近履歴 <small>複数選択可</small></legend><div class="learning-check-grid learning-check-grid-history"><label class="learning-check"><input type="checkbox" data-learning-setting="history" data-learning-value="unanswered"${learningHistoryFiltersV189.has("unanswered") ? " checked" : ""}><span>未回答</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="history" data-learning-value="×"${learningHistoryFiltersV189.has("×") ? " checked" : ""}><span class="learning-status-mark is-miss">×</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="history" data-learning-value="△"${learningHistoryFiltersV189.has("△") ? " checked" : ""}><span class="learning-status-mark is-review">△</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="history" data-learning-value="〇"${learningHistoryFiltersV189.has("〇") ? " checked" : ""}><span class="learning-status-mark is-safe">〇</span></label><label class="learning-check"><input type="checkbox" data-learning-setting="history" data-learning-value="◎"${learningHistoryFiltersV189.has("◎") ? " checked" : ""}><span class="learning-status-mark is-excellent">◎</span></label></div></fieldset>${renderLearningTagFilterV273()}<p>この設定は「全問を解く」にのみ適用されます。未回答を解く・苦手克服は固定ルールです。</p></div></details></div>`
+          `<div class="learning-all-action">${renderLearningActionButtonV194({ mode: "all", title: "全問", count: displayedAll, description: "選択した条件で学習", tone: "all", disabled: actionDisabled(Number(displayedAll)) })}<details class="learning-custom-settings" id="learningCustomSettings"><summary aria-label="全問を解くの設定"><span><span class="learning-settings-icon" aria-hidden="true">⚙</span>条件設定</span><span data-learning-settings-summary>${escapeHtml(learningSettingsSummaryV189())}</span></summary><div class="learning-custom-settings-body">${renderLearningFilterGroupsV281()}${renderLearningTagFilterV273()}<p>「全問」と「問題一覧」に共通の条件です。未回答・苦手克服は固定ルールです。</p></div></details></div>`
         ].join("");
         return `<section class="learning-dashboard today-dashboard" aria-labelledby="menuTitle"><nav class="learning-tabs" aria-label="学習メニュー"><button type="button" data-menu-jump="my"><span class="learning-tab-icon" aria-hidden="true">▦</span><span>問題一覧</span><span class="learning-tab-count">${displayedTotal}</span></button><button type="button" data-menu-jump="favorites"><span class="learning-tab-icon" aria-hidden="true">☆</span><span>お気に入り</span><span class="learning-tab-count">${displayedFavorites}</span></button></nav><section class="learning-action-grid" aria-label="学習を始める">${actionMarkup}</section><section class="today-recent learning-recent-section"><div class="today-section-heading"><h3>直近回答履歴</h3><button type="button" data-menu-jump="my">問題一覧を見る <span aria-hidden="true">→</span></button></div><div class="today-recent-list">${recentMarkup}</div></section></section>`;
       }
@@ -9787,7 +9888,7 @@
           const total = sharedQuestionKnownTotalV177();
           const partial = total !== null && total > questionsV16.length;
           const scopeNote = partial ? `「${collectionDisplayNameV101()}」の取得済み${questionsV16.length} / ${total}問が対象です。未取得の問題は集計に含みません。`
-            : `「${collectionDisplayNameV101()}」の回答履歴だけを集計しています。他の問題集の回答は含みません。`;
+            : "この本でのすべての回答を集計";
           grid.innerHTML = `<p class="navigation-scope-note-v234">${escapeHtml(scopeNote)}</p>${renderAnalysisViewV44()}`;
           grid.style.display = "block";
           empty.hidden = true;
@@ -9831,12 +9932,12 @@
           bindCollectionManagementV100();
           return;
         }
-        if (menuCommentTagV270 && sharedQuestionPagingIsCurrentV177() && !sharedQuestionPagingV177.allLoaded) {
+        if (bookListFiltersActiveV281() && sharedQuestionPagingIsCurrentV177() && !sharedQuestionPagingV177.allLoaded) {
           empty.hidden = true;
-          grid.innerHTML = '<div class="menu-placeholder">' + (sharedQuestionPagingV177.error ? '検索結果を読み込めませんでした。ページを再読み込みしてください。' : 'この問題集のタグを検索中…') + '</div>';
+          grid.innerHTML = '<div class="menu-placeholder">' + (sharedQuestionPagingV177.error ? '検索結果を読み込めませんでした。ページを再読み込みしてください。' : 'この問題集の条件を検索中…') + '</div>';
           return;
         }
-        const entries = menuFilteredQuestionsV80().map(question => ({ question, index: questionIndexByKeyV44(questionKeyV16(question)) })).filter(({ index }) => index >= 0).sort((left, right) => menuQuestionSortKeyV99(left.question) - menuQuestionSortKeyV99(right.question) || left.index - right.index);
+        const entries = menuFilteredQuestionsV80().map(question => ({ question, index: questionIndexByKeyV44(questionKeyV16(question)) })).filter(({ index }) => index >= 0);
         empty.hidden = entries.length > 0;
         empty.textContent = menuCommentTagV270 ? `#${menuCommentTagV270} が付いた問題はまだありません。` : menuFavoritesOnlyV137 ? "お気に入り登録した問題はまだありません。" : "出題できる問題がありません。";
         const visibleEntries = entries.length > MENU_RENDER_THRESHOLD_V119 ? entries.slice(0, menuRenderLimitV119) : entries;
@@ -9844,14 +9945,18 @@
         grid.innerHTML = visibleEntries.map(({ question, index }) => {
           const favorite = isFavoriteV16(question);
           const title = escapeHtml(question.title || `問題${question.number}`);
-          const scores = recentScoresV16(question);
+          const scores = recentScoresV16(question).slice(0, 3);
           const historyLabel = scores.length ? `直近${scores.length}回の採点履歴：${scores.map(entry => `${entry.scoreMark} ${entry.scoreLabel || scoreForQuestionV16(question, entry)?.label || "採点結果"}`).join("、")}` : "採点履歴はまだありません";
-          const history = scores.length ? scores.map(entry => `<span class="menu-card-latest-mark ${menuScoreMarkClassV63(entry.scoreMark)}" title="${escapeHtml(entry.scoreLabel || scoreForQuestionV16(question, entry)?.label || "採点結果")}">${escapeHtml(entry.scoreMark)}</span>`).join("") : "—";
+          const history = Array.from({ length: 3 }, (_, slot) => {
+            const entry = scores[slot];
+            const position = slot === 0 ? "最新" : `${slot}回前`;
+            return `<span class="menu-card-latest-mark book-list-history-slot-v281 ${entry ? menuScoreMarkClassV63(entry.scoreMark) : "is-pending"}${slot === 0 ? " is-latest" : ""}" title="${position}${entry ? "：" + escapeHtml(entry.scoreLabel || "採点結果") : "：履歴なし"}">${entry ? escapeHtml(entry.scoreMark) : ""}</span>`;
+          }).join("");
           const typeMetadata = questionTypeV44(question);
           const favoriteLabel = favorite ? `問題${question.number}のお気に入りを解除` : `問題${question.number}をお気に入りに追加`;
           const commentNoticeCount = commentNotificationCountForQuestionV65(question);
           const commentNotice = notificationBadgeMarkupV65(commentNoticeCount, `問題${question.number}の新着コメント${commentNoticeCount}件`, `data-menu-question-notification="${escapeHtml(questionKeyV16(question))}"`);
-          return `<article class="menu-card"><button class="menu-card-open" type="button" data-question-index="${index}" title="問題${question.number}（${escapeHtml(typeMetadata)}）を開く"><span class="menu-card-heading"><span class="menu-card-title">${title}</span><span class="menu-card-meta">${escapeHtml(typeMetadata)}</span><span class="menu-card-notification">${commentNotice}</span><span class="question-created-v246">${questionCreatedMarkupV246(question)}</span></span></button><span class="menu-card-latest${scores.length ? "" : " is-empty"}" aria-label="${escapeHtml(historyLabel)}" title="${escapeHtml(historyLabel)}">${history}</span><button class="menu-card-icon-action${favorite ? " is-active" : ""}" type="button" data-menu-action="favorite" data-question-index="${index}" aria-pressed="${favorite}" aria-label="${escapeHtml(favoriteLabel)}" title="${escapeHtml(favoriteLabel)}">${favorite ? "★" : "☆"}</button></article>`;
+          return `<article class="menu-card"><button class="menu-card-open" type="button" data-question-index="${index}" title="問題${question.number}（${escapeHtml(typeMetadata)}）を開く"><span class="menu-card-heading"><span class="menu-card-title">${title}</span><span class="menu-card-meta">${escapeHtml(typeMetadata)}</span><span class="menu-card-notification">${commentNotice}</span><span class="question-created-v246">${questionCreatedMarkupV246(question, { label: false })}</span></span></button><span class="menu-card-latest${scores.length ? "" : " is-empty"}" aria-label="${escapeHtml(historyLabel)}" title="${escapeHtml(historyLabel)}">${history}</span><button class="menu-card-icon-action${favorite ? " is-active" : ""}" type="button" data-menu-action="favorite" data-question-index="${index}" aria-pressed="${favorite}" aria-label="${escapeHtml(favoriteLabel)}" title="${escapeHtml(favoriteLabel)}">${favorite ? "★" : "☆"}</button></article>`;
         }).join("");
       }
 
@@ -11460,13 +11565,8 @@
           const tag = window.MinkiruCommentTagsV270.normalizeTag(button.dataset.commentTagFilter);
           if (button.dataset.commentTagFilter && !tag) return;
           menuCommentTagV270 = tag;
-          menuRangeV60 = "all";
-          menuFavoritesOnlyV137 = false;
-          menuStatusFiltersV92 = [];
-          menuTypeV44 = "all";
-          menuSearchV44 = "";
-          resetMenuRenderLimitV119();
-          showMenuV16("my", { restorePosition: false });
+          learningCommentTagV273 = tag;
+          refreshBookListConditionsV281();
         });
         document.getElementById("menuPanel").addEventListener("click", handleMenuGridClickV16);
         document.getElementById("menuPanel").addEventListener("change", handleLearningSettingsChangeV189);
@@ -11479,6 +11579,10 @@
           if (note) note.textContent = learningCommentTagV273 ? "#" + learningCommentTagV273 + " の問題に絞り込み" : "コメントに付いたタグから選べます。";
           syncLearningSettingsUiV189();
           syncLearningActionCountsV189();
+          refreshBookListConditionsV281();
+        });
+        document.getElementById("menuPanel").addEventListener("click", event => {
+          if (event.target.closest("[data-book-filter-reset-v281]")) resetBookListConditionsV281();
         });
         document.getElementById("menuActiveFilters")?.addEventListener("click", event => {
           const clearButton = event.target.closest("[data-menu-filter-clear]");

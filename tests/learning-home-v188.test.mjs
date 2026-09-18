@@ -15,10 +15,10 @@ test("V210 keeps the learning actions usable and stable on desktop and mobile", 
     readFile(packageUrl, "utf8")
   ]);
 
-  assert.match(html, /const APP_VERSION = 280;/);
-  assert.match(identity, /APP_VERSION = 280/);
+  assert.match(html, /const APP_VERSION = 281;/);
+  assert.match(identity, /APP_VERSION = 281/);
   for (const asset of ["ux-v159\\.css", "supabase-sync-v48\\.js", "drill-ux-v44\\.js"]) {
-    assert.match(html, new RegExp(`${asset}\\?v=280`));
+    assert.match(html, new RegExp(`${asset}\\?v=281`));
   }
   assert.match(html, /問題集を変更する/);
   assert.doesNotMatch(html, /class="active-collection-label"/);
@@ -59,15 +59,17 @@ test("V210 keeps the learning actions usable and stable on desktop and mobile", 
   assert.match(html, /class="learning-header-progress"/);
   const customSettings = learningView.match(/<details class="learning-custom-settings"[\s\S]*?<\/details>/)?.[0] || "";
   assert.ok(customSettings, "custom settings details should be rendered");
-  assert.equal((customSettings.match(/type="checkbox" data-learning-setting="order"/g) || []).length, 2);
-  assert.equal((customSettings.match(/type="checkbox" data-learning-setting="genre"/g) || []).length, 3);
-  assert.equal((customSettings.match(/type="checkbox" data-learning-setting="history"/g) || []).length, 5);
+  const filterGroups = html.match(/function renderLearningFilterGroupsV281\([\s\S]*?\n      \}/)?.[0] || "";
+  assert.match(customSettings, /renderLearningFilterGroupsV281\(\)/);
+  assert.equal((filterGroups.match(/type="checkbox" data-learning-setting="order"/g) || []).length, 2);
+  assert.equal((filterGroups.match(/type="checkbox" data-learning-setting="genre"/g) || []).length, 3);
+  assert.equal((filterGroups.match(/type="checkbox" data-learning-setting="history"/g) || []).length, 5);
   assert.doesNotMatch(customSettings, /<select[^>]*data-learning-setting/);
-  assert.match(customSettings, /data-learning-value="sequential"/);
-  assert.match(customSettings, /data-learning-value="random"/);
-  assert.doesNotMatch(customSettings, /data-learning-value="reverse"/);
-  assert.match(customSettings, /複数選択可/);
-  assert.match(customSettings, /この設定は「全問を解く」にのみ適用されます/);
+  assert.match(filterGroups, /data-learning-value="sequential"/);
+  assert.match(filterGroups, /data-learning-value="random"/);
+  assert.doesNotMatch(filterGroups, /data-learning-value="reverse"/);
+  assert.match(filterGroups, /複数選択可/);
+  assert.match(customSettings, /「全問」と「問題一覧」に共通の条件です/);
   assert.match(learningView, /直近×・△/);
 
   assert.match(html, /function learningWeakQuestionsV189\([^)]*\)/);

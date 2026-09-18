@@ -1,0 +1,593 @@
+/* V281: the book list and results share the learning page's serif, frames and ink.
+   Scoped to these two views; grades, stored records and the learning home stay intact. */
+html .page.menu-active #menuPanel:is([data-view="my"], [data-view="analysis"]) {
+  --book-page-serif: "Yu Mincho", "Hiragino Mincho ProN", "Noto Serif JP", "Times New Roman", serif;
+  --book-page-ink: #fff;
+  --book-page-muted: #b9c6ca;
+  --book-page-surface: #0c1b24;
+  --book-page-line: #394b53;
+  --book-page-gold: #d3ad69;
+  --book-page-purple: #b29ad0;
+  --book-page-teal: #78c6bf;
+  --book-page-hover: #172c34;
+}
+html[data-theme="light"] .page.menu-active #menuPanel:is([data-view="my"], [data-view="analysis"]) {
+  --book-page-ink: #183044;
+  --book-page-muted: #536873;
+  --book-page-surface: #fff;
+  --book-page-line: #c3d1d4;
+  --book-page-gold: #b08343;
+  --book-page-purple: #8b67ac;
+  --book-page-teal: #078991;
+  --book-page-hover: #edf5f2;
+}
+html .page.menu-active #menuPanel:is([data-view="my"], [data-view="analysis"]) .menu-heading {
+  display: block;
+  margin: 0;
+  padding: 22px 0 18px;
+}
+html .page.menu-active #menuPanel:is([data-view="my"], [data-view="analysis"]) #menuTitle {
+  margin: 0;
+  color: var(--book-page-ink);
+  font: 500 clamp(24px, 2.6vw, 30px)/1.5 var(--book-page-serif);
+  letter-spacing: .06em;
+}
+
+/* The list prioritises questions; progress already lives on the learning page. */
+html .page.menu-active #menuPanel[data-view="my"] .menu-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+}
+html .page.menu-active #menuPanel[data-view="my"] .menu-summary {
+  display: block;
+  width: auto;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  overflow: visible;
+}
+html .page.menu-active #menuPanel[data-view="my"] .book-list-count-v281 {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  color: var(--book-page-ink);
+  font: 500 14px/1.4 var(--book-page-serif);
+}
+html .page.menu-active #menuPanel[data-view="my"] .book-list-count-v281 strong {
+  color: inherit;
+  font: 500 30px/1.2 var(--book-page-serif);
+  font-variant-numeric: lining-nums tabular-nums;
+}
+/* Results carry the coloured double frames used by the learning cards. */
+html .page.menu-active #menuPanel[data-view="analysis"] .stat-card {
+  --book-frame: var(--book-page-teal);
+  position: relative;
+  min-width: 0;
+  padding: 16px 20px;
+  border: 2px solid var(--book-frame);
+  border-radius: 12px;
+  color: var(--book-page-ink);
+  background: linear-gradient(115deg, color-mix(in srgb, var(--book-frame) 7%, var(--book-page-surface)), var(--book-page-surface));
+  box-shadow: 0 3px 9px #0000000d;
+}
+html .page.menu-active #menuPanel[data-view="analysis"] .stat-card::after {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  pointer-events: none;
+  border: 1px solid color-mix(in srgb, var(--book-frame) 65%, transparent);
+  border-radius: 7px;
+}
+
+/* Compact, clearly selected list controls. */
+html .page.menu-active #menuPanel[data-view="my"] #menuContextTabs {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0 0 14px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+html .page.menu-active #menuPanel[data-view="my"] #menuContextTabs > button {
+  min-height: 48px;
+  padding: 9px 12px;
+  border: 1px solid var(--book-page-line);
+  border-radius: 7px;
+  background: var(--book-page-surface);
+  box-shadow: none;
+  color: var(--book-page-ink);
+  font: 500 16px/1.4 var(--book-page-serif);
+}
+html .page.menu-active #menuPanel[data-view="my"] #menuContextTabs > button.is-active {
+  border-color: var(--book-page-gold);
+  background: color-mix(in srgb, var(--book-page-gold) 10%, var(--book-page-surface));
+  box-shadow: inset 0 -2px var(--book-page-gold);
+}
+html .page.menu-active #menuPanel[data-view="my"] #menuContextTabs :is(.learning-tab-icon, .learning-tab-count) {
+  color: inherit;
+  font-weight: 500;
+}
+html .page.menu-active #menuPanel[data-view="my"] #menuContextTabs .learning-tab-count { font-size: 16px; }
+html .page.menu-active #menuPanel[data-view="my"] .comment-tag-search-v270 {
+  margin: 0 0 20px;
+  color: var(--book-page-ink);
+  border-color: var(--book-page-line);
+  background: var(--book-page-surface);
+  border-radius: 7px;
+}
+html .page.menu-active #menuPanel[data-view="my"] .comment-tag-search-v270 > summary {
+  min-height: 48px;
+  padding: 10px 14px;
+  font: 500 15px/1.5 var(--book-page-serif);
+}
+html .page.menu-active #menuPanel[data-view="my"] .comment-tag-v270 { min-height: 44px; }
+
+/* Align history and stars while giving each problem a generous, readable entry. */
+html .page.menu-active #menuPanel[data-view="my"] #menuGrid { gap: 8px; }
+html .page.menu-active #menuPanel[data-view="my"] :is(.menu-list-header, .menu-card) {
+  grid-template-columns: minmax(0, 1fr) 180px 70px;
+  gap: 14px;
+  align-items: center;
+}
+html .page.menu-active #menuPanel[data-view="my"] .menu-list-header {
+  display: grid;
+  min-height: 32px;
+  padding: 0 18px 8px;
+  margin: 0 0 8px;
+  border: 0;
+  color: var(--book-page-muted);
+  background: transparent;
+  font: 500 12px/1.5 var(--menu-sans-v238);
+}
+html .page.menu-active #menuPanel[data-view="my"] .menu-list-header > :not(:first-child) { text-align: center; }
+html .page.menu-active #menuPanel[data-view="my"] .menu-card {
+  min-height: 76px;
+  padding: 8px 18px;
+  border: 1px solid var(--book-page-line);
+  border-left: 3px solid color-mix(in srgb, var(--book-page-gold) 70%, var(--book-page-line));
+  border-radius: 8px;
+  background: var(--book-page-surface);
+  box-shadow: none;
+}
+html .page.menu-active #menuPanel[data-view="my"] .menu-card:has(.menu-card-open:hover) {
+  background: var(--book-page-hover);
+  border-color: var(--book-page-teal);
+}
+html .page.menu-active #menuPanel[data-view="my"] .menu-card-open {
+  display: flex;
+  align-items: center;
+  min-height: 52px;
+  padding: 0;
+  box-shadow: none;
+  transform: none;
+}
+html .page.menu-active #menuPanel[data-view="my"] .menu-card-heading {
+  min-width: 0;
+  overflow: visible;
+  gap: 2px 10px;
+}
+html .page.menu-active #menuPanel[data-view="my"] .menu-card-title {
+  max-width: 100%;
+  color: var(--book-page-ink);
+  font: 500 20px/1.5 var(--book-page-serif);
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+html .page.menu-active #menuPanel[data-view="my"] .menu-card-meta { color: var(--book-page-muted); font-size: 12px; }
+html .page.menu-active #menuPanel[data-view="my"] .menu-card-heading .question-created-v246 { color: var(--book-page-muted); font-size: 12px; }
+html .page.menu-active #menuPanel[data-view="my"] .menu-card-latest { justify-content: center; gap: 4px; }
+html .page.menu-active #menuPanel[data-view="my"] .menu-card-latest-mark { width: 25px; height: 28px; font-size: 23px; }
+html .page.menu-active #menuPanel[data-view="my"] .menu-card-icon-action {
+  justify-self: center;
+  width: 44px;
+  min-height: 44px;
+  padding: 0;
+  border: 1px solid var(--book-page-line);
+  border-radius: 50%;
+  color: var(--book-page-ink);
+  background: transparent;
+  box-shadow: none;
+  font-size: 25px;
+}
+html .page.menu-active #menuPanel[data-view="my"] .menu-card-icon-action.is-active {
+  color: var(--book-page-gold);
+  border-color: var(--book-page-gold);
+  background: color-mix(in srgb, var(--book-page-gold) 12%, var(--book-page-surface));
+}
+html .page.menu-active #menuPanel[data-view="my"] :is(.menu-empty, .menu-placeholder) {
+  padding: 24px;
+  color: var(--book-page-muted);
+  border: 1px solid var(--book-page-line);
+  background: var(--book-page-surface);
+  font-size: 14px;
+}
+
+/* Results: two primary metrics, then quiet detail and a comparison of judgments. */
+html .page.menu-active #menuPanel[data-view="analysis"] .navigation-scope-note-v234 {
+  margin: -8px 0 18px;
+  color: var(--book-page-muted);
+  font-size: 13px;
+  line-height: 1.7;
+}
+html .page.menu-active #menuPanel[data-view="analysis"] .analysis-section {
+  gap: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  color: var(--book-page-ink);
+}
+html .page.menu-active #menuPanel[data-view="analysis"] .analysis-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+html .page.menu-active #menuPanel[data-view="analysis"] .stat-card { padding: 22px 24px; }
+html .page.menu-active #menuPanel[data-view="analysis"] .stat-card:first-child { --book-frame: var(--book-page-gold); }
+html .page.menu-active #menuPanel[data-view="analysis"] .stat-label { color: var(--book-page-ink); font: 500 19px/1.5 var(--book-page-serif); }
+html .page.menu-active #menuPanel[data-view="analysis"] .analysis-number-v281 { display: flex; align-items: baseline; gap: 7px; margin: 8px 0; }
+html .page.menu-active #menuPanel[data-view="analysis"] .stat-value {
+  margin: 0;
+  color: var(--book-page-ink);
+  font: 500 clamp(38px, 4.6vw, 56px)/1.1 var(--book-page-serif);
+  font-variant-numeric: lining-nums tabular-nums;
+  overflow-wrap: anywhere;
+  min-width: 0;
+}
+html .page.menu-active #menuPanel[data-view="analysis"] .analysis-number-v281 > small { font: 500 16px/1 var(--book-page-serif); }
+html .page.menu-active #menuPanel[data-view="analysis"] .analysis-stat-note-v281 { font-size: 13px; line-height: 1.7; color: var(--book-page-muted); }
+html .page.menu-active #menuPanel[data-view="analysis"] .analysis-detail-v281 {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 26px;
+  padding: 16px 4px 24px;
+  color: var(--book-page-muted);
+  font-size: 13px;
+}
+html .page.menu-active #menuPanel[data-view="analysis"] .analysis-detail-v281 > span { display: inline-flex; align-items: baseline; gap: 10px; }
+html .page.menu-active #menuPanel[data-view="analysis"] .analysis-detail-v281 strong { color: var(--book-page-ink); font: 500 20px/1.4 var(--book-page-serif); }
+html .page.menu-active #menuPanel[data-view="analysis"] .analysis-detail-v281 small { margin-left: 3px; font-size: 13px; }
+html .page.menu-active #menuPanel[data-view="analysis"] h3 { color: var(--book-page-ink); font: 500 21px/1.5 var(--book-page-serif); letter-spacing: .025em; }
+html .page.menu-active #menuPanel[data-view="analysis"] .analysis-section-heading-v281 { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
+html .page.menu-active #menuPanel[data-view="analysis"] .analysis-section-heading-v281 > span { color: var(--book-page-muted); font-size: 12px; }
+html .page.menu-active #menuPanel[data-view="analysis"] .analysis-breakdowns {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+  padding: 2px 20px;
+  border: 1px solid var(--book-page-line);
+  border-radius: 10px;
+  background: var(--book-page-surface);
+}
+html .page.menu-active #menuPanel[data-view="analysis"] .analysis-breakdown {
+  --rate-accent: var(--book-page-gold);
+  display: grid;
+  grid-template-columns: minmax(110px, .55fr) minmax(0, 1fr) 72px;
+  gap: 18px;
+  align-items: center;
+  padding: 16px 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+html .page.menu-active #menuPanel[data-view="analysis"] .analysis-breakdown + .analysis-breakdown { border-top: 1px solid var(--book-page-line); }
+html .page.menu-active #menuPanel[data-view="analysis"] .analysis-breakdown:nth-child(2) { --rate-accent: var(--book-page-purple); }
+html .page.menu-active #menuPanel[data-view="analysis"] .analysis-breakdown:nth-child(3) { --rate-accent: var(--book-page-teal); }
+html .page.menu-active #menuPanel[data-view="analysis"] .analysis-breakdown strong { margin: 0 0 4px; color: var(--book-page-ink); font: 500 18px/1.4 var(--book-page-serif); }
+html .page.menu-active #menuPanel[data-view="analysis"] .analysis-type-v281 > span { color: var(--book-page-muted); font-size: 12px; }
+html .page.menu-active #menuPanel[data-view="analysis"] .analysis-rate-track-v281 { display: block; height: 7px; overflow: hidden; background: color-mix(in srgb, var(--book-page-line) 65%, transparent); border-radius: 6px; }
+html .page.menu-active #menuPanel[data-view="analysis"] .analysis-rate-track-v281 > span { display: block; height: 100%; background: var(--rate-accent); border-radius: inherit; }
+html .page.menu-active #menuPanel[data-view="analysis"] .analysis-rate-v281 { color: var(--book-page-ink); font: 500 30px/1.2 var(--book-page-serif); text-align: right; font-variant-numeric: lining-nums tabular-nums; }
+html .page.menu-active #menuPanel[data-view="analysis"] .analysis-rate-v281 small { margin-left: 4px; font-size: 14px; }
+html .page.menu-active #menuPanel[data-view="analysis"] .analysis-review-v281 { margin-top: 26px; }
+html .page.menu-active #menuPanel[data-view="analysis"] .analysis-review-v281 h3 { margin-bottom: 12px; }
+html .page.menu-active #menuPanel[data-view="analysis"] .drill-actions { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+html .page.menu-active #menuPanel[data-view="analysis"] .drill-action {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-height: 52px;
+  padding: 10px 16px;
+  border: 1px solid var(--book-page-line);
+  border-radius: 8px;
+  background: var(--book-page-surface);
+  box-shadow: none;
+  color: var(--book-page-ink);
+  font: 500 16px/1.5 var(--book-page-serif);
+}
+html .page.menu-active #menuPanel[data-view="analysis"] .drill-action:first-child { border-color: var(--book-page-purple); background: color-mix(in srgb, var(--book-page-purple) 10%, var(--book-page-surface)); }
+html .page.menu-active #menuPanel[data-view="analysis"] .drill-action > span { font-size: 24px; line-height: 1; }
+html .page.menu-active #menuPanel:is([data-view="my"], [data-view="analysis"]) :is(.drill-action, #menuContextTabs > button, .menu-card-icon-action):hover { background: var(--book-page-hover); }
+html .page.menu-active #menuPanel:is([data-view="my"], [data-view="analysis"]) :is(button, summary):focus-visible { outline: 2px solid var(--book-page-teal); outline-offset: 3px; }
+
+@media (max-width: 800px) {
+  html .page.menu-active #menuPanel:is([data-view="my"], [data-view="analysis"]) .menu-heading { padding: 18px 0 14px; }
+  html .page.menu-active #menuPanel[data-view="my"] :is(.menu-list-header, .menu-card) { grid-template-columns: minmax(0, 1fr) 105px 44px; column-gap: 8px; padding-inline: 10px; }
+  html .page.menu-active #menuPanel[data-view="my"] .menu-list-header { font-size: 11px; }
+  html .page.menu-active #menuPanel[data-view="my"] .menu-list-header > :last-child { font-size: 9px; white-space: nowrap; }
+  html .page.menu-active #menuPanel[data-view="my"] .menu-card { min-height: 84px; }
+  html .page.menu-active #menuPanel[data-view="my"] .menu-card-title { font-size: 18px; }
+  html .page.menu-active #menuPanel[data-view="my"] .menu-card-meta { font-size: 11px; }
+  html .page.menu-active #menuPanel[data-view="my"] .menu-card-latest { gap: 1px; }
+  html .page.menu-active #menuPanel[data-view="my"] .menu-card-latest-mark { width: 20px; font-size: 19px; }
+  html .page.menu-active #menuPanel[data-view="my"] .menu-card-heading .question-created-v246 { font-size: 11px; }
+  html .page.menu-active #menuPanel[data-view="analysis"] .analysis-grid { gap: 10px; }
+  html .page.menu-active #menuPanel[data-view="analysis"] .stat-card { padding: 18px; }
+  html .page.menu-active #menuPanel[data-view="analysis"] .stat-label { font-size: 17px; }
+  html .page.menu-active #menuPanel[data-view="analysis"] .analysis-stat-note-v281 { font-size: 12px; }
+  html .page.menu-active #menuPanel[data-view="analysis"] .analysis-breakdowns { padding-inline: 14px; }
+  html .page.menu-active #menuPanel[data-view="analysis"] .analysis-breakdown { grid-template-columns: 100px minmax(0, 1fr) 64px; gap: 12px; }
+  html .page.menu-active #menuPanel[data-view="analysis"] .analysis-breakdown strong { font-size: 16px; }
+  html .page.menu-active #menuPanel[data-view="analysis"] .analysis-rate-v281 { font-size: 28px; }
+  html .page.menu-active #menuPanel[data-view="analysis"] .drill-actions { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  html .page.menu-active #menuPanel[data-view="analysis"] .drill-action:first-child { grid-column: 1 / -1; }
+  html .page.menu-active #menuPanel[data-view="analysis"] .drill-action { padding-inline: 12px; }
+}
+@media (max-width: 380px) {
+  html .page.menu-active #menuPanel[data-view="my"] :is(.menu-list-header, .menu-card) { grid-template-columns: minmax(0, 1fr) 84px 44px; column-gap: 5px; padding-inline: 7px; }
+  html .page.menu-active #menuPanel[data-view="my"] .menu-card-latest-mark { width: 16px; font-size: 17px; }
+  html .page.menu-active #menuPanel[data-view="my"] .menu-card-meta { flex-basis: 100%; }
+  html .page.menu-active #menuPanel[data-view="analysis"] .stat-card { padding: 17px 13px; }
+  html .page.menu-active #menuPanel[data-view="analysis"] .stat-label { font-size: 16px; }
+  html .page.menu-active #menuPanel[data-view="analysis"] .analysis-breakdown { grid-template-columns: 92px minmax(0, 1fr) 61px; gap: 8px; }
+}
+
+/* Shared navigation and readable typography. */
+html:root .page.menu-active #menuPanel {
+  --readable-font: "Yu Mincho", "Hiragino Mincho ProN", "Noto Serif JP", "Times New Roman", serif;
+}
+html:root .page.menu-active #menuPanel .menu-sidebar .menu-nav-button {
+  min-height: 56px;
+  padding: 10px 14px;
+  font-size: 20px;
+  line-height: 1.35;
+  gap: 12px;
+  font-weight: 500;
+}
+html:root .page.menu-active #menuPanel .menu-sidebar .menu-nav-icon .menu-icon-v239 { width: 24px; height: 24px; }
+html:root .page.menu-active #menuPanel .active-collection-title { font-size: 22px; }
+html:root .page.menu-active #menuPanel .active-collection-button :is(small, .active-collection-meta) { font-size: 14px; }
+html:root .page.menu-active #menuPanel .book-context-title-v234 strong { font-size: 22px; }
+html:root .page.menu-active #menuPanel .book-title-actions-v239 > button { font-size: 16px; }
+html:root .page.menu-active #menuPanel .book-tabs-v234 button { font-size: 18px; }
+html:root .page.menu-active #menuPanel #announcementButton .menu-notice-label { font-size: 14px; }
+html:root .page.menu-active #menuPanel .menu-brand-version { font-size: 12px; }
+
+html:root .page.menu-active #menuPanel:is([data-view="my"], [data-view="analysis"]) .menu-heading { padding: 16px 0 12px; }
+html:root .page.menu-active #menuPanel:is([data-view="my"], [data-view="analysis"]) #menuTitle { font-size: 30px; line-height: 1.35; }
+html:root .page.menu-active #menuPanel[data-view="my"] .book-list-count-v281 { font-size: 16px; }
+html:root .page.menu-active #menuPanel[data-view="my"] #menuContextTabs { margin-bottom: 8px; }
+html:root .page.menu-active #menuPanel[data-view="my"] #menuContextTabs > button { font-size: 18px; }
+html:root .page.menu-active #menuPanel[data-view="my"] #menuContextTabs .learning-tab-count { font-size: 18px; }
+html:root .page.menu-active #menuPanel[data-view="my"] .comment-tag-search-v270 { margin-bottom: 12px; }
+html:root .page.menu-active #menuPanel[data-view="my"] .comment-tag-search-v270 > summary { font-size: 17px; }
+html:root .page.menu-active #menuPanel[data-view="my"] :is(.comment-tag-active-v272, .comment-tag-search-v270 p) { font-size: 14px; }
+html:root .page.menu-active #menuPanel[data-view="my"] .comment-tag-v270 { font-size: 16px; }
+html:root .page.menu-active #menuPanel[data-view="my"] :is(.menu-list-header, .menu-card) { grid-template-columns: minmax(0, 1fr) 180px 90px; gap: 12px; }
+html:root .page.menu-active #menuPanel[data-view="my"] .menu-list-header { font-size: 14px; min-height: 26px; padding-bottom: 4px; margin-bottom: 4px; }
+html:root .page.menu-active #menuPanel[data-view="my"] .menu-list-header > :last-child { font-size: 14px; }
+html:root .page.menu-active #menuPanel[data-view="my"] .menu-card { padding-block: 6px; min-height: 78px; }
+html:root .page.menu-active #menuPanel[data-view="my"] .menu-card-title { font-size: 24px; line-height: 1.3; }
+html:root .page.menu-active #menuPanel[data-view="my"] .menu-card-meta { font-size: 16px; }
+html:root .page.menu-active #menuPanel[data-view="my"] .menu-card-heading .question-created-v246 { font-size: 14px; }
+html:root .page.menu-active #menuPanel[data-view="my"] .menu-card-latest.is-empty { font-size: 16px; }
+
+html:root .page.menu-active #menuPanel[data-view="analysis"] .navigation-scope-note-v234 { font-size: 16px; margin: -4px 0 14px; }
+html:root .page.menu-active #menuPanel[data-view="analysis"] .stat-card { padding: 16px 20px; }
+html:root .page.menu-active #menuPanel[data-view="analysis"] .stat-label { font-size: 24px; line-height: 1.35; }
+html:root .page.menu-active #menuPanel[data-view="analysis"] .analysis-number-v281 { margin: 3px 0; }
+html:root .page.menu-active #menuPanel[data-view="analysis"] .stat-value { font-size: 52px; }
+html:root .page.menu-active #menuPanel[data-view="analysis"] .analysis-number-v281 > small { font-size: 18px; }
+html:root .page.menu-active #menuPanel[data-view="analysis"] .analysis-stat-note-v281 { font-size: 16px; line-height: 1.5; }
+html:root .page.menu-active #menuPanel[data-view="analysis"] .analysis-detail-v281 { padding: 12px 4px 18px; font-size: 16px; gap: 8px 24px; }
+html:root .page.menu-active #menuPanel[data-view="analysis"] .analysis-detail-v281 strong { font-size: 24px; }
+html:root .page.menu-active #menuPanel[data-view="analysis"] .analysis-detail-v281 small { font-size: 16px; }
+html:root .page.menu-active #menuPanel[data-view="analysis"] h3 { font-size: 24px; }
+html:root .page.menu-active #menuPanel[data-view="analysis"] .analysis-section-heading-v281 { margin-bottom: 8px; }
+html:root .page.menu-active #menuPanel[data-view="analysis"] .analysis-section-heading-v281 > span { font-size: 16px; }
+html:root .page.menu-active #menuPanel[data-view="analysis"] .analysis-breakdown { padding-block: 12px; }
+html:root .page.menu-active #menuPanel[data-view="analysis"] .analysis-breakdown strong { font-size: 22px; margin-bottom: 2px; }
+html:root .page.menu-active #menuPanel[data-view="analysis"] .analysis-type-v281 > span { font-size: 16px; }
+html:root .page.menu-active #menuPanel[data-view="analysis"] .analysis-rate-v281 { font-size: 32px; }
+html:root .page.menu-active #menuPanel[data-view="analysis"] .analysis-rate-v281 small { font-size: 16px; }
+html:root .page.menu-active #menuPanel[data-view="analysis"] .analysis-review-v281 { margin-top: 18px; }
+html:root .page.menu-active #menuPanel[data-view="analysis"] .analysis-review-v281 h3 { margin-bottom: 8px; }
+html:root .page.menu-active #menuPanel[data-view="analysis"] .drill-action { font-size: 18px; }
+
+@media (max-width: 800px) {
+  html:root .page.menu-active #menuPanel .menu-sidebar .menu-nav-button { font-size: 16px; min-height: 58px; padding: 5px 1px; gap: 3px; }
+  html:root .page.menu-active #menuPanel .menu-sidebar .menu-nav-icon .menu-icon-v239 { width: 22px; height: 22px; }
+  html:root .page.menu-active #menuPanel .book-tabs-v234 button { font-size: 16px; padding-inline: 2px; white-space: normal; line-height: 1.3; }
+  html:root .page.menu-active #menuPanel .book-context-title-v234 strong { font-size: 18px; }
+  html:root .page.menu-active #menuPanel .book-title-actions-v239 > button { font-size: 14px; }
+  html:root .page.menu-active #menuPanel:is([data-view="my"], [data-view="analysis"]) #menuTitle { font-size: 26px; }
+  html:root .page.menu-active #menuPanel[data-view="my"] :is(.menu-list-header, .menu-card) { grid-template-columns: minmax(0, 1fr) 108px 44px; column-gap: 7px; padding-inline: 8px; }
+  html:root .page.menu-active #menuPanel[data-view="my"] .menu-list-header > :last-child { font-size: 14px; overflow-wrap: anywhere; white-space: normal; }
+  html:root .page.menu-active #menuPanel[data-view="my"] .menu-card-title { font-size: 22px; }
+  html:root .page.menu-active #menuPanel[data-view="my"] .menu-card-meta { flex-basis: 100%; font-size: 14px; }
+  html:root .page.menu-active #menuPanel[data-view="analysis"] .stat-card { padding: 14px; }
+  html:root .page.menu-active #menuPanel[data-view="analysis"] .stat-label { font-size: 20px; }
+  html:root .page.menu-active #menuPanel[data-view="analysis"] .stat-value { font-size: 44px; }
+  html:root .page.menu-active #menuPanel[data-view="analysis"] .analysis-stat-note-v281 { font-size: 14px; }
+  html:root .page.menu-active #menuPanel[data-view="analysis"] .analysis-breakdown { grid-template-columns: 112px minmax(0, 1fr) 66px; gap: 10px; }
+  html:root .page.menu-active #menuPanel[data-view="analysis"] .analysis-breakdown strong { font-size: 20px; }
+  html:root .page.menu-active #menuPanel[data-view="analysis"] .analysis-rate-v281 { font-size: 28px; }
+}
+@media (max-width: 360px) {
+  html:root .page.menu-active #menuPanel .menu-sidebar .menu-nav-button { font-size: 14px; }
+  html:root .page.menu-active #menuPanel .book-tabs-v234 button { font-size: 14px; }
+  html:root .page.menu-active #menuPanel[data-view="my"] :is(.menu-list-header, .menu-card) { grid-template-columns: minmax(0, 1fr) 84px 44px; gap: 5px; padding-inline: 6px; }
+  html:root .page.menu-active #menuPanel[data-view="analysis"] .stat-card { padding-inline: 12px; }
+  html:root .page.menu-active #menuPanel[data-view="analysis"] .stat-label { font-size: 18px; }
+  html:root .page.menu-active #menuPanel[data-view="analysis"] .analysis-breakdown { grid-template-columns: 103px minmax(0, 1fr) 64px; gap: 8px; }
+  html:root .page.menu-active #menuPanel[data-view="analysis"] .analysis-breakdown strong { font-size: 18px; }
+}
+
+/* Keep problem titles, dates and three recent results on one line. */
+html:root .page.menu-active #menuPanel[data-view="my"] .menu-card {
+  min-height: 64px;
+  padding-block: 5px;
+}
+html:root .page.menu-active #menuPanel[data-view="my"] .menu-card-open {
+  min-height: 44px;
+}
+html:root .page.menu-active #menuPanel[data-view="my"] .menu-card-heading {
+  display: flex;
+  width: 100%;
+  flex-wrap: nowrap;
+  gap: 12px;
+  align-items: center;
+}
+html:root .page.menu-active #menuPanel[data-view="my"] .menu-card-title {
+  font-size: 28px;
+  white-space: nowrap;
+  flex: 0 0 auto;
+}
+html:root .page.menu-active #menuPanel[data-view="my"] .menu-card-meta { flex: 0 0 auto; }
+html:root .page.menu-active #menuPanel[data-view="my"] .menu-card-notification:empty { display: none; }
+html:root .page.menu-active #menuPanel[data-view="my"] .menu-card-heading .question-created-v246 {
+  display: inline;
+  flex: 0 0 auto;
+  margin: 0 0 0 auto;
+  white-space: nowrap;
+  font-size: 16px;
+}
+html:root .page.menu-active #menuPanel[data-view="my"] .menu-card-latest {
+  display: grid;
+  grid-template-columns: repeat(3, 30px);
+  gap: 5px;
+}
+html:root .page.menu-active #menuPanel[data-view="my"] .book-list-history-slot-v281 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 32px;
+  min-height: 0;
+  border: 1px solid var(--book-page-line);
+  border-radius: 4px;
+  font-size: 23px;
+  line-height: 1;
+}
+html:root .page.menu-active #menuPanel[data-view="my"] .book-list-history-slot-v281.is-latest {
+  border-top: 2px solid var(--book-page-teal);
+  background: color-mix(in srgb, var(--book-page-teal) 8%, transparent);
+}
+html:root .page.menu-active #menuPanel[data-view="my"] .book-list-history-slot-v281.is-pending { opacity: .55; }
+@media (max-width: 800px) {
+  html:root .page.menu-active #menuPanel[data-view="my"] .menu-card {
+    grid-template-columns: minmax(0, 1fr) 78px 44px;
+    grid-template-rows: auto;
+    gap: 6px;
+    padding: 5px 8px;
+    min-height: 64px;
+  }
+  html:root .page.menu-active #menuPanel[data-view="my"] .menu-card-open {
+    grid-column: 1;
+    grid-row: 1;
+    min-height: 44px;
+  }
+  html:root .page.menu-active #menuPanel[data-view="my"] .menu-card-heading { gap: 6px; }
+  html:root .page.menu-active #menuPanel[data-view="my"] .menu-card-title { font-size: 24px; }
+  html:root .page.menu-active #menuPanel[data-view="my"] .menu-card-heading .question-created-v246 { font-size: 14px; font-family: var(--book-page-serif); }
+  html:root .page.menu-active #menuPanel[data-view="my"] .menu-card-meta { display: none; }
+  html:root .page.menu-active #menuPanel[data-view="my"] .menu-card-latest {
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: center;
+    min-height: 24px;
+    grid-template-columns: repeat(3, 24px);
+    gap: 3px;
+  }
+  html:root .page.menu-active #menuPanel[data-view="my"] .book-list-history-slot-v281 { width: 24px; height: 28px; font-size: 20px; }
+  html:root .page.menu-active #menuPanel[data-view="my"] .menu-card-icon-action { grid-column: 3; grid-row: 1; }
+}
+@media (max-width: 360px) {
+  html:root .page.menu-active #menuPanel[data-view="my"] .menu-card { grid-template-columns: minmax(0, 1fr) 66px 44px; gap: 4px; padding-inline: 6px; }
+  html:root .page.menu-active #menuPanel[data-view="my"] .menu-card-heading { gap: 2px; }
+  html:root .page.menu-active #menuPanel[data-view="my"] .menu-card-title { font-size: 22px; }
+  html:root .page.menu-active #menuPanel[data-view="my"] .menu-card-latest { grid-template-columns: repeat(3, 20px); }
+  html:root .page.menu-active #menuPanel[data-view="my"] .book-list-history-slot-v281 { width: 20px; font-size: 18px; }
+}
+
+/* Continuous rows with an independent favorite action. */
+html:root .page.menu-active #menuPanel[data-view="my"] #menuGrid {
+  gap: 0;
+  border-top: 1px solid var(--book-page-line);
+  border-radius: 0;
+}
+html:root .page.menu-active #menuPanel[data-view="my"] .menu-list-header {
+  margin-bottom: 0;
+  padding-bottom: 10px;
+}
+html:root .page.menu-active #menuPanel[data-view="my"] .menu-card {
+  position: relative;
+  min-height: 58px;
+  margin: 0;
+  padding-block: 5px;
+  border: 0;
+  border-bottom: 1px solid var(--book-page-line);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  cursor: pointer;
+}
+html:root .page.menu-active #menuPanel[data-view="my"] .menu-card:nth-child(even) {
+  background: color-mix(in srgb, var(--book-page-ink) 2%, transparent);
+}
+html:root .page.menu-active #menuPanel[data-view="my"] .menu-card:has(.menu-card-open:hover),
+html:root .page.menu-active #menuPanel[data-view="my"] .menu-card:focus-within {
+  background: var(--book-page-hover);
+  border-color: var(--book-page-line);
+}
+html:root .page.menu-active #menuPanel[data-view="my"] .menu-card-open {
+  position: static;
+  background: transparent;
+  cursor: pointer;
+}
+html:root .page.menu-active #menuPanel[data-view="my"] .menu-card-heading { justify-content: flex-start; }
+html:root .page.menu-active #menuPanel[data-view="my"] .menu-card-heading .question-created-v246 { margin: 0; }
+html:root .page.menu-active #menuPanel[data-view="my"] .menu-card-open::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+html:root .page.menu-active #menuPanel[data-view="my"] .menu-card-open:focus-visible::after {
+  outline: 2px solid var(--book-page-teal);
+  outline-offset: -2px;
+}
+html:root .page.menu-active #menuPanel[data-view="my"] .menu-card-icon-action {
+  position: relative;
+  z-index: 2;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+}
+
+/* Full-size controls use the same conditions as the learning home. */
+html:root .page.menu-active #menuPanel[data-view="my"] #bookListFilterGroupsV281 { display: grid; gap: 14px; margin-bottom: 18px; }
+html:root .page.menu-active #menuPanel[data-view="my"] .learning-setting-group { margin: 0; padding: 0; border: 0; min-width: 0; }
+html:root .page.menu-active #menuPanel[data-view="my"] .learning-setting-group legend { margin-bottom: 8px; color: var(--book-page-ink); font: 500 18px/1.4 var(--book-page-serif); }
+html:root .page.menu-active #menuPanel[data-view="my"] .learning-setting-group legend small { color: var(--book-page-muted); font-size: 14px; }
+html:root .page.menu-active #menuPanel[data-view="my"] .learning-check-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+html:root .page.menu-active #menuPanel[data-view="my"] .learning-check { min-height: 44px; padding: 8px 12px; font-size: 16px; color: var(--book-page-ink); border-color: var(--book-page-line); background: var(--book-page-surface); }
+html:root .page.menu-active #menuPanel[data-view="my"] .learning-check:has(input:checked) { border-color: var(--book-page-teal); background: color-mix(in srgb, var(--book-page-teal) 12%, var(--book-page-surface)); }
+html:root .page.menu-active #menuPanel[data-view="my"] .learning-check input { width: 18px; height: 18px; accent-color: var(--book-page-teal); }
+html:root .page.menu-active #menuPanel[data-view="my"] .book-list-tag-heading-v281 { margin: 0 0 8px; font: 500 18px/1.4 var(--book-page-serif); }
+html:root .page.menu-active #menuPanel[data-view="my"] .book-list-reset-v281 { min-height: 44px; padding: 7px 14px; border: 1px solid var(--book-page-line); border-radius: 5px; font-size: 16px; color: var(--book-page-ink); background: var(--book-page-surface); }
+html:root .page.menu-active #menuPanel[data-view="my"] .comment-tag-active-v272 { min-width: 0; overflow-wrap: anywhere; }
+html:root .page.menu-active #menuPanel[data-view="my"] .menu-card-title { min-width: 0; flex: 0 1 auto; overflow: hidden; text-overflow: ellipsis; }
+@media (min-width: 801px) and (max-width: 1100px) {
+  html:root .page.menu-active #menuPanel[data-view="my"] :is(.menu-list-header, .menu-card) { grid-template-columns: minmax(0, 1fr) 108px 60px; gap: 8px; padding-inline: 10px; }
+  html:root .page.menu-active #menuPanel[data-view="my"] .menu-card-meta { display: none; }
+  html:root .page.menu-active #menuPanel[data-view="my"] .menu-card-heading { gap: 8px; }
+  html:root .page.menu-active #menuPanel[data-view="my"] .menu-card-title { font-size: 24px; }
+}

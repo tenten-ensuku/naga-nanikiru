@@ -110,10 +110,13 @@ test('list filters restore search, marks, type, range, favorites, count and orde
   const context = load(['restoreNavigationFiltersV234', 'navigationFiltersV234'], {
     menuSearchV44: '', menuCommentTagV270: '', menuStatusFiltersV92: [], menuTypeV44: 'all', menuRangeV60: 'all',
     window: { MinkiruCommentTagsV270: { normalizeTag: value => String(value || '') } },
+    learningOrderV189: 'sequential', learningGenresV189: new Set(['discard', 'riichi', 'call']),
+    learningHistoryFiltersV189: new Set(['unanswered', '×', '△', '〇', '◎']), learningCommentTagV273: '',
+    LEARNING_GENRE_ORDER_V189: ['discard', 'riichi', 'call'], LEARNING_HISTORY_ORDER_V189: ['unanswered', '×', '△', '〇', '◎'],
     menuFavoritesOnlyV137: false, menuRenderLimitV119: 40, menuOrderV92: 'sequential', MENU_RENDER_BATCH_V119: 40,
     document: { getElementById: () => search, querySelectorAll: () => [] }
   });
-  const filters = { search: '16', commentTag: '押し引き', statuses: ['wrong'], type: 'discard', range: '1-50', favorites: true, limit: 80, order: 'random' };
+  const filters = { search: '16', commentTag: '押し引き', statuses: ['wrong'], type: 'discard', range: '1-50', favorites: true, limit: 80, order: 'random', learning: { order: 'random', genres: ['call', 'riichi'], history: ['×', '△'], tag: '押し引き' } };
   context.restoreNavigationFiltersV234(filters);
   assert.deepEqual(JSON.parse(JSON.stringify(context.navigationFiltersV234())), filters);
   assert.equal(search.value, '16');

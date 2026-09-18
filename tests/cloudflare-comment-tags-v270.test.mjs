@@ -99,5 +99,5 @@ test('inline app parses and tag selection, paging and return-navigation are conn
   assert.match(html,/normalizeTag\(filters\.commentTag\)/);
   assert.match(html,/allowedKeys\.has\(questionKeyV16\(question\)\) && matchesCommentTagV270/);
   assert.match(html,/menuViewV16 === "my" && menuRangeV60 === "all"/);
-  assert.match(html,/commentTagFiltersV270[\s\S]*menuCommentTagV270 = tag;[\s\S]*showMenuV16\("my"/);
+  assert.match(html,/commentTagFiltersV270[\s\S]*menuCommentTagV270 = tag;[\s\S]*refreshBookListConditionsV281\(\)/);
 });

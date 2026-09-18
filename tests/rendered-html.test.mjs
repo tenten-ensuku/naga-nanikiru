@@ -32,7 +32,7 @@ test("wires v65 learning UX, generator, Supabase bridge, metadata, and social im
     readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
     access(new URL("../public/og-v266.png", import.meta.url)),
   ]);
-  assert.match(index, /const APP_VERSION = 280/);
+  assert.match(index, /const APP_VERSION = 281/);
   assert.match(index, /function menuRangeStepV120\(\)[\s\S]*?return MENU_RANGE_STEP_V137/);
   assert.match(index, /id="collectionDirectorySelect"/);
   assert.doesNotMatch(index, /class="collection-directory-item/);
@@ -44,7 +44,7 @@ test("wires v65 learning UX, generator, Supabase bridge, metadata, and social im
   assert.match(index, /topColor: "#06254a", bottomColor: "#02244c"/);
   assert.doesNotMatch(index, /<div class="menu-heading">\s*<p class="eyebrow">NAGA SCREENSHOT-BASED DRILL<\/p>/);
   assert.match(index, /function menuQuestionSortKeyV99\(question\)[\s\S]*?const entries = menuFilteredQuestionsV80\(\)\.map\(question => \(\{ question, index:/);
-  assert.match(index, /\.sort\(\(left, right\) => menuQuestionSortKeyV99\(left\.question\) - menuQuestionSortKeyV99\(right\.question\)/);
+  assert.match(index, /return filtered\.sort\(\(a, b\) => menuQuestionSortKeyV99\(a\) - menuQuestionSortKeyV99\(b\)\)/);
   assert.match(index, /<h1 id="questionPageTitle"[\s\S]*?id="questionSelect"[\s\S]*?id="questionTitleTypeV250">何切る？<\/span><\/h1>/);
   assert.doesNotMatch(index, /<p class="header-note">NAGAの局面を解き、復習し、弱点を育て直す実戦問題集<\/p>/);
   assert.match(index, /id="menuButton"[^>]*aria-label="問題一覧へ戻る"[^>]*><svg[\s\S]*?<span class="question-toolbar-label-full sr-only">問題一覧へ戻る<\/span><span class="question-toolbar-label-short" aria-hidden="true">戻る<\/span><\/button>/);
