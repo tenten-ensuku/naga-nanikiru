@@ -200,6 +200,25 @@ function context(userId, collections, current = null) {
   return { userId, collections, current, currentMetrics: null, loading: false, error: "" };
 }
 
+test('shelf management opens only the selected manageable book without entering study', async () => {
+  const api = await libraryApi();
+  const picked = { ...volume('picked', 1), can_manage: true };
+  const viewerBook = volume('viewer', 2);
+  const managed = [], opened = [];
+  const controller = api.create({ canManage: row => row.can_manage, onManage: slug => managed.push(slug), onOpen: slug => opened.push(slug) });
+  assert.match(controller.render(context('u', [picked, viewerBook], picked)), /data-library-manage="picked"/);
+  const { root } = mountedRoot();
+  const button = new FakeNode({ dataset: { libraryManage: 'picked' } });
+  root.append(button); controller.mount(root);
+  root.dispatch('click', { target: button });
+  assert.deepEqual(managed, ['picked']); assert.deepEqual(opened, []);
+  assert.doesNotMatch(controller.render(context('u', [viewerBook], viewerBook)), /data-library-manage/);
+  button.dataset.libraryManage = 'viewer';
+  root.dispatch('click', { target: button });
+  assert.deepEqual(managed, ['picked']);
+  controller.unmount();
+});
+
 async function loadAdapterOptions() {
   const source = await readFile(INDEX_PATH, "utf8");
   const start = source.indexOf("      function getCollectionLibraryV214() {");
@@ -412,7 +431,7 @@ test("switching users invalidates old in-flight/cache data", async () => {
 
 test("adapter keeps legacy fallback, controller mount/unmount hooks, and navigation reset contract", async () => {
   const [index, library] = await Promise.all([readFile(INDEX_PATH, "utf8"), readFile(LIBRARY_PATH, "utf8")]);
-  assert.match(index, /library-v214\.js\?v=287/);
+  assert.match(index, /library-v214\.js\?v=288/);
   const renderStart = index.indexOf("function renderCollectionChooserV165");
   const renderEnd = index.indexOf("function renderCollectionSpacePanelV100", renderStart);
   const renderer = index.slice(renderStart, renderEnd);

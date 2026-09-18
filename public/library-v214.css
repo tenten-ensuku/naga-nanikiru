@@ -425,6 +425,7 @@
 .library-order-status { min-height: 18px; margin: 8px 0 0; color: #c5b493; font-size: 11px; line-height: 1.6; }
 
 .library-detail {
+  position: relative;
   display: grid;
   grid-template-columns: minmax(180px, 1.35fr) minmax(260px, 1fr) auto;
   align-items: center;
@@ -436,6 +437,32 @@
   background: rgba(28, 26, 21, .92);
   box-shadow: inset 0 1px 0 rgba(245,216,159,.07), 0 12px 22px rgba(0,0,0,.12);
 }
+
+.library-detail:has(.library-manage-v288) { padding-top: 48px; }
+.library-v214 .library-manage-v288 {
+  position: absolute; top: 6px; right: 8px; width: 44px; min-height: 38px;
+  padding: 0; border: 1px solid #85683d; border-radius: 6px;
+  background: #302819; color: #f7eacb; font: 26px/1 Georgia, serif; cursor: pointer;
+}
+.library-manage-v288:hover { background: #493a25; }
+.library-manage-v288:focus-visible { outline: 2px solid #f2cf8e; outline-offset: 2px; }
+.shelf-management-v288 {
+  box-sizing: border-box; width: min(640px, calc(100% - 24px)); max-height: calc(100dvh - 32px);
+  padding: 20px; overflow-y: auto; color: var(--ink); background: #091f2c;
+  border: 1px solid #947548; border-radius: 12px; font: inherit;
+}
+.shelf-management-v288::backdrop { background: rgb(0 0 0 / .65); }
+.shelf-management-heading-v288 { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
+.shelf-management-heading-v288 h2 { margin: 0; font-size: 24px; }
+.shelf-management-heading-v288 button { min-height: 44px; padding: 8px 12px; color: inherit; background: transparent; border: 1px solid #947548; border-radius: 6px; font: inherit; cursor: pointer; }
+.shelf-management-v288 .book-tone-editor-v235 { margin-top: 24px; }
+.shelf-management-v288 .collection-management { margin-top: 0; padding-top: 0; }
+.shelf-management-v288 .book-tone-editor-v235 button { padding: 10px 16px; color: #fff; background: #176b68; border: 1px solid #438a86; border-radius: 7px; font: inherit; font-size: 16px; cursor: pointer; }
+.shelf-management-v288 .book-colors-v235 label { font-size: 14px !important; }
+html[data-theme="light"] .shelf-management-v288 { background: #fffdf8; }
+html[data-theme="light"] .shelf-management-v288 #collectionDetailsFormV287 :is(input, textarea) { color: var(--ink); background: #fff; border-color: #a9bfc2; }
+html[data-theme="light"] .shelf-management-v288 :is(h3, h4, legend) { color: var(--ink); }
+html[data-theme="light"] .shelf-management-v288 .book-colors-v235 label:has(:checked) { background: #e1f1e9; }
 
 .library-detail-copy { min-width: 0; }
 .library-detail-eyebrow { color: #c3a777; font-size: 10px; letter-spacing: .06em; }

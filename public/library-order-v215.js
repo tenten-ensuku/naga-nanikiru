@@ -274,6 +274,9 @@
     var visible = new Set(defaults);
     var used = new Set();
     var result = [];
+    var records = collectEntries(defaultEntries);
+    var parents = new Set(records.map(function (record) { return keyOf(read(record.entry, 'seriesParentSlug')); }).filter(Boolean));
+    var groups = new Map(records.map(function (record) { return [record.slug, seriesKey(record, parents)]; }));
 
     for (var index = 0; index < saved.length; index += 1) {
       if (visible.has(saved[index]) && !used.has(saved[index])) {
@@ -283,8 +286,15 @@
     }
     for (var defaultIndex = 0; defaultIndex < defaults.length; defaultIndex += 1) {
       if (!used.has(defaults[defaultIndex])) {
-        used.add(defaults[defaultIndex]);
-        result.push(defaults[defaultIndex]);
+        var slug = defaults[defaultIndex];
+        var group = groups.get(slug);
+        // A newly added volume belongs beside its siblings, even with a saved
+        // shelf order. Existing manually arranged books keep their order.
+        var previous = defaults.slice(0, defaultIndex).reverse().find(function (id) { return used.has(id) && groups.get(id) === group; });
+        var next = defaults.slice(defaultIndex + 1).find(function (id) { return used.has(id) && groups.get(id) === group; });
+        var position = previous ? result.indexOf(previous) + 1 : next ? result.indexOf(next) : result.length;
+        result.splice(position, 0, slug);
+        used.add(slug);
       }
     }
     return result;

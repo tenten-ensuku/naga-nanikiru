@@ -10,7 +10,7 @@ function source(name) {
   return match[0];
 }
 function load(names, globals = {}) {
-  const context = vm.createContext({ console, Date, ...globals });
+  const context = vm.createContext({ console, Date, shelfManagementV288: null, ...globals });
   vm.runInContext(names.map(source).join('\n'), context);
   return context;
 }
@@ -81,6 +81,95 @@ test('book management never falls back to another owned book', () => {
   assert.equal(context.collectionManagementTargetV197(), null);
   context.collectionManagementCanManageV197 = () => true;
   assert.equal(context.collectionManagementTargetV197(), current);
+});
+
+test('shelf management targets the selected book and never falls back after access changes', () => {
+  const row = { share_slug: 'picked-book', can_manage: true };
+  const context = load(['collectionManagementTargetV197'], {
+    shelfManagementV288: { slug: 'picked-book', userId: 'u' }, supabaseSessionV46: { user: { id: 'u' } },
+    collectionCatalogOptionsV100: () => [row], collectionManagementCanManageV197: book => book.can_manage,
+    sharedCollectionV46: { share_slug: 'different-current-book' }
+  });
+  assert.equal(context.collectionManagementTargetV197(), row);
+  row.can_manage = false;
+  assert.equal(context.collectionManagementTargetV197(), null);
+  row.can_manage = true; context.supabaseSessionV46 = { user: { id: 'other' } };
+  assert.equal(context.collectionManagementTargetV197(), null);
+});
+
+function importContext(storage = new Map(), api = {}) {
+  const nodes = Object.fromEntries(['importQuestionDialog', 'importTargetCollectionSelect', 'importQuestionDialogStatus', 'importQuestionConfirmButton', 'importQuestionButton', 'importQuestionDialogCancel', 'importQuestionCreateButton'].map(id => [id, {
+    listeners: {}, classList: { remove() {}, add() {} }, value: '', showModal() {}, close() {},
+    addEventListener(name, handler) { this.listeners[name] = handler; }
+  }]));
+  Object.defineProperty(nodes.importTargetCollectionSelect, 'innerHTML', { set(markup) { this.value = markup.match(/value="([^"]+)"/)?.[1] || ''; } });
+  const context = load(['importDestinationPreferenceV288', 'openImportQuestionDialogV115', 'bindImportQuestionDialogV115'], {
+    document: { getElementById: id => nodes[id] }, storageKey: key => 'app:' + key,
+    window: { localStorage: { getItem: key => storage.get(key), setItem: (key, value) => storage.set(key, value) },
+      setTimeout() {}, confirm: () => true, NagaSupabase: { importSharedQuestion: async () => ({ share_slug: 'last' }), ...api } },
+    supabaseSessionV46: { user: { id: 'u' } }, escapeHtml: String, collectionDisplayNameV101: row => row.title,
+    ownedCollectionOptionsV115: () => [{ share_slug: 'first', title: '最初' }, { share_slug: 'last', title: '最後' }],
+    openCollectionCreateFromImportV115() {}, refreshCollectionAccessStateV100: async () => {},
+    questionsV16: [{ serverQuestionId: 'q' }], currentQuestionIndexV16: 0
+  });
+  context.bindImportQuestionDialogV115();
+  return { context, nodes, storage, confirm: () => nodes.importQuestionConfirmButton.listeners.click({ currentTarget: nodes.importQuestionConfirmButton }) };
+}
+
+test('imports remember the last successful destination across reloads and isolate accounts', async () => {
+  const fixture = importContext();
+  fixture.context.openImportQuestionDialogV115();
+  assert.equal(fixture.nodes.importTargetCollectionSelect.value, 'first');
+  fixture.nodes.importTargetCollectionSelect.value = 'last';
+  await fixture.confirm();
+  const reloaded = importContext(fixture.storage);
+  reloaded.context.openImportQuestionDialogV115();
+  assert.equal(reloaded.nodes.importTargetCollectionSelect.value, 'last');
+  reloaded.context.supabaseSessionV46.user.id = 'other';
+  reloaded.context.openImportQuestionDialogV115();
+  assert.equal(reloaded.nodes.importTargetCollectionSelect.value, 'first');
+  reloaded.context.supabaseSessionV46.user.id = 'u';
+  reloaded.context.ownedCollectionOptionsV115 = () => [{ share_slug: 'first' }];
+  reloaded.context.openImportQuestionDialogV115();
+  assert.equal(reloaded.nodes.importTargetCollectionSelect.value, 'first');
+});
+
+test('failed and cancelled imports preserve the last successful destination', async () => {
+  const fixture = importContext(new Map(), { importSharedQuestion: async () => { throw new Error('failed'); } });
+  fixture.context.importDestinationPreferenceV288('first');
+  fixture.context.openImportQuestionDialogV115();
+  fixture.nodes.importTargetCollectionSelect.value = 'last';
+  fixture.nodes.importQuestionDialogCancel.listeners.click();
+  assert.equal(fixture.context.importDestinationPreferenceV288(), 'first');
+  await fixture.confirm();
+  assert.equal(fixture.context.importDestinationPreferenceV288(), 'first');
+  fixture.context.window.NagaSupabase.importSharedQuestion = async () => ({ capacity_reached: true, can_create_volume: true });
+  fixture.context.window.confirm = () => false;
+  await fixture.confirm();
+  assert.equal(fixture.context.importDestinationPreferenceV288(), 'first');
+});
+
+test('imports remember the actual next volume and tolerate unavailable browser storage', async () => {
+  let calls = 0;
+  const fixture = importContext(new Map(), {
+    importSharedQuestion: async () => ++calls === 1 ? { capacity_reached: true, can_create_volume: true } : { share_slug: 'next-volume' },
+    createCollectionVolume: async () => ({ share_slug: 'next-volume' })
+  });
+  fixture.nodes.importTargetCollectionSelect.value = 'last';
+  await fixture.confirm();
+  assert.equal(fixture.context.importDestinationPreferenceV288(), 'next-volume');
+  fixture.context.window.localStorage.setItem = () => { throw new Error('Storage disabled'); };
+  fixture.context.window.localStorage.getItem = () => { throw new Error('Storage disabled'); };
+  await fixture.confirm();
+  assert.match(fixture.nodes.importQuestionDialogStatus.textContent, /インポートしました/);
+});
+
+test('editable import destinations sort volumes numerically and exclude inaccessible books', () => {
+  const context = load(['editableCollectionOptionsV130'], {
+    supabaseSessionV46: { user: { id: 'u' } }, sharedCollectionV46: { share_slug: 'current' },
+    collectionCatalogOptionsV100: () => [10, 2, 1, 9].map(n => ({ share_slug: String(n), display_title: `ピエール問題集 第${n}巻`, can_edit: true })).concat([{ share_slug: 'hidden', display_title: '秘密' }])
+  });
+  assert.deepEqual(Array.from(context.editableCollectionOptionsV130(), row => row.share_slug), ['1', '2', '9', '10']);
 });
 test('personal settings do not render book permission or membership forms', () => {
   const context = load(['renderSettingsViewV67'], {

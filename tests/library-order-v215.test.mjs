@@ -30,6 +30,15 @@ test('exports the frozen V215 API', () => {
   assert.equal(Object.isFrozen(order), true);
 });
 
+test('new volumes join their series instead of appearing at the shelf end', () => {
+  const entries = [10, 2, 1, 9].map(n => book('p' + n, 'ピエール問題集', n, { seriesParentSlug: 'pierre' }));
+  entries.push(book('other', '別の問題集', null));
+  const saved = ['p1', 'p2', 'p9', 'other'];
+  assert.deepEqual(Array.from(order.applySavedOrder(entries, saved)), ['p1', 'p2', 'p9', 'p10', 'other']);
+  assert.deepEqual(Array.from(order.applySavedOrder(entries, ['other', 'p10'])), ['other', 'p1', 'p2', 'p9', 'p10']);
+  assert.deepEqual(saved, ['p1', 'p2', 'p9', 'other']);
+});
+
 test('defaultOrder prioritises named groups and sorts child volumes numerically', () => {
   const entries = [
     book('other-1', 'その他', 1, {questionCount: 99, series_key: 'other'}),
