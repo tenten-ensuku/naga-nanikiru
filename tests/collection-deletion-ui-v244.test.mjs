@@ -50,10 +50,10 @@ test('confirmation distinguishes one volume from a complete series',async()=>{
   const f=fixture();f.preview.is_volume=true;await f.api.open(f.options);assert.match(f.node('#bookDeleteDescriptionV244').textContent,/他の巻は削除しません/);
   const g=fixture();g.preview.child_count=2;g.preview.collection_count=3;await g.api.open(g.options);assert.match(g.node('#bookDeleteDescriptionV244').textContent,/シリーズと含まれる2冊/);
 });
-test('management exposes plain deletion only to managers, and returns to a fresh shelf on success',()=>{
+test('management exposes deletion only to owners/admins, and returns to a fresh shelf on success',()=>{
   assert.match(source,/>削除<\/button>/);assert.doesNotMatch(source,/ゴミ箱|fetch\(|setInterval/);
-  assert.match(html,/const deletion = canManage && collection \? window\.MinkiruCollectionDeletionV244\.markup\(\) : ""/);
-  assert.match(html,/if \(deletionTarget && collectionManagementCanManageV197\(deletionTarget\)\)/);
+  assert.match(html,/const deletion = canAdminister && collection \? window\.MinkiruCollectionDeletionV244\.markup\(\) : ""/);
+  assert.match(html,/if \(deletionTarget && collectionManagementCanAdministerV290\(deletionTarget\)\)/);
   assert.match(html,/rememberCollectionSlugV165\(""\);[\s\S]*url.searchParams.set\("view", "collections"\)/);
   assert.match(css,/min-height:44px/);assert.match(css,/max-height:calc\(100dvh - 32px\)/);assert.match(css,/overflow-wrap:anywhere/);assert.match(css,/:focus-visible/);
 });
