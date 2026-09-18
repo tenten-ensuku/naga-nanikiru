@@ -138,6 +138,9 @@ test('V254 annotates only the previous card without adding a resume control',()=
   assert.match(cards[1],/前回の続き・12問目から/);
   assert.match(cards[1],/aria-label="weak 前回の続き・12問目から"/);
   assert.doesNotMatch(cards[0]+cards[2],/前回の続き/);
+  assert.match(cards[0],/title="説明"/);
+  assert.match(cards[1],/title="前回の続き・12問目から。/);
+  assert.doesNotMatch(cards.join(""),/class="learning-action-description"/);
   assert.doesNotMatch(source('renderRecentHistoryViewV180'),/learning-resume|data-today-session="resume"|resumeMarkup/);
 });
 

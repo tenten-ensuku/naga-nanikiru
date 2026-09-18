@@ -262,3 +262,31 @@ html[data-theme="light"] .page.menu-active #menuPanel[data-view="today"] .learni
 .generator-comment-v273 textarea:focus-visible { outline: 2px solid #50bab0; outline-offset: 2px; }
 .page.menu-active #menuPanel[data-view="generator"] .candidate-analysis-column { align-content: start; }
 .page.menu-active #menuPanel[data-view="generator"] .candidate-choice-row { align-self: start; }
+
+/* V282: titles stand alone; supporting text is available in the button tooltip. */
+.page.menu-active #menuPanel[data-view="today"] .learning-action-main {
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0;
+}
+.page.menu-active #menuPanel[data-view="today"] .learning-action-card .learning-action-title { font-size: 20px; }
+@container (max-width: 330px) {
+  .page.menu-active #menuPanel[data-view="today"] :is(.learning-action-card, .learning-all-action > .learning-action-card) {
+    grid-template-columns: 28px minmax(80px, 1fr) 64px 62px 24px;
+    column-gap: 2px;
+    padding-inline: 6px;
+  }
+  .page.menu-active #menuPanel[data-view="today"] .learning-action-main { padding-right: 0; border-right: 0; }
+  .page.menu-active #menuPanel[data-view="today"] .learning-action-card .learning-action-title { letter-spacing: 0; }
+  .page.menu-active #menuPanel[data-view="today"] .learning-category-icon-v239 { width: 28px; }
+  .page.menu-active #menuPanel[data-view="today"] .learning-category-icon-v239 .menu-icon-v239 { width: 26px; height: 26px; }
+  .page.menu-active #menuPanel[data-view="today"] .learning-action-card .learning-action-link { width: 24px; min-width: 24px; }
+  .page.menu-active #menuPanel[data-view="today"] .learning-all-action > .learning-custom-settings > summary { right: 35px; }
+}
+@container (min-width: 480px) {
+  .page.menu-active #menuPanel[data-view="today"] .learning-action-card .learning-action-title { font-size: 26px; }
+}
+@container (min-width: 700px) {
+  .page.menu-active #menuPanel[data-view="today"] .learning-action-card .learning-action-title { font-size: 28px; }
+}

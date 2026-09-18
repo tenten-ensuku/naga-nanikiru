@@ -24,9 +24,9 @@ function fixture() {
   return {api: context.window.MinkiruMenuV239, context, events, replacements, menu, summary, buttons};
 }
 test('V239 is an additive menu-only layer, with no external font or backend work', () => {
-  assert.match(html, /const APP_VERSION = 281;/);
-  assert.match(html, /menu-polish-v238\.css\?v=281[\s\S]*menu-sections-v239\.css\?v=281/);
-  assert.match(html, /menu-sections-v239\.js\?v=281/);
+  assert.match(html, /const APP_VERSION = 282;/);
+  assert.match(html, /menu-polish-v238\.css\?v=282[\s\S]*menu-sections-v239\.css\?v=282/);
+  assert.match(html, /menu-sections-v239\.js\?v=282/);
   assert.doesNotMatch(css, /@import|@font-face|https?:|\.scene-frame|\.hand-mask|\.riichi|learning-header-progress-track/);
   assert.doesNotMatch(js, /fetch\(|localStorage|sessionStorage|NagaSupabase|XMLHttpRequest/);
 });
@@ -61,7 +61,8 @@ test('each category is one native button with its original action, number and di
     const row = context.renderLearningActionButtonV194({mode,tone,title,count:0,description:'条件の説明',disabled:' disabled'});
     assert.equal((row.match(/<button/g)||[]).length,1);
     assert.match(row, new RegExp(`data-learning-action="${mode}"`));
-    assert.match(row, /0問の学習を開始" disabled>/);
+    assert.match(row, /0問の学習を開始"/);
+    assert.match(row, /title="条件の説明" disabled>/);
     assert.match(row, /learning-category-icon-v239/);
     assert.match(row, /learning-action-link" aria-hidden="true"><svg/);
     assert.doesNotMatch(row, /プレイ|>解く<|>復習</);
