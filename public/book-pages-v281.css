@@ -285,25 +285,6 @@ html .page.menu-active #menuPanel[data-view="analysis"] .analysis-rate-track-v28
 html .page.menu-active #menuPanel[data-view="analysis"] .analysis-rate-track-v281 > span { display: block; height: 100%; background: var(--rate-accent); border-radius: inherit; }
 html .page.menu-active #menuPanel[data-view="analysis"] .analysis-rate-v281 { color: var(--book-page-ink); font: 500 30px/1.2 var(--book-page-serif); text-align: right; font-variant-numeric: lining-nums tabular-nums; }
 html .page.menu-active #menuPanel[data-view="analysis"] .analysis-rate-v281 small { margin-left: 4px; font-size: 14px; }
-html .page.menu-active #menuPanel[data-view="analysis"] .analysis-review-v281 { margin-top: 26px; }
-html .page.menu-active #menuPanel[data-view="analysis"] .analysis-review-v281 h3 { margin-bottom: 12px; }
-html .page.menu-active #menuPanel[data-view="analysis"] .drill-actions { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
-html .page.menu-active #menuPanel[data-view="analysis"] .drill-action {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  min-height: 52px;
-  padding: 10px 16px;
-  border: 1px solid var(--book-page-line);
-  border-radius: 8px;
-  background: var(--book-page-surface);
-  box-shadow: none;
-  color: var(--book-page-ink);
-  font: 500 16px/1.5 var(--book-page-serif);
-}
-html .page.menu-active #menuPanel[data-view="analysis"] .drill-action:first-child { border-color: var(--book-page-purple); background: color-mix(in srgb, var(--book-page-purple) 10%, var(--book-page-surface)); }
-html .page.menu-active #menuPanel[data-view="analysis"] .drill-action > span { font-size: 24px; line-height: 1; }
 html .page.menu-active #menuPanel:is([data-view="my"], [data-view="analysis"]) :is(.drill-action, #menuContextTabs > button, .menu-card-icon-action):hover { background: var(--book-page-hover); }
 html .page.menu-active #menuPanel:is([data-view="my"], [data-view="analysis"]) :is(button, summary):focus-visible { outline: 2px solid var(--book-page-teal); outline-offset: 3px; }
 
@@ -326,9 +307,6 @@ html .page.menu-active #menuPanel:is([data-view="my"], [data-view="analysis"]) :
   html .page.menu-active #menuPanel[data-view="analysis"] .analysis-breakdown { grid-template-columns: 100px minmax(0, 1fr) 64px; gap: 12px; }
   html .page.menu-active #menuPanel[data-view="analysis"] .analysis-breakdown strong { font-size: 16px; }
   html .page.menu-active #menuPanel[data-view="analysis"] .analysis-rate-v281 { font-size: 28px; }
-  html .page.menu-active #menuPanel[data-view="analysis"] .drill-actions { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  html .page.menu-active #menuPanel[data-view="analysis"] .drill-action:first-child { grid-column: 1 / -1; }
-  html .page.menu-active #menuPanel[data-view="analysis"] .drill-action { padding-inline: 12px; }
 }
 @media (max-width: 380px) {
   html .page.menu-active #menuPanel[data-view="my"] :is(.menu-list-header, .menu-card) { grid-template-columns: minmax(0, 1fr) 84px 44px; column-gap: 5px; padding-inline: 7px; }
@@ -397,9 +375,6 @@ html:root .page.menu-active #menuPanel[data-view="analysis"] .analysis-breakdown
 html:root .page.menu-active #menuPanel[data-view="analysis"] .analysis-type-v281 > span { font-size: 16px; }
 html:root .page.menu-active #menuPanel[data-view="analysis"] .analysis-rate-v281 { font-size: 32px; }
 html:root .page.menu-active #menuPanel[data-view="analysis"] .analysis-rate-v281 small { font-size: 16px; }
-html:root .page.menu-active #menuPanel[data-view="analysis"] .analysis-review-v281 { margin-top: 18px; }
-html:root .page.menu-active #menuPanel[data-view="analysis"] .analysis-review-v281 h3 { margin-bottom: 8px; }
-html:root .page.menu-active #menuPanel[data-view="analysis"] .drill-action { font-size: 18px; }
 
 @media (max-width: 800px) {
   html:root .page.menu-active #menuPanel .menu-sidebar .menu-nav-button { font-size: 16px; min-height: 58px; padding: 5px 1px; gap: 3px; }
