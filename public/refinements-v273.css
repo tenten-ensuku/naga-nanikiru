@@ -21,6 +21,9 @@
 /* Three equal rows, using the supplied reference's icon / label / count /
    settings / arrow arrangement. Settings stay separate from the start button. */
 .page.menu-active #menuPanel[data-view="today"] .learning-action-grid {
+  --learning-card-font-v280: "Yu Mincho", "Hiragino Mincho ProN", "Noto Serif JP", "Times New Roman", serif;
+  --learning-card-weight-v280: 500;
+  --learning-card-ink-v280: #ffffff;
   container-type: inline-size;
   grid-template-columns: minmax(0, 1fr);
   gap: 10px;
@@ -54,19 +57,19 @@
   border-right: 1px solid color-mix(in srgb, var(--row-accent-v239) 25%, transparent);
 }
 .page.menu-active #menuPanel[data-view="today"] .learning-action-card .learning-action-title {
-  font-family: "Noto Sans JP", "Yu Gothic", Meiryo, sans-serif;
+  font-family: var(--learning-card-font-v280);
   font-size: 16px;
   line-height: 1.25;
-  font-weight: 800;
-  color: var(--row-accent-v239);
+  font-weight: var(--learning-card-weight-v280);
+  color: var(--learning-card-ink-v280);
   white-space: nowrap;
 }
 .page.menu-active #menuPanel[data-view="today"] .learning-action-card .learning-action-description {
-  font-family: "Noto Sans JP", "Yu Gothic", Meiryo, sans-serif;
+  font-family: var(--learning-card-font-v280);
   font-size: 10px;
   line-height: 1.45;
   font-weight: 500;
-  color: var(--muted);
+  color: var(--learning-card-ink-v280);
 }
 .page.menu-active #menuPanel[data-view="today"] .learning-action-card .learning-action-count {
   grid-area: count;
@@ -74,12 +77,12 @@
   justify-content: flex-end;
   align-items: baseline;
   gap: 3px;
-  color: var(--row-accent-v239);
-  font: 850 32px/1.1 Inter, "Arial", sans-serif;
-  font-variant-numeric: tabular-nums;
+  color: var(--learning-card-ink-v280);
+  font: var(--learning-card-weight-v280) 30px/1.1 var(--learning-card-font-v280);
+  font-variant-numeric: lining-nums tabular-nums;
   white-space: nowrap;
 }
-.page.menu-active #menuPanel[data-view="today"] .learning-action-count small { font-size: 10px; color: var(--muted); }
+.page.menu-active #menuPanel[data-view="today"] .learning-action-count small { font-size: 10px; font-weight: var(--learning-card-weight-v280); color: var(--learning-card-ink-v280); }
 .page.menu-active #menuPanel[data-view="today"] .learning-category-icon-v239 {
   display: grid;
   place-items: center;
@@ -114,13 +117,27 @@
   gap: 2px;
   justify-content: space-between;
   font-size: 10px;
-  font-family: "Noto Sans JP", "Yu Gothic", Meiryo, sans-serif;
-  color: var(--row-accent-v239);
+  font-family: var(--learning-card-font-v280);
+  font-weight: var(--learning-card-weight-v280);
+  color: var(--learning-card-ink-v280);
 }
 .page.menu-active #menuPanel[data-view="today"] .learning-all-action > .learning-custom-settings > summary::after { font-size: 14px; }
 .page.menu-active #menuPanel[data-view="today"] .learning-all-action .learning-settings-icon { display: none; }
 .page.menu-active #menuPanel[data-view="today"] .learning-custom-settings-body .comment-tags-v270 { max-height: 200px; overflow: auto; padding: 3px; }
 .page.menu-active #menuPanel[data-view="today"] .learning-custom-settings-body [data-learning-tag-result-v273] { margin: 8px 0 0; font-size: 12px; overflow-wrap: anywhere; }
+/* V280: one readable text color, including resumed and disabled cards. Keep
+   the existing frame, surface, icon and arrow colors independent of the text. */
+.page.menu-active #menuPanel[data-view="today"] .learning-action-grid .learning-action-card :is(.learning-action-title, .learning-action-description, .learning-action-count) {
+  color: var(--learning-card-ink-v280);
+  font-weight: var(--learning-card-weight-v280);
+}
+html[data-theme="light"] .page.menu-active #menuPanel[data-view="today"] .learning-action-grid {
+  --learning-card-ink-v280: var(--theme-ink-v259, #183044);
+}
+html[data-theme="light"] .page.menu-active #menuPanel[data-view="today"] .learning-action-grid .learning-action-card :is(.learning-action-title, .learning-action-description, .learning-action-count, .learning-action-count small),
+html[data-theme="light"] .page.menu-active #menuPanel[data-view="today"] .learning-action-grid .learning-custom-settings > summary {
+  color: var(--learning-card-ink-v280);
+}
 html[data-theme="light"] .page.menu-active #menuPanel[data-view="today"] :is(.learning-action-card, .learning-all-action) {
   --row-accent-v239: #996014;
   --row-surface-v239: #fffaf3;
@@ -206,7 +223,7 @@ html[data-theme="light"] .page.menu-active #menuPanel[data-view="today"] .learni
   .page.menu-active #menuPanel[data-view="today"] :is(.learning-action-card, .learning-all-action > .learning-action-card) { grid-template-columns: 54px minmax(120px, 1.2fr) minmax(90px, 1fr) 112px 38px; gap: 10px; padding-inline: 16px; }
   .page.menu-active #menuPanel[data-view="today"] .learning-action-card .learning-action-title { font-size: 22px; }
   .page.menu-active #menuPanel[data-view="today"] .learning-action-card .learning-action-description { font-size: 12px; }
-  .page.menu-active #menuPanel[data-view="today"] .learning-action-card .learning-action-count { font-size: 48px; }
+  .page.menu-active #menuPanel[data-view="today"] .learning-action-card .learning-action-count { font-size: 42px; }
   .page.menu-active #menuPanel[data-view="today"] .learning-action-count small { font-size: 16px; }
   .page.menu-active #menuPanel[data-view="today"] .learning-category-icon-v239 { width: 54px; height: 60px; }
   .page.menu-active #menuPanel[data-view="today"] .learning-category-icon-v239 .menu-icon-v239 { width: 40px; height: 40px; }
@@ -218,7 +235,7 @@ html[data-theme="light"] .page.menu-active #menuPanel[data-view="today"] .learni
   .page.menu-active #menuPanel[data-view="today"] :is(.learning-action-card, .learning-all-action > .learning-action-card) { grid-template-columns: 66px minmax(180px, 1.2fr) minmax(130px, 1fr) 150px 44px; gap: 16px; padding-inline: 22px; }
   .page.menu-active #menuPanel[data-view="today"] .learning-action-card .learning-action-title { font-size: 24px; }
   .page.menu-active #menuPanel[data-view="today"] .learning-action-card .learning-action-description { font-size: 14px; }
-  .page.menu-active #menuPanel[data-view="today"] .learning-action-card .learning-action-count { font-size: 56px; }
+  .page.menu-active #menuPanel[data-view="today"] .learning-action-card .learning-action-count { font-size: 48px; }
   .page.menu-active #menuPanel[data-view="today"] .learning-category-icon-v239 { width: 66px; height: 66px; }
   .page.menu-active #menuPanel[data-view="today"] .learning-action-card .learning-action-link { width: 44px; height: 46px; }
   .page.menu-active #menuPanel[data-view="today"] .learning-all-action > .learning-custom-settings > summary { right: 82px; width: 150px; font-size: 14px; }
