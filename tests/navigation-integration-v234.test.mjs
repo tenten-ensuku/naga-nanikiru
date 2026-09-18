@@ -103,11 +103,12 @@ function importContext(storage = new Map(), api = {}) {
     addEventListener(name, handler) { this.listeners[name] = handler; }
   }]));
   Object.defineProperty(nodes.importTargetCollectionSelect, 'innerHTML', { set(markup) { this.value = markup.match(/value="([^"]+)"/)?.[1] || ''; } });
-  const context = load(['importDestinationPreferenceV288', 'openImportQuestionDialogV115', 'bindImportQuestionDialogV115'], {
+  const context = load(['collectionRoleLabelV130', 'importDestinationPreferenceV288', 'openImportQuestionDialogV115', 'bindImportQuestionDialogV115'], {
     document: { getElementById: id => nodes[id] }, storageKey: key => 'app:' + key,
     window: { localStorage: { getItem: key => storage.get(key), setItem: (key, value) => storage.set(key, value) },
       setTimeout() {}, confirm: () => true, NagaSupabase: { importSharedQuestion: async () => ({ share_slug: 'last' }), ...api } },
     supabaseSessionV46: { user: { id: 'u' } }, escapeHtml: String, collectionDisplayNameV101: row => row.title,
+    isQuestionAdminV47: () => false, collectionVisibilityLabelV100: () => '閲覧のみ',
     ownedCollectionOptionsV115: () => [{ share_slug: 'first', title: '最初' }, { share_slug: 'last', title: '最後' }],
     openCollectionCreateFromImportV115() {}, refreshCollectionAccessStateV100: async () => {},
     questionsV16: [{ serverQuestionId: 'q' }], currentQuestionIndexV16: 0
