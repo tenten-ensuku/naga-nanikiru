@@ -132,14 +132,14 @@ test('V256 back saves an active run and resumes the next unanswered question, or
 
 test('V254 annotates only the previous card without adding a resume control',()=>{
   const c=setup();c.startSessionV44('weak',c.questionsV16);c.activeSessionV44().cursor=11;c.pauseSessionV253();
-  const cards=['unanswered','weak','all'].map(mode=>c.renderLearningActionButtonV194({mode,title:mode,count:24,description:'説明',tone:mode}));
+  const cards=['unanswered','weak','all'].map(mode=>c.renderLearningActionButtonV194({mode,title:mode,count:24,description:mode==='weak'?'直近の回答が△または×の問題':'説明',tone:mode}));
   assert.equal((cards.join('').match(/<button /g)||[]).length,3);
   assert.equal((cards.join('').match(/data-resume-v254=/g)||[]).length,1);
   assert.match(cards[1],/前回の続き・12問目から/);
   assert.match(cards[1],/aria-label="weak 前回の続き・12問目から"/);
   assert.doesNotMatch(cards[0]+cards[2],/前回の続き/);
   assert.match(cards[0],/title="説明"/);
-  assert.match(cards[1],/title="前回の続き・12問目から。/);
+  assert.match(cards[1],/title="直近の回答が△または×の問題"/);
   assert.doesNotMatch(cards.join(""),/class="learning-action-description"/);
   assert.doesNotMatch(source('renderRecentHistoryViewV180'),/learning-resume|data-today-session="resume"|resumeMarkup/);
 });

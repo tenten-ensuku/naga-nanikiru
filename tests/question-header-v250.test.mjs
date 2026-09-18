@@ -68,6 +68,6 @@ test('responsive styles preserve touch targets, permission-hidden actions and re
   assert.match(css,/overflow-x: auto/);assert.match(css,/flex-wrap: nowrap/);
   assert.match(css,/@media \(max-width: 800px\)/);
   assert.doesNotMatch(css,/\.(hand|tile|scene|answer|riichi)[-\w]*\s*\{/);
-  assert.match(html,/question-header-v250\.js\?v=285/);
-  assert.match(html,/question-header-v250\.css\?v=285/);
+  assert.match(html,/question-header-v250\.js\?v=286/);
+  assert.match(html,/question-header-v250\.css\?v=286/);
 });
