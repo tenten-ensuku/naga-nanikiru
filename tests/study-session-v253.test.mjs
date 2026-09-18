@@ -169,7 +169,7 @@ test('V254 the resume note points past an answered question and never says a non
 
 test('V254 zero current candidates do not disable the card holding a saved run or its results',()=>{
   const c=setup();c.startSessionV44('weak',c.questionsV16);c.pauseSessionV253();
-  const card=c.renderLearningActionButtonV194({mode:'weak',title:'苦手克服',count:0,description:'説明',tone:'weak',disabled:' disabled aria-disabled="true"'});
+  const card=c.renderLearningActionButtonV194({mode:'weak',title:'苦手',count:0,description:'説明',tone:'weak',disabled:' disabled aria-disabled="true"'});
   assert.doesNotMatch(card,/ disabled|aria-disabled="true"/);
   c.sharedQuestionKnownTotalV177=()=>null;c.learningLatestAnswersV189=()=>new Map();c.learningCandidatesV189=()=>[];
   const buttons=['weak','all'].map(mode=>({dataset:{learningAction:mode},attrs:{},querySelector:selector=>selector==='.learning-action-title'?{textContent:mode}:{innerHTML:''},setAttribute(name,value){this.attrs[name]=value;}}));

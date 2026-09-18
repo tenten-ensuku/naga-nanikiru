@@ -24,9 +24,9 @@ function fixture() {
   return {api: context.window.MinkiruMenuV239, context, events, replacements, menu, summary, buttons};
 }
 test('V239 is an additive menu-only layer, with no external font or backend work', () => {
-  assert.match(html, /const APP_VERSION = 284;/);
-  assert.match(html, /menu-polish-v238\.css\?v=284[\s\S]*menu-sections-v239\.css\?v=284/);
-  assert.match(html, /menu-sections-v239\.js\?v=284/);
+  assert.match(html, /const APP_VERSION = 285;/);
+  assert.match(html, /menu-polish-v238\.css\?v=285[\s\S]*menu-sections-v239\.css\?v=285/);
+  assert.match(html, /menu-sections-v239\.js\?v=285/);
   assert.doesNotMatch(css, /@import|@font-face|https?:|\.scene-frame|\.hand-mask|\.riichi|learning-header-progress-track/);
   assert.doesNotMatch(js, /fetch\(|localStorage|sessionStorage|NagaSupabase|XMLHttpRequest/);
 });
@@ -57,7 +57,7 @@ test('management disclosure hides for viewers and revoked permissions, with Esca
 });
 test('each category is one native button with its original action, number and disabled state', () => {
   const {context} = fixture();
-  for (const [mode,tone,title] of [['unanswered','primary','未回答'],['weak','weak','苦手克服'],['all','all','全問']]) {
+  for (const [mode,tone,title] of [['unanswered','primary','未回答'],['weak','weak','苦手'],['all','all','全問']]) {
     const row = context.renderLearningActionButtonV194({mode,tone,title,count:0,description:'条件の説明',disabled:' disabled'});
     assert.equal((row.match(/<button/g)||[]).length,1);
     assert.match(row, new RegExp(`data-learning-action="${mode}"`));
