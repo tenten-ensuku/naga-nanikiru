@@ -65,7 +65,7 @@ test("V234 book management rejects viewers and editors without falling back to a
     return body;
   });
   const target = new Function("supabaseSessionV46", "isQuestionAdminV47", "menuViewV16", "sharedCollectionV46", "ownedCollectionOptionsV197",
-    `${helpers.join("\n")}\nreturn collectionManagementTargetV197();`);
+    `const shelfManagementV288 = null;\n${helpers.join("\n")}\nreturn collectionManagementTargetV197();`);
   const noFallback = () => { assert.fail("book management must not select an unrelated owned book"); };
   for (const role of ["viewer", "editor"]) {
     const book = { share_slug: "current-book", owner_id: "other-user", member_role: role, can_view: true, can_edit: role === "editor", can_manage: false };
