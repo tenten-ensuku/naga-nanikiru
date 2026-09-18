@@ -31,6 +31,33 @@ export function tagsFromComments(comments) {
     .flatMap(comment => extractTags(typeof comment === "string" ? comment : comment.content ?? comment.body)));
 }
 
+// Search only visible comment text. The same normalized text is reused by the
+// index response and local comments, without fetching each question's details.
+export function normalizeSearchQuery(value) {
+  return typeof value === "string"
+    ? [...value.normalize("NFKC").trim().replace(/^#+\s*/u, "").replace(/\s+/gu, " ")].slice(0, 100).join("") : "";
+}
+
+export function searchTextFromComments(comments) {
+  const texts = (Array.isArray(comments) ? comments : [])
+    .filter(comment => comment && comment.showInComments !== false && !comment.deleted_at && !comment.deletedAt)
+    .map(comment => typeof comment === "string" ? comment : comment.content ?? comment.body)
+    .filter(text => typeof text === "string")
+    .map(text => text.normalize("NFKC")
+      .replace(/\[([^\]]+)\]\(https?:\/\/[^)]+\)/giu, "$1")
+      .replace(/https?:\/\/[^\s<>]+/giu, " ")
+      .replace(/\[\/?(?:color|size)(?:[:=][^\]]*)?\]/giu, "")
+      .replace(/\*\*|__|\|\|/gu, "")
+      .replace(/\s+/gu, " ").trim().toLowerCase())
+    .filter(Boolean);
+  return [...new Set(texts)].join("\n");
+}
+
+export function matchesCommentSearch(searchText, query) {
+  const term = normalizeSearchQuery(query).toLowerCase();
+  return !term || String(searchText || "").includes(term);
+}
+
 export function appendTag(text, tag, maxLength = 2000) {
   const source = String(text || "");
   tag = normalizeTag(tag);

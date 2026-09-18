@@ -6,7 +6,7 @@ import {
   canViewStudent,
   requireActor,
 } from "./access.mjs";
-import {tagsFromComments} from "../public/comment-tags-v270.mjs";
+import {tagsFromComments, searchTextFromComments} from "../public/comment-tags-v270.mjs";
 import {normalizeQuestionNumbering,toSafeQuestionNumber,isInvalidQuestionTitle} from './question-numbering-v235.mjs';
 
 // Metadata-only, scoped to this book. Answers and views do not update content.
@@ -309,6 +309,7 @@ function placeholders(count) {
 }
 
 function mapIndexRow(row, includeTotal) {
+  const comments = [...asJsonArray(row.comment_tag_bodies), ...asJsonArray(row.embedded_tag_comments)];
   const mapped = {
     id: row.id,
     created_by: row.created_by,
@@ -330,8 +331,10 @@ function mapIndexRow(row, includeTotal) {
     created_at: row.created_at,
     updated_at: row.updated_at,
     generated_at: row.generated_at,
-    // Only tag names cross the network; comment bodies/attachments do not.
-    comment_tags: tagsFromComments([...asJsonArray(row.comment_tag_bodies), ...asJsonArray(row.embedded_tag_comments)]),
+    // Reuse the existing indexed comment lookup; no extra query per search.
+    // Only visible text is included, without authors, images or attachments.
+    comment_tags: tagsFromComments(comments),
+    comment_search_text: searchTextFromComments(comments),
   };
   if (includeTotal) mapped.total_count = rowCount(row.total_count);
   return mapped;

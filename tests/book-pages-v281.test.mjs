@@ -2,17 +2,19 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
+import * as CommentSearch from '../public/comment-tags-v270.mjs';
 
 const html = fs.readFileSync(new URL('../public/index.html', import.meta.url), 'utf8');
 const names = ['learningLatestAnswersV189', 'learningQuestionGenreKeyV189', 'learningQuestionMatchesGenreV189',
   'learningQuestionHistoryKeyV189', 'learningQuestionMatchesHistoryV189', 'bookListFilteredV281',
-  'bookListFiltersActiveV281', 'resetBookListConditionsV281', 'recentScoresV16', 'restoreNavigationFiltersV234', 'navigationFiltersV234'];
+  'bookListFiltersActiveV281', 'resetBookListConditionsV281', 'recentScoresV16', 'restoreNavigationFiltersV234', 'navigationFiltersV234',
+  'questionCommentSearchTextV284', 'questionMatchesCommentSearchV284', 'syncQuestionCommentTagsV270', 'learningCandidatesV189', 'learningWeakQuestionsV189'];
 function fixture() {
   const types = {discard:'打牌判断', riichi:'リーチ判断', call:'副露判断'};
   const context = vm.createContext({
-    Date, Math, Set, Map, window: {MinkiruCommentTagsV270:{normalizeTag:value=>String(value||'')}},
+    Date, Math, Set, Map, window: {MinkiruCommentTagsV270:CommentSearch},
     document: {getElementById:()=>null,querySelectorAll:()=>[]},
-    userStateV16:{answerHistory:[]}, questionKeyV16:q=>q.id, questionTypeV44:q=>types[q.type],
+    userStateV16:{answerHistory:[],localComments:{}}, questionKeyV16:q=>q.id, questionTypeV44:q=>types[q.type],
     questionCommentTagsV270:q=>q.tags||[], normalizeScoreMarkV159:mark=>mark==='○'?'〇':mark||'',
     menuQuestionSortKeyV99:q=>q.number, navigationScopeV234:()=> 'book-a',
     learningOrderV189:'sequential', learningGenresV189:new Set(Object.keys(types)),
@@ -20,7 +22,9 @@ function fixture() {
     LEARNING_GENRE_ORDER_V189:Object.keys(types), LEARNING_HISTORY_ORDER_V189:['unanswered','×','△','〇','◎'],
     bookListShuffleV281:new Map(), bookListShuffleScopeV281:'', refreshBookListConditionsV281:()=>{},
     menuSearchV44:'',menuCommentTagV270:'',menuStatusFiltersV92:[],menuTypeV44:'all',menuRangeV60:'all',
-    menuFavoritesOnlyV137:false,menuRenderLimitV119:40,menuOrderV92:'sequential',MENU_RENDER_BATCH_V119:40
+    menuFavoritesOnlyV137:false,menuRenderLimitV119:40,menuOrderV92:'sequential',MENU_RENDER_BATCH_V119:40,
+    state:{comments:[]},questionsV16:[],currentQuestionIndexV16:0,sharedQuestionPagingV177:{pages:new Map()},
+    learningScopeQuestionsV184:()=>[],isPlayableV16:()=>true,questionIndexByKeyV44:()=>0,randomizeQuestionsByAnswerCountV93:items=>items
   });
   for (const name of names) {
     const source=html.match(new RegExp(`^      function ${name}\\([^\\n]*\\) \\{[\\s\\S]*?^      \\}`, 'm'))?.[0];
@@ -28,8 +32,8 @@ function fixture() {
   }
   return context;
 }
-const questions=[{id:'a',number:3,type:'discard',tags:['押し引き']},{id:'b',number:1,type:'call',tags:['押し引き']},
-  {id:'c',number:4,type:'riichi',tags:[]},{id:'d',number:2,type:'call',tags:['押し引き']}];
+const questions=[{id:'a',number:3,type:'discard',commentTagsV270:['押し引き']},{id:'b',number:1,type:'call',commentTagsV270:['押し引き']},
+  {id:'c',number:4,type:'riichi',commentTagsV270:[]},{id:'d',number:2,type:'call',commentTagsV270:['押し引き']}];
 const ids=items=>Array.from(items,q=>q.id);
 test('list intersects shared genre, latest grade and tag; latest is determined by time',()=>{
   const ctx=fixture();ctx.userStateV16.answerHistory=[
@@ -78,4 +82,28 @@ test('navigation accepts old snapshots and validates new shared filter values',(
   ctx.restoreNavigationFiltersV234({learning:{genres:[],history:['invalid'],order:'invalid'}});
   assert.deepEqual(Array.from(ctx.learningGenresV189),['discard','riichi','call']);
   assert.equal(ctx.learningHistoryFiltersV189.size,5);assert.equal(ctx.learningOrderV189,'sequential');
+  ctx.restoreNavigationFiltersV234({learning:{tag:'＃ＮＡＮＡ　League'}});
+  assert.equal(ctx.navigationFiltersV234().learning.tag,'NANA League');
+});
+
+test('learning and question list share body search while titles and hidden comments stay excluded',()=>{
+  const ctx=fixture();
+  const rows=[{id:'a',number:1,type:'discard',commentSearchTextV284:'押し引きを考える'},
+    {id:'b',number:2,type:'discard',comments:[{content:'＃押し引き'}]},
+    {id:'c',number:3,type:'discard',title:'押し引き',comments:[{content:'押し引き',showInComments:false}]},
+    {id:'d',number:4,type:'discard'}];
+  ctx.userStateV16.localComments.d=[{content:'押し引きのメモ'}];
+  ctx.learningScopeQuestionsV184=()=>rows;ctx.learningCommentTagV273='押し引き';
+  assert.deepEqual(ids(ctx.bookListFilteredV281(rows)),['a','b','d']);
+  assert.deepEqual(ids(ctx.learningCandidatesV189('all')),['a','b','d']);
+  assert.deepEqual(ids(ctx.learningCandidatesV189('unanswered')),['a','b','c','d']);
+});
+
+test('comment text cache follows edits and deletions in both the active question and index pages',()=>{
+  const ctx=fixture();const question={id:'a',serverQuestionId:'server-a',commentSearchTextV284:'古い語'};
+  const cached={...question};ctx.questionsV16=[question];ctx.sharedQuestionPagingV177.pages.set(0,{questions:[cached]});
+  ctx.state.comments=[{content:'新しい語 #押し引き'}];ctx.syncQuestionCommentTagsV270(question);
+  for(const q of [question,cached]) {assert.equal(ctx.questionMatchesCommentSearchV284(q,'新しい語'),true);assert.equal(ctx.questionMatchesCommentSearchV284(q,'古い語'),false);}
+  ctx.state.comments=[];ctx.syncQuestionCommentTagsV270(question);
+  for(const q of [question,cached]) assert.equal(ctx.questionMatchesCommentSearchV284(q,'新しい語'),false);
 });

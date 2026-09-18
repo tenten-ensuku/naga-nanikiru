@@ -573,7 +573,7 @@ html:root .page.menu-active #menuPanel[data-view="my"] .menu-card-icon-action {
 
 /* Full-size controls use the same conditions as the learning home. */
 html:root .page.menu-active #menuPanel[data-view="my"] #bookListFilterGroupsV281 { display: grid; gap: 14px; margin-bottom: 18px; }
-html:root .page.menu-active #menuPanel[data-view="my"] .learning-setting-group { margin: 0; padding: 0; border: 0; min-width: 0; }
+html:root .page.menu-active #menuPanel[data-view="my"] .learning-setting-group { margin: 0; padding: 0; border: 0; min-width: 0; background: transparent; box-shadow: none; }
 html:root .page.menu-active #menuPanel[data-view="my"] .learning-setting-group legend { margin-bottom: 8px; color: var(--book-page-ink); font: 500 18px/1.4 var(--book-page-serif); }
 html:root .page.menu-active #menuPanel[data-view="my"] .learning-setting-group legend small { color: var(--book-page-muted); font-size: 14px; }
 html:root .page.menu-active #menuPanel[data-view="my"] .learning-check-grid { display: flex; flex-wrap: wrap; gap: 8px; }

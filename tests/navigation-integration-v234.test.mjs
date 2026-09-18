@@ -109,7 +109,7 @@ test('list filters restore search, marks, type, range, favorites, count and orde
   const search = { value: '' };
   const context = load(['restoreNavigationFiltersV234', 'navigationFiltersV234'], {
     menuSearchV44: '', menuCommentTagV270: '', menuStatusFiltersV92: [], menuTypeV44: 'all', menuRangeV60: 'all',
-    window: { MinkiruCommentTagsV270: { normalizeTag: value => String(value || '') } },
+    window: { MinkiruCommentTagsV270: { normalizeSearchQuery: value => String(value || '') } },
     learningOrderV189: 'sequential', learningGenresV189: new Set(['discard', 'riichi', 'call']),
     learningHistoryFiltersV189: new Set(['unanswered', '×', '△', '〇', '◎']), learningCommentTagV273: '',
     LEARNING_GENRE_ORDER_V189: ['discard', 'riichi', 'call'], LEARNING_HISTORY_ORDER_V189: ['unanswered', '×', '△', '〇', '◎'],

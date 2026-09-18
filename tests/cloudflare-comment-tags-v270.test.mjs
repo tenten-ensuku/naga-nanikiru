@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
-import { TAGS, extractTags, tagsFromComments, appendTag, normalizeTag, tagSuggestions } from '../public/comment-tags-v270.mjs';
+import { TAGS, extractTags, tagsFromComments, appendTag, normalizeTag, tagSuggestions, normalizeSearchQuery, searchTextFromComments, matchesCommentSearch } from '../public/comment-tags-v270.mjs';
 import { testD1 } from './helpers/cloudflare-d1.mjs';
 import { readRpc } from '../cloudflare/read-api.mjs';
 import { writeRpc } from '../cloudflare/student-write-api.mjs';
@@ -57,7 +57,8 @@ test('saved, edited and deleted tags follow comments, with question data and att
     assert.deepEqual((await read(ctx))[0].comment_tags,['セオリー集']);
     assert.equal(db.sqlite.prepare('SELECT payload FROM questions WHERE id=?').get('q1').payload,original);
     const serial=JSON.stringify(await read(ctx));
-    for (const text of ['元の解説','original.png','comment_tag_bodies','embedded_tag_comments']) assert.equal(serial.includes(text),false);
+    assert.ok((await read(ctx))[0].comment_search_text.includes('元の解説'));
+    for (const text of ['original.png','comment_tag_bodies','embedded_tag_comments']) assert.equal(serial.includes(text),false);
   } finally { db.close(); }
 });
 
@@ -96,8 +97,43 @@ test('inline app parses and tag selection, paging and return-navigation are conn
   const html=readFileSync(new URL('../public/index.html',import.meta.url),'utf8');
   for(const [,source] of html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g)) if(source.trim()) new vm.Script(source);
   assert.match(html,/commentTag: menuCommentTagV270/);
-  assert.match(html,/normalizeTag\(filters\.commentTag\)/);
+  assert.match(html,/normalizeSearchQuery\(filters\.commentTag\)/);
   assert.match(html,/allowedKeys\.has\(questionKeyV16\(question\)\) && matchesCommentTagV270/);
   assert.match(html,/menuViewV16 === "my" && menuRangeV60 === "all"/);
-  assert.match(html,/commentTagFiltersV270[\s\S]*menuCommentTagV270 = tag;[\s\S]*refreshBookListConditionsV281\(\)/);
+  assert.match(html,/applyCommentSearchV284\(menuCommentTagV270 === tag \? "" : tag\)/);
+});
+
+test('comment search matches untagged text, formatting, fullwidth and case without searching authors or images', () => {
+  const comments=[{content:'押し**引き**の基礎と、[color=#ff0000]安全度比較[/color]。 ＮＡＮＡ League',author:'人物専用語',attachments:[{alt:'画像専用語',src:'image.png'}]},
+    {body:'本文の別の語'}, {content:'非表示専用語',showInComments:false}, {body:'削除専用語',deleted_at:'now'}];
+  const before=JSON.stringify(comments),text=searchTextFromComments(comments);
+  for(const query of ['押し引き','#押し引き','＃押し引き','安全度比較','nana league','ＮＡＮＡ League','本文の別の語']) assert.equal(matchesCommentSearch(text,query),true,query);
+  for(const query of ['人物専用語','画像専用語','非表示専用語','削除専用語','image.png','ff0000']) assert.equal(matchesCommentSearch(text,query),false,query);
+  assert.equal(normalizeSearchQuery(' ＃ＮＡＮＡ　League '),'NANA League');
+  assert.equal(normalizeSearchQuery('語'.repeat(101)).length,100);
+  assert.equal(matchesCommentSearch(text,''),true);
+  assert.equal(JSON.stringify(comments),before);
+});
+
+test('untagged server and embedded comments are searchable on later pages and track edits/deletes', async () => {
+  const ctx=fixture(),{db}=ctx;
+  try {
+    const original=db.sqlite.prepare('SELECT payload FROM questions WHERE id=?').get('q1').payload;
+    const id=await post(ctx,'q101','押し引きを考える。逆転条件も確認。');
+    let row=(await read(ctx,100))[0];
+    assert.deepEqual(row.comment_tags,[]);
+    assert.equal(matchesCommentSearch(row.comment_search_text,'#押し引き'),true);
+    assert.equal(matchesCommentSearch(row.comment_search_text,'逆転条件'),true);
+    assert.equal(matchesCommentSearch((await read(ctx))[0].comment_search_text,'元の解説'),true);
+    db.sqlite.prepare('UPDATE questions SET title=? WHERE id=?').run('押し引きはタイトルだけ','q2');
+    assert.equal(matchesCommentSearch((await read(ctx))[1].comment_search_text,'押し引き'),false);
+    await writeRpc('update_shared_comment',{p_comment_id:id,p_body:'安全度比較の復習',p_attachments:[]},ctx);
+    row=(await read(ctx,100))[0];
+    assert.equal(matchesCommentSearch(row.comment_search_text,'押し引き'),false);
+    assert.equal(matchesCommentSearch(row.comment_search_text,'安全度比較'),true);
+    await writeRpc('delete_shared_comment',{p_comment_id:id},ctx);
+    assert.equal((await read(ctx,100))[0].comment_search_text,'');
+    assert.deepEqual(await read({db,actor:{id:'tag-other'}},0,'tag-private'),[]);
+    assert.equal(db.sqlite.prepare('SELECT payload FROM questions WHERE id=?').get('q1').payload,original);
+  } finally {db.close();}
 });

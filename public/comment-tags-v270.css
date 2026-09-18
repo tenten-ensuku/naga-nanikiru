@@ -29,3 +29,12 @@
 .comment-tag-search-v270:not([open]) > .comment-tag-search-body-v272 { display: none; }
 .comment-tag-search-v270 p { margin: 9px 0 0; font-size: 12px; color: var(--muted, #acc0c6); }
 @media (max-width: 480px) { .comment-tag-v270 { min-height: 40px; } }
+
+/* Keep keyword search inside the existing collapsible condition panel. */
+.comment-search-form-v284 { display: grid; gap: 8px; margin: 0 0 12px; min-width: 0; }
+.comment-search-form-v284 > label { color: var(--ink); font: 500 18px/1.4 "Yu Mincho", "Hiragino Mincho ProN", serif; }
+.comment-search-controls-v284 { display: flex; gap: 8px; min-width: 0; }
+.comment-search-controls-v284 input { flex: 1; min-width: 0; width: 100%; min-height: 44px; padding: 8px 10px; border: 1px solid var(--line); border-radius: 5px; background: var(--panel); color: var(--ink); font: inherit; font-size: 16px; }
+.comment-search-controls-v284 button { flex: 0 0 auto; min-height: 44px; padding: 8px 14px; border: 1px solid var(--line); border-radius: 5px; background: var(--panel); color: var(--ink); font: inherit; font-size: 16px; cursor: pointer; }
+.comment-search-controls-v284 :is(input,button):focus-visible { outline: 2px solid #50bab0; outline-offset: 2px; }
+.comment-search-hint-v284 { margin: 8px 0; color: var(--muted); font-size: 14px; line-height: 1.5; }

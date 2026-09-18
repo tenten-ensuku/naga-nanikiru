@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=283">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=283">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=283">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=284">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=284">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=284">
   <title>みん切る｜みんなの何切る問題集</title>
   <link rel="preload" as="image" href="assets/loading-screen-v243.png" fetchpriority="high">
   <meta name="description" content="みん切るは、NAGA URLから問題をつくり、解いて、仲間と共有できる麻雀学習アプリです。">
   <meta name="theme-color" content="#06131e">
-  <script src="theme-v259.js?v=283"></script>
+  <script src="theme-v259.js?v=284"></script>
   <meta property="og:type" content="website">
   <meta property="og:title" content="みん切る｜みんなの何切る問題集">
   <meta property="og:description" content="みん切るは、NAGA URLから問題をつくり、解いて、仲間と共有できる麻雀学習アプリです。">
@@ -2249,19 +2249,19 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=283">
-  <link rel="stylesheet" href="library-v214.css?v=283">
-  <link rel="stylesheet" href="navigation-v234.css?v=283">
-  <link rel="stylesheet" href="book-builder-v235.css?v=283">
-  <link rel="stylesheet" href="menu-polish-v238.css?v=283">
-  <link rel="stylesheet" href="menu-sections-v239.css?v=283">
-  <link rel="stylesheet" href="workspace-ui-v240.css?v=283">
-  <link rel="stylesheet" href="collection-deletion-v244.css?v=283">
-  <link rel="stylesheet" href="menu-simplify-v245.css?v=283">
-  <link rel="stylesheet" href="content-dates-v246.css?v=283">
-  <link rel="stylesheet" href="question-header-v250.css?v=283">
-  <link rel="stylesheet" href="question-toolbar-v255.css?v=283">
-  <link rel="stylesheet" href="theme-v259.css?v=283">
+  <link rel="stylesheet" href="ux-v159.css?v=284">
+  <link rel="stylesheet" href="library-v214.css?v=284">
+  <link rel="stylesheet" href="navigation-v234.css?v=284">
+  <link rel="stylesheet" href="book-builder-v235.css?v=284">
+  <link rel="stylesheet" href="menu-polish-v238.css?v=284">
+  <link rel="stylesheet" href="menu-sections-v239.css?v=284">
+  <link rel="stylesheet" href="workspace-ui-v240.css?v=284">
+  <link rel="stylesheet" href="collection-deletion-v244.css?v=284">
+  <link rel="stylesheet" href="menu-simplify-v245.css?v=284">
+  <link rel="stylesheet" href="content-dates-v246.css?v=284">
+  <link rel="stylesheet" href="question-header-v250.css?v=284">
+  <link rel="stylesheet" href="question-toolbar-v255.css?v=284">
+  <link rel="stylesheet" href="theme-v259.css?v=284">
 </head>
 <body class="auth-gate-open">
   <section class="startup-screen-v236" id="startupScreenV236" aria-label="みん切るを準備中">
@@ -2319,8 +2319,9 @@
           <summary id="commentTagSearchTitleV270"><span>条件で絞り込む</span><span class="comment-tag-active-v272" id="commentTagActiveV272" hidden></span></summary>
           <div class="comment-tag-search-body-v272">
             <div id="bookListFilterGroupsV281"></div>
-            <h3 class="book-list-tag-heading-v281">ハッシュタグ</h3>
-            <div class="comment-tags-v270" id="commentTagFiltersV270" role="group" aria-label="コメントのタグで絞り込み"></div>
+            <div id="commentKeywordSearchV284"></div>
+            <p class="comment-search-hint-v284">候補は1つ選択。もう一度押すと解除できます。</p>
+            <div class="comment-tags-v270" id="commentTagFiltersV270" role="group" aria-label="コメント検索の候補"></div>
             <p id="commentTagResultV270" role="status"></p>
             <button type="button" class="book-list-reset-v281" data-book-filter-reset-v281>条件をリセット</button>
           </div>
@@ -2636,33 +2637,33 @@
     </form>
   </dialog>
 
-  <link rel="stylesheet" href="comment-tags-v270.css?v=283">
+  <link rel="stylesheet" href="comment-tags-v270.css?v=284">
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=283"></script>
-  <script src="drill-ux-v44.js?v=283"></script>
-  <script src="navigation-v234.js?v=283"></script>
-  <script src="book-builder-v235.js?v=283"></script>
-  <script src="library-order-v215.js?v=283"></script>
-  <script src="content-dates-v246.js?v=283"></script>
-  <script src="question-header-v250.js?v=283"></script>
-  <script src="library-v214.js?v=283"></script>
-  <script src="naga-generator-v44.js?v=283"></script>
-  <link rel="stylesheet" href="naga-board-v248.css?v=283">
-  <link rel="stylesheet" href="refinements-v273.css?v=283">
-  <link rel="stylesheet" href="generator-tools-v274.css?v=283">
-  <link rel="stylesheet" href="book-pages-v281.css?v=283">
-  <script src="comment-tools-v274.js?v=283"></script>
-  <script src="naga-board-state-v248.js?v=283"></script>
-  <script src="naga-board-v248.js?v=283"></script>
-  <script src="hand-mask-v237.js?v=283"></script>
-  <script src="menu-sections-v239.js?v=283"></script>
-  <script src="workspace-ui-v240.js?v=283"></script>
-  <script src="generation-confirm-v241.js?v=283"></script>
-  <script src="collection-deletion-v244.js?v=283"></script>
+  <script src="supabase-sync-v48.js?v=284"></script>
+  <script src="drill-ux-v44.js?v=284"></script>
+  <script src="navigation-v234.js?v=284"></script>
+  <script src="book-builder-v235.js?v=284"></script>
+  <script src="library-order-v215.js?v=284"></script>
+  <script src="content-dates-v246.js?v=284"></script>
+  <script src="question-header-v250.js?v=284"></script>
+  <script src="library-v214.js?v=284"></script>
+  <script src="naga-generator-v44.js?v=284"></script>
+  <link rel="stylesheet" href="naga-board-v248.css?v=284">
+  <link rel="stylesheet" href="refinements-v273.css?v=284">
+  <link rel="stylesheet" href="generator-tools-v274.css?v=284">
+  <link rel="stylesheet" href="book-pages-v281.css?v=284">
+  <script src="comment-tools-v274.js?v=284"></script>
+  <script src="naga-board-state-v248.js?v=284"></script>
+  <script src="naga-board-v248.js?v=284"></script>
+  <script src="hand-mask-v237.js?v=284"></script>
+  <script src="menu-sections-v239.js?v=284"></script>
+  <script src="workspace-ui-v240.js?v=284"></script>
+  <script src="generation-confirm-v241.js?v=284"></script>
+  <script src="collection-deletion-v244.js?v=284"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 283;
+    const APP_VERSION = 284;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -4519,7 +4520,7 @@
       function restoreNavigationFiltersV234(filters) {
         if (!filters) return;
         menuSearchV44 = String(filters.search || "");
-        menuCommentTagV270 = window.MinkiruCommentTagsV270.normalizeTag(filters.commentTag);
+        menuCommentTagV270 = window.MinkiruCommentTagsV270.normalizeSearchQuery(filters.commentTag);
         menuStatusFiltersV92 = Array.isArray(filters.statuses) ? [...filters.statuses] : [];
         menuTypeV44 = ["all", "discard", "riichi", "call"].includes(filters.type) ? filters.type : "all";
         menuRangeV60 = String(filters.range || "all");
@@ -4533,7 +4534,7 @@
           const history = Array.isArray(learning.history) ? learning.history.filter(value => LEARNING_HISTORY_ORDER_V189.includes(value)) : [];
           learningGenresV189 = new Set(genres.length ? genres : LEARNING_GENRE_ORDER_V189);
           learningHistoryFiltersV189 = new Set(history.length ? history : LEARNING_HISTORY_ORDER_V189);
-          learningCommentTagV273 = window.MinkiruCommentTagsV270.normalizeTag(learning.tag);
+          learningCommentTagV273 = window.MinkiruCommentTagsV270.normalizeSearchQuery(learning.tag);
         } else learningCommentTagV273 = menuCommentTagV270;
         menuCommentTagV270 = learningCommentTagV273;
         const search = document.getElementById("menuSearch");
@@ -4790,6 +4791,7 @@
       const QUESTION_NOTICE_STORAGE_KEY_V66 = storageKey("question-notices-v1");
         const ANNOUNCEMENT_SEEN_STORAGE_KEY_V65 = storageKey("announcement-seen-v1");
         const APP_ANNOUNCEMENTS_V66 = [
+          {"version":284,"date":"2026-09-18","publishedAt":"2026-09-18T09:13:33.577Z","title":"コメント検索と絞り込み表示を改善しました","body":"ハッシュタグのないコメントもキーワードで検索できるようになりました。タグ候補の「すべて」を削除し、選択中の候補をもう一度押すと解除できます。ライトモードの条件見出しも見やすくしました。"},
           {"version":283,"date":"2026-09-18","publishedAt":"2026-09-18T08:40:14.664Z","title":"問題一覧と学習ページの余白を調整しました","body":"文字サイズを保ったまま、問題一覧と学習ページの上下余白を減らしました。直近3回の成績は隙間なく並べ、最新のマスの上部線をなくしました。"},
           {"version":282,"date":"2026-09-18","publishedAt":"2026-09-18T05:21:22.811Z","title":"学習カードを一行で見やすくしました","body":"未回答・苦手克服・全問の補助説明を、カーソルを重ねたときに表示する形へ変更しました。カード内はタイトル・問題数・操作を一列に揃えています。"},
           {"version":281,"date":"2026-09-18","publishedAt":"2026-09-18T05:15:48.064Z","title":"問題一覧と成績を見やすくしました","body":"問題一覧を隙間のない表形式にし、直近3回の成績を新しい順に表示。絞り込みは学習ページと共通にしました。成績ページも明朝体と配色を揃え、メニューや問題名を読みやすくしています。"},
@@ -5175,6 +5177,7 @@
           title,
           createdAt: window.MinkiruContentDatesV246.first(payload.generatedAt, row?.generated_at, payload.createdAt, row?.created_at, row?.createdAt)?.iso || null,
           commentTagsV270: Array.isArray(row?.comment_tags) ? row.comment_tags : payload.commentTagsV270,
+          commentSearchTextV284: typeof row?.comment_search_text === "string" ? row.comment_search_text : payload.commentSearchTextV284,
           decisionType: payload.decisionType || row?.decision_type || "discard",
           hasRiichiJudgment: payload.decisionType !== "call" && (payload.hasRiichiJudgment === true || row?.has_riichi_judgment === true || Array.isArray(payload.reach) && payload.reach.some(value => Number(value) > 0)),
           sharedCollectionSlug: shareSlug,
@@ -9010,16 +9013,54 @@
         const local = userStateV16.localComments?.[questionKeyV16(question)] || [];
         return [...new Set([...(question.commentTagsV270 || []), ...tags.tagsFromComments([...(question.comments || []), ...local])])];
       }
+      function questionCommentSearchTextV284(question) {
+        const api = window.MinkiruCommentTagsV270;
+        const local = userStateV16.localComments?.[questionKeyV16(question)] || [];
+        const text = typeof question.commentSearchTextV284 === "string" ? question.commentSearchTextV284
+          : api.searchTextFromComments([...(question.comments || []), ...(question.commentTagsV270 || []).map(tag => "#" + tag)]);
+        return [text, api.searchTextFromComments(local)].filter(Boolean).join("\n");
+      }
+      function questionMatchesCommentSearchV284(question, query) {
+        return !query || window.MinkiruCommentTagsV270.matchesCommentSearch(questionCommentSearchTextV284(question), query);
+      }
       window.commentTagSuggestionsV271 = () => window.MinkiruCommentTagsV270.tagSuggestions(questionsV16.flatMap(questionCommentTagsV270));
       function syncQuestionCommentTagsV270(question) {
         if (question?.serverQuestionId !== questionsV16[currentQuestionIndexV16]?.serverQuestionId) return;
         const tags = window.MinkiruCommentTagsV270.tagsFromComments(state.comments);
+        const searchText = window.MinkiruCommentTagsV270.searchTextFromComments(state.comments);
         question.commentTagsV270 = tags;
+        question.commentSearchTextV284 = searchText;
         for (const page of sharedQuestionPagingV177.pages.values()) {
-          for (const cached of page.questions) if (cached.serverQuestionId === question.serverQuestionId) cached.commentTagsV270 = tags;
+          for (const cached of page.questions) if (cached.serverQuestionId === question.serverQuestionId) {
+            cached.commentTagsV270 = tags;
+            cached.commentSearchTextV284 = searchText;
+          }
         }
       }
-      function matchesCommentTagV270(question) { return !menuCommentTagV270 || questionCommentTagsV270(question).includes(menuCommentTagV270); }
+      function matchesCommentTagV270(question) { return questionMatchesCommentSearchV284(question, menuCommentTagV270); }
+      function renderCommentSearchFormV284(id) {
+        return `<form class="comment-search-form-v284" data-comment-search-form-v284><label for="${id}">コメント内を検索</label><div class="comment-search-controls-v284"><input id="${id}" type="search" data-comment-search-input-v284 maxlength="100" placeholder="例：押し引き" value="${escapeHtml(learningCommentTagV273)}"><button type="submit">検索</button></div></form>`;
+      }
+      function commentSearchNoteV284() {
+        return learningCommentTagV273 ? `「${learningCommentTagV273}」を含むコメントの問題に絞り込み` : "ハッシュタグがない文章も検索します。";
+      }
+      function syncCommentSearchUiV284() {
+        for (const input of document.querySelectorAll("[data-comment-search-input-v284]")) {
+          if (input !== document.activeElement) input.value = learningCommentTagV273;
+        }
+        document.querySelectorAll("[data-learning-tag-v273]").forEach(item => item.setAttribute("aria-pressed", String(item.dataset.learningTagV273 === learningCommentTagV273)));
+        const note = document.querySelector("[data-learning-tag-result-v273]");
+        if (note) note.textContent = commentSearchNoteV284();
+      }
+      function applyCommentSearchV284(query) {
+        learningCommentTagV273 = window.MinkiruCommentTagsV270.normalizeSearchQuery(query);
+        menuCommentTagV270 = learningCommentTagV273;
+        syncCommentSearchUiV284();
+        syncLearningSettingsUiV189();
+        syncLearningActionCountsV189();
+        refreshBookListConditionsV281();
+        if (menuViewV16 === "today") commitNavigationV234("replace");
+      }
       function renderCommentTagSearchV270() {
         const panel = document.getElementById("commentTagSearchV270");
         panel.hidden = menuViewV16 !== "my" || isSeriesParentCollectionV180(sharedCollectionV46);
@@ -9029,19 +9070,21 @@
         const scope = navigationScopeV234();
         if (filterGroups.dataset.scope !== scope || !filterGroups.innerHTML) {
           filterGroups.innerHTML = renderLearningFilterGroupsV281();
+          document.getElementById("commentKeywordSearchV284").innerHTML = renderCommentSearchFormV284("bookCommentKeywordV284");
           filterGroups.dataset.scope = scope;
         }
+        syncCommentSearchUiV284();
         syncLearningSettingsUiV189();
         activeTag.hidden = !bookListFiltersActiveV281();
         activeTag.textContent = bookListFilterSummaryV281();
-        const choices = window.MinkiruCommentTagsV270.tagSuggestions([...window.commentTagSuggestionsV271(), menuCommentTagV270]);
-        document.getElementById("commentTagFiltersV270").innerHTML = ["", ...choices].map(tag =>
-          `<button type="button" class="comment-tag-v270" data-comment-tag-filter="${escapeHtml(tag)}" aria-pressed="${menuCommentTagV270 === tag}">${tag ? "#" + escapeHtml(tag) : "すべて"}</button>`).join("");
+        const choices = window.commentTagSuggestionsV271();
+        document.getElementById("commentTagFiltersV270").innerHTML = choices.map(tag =>
+          `<button type="button" class="comment-tag-v270" data-comment-tag-filter="${escapeHtml(tag)}" aria-pressed="${menuCommentTagV270 === tag}">#${escapeHtml(tag)}</button>`).join("");
         const pending = sharedQuestionPagingIsCurrentV177() && !sharedQuestionPagingV177.allLoaded;
         document.getElementById("commentTagResultV270").textContent = menuCommentTagV270
           ? sharedQuestionPagingV177.error ? "検索結果を読み込めませんでした。ページを再読み込みしてください。"
-            : pending ? "この問題集の条件を検索中…" : `#${menuCommentTagV270}：${menuFilteredQuestionsV80().length}問`
-          : "コメントに付いたタグを選んで、問題を探せます。";
+            : pending ? "この問題集の条件を検索中…" : `「${menuCommentTagV270}」を含むコメント：${menuFilteredQuestionsV80().length}問`
+          : "ハッシュタグがない文章も検索します。";
       }
 
       let bookListShuffleV281 = new Map();
@@ -9056,14 +9099,14 @@
         if (learningOrderV189 === "random") parts.push("ランダム");
         if (learningGenresV189.size !== LEARNING_GENRE_ORDER_V189.length) parts.push(LEARNING_GENRE_ORDER_V189.filter(key => learningGenresV189.has(key)).map(key => LEARNING_GENRE_LABELS_V189[key]).join("・"));
         if (learningHistoryFiltersV189.size !== LEARNING_HISTORY_ORDER_V189.length) parts.push(LEARNING_HISTORY_ORDER_V189.filter(key => learningHistoryFiltersV189.has(key)).map(key => LEARNING_HISTORY_LABELS_V189[key]).join("・"));
-        if (learningCommentTagV273) parts.push("#" + learningCommentTagV273);
+        if (learningCommentTagV273) parts.push("コメント：「" + learningCommentTagV273 + "」");
         return parts.join(" / ");
       }
 
       function bookListFilteredV281(source) {
         const latest = learningLatestAnswersV189();
         const filtered = source.filter(question => learningQuestionMatchesGenreV189(question) && learningQuestionMatchesHistoryV189(question, latest)
-          && (!learningCommentTagV273 || questionCommentTagsV270(question).includes(learningCommentTagV273)));
+          && questionMatchesCommentSearchV284(question, learningCommentTagV273));
         if (learningOrderV189 === "random") {
           const scope = navigationScopeV234();
           if (scope !== bookListShuffleScopeV281) { bookListShuffleV281.clear(); bookListShuffleScopeV281 = scope; }
@@ -9653,7 +9696,7 @@
           ? learningWeakQuestionsV189(answerMap)
           : playable.filter(question => learningQuestionMatchesGenreV189(question) && learningQuestionMatchesHistoryV189(question, answerMap));
         const filtered = mode === "all" && learningCommentTagV273
-          ? source.filter(question => questionCommentTagsV270(question).includes(learningCommentTagV273)) : source;
+          ? source.filter(question => questionMatchesCommentSearchV284(question, learningCommentTagV273)) : source;
         if (!ordered) return filtered;
         const sequential = [...filtered].sort((left, right) => menuQuestionSortKeyV99(left) - menuQuestionSortKeyV99(right) || questionIndexByKeyV44(questionKeyV16(left)) - questionIndexByKeyV44(questionKeyV16(right)));
         // カスタム設定は「全問を解く」だけに適用し、未回答・苦手の導線は固定する。
@@ -9667,8 +9710,8 @@
       }
 
       function renderLearningTagFilterV273() {
-        const choices = window.MinkiruCommentTagsV270.tagSuggestions([...window.commentTagSuggestionsV271(), learningCommentTagV273]);
-        return `<fieldset class="learning-setting-group"><legend>ハッシュタグで検索</legend><div class="comment-tags-v270" role="group" aria-label="全問のハッシュタグ条件">${["", ...choices].map(tag => `<button type="button" class="comment-tag-v270" data-learning-tag-v273="${escapeHtml(tag)}" aria-pressed="${tag === learningCommentTagV273}">${tag ? "#" + escapeHtml(tag) : "すべて"}</button>`).join("")}</div><p data-learning-tag-result-v273>${learningCommentTagV273 ? "#" + escapeHtml(learningCommentTagV273) + " の問題に絞り込み" : "コメントに付いたタグから選べます。"}</p></fieldset>`;
+        const choices = window.commentTagSuggestionsV271();
+        return `<section class="learning-setting-group">${renderCommentSearchFormV284("learningCommentKeywordV284")}<p class="comment-search-hint-v284">候補は1つ選択。もう一度押すと解除できます。</p><div class="comment-tags-v270" role="group" aria-label="全問のコメント検索候補">${choices.map(tag => `<button type="button" class="comment-tag-v270" data-learning-tag-v273="${escapeHtml(tag)}" aria-pressed="${tag === learningCommentTagV273}">#${escapeHtml(tag)}</button>`).join("")}</div><p data-learning-tag-result-v273>${escapeHtml(commentSearchNoteV284())}</p></section>`;
       }
 
       function learningSettingsSummaryV189() {
@@ -9677,7 +9720,7 @@
         const history = LEARNING_HISTORY_ORDER_V189.filter(key => learningHistoryFiltersV189.has(key)).map(key => LEARNING_HISTORY_LABELS_V189[key]);
         const genreLabel = genres.length === LEARNING_GENRE_ORDER_V189.length ? "全ジャンル" : genres.join("・") || "未選択";
         const historyLabel = history.length === LEARNING_HISTORY_ORDER_V189.length ? "全履歴" : history.join("・") || "未選択";
-        return `全問のみ・${order}・${genreLabel}・${historyLabel}${learningCommentTagV273 ? "・#" + learningCommentTagV273 : ""}`;
+        return `全問のみ・${order}・${genreLabel}・${historyLabel}${learningCommentTagV273 ? "・コメント：「" + learningCommentTagV273 + "」" : ""}`;
       }
 
       function syncLearningSettingsUiV189() {
@@ -9942,7 +9985,7 @@
         }
         const entries = menuFilteredQuestionsV80().map(question => ({ question, index: questionIndexByKeyV44(questionKeyV16(question)) })).filter(({ index }) => index >= 0);
         empty.hidden = entries.length > 0;
-        empty.textContent = menuCommentTagV270 ? `#${menuCommentTagV270} が付いた問題はまだありません。` : menuFavoritesOnlyV137 ? "お気に入り登録した問題はまだありません。" : "出題できる問題がありません。";
+        empty.textContent = menuCommentTagV270 ? `「${menuCommentTagV270}」を含むコメントの問題は見つかりませんでした。` : menuFavoritesOnlyV137 ? "お気に入り登録した問題はまだありません。" : "出題できる問題がありません。";
         const visibleEntries = entries.length > MENU_RENDER_THRESHOLD_V119 ? entries.slice(0, menuRenderLimitV119) : entries;
         renderMenuLoadMoreV119(entries.length, visibleEntries.length);
         grid.innerHTML = visibleEntries.map(({ question, index }) => {
@@ -10630,6 +10673,7 @@
             question.isShared = true;
             if (remote.initialCommentId) markSharedCommentKnownV65(remote.initialCommentId);
             question.commentTagsV270 = window.MinkiruCommentTagsV270.tagsFromComments([initialComment]);
+            question.commentSearchTextV284 = window.MinkiruCommentTagsV270.searchTextFromComments([initialComment]);
           } catch (error) {
             const message = String(error.message || "共有問題集へ追加できませんでした。");
             setGeneratorStatusV44(message.includes("comments_disabled") ? "この問題集ではコメントが無効です。保存先を変えるか、コメント欄を空にして追加してください。" : message.includes("comment_content_invalid") ? "コメントは4,000文字以内で入力してください。" : message, true);
@@ -11437,7 +11481,7 @@
             if (shareSlug !== String(sharedCollectionV46?.share_slug || "") || pagingGeneration !== sharedQuestionPagingV177.generation) return question;
             const normalized = normalizeSharedQuestionV66(row, index, shareSlug);
             if (!normalized?.question) throw new Error("問題の内容を読み込めませんでした。");
-            const merged = { ...question, ...normalized.question, commentTagsV270: normalized.question.commentTagsV270 ?? question.commentTagsV270, __sharedDetailLoaded: true };
+            const merged = { ...question, ...normalized.question, commentTagsV270: normalized.question.commentTagsV270 ?? question.commentTagsV270, commentSearchTextV284: normalized.question.commentSearchTextV284 ?? question.commentSearchTextV284, __sharedDetailLoaded: true };
             const currentIndex = questionsV16.findIndex(candidate => questionKeyV16(candidate) === questionKey);
             if (currentIndex >= 0) questionsV16[currentIndex] = merged;
             for (const page of sharedQuestionPagingV177.pages.values()) {
@@ -11567,22 +11611,24 @@
           if (!button) return;
           const tag = window.MinkiruCommentTagsV270.normalizeTag(button.dataset.commentTagFilter);
           if (button.dataset.commentTagFilter && !tag) return;
-          menuCommentTagV270 = tag;
-          learningCommentTagV273 = tag;
-          refreshBookListConditionsV281();
+          applyCommentSearchV284(menuCommentTagV270 === tag ? "" : tag);
+        });
+        document.getElementById("menuPanel").addEventListener("submit", event => {
+          const form = event.target.closest("[data-comment-search-form-v284]");
+          if (!form) return;
+          event.preventDefault();
+          applyCommentSearchV284(form.querySelector("[data-comment-search-input-v284]").value);
+        });
+        document.getElementById("menuPanel").addEventListener("input", event => {
+          if (event.target.matches("[data-comment-search-input-v284]") && !event.isComposing && !event.target.value) applyCommentSearchV284("");
         });
         document.getElementById("menuPanel").addEventListener("click", handleMenuGridClickV16);
         document.getElementById("menuPanel").addEventListener("change", handleLearningSettingsChangeV189);
         document.getElementById("menuPanel").addEventListener("click", event => {
           const button = event.target.closest("[data-learning-tag-v273]");
           if (!button) return;
-          learningCommentTagV273 = window.MinkiruCommentTagsV270.normalizeTag(button.dataset.learningTagV273);
-          document.querySelectorAll("[data-learning-tag-v273]").forEach(item => item.setAttribute("aria-pressed", String(item.dataset.learningTagV273 === learningCommentTagV273)));
-          const note = document.querySelector("[data-learning-tag-result-v273]");
-          if (note) note.textContent = learningCommentTagV273 ? "#" + learningCommentTagV273 + " の問題に絞り込み" : "コメントに付いたタグから選べます。";
-          syncLearningSettingsUiV189();
-          syncLearningActionCountsV189();
-          refreshBookListConditionsV281();
+          const tag = window.MinkiruCommentTagsV270.normalizeTag(button.dataset.learningTagV273);
+          if (tag) applyCommentSearchV284(learningCommentTagV273 === tag ? "" : tag);
         });
         document.getElementById("menuPanel").addEventListener("click", event => {
           if (event.target.closest("[data-book-filter-reset-v281]")) resetBookListConditionsV281();
