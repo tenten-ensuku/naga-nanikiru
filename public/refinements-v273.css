@@ -26,10 +26,10 @@
   --learning-card-ink-v280: #ffffff;
   container-type: inline-size;
   grid-template-columns: minmax(0, 1fr);
-  gap: 10px;
+  gap: 8px;
 }
 .page.menu-active #menuPanel[data-view="today"] :is(.learning-action-card, .learning-all-action) {
-  --entry-height-v273: 90px;
+  --entry-height-v273: 64px;
   min-height: var(--entry-height-v273);
   width: 100%;
   border-radius: 6px;
@@ -202,7 +202,7 @@ html[data-theme="light"] .page.menu-active #menuPanel[data-view="today"] .learni
   border-radius: 9px;
 }
 .page.menu-active #menuPanel[data-view="today"] .learning-action-grid .learning-action-card {
-  padding-block: 8px;
+  padding-block: 2px;
 }
 .page.menu-active #menuPanel[data-view="today"] .learning-all-action > .learning-action-card:hover:not(:disabled) {
   background: transparent;
@@ -220,6 +220,7 @@ html[data-theme="light"] .page.menu-active #menuPanel[data-view="today"] .learni
 }
 
 @container (min-width: 480px) {
+  .page.menu-active #menuPanel[data-view="today"] :is(.learning-action-card, .learning-all-action) { --entry-height-v273: 72px; }
   .page.menu-active #menuPanel[data-view="today"] :is(.learning-action-card, .learning-all-action > .learning-action-card) { grid-template-columns: 54px minmax(120px, 1.2fr) minmax(90px, 1fr) 112px 38px; gap: 10px; padding-inline: 16px; }
   .page.menu-active #menuPanel[data-view="today"] .learning-action-card .learning-action-title { font-size: 22px; }
   .page.menu-active #menuPanel[data-view="today"] .learning-action-card .learning-action-description { font-size: 12px; }
@@ -232,6 +233,7 @@ html[data-theme="light"] .page.menu-active #menuPanel[data-view="today"] .learni
   .page.menu-active #menuPanel[data-view="today"] .learning-all-action .learning-settings-icon { display: inline; margin-right: 5px; }
 }
 @container (min-width: 700px) {
+  .page.menu-active #menuPanel[data-view="today"] :is(.learning-action-card, .learning-all-action) { --entry-height-v273: 76px; }
   .page.menu-active #menuPanel[data-view="today"] :is(.learning-action-card, .learning-all-action > .learning-action-card) { grid-template-columns: 66px minmax(180px, 1.2fr) minmax(130px, 1fr) 150px 44px; gap: 16px; padding-inline: 22px; }
   .page.menu-active #menuPanel[data-view="today"] .learning-action-card .learning-action-title { font-size: 24px; }
   .page.menu-active #menuPanel[data-view="today"] .learning-action-card .learning-action-description { font-size: 14px; }
@@ -289,4 +291,14 @@ html[data-theme="light"] .page.menu-active #menuPanel[data-view="today"] .learni
 }
 @container (min-width: 700px) {
   .page.menu-active #menuPanel[data-view="today"] .learning-action-card .learning-action-title { font-size: 28px; }
+}
+
+/* V283: trim vertical space without changing question or result typography. */
+.page.menu-active #menuPanel[data-view="today"] .learning-recent-row {
+  min-height: 48px;
+  padding-block: 1px;
+}
+.page.menu-active #menuPanel[data-view="today"] .learning-recent-open {
+  min-height: 44px;
+  padding-block: 2px;
 }
