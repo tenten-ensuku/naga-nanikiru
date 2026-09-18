@@ -79,7 +79,7 @@ test("V161 displays the canonical perfect mark while accepting legacy history", 
   assert.match(html, /replaceAll\("💮", "◎"\)/);
   assert.match(html, /return normalizeScoreMarkV159\(value\) === "◎"/);
   assert.match(todayView, /learning-dashboard/);
-  assert.match(todayView, /直近×・△/);
+  assert.match(todayView, /直近の回答が△または×の問題/);
   assert.doesNotMatch(todayView, /直近2回連続で◎/);
 });
 

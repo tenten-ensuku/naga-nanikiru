@@ -70,7 +70,7 @@ test("V210 keeps the learning actions usable and stable on desktop and mobile", 
   assert.doesNotMatch(filterGroups, /data-learning-value="reverse"/);
   assert.match(filterGroups, /複数選択可/);
   assert.match(customSettings, /「全問」と「問題一覧」に共通の条件です/);
-  assert.match(learningView, /直近×・△/);
+  assert.match(learningView, /直近の回答が△または×の問題/);
 
   assert.match(html, /function learningWeakQuestionsV189\([^)]*\)/);
   assert.match(html, /\["×", "△"\]\.includes\(mark\)/);
