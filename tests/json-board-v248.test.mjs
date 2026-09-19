@@ -48,5 +48,5 @@ test('browser code is syntactically valid and generation does not call capture/u
  assert.match(html,/needsScreenshot: false/);assert.match(html,/if \(!SCENE.boardScene\) setHandMaskV17/);
  assert.match(html,/question\.id = String\(question\.serverQuestionId\)/);
  assert.match(html,/question\.__sharedDetailLoaded = true/);
- assert.match(html,/question\?\.image \|\| hasJsonBoardV248\(question\)/);
+ assert.doesNotMatch(html,/questionsV16\.concat\(\(userStateV16\.customQuestions/);
 });
