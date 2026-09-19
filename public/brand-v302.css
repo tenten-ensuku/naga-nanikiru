@@ -1,0 +1,8 @@
+/* Header viewport shows the wordmark from the original artwork. */
+.page.menu-active .menu-brand-logo {
+  height: 56px;
+  overflow: hidden;
+}
+@media (max-width: 800px) {
+  .page.menu-active .menu-brand-logo { height: 52px; }
+}

@@ -10,7 +10,7 @@ test("renders the v87 scene and half-game generator controls", async () => {
     readFile(indexUrl, "utf8"),
     readFile(generatorUrl, "utf8")
   ]);
-  assert.match(html, /const APP_VERSION = 301/);
+  assert.match(html, /const APP_VERSION = 302/);
   assert.match(html, /function captureGeneratorFormDraftV157\(\)/);
   assert.match(html, /destination: document\.getElementById\("generatorDestinationSelect"\)\?\.value \|\| generatorDestinationV130 \|\| ""/);
   assert.match(html, /function restoreGeneratorFormDraftV157\(draft\)/);
@@ -120,7 +120,7 @@ test("renders the v87 scene and half-game generator controls", async () => {
   assert.match(html, /function setMenuRangeV137\(rangeKey\)/);
   assert.match(html, /function moveMenuRangeV137\(delta\)/);
   assert.match(html, /sourceQuestions\.filter\(menuRangeMatchesV60\)/);
-  assert.match(html, /class="menu-brand-logo-wrap"[\s\S]*<img class="menu-brand-logo" src="assets\/min-kiru-header\.png" alt="みん切る（みんなの何切る問題集）">[\s\S]*id="menuVersion"/);
+  assert.match(html, /class="menu-brand-logo-wrap"[\s\S]*<svg class="menu-brand-logo"[^>]*aria-label="みん切る"[^>]*>[\s\S]*<image href="assets\/min-kiru-header\.png"[\s\S]*id="menuVersion"/);
   assert.match(html, /class="menu-brand-actions"/);
   assert.match(html, /class="menu-notice-icon"[^>]*><svg class="menu-icon-v239 announcement-icon-v251"/);
   assert.match(html, /class="menu-notice-icon"[^>]*>🔔<\/span>/);

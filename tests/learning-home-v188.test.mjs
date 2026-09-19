@@ -15,10 +15,10 @@ test("V210 keeps the learning actions usable and stable on desktop and mobile", 
     readFile(packageUrl, "utf8")
   ]);
 
-  assert.match(html, /const APP_VERSION = 301;/);
-  assert.match(identity, /APP_VERSION = 301/);
+  assert.match(html, /const APP_VERSION = 302;/);
+  assert.match(identity, /APP_VERSION = 302/);
   for (const asset of ["ux-v159\\.css", "supabase-sync-v48\\.js", "drill-ux-v44\\.js"]) {
-    assert.match(html, new RegExp(`${asset}\\?v=301`));
+    assert.match(html, new RegExp(`${asset}\\?v=302`));
   }
   assert.match(html, /問題集を変更する/);
   assert.doesNotMatch(html, /class="active-collection-label"/);
@@ -108,7 +108,7 @@ test("V210 keeps the learning actions usable and stable on desktop and mobile", 
   assert.match(css, /learning-custom-settings:not\(\[open\]\) > \.learning-custom-settings-body/);
   assert.match(html, /<summary aria-label="全問を解くの設定">[\s\S]*条件設定/);
   assert.match(html, /function renderLearningActionButtonV194\(/);
-  assert.match(html, /class="menu-brand-logo" src="assets\/min-kiru-header\.png" alt="みん切る（みんなの何切る問題集）"/);
+  assert.match(html, /class="menu-brand-logo"[^>]*aria-label="みん切る"/);
   assert.match(html, /class="menu-brand-actions"[\s\S]*id="discordAuthButton"/);
   assert.match(html, /id="accountStatus"/);
   const learningActionRenderer = html.match(/function renderLearningActionButtonV194\([\s\S]*?\n      \}/)?.[0] || "";
