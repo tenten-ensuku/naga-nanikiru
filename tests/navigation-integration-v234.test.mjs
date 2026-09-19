@@ -35,7 +35,7 @@ test('generation never treats empty or revoked destinations as local storage', (
     assert.equal(context.currentGeneratorDestinationV130().kind, 'unselected');
     assert.equal(context.canAddGeneratedQuestionV130(), false);
   }
-  select.value = 'local'; assert.equal(context.canAddGeneratedQuestionV130(), true);
+  select.value = 'local'; assert.equal(context.canAddGeneratedQuestionV130(), false);
   select.value = 'editable-book'; assert.equal(context.currentGeneratorDestinationV130().label, '保存先の本');
   context.supabaseSessionV46 = null; assert.equal(context.canAddGeneratedQuestionV130(), false);
 });
@@ -50,10 +50,10 @@ function generatorContext(draft, destination) {
   });
 }
 test('this-book creation preserves a draft with an explicitly selected different destination', () => {
-  const context = generatorContext({ url: 'https://example.invalid/draft', destination: 'local' }, 'local');
+  const context = generatorContext({ url: 'https://example.invalid/draft', destination: 'book-a' }, 'book-a');
   context.showMenuV16 = view => context.shown.push(view);
   context.openGeneratorNavigationV234(true);
-  assert.equal(context.generatorDestinationV130, 'local');
+  assert.equal(context.generatorDestinationV130, 'book-a');
   assert.equal(context.generatorFormDraftV157.url, 'https://example.invalid/draft');
   assert.deepEqual(context.shown, ['generator']);
 });

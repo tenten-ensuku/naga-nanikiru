@@ -10,7 +10,7 @@ async function source() {
 
 test("exposes v65 ownership-aware problem management controls", async () => {
   const html = await source();
-  assert.match(html, /const APP_VERSION = 300;/);
+  assert.match(html, /const APP_VERSION = 301;/);
   assert.match(html, /id="questionManageEditForm"/);
   assert.match(html, /id="questionManageProposeDeleteButton"[^>]*data-manage-action="propose-delete"/);
   assert.match(html, /id="questionManageDeleteButton"[^>]*data-manage-action="delete"/);
@@ -36,7 +36,7 @@ test("keeps shared mutations behind explicit scope confirmation and permission b
   assert.match(html, /invokeSharedMutationV47\("delete"/);
 });
 
-test("records local ownership metadata and makes shared generator scope explicit", async () => {
+test("records account ownership metadata and makes generator book scope explicit", async () => {
   const html = await source();
   assert.match(html, /createdByName: creatorName/);
   assert.match(html, /updatedByName: creatorName/);

@@ -77,7 +77,7 @@ test("fromBook selects only the current book in the editable allowlist, without 
 test("explicit selections and restored draft destinations take priority over the entry book", () => {
   const { generatorDefault } = loadApi();
   // Draft restoration uses the same stored + explicit contract as a selection.
-  for (const stored of ["book-b", "local"]) {
+  for (const stored of ["book-b"]) {
     for (const fromBook of [false, true]) {
       const options = Object.freeze({ stored, explicit: true, rows: EDITABLE_ROWS, bookSlug: "book-a", fromBook });
       assert.equal(generatorDefault(options), stored);
@@ -91,7 +91,7 @@ test("revoked explicit destination is unselected on global entry", () => {
   assert.equal(generatorDefault(options), "book-b");
   assert.equal(generatorDefault({ ...options, rows: [EDITABLE_ROWS[0]] }), "");
   assert.equal(generatorDefault({ ...options, rows: [] }), "");
-  assert.equal(generatorDefault({ ...options, stored: "local", rows: [] }), "local");
+  assert.equal(generatorDefault({ ...options, stored: "local", rows: [] }), "");
 });
 
 test("revoked explicit or draft destination does not silently fall back to another editable entry book", () => {

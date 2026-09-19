@@ -8,7 +8,7 @@
   const globalView = view => isBookView(view) ? "today" : view === "students" ? "settings" : view;
   const localView = view => ["my", "question"].includes(normalizeView(view)) ? "my" : view === "analysis" ? "analysis" : "today";
   function generatorDefault({ stored = "", explicit = false, rows = [], bookSlug = "", fromBook = false } = {}) {
-    const valid = value => value === "local" || rows.some(row => String(row.share_slug || "") === value);
+    const valid = value => Boolean(value) && value !== "local" && rows.some(row => String(row.share_slug || "") === value);
     if (explicit) return valid(stored) ? stored : "";
     if (fromBook && bookSlug && valid(bookSlug)) return bookSlug;
     return "";

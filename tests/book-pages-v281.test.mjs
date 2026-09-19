@@ -92,7 +92,7 @@ test('learning and question list share body search while titles and hidden comme
     {id:'b',number:2,type:'discard',comments:[{content:'＃押し引き'}]},
     {id:'c',number:3,type:'discard',title:'押し引き',comments:[{content:'押し引き',showInComments:false}]},
     {id:'d',number:4,type:'discard'}];
-  ctx.userStateV16.localComments.d=[{content:'押し引きのメモ'}];
+  rows.find(q=>q.id==='d').comments=[{content:'押し引きのメモ'}];
   ctx.learningScopeQuestionsV184=()=>rows;ctx.learningCommentTagV273='押し引き';
   assert.deepEqual(ids(ctx.bookListFilteredV281(rows)),['a','b','d']);
   assert.deepEqual(ids(ctx.learningCandidatesV189('all')),['a','b','d']);

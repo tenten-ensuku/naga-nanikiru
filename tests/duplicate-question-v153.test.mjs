@@ -9,7 +9,7 @@ const privateCollectionQuestionsMigrationUrl = new URL("../supabase/migrations/2
 
 test("重複追加は既存問題への導線を持ち、コメント欄の拡大ボタンを持たない", async () => {
   const html = await readFile(indexUrl, "utf8");
-  assert.match(html, /const APP_VERSION = 300/);
+  assert.match(html, /const APP_VERSION = 301/);
   assert.doesNotMatch(html, /commentsExpandButton|comments-expand-button|toggleCommentsExpanded|commentsExpanded/);
   assert.match(html, /alreadyExists: result\.already_exists === true/);
   assert.match(html, /showGeneratorExistingStatusV153\("この局面は既に登録済みです。"/);
@@ -22,7 +22,7 @@ test("重複追加は既存問題への導線を持ち、コメント欄の拡�
   assert.doesNotMatch(html, /if \(!candidate\._imageData\)/);
   assert.match(html, /function finiteQuestionNumberV154/);
   assert.match(html, /function nextQuestionNumberV154/);
-  assert.match(html, /repairInvalidCustomQuestionNumbersV154\(\)/);
+  assert.doesNotMatch(html, /repairInvalidCustomQuestionNumbersV154\(\)/);
   assert.doesNotMatch(html, /Math\.max\(\.\.\.questionsV16\.map\(question => Number\(question\.number\) \|\| 0\)\) \+ 1/);
 });
 
