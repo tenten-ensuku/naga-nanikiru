@@ -9,6 +9,7 @@ import {MANAGER_READ_RPCS,MANAGER_WRITE_RPCS,managerRpc} from './collection-mana
 import {QUESTION_MANAGEMENT_RPCS,questionManagementRpc} from './question-management-v290.mjs';
 import {imageUpload} from './media-write-v241.mjs';
 import {createGenerationApi} from './generation-api-v241.mjs';
+import {guideVideo} from './guide-video-v296.mjs';
 import {reconcileMediaBudget} from './generation-capacity-v241.mjs';
 import {authenticateDiscordBot,createDiscordSyncApi} from './discord-sync-v242.mjs';
 const discordSyncApi=createDiscordSyncApi();
@@ -68,7 +69,7 @@ export default {
     try{
       const url=new URL(request.url);
       if(url.pathname==='/guide/video/minkiru-promo.mp4')return new Response(request.method==='HEAD'?null:'This video has been withdrawn.',{status:410,headers:common});
-      if(url.pathname==='/health'&&request.method==='GET')return json({version:295,backend:'cloudflare',ready:ready(env),studentFlow:ready(env),signups:ready(env)&&env.SIGNUPS_ENABLED==='true',heavyOperations:generationEnabled(env),generation:generationEnabled(env),uploads:env.UPLOADS_ENABLED==='true',bulkImport:false,bot:env.DISCORD_SYNC_ENABLED==='true'&&!!env.DISCORD_SYNC_TOKEN});
+      if(url.pathname==='/health'&&request.method==='GET')return json({version:296,backend:'cloudflare',ready:ready(env),studentFlow:ready(env),signups:ready(env)&&env.SIGNUPS_ENABLED==='true',heavyOperations:generationEnabled(env),generation:generationEnabled(env),uploads:env.UPLOADS_ENABLED==='true',bulkImport:false,bot:env.DISCORD_SYNC_ENABLED==='true'&&!!env.DISCORD_SYNC_TOKEN});
       if(!ready(env))return json({error:'migration_not_ready',message:'移行確認中です。公開切替はまだ完了していません。'},503);
       if(url.origin!==env.APP_ORIGIN)throw new ApiError('origin_denied',403);
       if(url.pathname==='/naga-nanikiru'||url.pathname==='/naga-nanikiru/')return Response.redirect(url.origin+'/'+url.search,302);
@@ -144,7 +145,7 @@ export default {
         return json({error:'not_found'},404);
       }
       if(['GET','HEAD'].includes(request.method)&&env.ASSETS){
-        const response=await env.ASSETS.fetch(request);const headers=new Headers(response.headers);headers.set('X-Content-Type-Options','nosniff');headers.set('Referrer-Policy','same-origin');headers.set('X-Frame-Options','DENY');
+        const response=/^\/guide\/video\/[^/]+\.mp4$/.test(url.pathname)?await guideVideo(request,env.ASSETS):await env.ASSETS.fetch(request);const headers=new Headers(response.headers);headers.set('X-Content-Type-Options','nosniff');headers.set('Referrer-Policy','same-origin');headers.set('X-Frame-Options','DENY');
         if(headers.get('Content-Type')?.includes('text/html'))headers.set('Cache-Control','no-cache');
         return new Response(response.body,{status:response.status,headers});
       }
