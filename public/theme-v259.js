@@ -3,7 +3,7 @@
   "use strict";
   const storageKey = "minkiru:color-theme:v1";
   const valid = value => value === "light" || value === "dark";
-  let theme = "dark";
+  let theme = "light";
   try {
     const saved = window.localStorage.getItem(storageKey);
     if (valid(saved)) theme = saved;
@@ -41,7 +41,7 @@
     let local;
     try { local = window.localStorage; } catch { return; }
     if (event.storageArea !== local || (event.key !== storageKey && event.key !== null)) return;
-    apply(valid(event.newValue) ? event.newValue : "dark");
+    apply(valid(event.newValue) ? event.newValue : "light");
     const status = document.querySelector("#themePreferenceStatusV259");
     if (status) { status.textContent = ""; status.classList.remove("is-error"); }
   });

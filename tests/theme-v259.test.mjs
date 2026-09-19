@@ -24,15 +24,15 @@ function browser({ values = new Map(), blocked = false } = {}) {
   return {api:window.MinkiruThemeV259, document, meta, writes, values, events, storage, status, radios, listeners};
 }
 
-test('first visit and invalid preferences keep dark mode without rewriting saved study data', () => {
+test('first visit and invalid preferences use light mode without rewriting saved study data', () => {
   for (const saved of [undefined, 'auto', '<script>', 'LIGHT']) {
     const values = new Map([['existing-study-state', '{"answerHistory":[1],"settings":{"desktopLayout":"single"}}']]);
     if (saved !== undefined) values.set(key, saved);
     const before = [...values];
     const b = browser({values});
-    assert.equal(b.api.current(), 'dark');
-    assert.equal(b.document.documentElement.dataset.theme, 'dark');
-    assert.equal(b.meta.content, '#06131e');
+    assert.equal(b.api.current(), 'light');
+    assert.equal(b.document.documentElement.dataset.theme, 'light');
+    assert.equal(b.meta.content, '#f3f6f7');
     assert.deepEqual([...values], before);
     assert.deepEqual(b.writes, []);
   }
@@ -67,23 +67,23 @@ test('disabled storage still switches and truthfully reports the missing persist
   assert.equal(b.api.current(), 'light');
   assert.equal(b.status.error, true);
   assert.match(b.status.textContent, /保存できない/);
-  assert.equal(browser({blocked:true}).api.current(), 'dark');
+  assert.equal(browser({blocked:true}).api.current(), 'light');
   assert.doesNotThrow(() => b.events.storage({key, newValue:'dark'}));
 });
 
-test('other tabs synchronize controls and clearing preferences restores dark without feedback writes', () => {
+test('other tabs synchronize controls and clearing preferences restores light without feedback writes', () => {
   const b = browser();
-  b.events.storage({key, newValue:'light', storageArea:b.storage});
-  assert.equal(b.api.current(), 'light');
-  assert.deepEqual(b.radios.map(input => input.checked), [true, false]);
-  b.events.storage({key:'existing-study-state', newValue:'dark', storageArea:b.storage});
-  b.events.storage({key, newValue:'dark', storageArea:{}});
-  assert.equal(b.api.current(), 'light');
+  b.events.storage({key, newValue:'dark', storageArea:b.storage});
+  assert.equal(b.api.current(), 'dark');
+  assert.deepEqual(b.radios.map(input => input.checked), [false, true]);
+  b.events.storage({key:'existing-study-state', newValue:'light', storageArea:b.storage});
+  b.events.storage({key, newValue:'light', storageArea:{}});
+  assert.equal(b.api.current(), 'dark');
   b.events.storage({key, newValue:null, storageArea:b.storage});
-  assert.equal(b.api.current(), 'dark');
-  b.events.storage({key, newValue:'light', storageArea:b.storage});
+  assert.equal(b.api.current(), 'light');
+  b.events.storage({key, newValue:'dark', storageArea:b.storage});
   b.events.storage({key:null, newValue:null, storageArea:b.storage});
-  assert.equal(b.api.current(), 'dark');
+  assert.equal(b.api.current(), 'light');
   assert.deepEqual(b.writes, []);
 });
 
@@ -111,7 +111,7 @@ test('accessible My Page controls reflect current theme and early restoration pr
     assert.match(result, /id="themePreferenceStatusV259" role="status"/);
     assert.match(result, /id="desktopLayoutSelect"/);
   }
-  assert.ok(html.indexOf('<script src="theme-v259.js?v=298"></script>') < html.indexOf('<style'));
+  assert.ok(html.indexOf('<script src="theme-v259.js?v=299"></script>') < html.indexOf('<style'));
   assert.match(html, /window\.MinkiruThemeV259\?\.bind\(\)/);
-  assert.ok(html.indexOf('theme-v259.css?v=298') > html.indexOf('question-toolbar-v255.css'));
+  assert.ok(html.indexOf('theme-v259.css?v=299') > html.indexOf('question-toolbar-v255.css'));
 });

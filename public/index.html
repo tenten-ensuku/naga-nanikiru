@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=298">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=298">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=298">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=299">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=299">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=299">
   <title>みん切る｜みんなの何切る問題集</title>
   <link rel="preload" as="image" href="assets/loading-screen-v243.png" fetchpriority="high">
   <meta name="description" content="みん切るは、NAGA URLから問題をつくり、解いて、仲間と共有できる麻雀学習アプリです。">
-  <meta name="theme-color" content="#06131e">
-  <script src="theme-v259.js?v=298"></script>
+  <meta name="theme-color" content="#f3f6f7">
+  <script src="theme-v259.js?v=299"></script>
   <meta property="og:type" content="website">
   <meta property="og:title" content="みん切る｜みんなの何切る問題集">
   <meta property="og:description" content="みん切るは、NAGA URLから問題をつくり、解いて、仲間と共有できる麻雀学習アプリです。">
@@ -640,6 +640,7 @@
     .comment-image-viewer-close { position: absolute; top: 14px; right: 18px; min-width: 42px; min-height: 36px; padding: 7px 10px; color: #fff; background: #164862; border: 1px solid rgba(155,232,216,.75); border-radius: 7px; font-size: 12px; font-weight: 800; }
     .comment-image-viewer-close:hover, .comment-image-viewer-close:focus-visible { background: #246b8a; outline: 2px solid rgba(155,232,216,.3); outline-offset: 2px; }
     .comment-image-viewer-hint { position: absolute; bottom: 10px; left: 0; width: 100%; margin: 0; color: #cfe9ed; font-size: 10px; text-align: center; }
+    .comment-welcome-v299 { margin: 10px 0 8px; color: var(--muted); font-size: 16px; line-height: 1.65; }
     .comment-form { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px; align-items: end; padding: 9px; border: 1px solid rgba(113,183,255,.28); border-radius: 8px; background: rgba(0,0,0,.14); }
     .comment-form[hidden] { display: none; }
     .comment-form label { grid-column: 1 / -1; color: #eafefe; font-size: 11px; font-weight: 800; }
@@ -2256,22 +2257,22 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=298">
-  <link rel="stylesheet" href="library-v214.css?v=298">
-  <link rel="stylesheet" href="navigation-v234.css?v=298">
-  <link rel="stylesheet" href="book-builder-v235.css?v=298">
-  <link rel="stylesheet" href="menu-polish-v238.css?v=298">
-  <link rel="stylesheet" href="menu-sections-v239.css?v=298">
-  <link rel="stylesheet" href="workspace-ui-v240.css?v=298">
-  <link rel="stylesheet" href="collection-deletion-v244.css?v=298">
-  <link rel="stylesheet" href="collection-managers-v290.css?v=298">
-  <link rel="stylesheet" href="menu-simplify-v245.css?v=298">
-  <link rel="stylesheet" href="content-dates-v246.css?v=298">
-  <link rel="stylesheet" href="question-header-v250.css?v=298">
-  <link rel="stylesheet" href="question-toolbar-v255.css?v=298">
-  <link rel="stylesheet" href="theme-v259.css?v=298">
-  <link rel="stylesheet" href="theme-quick-v295.css?v=298">
-  <script defer src="theme-quick-v295.js?v=298"></script>
+  <link rel="stylesheet" href="ux-v159.css?v=299">
+  <link rel="stylesheet" href="library-v214.css?v=299">
+  <link rel="stylesheet" href="navigation-v234.css?v=299">
+  <link rel="stylesheet" href="book-builder-v235.css?v=299">
+  <link rel="stylesheet" href="menu-polish-v238.css?v=299">
+  <link rel="stylesheet" href="menu-sections-v239.css?v=299">
+  <link rel="stylesheet" href="workspace-ui-v240.css?v=299">
+  <link rel="stylesheet" href="collection-deletion-v244.css?v=299">
+  <link rel="stylesheet" href="collection-managers-v290.css?v=299">
+  <link rel="stylesheet" href="menu-simplify-v245.css?v=299">
+  <link rel="stylesheet" href="content-dates-v246.css?v=299">
+  <link rel="stylesheet" href="question-header-v250.css?v=299">
+  <link rel="stylesheet" href="question-toolbar-v255.css?v=299">
+  <link rel="stylesheet" href="theme-v259.css?v=299">
+  <link rel="stylesheet" href="theme-quick-v295.css?v=299">
+  <script defer src="theme-quick-v295.js?v=299"></script>
 </head>
 <body class="auth-gate-open">
   <section class="startup-screen-v236" id="startupScreenV236" aria-label="みん切るを準備中">
@@ -2491,7 +2492,7 @@
           </div>
         </details>
         <div class="comment-compose-editor" id="commentComposeEditor">
-          <textarea id="commentInput" maxlength="2000" placeholder="コメントを書き込む"></textarea>
+          <textarea id="commentInput" maxlength="2000" aria-describedby="commentWelcomeV299" placeholder="例：私はこの牌を選びました。理由が気になる／勉強になりました"></textarea>
           <div class="comment-dropzone" id="commentDropzone">画像をここへドラッグ＆ドロップ、または貼り付け</div>
         </div>
         <div class="comment-attachment-preview" id="commentAttachmentPreview" hidden></div>
@@ -2501,6 +2502,7 @@
         <button class="comment-edit-cancel" id="commentEditCancelButton" type="button" hidden>編集をキャンセル</button>
       </form>
       <p class="comment-sync-note">追加したコメントはこのアプリ内に保存されます。共有問題集ではDiscordログイン後に他の利用者にも表示されます。投稿者本人のコメントには「編集」が表示されます。Discordのスレッドには投稿されません。</p>
+      <p class="comment-welcome-v299" id="commentWelcomeV299">疑問も、違う考えも、一言の感想も歓迎。<br>作成者にとって、誰からのコメントもうれしいものです。</p>
       <div class="comments-footer">
         <button class="comment-add-button" id="commentAddButton" type="button" aria-expanded="false">コメント追加</button>
         <a id="threadLink" hidden target="_blank" rel="noreferrer">Discordで開く</a>
@@ -2647,34 +2649,34 @@
     </form>
   </dialog>
 
-  <link rel="stylesheet" href="comment-tags-v270.css?v=298">
+  <link rel="stylesheet" href="comment-tags-v270.css?v=299">
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=298"></script>
-  <script src="drill-ux-v44.js?v=298"></script>
-  <script src="navigation-v234.js?v=298"></script>
-  <script src="book-builder-v235.js?v=298"></script>
-  <script src="library-order-v215.js?v=298"></script>
-  <script src="content-dates-v246.js?v=298"></script>
-  <script src="question-header-v250.js?v=298"></script>
-  <script src="library-v214.js?v=298"></script>
-  <script src="naga-generator-v44.js?v=298"></script>
-  <link rel="stylesheet" href="naga-board-v248.css?v=298">
-  <link rel="stylesheet" href="refinements-v273.css?v=298">
-  <link rel="stylesheet" href="generator-tools-v274.css?v=298">
-  <link rel="stylesheet" href="book-pages-v281.css?v=298">
-  <script src="comment-tools-v274.js?v=298"></script>
-  <script src="naga-board-state-v248.js?v=298"></script>
-  <script src="naga-board-v248.js?v=298"></script>
-  <script src="hand-mask-v237.js?v=298"></script>
-  <script src="menu-sections-v239.js?v=298"></script>
-  <script src="workspace-ui-v240.js?v=298"></script>
-  <script src="generation-confirm-v241.js?v=298"></script>
-  <script src="collection-deletion-v244.js?v=298"></script>
-  <script src="collection-managers-v290.js?v=298"></script>
+  <script src="supabase-sync-v48.js?v=299"></script>
+  <script src="drill-ux-v44.js?v=299"></script>
+  <script src="navigation-v234.js?v=299"></script>
+  <script src="book-builder-v235.js?v=299"></script>
+  <script src="library-order-v215.js?v=299"></script>
+  <script src="content-dates-v246.js?v=299"></script>
+  <script src="question-header-v250.js?v=299"></script>
+  <script src="library-v214.js?v=299"></script>
+  <script src="naga-generator-v44.js?v=299"></script>
+  <link rel="stylesheet" href="naga-board-v248.css?v=299">
+  <link rel="stylesheet" href="refinements-v273.css?v=299">
+  <link rel="stylesheet" href="generator-tools-v274.css?v=299">
+  <link rel="stylesheet" href="book-pages-v281.css?v=299">
+  <script src="comment-tools-v274.js?v=299"></script>
+  <script src="naga-board-state-v248.js?v=299"></script>
+  <script src="naga-board-v248.js?v=299"></script>
+  <script src="hand-mask-v237.js?v=299"></script>
+  <script src="menu-sections-v239.js?v=299"></script>
+  <script src="workspace-ui-v240.js?v=299"></script>
+  <script src="generation-confirm-v241.js?v=299"></script>
+  <script src="collection-deletion-v244.js?v=299"></script>
+  <script src="collection-managers-v290.js?v=299"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 298;
+    const APP_VERSION = 299;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -4803,6 +4805,7 @@
       const QUESTION_NOTICE_STORAGE_KEY_V66 = storageKey("question-notices-v1");
         const ANNOUNCEMENT_SEEN_STORAGE_KEY_V65 = storageKey("announcement-seen-v1");
         const APP_ANNOUNCEMENTS_V66 = [
+          {"version":299,"date":"2026-09-19","publishedAt":"2026-09-19T05:11:24.917Z","title":"ライト表示と、気軽に学び合える案内に","body":"初めて開いたときはライトモードに。紹介動画には大きな再生ボタンを付け、コメント欄とガイドに疑問や感想を気軽に書ける案内を加えました。選択済みの表示設定は引き継ぎます。"},
           {"version":298,"date":"2026-09-19","publishedAt":"2026-09-19T04:34:12.780Z","title":"紹介動画と使い方ガイドを見やすくしました","body":"動画の問題集名を「てんぱに問題集」に変更し、太陽・月の表示切り替えを5秒で紹介しています。WebガイドとPDFは文字を大きくし、手順や質問の並びを整理しました。"},
           {"version":297,"date":"2026-09-19","publishedAt":"2026-09-19T03:40:51.263Z","title":"カラーモードの切り替えを小さなアイコンにしました","body":"アナウンスの隣に、太陽・月の切り替えボタンを配置しました。ヘッダーの余分な一行をなくし、問題を解いている間は非表示にしています。"},
           {"version":296,"date":"2026-09-19","publishedAt":"2026-09-19T03:21:28.384Z","title":"紹介動画の再生位置を動かせるようにしました","body":"紹介動画の再生バーから、見たい位置へ進めたり戻したりできるように修正しました。PC向け・スマホ向けの両方に対応しています。"},
@@ -7156,7 +7159,7 @@
         const configuredName = String(userStateV16.settings?.displayName || "").trim();
         const fallbackName = currentUserDisplayNameV47();
         const desktopLayout = userStateV16.settings?.desktopLayout === "single" ? "single" : "split";
-        const colorTheme = window.MinkiruThemeV259?.current() || "dark";
+        const colorTheme = window.MinkiruThemeV259?.current() || "light";
         const syncNote = supabaseSessionV46
           ? "ログイン中：保存すると共有コメントと問題作成にも反映されます。"
           : "未ログイン：この端末に保存されます。共有コメント・問題作成へ反映するにはDiscordログイン後に再保存してください。";
