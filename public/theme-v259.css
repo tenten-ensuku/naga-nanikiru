@@ -33,38 +33,6 @@ html[data-theme="light"] :is(button, input, select, textarea, a, summary):focus-
   outline-color: var(--theme-teal-v259);
 }
 
-/* Personal preference controls work in either appearance, with native radios. */
-#menuPanel[data-view="settings"] .theme-preference-v259 {
-  display: block; min-width: 0;
-  padding: 0; margin: 0; border: 0;
-}
-#menuPanel[data-view="settings"] .theme-options-v259 {
-  display: flex; flex-wrap: wrap; gap: 10px; width: 100%; min-width: 0;
-}
-#menuPanel[data-view="settings"] .theme-preference-v259 legend {
-  padding: 0; margin-bottom: 9px; color: var(--workspace-text); font-size: 14px; font-weight: 700;
-}
-#menuPanel[data-view="settings"] .theme-preference-v259 .theme-option-v259 {
-  display: flex; flex: 1 1 125px; align-items: center; gap: 10px;
-  min-height: 48px; padding: 10px 14px; margin: 0;
-  color: var(--workspace-text); background: var(--workspace-surface);
-  border: 1px solid var(--workspace-line); border-radius: 8px; cursor: pointer;
-}
-#menuPanel[data-view="settings"] .theme-option-v259:has(input:checked) {
-  border-color: var(--workspace-gold); box-shadow: inset 0 -2px var(--workspace-gold);
-}
-#menuPanel[data-view="settings"] .theme-option-v259 input {
-  width: 18px; height: 18px; flex: 0 0 18px; margin: 0; accent-color: var(--workspace-gold);
-}
-#menuPanel[data-view="settings"] .theme-option-v259:focus-within {
-  outline: 2px solid var(--workspace-gold); outline-offset: 3px;
-}
-#menuPanel[data-view="settings"] #themePreferenceStatusV259 { flex-basis: 100%; margin: 4px 0 0; }
-#menuPanel[data-view="settings"] #themePreferenceHelpV259 {
-  margin: 10px 0 0; font-size: 13px !important; line-height: 1.7;
-} /* The legacy settings-note rule fixes its font size with important. */
-#menuPanel[data-view="settings"] #themePreferenceStatusV259:empty { display: none; }
-
 /* Match the existing menu selectors so later feature CSS cannot retain dark panels. */
 html[data-theme="light"] .page.menu-active #menuPanel {
   --menu-gold-v239: var(--theme-gold-v259);
