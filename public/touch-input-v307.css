@@ -1,0 +1,19 @@
+/* Avoid accidental double-tap page zoom throughout the app. Keep native
+   scrolling, text selection and deliberate pinch gestures available.
+   Existing shelf drag rules have higher specificity and retain their pan axes. */
+:where(html, body, body *) {
+  touch-action: manipulation;
+}
+
+/* Small editable text can trigger focus zoom in mobile browsers. Apply this
+   to comment creation/editing, generator comments and other text-entry forms. */
+@media (max-width: 800px), (any-pointer: coarse) {
+  html body :is(
+    textarea,
+    select,
+    input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=file]):not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]):not([type=color]):not([type=image]),
+    [contenteditable]:not([contenteditable=false])
+  ) {
+    font-size: max(16px, 1rem) !important;
+  }
+}
