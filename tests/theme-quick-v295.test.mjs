@@ -3,16 +3,20 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
 const code=fs.readFileSync(new URL('../public/theme-quick-v295.js',import.meta.url),'utf8');
-function controls(){
+function control(saved=true){
   let current='dark',listener,observer;const writes=[];
-  const buttons=['dark','light'].map(value=>({dataset:{themeChoice:value},setAttribute(k,v){this[k]=v},closest(){return this}}));
-  const group={querySelectorAll:()=>buttons,contains:b=>buttons.includes(b),addEventListener:(_,f)=>listener=f};
-  const api={current:()=>current,set(value){current=value;writes.push(value);return true}};
-  vm.runInNewContext(code,{window:{MinkiruThemeV259:api},document:{readyState:'complete',documentElement:{},getElementById:id=>id==='themeQuickV295'?group:null},MutationObserver:class{constructor(f){observer=f}observe(){}}});
-  return {buttons,writes,click:b=>listener({target:b}),external(value){current=value;observer()},current:()=>current};
+  const button={setAttribute(k,v){this[k]=v},addEventListener:(_,f)=>listener=f};
+  const status={textContent:''};
+  const api={current:()=>current,set(value){current=value;writes.push(value);return saved}};
+  vm.runInNewContext(code,{window:{MinkiruThemeV259:api},document:{readyState:'complete',documentElement:{},getElementById:id=>id==='themeQuickV295'?button:status},MutationObserver:class{constructor(f){observer=f}observe(){}}});
+  return {button,status,writes,click:()=>listener(),external(value){current=value;observer()},current:()=>current};
 }
-test('the quick switch applies the existing preference and reflects external settings changes',()=>{
-  const c=controls();assert.equal(c.buttons[0]['aria-pressed'],'true');c.click(c.buttons[1]);assert.deepEqual(c.writes,['light']);assert.equal(c.current(),'light');assert.equal(c.buttons[1]['aria-pressed'],'true');assert.equal(c.buttons[0]['aria-pressed'],'false');
-  c.external('dark');assert.equal(c.buttons[0]['aria-pressed'],'true');assert.deepEqual(c.writes,['light']);
+test('the icon button toggles the saved preference and describes its next action',()=>{
+  const c=control();assert.equal(c.button['aria-label'],'ライトモードに切り替える');
+  c.click();assert.equal(c.current(),'light');assert.equal(c.button['aria-label'],'ダークモードに切り替える');
+  c.click();assert.equal(c.current(),'dark');assert.deepEqual(c.writes,['light','dark']);
+  c.external('light');assert.equal(c.button.title,'ダークモードに切り替える');assert.deepEqual(c.writes,['light','dark']);
 });
-test('clicks outside either choice cannot change the preference',()=>{const c=controls();c.click({closest:()=>null});assert.deepEqual(c.writes,[])});
+test('a blocked preference store still changes the theme and announces the persistence limitation',()=>{
+  const c=control(false);c.click();assert.equal(c.current(),'light');assert.match(c.status.textContent,/保存できません/);
+});
