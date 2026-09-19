@@ -61,3 +61,17 @@ html[data-theme=light] .comment-body .comment-spoiler { background: #dce8e4 !imp
   #menuPanel[data-view=generator] .generator-custom-settings > :not(summary) { margin: 10px; }
   .generator-detection-options-v300 { gap: 4px; }
 }
+
+/* Preview rates use the candidate's own model data, separate from the active question. */
+.page.menu-active #menuPanel .candidate-rates-v308 { margin: 14px 0; min-width: 0; color: var(--ink); }
+.page.menu-active #menuPanel .candidate-rates-v308 h4 { margin: 0 0 8px; font-size: 16px; line-height: 1.5; }
+.candidate-rate-row-v308 { display: grid; grid-template-columns: 5em minmax(24px, 1fr) 4.5em; gap: 10px; align-items: center; padding: 4px 0; font-size: 16px; line-height: 1.5; }
+.candidate-rate-row-v308 > strong { font-size: inherit; font-weight: 600; text-align: right; font-variant-numeric: tabular-nums; }
+.candidate-rate-track-v308 { display: block; height: 8px; overflow: hidden; border-radius: 4px; background: var(--line); }
+.candidate-rate-fill-v308 { display: block; height: 100%; background: var(--teal, #219b9d); }
+.candidate-rate-fill-v308.model-nishiki { background: var(--nishiki); }
+.candidate-rate-fill-v308.model-hihikari { background: var(--hihikari); }
+.candidate-rate-fill-v308.model-kagashi { background: var(--kagashi); }
+.candidate-rate-fill-v308.model-gamma { background: var(--gamma); }
+.candidate-rate-fill-v308.model-omega { background: var(--omega); }
+.candidate-rate-missing-v308 { grid-column: 2 / -1; text-align: right; color: var(--muted); }

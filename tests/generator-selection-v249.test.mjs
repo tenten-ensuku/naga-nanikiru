@@ -28,7 +28,7 @@ function harness() {
     hasJsonBoardV248: candidate => Boolean(candidate.boardScene) && !candidate.invalid,
     prepareJsonBoardV248: candidate => !candidate.invalid, generatedHandIsValidV237: () => true,
     escapeHtml: value => String(value), questionTypeV44: () => '打牌判断',
-    generatorCandidateChoiceMarkupV158: () => '', generatorCandidateModelsMarkupV158: () => '',
+    generatorCandidateChoiceMarkupV158: () => '', generatorCandidateModelsMarkupV158: () => '', generatorCandidateRecommendationMarkupV308: () => '',
     window: {NagaBoardV248:{markup:()=>'<svg></svg>'},NagaGenerationConfirmV241:{ask:async()=>{events.push('confirm');return true;}}},
     setGeneratorStatusV44: message => events.push(message), setGeneratorStageV159: () => {},
     bindGeneratorCandidateInputsV44: () => {}, invokeSharedMutationV47: () => {throw Error('unexpected write');},
