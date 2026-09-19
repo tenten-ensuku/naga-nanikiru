@@ -39,3 +39,25 @@ html[data-theme=light] .comment-body .comment-spoiler-cover { color: #526971; }
 html[data-theme=light] .comment-body .comment-spoiler { background: #dce8e4 !important; color: #183044 !important; }
 .generator-results-footer-v274 { margin-top: 20px; padding: 16px 0; border-top: 1px solid var(--line,#436574); }
 @media(max-width:600px) { .generator-results-footer-v274 .generator-results-actions,.generator-results-footer-v274 [data-generator-add-selected] { width: 100%; } }
+
+/* NAGA's four detection levels and one model, readable in both themes. */
+#menuPanel[data-view=generator] .generator-detection-v300 { min-width: 0; padding: 0; border: 0; }
+#menuPanel[data-view=generator] :is(.generator-detection-v300, .generator-model-filter) legend { color: var(--ink); font-size: 16px; padding: 0 0 8px; }
+.generator-detection-options-v300 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
+#menuPanel[data-view=generator] .generator-detection-options-v300 label { position: relative; box-sizing: border-box; display: flex; flex-direction: column; justify-content: center; gap: 0; min-height: 68px; padding: 6px 2px; border: 1px solid var(--line); border-radius: 7px; background: var(--panel-2); color: var(--ink); cursor: pointer; }
+#menuPanel[data-view=generator] .generator-detection-options-v300 label span { font-size: 22px; line-height: 1.3; }
+#menuPanel[data-view=generator] .generator-detection-options-v300 label small { font-size: 16px; line-height: 1.4; white-space: nowrap; }
+#menuPanel[data-view=generator] .generator-detection-options-v300 input { position: absolute; opacity: 0; width: 1px !important; height: 1px !important; }
+#menuPanel[data-view=generator] :is(.generator-detection-options-v300 label, .generator-model-option):has(:checked) { border-color: var(--workspace-gold); box-shadow: inset 0 -3px var(--workspace-gold); }
+#menuPanel[data-view=generator] :is(.generator-detection-options-v300 label, .generator-model-option):has(:focus-visible) { outline: 3px solid #279f9e; outline-offset: 2px; }
+#menuPanel[data-view=generator] :is(.generator-model-option, .generator-settings-note, .generator-model-empty) { font-size: 16px !important; }
+#menuPanel[data-view=generator] .generator-model-option { color: var(--ink); }
+#menuPanel[data-view=generator] #generatorModelFilter { display: block; border: 0; padding: 0; background: transparent; color: var(--ink); }
+#menuPanel[data-view=generator] #generatorModelFilter .generator-model-options { grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 8px; }
+#menuPanel[data-view=generator] #generatorModelFilter .generator-model-option,
+#menuPanel[data-view=generator] #generatorModelFilter .generator-model-option span,
+#menuPanel[data-view=generator] #generatorCustomSettings .generator-settings-note { font-size: 16px !important; }
+@media(max-width:420px) {
+  #menuPanel[data-view=generator] .generator-custom-settings > :not(summary) { margin: 10px; }
+  .generator-detection-options-v300 { gap: 4px; }
+}

@@ -9,15 +9,34 @@ function source(name) {
   const match = html.match(new RegExp(`^      (?:async )?function ${name}\\([^\\n]*\\) \\{[\\s\\S]*?^      \\}`, 'm'));
   assert.ok(match, name); return match[0];
 }
+test('generator keeps the selected model while the restored report is still loading',()=>{
+  const context=vm.createContext({generatorFormDraftV157:{modelNames:['カガシ']},document:{querySelector:()=>null}});
+  vm.runInContext(source('selectedGeneratorModelNamesV46'),context);
+  assert.deepEqual(Array.from(context.selectedGeneratorModelNamesV46()),['カガシ']);
+  context.document.querySelector=selector=>selector.endsWith(':checked')?{value:'ニシキ'}:{};
+  assert.deepEqual(Array.from(context.selectedGeneratorModelNamesV46()),['ニシキ']);
+});
+test('changing extraction controls reuses the canonical report ID instead of the replay URL',()=>{
+  const report={haihu_id:'https://tenhou.net/0/?log=replay'},result={innerHTML:''};let received;
+  const context=vm.createContext({generatorModeV46:'match',generatorReportV44:report,generatorSpecV44:{reportId:'canonical-report'},
+    document:{getElementById:id=>id==='generatorSeat'?{value:'2'}:result},generatorExtractionOptionsV46:()=>({detectionLevel:'many',modelNames:['ニシキ']}),
+    generatorSelectedCandidatesV158:new Set(['old']),generatorCandidatesV44:[],window:{NagaGeneratorV44:{extractBadMoves:(data,seat,options)=>{received={data,seat,options};return [{id:'new'}]}}},
+    setGeneratorStatusV44:()=>{},renderGeneratorCandidatesV44:()=>'<article>new</article>',bindGeneratorCandidateInputsV44:()=>{},setGeneratorStageV159:()=>{}});
+  vm.runInContext(source('refreshGeneratorCandidatesV46'),context);context.refreshGeneratorCandidatesV46();
+  assert.equal(received.data,report);assert.equal(received.seat,2);assert.equal(received.options.reportId,'canonical-report');
+  assert.equal(received.options.detectionLevel,'many');assert.equal(context.generatorSelectedCandidatesV158.size,0);assert.equal(result.innerHTML,'<article>new</article>');
+});
 function generator(unavailable, mode = 'scene') {
   const context = vm.createContext({window:{NAGA_RUNTIME_CONFIG:{backend:'cloudflare',heavyOperationsEnabled:!unavailable}},generatorModeV46:mode,generatorBusyV159:false,
     generatorEntryV234:'global',generatorProgressMarkupV159:()=>'<ol></ol>',renderGeneratorDestinationV130:()=>'<select id="generatorDestinationSelect"></select>',
     generatorSeatOptionsV46:()=>'<option value="auto">URLのtwを使用</option>',generatorModelFilterMarkupV46:()=>'<div id="generatorModelFilter"></div>',renderGeneratorCandidatesV44:()=>''});
-  vm.runInContext(source('renderGeneratorViewV44'),context); return context.renderGeneratorViewV44();
+  vm.runInContext(html.match(/const GENERATOR_DETECTION_V300 = \{[\s\S]*?\n      \};/)[0],context);
+  context.generatorFormDraftV157=null;
+  vm.runInContext(source('generatorDetectionMarkupV300')+'\n'+source('renderGeneratorViewV44'),context); return context.renderGeneratorViewV44();
 }
 test('V240 adds only a local presentation layer and preserves approved assets',()=>{
-  assert.match(html,/const APP_VERSION = 299;/);
-  assert.match(html,/workspace-ui-v240\.css\?v=299/); assert.match(html,/workspace-ui-v240\.js\?v=299/);
+  assert.match(html,/const APP_VERSION = 300;/);
+  assert.match(html,/workspace-ui-v240\.css\?v=300/); assert.match(html,/workspace-ui-v240\.js\?v=300/);
   assert.doesNotMatch(js,/fetch\(|XMLHttpRequest|localStorage|sessionStorage|innerHTML|NagaSupabase/);
   assert.doesNotMatch(css,/@import|@font-face|https?:|\.scene-frame|\.hand-mask|\.riichi|learning-header-progress-track/);
   assert.match(css,/var\(--menu-serif-v238\)/); assert.match(css,/var\(--menu-sans-v238\)/);
@@ -49,7 +68,7 @@ test('manual scene or match intent is restored after reload, including older dra
   const doc={getElementById:()=>null,querySelectorAll:s=>s==='input[name="generatorMode"]'?radios:[]};
   let syncs=0;
   const context=vm.createContext({document:doc,generatorFormDraftV157:null,generatorReportV44:null,generatorReportedModelNamesV46:()=>[],syncGeneratorModeV46:()=>{syncs++}});
-  vm.runInContext(source('restoreGeneratorFormDraftV157'),context);
+  vm.runInContext(source('preferredGeneratorModelV300')+'\n'+source('restoreGeneratorFormDraftV157'),context);
   context.restoreGeneratorFormDraftV157({mode:'match'});assert.deepEqual(radios.map(r=>r.checked),[false,true]);
   context.restoreGeneratorFormDraftV157({url:'older draft'});assert.deepEqual(radios.map(r=>r.checked),[false,true]);
   context.restoreGeneratorFormDraftV157({mode:'scene'});assert.deepEqual(radios.map(r=>r.checked),[true,false]);

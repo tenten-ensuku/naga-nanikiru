@@ -1177,6 +1177,11 @@
 
   function normalizeExtractionOptions(options) {
     var settings = options || {};
+    // Explicit numeric thresholds remain supported for older Node/Bot callers.
+    var detectionLevel = settings.detectionLevel == null ? null : String(settings.detectionLevel);
+    if (detectionLevel != null && ["all", "many", "normal", "few"].indexOf(detectionLevel) < 0) {
+      throw new TypeError("detectionLevel must be all, many, normal, or few");
+    }
     var reportId = settings.reportId == null ? null : requireReportId(settings.reportId);
     var threshold = settings.thresholdPercent == null ? 5 : Number(settings.thresholdPercent);
     if (!Number.isFinite(threshold) || threshold < 0.1 || threshold > 50) {
@@ -1206,6 +1211,7 @@
 
     return {
       reportId: reportId,
+      detectionLevel: detectionLevel,
       thresholdPercent: threshold,
       decisionType: decisionType,
       modelMode: modelMode,
@@ -1226,6 +1232,25 @@
     return candidate.decisionType === "call"
       ? candidate.actualCallProbability
       : candidate.actualDiscardProbability;
+  }
+
+  function matchesNagaDetection(report, candidate, modelIndex, level) {
+    if (candidate.decisionType !== "discard" || candidate.reached) return false;
+    var entry = report.pred[candidate.ts][candidate.tv];
+    var message = getMessage(entry);
+    var actualIndex = tileIndex(message && message.real_dahai);
+    var recommendedIndex = tileIndex(message && Array.isArray(message.pred_dahai) ? message.pred_dahai[modelIndex] : null);
+    if (actualIndex == null || recommendedIndex == null || actualIndex === recommendedIndex) return false;
+    var row = entry && Array.isArray(entry.dahai_pred) ? entry.dahai_pred[modelIndex] : null;
+    if (!Array.isArray(row) || row[actualIndex] == null || row[recommendedIndex] == null) return false;
+    var actual = Number(row[actualIndex]);
+    var recommended = Number(row[recommendedIndex]);
+    if (!Number.isFinite(actual) || !Number.isFinite(recommended)) return false;
+    // NAGA viewer: all disagreements / difference >= .2 / >= .5 / actual < .05.
+    // Compare original basis points to avoid percent rounding at the boundary.
+    if (level === "all") return true;
+    if (level === "few") return actual < 500;
+    return Math.abs(recommended - actual) >= (level === "many" ? 2000 : 5000);
   }
 
   function decisionMismatchIndices(candidate, indices) {
@@ -1280,12 +1305,13 @@
           var alternate = sceneCandidate(report, {reportId:reportId,tw:targetSeat,ts:ts,tv:tv,decisionType:"combined"});
           if (alternate && alternate.decisionType === "discard") {
             var alternateMismatch = decisionMismatchIndices(alternate, consideredModelIndices);
-            if (alternateMismatch.length) { candidate = alternate; mismatchIndices = alternateMismatch; }
+            if (alternateMismatch.length || settings.detectionLevel) { candidate = alternate; mismatchIndices = alternateMismatch; }
           }
         }
         var probabilities = candidateProbabilityValues(candidate);
         var badModelIndices = Array.isArray(probabilities)
           ? consideredModelIndices.filter(function (modelIndex) {
+            if (settings.detectionLevel) return matchesNagaDetection(report, candidate, modelIndex, settings.detectionLevel);
             var value = probabilities[modelIndex];
             return Number.isFinite(Number(value)) && Number(value) <= settings.thresholdPercent;
           })
@@ -1295,7 +1321,7 @@
         // Decision disagreements are independent of all extraction filters.
         // Use the same first-choice rule as question grading (riichi >= 50%).
         var forced = mismatchIndices.length > 0;
-        if (!forced && (!bad || !candidateMatchesDecision(candidate, settings.decisionType) || filteredCount >= settings.maxCandidates)) continue;
+        if (!forced && (!bad || !candidateMatchesDecision(candidate, settings.decisionType) || (!settings.detectionLevel && filteredCount >= settings.maxCandidates))) continue;
         if (candidate.decisionType === "discard"
           && (candidate.reached || candidate.actualDiscardNaga === "?")) {
           continue;
@@ -1303,6 +1329,7 @@
         if (!forced) filteredCount += 1;
         candidate.decisionMismatchModels = mismatchIndices.map(function (i) { return candidate.models[i].name; });
         candidate.isBadMove = true;
+        candidate.detectionLevel = settings.detectionLevel;
         candidate.badMoveThresholdPercent = settings.thresholdPercent;
         candidate.badMoveModelMode = settings.modelMode;
         candidate.badMoveSelectedModels = consideredModelIndices.map(function (modelIndex) {

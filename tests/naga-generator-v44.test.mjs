@@ -14,6 +14,47 @@ async function loadApi() {
   return sandbox.NagaGeneratorV44;
 }
 
+test("NAGA detection uses recommendation differences, strict 5%, normalized red tiles and the selected model", async () => {
+  const api = await loadApi();
+  const samples = [
+    [500, 9500], [499, 9501], [4000, 6000], [4001, 5999],
+    [2500, 7500], [2501, 7499], [100, 100], [5000, 5000]
+  ];
+  const report = {reportId:"levels",naga_types:{0:"ニシキ",1:"カガシ"},pred:[samples.map(([actual,best], i) => {
+    const row = Array(34).fill(0); row[4]=actual; row[5]=best;
+    const matched = Array(34).fill(0); matched[4]=10000;
+    return discardPrediction(0,"5mr",[i===6?"5m":"6m","5m"],[row,matched]);
+  })]};
+  const find = level => Array.from(api.extractBadMoves(report,0,{detectionLevel:level,modelNames:["ニシキ"]}),c=>c.tv);
+  assert.deepEqual(find("all"),[0,1,2,3,4,5,7]);
+  assert.deepEqual(find("many"),[0,1,2,4,5]);
+  assert.deepEqual(find("normal"),[0,1,4]);
+  assert.deepEqual(find("few"),[1]);
+  for (const level of ["all","many","normal","few"]) {
+    assert.equal(api.extractBadMoves(report,0,{detectionLevel:level,modelNames:["カガシ"]}).length,0);
+  }
+  delete report.pred[0][1].dahai_pred[0];
+  assert.deepEqual(find("few"),[]);
+  assert.throws(()=>api.normalizeExtractionOptions({detectionLevel:"unknown"}),/detectionLevel/);
+});
+
+test("NAGA detection does not truncate at the old extraction limit and still includes call and riichi disagreements", async () => {
+  const api = await loadApi();
+  const row=Array(34).fill(0);row[4]=400;row[5]=9600;
+  const match=Array(34).fill(0);match[4]=10000;
+  const entries=Array.from({length:105},()=>discardPrediction(0,"5m",["6m"],[row]));
+  entries.push({...msg("dahai",{actor:1,pai:"5p"}),huro:{0:[{0:4000,4:6000}]}});
+  entries.push(discardPrediction(0,"5m",["5m"],[match],{reach:[8000]}));
+  entries.push(msg("dahai",{actor:0,pai:"5m"}));
+  const report={reportId:"uncapped",naga_types:{0:"ニシキ"},pred:[entries]};
+  for (const level of ["all","many","normal","few"]) {
+    const found=api.extractBadMoves(report,0,{detectionLevel:level,modelNames:["ニシキ"]});
+    assert.equal(found.length,107);
+    assert.ok(found.some(c=>c.tv===105&&c.decisionType==="call"));
+    assert.ok(found.some(c=>c.tv===106&&c.decisionMismatchModels.includes("ニシキ")));
+  }
+});
+
 function msg(type, fields = {}) {
   return { info: { msg: { type, ...fields } } };
 }

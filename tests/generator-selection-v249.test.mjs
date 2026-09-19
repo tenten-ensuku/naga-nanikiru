@@ -35,6 +35,7 @@ function harness() {
   });
   vm.runInContext(fs.readFileSync(new URL('../public/comment-tools-v274.js', import.meta.url), 'utf8'), context);
   context.window.MinkiruCommentToolsV274 = context.MinkiruCommentToolsV274;
+  vm.runInContext(html.match(/const GENERATOR_DETECTION_V300 = \{[\s\S]*?\n      \};/)[0], context);
   vm.runInContext(source, context);
   return {context, select, events, run: code => vm.runInContext(code, context)};
 }

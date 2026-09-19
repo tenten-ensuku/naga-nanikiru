@@ -117,7 +117,8 @@
     var rank = 999;
     for (var index = 0; index < group.records.length; index += 1) {
       var entry = group.records[index].entry;
-      if (matches(entry, /基本序列/)) rank = Math.min(rank, -1);
+      if (matches(entry, /みん切る共有問題集/)) rank = Math.min(rank, -2);
+      else if (matches(entry, /基本序列/)) rank = Math.min(rank, -1);
       else if (matches(entry, /くにたそ/)) rank = Math.min(rank, 0);
       else if (matches(entry, /ピエール/)) rank = Math.min(rank, 1);
       else if (matches(entry, /垣崎にま/)) rank = Math.min(rank, 2);
@@ -181,6 +182,7 @@
     group.latestTime = latestTime;
     group.title = groupTitle(group);
     group.namedRank = namedRank(group);
+    group.isCommunity = group.namedRank === -2;
     group.isBasic = group.namedRank === -1;
     return group;
   }
@@ -207,6 +209,7 @@
   }
 
   function compareGroups(left, right, preferNamedOrder) {
+    if (left.isCommunity !== right.isCommunity) return left.isCommunity ? -1 : 1;
     if (left.isBasic !== right.isBasic) return left.isBasic ? -1 : 1;
     if (preferNamedOrder && left.namedRank !== right.namedRank) {
       return left.namedRank < right.namedRank ? -1 : 1;

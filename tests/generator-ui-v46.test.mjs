@@ -10,7 +10,7 @@ test("renders the v87 scene and half-game generator controls", async () => {
     readFile(indexUrl, "utf8"),
     readFile(generatorUrl, "utf8")
   ]);
-  assert.match(html, /const APP_VERSION = 299/);
+  assert.match(html, /const APP_VERSION = 300/);
   assert.match(html, /function captureGeneratorFormDraftV157\(\)/);
   assert.match(html, /destination: document\.getElementById\("generatorDestinationSelect"\)\?\.value \|\| generatorDestinationV130 \|\| ""/);
   assert.match(html, /function restoreGeneratorFormDraftV157\(draft\)/);
@@ -144,20 +144,22 @@ test("renders the v87 scene and half-game generator controls", async () => {
   assert.match(html, /value="match"/);
   assert.match(html, /id="generatorSeat"/);
   assert.match(html, /player_info\?\.name/);
-  assert.match(html, /id="generatorThreshold"[^>]+min="0\.1"[^>]+max="50"/);
-  assert.match(html, /id="generatorDecisionType"/);
+  assert.doesNotMatch(html, /id="generatorThreshold"/);
+  assert.match(html, /name="generatorDetection"/);
+  assert.match(html, /おすすめ/);
+  assert.doesNotMatch(html, /id="generatorDecisionType"/);
   assert.match(html, /value="discard"/);
   assert.match(html, /value="call"/);
-  assert.match(html, /value="reach"/);
+  assert.doesNotMatch(html, /id="generatorDecisionType"/);
   assert.match(generator, /actualReach/);
   assert.match(html, /id="generatorModelFilter"/);
-  assert.match(html, /name="generatorModelMode"/);
+  assert.doesNotMatch(html, /name="generatorModelMode"/);
   assert.match(html, /name="generatorModel"/);
-  assert.match(html, /解析済みモデルのみ/);
+  assert.match(html, /type="radio" name="generatorModel"/);
   assert.match(html, /modelNames: selectedGeneratorModelNamesV46\(\)/);
   assert.match(html, /function generatorReportedModelNamesV46\(report = generatorReportV44\)/);
   assert.doesNotMatch(html, /candidate\.models \|\| \[\]\)\.slice\(0, 3\)/);
-  assert.match(html, /id="generatorMaxCandidates"[^>]+max="500"/);
+  assert.doesNotMatch(html, /id="generatorMaxCandidates"/);
   assert.match(html, /局面URLではURLにtsとtvの両方が必要です/);
   assert.match(html, /ts: null, tv: null/);
   assert.match(html, /extractBadMoves\(report, seat, \{ \.\.\.extraction, reportId: spec\.reportId \}\)/);

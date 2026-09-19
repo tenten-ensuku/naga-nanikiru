@@ -51,9 +51,11 @@ test('defaultOrder prioritises named groups and sorts child volumes numerically'
     book('kuni-9', 'くにたそ', 9, {questionCount: 1, series_key: 'kuni'}),
     book('pierre-1', 'ピエール', 1, {questionCount: 1, series_key: 'pierre'}),
     book('kuni-1', 'くにたそ', 1, {questionCount: 1, series_key: 'kuni'}),
+    book('community', 'みん切る共有問題集', null, {questionCount: 0}),
   ];
 
   assert.deepEqual(Array.from(order.defaultOrder(entries)), [
+    'community',
     'basic-2', 'basic-10',
     'kuni-1', 'kuni-2', 'kuni-9', 'kuni-10',
     'pierre-1', 'pierre-10',

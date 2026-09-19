@@ -93,7 +93,7 @@
   }
 
   function detailMarkup(book, context, picked = false, unread = false) {
-    if (!book) return `<div class="library-detail-empty">本棚から問題集を選んでください。</div>`;
+    if (!book) return `<div class="library-detail-empty" id="libraryDetailTitleV214">本棚から問題集を選んでください。</div>`;
     let total = book.questionCount;
     let answered = book.answeredCount;
     let mastery = book.mastery;
@@ -125,6 +125,7 @@
       context: {}, userId: null, sessionRevision: 0, currentSlug: "", selected: "", picked: "", userSelected: false,
       cache: new Map(), summaries: new Map(), inflight: new Map(), failures: new Map(),
       staleSeries: new Set(), staleSummaries: new Set(), savedOrder: [], seenUpdates: new Map(),
+      hiddenBooks: new Set(), allEntries: [], hiddenDialogOpen: false, hiddenNotice: "", focusHidden: false,
       root: null, abort: null, observer: null, entries: [], opening: false,
       scrollLeft: 0, focusAfterRender: "", error: "", drag: null, needsRender: false,
       artReady: !host.Image, artFailed: false, artTask: null,
@@ -192,7 +193,8 @@
       const position = state.entries.findIndex(item => item.slug === state.selected);
       const picked = Boolean(book && book.slug === state.picked);
       const management = book && options.canManage?.(book) ? `<button type="button" class="library-manage-v288" data-library-manage="${escape(book.slug)}" aria-label="${escape(book.fullTitle)}の管理" aria-haspopup="dialog" title="問題集の管理">…</button>` : "";
-      return management + detailMarkup(book, state.context, picked, hasUnreadUpdate(book)) + (picked ? `
+      const controls = book ? `<div class="library-detail-tools-v300"><button type="button" data-library-hide="${escape(book.slug)}">本棚から隠す</button>${management}</div>` : "";
+      return controls + detailMarkup(book, state.context, picked, hasUnreadUpdate(book)) + (picked ? `
         <div class="library-arrange" role="group" aria-label="選んだ本の並べ替え">
           <span>${reorderReady() ? "つかんで移動" : "巻の準備が終わると並べ替えできます"} <small>ドラッグ / Shift＋← →</small></span>
           <div><button type="button" data-library-move="-1" aria-label="選んだ本を左へ移動" ${!reorderReady() || position <= 0 ? "disabled" : ""}>${icon("left")}左へ</button>
@@ -207,6 +209,17 @@
     function announce(message) {
       const node = state.root?.querySelector("[data-library-status]");
       if (node) node.textContent = message;
+    }
+    function hiddenBooksMarkup() {
+      const books = state.allEntries.filter(book => state.hiddenBooks.has(book.slug));
+      return `<dialog class="library-hidden-dialog-v300" data-library-hidden-dialog aria-labelledby="libraryHiddenTitleV300"><header><h3 id="libraryHiddenTitleV300">非表示の本</h3><button type="button" data-library-hidden-close>閉じる</button></header><p>戻したい本を選んでください。問題や回答記録はそのままです。</p><ul>${books.map(book => `<li><span>${escape(book.fullTitle)}</span><button type="button" data-library-restore="${escape(book.slug)}" aria-label="${escape(book.fullTitle)}を本棚に戻す">本棚に戻す</button></li>`).join("")}</ul>${books.length ? '<button type="button" data-library-restore-all>すべて本棚に戻す</button>' : '<p>非表示の本はありません。</p>'}<p role="status">${escape(state.hiddenNotice)}</p></dialog>`;
+    }
+    function saveHiddenBooks(ids) {
+      const hidden = cleanOrder(ids);
+      try { options.saveHiddenBooks?.(state.userId, hidden); }
+      catch { announce("保存できませんでした。ブラウザーの保存設定を確認してください。"); return false; }
+      state.hiddenBooks = new Set(hidden);
+      return true;
     }
     function render(context = {}) {
       // A parent render can replace the rail. Cancel a pointer gesture before that happens.
@@ -230,6 +243,9 @@
         state.error = "";
         try { state.savedOrder = cleanOrder(options.loadOrder?.(userId)); }
         catch { state.savedOrder = []; }
+        try { state.hiddenBooks = new Set(cleanOrder(options.loadHiddenBooks?.(userId))); }
+        catch { state.hiddenBooks = new Set(); }
+        state.hiddenDialogOpen = false; state.hiddenNotice = "";
         state.seenUpdates = loadSeenUpdates(userId);
       }
       const roots = rootsNow();
@@ -270,7 +286,8 @@
           entries.push(normaliseBook({ ...row, ...(summary ? { question_count: summary.question_count, last_activity_at: summary.last_activity_at } : {}) }, currentSlug, summary));
         }
       }
-      state.entries = orderedEntries(entries);
+      state.allEntries = orderedEntries(entries);
+      state.entries = state.allEntries.filter(book => !state.hiddenBooks.has(book.slug));
       const selected = (!state.userSelected && state.entries.find(row => row.isCurrent)) || state.entries.find(row => row.slug === state.selected)
         || state.entries.find(row => row.isCurrent) || state.entries[0];
       state.selected = selected?.slug || "";
@@ -280,13 +297,13 @@
         || roots.some(row => isSeries(row) && permittedRoot(String(row.share_slug)) && !state.cache.has(String(row.share_slug)) && !state.failures.has("series:" + row.share_slug));
       return `<section class="collection-chooser library-v214 has-volumes${reorderReady() ? " is-reorder-ready" : ""}${preparing ? " is-preparing-v236" : ""}${state.artFailed ? " is-art-fallback-v236" : ""}" aria-busy="${preparing}" aria-labelledby="collectionChooserHeading">
         <header class="collection-chooser-header library-header"><div><h3 id="collectionChooserHeading">学習する問題集を選択</h3><p id="libraryBookHintV214">1タップで確認、もう一度で開く。</p></div><button class="collection-chooser-create library-create" type="button" data-open-book-create aria-haspopup="dialog" aria-controls="bookCreateDetailsV235">${icon("plus")}新しい問題集</button></header>
-        <div class="library-shelf-heading"><div class="library-breadcrumb"><h4>あなたの本棚</h4><span class="library-shelf-total">${preparing ? "準備中" : `${state.entries.length}冊`}</span></div><button type="button" class="library-reset" data-library-reset${preparing ? " disabled" : ""}>標準順に戻す</button><div class="library-rail-actions" data-library-rail-actions><button type="button" data-library-scroll="-1" aria-label="前の本を表示">${icon("left")}</button><button type="button" data-library-scroll="1" aria-label="次の本を表示">${icon("right")}</button></div></div>
+        <div class="library-shelf-heading"><div class="library-breadcrumb"><h4>あなたの本棚</h4><span class="library-shelf-total">${preparing ? "準備中" : `${state.entries.length}冊`}</span></div><div class="library-shelf-tools-v300"><button type="button" class="library-reset" data-library-reset${preparing ? " disabled" : ""}>標準順に戻す</button><button type="button" class="library-hidden-button-v300" data-library-hidden-open aria-haspopup="dialog"${preparing ? " disabled" : ""}>非表示の本（${state.allEntries.length-state.entries.length}）</button></div><div class="library-rail-actions" data-library-rail-actions><button type="button" data-library-scroll="-1" aria-label="前の本を表示">${icon("left")}</button><button type="button" data-library-scroll="1" aria-label="次の本を表示">${icon("right")}</button></div></div>
         ${notice ? `<div class="library-notice" role="alert"><span>${escape(notice)}</span>${state.failures.size ? '<button type="button" data-library-retry>もう一度読み込む</button>' : ""}</div>` : ""}
-        <div class="library-stage">${preparing ? '<div class="library-preparing-v236" role="status"><span class="library-loading-mark-v236" aria-hidden="true"></span><span>本棚を準備しています…</span></div>' : ""}<img class="library-study-art" src="${ASSET_ROOT}study.webp" alt="" width="1672" height="941" decoding="async" fetchpriority="high"><div class="library-rail" data-library-rail role="group" aria-label="すべての問題集の本棚"${preparing ? ' inert aria-hidden="true"' : ""}>${state.entries.map(book => bookMarkup(book, book.slug === state.selected, { picked: book.slug === state.picked, unread: hasUnreadUpdate(book) })).join("") || `<p class="library-empty" role="status">${context.loading ? "問題集を本棚に並べています…" : "まだ問題集がありません。新しい問題集を作るか、共有された問題集を開いてください。"}</p>`}</div></div>
-        <div class="library-shelf-foot"><span>本をそのままドラッグして並べ替え</span><span>並び順はこのブラウザーに保存</span></div>
+        <div class="library-stage">${preparing ? '<div class="library-preparing-v236" role="status"><span class="library-loading-mark-v236" aria-hidden="true"></span><span>本棚を準備しています…</span></div>' : ""}<img class="library-study-art" src="${ASSET_ROOT}study.webp" alt="" width="1672" height="941" decoding="async" fetchpriority="high"><div class="library-rail" data-library-rail role="group" aria-label="すべての問題集の本棚"${preparing ? ' inert aria-hidden="true"' : ""}>${state.entries.map(book => bookMarkup(book, book.slug === state.selected, { picked: book.slug === state.picked, unread: hasUnreadUpdate(book) })).join("") || `<p class="library-empty" role="status">${context.loading ? "問題集を本棚に並べています…" : state.allEntries.length ? "本棚の本はすべて非表示です。「非表示の本」から戻せます。" : "まだ問題集がありません。新しい問題集を作るか、共有された問題集を開いてください。"}</p>`}</div></div>
+        <div class="library-shelf-foot"><span>本をそのままドラッグして並べ替え</span><span>並び順・非表示はこのブラウザーに保存</span></div>
         <p class="library-update-legend-v246">「更新」は7日以内の未確認の更新です。本を開くと消えます。確認状態はこのブラウザーに保存します。</p>
         <section class="library-detail" data-library-detail aria-labelledby="libraryDetailTitleV214"${preparing ? ' inert aria-hidden="true"' : ""}>${detail()}</section>
-        <p class="library-order-status" data-library-status role="status" aria-live="polite"></p>
+        <p class="library-order-status" data-library-status role="status" aria-live="polite">${escape(state.hiddenNotice)}</p>${hiddenBooksMarkup()}
       </section>`;
     }
     function setSelection(slug, picked = true) {
@@ -594,6 +611,32 @@
       host.addEventListener?.("blur", () => finishDrag(true), { signal });
       host.document?.addEventListener?.("visibilitychange", () => { if (host.document.hidden) finishDrag(true); }, { signal });
       root.addEventListener("click", event => {
+        const hide = event.target.closest("[data-library-hide]");
+        if (hide) {
+          event.stopPropagation();
+          const book = state.entries.find(item => item.slug === hide.dataset.libraryHide);
+          if (!book || !saveHiddenBooks([...state.hiddenBooks, book.slug])) return;
+          state.hiddenNotice = `${book.fullTitle}を本棚から隠しました。「非表示の本」から戻せます。`;
+          state.picked = ""; state.focusHidden = true; requestRender(); return;
+        }
+        if (event.target.closest("[data-library-hidden-open]")) {
+          event.stopPropagation(); state.hiddenDialogOpen = true;
+          root.querySelector("[data-library-hidden-dialog]")?.showModal(); return;
+        }
+        if (event.target.closest("[data-library-hidden-close]")) {
+          event.stopPropagation(); state.hiddenDialogOpen = false;
+          root.querySelector("[data-library-hidden-dialog]")?.close();
+          root.querySelector("[data-library-hidden-open]")?.focus(); return;
+        }
+        const restore = event.target.closest("[data-library-restore], [data-library-restore-all]");
+        if (restore) {
+          event.stopPropagation();
+          const slug = restore.dataset.libraryRestore;
+          if (slug && !state.allEntries.some(book => book.slug === slug && state.hiddenBooks.has(slug))) return;
+          if (!saveHiddenBooks(slug ? [...state.hiddenBooks].filter(id => id !== slug) : [])) return;
+          state.hiddenNotice = slug ? "本棚に戻しました。" : "すべての本を本棚に戻しました。";
+          requestRender(); return;
+        }
         const manage = event.target.closest("[data-library-manage]");
         if (manage) {
           event.stopPropagation();
@@ -645,6 +688,7 @@
         void openBook(slug, source);
       }, { signal });
       root.addEventListener("keydown", event => {
+        if (event.target.closest("[data-library-hidden-dialog]")) return;
         if (event.key === "Escape") {
           if (state.drag) { event.preventDefault(); finishDrag(true); }
           else { state.picked = ""; setSelection(state.selected, false); announce("本の選択を解除しました。"); }
@@ -675,6 +719,13 @@
         }
       }
       updateRailControls();
+      const hiddenDialog = root.querySelector("[data-library-hidden-dialog]");
+      hiddenDialog?.addEventListener("cancel", () => {
+        state.hiddenDialogOpen = false;
+        root.querySelector("[data-library-hidden-open]")?.focus();
+      }, {signal});
+      if (state.hiddenDialogOpen) hiddenDialog?.showModal();
+      if (state.focusHidden) { state.focusHidden = false; root.querySelector("[data-library-hidden-open]")?.focus({preventScroll:true}); }
       if (state.focusAfterRender) {
         const target = [...root.querySelectorAll("[data-library-book]")].find(item => item.dataset.libraryBook === state.focusAfterRender);
         state.focusAfterRender = "";
@@ -683,6 +734,7 @@
       queueMicrotask(hydrate);
     }
     function unmount() {
+      state.hiddenDialogOpen = false;
       finishDrag(true, true);
       state.sessionRevision += 1;
       state.inflight.clear();

@@ -431,7 +431,7 @@ test("switching users invalidates old in-flight/cache data", async () => {
 
 test("adapter keeps legacy fallback, controller mount/unmount hooks, and navigation reset contract", async () => {
   const [index, library] = await Promise.all([readFile(INDEX_PATH, "utf8"), readFile(LIBRARY_PATH, "utf8")]);
-  assert.match(index, /library-v214\.js\?v=299/);
+  assert.match(index, /library-v214\.js\?v=300/);
   const renderStart = index.indexOf("function renderCollectionChooserV165");
   const renderEnd = index.indexOf("function renderCollectionSpacePanelV100", renderStart);
   const renderer = index.slice(renderStart, renderEnd);
@@ -709,6 +709,39 @@ function mountShelfV215(controller, ctx) {
   return { root, rail, detail, status, buttons };
 }
 const v215Ids = root => root.querySelectorAll("[data-library-book]").map(button => button.dataset.libraryBook);
+
+test("personal hidden books survive reload, stay separate per account, and can be restored without changing the catalogue", async () => {
+  const api=await libraryApi(), saved=new Map(), books=v215Books(), before=JSON.stringify(books);
+  const options={loadHiddenBooks:id=>saved.get(id)||[],saveHiddenBooks:(id,ids)=>saved.set(id,Array.from(ids))};
+  let controller=api.create(options),ctx=context("u",books),shelf=mountShelfV215(controller,ctx);
+  const first=shelf.buttons[0].dataset.libraryBook;
+  shelf.root.dispatch("click",{target:new FakeNode({dataset:{libraryHide:first}})});
+  assert.deepEqual(saved.get("u"),[first]);
+  assert.doesNotMatch(controller.render(ctx),new RegExp(`data-library-book="${first}"`));
+  assert.match(controller.render(ctx),new RegExp(`data-library-restore="${first}"`));
+  controller.unmount();controller=api.create(options);shelf=mountShelfV215(controller,ctx);
+  assert.ok(!v215Ids(shelf.root).includes(first));
+  assert.match(controller.render(context("other",books)),new RegExp(`data-library-book="${first}"`));
+  shelf=mountShelfV215(controller,ctx);
+  shelf.root.dispatch("click",{target:new FakeNode({dataset:{libraryRestore:first}})});
+  assert.deepEqual(saved.get("u"),[]);
+  assert.match(controller.render(ctx),new RegExp(`data-library-book="${first}"`));
+  assert.equal(JSON.stringify(books),before);
+});
+
+test("all-hidden shelf offers restore, ignores unknown books, and leaves the shelf intact when preference saving fails", async () => {
+  const api=await libraryApi(),books=v215Books(),ctx=context("u",books);
+  let controller=api.create({loadHiddenBooks:()=>books.map(b=>b.share_slug)}),shelf=mountShelfV215(controller,ctx);
+  assert.equal(shelf.buttons.length,0);
+  assert.match(controller.render(ctx),/本棚の本はすべて非表示/);
+  shelf.root.dispatch("click",{target:new FakeNode({dataset:{libraryRestoreAll:""}})});
+  assert.equal([...controller.render(ctx).matchAll(/data-library-book=/g)].length,books.length);
+  controller=api.create({saveHiddenBooks:()=>{throw Error("quota");}});shelf=mountShelfV215(controller,ctx);
+  const first=shelf.buttons[0].dataset.libraryBook;
+  shelf.root.dispatch("click",{target:new FakeNode({dataset:{libraryHide:"unknown"}})});
+  shelf.root.dispatch("click",{target:new FakeNode({dataset:{libraryHide:first}})});
+  assert.match(controller.render(ctx),new RegExp(`data-library-book="${first}"`));
+});
 
 test("V215 leaving during a series request ignores the old response and permits a fresh request", async () => {
   const api = await libraryApi();
