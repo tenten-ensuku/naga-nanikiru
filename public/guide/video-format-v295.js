@@ -16,7 +16,7 @@
     video.poster = video.dataset[format + 'Poster'];
     if (download) {
       download.href = src;
-      download.download = `minkiru-intro-${format}-v295.mp4`;
+      download.download = `minkiru-intro-${format}-v298.mp4`;
     }
   }
   media.addEventListener('change', selectFormat);
