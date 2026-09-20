@@ -7,7 +7,7 @@ const indexUrl = new URL("../public/index.html", import.meta.url);
 test("V227 pauses hidden tabs and elects one visible notification poller", async () => {
   const html = await readFile(indexUrl, "utf8");
 
-  assert.match(html, /const APP_VERSION = 313;/);
+  assert.match(html, /const APP_VERSION = 314;/);
   assert.match(html, /COMMENT_NOTIFICATION_POLL_MS_V227 = 300000/);
   assert.match(html, /NOTIFICATION_LEADER_STORAGE_KEY_V227 = storageKey\("notification-poll-leader-v227"\)/);
   assert.match(html, /function claimNotificationLeaderV227\(\)/);
@@ -23,6 +23,6 @@ test("V227 removes periodic question-index polling and refreshes it on demand", 
 
   assert.doesNotMatch(html, /questionPollTimerV66/);
   assert.doesNotMatch(html, /setInterval\([\s\S]{0,180}refreshSharedQuestionNotificationsV66/);
-  assert.match(html, /function openCommentNotificationDialogV65\(\)[\s\S]*refreshSharedCommentNotificationsV65\(\)[\s\S]*refreshSharedQuestionNotificationsV66\(\)/);
+  assert.match(html, /function openCommentNotificationDialogV65\(\).*accountNotificationsV314.open/);
   assert.match(html, /問題一覧は定期取得しない/);
 });

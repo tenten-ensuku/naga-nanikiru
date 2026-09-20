@@ -1,3 +1,4 @@
+import {NOTIFICATION_READ_RPCS,NOTIFICATION_WRITE_RPCS,notificationRpc} from './notifications-v314.mjs';
 import {ApiError,requireActor} from './access.mjs';
 import {startDiscord,finishDiscord,sessionFor,sessionResponse,endSession,requireCsrf} from './auth.mjs';
 import {READ_RPCS,readRpc,readTable} from './read-api.mjs';
@@ -69,7 +70,7 @@ export default {
     try{
       const url=new URL(request.url);
       if(url.pathname==='/guide/video/minkiru-promo.mp4')return new Response(request.method==='HEAD'?null:'This video has been withdrawn.',{status:410,headers:common});
-      if(url.pathname==='/health'&&request.method==='GET')return json({version:313,backend:'cloudflare',ready:ready(env),studentFlow:ready(env),signups:ready(env)&&env.SIGNUPS_ENABLED==='true',heavyOperations:generationEnabled(env),generation:generationEnabled(env),uploads:env.UPLOADS_ENABLED==='true',bulkImport:false,bot:env.DISCORD_SYNC_ENABLED==='true'&&!!env.DISCORD_SYNC_TOKEN});
+      if(url.pathname==='/health'&&request.method==='GET')return json({version:314,backend:'cloudflare',ready:ready(env),studentFlow:ready(env),signups:ready(env)&&env.SIGNUPS_ENABLED==='true',heavyOperations:generationEnabled(env),generation:generationEnabled(env),uploads:env.UPLOADS_ENABLED==='true',bulkImport:false,bot:env.DISCORD_SYNC_ENABLED==='true'&&!!env.DISCORD_SYNC_TOKEN});
       if(!ready(env))return json({error:'migration_not_ready',message:'移行確認中です。公開切替はまだ完了していません。'},503);
       if(url.origin!==env.APP_ORIGIN)throw new ApiError('origin_denied',403);
       if(url.pathname==='/naga-nanikiru'||url.pathname==='/naga-nanikiru/')return Response.redirect(url.origin+'/'+url.search,302);
@@ -118,6 +119,10 @@ export default {
         const rpc=url.pathname.match(/^\/api\/rpc\/([a-z_]+)$/);
         if(rpc){
           const name=rpc[1];
+          if(NOTIFICATION_READ_RPCS.has(name)||NOTIFICATION_WRITE_RPCS.has(name)){
+            if(NOTIFICATION_WRITE_RPCS.has(name))await limited(env.WRITE_LIMIT,actor.id);
+            return json({data:await notificationRpc(name,args,context)});
+          }
           if(MANAGER_READ_RPCS.has(name)||MANAGER_WRITE_RPCS.has(name)){
             await limited(env.WRITE_LIMIT,actor.id);
             return json({data:await managerRpc(name,args,context)});

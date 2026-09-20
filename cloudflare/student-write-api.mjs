@@ -1,3 +1,4 @@
+import {commentNotificationStatement,accessNotificationStatement} from './notifications-v314.mjs';
 import {
   ApiError,
   canAccessCollection,
@@ -309,12 +310,11 @@ async function postSharedComment(db, actor, args) {
     }
     const id = newId();
     const imageGuard=retiredImageCondition(body);
-    const inserted=await first(
-      db,
+    const results=await db.batch([db.prepare(
       `INSERT INTO comments(id,collection_id,question_id,user_id,body,attachments)
        SELECT ?,?,?,?,?,'[]' WHERE ${imageGuard.sql} RETURNING id`,
-      [id, collection.id, questionId, actor.id, body,...imageGuard.params],
-    );
+      ).bind(id, collection.id, questionId, actor.id, body,...imageGuard.params),commentNotificationStatement(db,id)]);
+    const inserted=results[0].results?.[0];
     if(!inserted)fail('question_image_retired',409);
     return id;
   }
@@ -341,12 +341,11 @@ async function postSharedComment(db, actor, args) {
   }
   const id = newId();
   const imageGuard=retiredImageCondition({body,attachments});
-  const inserted=await first(
-    db,
+  const results=await db.batch([db.prepare(
     `INSERT INTO comments(id,collection_id,question_id,user_id,body,attachments)
      SELECT ?,?,?,?,?,? WHERE ${imageGuard.sql} RETURNING id`,
-    [id, collection.id, questionId, actor.id, body, jsonText(attachments, []),...imageGuard.params],
-  );
+    ).bind(id, collection.id, questionId, actor.id, body, jsonText(attachments, []),...imageGuard.params),commentNotificationStatement(db,id)]);
+  const inserted=results[0].results?.[0];
   if(!inserted)fail('question_image_retired',409);
   return id;
 }
@@ -573,7 +572,6 @@ async function requestCollectionAccess(db, actor, args) {
   );
   const requestId = existing?.id ?? newId();
   const now = new Date().toISOString();
-  const notificationId = newId();
   if (typeof db.batch !== "function") fail("d1_batch_required", 500);
   const requestStatement = existing
     ? db.prepare(`UPDATE collection_access_requests
@@ -584,19 +582,7 @@ async function requestCollectionAccess(db, actor, args) {
                     (id,collection_id,requester_id,message,status,created_at,updated_at)
                   VALUES (?,?,?,?, 'pending',?,?)`)
       .bind(requestId, collection.id, actor.id, normalizedMessage, now, now);
-  const notificationStatement = db.prepare(`INSERT INTO collection_access_notifications
-      (id,recipient_id,collection_id,request_id,actor_id,kind,payload,created_at)
-    VALUES (?,?,?,?,?,'access_requested',?,?)`)
-    .bind(
-      notificationId,
-      collection.owner_id,
-      collection.id,
-      requestId,
-      actor.id,
-      jsonText({ message: normalizedMessage }, {}),
-      now,
-    );
-  await db.batch([requestStatement, notificationStatement]);
+  await db.batch([requestStatement,...(existing?[]:[accessNotificationStatement(db,requestId)])]);
   return requestId;
 }
 

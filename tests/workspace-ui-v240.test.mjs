@@ -39,8 +39,8 @@ function generator(unavailable, mode = 'scene') {
   vm.runInContext(source('generatorDetectionMarkupV300')+'\n'+source('renderGeneratorViewV44'),context); return context.renderGeneratorViewV44();
 }
 test('V240 adds only a local presentation layer and preserves approved assets',()=>{
-  assert.match(html,/const APP_VERSION = 313;/);
-  assert.match(html,/workspace-ui-v240\.css\?v=313/); assert.match(html,/workspace-ui-v240\.js\?v=313/);
+  assert.match(html,/const APP_VERSION = 314;/);
+  assert.match(html,/workspace-ui-v240\.css\?v=314/); assert.match(html,/workspace-ui-v240\.js\?v=314/);
   assert.doesNotMatch(js,/fetch\(|XMLHttpRequest|localStorage|sessionStorage|innerHTML|NagaSupabase/);
   assert.doesNotMatch(css,/@import|@font-face|https?:|\.scene-frame|\.hand-mask|\.riichi|learning-header-progress-track/);
   assert.match(css,/var\(--menu-serif-v238\)/); assert.match(css,/var\(--menu-sans-v238\)/);
@@ -91,7 +91,7 @@ test('settings disclosures retain mounted draft/file state and open the reaction
   assert.match(html,/openSettings\("reactions", \{ focus: true \}\)/);
 });
 test('settings keep authority gates, named categories and escaped profile text without obsolete transfer',()=>{
-  const context=vm.createContext({window:{},userStateV16:{settings:{displayName:'<img>'}},currentUserDisplayNameV47:()=>'<img>',supabaseSessionV46:{user:{id:'fixture'}},escapeHtml:s=>s.replaceAll('<','&lt;'),customReactionSettingsMarkupV211:()=>'<form id="reactions"></form>'});
+  const context=vm.createContext({window:{},userStateV16:{settings:{displayName:'<img>'}},currentUserDisplayNameV47:()=>'<img>',supabaseSessionV46:{user:{id:'fixture'}},escapeHtml:s=>s.replaceAll('<','&lt;'),accountNotificationsV314:{settingsMarkup:()=>'<div>通知設定</div>'},customReactionSettingsMarkupV211:()=>'<form id="reactions"></form>'});
   vm.runInContext(source('renderSettingsViewV67'),context);const result=context.renderSettingsViewV67();
   for(const key of ['account','display','reactions']) assert.match(result,new RegExp(`data-settings-group-v240="${key}"`));
   assert.doesNotMatch(result,/<img>|data-settings-group-v240="teaching"/);

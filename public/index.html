@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=313">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=313">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=313">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=314">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=314">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=314">
   <title>みん切る｜みんなの何切る問題集</title>
   <link rel="preload" as="image" href="assets/loading-screen-v243.png" fetchpriority="high">
   <meta name="description" content="みん切るは、NAGA URLから問題をつくり、解いて、仲間と共有できる麻雀学習アプリです。">
   <meta name="theme-color" content="#f3f6f7">
-  <script src="theme-v259.js?v=313"></script>
+  <script src="theme-v259.js?v=314"></script>
   <meta property="og:type" content="website">
   <meta property="og:title" content="みん切る｜みんなの何切る問題集">
   <meta property="og:description" content="みん切るは、NAGA URLから問題をつくり、解いて、仲間と共有できる麻雀学習アプリです。">
@@ -2262,23 +2262,23 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=313">
-  <link rel="stylesheet" href="library-v214.css?v=313">
-  <link rel="stylesheet" href="navigation-v234.css?v=313">
-  <link rel="stylesheet" href="book-builder-v235.css?v=313">
-  <link rel="stylesheet" href="menu-polish-v238.css?v=313">
-  <link rel="stylesheet" href="menu-sections-v239.css?v=313">
-  <link rel="stylesheet" href="workspace-ui-v240.css?v=313">
-  <link rel="stylesheet" href="collection-deletion-v244.css?v=313">
-  <link rel="stylesheet" href="collection-managers-v290.css?v=313">
-  <link rel="stylesheet" href="menu-simplify-v245.css?v=313">
-  <link rel="stylesheet" href="content-dates-v246.css?v=313">
-  <link rel="stylesheet" href="question-header-v250.css?v=313">
-  <link rel="stylesheet" href="question-toolbar-v255.css?v=313">
-  <link rel="stylesheet" href="theme-v259.css?v=313">
-  <link rel="stylesheet" href="theme-quick-v295.css?v=313">
-  <link rel="stylesheet" href="brand-v302.css?v=313">
-  <script defer src="theme-quick-v295.js?v=313"></script>
+  <link rel="stylesheet" href="ux-v159.css?v=314">
+  <link rel="stylesheet" href="library-v214.css?v=314">
+  <link rel="stylesheet" href="navigation-v234.css?v=314">
+  <link rel="stylesheet" href="book-builder-v235.css?v=314">
+  <link rel="stylesheet" href="menu-polish-v238.css?v=314">
+  <link rel="stylesheet" href="menu-sections-v239.css?v=314">
+  <link rel="stylesheet" href="workspace-ui-v240.css?v=314">
+  <link rel="stylesheet" href="collection-deletion-v244.css?v=314">
+  <link rel="stylesheet" href="collection-managers-v290.css?v=314">
+  <link rel="stylesheet" href="menu-simplify-v245.css?v=314">
+  <link rel="stylesheet" href="content-dates-v246.css?v=314">
+  <link rel="stylesheet" href="question-header-v250.css?v=314">
+  <link rel="stylesheet" href="question-toolbar-v255.css?v=314">
+  <link rel="stylesheet" href="theme-v259.css?v=314">
+  <link rel="stylesheet" href="theme-quick-v295.css?v=314">
+  <link rel="stylesheet" href="brand-v302.css?v=314">
+  <script defer src="theme-quick-v295.js?v=314"></script>
 </head>
 <body class="auth-gate-open">
   <section class="startup-screen-v236" id="startupScreenV236" aria-label="みん切るを準備中">
@@ -2630,8 +2630,9 @@
 
   <dialog class="comment-notification-dialog" id="commentNotificationDialog" aria-labelledby="commentNotificationDialogTitle">
     <div class="notice-dialog-inner">
-      <div class="notice-dialog-heading"><h3 id="commentNotificationDialogTitle">コメント・追加通知</h3><button class="notice-dialog-close" id="commentNotificationDialogClose" type="button">閉じる</button></div>
-      <p class="notice-dialog-note" id="commentNotificationNote">新しいコメントと、他の利用者が追加した問題を確認できます。</p>
+      <div class="notice-dialog-heading"><h3 id="commentNotificationDialogTitle">通知</h3><button class="notice-dialog-close" id="commentNotificationDialogClose" type="button">閉じる</button></div>
+      <p class="notice-dialog-note" id="commentNotificationNote">すべての問題集から届いた通知です。選ぶと該当箇所へ移動します。</p>
+      <div id="notificationFiltersV314" aria-label="通知の表示"></div>
       <div class="notice-list" id="commentNotificationList"></div>
       <div class="notice-dialog-actions"><button class="notice-dialog-action" id="markAllCommentsReadButton" type="button">すべて既読</button><button class="notice-dialog-action secondary" id="commentNotificationDialogDone" type="button">閉じる</button></div>
     </div>
@@ -2655,35 +2656,37 @@
     </form>
   </dialog>
 
-  <link rel="stylesheet" href="comment-tags-v270.css?v=313">
+  <link rel="stylesheet" href="comment-tags-v270.css?v=314">
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=313"></script>
-  <script src="drill-ux-v44.js?v=313"></script>
-  <script src="navigation-v234.js?v=313"></script>
-  <script src="book-builder-v235.js?v=313"></script>
-  <script src="library-order-v215.js?v=313"></script>
-  <script src="content-dates-v246.js?v=313"></script>
-  <script src="question-header-v250.js?v=313"></script>
-  <script src="library-v214.js?v=313"></script>
-  <script src="naga-generator-v44.js?v=313"></script>
-  <link rel="stylesheet" href="naga-board-v248.css?v=313">
-  <link rel="stylesheet" href="refinements-v273.css?v=313">
-  <link rel="stylesheet" href="generator-tools-v274.css?v=313">
-  <link rel="stylesheet" href="book-pages-v281.css?v=313">
-  <link rel="stylesheet" href="touch-input-v307.css?v=313">
-  <script src="comment-tools-v274.js?v=313"></script>
-  <script src="naga-board-state-v248.js?v=313"></script>
-  <script src="naga-board-v248.js?v=313"></script>
-  <script src="hand-mask-v237.js?v=313"></script>
-  <script src="menu-sections-v239.js?v=313"></script>
-  <script src="workspace-ui-v240.js?v=313"></script>
-  <script src="generation-confirm-v241.js?v=313"></script>
-  <script src="collection-deletion-v244.js?v=313"></script>
-  <script src="collection-managers-v290.js?v=313"></script>
+  <script src="supabase-sync-v48.js?v=314"></script>
+  <script src="drill-ux-v44.js?v=314"></script>
+  <link rel="stylesheet" href="notifications-v314.css?v=314">
+  <script src="notifications-v314.js?v=314"></script>
+  <script src="navigation-v234.js?v=314"></script>
+  <script src="book-builder-v235.js?v=314"></script>
+  <script src="library-order-v215.js?v=314"></script>
+  <script src="content-dates-v246.js?v=314"></script>
+  <script src="question-header-v250.js?v=314"></script>
+  <script src="library-v214.js?v=314"></script>
+  <script src="naga-generator-v44.js?v=314"></script>
+  <link rel="stylesheet" href="naga-board-v248.css?v=314">
+  <link rel="stylesheet" href="refinements-v273.css?v=314">
+  <link rel="stylesheet" href="generator-tools-v274.css?v=314">
+  <link rel="stylesheet" href="book-pages-v281.css?v=314">
+  <link rel="stylesheet" href="touch-input-v307.css?v=314">
+  <script src="comment-tools-v274.js?v=314"></script>
+  <script src="naga-board-state-v248.js?v=314"></script>
+  <script src="naga-board-v248.js?v=314"></script>
+  <script src="hand-mask-v237.js?v=314"></script>
+  <script src="menu-sections-v239.js?v=314"></script>
+  <script src="workspace-ui-v240.js?v=314"></script>
+  <script src="generation-confirm-v241.js?v=314"></script>
+  <script src="collection-deletion-v244.js?v=314"></script>
+  <script src="collection-managers-v290.js?v=314"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 313;
+    const APP_VERSION = 314;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -3976,6 +3979,8 @@
         const authorClass = commentAuthorColorV65(group.author);
         return `<article class="comment-card comment-group ${authorClass}">${commentAuthorBadgeMarkupV196(group, authorClass)}<div class="comment-card-main">${group.messages.map(renderCommentEntryV65).join("")}</div></article>`;
       }).join("");
+      const notificationComment = document.getElementById("commentsPanel")?.dataset.notificationComment;
+      if (notificationComment) list.querySelector(`[data-comment-id="${CSS.escape(notificationComment)}"]`)?.classList.add("notification-target-v314");
       list.querySelectorAll("[data-comment-avatar]").forEach(image => {
         image.addEventListener("error", () => {
           const badge = image.closest(".comment-author-badge");
@@ -4473,6 +4478,11 @@
       let collectionAccessNotificationsV100 = [];
       let collectionAccessBusyV100 = false;
       let collectionManagementSlugV197 = "";
+      let notificationCommentQuestionV314 = "", notificationCommentIdV314 = "", notificationRequestIdV314 = "";
+      const accountNotificationsV314 = window.MinkiruNotificationsV314.create({
+        api: () => window.NagaSupabase, userId: () => String(supabaseSessionV46?.user?.id || ""),
+        openTarget: openNotificationTargetV314, isReady: () => navigationReadyV234 && importedQuestionsReadyV81
+      });
       let shelfManagementV288 = null;
       let collectionManagementLoadTokenV197 = 0;
       let generatorDestinationV130 = "";
@@ -5381,36 +5391,14 @@
       }
 
       function renderNotificationBadgesV65() {
-        const unreadCommentCount = commentNotificationCountForRangeV65("all");
-        const unreadQuestionCount = questionNotificationCountV66();
-        const unreadAccessCount = collectionAccessNotificationCountV100();
-        const unreadCount = unreadCommentCount + unreadQuestionCount + unreadAccessCount;
-        const commentButton = document.getElementById("commentNotificationsButton");
-        const commentBadge = document.getElementById("commentNotificationBadge");
-        if (commentBadge) {
-          commentBadge.hidden = unreadCount === 0;
-          commentBadge.textContent = unreadCount > 99 ? "99+" : String(unreadCount);
-        }
-        if (commentButton) {
-          commentButton.setAttribute("aria-label", unreadCount ? `コメント・追加・アクセス通知。未読${unreadCount}件` : "コメント・追加・アクセス通知。新着なし");
-          commentButton.title = unreadCount ? `コメント・追加・アクセス通知（未読${unreadCount}件）` : "コメント・追加・アクセス通知（新着なし）";
-        }
+        accountNotificationsV314.badge();
         const announcementBadge = document.getElementById("announcementBadge");
         const announcementUnread = Number(window.localStorage.getItem(ANNOUNCEMENT_SEEN_STORAGE_KEY_V65) || 0) < Math.max(...APP_ANNOUNCEMENTS_V66.map(item => item.version));
         if (announcementBadge) {
           announcementBadge.hidden = !announcementUnread;
           announcementBadge.textContent = "1";
         }
-        document.querySelectorAll("[data-menu-question-notification]").forEach(badge => {
-          const count = commentNotificationCountForQuestionV65(questionsV16.find(question => questionKeyV16(question) === badge.dataset.menuQuestionNotification));
-          badge.hidden = count === 0;
-          badge.textContent = count > 99 ? "99+" : String(count);
-        });
-        document.querySelectorAll("[data-menu-range-notification]").forEach(badge => {
-          const count = commentNotificationCountForRangeV65(badge.dataset.menuRangeNotification || "all");
-          badge.hidden = count === 0;
-          badge.textContent = count > 99 ? "99+" : String(count);
-        });
+        document.querySelectorAll('[data-menu-question-notification], [data-menu-range-notification]').forEach(badge => { badge.hidden = true; });
       }
 
       function adoptSharedCommentRowsV65(rows) {
@@ -5488,70 +5476,10 @@
         document.getElementById("announcementDialog")?.showModal();
       }
 
-      function renderCommunityNotificationListV66() {
-        const list = document.getElementById("commentNotificationList");
-        if (!list) return;
-        const unreadComments = unreadCommentIdsV65();
-        const unreadQuestions = unreadQuestionIdsV66();
-        const rows = [
-          ...sharedCommentRowsV65.filter(row => unreadComments.has(row.id)).map(row => ({ ...row, kind: "comment" })),
-          ...sharedQuestionRowsV66.filter(row => unreadQuestions.has(row.id)).map(row => ({ ...row, kind: "question" })),
-          ...collectionAccessNotificationsV100.filter(row => !row?.read_at && !row?.readAt).map(row => ({ ...row, kind: "access", createdAt: row.created_at || row.createdAt }))
-        ].sort((left, right) => new Date(right.createdAt) - new Date(left.createdAt));
-        if (!rows.length) {
-          list.innerHTML = `<div class="notice-empty">新しいコメント・追加問題・アクセス申請はありません。</div>`;
-          return;
-        }
-        list.innerHTML = rows.map(row => {
-          if (row.kind === "access") {
-            const message = row.payload?.message ? `「${row.payload.message}」` : "メッセージなし";
-            return `<article class="notice-item"><span class="notice-item-top"><strong class="notice-item-question">問題集への閲覧申請</strong><span>${escapeHtml(formatCommentTime(row.createdAt))}</span></span><span class="notice-item-body">申請が届いています。設定の問題集スペース管理から承認・却下できます。${escapeHtml(message)}</span></article>`;
-          }
-          if (row.kind === "question") {
-            const index = questionsV16.findIndex(question => String(question.serverQuestionId || "") === row.id);
-            const questionLabel = row.title || (row.number ? `問題${row.number}` : "新しい問題");
-            const body = `${row.author || "利用者"}さんが問題を追加しました。`;
-            return index >= 0
-              ? `<button class="notice-item" type="button" data-community-notification-kind="question" data-community-notification-question="${index}" data-community-notification-id="${escapeHtml(row.id)}"><span class="notice-item-top"><strong class="notice-item-question">${escapeHtml(questionLabel)}</strong><span>${escapeHtml(formatCommentTime(row.createdAt))}</span></span><span class="notice-item-body">${escapeHtml(body)}</span></button>`
-              : `<article class="notice-item"><span class="notice-item-top"><strong class="notice-item-question">${escapeHtml(questionLabel)}</strong><span>${escapeHtml(formatCommentTime(row.createdAt))}</span></span><span class="notice-item-body">${escapeHtml(body)}</span></article>`;
-          }
-          const index = questionsV16.findIndex(question => String(question.serverQuestionId || "") === row.questionId);
-          const question = index >= 0 ? questionsV16[index] : null;
-          const questionLabel = question?.title || (question?.number ? `問題${question.number}` : "問題不明");
-          const content = row.content || "（本文なし）";
-          const authorClass = commentAuthorColorV65(row.author);
-          return index >= 0
-            ? `<button class="notice-item" type="button" data-community-notification-kind="comment" data-community-notification-question="${index}" data-comment-notification-question="${index}" data-comment-notification-id="${escapeHtml(row.id)}"><span class="notice-item-top"><strong class="notice-item-question">${escapeHtml(questionLabel)}</strong><span><span class="notice-item-author ${authorClass}">${escapeHtml(row.author)}</span>　${escapeHtml(formatCommentTime(row.createdAt))}</span></span><span class="notice-item-body">${escapeHtml(content)}</span></button>`
-            : `<article class="notice-item"><span class="notice-item-top"><strong class="notice-item-question">${escapeHtml(questionLabel)}</strong><span><span class="notice-item-author ${authorClass}">${escapeHtml(row.author)}</span>　${escapeHtml(formatCommentTime(row.createdAt))}</span></span><span class="notice-item-body">${escapeHtml(content)}</span></article>`;
-        }).join("");
-      }
-
-      function renderCommentNotificationListV65() {
-        renderCommunityNotificationListV66();
-      }
-
-      function openCommentNotificationDialogV65() {
-        renderCommunityNotificationListV66();
-        document.getElementById("commentNotificationDialog")?.showModal();
-        if (!sharedCollectionV46 || !window.NagaSupabase?.configured || document.visibilityState !== "visible") return;
-        void Promise.allSettled([
-          refreshSharedCommentNotificationsV65(),
-          refreshSharedQuestionNotificationsV66()
-        ]).then(() => renderCommunityNotificationListV66());
-      }
-
-      function markAllCommentsReadV65() {
-        const bucket = commentNoticeBucketV65();
-        bucket.unreadIds = [];
-        saveCommentNoticeStoreV65();
-        const questionBucket = questionNoticeBucketV66();
-        questionBucket.unreadIds = [];
-        saveQuestionNoticeStoreV66();
-        collectionAccessNotificationsV100 = collectionAccessNotificationsV100.map(row => ({ ...row, read_at: row.read_at || new Date().toISOString() }));
-        if (supabaseSessionV46 && window.NagaSupabase?.markCollectionNotificationsRead) void window.NagaSupabase.markCollectionNotificationsRead(null).catch(error => console.warn("問題集通知を既読にできませんでした", error));
-        renderNotificationBadgesV65();
-        renderCommunityNotificationListV66();
-      }
+      function renderCommunityNotificationListV66() { accountNotificationsV314.render(); }
+      function renderCommentNotificationListV65() { accountNotificationsV314.render(); }
+      function openCommentNotificationDialogV65() { void accountNotificationsV314.open(); }
+      function markAllCommentsReadV65() { void accountNotificationsV314.markAll(); }
 
       function notificationPageVisibleV227() {
         return document.visibilityState === "visible";
@@ -5615,46 +5543,7 @@
 
       async function refreshSharedCommentNotificationsV65({ background = false } = {}) {
         if (background && (!notificationPageVisibleV227() || !isNotificationLeaderV227())) return;
-        if (!sharedCollectionV46 || !window.NagaSupabase?.configured || commentRefreshBusyV65) return;
-        commentRefreshBusyV65 = true;
-        const shareSlug = sharedCollectionV46.share_slug;
-        const noticeUserIdV230 = supabaseSessionV46?.user?.id;
-        const bucket = commentNoticeBucketV65();
-        try {
-          sharedCommentRowsV65 = bucket.rowsV230 || [];
-          renderNotificationBadgesV65();
-          if (Date.now() - Number(bucket.checkedAtV230 || 0) < 30000) return;
-          const result = await window.NagaSupabase.loadSharedCommentChanges(shareSlug, bucket.cursorV230 || null);
-          if (shareSlug !== sharedCollectionV46?.share_slug || noticeUserIdV230 !== supabaseSessionV46?.user?.id) return;
-          const previous = new Map((bucket.rowsV230 || []).map(row => [row.id, row]));
-          const known = new Set(bucket.knownIds);
-          const unread = new Set(bucket.unreadIds);
-          const initial = !bucket.cursorV230;
-          const ordered = result.rows;
-          for (const row of ordered) {
-            if (row.deleted_at) { previous.delete(String(row.id)); unread.delete(String(row.id)); }
-            else {
-              const normalized = normalizeSharedCommentV65(row);
-              if (normalized) previous.set(normalized.id, normalized);
-              if (!initial && !known.has(String(row.id))) unread.add(String(row.id));
-            }
-            known.add(String(row.id));
-          }
-          bucket.cursorV230 = result.cursor;
-          bucket.checkedAtV230 = Date.now();
-          bucket.initialized = true;
-          bucket.rowsV230 = [...previous.values()].slice(-500);
-          bucket.knownIds = [...known].slice(-1000);
-          const retained = new Set(bucket.rowsV230.map(row => row.id));
-          bucket.unreadIds = [...unread].filter(id => retained.has(id));
-          sharedCommentRowsV65 = bucket.rowsV230;
-          saveCommentNoticeStoreV65();
-          renderNotificationBadgesV65();
-        } catch (error) {
-          console.warn("共有コメント通知を更新できませんでした", error);
-        } finally {
-          commentRefreshBusyV65 = false;
-        }
+        await accountNotificationsV314.refresh();
       }
 
       function ensureNotificationLeaderHeartbeatV227() {
@@ -5665,7 +5554,7 @@
       }
 
       async function coordinateNotificationPollingV227({ refresh = false } = {}) {
-        if (!sharedCollectionV46 || !window.NagaSupabase?.configured || window.NagaSupabase?.serviceAvailable?.() === false || !notificationPageVisibleV227()) {
+        if (!supabaseSessionV46?.user?.id || !window.NagaSupabase?.configured || window.NagaSupabase?.serviceAvailable?.() === false || !notificationPageVisibleV227()) {
           stopCommentNotificationNetworkTimerV227();
           if (!notificationPageVisibleV227()) releaseNotificationLeaderV227();
           return false;
@@ -6742,8 +6631,8 @@
       function renderCollectionAccessRequestsV100() {
         const requestList = document.getElementById("collectionAccessRequests");
         if (requestList) {
-          const pending = collectionAccessRequestsV100.filter(row => row?.status === "pending");
-          requestList.innerHTML = pending.length ? pending.map(row => `<div class="collection-access-row"><span><strong>${escapeHtml(row.requester_name || "利用者")}</strong><small>${escapeHtml(row.message || "メッセージなし")}　${escapeHtml(formatCommentTime(row.created_at))}</small></span><select data-request-role="${escapeHtml(row.id)}" aria-label="付与する権限"><option value="viewer">閲覧</option><option value="editor">編集</option></select><span class="collection-space-actions"><button type="button" data-collection-request-action="approve" data-request-id="${escapeHtml(row.id)}">承認</button><button class="is-danger" type="button" data-collection-request-action="reject" data-request-id="${escapeHtml(row.id)}">却下</button></span></div>`).join("") : `<span class="collection-access-empty">保留中の閲覧申請はありません。</span>`;
+          const pending = collectionAccessRequestsV100.filter(row => row?.status === "pending" || row?.id === notificationRequestIdV314);
+          requestList.innerHTML = pending.length ? pending.map(row => `<div class="collection-access-row" data-notification-request="${escapeHtml(row.id)}"><span><strong>${escapeHtml(row.requester_name || "利用者")}</strong><small>${escapeHtml(row.message || "メッセージなし")}　${escapeHtml(formatCommentTime(row.created_at))}</small></span><select data-request-role="${escapeHtml(row.id)}" aria-label="付与する権限"><option value="viewer">閲覧</option><option value="editor">編集</option></select><span class="collection-space-actions"><button type="button" data-collection-request-action="approve" data-request-id="${escapeHtml(row.id)}">承認</button><button class="is-danger" type="button" data-collection-request-action="reject" data-request-id="${escapeHtml(row.id)}">却下</button></span></div>`).join("") : `<span class="collection-access-empty">保留中の閲覧申請はありません。</span>`;
         }
         const memberList = document.getElementById("collectionAccessMembers");
         if (memberList) {
@@ -6987,7 +6876,7 @@
           }
           collectionCatalogV100 = [...catalogBySlug.values()];
           if (supabaseSessionV46) {
-            try { collectionAccessNotificationsV100 = await window.NagaSupabase.loadCollectionNotifications(false); } catch (error) { console.warn("問題集通知を読み込めませんでした", error); }
+            // Account notifications refresh independently of the selected book.
           }
           await loadCollectionManagementDataV100();
         }
@@ -7119,10 +7008,11 @@
         const group = (key, title, description, symbol, content) => `<details class="settings-group-v240" data-settings-group-v240="${key}"><summary>${icon(symbol)}<span><strong>${title}</strong><small>${description}</small></span>${icon("chevron-right")}</summary><div class="settings-group-body-v240">${content}</div></details>`;
         const account = `<p>コメントや問題作成で使う表示名を、1〜5文字で設定できます。</p><form class="settings-form" id="displayNameForm"><label for="displayNameInput">表示名<input id="displayNameInput" type="text" maxlength="5" minlength="1" value="${escapeHtml(configuredName)}" placeholder="${escapeHtml(fallbackName)}" autocomplete="nickname" required></label><p class="settings-form-note">${escapeHtml(syncNote)}</p><div class="settings-form-actions"><button class="primary" type="submit">表示名を保存</button><span class="settings-form-status" id="displayNameStatus" aria-live="polite"></span></div></form><div class="account-signout-v240"><button id="accountAuthButtonV240" type="button">${supabaseSessionV46?.user?.id ? "ログアウト" : "Discordでログイン"}</button><p class="settings-form-status" id="accountActionStatusV240" aria-live="polite"></p></div>`;
         const display = `<div class="settings-form" id="layoutPreferenceForm"><label for="desktopLayoutSelect">PCの問題画面<select id="desktopLayoutSelect"><option value="split"${desktopLayout === "split" ? " selected" : ""}>問題とコメントを左右に表示</option><option value="single"${desktopLayout === "single" ? " selected" : ""}>縦1列に表示</option></select></label><p class="settings-form-note">スマホは常に縦配置です。このブラウザに保存され、次に問題を開くと反映されます。</p></div>`;
-        return `<section class="settings-section settings-workspace-v240"><p class="settings-intro-v240">使い方に合わせて、必要な設定を開いてください。</p><div class="guide-entry-v266"><h3>使い方ガイド</h3><p>問題の作り方から、チームで使う共有問題集まで。画面付きの説明書と紹介動画で確認できます。</p><a class="guide-link-v266" href="./guide/" target="_blank" rel="noopener" aria-label="使い方ガイドを別タブで開く">使い方ガイドを開く ↗</a></div>${group("account", "アカウント", "表示名・ログアウト", "user-circle", account)}${group("display", "表示・学習", "PCの問題画面のレイアウト", "cog-6-tooth", display)}${group("reactions", "リアクション", "絵文字や画像を使ったリアクションの追加", "face-smile", customReactionSettingsMarkupV211())}<p class="settings-form-note">問題集の共有・権限は、その本の「この本の管理」から変更できます。</p></section>`;
+        return `<section class="settings-section settings-workspace-v240"><p class="settings-intro-v240">使い方に合わせて、必要な設定を開いてください。</p><div class="guide-entry-v266"><h3>使い方ガイド</h3><p>問題の作り方から、チームで使う共有問題集まで。画面付きの説明書と紹介動画で確認できます。</p><a class="guide-link-v266" href="./guide/" target="_blank" rel="noopener" aria-label="使い方ガイドを別タブで開く">使い方ガイドを開く ↗</a></div>${group("account", "アカウント", "表示名・ログアウト", "user-circle", account)}${group("notifications", "通知", "通知のON/OFF・通知する問題集", "bell", accountNotificationsV314.settingsMarkup())}${group("display", "表示・学習", "PCの問題画面のレイアウト", "cog-6-tooth", display)}${group("reactions", "リアクション", "絵文字や画像を使ったリアクションの追加", "face-smile", customReactionSettingsMarkupV211())}<p class="settings-form-note">問題集の共有・権限は、その本の「この本の管理」から変更できます。</p></section>`;
       }
 
       function bindSettingsViewV67() {
+        void accountNotificationsV314.bindSettings();
         window.MinkiruWorkspaceV240?.bindSettings();
         document.getElementById("accountAuthButtonV240")?.addEventListener("click", handleDiscordAuthV187);
         const form = document.getElementById("displayNameForm");
@@ -8214,7 +8104,8 @@
         if (!state.revealed) {
           clearQuestionPollStatsV110();
           answerStrip.hidden = true;
-          commentsPanel.hidden = true;
+          commentsPanel.hidden = notificationCommentQuestionV314 !== String(questionsV16[currentQuestionIndexV16]?.serverQuestionId || "") || !notificationCommentQuestionV314;
+          if (!commentsPanel.hidden) renderComments();
           setNextButtonState(true);
           renderChoiceScoreV16();
           return;
@@ -8816,6 +8707,8 @@
       }
 
       async function openQuestionV16(index, { preserveSession = false, resume = false, historyMode = "push" } = {}) {
+        notificationCommentQuestionV314 = ""; notificationCommentIdV314 = "";
+        delete document.getElementById("commentsPanel").dataset.notificationComment;
         if (!requireLoginForPlayV187()) return false;
         const requestedQuestion = questionsV16[index];
         if (!requestedQuestion) return false;
@@ -11182,6 +11075,56 @@
         }
       }
 
+      async function openNotificationTargetV314(row) {
+        if (String(sharedCollectionV46?.share_slug || "") !== row.share_slug) {
+          const url = new URL(location.href);
+          url.searchParams.set("collection", row.share_slug);
+          url.searchParams.set("view", row.request_id ? "book-settings" : "today");
+          url.searchParams.set("notification", row.id);
+          url.searchParams.delete("existing_question"); url.searchParams.delete("study_question");
+          location.assign(url.toString());
+          return false;
+        }
+        const owner = String(supabaseSessionV46?.user?.id || "");
+        if (row.request_id) {
+          notificationRequestIdV314 = row.request_id;
+          collectionManagementSlugV197 = row.share_slug;
+          await loadCollectionManagementDataV100();
+          if (owner !== String(supabaseSessionV46?.user?.id || "")) return false;
+          showMenuV16("book-settings");
+          renderCollectionAccessRequestsV100();
+          const target = document.querySelector(`[data-notification-request="${CSS.escape(row.request_id)}"]`);
+          if (!target) throw new Error("申請を読み込めませんでした。通知からもう一度開いてください。");
+          if (row.request_status !== "pending") {
+            target.querySelectorAll("button,select").forEach(control => control.hidden = true);
+            const note = document.createElement("span"); note.textContent = "この申請は対応済みです。"; target.append(note);
+          }
+          target.classList.add("notification-target-v314"); target.scrollIntoView({block:"center"}); return true;
+        }
+        const raw = await window.NagaSupabase.loadSharedQuestionDetail(row.share_slug,row.question_id);
+        if (owner !== String(supabaseSessionV46?.user?.id || "") || sharedCollectionV46?.share_slug !== row.share_slug) return false;
+        let index = questionsV16.findIndex(q => q.serverQuestionId === row.question_id);
+        const normalized = normalizeSharedQuestionV66(raw,index < 0 ? questionsV16.length : index,row.share_slug);
+        if (!normalized?.question) throw new Error("問題を読み込めませんでした。");
+        if (index < 0) { index = questionsV16.length; questionsV16.push(normalized.question); }
+        else questionsV16[index] = normalized.question;
+        renderQuestionOptionsV16();
+        if (!await openQuestionV16(index,{preserveSession:true})) return false;
+        if (row.comment_id) {
+          notificationCommentQuestionV314 = row.question_id; notificationCommentIdV314 = row.comment_id;
+          document.getElementById("commentsPanel").dataset.notificationComment = row.comment_id;
+          if (!await hydrateSharedCommentsV46(questionsV16[index])) throw new Error("コメントを読み込めませんでした。通知からもう一度開いてください。");
+          if (owner !== String(supabaseSessionV46?.user?.id || "") || questionsV16[currentQuestionIndexV16]?.serverQuestionId !== row.question_id) return false;
+          renderAnswerV16();
+          const target = document.querySelector(`[data-comment-id="${CSS.escape(row.comment_id)}"]`);
+          if (!target) throw new Error("このコメントは削除されたか、表示できなくなっています。");
+          target.classList.add("notification-target-v314"); target.setAttribute("tabindex","-1");
+          await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+          target.scrollIntoView({block:"center"}); target.focus({preventScroll:true});
+        }
+        return true;
+      }
+
       async function openRequestedQuestionAfterAuthV187() {
         const questionId = String(pendingExistingQuestionIdV187 || "").trim();
         if (!questionId || !supabaseSessionV46?.user?.id || pendingExistingQuestionOpeningV187) return false;
@@ -11220,6 +11163,8 @@
       async function refreshAccountBodyV153(session = null) {
         if (navigationMemoryV234.setOwner(String(session?.user?.id || ""))) appliedQuestionKeyV234 = "";
         syncAuthGateForSessionV187(session);
+        void accountNotificationsV314.accountChanged();
+        void coordinateNotificationPollingV227();
         if (!session) remoteHistorySyncScopeV135 = "";
         window.nagaCurrentUserIdV75 = String(session?.user?.id || "");
         window.nagaCurrentUserDisplayNameV75 = session ? currentUserDisplayNameV47() : "";
@@ -11634,9 +11579,10 @@
           }
           if (canLoadReactions && customReactionsResult.status === "rejected") console.warn("カスタムリアクションを読み込めませんでした", customReactionsResult.reason);
           renderComments();
-          markQuestionCommentsReadV65(question.serverQuestionId);
+          return true;
         } catch (error) {
           console.warn("共有コメントを読み込めませんでした", error);
+          return false;
         }
       }
 
@@ -11792,21 +11738,11 @@
           else if (initialViewV234 && MENU_VIEW_COPY_V16[initialViewV234]) showMenuV16(initialViewV234, { historyMode: "none" });
         }
         navigationReadyV234 = true;
+        accountNotificationsV314.bindInbox();
+        void accountNotificationsV314.accountChanged();
+        void coordinateNotificationPollingV227();
         commitNavigationV234("replace");
         applyDesktopLayoutV70();
-        document.getElementById("commentNotificationList").addEventListener("click", event => {
-          const button = event.target.closest("[data-community-notification-question]");
-          if (!button) return;
-          const index = Number(button.dataset.communityNotificationQuestion);
-          const question = questionsV16[index];
-          if (button.dataset.communityNotificationKind === "question") {
-            if (question?.serverQuestionId) markQuestionAddedReadV66(question.serverQuestionId);
-          } else if (question?.serverQuestionId) {
-            markQuestionCommentsReadV65(question.serverQuestionId);
-          }
-          document.getElementById("commentNotificationDialog").close();
-          openQuestionV16(index);
-        });
         document.addEventListener("keydown", event => {
           if (["INPUT", "TEXTAREA", "SELECT", "BUTTON", "SUMMARY"].includes(document.activeElement?.tagName)) return;
           if (event.key === "Enter" && !state.revealed && !document.getElementById("answerConfirmation").hidden) {

@@ -1,3 +1,4 @@
+import {questionNotificationStatement} from './notifications-v314.mjs';
 import {ApiError, requireActor, canEditCollection, canManageCollection, canManageCollectionContent, canAccessCollection} from './access.mjs';
 import {validatedManagerIds} from './collection-managers-v290.mjs';
 import {isGeneratedQuestionTitle,isInvalidQuestionTitle,toSafeQuestionNumber,nextQuestionNumberV235} from './question-numbering-v235.mjs';
@@ -161,10 +162,12 @@ async function addQuestion(args,{db,actor,origin},imported=null){
       SELECT q.collection_id,q.id,cm.user_id,cm.body,cm.attachments,cm.created_at,cm.updated_at
       FROM comments cm JOIN questions q ON q.id=?
       WHERE cm.question_id=? AND cm.deleted_at IS NULL ORDER BY cm.created_at,cm.id RETURNING id`).bind(id,imported));
-    const results=statements.length>1?await db.batch(statements):null;
-    const inserted=results?results[0].results?.[0]:await insertQuestion.first();
+    const importedCommentIndex=statements.length-1;
+    statements.push(questionNotificationStatement(db,id));
+    const results=await db.batch(statements);
+    const inserted=results[0].results?.[0];
     if(!inserted){const capacity=await collectionCapacity({p_share_slug:c.share_slug},{db,actor});if(capacity.capacity_reached)return {...capacity,requires_volume_confirmation:true};fail('question_image_retired',409);}
-    return {question_id:inserted.id,question_number:inserted.sort_order,share_slug:c.share_slug,question_count:await count(db,c.id),collection_title:c.title,initial_comment_id:commentId,...(imported?{imported_comment_count:results.at(-1).results?.length||0}:{})};
+    return {question_id:inserted.id,question_number:inserted.sort_order,share_slug:c.share_slug,question_count:await count(db,c.id),collection_title:c.title,initial_comment_id:commentId,...(imported?{imported_comment_count:results[importedCommentIndex].results?.length||0}:{})};
   }catch(error){
     if(String(error.message).includes('collection_capacity_reached'))return {...await collectionCapacity({p_share_slug:c.share_slug},{db,actor}),requires_volume_confirmation:true};
     if(String(error.message).includes('UNIQUE constraint')){const prior=await first(db,`SELECT id FROM questions WHERE collection_id=? AND (legacy_key=? OR (source_report_id IS NOT NULL AND source_report_id=? AND scene_tw IS ? AND scene_ts IS ? AND scene_tv IS ?)) AND deleted_at IS NULL`,c.id,key,report,...scene);if(prior)return {question_id:prior.id,already_exists:true,share_slug:c.share_slug};}

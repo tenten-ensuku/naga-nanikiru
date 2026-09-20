@@ -405,7 +405,7 @@ test("notification marking and access requests remain actor-scoped and retry-saf
     const secondRequest = await writeRpc("request_collection_access", { ...requestArgs, p_message: "updated" }, { db, actor: STUDENT });
     assert.equal(secondRequest, firstRequest);
     assert.equal(await count(db, "collection_access_requests", "collection_id = ? AND requester_id = ?", "collection-request", STUDENT.id), 1);
-    assert.equal(await count(db, "collection_access_notifications", "request_id = ?", firstRequest), 2);
+    assert.equal(await count(db, "account_notifications", "request_id = ?", firstRequest), 1);
     const profile = await writeTable("profiles", {
       id: STUDENT.id,
       display_name: " 学生 ",

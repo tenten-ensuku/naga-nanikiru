@@ -396,6 +396,15 @@ async function transferCollectionOwnership(collectionId: string, userId: string)
   if (error) throw error;
 }
 
+async function notificationRequest(name: string, args: Record<string, unknown> = {}) {
+  const {data,error}=await requireClient().rpc(name,args);if(error)throw error;return data;
+}
+const getNotificationPreferences=()=>notificationRequest('get_notification_preferences');
+const saveNotificationPreferences=(preferences: Record<string,boolean>,subscriptions: string[])=>notificationRequest('save_notification_preferences',{p_preferences:preferences,p_subscriptions:subscriptions});
+const loadAccountNotifications=({unreadOnly=false,cursor=null}: {unreadOnly?:boolean,cursor?:unknown}={})=>notificationRequest('list_account_notifications',{p_unread_only:unreadOnly,p_cursor:cursor});
+const getNotificationTarget=(id:string)=>notificationRequest('get_notification_target',{p_id:id});
+const markAccountNotificationsRead=(ids:string[]|null)=>notificationRequest('mark_account_notifications_read',{p_ids:ids});
+
 async function loadCollectionNotifications(unreadOnly = false) {
   const { data, error } = await requireClient().rpc("list_collection_notifications", {
     p_unread_only: unreadOnly,
@@ -981,6 +990,7 @@ function buildApi() {
     revokeCollectionAccess,
     setCollectionVisibility,
     transferCollectionOwnership,
+    getNotificationPreferences,saveNotificationPreferences,loadAccountNotifications,getNotificationTarget,markAccountNotificationsRead,
     loadCollectionNotifications,
     markCollectionNotificationsRead,
     loadSharedComments,

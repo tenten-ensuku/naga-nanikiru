@@ -175,7 +175,7 @@ test('editable import destinations sort volumes numerically and exclude inaccess
 test('personal settings do not render book permission or membership forms', () => {
   const context = load(['renderSettingsViewV67'], {
     window: {}, userStateV16: { settings: {} }, currentUserDisplayNameV47: () => 'テスト',
-    supabaseSessionV46: {}, escapeHtml: String, customReactionSettingsMarkupV211: () => '<section>共通リアクション</section>'
+    supabaseSessionV46: {}, escapeHtml: String, accountNotificationsV314:{settingsMarkup:()=>'<div>通知設定</div>'},customReactionSettingsMarkupV211: () => '<section>共通リアクション</section>'
   });
   const output = context.renderSettingsViewV67();
   assert.match(output, /この本の管理/);

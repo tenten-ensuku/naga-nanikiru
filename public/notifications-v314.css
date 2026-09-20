@@ -1,0 +1,22 @@
+.notification-settings-v314,.notification-settings-v314 p,.notification-settings-v314 label,.notification-settings-v314 button,#commentNotificationDialog .notice-item,#commentNotificationDialog .notice-item-body,#commentNotificationDialog .notice-dialog-note,#commentNotificationDialog button{font-size:16px;line-height:1.6}
+.notification-settings-v314 form{display:grid;gap:12px}
+.notification-settings-v314 p{margin:0;color:var(--muted)}
+.notification-toggle-v314{display:flex;gap:16px;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--line)}
+.notification-toggle-v314 input{flex:none;width:22px;height:22px;accent-color:var(--accent,#15968c);cursor:pointer}
+.notification-books-v314{margin:0;padding:14px;border:1px solid var(--line);border-radius:8px;min-width:0}
+.notification-books-v314>div{max-height:280px;overflow:auto;display:grid;gap:10px;margin-top:10px}
+.notification-books-v314 label{display:flex;align-items:center;gap:10px}
+.notification-books-v314 input{width:20px;height:20px;flex:none}
+.notification-books-v314:disabled{opacity:.65}
+#notificationFiltersV314{display:flex;gap:8px;margin:12px 0}
+#notificationFiltersV314 button{min-height:44px;padding:6px 20px}
+#notificationFiltersV314 [aria-pressed=true]{box-shadow:inset 0 -3px var(--accent,#15968c);font-weight:700}
+#commentNotificationDialog .notice-item{display:grid;gap:8px;text-align:left;overflow-wrap:anywhere;color:var(--ink);background:var(--panel);padding:14px;border:1px solid var(--line)}
+#commentNotificationDialog .notice-item.is-read{border-inline-start:3px solid var(--line)}
+#commentNotificationDialog .notice-item:not(.is-read){border-inline-start:3px solid var(--accent,#15968c)}
+#commentNotificationDialog .notice-item-top{display:flex;flex-wrap:wrap;gap:6px 16px;justify-content:space-between}
+#commentNotificationDialog time{font-size:16px;color:var(--muted)}
+.notification-target-v314{outline:3px solid var(--accent,#15968c);outline-offset:4px;scroll-margin:30px;background:color-mix(in srgb,var(--accent,#15968c) 12%,transparent)}
+#collectionAccessRequests .collection-access-row,#collectionAccessRequests small,#collectionAccessRequests button{font-size:16px}
+
+.settings-workspace-v240 #notificationSettingsV314 label,.settings-workspace-v240 #notificationSettingsV314 p,.settings-workspace-v240 #notificationSettingsV314 button,.settings-workspace-v240 #notificationSettingsV314 legend{font-size:16px;line-height:1.6}

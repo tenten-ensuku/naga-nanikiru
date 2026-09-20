@@ -10,7 +10,7 @@ test("renders the v87 scene and half-game generator controls", async () => {
     readFile(indexUrl, "utf8"),
     readFile(generatorUrl, "utf8")
   ]);
-  assert.match(html, /const APP_VERSION = 313/);
+  assert.match(html, /const APP_VERSION = 314/);
   assert.match(html, /function captureGeneratorFormDraftV157\(\)/);
   assert.match(html, /destination: document\.getElementById\("generatorDestinationSelect"\)\?\.value \|\| generatorDestinationV130 \|\| ""/);
   assert.match(html, /function restoreGeneratorFormDraftV157\(draft\)/);
@@ -56,7 +56,7 @@ test("renders the v87 scene and half-game generator controls", async () => {
   assert.match(html, /data-comment-action="delete"/);
   assert.match(html, /function beginCommentEditV75/);
   assert.match(html, /function deleteCommentV75/);
-  assert.match(html, /data-community-notification-kind="question"/);
+  assert.match(html, /accountNotificationsV314.open/);
   assert.match(html, /data-menu-question-notification/);
   assert.match(html, /data-menu-range-notification/);
   assert.doesNotMatch(html, /data-menu-view="session"/);

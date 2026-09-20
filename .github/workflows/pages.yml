@@ -29,6 +29,7 @@ jobs:
       - run: npm run test:drill
       - run: npm run test:mobile
       - run: npm run test:navigation
+      - run: node --test tests/notifications-ui-v314.test.mjs
       - run: npm run test:menu
       - run: node --test tests/theme-v259.test.mjs
       - run: npm run test:builder
