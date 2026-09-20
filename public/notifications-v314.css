@@ -23,3 +23,7 @@
 #collectionAccessRequests .collection-access-row,#collectionAccessRequests small,#collectionAccessRequests button{font-size:16px}
 
 .settings-workspace-v240 #notificationSettingsV314 label,.settings-workspace-v240 #notificationSettingsV314 p,.settings-workspace-v240 #notificationSettingsV314 button,.settings-workspace-v240 #notificationSettingsV314 legend{font-size:16px;line-height:1.6}
+#commentNotificationDialog{overflow:hidden;max-height:calc(100dvh - 32px)}
+#commentNotificationDialog .notice-dialog-inner{display:flex;flex-direction:column;max-height:calc(100dvh - 70px)}
+#commentNotificationDialog .notice-dialog-heading,#commentNotificationDialog .notice-dialog-note,#commentNotificationDialog .notice-dialog-actions,#notificationFiltersV314{flex:none}
+#commentNotificationDialog .notice-list{flex:1 1 auto;min-height:0;max-height:none;overflow-y:auto}
