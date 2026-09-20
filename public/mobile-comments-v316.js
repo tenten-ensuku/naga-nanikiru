@@ -13,13 +13,14 @@
     const dialog = document.createElement('dialog');
     dialog.className = 'mobile-comment-dialog-v316';
     dialog.setAttribute('aria-labelledby','mobileCommentTitleV316');
-    dialog.innerHTML = '<header class="mobile-comment-heading-v316"><h2 id="mobileCommentTitleV316">コメントを書く</h2><button type="button" data-comment-return>コメントを読む</button></header><section class="mobile-comment-preview-v316" aria-label="問題の盤面プレビュー"><div class="mobile-comment-board-v316" aria-hidden="true" inert></div><button type="button" data-comment-expand aria-expanded="false" aria-label="盤面を拡大">拡大</button></section><div class="mobile-comment-form-host-v316"></div>';
+    dialog.innerHTML = '<header class="mobile-comment-heading-v316"><h2 id="mobileCommentTitleV316">コメントを書く</h2><button type="button" data-comment-return aria-label="コメント入力を閉じる">× 閉じる</button></header><section class="mobile-comment-preview-v316" aria-label="問題の盤面プレビュー"><div class="mobile-comment-board-v316" aria-hidden="true" inert></div><button type="button" data-comment-expand aria-expanded="false" aria-label="盤面を拡大">拡大</button></section><div class="mobile-comment-form-host-v316"></div>';
     document.querySelector('.page').append(dialog);
     const host = dialog.querySelector('.mobile-comment-form-host-v316');
     const board = dialog.querySelector('.mobile-comment-board-v316');
     const preview = dialog.querySelector('.mobile-comment-preview-v316');
     const expand = dialog.querySelector('[data-comment-expand]');
     const back = dialog.querySelector('[data-comment-return]');
+    const footerBack = document.getElementById('commentReturnButtonV317');
     const media = root.matchMedia('(max-width: 800px)');
     let active = false, expanded = false, selection = null, scrollY = 0, clone, frameWidth, frameHeight;
     let oldBody = null;
@@ -58,6 +59,7 @@
     function hide({focus=false}={}) {
       if (!active) return;
       rememberSelection(); active=false; expanded=false;
+      input.blur();
       marker.after(form);
       dialog.close();
       dialog.classList.remove('is-expanded-v316');
@@ -67,7 +69,7 @@
       document.body.style.top=oldBody.top;
       document.body.style.width=oldBody.width;
       document.body.style.overflow=oldBody.overflow;
-      root.scrollTo(0,scrollY);
+      root.scrollTo({left:0,top:scrollY,behavior:'instant'});
       if (focus) document.getElementById('commentAddButton').focus({preventScroll:true});
     }
     function show() {
@@ -94,6 +96,7 @@
     }
     function closeFromUser() { if (!busy) { hide({focus:true}); latest?.onClose?.(); } }
     back.addEventListener('click',closeFromUser);
+    footerBack.addEventListener('click',closeFromUser);
     expand.addEventListener('click',()=>setExpanded(!expanded));
     dialog.addEventListener('cancel',event=>{event.preventDefault();if(expanded)setExpanded(false);else closeFromUser();});
     input.addEventListener('input',resizeInput);
@@ -103,7 +106,7 @@
     root.visualViewport?.addEventListener('scroll',layout);
     root.addEventListener('resize',layout);
     media.addEventListener('change',()=>sync(latest));
-    return {dialog,media,show,hide,resizeInput,setBusy(value){back.disabled=value;expand.disabled=value;}};
+    return {dialog,media,show,hide,resizeInput,setBusy(value){back.disabled=value;footerBack.disabled=value;expand.disabled=value;}};
   }
   function sync(options) {
     if (!options) return;
