@@ -25,6 +25,49 @@
   const coverTitle = title => /.+問題集$/.test(title)
     ? `<span>${escape(title.slice(0, -3))}</span><small>問題集</small>` : escape(title);
 
+  function syncAttributes(current, next) {
+    for (const attribute of [...current.attributes]) {
+      if (!next.hasAttribute(attribute.name)) current.removeAttribute(attribute.name);
+    }
+    for (const attribute of next.attributes) {
+      if (current.getAttribute(attribute.name) !== attribute.value) current.setAttribute(attribute.name, attribute.value);
+    }
+  }
+
+  const shelfNodeKey = node => node.nodeType === 1
+    ? `${node.nodeName}:${node.getAttribute("data-library-book") || node.getAttribute("data-library-placeholder") || node.classList[0] || ""}`
+    : String(node.nodeType);
+
+  // Metadata arrives one book at a time. Keep decoded artwork, scroll position,
+  // and book identity while updating only changed shelf content.
+  function syncShelfChildren(current, next, shelf = false) {
+    const available = new Map();
+    for (const child of current.childNodes) {
+      const key = shelfNodeKey(child);
+      if (!available.has(key)) available.set(key, []);
+      available.get(key).push(child);
+    }
+    let cursor = current.firstChild;
+    for (const incoming of [...next.childNodes]) {
+      const existing = available.get(shelfNodeKey(incoming))?.shift();
+      let child = existing || incoming;
+      if (existing && !existing.isEqualNode(incoming)) {
+        if (existing.nodeType !== 1) existing.nodeValue = incoming.nodeValue;
+        else if (shelf || existing.classList.contains("library-stage")) {
+          syncAttributes(existing, incoming);
+          syncShelfChildren(existing, incoming, true);
+        } else {
+          existing.replaceWith(incoming);
+          if (cursor === existing) cursor = incoming;
+          child = incoming;
+        }
+      }
+      if (child !== cursor) current.insertBefore(child, cursor);
+      cursor = child.nextSibling;
+    }
+    for (const children of available.values()) for (const child of children) child.remove();
+  }
+
   function bookTone(row) {
     if (["walnut", "navy", "forest", "burgundy", "ivory", "plum", "teal", "ochre"].includes(row?.book_tone)) return row.book_tone;
     const title = String(row?.series_title || row?.display_title || row?.title || "");
@@ -126,7 +169,7 @@
       cache: new Map(), summaries: new Map(), inflight: new Map(), failures: new Map(),
       staleSeries: new Set(), staleSummaries: new Set(), savedOrder: [], seenUpdates: new Map(),
       hiddenBooks: new Set(), allEntries: [], hiddenDialogOpen: false, hiddenNotice: "", focusHidden: false,
-      root: null, abort: null, observer: null, entries: [], opening: false,
+      root: null, paintedUserId: null, abort: null, observer: null, entries: [], opening: false,
       scrollLeft: 0, focusAfterRender: "", error: "", drag: null, needsRender: false,
       artReady: !host.Image, artFailed: false, artTask: null,
       suppressClick: { slug: "", until: 0 }
@@ -305,6 +348,19 @@
         <section class="library-detail" data-library-detail aria-labelledby="libraryDetailTitleV214"${preparing ? ' inert aria-hidden="true"' : ""}>${detail()}</section>
         <p class="library-order-status" data-library-status role="status" aria-live="polite">${escape(state.hiddenNotice)}</p>${hiddenBooksMarkup()}
       </section>`;
+    }
+    function paint(root, markup) {
+      const current = root.querySelector(".library-v214");
+      if (!current || state.paintedUserId !== state.userId) {
+        root.innerHTML = markup;
+      } else {
+        const template = host.document.createElement("template");
+        template.innerHTML = markup;
+        const next = template.content.firstElementChild;
+        syncAttributes(current, next);
+        syncShelfChildren(current, next);
+      }
+      state.paintedUserId = state.userId;
     }
     function setSelection(slug, picked = true) {
       if (state.opening) return;
@@ -760,7 +816,7 @@
       state.failures.clear();
       state.error = "";
     }
-    return { render, mount, unmount, browseSeries, openBook, invalidate };
+    return { render, paint, mount, unmount, browseSeries, openBook, invalidate };
   }
 
   function reducedMotion() {

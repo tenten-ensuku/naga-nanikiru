@@ -431,13 +431,14 @@ test("switching users invalidates old in-flight/cache data", async () => {
 
 test("adapter keeps legacy fallback, controller mount/unmount hooks, and navigation reset contract", async () => {
   const [index, library] = await Promise.all([readFile(INDEX_PATH, "utf8"), readFile(LIBRARY_PATH, "utf8")]);
-  assert.match(index, /library-v214\.js\?v=317/);
+  assert.match(index, /library-v214\.js\?v=318/);
   const renderStart = index.indexOf("function renderCollectionChooserV165");
   const renderEnd = index.indexOf("function renderCollectionSpacePanelV100", renderStart);
   const renderer = index.slice(renderStart, renderEnd);
   assert.match(renderer, /if \(!library\) return renderCollectionChooserLegacyV165\(\);/);
   assert.match(index, /getCollectionLibraryV214\(\)\?\.mount\(grid\)/);
-  assert.match(library, /return \{ render, mount, unmount, browseSeries, openBook, invalidate \}/);
+  assert.match(index, /library\.paint\(grid, libraryMarkup\)/);
+  assert.match(library, /return \{ render, paint, mount, unmount, browseSeries, openBook, invalidate \}/);
 
   const navigationStart = index.indexOf("function navigateToCollectionV106");
   const navigationEnd = index.indexOf("function captureCollectionCreateDraftV114", navigationStart);
