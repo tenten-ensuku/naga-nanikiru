@@ -8,7 +8,7 @@ const html = fs.readFileSync(new URL('../public/index.html', import.meta.url), '
 const names = ['currentGeneratorDestinationV130', 'canAddGeneratedQuestionV130',
   'explainGeneratorSaveBlockedV249', 'generatorCandidateStateV249',
   'selectedGeneratorCandidateIndexesV249', 'renderGeneratorBatchToolbarV158',
-  'generatorCandidateSourceMarkupV309', 'renderGeneratorCandidatesV44', 'generatorCommentMarkupV273', 'addSelectedGeneratorQuestionsV158', 'addGeneratedQuestionV44'];
+  'generatorCandidateToggleMarkupV310', 'renderGeneratorCandidatesV44', 'generatorCommentMarkupV273', 'addSelectedGeneratorQuestionsV158', 'addGeneratedQuestionV44'];
 const source = names.map(name => {
   const match = html.match(new RegExp(`(?:async )?function ${name}\\([\\s\\S]*?\\n      \\}`));
   assert.ok(match, name); return match[0];
@@ -26,6 +26,7 @@ function harness() {
     generatorCandidatesV44: [{id:'a',boardScene:{},playerName:'確認用',tv:1},{id:'b',boardScene:{},tv:2}],
     generatorSelectedCandidatesV158: new Set(), generatorAddedKeysV130: new Set(), generatorDuplicateKeysV153: new Set(), generatorCommentDraftsV273: new Map(),
     generatorReportV44: {},
+    generatorRecommendationOpenV310: new Set(), generatorCandidateBarsMarkupV310: () => '', generatorCandidatePanelMarkupV310: () => '',
     hasJsonBoardV248: candidate => Boolean(candidate.boardScene) && !candidate.invalid,
     prepareJsonBoardV248: candidate => !candidate.invalid, generatedHandIsValidV237: () => true,
     escapeHtml: value => String(value), questionTypeV44: () => '打牌判断',
@@ -52,23 +53,22 @@ test('candidate selection is enabled without a destination; save action asks for
   assert.doesNotMatch(toolbar.match(/<button[^>]+data-generator-add-selected[^>]*>/)[0], /disabled/);
 });
 
-test('each preview links to its own NAGA scene in a separate tab, including invalid-board candidates', () => {
-  const h=harness(),url='https://naga.dmv.nico/htmls/report_viewer.html?report_id=preview-test&tw=3&ts=2&tv=83';
-  h.context.generatorCandidatesV44[0].nagaUrl=url;
-  h.context.generatorCandidatesV44[1].nagaUrl=url.replace('tv=83','tv=84');
+test('each valid preview has an in-app recommendation toggle and invalid boards stay blocked', () => {
+  const h=harness();
   h.context.generatorCandidatesV44[1].invalid=true;
   const markup=h.run('renderGeneratorCandidatesV44()');
-  assert.ok(markup.includes(`href="${url}"`));assert.ok(markup.includes(`href="${url.replace('tv=83','tv=84')}"`));
-  assert.equal((markup.match(/target="_blank" rel="noopener noreferrer"/g)||[]).length,2);
-  assert.doesNotMatch(markup,/data-generator-capture|盤面を再描画|プレビューを読み込む/);
+  assert.match(markup,/data-generator-recommendations-v310="0" aria-expanded="false" aria-controls="generatorRecommendationPanelV310-0">NAGA推奨を見る/);
+  assert.match(markup,/data-generator-recommendations-v310="1"[^>]*disabled/);
+  assert.doesNotMatch(markup,/data-generator-capture|盤面を再描画|NAGAで局面を見る|target="_blank"/);
   assert.match(markup, /data-generator-add="1"[^>]*disabled/);
 });
 
-test('preview source links exclude unsafe, missing and non-scene URLs', () => {
+test('recommendation toggle state survives rendering and does not depend on a source URL', () => {
   const h=harness();
-  for(const nagaUrl of [undefined,'javascript:alert(1)','https://example.com/htmls/report_viewer.html?report_id=test&tw=0&ts=0&tv=1','https://naga.dmv.nico/htmls/report_viewer.html?report_id=test']) {
-    assert.equal(h.context.generatorCandidateSourceMarkupV309({nagaUrl}), '');
-  }
+  h.context.generatorRecommendationOpenV310.add('a');
+  const markup=h.run('renderGeneratorCandidatesV44()');
+  assert.match(markup,/data-generator-recommendations-v310="0" aria-expanded="true"[^>]*>NAGA推奨を閉じる/);
+  assert.match(markup,/data-generator-recommendations-v310="1" aria-expanded="false"/);
 });
 
 test('single and batch save without destination focus picker, preserve selection, never confirm/write', async () => {

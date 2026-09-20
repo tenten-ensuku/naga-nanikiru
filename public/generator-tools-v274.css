@@ -76,4 +76,24 @@ html[data-theme=light] .comment-body .comment-spoiler { background: #dce8e4 !imp
 .candidate-rate-fill-v308.model-omega { background: var(--omega); }
 .candidate-rate-missing-v308 { grid-column: 2 / -1; text-align: right; color: var(--muted); }
 
-.page.menu-active #menuPanel .candidate-actions .candidate-source-v309 { display: inline-flex; align-items: center; justify-content: center; gap: 6px; box-sizing: border-box; min-height: 44px; padding: 10px 12px; font-size: 14px; line-height: 1.5; color: var(--ink); background: var(--panel-2); border-color: var(--line); text-decoration: none; }
+.page.menu-active #menuPanel .candidate-actions .candidate-toggle-v310 { display: inline-flex; align-items: center; justify-content: center; gap: 6px; box-sizing: border-box; min-height: 44px; padding: 10px 12px; font-size: 14px; line-height: 1.5; color: var(--ink); background: var(--panel-2); border-color: var(--line); text-decoration: none; }
+
+/* Preview recommendations share the JSON board's hand positions. */
+.candidate-board-bars-v310 { position: absolute; inset: 0; pointer-events: none; }
+.candidate-board-bars-v310 svg { display: block; width: 100%; height: 100%; }
+.candidate-board-bars-v310 .model-nishiki { fill: var(--nishiki); }
+.candidate-board-bars-v310 .model-hihikari { fill: var(--hihikari); }
+.candidate-board-bars-v310 .model-kagashi { fill: var(--kagashi); }
+.candidate-board-bars-v310 .model-gamma { fill: var(--gamma); }
+.candidate-board-bars-v310 .model-omega { fill: var(--omega); }
+[data-generator-recommendation-content-v310][hidden] { display: none !important; }
+.candidate-bar-legend-v310 { display: flex; flex-wrap: wrap; gap: 8px 16px; margin: 12px 0; font-size: 16px; }
+.candidate-bar-legend-v310 > span { display: inline-flex; align-items: center; gap: 6px; }
+.candidate-bar-legend-v310 i { width: 12px; height: 12px; border-radius: 2px; }
+.page.menu-active #menuPanel .candidate-judgment-v310 { margin: 14px 0; padding-top: 12px; border-top: 1px solid var(--line); color: var(--ink); }
+.candidate-judgment-heading-v310 { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 12px; font-size: 16px; }
+.page.menu-active #menuPanel .candidate-judgment-heading-v310 h4 { font-size: 18px; margin: 0; }
+.candidate-call-tile-v310 img { display: block; width: 26px; height: auto; }
+.candidate-decision-choices-v310 { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; font-size: 16px; }
+.candidate-decision-choices-v310 > span { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border: 1px solid var(--line); border-radius: 6px; }
+.candidate-decision-choices-v310 strong { font-size: inherit; font-weight: 600; }

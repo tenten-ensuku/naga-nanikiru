@@ -47,5 +47,5 @@ test('unavailable predictions are distinct from genuine zero rates',()=>{
 });
 test('ordinary discards do not acquire a riichi section and preview rendering includes the section',()=>{
   const h=harness();assert.equal(h.generatorCandidateRecommendationMarkupV308({models,reach:[0,0],actualReach:false}), '');
-  assert.match(html,/\$\{generatorCandidateRecommendationMarkupV308\(candidate\)\}/);
+  assert.match(html,/const rates = generatorCandidateRecommendationMarkupV308\(candidate\)/);
 });

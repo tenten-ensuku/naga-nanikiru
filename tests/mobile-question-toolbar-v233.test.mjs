@@ -19,8 +19,8 @@ function functionBlock(source, name, nextName) {
 
 test("V233 aligns the mobile toolbar version, labels, and accessible names", async () => {
   const html = await readFile(indexPath, "utf8");
-  assert.match(html, /const APP_VERSION = 309;/);
-  assert.match(html, /ux-v159\.css\?v=309/);
+  assert.match(html, /const APP_VERSION = 310;/);
+  assert.match(html, /ux-v159\.css\?v=310/);
   assert.doesNotMatch(html, /<script[^>]+legacy-transfer-v232\.js/);
 
   const sourceBar = html.match(/<div class="source-bar">[\s\S]*?<\/div>\s*\n\s*<section class="scene-card"/)?.[0] || "";
