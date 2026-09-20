@@ -28,6 +28,7 @@ jobs:
       - run: npm run test:ops
       - run: npm run test:drill
       - run: npm run test:mobile
+      - run: node --test tests/mobile-comments-v316.test.mjs
       - run: npm run test:navigation
       - run: node --test tests/notifications-ui-v314.test.mjs
       - run: npm run test:menu

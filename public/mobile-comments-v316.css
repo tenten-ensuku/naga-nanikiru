@@ -1,0 +1,52 @@
+/* Keep the two navigation rows outside the only reaction scroll area. */
+#reactionPickerV208:not([hidden]) { display:flex; flex-direction:column; overflow:hidden; box-sizing:border-box; }
+#reactionPickerV208 > .reaction-popover-heading-v208,
+#reactionPickerV208 > [role=tablist] { flex:none; }
+#reactionPickerV208 > [role=tabpanel]:not([hidden]) { min-height:0; overflow-y:auto; overscroll-behavior:contain; -webkit-overflow-scrolling:touch; }
+#reactionPickerV208 .reaction-popover-heading-v208 strong { font-size:16px; }
+#reactionPickerV208 .reaction-popover-close-v208 { width:44px; min-height:44px; flex:none; }
+#reactionPickerV208 .reaction-picker-tabs-v221 { display:flex; gap:3px; overflow-x:auto; overscroll-behavior-x:contain; scrollbar-width:none; }
+#reactionPickerV208 .reaction-picker-tab-v221 { flex:1 0 auto; gap:3px; min-height:44px; padding:6px 5px; font-size:14px; overflow:visible; text-overflow:clip; }
+#reactionPickerV208 .reaction-picker-tab-v221 span { font-size:12px; }
+#reactionPickerV208 .reaction-picker-option-v221 { display:flex; min-height:48px; }
+#reactionPickerV208 .reaction-picker-select-v221 { flex:1; padding:7px; font-size:14px; }
+#reactionPickerV208 .reaction-picker-favorite-v221 { position:static; flex:0 0 44px; width:44px; height:auto; min-height:44px; align-self:stretch; border-radius:0; border-width:0 0 0 1px; font-size:19px; }
+#reactionPickerV208 .reaction-tile-picker-options-v213 { grid-template-columns:repeat(4,minmax(0,1fr)); }
+#reactionPickerV208 .is-tile { flex-direction:column; }
+#reactionPickerV208 .is-tile .reaction-picker-favorite-v221 { width:100%; flex:0 0 44px; border-width:1px 0 0; }
+#reactionPickerV208 .reaction-picker-personal-note-v221,
+#reactionPickerV208 .reaction-picker-empty-v211 { font-size:16px; }
+.comment-compose-body-v316, .comment-compose-actions-v316 { display:contents; }
+.mobile-comment-dialog-v316 { color:var(--ink); background:var(--ux-surface,#092331); border:1px solid var(--ux-border-soft,#315b65); }
+.mobile-comment-dialog-v316:not([open]) { display:none; }
+.mobile-comment-dialog-v316[open] { position:fixed; inset:auto; left:var(--comment-left,0px); top:var(--comment-top,0px); width:var(--comment-width,100vw); height:var(--comment-height,100dvh); max-width:none; max-height:none; margin:0; padding:10px max(10px,env(safe-area-inset-right)) max(10px,env(safe-area-inset-bottom)) max(10px,env(safe-area-inset-left)); box-sizing:border-box; border-radius:0; display:flex; flex-direction:column; gap:8px; overflow:hidden; }
+.mobile-comment-dialog-v316::backdrop { background:#00121bcc; }
+.mobile-comment-heading-v316 { display:flex; align-items:center; justify-content:space-between; flex:none; gap:8px; }
+.mobile-comment-heading-v316 h2 { margin:0; font-size:18px; }
+.mobile-comment-heading-v316 button, .mobile-comment-preview-v316 > button, .mobile-comment-dialog-v316 .comment-form button { min-height:44px; padding:7px 10px; color:var(--ink); background:var(--ux-surface-strong,#15455a); border:1px solid var(--ux-border-soft,#315b65); border-radius:7px; font-size:16px; }
+.mobile-comment-board-v316 button { opacity:1; }
+.mobile-comment-preview-v316 { position:relative; min-height:80px; flex:1 1 0; overflow:hidden; }
+.mobile-comment-board-v316 { position:absolute; inset:0; pointer-events:none; }
+.mobile-comment-preview-v316 > button { position:absolute; bottom:0; right:0; }
+.mobile-comment-form-host-v316 { min-height:0; flex:0 1 auto; max-height:60%; }
+.mobile-comment-dialog-v316 .comment-form { height:100%; max-height:100%; min-height:0; display:flex; flex-direction:column; align-items:stretch; gap:6px; padding:8px; margin:0; }
+.mobile-comment-dialog-v316 .comment-compose-body-v316 { display:flex; flex-direction:column; min-height:0; gap:8px; overflow-y:auto; overscroll-behavior:contain; }
+.mobile-comment-dialog-v316 .comment-compose-body-v316 > label { display:none; }
+.mobile-comment-dialog-v316 .comment-compose-editor { order:-1; flex:none; }
+.mobile-comment-dialog-v316 .comment-form textarea { font-size:16px; line-height:1.5; min-height:110px; max-height:160px; resize:none; padding:8px; }
+.mobile-comment-dialog-v316 .comment-compose-actions-v316 { display:flex; flex:none; flex-wrap:wrap; align-items:center; gap:6px; }
+.mobile-comment-dialog-v316 .comment-form-status { flex:1 0 100%; font-size:16px; min-height:0; margin:0; }
+.mobile-comment-dialog-v316 .comment-form-status:empty { display:none; }
+.mobile-comment-dialog-v316 .comment-submit { flex:1; font-size:16px; color:var(--ink); }
+.mobile-comment-dialog-v316 .comment-tools-v274 > summary { min-height:44px; box-sizing:border-box; padding:9px; font-size:16px; }
+.mobile-comment-dialog-v316 .comment-format-help { font-size:14px; }
+.mobile-comment-dialog-v316.is-expanded-v316 .mobile-comment-form-host-v316 { display:none; }
+.mobile-comment-dialog-v316.is-expanded-v316 .mobile-comment-preview-v316 { min-height:0; }
+.mobile-comment-dialog-v316.is-short-v316 { gap:4px; padding-block:4px; }
+.mobile-comment-dialog-v316.is-short-v316 .mobile-comment-heading-v316 h2 { font-size:16px; }
+.mobile-comment-dialog-v316.is-short-v316 .comment-form textarea { min-height:86px; max-height:110px; }
+.mobile-comment-dialog-v316.is-short-v316 .mobile-comment-preview-v316 { min-height:60px; }
+@media(max-width:800px) {
+  #reactionPickerV208 { width:calc(100vw - 16px); max-height:calc(100dvh - 24px); }
+  .reaction-add-button-v208 { min-height:44px; min-width:44px; font-size:14px; }
+}
