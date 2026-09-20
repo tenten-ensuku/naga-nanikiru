@@ -14,9 +14,9 @@ test("V180 exposes the recent-history shell and synchronized release assets", as
     readFile(identityUrl, "utf8"),
   ]);
 
-  assert.match(html, /const APP_VERSION = 308;/);
-  assert.match(identity, /APP_VERSION = 308/);
-  assert.match(html, /ux-v159\.css\?v=308/);
+  assert.match(html, /const APP_VERSION = 309;/);
+  assert.match(identity, /APP_VERSION = 309/);
+  assert.match(html, /ux-v159\.css\?v=309/);
   assert.match(html, /\.comment-form textarea \{ display: block; width: 100%; min-width: 0;/);
   assert.match(html, /data-menu-view="today"/);
   assert.match(html, /data-menu-view="today"[^>]*>[\s\S]*?<span>学ぶ<\/span>/);
@@ -70,7 +70,7 @@ test("V161 keeps generator input and destination in a persistent staged workflow
   assert.match(html, /generatorForm\?\.addEventListener\("change", persistGeneratorFormDraftV157\)/);
   assert.match(html, /generator-progress/);
   assert.match(html, /const steps = \["入力", "解析", "確認", "追加"\]/);
-  assert.match(html, /data-generator-capture-all/);
+  assert.doesNotMatch(html, /data-generator-capture-all/);
   assert.match(html, /data-generator-add-selected/);
   const generatorView = html.match(/function renderGeneratorViewV44\(\)[\s\S]*?function generatorCandidateChoiceMarkupV158/)?.[0] || "";
   assert.doesNotMatch(generatorView, /type="file"/);

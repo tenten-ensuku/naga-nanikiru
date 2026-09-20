@@ -75,3 +75,5 @@ html[data-theme=light] .comment-body .comment-spoiler { background: #dce8e4 !imp
 .candidate-rate-fill-v308.model-gamma { background: var(--gamma); }
 .candidate-rate-fill-v308.model-omega { background: var(--omega); }
 .candidate-rate-missing-v308 { grid-column: 2 / -1; text-align: right; color: var(--muted); }
+
+.page.menu-active #menuPanel .candidate-actions .candidate-source-v309 { display: inline-flex; align-items: center; justify-content: center; gap: 6px; box-sizing: border-box; min-height: 44px; padding: 10px 12px; font-size: 14px; line-height: 1.5; color: var(--ink); background: var(--panel-2); border-color: var(--line); text-decoration: none; }

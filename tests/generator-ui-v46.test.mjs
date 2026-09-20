@@ -10,7 +10,7 @@ test("renders the v87 scene and half-game generator controls", async () => {
     readFile(indexUrl, "utf8"),
     readFile(generatorUrl, "utf8")
   ]);
-  assert.match(html, /const APP_VERSION = 308/);
+  assert.match(html, /const APP_VERSION = 309/);
   assert.match(html, /function captureGeneratorFormDraftV157\(\)/);
   assert.match(html, /destination: document\.getElementById\("generatorDestinationSelect"\)\?\.value \|\| generatorDestinationV130 \|\| ""/);
   assert.match(html, /function restoreGeneratorFormDraftV157\(draft\)/);
@@ -163,14 +163,15 @@ test("renders the v87 scene and half-game generator controls", async () => {
   assert.match(html, /局面URLではURLにtsとtvの両方が必要です/);
   assert.match(html, /ts: null, tv: null/);
   assert.match(html, /extractBadMoves\(report, seat, \{ \.\.\.extraction, reportId: spec\.reportId \}\)/);
-  assert.match(html, /captureGeneratorCandidateV51/);
-  assert.match(html, /data-generator-capture/);
+  assert.doesNotMatch(html, /captureGeneratorCandidateV51/);
+  assert.doesNotMatch(html, /data-generator-capture/);
+  assert.match(html, /generatorCandidateSourceMarkupV309/);
   assert.match(html, /generatorSelectedCandidatesV158/);
   assert.match(html, /data-generator-select/);
   assert.match(html, /data-generator-add-selected/);
   assert.match(html, /function addSelectedGeneratorQuestionsV158\(\)/);
-  assert.match(html, /function captureGeneratorCandidatesSequentiallyV158\(\)/);
-  assert.match(html, /data-generator-capture-all/);
+  assert.doesNotMatch(html, /function captureGeneratorCandidatesSequentiallyV158\(\)/);
+  assert.doesNotMatch(html, /data-generator-capture-all/);
   assert.doesNotMatch(html, /captureNagaScene/);
   assert.doesNotMatch(html, /JSON盤面・画像撮影なし/);
   assert.doesNotMatch(html, /candidate-file-label/);

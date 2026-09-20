@@ -43,8 +43,9 @@ test('server saves JSON-only question, reloads exactly and deduplicates without 
 test('browser code is syntactically valid and generation does not call capture/upload',async()=>{
  const html=await readFile(new URL('../public/index.html',import.meta.url),'utf8');
  for(const m of html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g))if(m[1].trim())new vm.Script(m[1]);
- const start=html.indexOf('async function captureGeneratorCandidateV51('),end=html.indexOf('function setGeneratorStatusV44(',start),flow=html.slice(start,end);
- assert.doesNotMatch(flow,/captureNagaScene|compressImageFile|upload|fetch\(/);assert.match(flow,/prepareJsonBoardV248/);
+ const start=html.indexOf('function prepareJsonBoardV248('),end=html.indexOf('function setGeneratorStatusV44(',start),flow=html.slice(start,end);
+ assert.doesNotMatch(flow,/captureNagaScene|compressImageFile|upload|fetch\(/);assert.match(flow,/NagaBoardStateV248\.project/);
+ assert.match(html,/if \(!candidate\.boardScene && !candidate\._captureError && generatorReportV44\) prepareJsonBoardV248\(candidate\)/);
  assert.match(html,/needsScreenshot: false/);assert.match(html,/if \(!SCENE.boardScene\) setHandMaskV17/);
  assert.match(html,/question\.id = String\(question\.serverQuestionId\)/);
  assert.match(html,/question\.__sharedDetailLoaded = true/);
