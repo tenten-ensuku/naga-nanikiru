@@ -15,6 +15,9 @@
 #commentNotificationDialog .notice-item.is-read{border-inline-start:3px solid var(--line)}
 #commentNotificationDialog .notice-item:not(.is-read){border-inline-start:3px solid var(--accent,#15968c)}
 #commentNotificationDialog .notice-item-top{display:flex;flex-wrap:wrap;gap:6px 16px;justify-content:space-between}
+#commentNotificationDialog .notice-item-top,#commentNotificationDialog .notice-item-top strong{font-size:16px;line-height:1.6}
+#commentNotificationDialog .notice-empty{font-size:16px;line-height:1.6;color:var(--muted);background:var(--panel-2);padding:20px}
+#notificationFiltersV314 button,#commentNotificationList>button[data-notification-more]{color:var(--ink);background:var(--panel-2);border:1px solid var(--line);border-radius:7px}
 #commentNotificationDialog time{font-size:16px;color:var(--muted)}
 .notification-target-v314{outline:3px solid var(--accent,#15968c);outline-offset:4px;scroll-margin:30px;background:color-mix(in srgb,var(--accent,#15968c) 12%,transparent)}
 #collectionAccessRequests .collection-access-row,#collectionAccessRequests small,#collectionAccessRequests button{font-size:16px}
