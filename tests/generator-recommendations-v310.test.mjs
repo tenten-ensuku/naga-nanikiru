@@ -48,21 +48,21 @@ test('call previews show decision UI, target tile, kan actions and rates, withou
     callRecommendedActions:['kan','call','pass'],callActionProbabilities:{call:[0,90,0],kan:[75,0,5],pass:[25,10,95]}};
   const before=structuredClone(candidate),markup=h.generatorCandidatePanelMarkupV310(candidate,0);
   assert.equal(h.generatorCandidateBarsMarkupV310(candidate,0),'');
-  assert.match(markup,/aria-label="副露判断"/); assert.match(markup,/tiles\/ji1-66-90-l.png/);
+  assert.match(markup,/aria-label="副露推奨"/); assert.match(markup,/tiles\/ji1-66-90-l.png/);
   const actions=h.generatorCandidateModelsMarkupV158(candidate);
   assert.match(actions,/ニシキの推奨：カン/); assert.match(actions,/カガシの推奨：スルー/);
-  assert.match(markup,/>75\.0%<\/strong>/); assert.match(h.generatorCandidateChoiceMarkupV158(candidate),/プレイヤー選択：スルー/);
+  assert.match(markup,/カン：75\.0%/); assert.match(h.generatorCandidateChoiceMarkupV158(candidate),/プレイヤー選択：スルー/);
   assert.deepEqual(candidate,before);
 });
 
 test('riichi uses the same 5000 basis-point boundary and ordinary discards do not show judgment controls', () => {
   const h=harness();
   const markup=h.generatorCandidateJudgmentMarkupV310({models,hasRiichiJudgment:true,actualReach:true,reach:[5000,9000,4999]});
-  assert.match(markup,/aria-label="立直判断"/); assert.match(markup,/ニシキ<strong>立直/);
-  assert.match(markup,/カガシ<strong>ダマ/); assert.match(markup,/当時の選択：立直/);
+  assert.match(markup,/aria-label="立直推奨"/); assert.match(markup,/>立直寄りかな</);
+  assert.match(markup,/カガシ 立直：50\.0%/);
   assert.equal(h.generatorCandidateJudgmentMarkupV310({models,reach:[0,0,0]}),'');
   const missing=h.generatorCandidateJudgmentMarkupV310({models,hasRiichiJudgment:true,reach:[null,5000,null]});
-  assert.match(missing,/ニシキ<strong>データなし/); assert.doesNotMatch(missing,/ニシキ<strong>スルー/);
+  assert.match(missing,/このモデルの推奨データはありません/); assert.doesNotMatch(missing,/ニシキ<strong>スルー/);
 });
 
 test('toggle affects only its candidate and preserves drafts, selection, board and data without re-rendering', () => {

@@ -35,10 +35,10 @@ test("requires explicit confirmation before revealing or recording an answer", a
 
 test("records answer timing and exposes the synchronized drill version", async () => {
   const html = await source();
-  assert.match(html, /const APP_VERSION = 311;/);
+  assert.match(html, /const APP_VERSION = 312;/);
   assert.match(html, /const MODEL_PRIORITY = \["ニシキ", "ヒバカリ", "カガシ", "ガンマ", "オメガ"\];/);
   assert.match(html, /const HAND_BAR_MODEL_NAMES = \["ニシキ", "ヒバカリ", "カガシ"\];/);
-  assert.match(html, /const topCallModelIndices = priorityIndicesV16\(3\);/);
+  assert.match(html, /NagaBoardV248\.judgmentMarkup\(SCENE, \{selectedModel: state\.judgeModel\}\)/);
   assert.match(html, /const topModelIndices = priorityIndicesV16\(3\);/);
   assert.match(html, /indices\.sort\(\(a, b\) => modelPriorityRank\(a\) - modelPriorityRank\(b\)\)/);
   assert.match(html, /id="answerPollPanel"/);
@@ -55,11 +55,11 @@ test("records answer timing and exposes the synchronized drill version", async (
   assert.doesNotMatch(html, /questionCallActionProbabilityV112/);
 });
 
-test("uses pass-through wording and a call recommendation percentage for every call result", async () => {
+test("uses pass-through wording and the shared NAGA graph for call results", async () => {
   const html = await source();
   assert.match(html, /function callActionLabelV112\(action\)[\s\S]*?return "スルー";/);
   assert.match(html, /function callRecommendationProbabilityV112\(index\)/);
-  assert.match(html, /副露推奨度 \$\{value\.toFixed\(1\)\}%/);
+  assert.match(html, /NagaBoardV248\.judgmentMarkup\(SCENE/);
   assert.doesNotMatch(html, /副露推奨度50％以下はスルー推奨/);
   assert.doesNotMatch(html, /answer-choice-reach-label">\$\{selectedLabel\}/);
 });

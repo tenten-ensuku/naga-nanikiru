@@ -64,7 +64,7 @@ test('preview model defaults to extraction choice, switches per candidate and le
   const h={generatorReportedModelNamesV46:()=>models.map(m=>m.name),selectedGeneratorModelNamesV46:()=>['カガシ'],generatorPreviewModelsV311:new Map(),generatorCandidatesV44:[candidate,{...candidate,id:'b'}],
     generatorReportV44:{pred:[[{info:{msg:{next_tsumogiri:true}}}]]},window:{NagaBoardV248:boardRenderer}};
   vm.runInNewContext(source,h);assert.equal(h.generatorCandidateModelIndexV311(candidate),2);
-  const overlay={innerHTML:''},draft={value:'入力中'},checkbox={checked:true},article={querySelector:()=>overlay,draft,checkbox};
+  const overlay={innerHTML:''},draft={value:'入力中'},checkbox={checked:true},article={querySelector:selector=>selector==='.candidate-board-bars-v310'?overlay:null,draft,checkbox};
   h.changeGeneratorPreviewModelV311({dataset:{generatorPreviewModelV311:'0'},value:'ヒバカリ',closest:()=>article});
   assert.equal(h.generatorCandidateModelIndexV311(candidate),1);assert.equal(h.generatorCandidateModelIndexV311(h.generatorCandidatesV44[1]),2);
   assert.match(overlay.innerHTML,/表示モデル：ヒバカリ/);assert.equal(article.draft,draft);assert.equal(draft.value,'入力中');assert.equal(checkbox.checked,true);

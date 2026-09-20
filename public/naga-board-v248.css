@@ -12,3 +12,21 @@
 .scene-frame.is-json-board-v248 .riichi-layer{left:83%;top:85%}
 .scene-frame.is-json-board-v248 .call-controls{left:50%;top:70%;bottom:auto;transform:translateX(-50%)}
 .scene-frame.is-json-board-v248 .probability-stack{height:5cqw}
+.tile-button.has-naga-recommendations-v312 img{outline:none;border-radius:0}
+.naga-tile-recommendations-v312{position:absolute;left:0;top:-100%;width:100%;height:200%;overflow:visible;pointer-events:none}
+.tile-button.has-naga-recommendations-v312 .selection-marker{display:none}
+.naga-judgment-v312{min-width:0;margin-top:8px;font-family:"Noto Sans JP","Yu Gothic",Meiryo,sans-serif;color:var(--ink,#153b4e)}
+.naga-judgment-heading-v312{display:flex;align-items:center;gap:12px;margin-bottom:8px;font-size:16px}
+.naga-judgment-heading-v312>span{font-size:14px;color:var(--muted,#748c98)}
+.naga-judgment-body-v312{display:flex;align-items:center;gap:16px;min-width:0}
+.naga-judgment-graph-v312{display:block;flex:0 0 156px;width:156px;height:162px;max-width:52%;font-family:"Noto Sans JP","Yu Gothic",Meiryo,sans-serif}
+.naga-judgment-caption-v312{display:grid;gap:8px;min-width:0;font-size:18px;line-height:1.5}
+.naga-consumed-tiles-v312{display:flex;align-items:center;flex-wrap:wrap;gap:2px;font-size:16px}
+.naga-consumed-tiles-v312 img{width:22px;height:30px;border-radius:0}
+.naga-consumed-tiles-v312>span{margin-left:4px}
+.naga-judgment-legend-v312{display:flex;flex-wrap:wrap;gap:12px;margin-top:8px;font-size:14px}
+.naga-judgment-legend-v312>span{display:inline-flex;align-items:center;gap:5px}
+.naga-judgment-legend-v312 i{display:inline-block;width:10px;height:10px}
+.naga-judgment-missing-v312{font-size:16px}
+.answer-comparison:has(>.answer-choice:nth-child(2):last-child){grid-template-columns:repeat(2,minmax(0,1fr))}
+.candidate-call-tile-v310:has(+.naga-judgment-v312){display:flex;align-items:center;gap:8px;font-size:16px}
