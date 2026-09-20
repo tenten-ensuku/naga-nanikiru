@@ -29,3 +29,10 @@ test('direct comment entry is separate from answering and uses stable IDs',()=>{
  assert.match(fn,/loadSharedQuestionDetail\(row.share_slug,row.question_id\)/);assert.match(fn,/hydrateSharedCommentsV46/);assert.match(fn,/data-comment-id/);
  assert.doesNotMatch(fn,/state\.revealed\s*=|recordSharedAttempt|confirmAnswerV41|submitAnswer|answerHistory\.push/);
 });
+
+test('access-request entry keeps the loaded request while showing book management',()=>{
+ const html=fs.readFileSync(new URL('../public/index.html',import.meta.url),'utf8');
+ assert.match(html,/showMenuV16\("book-settings", \{ loadManagement: false \}\)/);
+ assert.match(html,/menuViewV16 === "book-settings" && loadManagement/);
+ assert.match(html,/data-notification-request=/);
+});

@@ -6632,7 +6632,7 @@
         const requestList = document.getElementById("collectionAccessRequests");
         if (requestList) {
           const pending = collectionAccessRequestsV100.filter(row => row?.status === "pending" || row?.id === notificationRequestIdV314);
-          requestList.innerHTML = pending.length ? pending.map(row => `<div class="collection-access-row" data-notification-request="${escapeHtml(row.id)}"><span><strong>${escapeHtml(row.requester_name || "利用者")}</strong><small>${escapeHtml(row.message || "メッセージなし")}　${escapeHtml(formatCommentTime(row.created_at))}</small></span><select data-request-role="${escapeHtml(row.id)}" aria-label="付与する権限"><option value="viewer">閲覧</option><option value="editor">編集</option></select><span class="collection-space-actions"><button type="button" data-collection-request-action="approve" data-request-id="${escapeHtml(row.id)}">承認</button><button class="is-danger" type="button" data-collection-request-action="reject" data-request-id="${escapeHtml(row.id)}">却下</button></span></div>`).join("") : `<span class="collection-access-empty">保留中の閲覧申請はありません。</span>`;
+          requestList.innerHTML = pending.length ? pending.map(row => `<div class="collection-access-row${row.id === notificationRequestIdV314 ? " notification-target-v314" : ""}" data-notification-request="${escapeHtml(row.id)}"><span><strong>${escapeHtml(row.requester_name || "利用者")}</strong><small>${escapeHtml(row.message || "メッセージなし")}　${escapeHtml(formatCommentTime(row.created_at))}</small></span><select data-request-role="${escapeHtml(row.id)}" aria-label="付与する権限"><option value="viewer">閲覧</option><option value="editor">編集</option></select><span class="collection-space-actions"><button type="button" data-collection-request-action="approve" data-request-id="${escapeHtml(row.id)}">承認</button><button class="is-danger" type="button" data-collection-request-action="reject" data-request-id="${escapeHtml(row.id)}">却下</button></span></div>`).join("") : `<span class="collection-access-empty">保留中の閲覧申請はありません。</span>`;
         }
         const memberList = document.getElementById("collectionAccessMembers");
         if (memberList) {
@@ -8679,13 +8679,13 @@
         favoriteButton.textContent = isFavoriteV16(question) ? "★ お気に入り済" : "☆ お気に入り";
       }
 
-      function showMenuV16(view = menuViewV16, { historyMode = "push", restorePosition = true } = {}) {
+      function showMenuV16(view = menuViewV16, { historyMode = "push", restorePosition = true, loadManagement = true } = {}) {
         captureNavigationV234();
         if (menuViewV16 === "generator") persistGeneratorFormDraftV157();
         const requestedView = ["favorites", "archive"].includes(view) ? "my" : view;
         if (view === "favorites") menuFavoritesOnlyV137 = true;
         const needsCollection = ["today", "my", "analysis", "book-settings"].includes(requestedView);
-        const effectiveView = needsCollection && (!sharedCollectionV46 || isSeriesParentCollectionV180(sharedCollectionV46)) && window.NagaSupabase?.configured ? "collections" : requestedView;
+        const effectiveView = needsCollection && (!sharedCollectionV46 || (isSeriesParentCollectionV180(sharedCollectionV46) && requestedView !== "book-settings")) && window.NagaSupabase?.configured ? "collections" : requestedView;
         menuViewV16 = MENU_VIEW_COPY_V16[effectiveView] ? effectiveView : "my";
         if (menuViewV16 === "book-settings" && !collectionManagementCanManageV197(sharedCollectionV46)) menuViewV16 = "today";
         const savedRoute = navigationMemoryV234.route(navigationScopeV234(), menuViewV16);
@@ -8693,7 +8693,7 @@
         applyDesktopLayoutV70();
         document.querySelector(".page").classList.add("menu-active");
         document.getElementById("menuPanel").hidden = false;
-        if (menuViewV16 === "book-settings") {
+        if (menuViewV16 === "book-settings" && loadManagement) {
           collectionManagementSlugV197 = navigationScopeV234();
           collectionAccessRequestsV100 = []; collectionAccessMembersV100 = [];
           const slug = navigationScopeV234();
@@ -11091,7 +11091,7 @@
           collectionManagementSlugV197 = row.share_slug;
           await loadCollectionManagementDataV100();
           if (owner !== String(supabaseSessionV46?.user?.id || "")) return false;
-          showMenuV16("book-settings");
+          showMenuV16("book-settings", { loadManagement: false });
           renderCollectionAccessRequestsV100();
           const target = document.querySelector(`[data-notification-request="${CSS.escape(row.request_id)}"]`);
           if (!target) throw new Error("申請を読み込めませんでした。通知からもう一度開いてください。");

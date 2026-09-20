@@ -85,7 +85,7 @@ test('My Page retains PC layout settings without duplicating the header theme co
   const match = html.match(/^      function renderSettingsViewV67\([^\n]*\) \{[\s\S]*?^      \}/m);
   assert.ok(match);
   for (const desktopLayout of [undefined, 'single', 'split']) {
-    const context = vm.createContext({window:{},userStateV16:{settings:{desktopLayout}},currentUserDisplayNameV47:()=>'',supabaseSessionV46:null,escapeHtml:s=>s,customReactionSettingsMarkupV211:()=>''});
+    const context = vm.createContext({window:{},userStateV16:{settings:{desktopLayout}},currentUserDisplayNameV47:()=>'',supabaseSessionV46:null,escapeHtml:s=>s,accountNotificationsV314:{settingsMarkup:()=>'<div>通知設定</div>'},customReactionSettingsMarkupV211:()=>''});
     vm.runInContext(match[0], context);
     const result = context.renderSettingsViewV67();
     assert.match(result, /data-settings-group-v240="display"/);
