@@ -18,6 +18,8 @@
 #reactionPickerV208 .reaction-picker-empty-v211 { font-size:16px; }
 .comment-compose-body-v316, .comment-compose-actions-v316 { display:contents; }
 .comment-return-v317 { display:none; }
+.comment-send-notice-v319 { position:fixed; z-index:220; top:max(16px,env(safe-area-inset-top)); left:50%; transform:translateX(-50%); max-width:calc(100vw - 32px); box-sizing:border-box; padding:12px 22px; border:1px solid var(--teal,#62bdbb); border-radius:10px; background:var(--ux-surface,#092331); color:var(--ink); box-shadow:0 4px 16px #0002; font-size:16px; line-height:1.5; text-align:center; pointer-events:none; }
+.comment-send-notice-v319:empty { display:none; }
 .mobile-comment-dialog-v316 .comment-return-v317 { display:inline-flex; align-items:center; justify-content:center; flex:none; }
 .mobile-comment-dialog-v316 { color:var(--ink); background:var(--ux-surface,#092331); border:1px solid var(--ux-border-soft,#315b65); }
 .mobile-comment-dialog-v316:not([open]) { display:none; }
