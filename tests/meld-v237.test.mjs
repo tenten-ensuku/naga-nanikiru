@@ -79,5 +79,7 @@ test('input and answer keep detected geometry, normal post-call detection stays 
   assert.match(html,/questionKeyV16\(activeHandQuestionV18\) === questionKeyV16\(question\) && activeHandMaskV18/);
   assert.match(html,/if \(isImmediateCallDiscardV132\(SCENE\) && globalThis\.NagaHandMaskV237\)/);
   assert.match(html,/hasSelfMeldsV17 \? detectHandMaskV17/);
-  assert.equal(html.match(/if \(!generatedHandIsValidV237\(candidate\)\) return false;/g)?.length,2);
+  const saveFlow=html.match(/async function addGeneratedQuestionV44\([\s\S]*?\n      \}/)?.[0];
+  assert.ok(saveFlow, 'single and batch generation share the save guard');
+  assert.match(saveFlow,/if \(!generatedHandIsValidV237\(candidate\)\) return false;/);
 });
