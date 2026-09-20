@@ -81,11 +81,6 @@ html[data-theme=light] .comment-body .comment-spoiler { background: #dce8e4 !imp
 /* Preview recommendations share the JSON board's hand positions. */
 .candidate-board-bars-v310 { position: absolute; inset: 0; pointer-events: none; }
 .candidate-board-bars-v310 svg { display: block; width: 100%; height: 100%; }
-.candidate-board-bars-v310 .model-nishiki { fill: var(--nishiki); }
-.candidate-board-bars-v310 .model-hihikari { fill: var(--hihikari); }
-.candidate-board-bars-v310 .model-kagashi { fill: var(--kagashi); }
-.candidate-board-bars-v310 .model-gamma { fill: var(--gamma); }
-.candidate-board-bars-v310 .model-omega { fill: var(--omega); }
 [data-generator-recommendation-content-v310][hidden] { display: none !important; }
 .candidate-bar-legend-v310 { display: flex; flex-wrap: wrap; gap: 8px 16px; margin: 12px 0; font-size: 16px; }
 .candidate-bar-legend-v310 > span { display: inline-flex; align-items: center; gap: 6px; }
@@ -97,3 +92,10 @@ html[data-theme=light] .comment-body .comment-spoiler { background: #dce8e4 !imp
 .candidate-decision-choices-v310 { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; font-size: 16px; }
 .candidate-decision-choices-v310 > span { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border: 1px solid var(--line); border-radius: 6px; }
 .candidate-decision-choices-v310 strong { font-size: inherit; font-weight: 600; }
+
+.candidate-recommendation-controls-v311 { margin: 14px 0; }
+.candidate-recommendation-controls-v311 > label { display: flex; align-items: center; gap: 12px; font-size: 16px; }
+.page.menu-active #menuPanel .candidate-recommendation-controls-v311 select { width: auto; flex: 1; min-width: 0; max-width: 210px; padding: 8px 12px; min-height: 44px; font-size: 16px; color: var(--ink); background: var(--panel-2); border: 1px solid var(--line); border-radius: 6px; }
+.candidate-bar-legend-v310 i { box-sizing: border-box; border-radius: 0; background: transparent; }
+.candidate-player-key-v311 { border: 2px solid #ff0000; }
+.candidate-naga-key-v311 { border: 3px solid #7c3be6; }

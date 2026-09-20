@@ -21,12 +21,14 @@ test('changing extraction controls reuses the canonical report ID instead of the
   const context=vm.createContext({generatorModeV46:'match',generatorReportV44:report,generatorSpecV44:{reportId:'canonical-report'},
     document:{getElementById:id=>id==='generatorSeat'?{value:'2'}:result},generatorExtractionOptionsV46:()=>({detectionLevel:'many',modelNames:['ニシキ']}),
     generatorRecommendationOpenV310:new Set(['old']),
+    generatorPreviewModelsV311:new Map([['old','カガシ']]),
     generatorSelectedCandidatesV158:new Set(['old']),generatorCandidatesV44:[],window:{NagaGeneratorV44:{extractBadMoves:(data,seat,options)=>{received={data,seat,options};return [{id:'new'}]}}},
     setGeneratorStatusV44:()=>{},renderGeneratorCandidatesV44:()=>'<article>new</article>',bindGeneratorCandidateInputsV44:()=>{},setGeneratorStageV159:()=>{}});
   vm.runInContext(source('refreshGeneratorCandidatesV46'),context);context.refreshGeneratorCandidatesV46();
   assert.equal(received.data,report);assert.equal(received.seat,2);assert.equal(received.options.reportId,'canonical-report');
   assert.equal(received.options.detectionLevel,'many');assert.equal(context.generatorSelectedCandidatesV158.size,0);assert.equal(result.innerHTML,'<article>new</article>');
   assert.equal(context.generatorRecommendationOpenV310.size,0);
+  assert.equal(context.generatorPreviewModelsV311.size,0);
 });
 function generator(unavailable, mode = 'scene') {
   const context = vm.createContext({window:{NAGA_RUNTIME_CONFIG:{backend:'cloudflare',heavyOperationsEnabled:!unavailable}},generatorModeV46:mode,generatorBusyV159:false,
@@ -37,8 +39,8 @@ function generator(unavailable, mode = 'scene') {
   vm.runInContext(source('generatorDetectionMarkupV300')+'\n'+source('renderGeneratorViewV44'),context); return context.renderGeneratorViewV44();
 }
 test('V240 adds only a local presentation layer and preserves approved assets',()=>{
-  assert.match(html,/const APP_VERSION = 310;/);
-  assert.match(html,/workspace-ui-v240\.css\?v=310/); assert.match(html,/workspace-ui-v240\.js\?v=310/);
+  assert.match(html,/const APP_VERSION = 311;/);
+  assert.match(html,/workspace-ui-v240\.css\?v=311/); assert.match(html,/workspace-ui-v240\.js\?v=311/);
   assert.doesNotMatch(js,/fetch\(|XMLHttpRequest|localStorage|sessionStorage|innerHTML|NagaSupabase/);
   assert.doesNotMatch(css,/@import|@font-face|https?:|\.scene-frame|\.hand-mask|\.riichi|learning-header-progress-track/);
   assert.match(css,/var\(--menu-serif-v238\)/); assert.match(css,/var\(--menu-sans-v238\)/);

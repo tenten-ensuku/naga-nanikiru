@@ -7,14 +7,16 @@ const html = fs.readFileSync(new URL('../public/index.html', import.meta.url), '
 const names = ['normalizeCallActionV112', 'callActionLabelV112', 'questionCallActionV112',
   'questionCallProbabilityV112', 'questionCallRecommendationProbabilityV308',
   'generatorCandidateRecommendationMarkupV308', 'generatorCandidateBarsMarkupV310',
-  'generatorCandidateJudgmentMarkupV310', 'generatorCandidateModelsMarkupV158', 'generatorCandidateChoiceMarkupV158', 'generatorCandidatePanelMarkupV310', 'toggleGeneratorRecommendationsV310'];
+  'generatorCandidateJudgmentMarkupV310', 'generatorCandidateModelsMarkupV158', 'generatorCandidateChoiceMarkupV158', 'generatorCandidatePanelMarkupV310', 'toggleGeneratorRecommendationsV310',
+  'preferredGeneratorModelV300', 'generatorCandidateModelIndexV311', 'generatorCandidateOverlayV311', 'changeGeneratorPreviewModelV311'];
 const source = names.map(name => html.match(new RegExp(`    (?:  )?function ${name}\\([^]*?\\n    (?:  )?\\}`))?.[0] || assert.fail(name)).join('\n');
 function harness(reported = ['ニシキ', 'カガシ']) {
   const context = { generatorReportedModelNamesV46: () => reported,
     modelColorByNameV16: { 'ニシキ': 'model-nishiki', 'カガシ': 'model-kagashi' },
     escapeHtml: value => String(value).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('"','&quot;'),
     tileLabel: tile => tile, tileImage: tile => `<img src="tiles/${tile}-66-90-l.png">`,
-    generatorRecommendationOpenV310: new Set(), generatorCandidatesV44: [], hasJsonBoardV248: candidate => !!candidate.boardScene
+    generatorRecommendationOpenV310: new Set(), generatorCandidatesV44: [], hasJsonBoardV248: candidate => !!candidate.boardScene,
+    generatorReportV44: {}, generatorPreviewModelsV311: new Map(), selectedGeneratorModelNamesV46: () => ['ニシキ']
   };
   vm.createContext(context);
   vm.runInContext(fs.readFileSync(new URL('../public/naga-board-v248.js', import.meta.url),'utf8'), context);
@@ -31,11 +33,11 @@ test('bars use canonical hand positions, original model indices, percent units a
   assert.match(markup,/data-generator-recommendation-content-v310="2" hidden/);
   assert.equal((markup.match(/<rect /g)||[]).length,5);
   assert.doesNotMatch(markup,/オメガ|99\.0%/);
-  assert.match(markup,/ニシキ・man5：60\.0%/);
-  assert.match(markup,/カガシ・aka1：40\.0%/);
+  assert.match(markup,/ニシキ：60\.0%/);
+  assert.match(markup,/カガシ：40\.0%/);
   const bars=[...markup.matchAll(/x="([\d.]+)" y="([\d.]+)" width="([\d.]+)" height="([\d.]+)"/g)].map(m=>m.slice(1).map(Number));
   const positions=h.NagaBoardV248.handPositions(candidate.boardScene);
-  assert.equal(bars[0][1],positions[0].y-6-31.2);
+  assert.equal(bars[0][1],positions[0].y-24);
   assert.equal(bars[2][0]-bars[0][0],positions[1].x-positions[0].x);
   assert.equal(bars[4][0]-bars[0][0],positions[2].x-positions[0].x);
   assert.deepEqual(candidate,before);
@@ -76,5 +78,5 @@ test('toggle affects only its candidate and preserves drafts, selection, board a
   assert.equal(article.draft,draft);assert.equal(draft.value,'入力途中の解説');assert.equal(selection.checked,true);assert.equal(article.board,board);
   h.toggleGeneratorRecommendationsV310(button);
   assert.equal(button['aria-expanded'],'false');assert.ok(children.every(el=>el.hidden));assert.deepEqual(candidate,before);
-  assert.doesNotMatch(source.match(/function toggleGeneratorRecommendationsV310[^]*$/)[0],/innerHTML|fetch\(|SCENE|invokeSharedMutation|renderGeneratorCandidates/);
+  assert.doesNotMatch(source.match(/function toggleGeneratorRecommendationsV310[^]*?\n      \}/)[0],/innerHTML|fetch\(|SCENE|invokeSharedMutation|renderGeneratorCandidates/);
 });

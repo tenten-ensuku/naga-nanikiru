@@ -63,5 +63,37 @@
     if(scene.hand.draw)values.push({tile:scene.hand.draw,index:scene.hand.tiles.length,x:hands[0][0]+scene.hand.tiles.length*TW+Math.floor(TW/2),y:hands[0][1],draw:true});
     return values;
   }
-  root.NagaBoardV248=Object.freeze({markup,handPositions,geometry:{width:W,height:H,tileWidth:TW,tileHeight:TH,handY:hands[0][1]}});
+  function recommendationsMarkup(scene,{models=[],probabilities={},selectedModel=0,actualDiscard=null,actualTsumogiri=false}={}) {
+    const selectedColumn=models.findIndex((model,column)=>(model.index??column)===selectedModel);
+    if(selectedColumn<0)return '';
+    // NAGA report viewer 1.1.3: renderDahaiGraph / _renderTehaiRect.
+    // A 100% bar is one tile high; the selected bar is 1.7 times wider.
+    const count=models.length,gap=.5,ratio=1.7;
+    const thin=Math.min((20-(count-1)*gap)/(count+ratio-1),10/ratio),thick=thin*ratio;
+    const inset=(TW-(count-1)*gap-(count+ratio-1)*thin)/2;
+    const positions=handPositions(scene),draw=positions.find(position=>position.draw);
+    const recommended=models[selectedColumn].recommendation;
+    const recommendationPosition=draw?.tile===recommended?draw:positions.find(position=>!position.draw&&position.tile===recommended);
+    const playerPosition=actualTsumogiri?draw?.tile===actualDiscard?draw:null:positions.find(position=>!position.draw&&position.tile===actualDiscard);
+    const finite=value=>value!=null&&value!==''&&Number.isFinite(Number(value));
+    let out=`<svg class="naga-board-recommendations-v311" viewBox="0 0 ${W} ${H}" role="img" aria-label="NAGA打牌推奨度・赤枠はプレイヤー、紫枠はNAGA推奨"><title>表示モデル：${esc(models[selectedColumn].name)}</title>`;
+    for(const position of positions) {
+      const values=probabilities[position.tile]||[];
+      // The original viewer only draws this group when the selected model has a positive probability.
+      if(finite(values[selectedModel])&&Number(values[selectedModel])>0) {
+        let x=position.x+inset;
+        models.forEach((model,column)=>{
+          const selected=column===selectedColumn,width=selected?thick:thin,raw=values[model.index??column];
+          const value=finite(raw)?Math.max(0,Math.min(100,Number(raw))):0,height=TH*value/100;
+          if(height>0)out+=`<rect data-recommendation-bar="${model.index??column}" data-hand-index="${position.index}" x="${x}" y="${position.y-height}" width="${width}" height="${height}" fill="${selected?'#7c3be6':'#5a5c4e'}"${selected?' stroke="#c992d3" stroke-width=".5"':''}><title>${esc(model.name)}：${value.toFixed(1)}%</title></rect>`;
+          x+=width+gap;
+        });
+      }
+      const frame=(kind,width,color)=>`<rect data-recommendation-frame="${kind}" data-hand-index="${position.index}" x="${position.x+width/2}" y="${position.y+width/2}" width="${TW-width}" height="${TH-width}" fill="none" stroke="${color}" stroke-width="${width}"><title>${kind==='player'?'プレイヤーの選択':'NAGAの推奨'}</title></rect>`;
+      if(position===recommendationPosition)out+=frame('naga',3,'#7c3be6');
+      if(position===playerPosition)out+=frame('player',2,'#ff0000');
+    }
+    return out+'</svg>';
+  }
+  root.NagaBoardV248=Object.freeze({markup,handPositions,recommendationsMarkup,geometry:{width:W,height:H,tileWidth:TW,tileHeight:TH,handY:hands[0][1]}});
 })(typeof globalThis!=='undefined'?globalThis:this);

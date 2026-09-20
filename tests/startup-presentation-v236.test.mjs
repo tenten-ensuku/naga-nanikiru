@@ -21,8 +21,8 @@ test("V243 uses the exact user-supplied loading artwork with the approved brand 
   assert.match(loader, /src="assets\/loading-screen-v243\.png" width="1402" height="1122"/);
   assert.match(loader, /alt="みん切る — みんなの何切る問題集" loading="eager" fetchpriority="high"/);
   assert.doesNotMatch(loader, /min-kiru-header\.png|startup-line-v236/);
-  assert.match(normalizedHtml, /rel="icon"[^>]*icons\/favicon-32\.png\?v=310/);
-  assert.match(normalizedHtml, /rel="apple-touch-icon"[^>]*icons\/apple-touch-icon-180\.png\?v=310/);
+  assert.match(normalizedHtml, /rel="icon"[^>]*icons\/favicon-32\.png\?v=311/);
+  assert.match(normalizedHtml, /rel="apple-touch-icon"[^>]*icons\/apple-touch-icon-180\.png\?v=311/);
 });
 
 test("V243 white loading shell contains artwork on small screens and keeps retry accessible", () => {
