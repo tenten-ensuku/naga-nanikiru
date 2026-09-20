@@ -40,6 +40,53 @@ test("problem 41 converts every tile in shorthand and adjacent notation", async 
   assert.match(rendered, /\[man3\]\[man3\]\[man4\]\[man4\]\[man5\]\[man5\]\[man5\]/);
 });
 
+test("honor notation maps all seven tiles and supports full-width, sequences, and ranges", async () => {
+  const format = await formatter();
+  for (let number = 1; number <= 7; number++) {
+    const fullWidth = String.fromCharCode(0xff10 + number);
+    for (const digit of [String(number), fullWidth]) {
+      for (const suit of ["z", "ｚ", "Z", "Ｚ"]) {
+        assert.equal(format(`${digit}${suit}`), `[ji${number}]`);
+      }
+    }
+    await readFile(new URL(`../public/tiles/ji${number}-66-90-l.png`, import.meta.url));
+  }
+  assert.equal(format("1234567z"), "[ji1][ji2][ji3][ji4][ji5][ji6][ji7]");
+  assert.equal(format("６６７ｚ"), "[ji6][ji6][ji7]");
+  assert.equal(format("1z7z"), "[ji1][ji7]");
+  assert.equal(format("1ｚ～7ｚ"), "[ji1]～[ji7]");
+  assert.equal(format("１～７ｚ"), "[ji1]～[ji7]");
+  assert.equal(format("東は1z、中は7ｚ。発展の中では6z。"), "東は[ji1]、中は[ji7]。発展の中では[ji6]。");
+  assert.equal(format("123m456p789s567z"), "[man1][man2][man3][pin4][pin5][pin6][sou7][sou8][sou9][ji5][ji6][ji7]");
+});
+
+test("honor conversion leaves Japanese prose, invalid tile numbers, and ordinary words intact", async () => {
+  const format = await formatter();
+  for (const value of [
+    "発展の発、最中の中、〇〇の中では、東南西北白發中。",
+    "東京から南へ。西口、北海道、白紙、發展、集中。",
+    "0z 8z 9z ０ｚ ８ｚ ９ｚ 18z ０７ｚ 1～8z 8～7z",
+    "7zip ７ｚｉｐ"
+  ]) assert.equal(format(value), value);
+});
+
+test("honor notation works in styled and hidden comments without changing links or source text", async () => {
+  const html = await readFile(htmlUrl, "utf8");
+  const start = html.indexOf("    function escapeHtml(");
+  const end = html.indexOf("    function setCommentFormStatusV68(", start);
+  assert.ok(start >= 0 && end > start);
+  const format = new Function("commentTileImage", `${html.slice(start, end)}\nreturn formatCommentContent;`)(tile => `[${tile}]`);
+  const source = "**7ｚ** [color:green]6z[/color] ||５ｚ|| 発展・最中・〇〇の中では https://example.com/7z";
+  const rendered = format(source);
+  assert.match(rendered, /<strong>\[ji7\]<\/strong>/);
+  assert.match(rendered, /comment-color-green">\[ji6\]/);
+  assert.match(rendered, /comment-spoiler-content[^>]*>\[ji5\]/);
+  assert.match(rendered, /発展・最中・〇〇の中では/);
+  assert.match(rendered, /href="https:\/\/example\.com\/7z"/);
+  assert.match(rendered, />https:\/\/example\.com\/7z<\/a>/);
+  assert.equal(source, "**7ｚ** [color:green]6z[/color] ||５ｚ|| 発展・最中・〇〇の中では https://example.com/7z");
+});
+
 test("problem 163 converts r-prefixed red-five notation", async () => {
   const format = await formatter();
   const questions = JSON.parse(await readFile(questionsUrl, "utf8"));
