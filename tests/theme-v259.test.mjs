@@ -93,7 +93,7 @@ test('My Page retains PC layout settings without duplicating the header theme co
     assert.match(result, /id="desktopLayoutSelect"/);
     assert.match(result, new RegExp(`<option value="${desktopLayout === 'single' ? 'single' : 'split'}" selected>`));
   }
-  assert.ok(html.indexOf('<script src="theme-v259.js?v=322"></script>') < html.indexOf('<style'));
+  assert.ok(html.indexOf('<script src="theme-v259.js?v=323"></script>') < html.indexOf('<style'));
   assert.match(html, /id="themeQuickV295"/);
-  assert.ok(html.indexOf('theme-v259.css?v=322') > html.indexOf('question-toolbar-v255.css'));
+  assert.ok(html.indexOf('theme-v259.css?v=323') > html.indexOf('question-toolbar-v255.css'));
 });

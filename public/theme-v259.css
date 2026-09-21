@@ -252,7 +252,6 @@ html[data-theme="light"] :is(.reaction-picker-tab-v211, .reaction-picker-tab-v21
 html[data-theme="light"] :is(.reaction-picker-tab-v211, .reaction-picker-tab-v213).is-active { color: #614a1d; background: #f7e7b9; border-color: #b89a58; }
 html[data-theme="light"] :is(.reaction-picker-tab-v211, .reaction-picker-tab-v213) span { color: var(--theme-muted-v259); background: #e0e9e4; }
 html[data-theme="light"] :is(.reaction-picker-empty-v211, .reaction-picker-custom-note-v211, .reaction-details-empty-v208) { color: var(--theme-muted-v259); }
-html[data-theme="light"] .reaction-picker-favorite-v221 { color: #725823; background: #fffaf0; border-color: #c4b694; }
 
 /* Native dialogs and notices use explicit surfaces; full-screen artwork viewers
    keep their existing dark scrim so source images are shown without alteration. */

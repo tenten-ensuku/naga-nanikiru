@@ -6,14 +6,16 @@
 #reactionPickerV208 .reaction-popover-heading-v208 strong { font-size:16px; }
 #reactionPickerV208 .reaction-popover-close-v208 { width:44px; min-height:44px; flex:none; }
 #reactionPickerV208 .reaction-picker-tabs-v221 { display:flex; gap:3px; overflow-x:auto; overscroll-behavior-x:contain; scrollbar-width:none; }
-#reactionPickerV208 .reaction-picker-tab-v221 { flex:1 0 auto; gap:3px; min-height:44px; padding:6px 5px; font-size:14px; overflow:visible; text-overflow:clip; }
-#reactionPickerV208 .reaction-picker-tab-v221 span { font-size:12px; }
+#reactionPickerV208 .reaction-picker-tab-v221 { flex:1 0 auto; gap:3px; min-height:44px; padding:6px 5px; font-size:16px; overflow:visible; text-overflow:clip; }
+#reactionPickerV208 .reaction-picker-tab-v221 span { font-size:14px; }
 #reactionPickerV208 .reaction-picker-option-v221 { display:flex; min-height:48px; }
-#reactionPickerV208 .reaction-picker-select-v221 { flex:1; padding:7px; font-size:14px; }
-#reactionPickerV208 .reaction-picker-favorite-v221 { position:static; flex:0 0 44px; width:44px; height:auto; min-height:44px; align-self:stretch; border-radius:0; border-width:0 0 0 1px; font-size:19px; }
+#reactionPickerV208 .reaction-picker-options-v221 { grid-template-columns:repeat(2,minmax(0,1fr)); }
+#reactionPickerV208 .reaction-picker-select-v221 { flex:1; min-height:48px; padding:8px; font-size:16px; line-height:1.4; }
+#reactionPickerV208 .reaction-picker-label-v208 { min-width:0; white-space:normal; overflow:visible; overflow-wrap:anywhere; }
+#reactionPickerV208 .reaction-picker-icon-v209 { font-size:20px; }
+#reactionPickerV208 .reaction-picker-custom-note-v211 { font-size:16px; }
 #reactionPickerV208 .reaction-tile-picker-options-v213 { grid-template-columns:repeat(4,minmax(0,1fr)); }
 #reactionPickerV208 .is-tile { flex-direction:column; }
-#reactionPickerV208 .is-tile .reaction-picker-favorite-v221 { width:100%; flex:0 0 44px; border-width:1px 0 0; }
 #reactionPickerV208 .reaction-picker-personal-note-v221,
 #reactionPickerV208 .reaction-picker-empty-v211 { font-size:16px; }
 .comment-compose-body-v316, .comment-compose-actions-v316 { display:contents; }
@@ -51,6 +53,6 @@
 .mobile-comment-dialog-v316.is-short-v316 .comment-form textarea { min-height:86px; max-height:110px; }
 .mobile-comment-dialog-v316.is-short-v316 .mobile-comment-preview-v316 { min-height:60px; }
 @media(max-width:800px) {
-  #reactionPickerV208 { width:calc(100vw - 16px); max-height:calc(100dvh - 24px); }
+  #reactionPickerV208 { width:calc(100vw - 24px); max-height:calc(100dvh - 24px); }
   .reaction-add-button-v208 { min-height:44px; min-width:44px; font-size:14px; }
 }

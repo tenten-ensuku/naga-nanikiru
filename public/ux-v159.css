@@ -7151,9 +7151,9 @@ body.auth-gate-open {
   }
 }
 
-/* V221: add personal reaction favorites and history without changing shared reaction data. */
+/* Reaction history and a readable picker; V323 removes the favorite controls. */
 .reaction-picker-tabs-v221 {
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 .reaction-picker-tab-v221 {
@@ -7165,7 +7165,7 @@ body.auth-gate-open {
 }
 
 .reaction-picker-options-v221 {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .reaction-picker-option-v221 {
@@ -7187,12 +7187,12 @@ body.auth-gate-open {
   width: 100%;
   min-width: 0;
   min-height: 46px;
-  padding: 7px 25px 7px 6px;
+  padding: 8px;
   color: inherit;
   background: transparent;
   border: 0;
   border-radius: inherit;
-  font-size: 10px;
+  font-size: 16px;
   font-weight: 800;
   line-height: 1.25;
   text-align: left;
@@ -7212,40 +7212,6 @@ body.auth-gate-open {
   text-align: center;
 }
 
-.reaction-picker-favorite-v221 {
-  position: absolute;
-  top: 3px;
-  right: 3px;
-  z-index: 1;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 19px;
-  height: 19px;
-  padding: 0;
-  color: rgba(255, 247, 214, .72);
-  background: rgba(2, 16, 26, .52);
-  border: 1px solid rgba(255, 255, 255, .18);
-  border-radius: 50%;
-  font-size: 12px;
-  line-height: 1;
-}
-
-.reaction-picker-favorite-v221:hover,
-.reaction-picker-favorite-v221:focus-visible,
-.reaction-picker-favorite-v221.is-active {
-  color: #6f4e1a;
-  background: #fff0ab;
-  border-color: #ffe08a;
-  outline: 2px solid rgba(255, 224, 138, .26);
-  outline-offset: 1px;
-}
-
-.reaction-picker-option-v221.is-selected .reaction-picker-favorite-v221 {
-  color: #6f4e1a;
-  background: rgba(255, 255, 255, .55);
-  border-color: rgba(255, 255, 255, .7);
-}
 
 .reaction-picker-option-v221.is-tile {
   min-height: 42px;
@@ -7259,25 +7225,16 @@ body.auth-gate-open {
   gap: 0;
   text-align: center;
 }
-
-.reaction-picker-option-v221.is-tile .reaction-picker-favorite-v221 {
-  top: 2px;
-  right: 2px;
-  width: 17px;
-  height: 17px;
-  font-size: 10px;
-}
-
 .reaction-picker-personal-note-v221 {
   margin: 9px 2px 0;
   color: #a9cbd0;
-  font-size: 10px;
+  font-size: 16px;
   line-height: 1.45;
 }
 
 @media (min-width: 801px) and (max-width: 1100px) {
   .reaction-picker-options-v221 {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -7289,7 +7246,7 @@ body.auth-gate-open {
   .reaction-picker-tab-v221 {
     min-height: 34px;
     padding-inline: 2px;
-    font-size: 10px;
+    font-size: 16px;
   }
 
   .reaction-picker-options-v221 {
@@ -7298,13 +7255,13 @@ body.auth-gate-open {
 
   .reaction-picker-option-v221 .reaction-picker-select-v221 {
     min-height: 48px;
-    font-size: 11px;
+    font-size: 16px;
   }
 }
 
 @media (max-width: 480px) {
   .reaction-picker-tab-v221 {
-    font-size: 9px;
+    font-size: 16px;
   }
 }
 
