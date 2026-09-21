@@ -101,7 +101,7 @@ test('settings keep authority gates, named categories and escaped profile text w
   assert.match(source('bindSettingsViewV67'),/accountAuthButtonV240.*handleDiscordAuthV187/);
 });
 test('image disclosure keeps sharing and size warnings and does not enable disabled uploads',()=>{
-  const context=vm.createContext({window:{NAGA_RUNTIME_CONFIG:{backend:'cloudflare',heavyOperationsEnabled:false}},customReactionSettingsListMarkupV213:()=>''});
+  const context=vm.createContext({standardReactionCatalogV329:{markup:()=>''},window:{NAGA_RUNTIME_CONFIG:{backend:'cloudflare',heavyOperationsEnabled:false}},customReactionSettingsListMarkupV213:()=>''});
   vm.runInContext(source('customReactionSettingsMarkupV213'),context);const result=context.customReactionSettingsMarkupV213();
   assert.match(result,/他のログイン利用者も使えます/);assert.match(result,/1MB以内/);
   assert.match(result,/<details class="reaction-image-options-v240" id="reactionImageOptionsV240">/);
