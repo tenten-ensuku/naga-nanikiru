@@ -13,6 +13,8 @@
 .page .comment-form .comment-form-status:empty { display:none; }
 .page .comment-composer-help-v324,
 #menuPanel #menuGrid .comment-composer-help-v324 { margin:6px 0 0; color:var(--muted); font:inherit; font-size:16px; line-height:1.5; }
+.page .generator-comment-v273 > .comment-composer-help-v324,
+#menuPanel #menuGrid .generator-comment-v273 > .comment-composer-help-v324 { margin:0; }
 .comment-tag-suggestions-v324 { position:fixed; inset:auto; z-index:250; display:block; box-sizing:border-box; width:300px; max-width:calc(100vw - 16px); max-height:320px; overflow-y:auto; overscroll-behavior:contain; scrollbar-width:thin; scroll-padding-top:38px; margin:0; padding:4px; border:1px solid var(--line,#436574); border-radius:10px; box-shadow:0 6px 24px #0004; color:var(--ink); background:var(--ux-surface,#092331); }
 .comment-tag-suggestions-v324::before { content:'タグ候補'; position:sticky; z-index:1; top:-4px; display:block; padding:6px 10px; color:var(--muted,#b6c6ce); background:inherit; font-size:14px; font-weight:700; line-height:1.5; }
 .comment-tag-suggestions-v324::backdrop { background:transparent; pointer-events:none; }
@@ -22,7 +24,7 @@
 .page .comment-tag-suggestions-v324 button:is(:hover,[aria-selected=true]),
 #menuPanel #menuGrid .comment-tag-suggestions-v324 button:is(:hover,[aria-selected=true]) { background:var(--ux-surface-strong,#15455a); border-color:var(--teal,#279f9e); }
 .page .generator-comment-v273 .comment-input-v324 textarea,
-#menuPanel #menuGrid .generator-comment-v273 .comment-input-v324 textarea { min-height:148px; font-size:16px; line-height:1.6; }
+#menuPanel #menuGrid .generator-comment-v273 .comment-input-v324 textarea { min-height:calc(148px + 3.2em); font-size:16px; line-height:1.6; }
 .page .generator-comment-v273 > [data-composer-status]:empty { display:none; }
 .page .generator-comment-v273 > [data-composer-status],
 #menuPanel #menuGrid .generator-comment-v273 > [data-composer-status] { font-size:16px; }

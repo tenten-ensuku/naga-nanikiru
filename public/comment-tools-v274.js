@@ -10,14 +10,14 @@
     const state = draft(id), off = disabled ? " disabled" : "";
     return `<div class="generator-comment-v273" data-comment-composer-v274="${index}">
       <label for="generatorCommentV273-${index}">コメント・解説 <small>任意</small></label>
+      <p class="comment-composer-help-v324" id="generatorCommentHelpV324-${index}">文字選択で装飾、# でタグ候補表示できます。</p>
       <div class="comment-compose-editor">
         <div class="comment-input-v324">
-          <textarea id="generatorCommentV273-${index}" data-generator-comment-v273="${index}" rows="3" maxlength="4000" aria-describedby="generatorCommentHelpV324-${index}" placeholder="この局面の考え方など。問題と一緒にコメント欄へ保存されます。"${off}>${escape(text)}</textarea>
+          <textarea id="generatorCommentV273-${index}" data-generator-comment-v273="${index}" rows="5" maxlength="4000" aria-describedby="generatorCommentHelpV324-${index}" placeholder="この局面の考え方など。問題と一緒にコメント欄へ保存されます。"${off}>${escape(text)}</textarea>
           <button type="button" data-comment-attach-toggle aria-label="コメントに追加" aria-expanded="false" aria-controls="generatorAttachMenuV324-${index}"${off}>＋</button>
           <div id="generatorAttachMenuV324-${index}" data-comment-attach-menu hidden><button type="button" data-attach${off}>画像を追加</button></div>
           <input type="file" data-images accept="image/png,image/jpeg,image/webp,image/gif" multiple hidden${off}>
         </div>
-        <p class="comment-composer-help-v324" id="generatorCommentHelpV324-${index}">文字を選択すると装飾できます。# でタグ候補。</p>
       </div>
       <div class="generator-attachments-v274" data-attachments></div>
       <div class="generator-comment-preview-v274" data-preview hidden></div>
