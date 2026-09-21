@@ -100,6 +100,7 @@
       if (!button || input.disabled) return;
       state.attachments.splice(Number(button.dataset.removeImage), 1); attachments(); status(`${state.attachments.length}枚の画像を添付しています。`);
     });
+    root.MinkiruCommentSelectionV321?.bind(input);
     refresh(); attachments();
   }
   async function getAttachments(id) { const state = draft(id); await state.pending; return state.attachments.slice(); }

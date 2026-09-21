@@ -1,0 +1,20 @@
+/* Selection actions sit directly below the editor, separate from native copy/paste. */
+.comment-selection-v321 { grid-column:1 / -1; margin-top:6px; padding:4px; border:1px solid var(--teal,#389f9d); border-radius:8px; background:var(--ux-surface,#092331); color:var(--ink); }
+.comment-selection-v321[hidden], .comment-selection-v321 [hidden] { display:none !important; }
+.comment-selection-actions-v321 { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:2px; }
+.comment-selection-colors-v321 { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:2px; padding-top:4px; margin-top:4px; border-top:1px solid var(--line,#436574); }
+.page .comment-selection-v321 button { display:inline-flex; align-items:center; justify-content:center; gap:4px; width:auto; min-width:0; min-height:44px; padding:6px 3px; margin:0; border:0; border-radius:5px; color:var(--ink); background:transparent; font:inherit; font-size:16px; line-height:1.3; white-space:nowrap; cursor:pointer; touch-action:manipulation; }
+.page .comment-selection-v321 button:hover, .page .comment-selection-v321 button[aria-pressed=true], .page .comment-selection-v321 button[aria-expanded=true] { background:var(--ux-surface-strong,#15455a); }
+.page .comment-selection-v321 button:focus-visible { outline:2px solid var(--teal,#389f9d); outline-offset:-2px; }
+.comment-selection-status-v321 { margin:6px; font-size:16px; line-height:1.5; }
+.comment-selection-v321 .comment-color-red { color:#e76579; }
+.comment-selection-v321 .comment-color-yellow { color:#e1b850; }
+.comment-selection-v321 .comment-color-blue { color:#64b4f5; }
+.comment-selection-v321 .comment-color-green { color:#62c49b; }
+.comment-selection-v321 .comment-color-purple { color:#c49ce8; }
+html[data-theme=light] .comment-selection-v321 { background:#fff; color:#183044; }
+html[data-theme=light] .comment-selection-v321 button { color:#183044; }
+html[data-theme=light] .comment-selection-v321 button:hover,html[data-theme=light] .comment-selection-v321 button[aria-pressed=true],html[data-theme=light] .comment-selection-v321 button[aria-expanded=true] { background:#e0f1ed; }
+html[data-theme=light] .comment-selection-v321 .comment-color-yellow { color:#805c00; }
+.mobile-comment-dialog-v316 .comment-selection-v321 { flex:none; }
+.mobile-comment-dialog-v316:has(.comment-selection-v321:not([hidden])) .mobile-comment-form-host-v316 { max-height:72%; }
