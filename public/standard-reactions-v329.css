@@ -1,5 +1,5 @@
-/* The same compact three-column layout is used in the picker and preview. */
-#reactionPickerV208 { padding:7px; }
+/* Use four columns when every compact reaction still has at least 100px. */
+#reactionPickerV208 { padding:7px; container:reaction-picker / inline-size; }
 #reactionPickerV208 .reaction-popover-heading-v208 { margin-bottom:4px; }
 #reactionPickerV208 .reaction-popover-close-v208 { width:32px; min-height:32px; }
 #reactionPickerV208 .reaction-picker-tabs-v221 { margin-bottom:6px; }
@@ -15,6 +15,7 @@
 .standard-editor-heading-v329 h3 small { font-size:12px; font-weight:normal; }
 .standard-editor-heading-v329 p { margin:0 0 12px; font-size:14px; }
 .standard-editor-layout-v329 { display:grid; grid-template-columns:minmax(260px,430px) minmax(220px,1fr); gap:18px; align-items:start; }
+.standard-editor-layout-v329 > div { min-width:0; container:reaction-preview / inline-size; }
 .standard-preview-grid-v329 { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:4px; margin-bottom:8px; }
 .standard-editor-v329 button,.standard-editor-v329 input { color:var(--ink); background:var(--ux-surface,#113348); border:1px solid var(--ux-border-soft,#648185); border-radius:6px; }
 .standard-editor-v329 button { cursor:pointer; padding:6px 8px; }
@@ -44,6 +45,12 @@
 .standard-editor-actions-v329 p { width:100%; margin:0; font-size:14px; }
 html[data-theme="light"] .standard-editor-v329 button,html[data-theme="light"] .standard-editor-v329 input { color:#153c4b; background:#fffdfa; border-color:#b7c8c6; }
 html[data-theme="light"] .standard-editor-actions-v329 [data-standard-save] { color:#fff; background:#277466; }
+@container reaction-picker (min-width:412px){
+  #reactionPickerV208 .reaction-picker-options-v221:not(.reaction-tile-picker-options-v213) { grid-template-columns:repeat(4,minmax(0,1fr)); }
+}
+@container reaction-preview (min-width:412px){
+  .standard-preview-grid-v329 { grid-template-columns:repeat(4,minmax(0,1fr)); }
+}
 @media(max-width:680px){
   .standard-editor-layout-v329 { grid-template-columns:minmax(0,1fr); gap:12px; }
   .standard-editor-fields-v329 { padding:10px; }

@@ -70,5 +70,5 @@ test('V245 adapter uses the current account without sending or modifying retaine
   assert.match(section, /loadCollectionLibrarySummary\(slug\)/);
   assert.doesNotMatch(section, /archived|collectionPersonal/);
   assert.doesNotMatch(section, /saveUserState|setItem|push\(/);
-  assert.match(html, /library-order-v215\.js\?v=329/);
+  assert.match(html, /library-order-v215\.js\?v=330/);
 });
