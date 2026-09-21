@@ -5,7 +5,7 @@ import {readFileSync} from 'node:fs';
 import * as tags from '../public/comment-tags-v270.mjs';
 const source=readFileSync(new URL('../public/comment-composer-v324.js',import.meta.url),'utf8');
 function setup(storage=new Map()){
-  const ctx=vm.createContext({Event,MinkiruCommentTagsV270:tags,nagaCurrentUserIdV75:'alice',
+  const ctx=vm.createContext({Event,innerWidth:1280,innerHeight:900,addEventListener(){},MinkiruCommentTagsV270:tags,nagaCurrentUserIdV75:'alice',
     localStorage:{getItem:key=>storage.get(key)??null,setItem:(key,value)=>storage.set(key,value)}});
   vm.runInContext(source,ctx);return{ctx,api:ctx.MinkiruCommentComposerV324,storage};
 }
@@ -68,18 +68,23 @@ test('invalid stored tags cannot become markup or unbounded suggestions',()=>{
 
 function bindEditor(api) {
   class Node extends EventTarget {
-    children=[];dataset={};attrs=new Map();
+    children=[];dataset={};attrs=new Map();style={};scrollHeight=264;
     setAttribute(key,value){this.attrs.set(key,value);}
     removeAttribute(key){this.attrs.delete(key);}
     contains(node){return node===this || this.children.includes(node);}
     replaceChildren(){this.children=[];}
     append(node){this.children.push(node);}
     querySelector(){return null;}
+    scrollIntoView(){}
+    getBoundingClientRect(){return {left:100,top:400,bottom:548,width:300};}
   }
   const document=new EventTarget(),input=new Node(),field=new Node();let panel;
   document.createElement=()=>new Node();document.activeElement=input;
   Object.assign(input,{ownerDocument:document,isConnected:true,value:'',selectionStart:0,selectionEnd:0});
   input.closest=()=>field;field.after=node=>{panel=node;};
+  input.focus=()=>{document.activeElement=input;};
+  input.setRangeText=(text,start,end)=>{input.value=input.value.slice(0,start)+text+input.value.slice(end);};
+  input.setSelectionRange=(start,end)=>{input.selectionStart=start;input.selectionEnd=end;};
   api.bind(input);
   const event=(type,props={})=>{const e=new Event(type,{cancelable:true});Object.assign(e,props);input.dispatchEvent(e);return e;};
   const type=(value,start=value.length,end=start)=>{
@@ -100,12 +105,37 @@ test('IME preedit shows candidates immediately, keeps IME keys untouched, and re
     assert.equal(input.value,'＃');
     type('＃ピエール');assert.deepEqual(Array.from(api.recent()),[]);
     event('compositionend');type('＃ピエール　');
-    type('＃');assert.equal(panel.children[0].textContent,'#ピエール');
+    type('＃');assert.equal(panel.children[0].attrs.get('aria-label'),'#ピエール');
     event('compositionstart');type('＃',0,1);
-    assert.equal(panel.hidden,false);assert.equal(panel.children[0].textContent,'#ピエール');
+    assert.equal(panel.hidden,false);assert.equal(panel.children[0].attrs.get('aria-label'),'#ピエール');
     event('compositionend');
     type('https://example.test/#押');assert.equal(panel.hidden,true);
     type('#');event('keydown',{key:'Escape'});assert.equal(panel.hidden,true);
     type('＃');assert.equal(panel.hidden,false);
+  }
+});
+
+test('the suggestion popup sits above the editor and stays inside the visible viewport',()=>{
+  const {api}=setup();
+  const wide=api.popupPosition({left:100,top:600,bottom:750,width:600},{left:0,top:0,width:1280,height:900},280);
+  assert.equal(wide.placement,'above');assert.equal(wide.width,380);assert.equal(wide.top+wide.height,594);
+  const mobile=api.popupPosition({left:300,top:300,bottom:448,width:260},{left:12,top:50,width:320,height:400},600);
+  assert.equal(mobile.placement,'above');assert.ok(mobile.left>=20);assert.ok(mobile.left+mobile.width<=324);
+  assert.ok(mobile.top>=58);assert.ok(mobile.top+mobile.height<300);
+  const nearTop=api.popupPosition({left:10,top:30,bottom:170,width:300},{left:0,top:0,width:320,height:600},260);
+  assert.equal(nearTop.placement,'below');assert.equal(nearTop.top,176);assert.ok(nearTop.top+nearTop.height<=592);
+});
+
+test('the first candidate is active immediately, with Enter and Tab completion and arrow navigation',()=>{
+  for(const key of ['Enter','Tab']){
+    const {api}=setup();api.remember('＃ピエール');
+    const {input,panel,event,type}=bindEditor(api);type('＃');
+    assert.equal(panel.children[0].attrs.get('aria-selected'),'true');
+    assert.equal(panel.dataset.placement,'above');
+    assert.equal(event('keydown',{key}).defaultPrevented,true);assert.equal(input.value,'#ピエール ');
+    assert.equal(panel.hidden,true);
+    type('#');event('keydown',{key:'ArrowDown'});assert.equal(panel.children[1].attrs.get('aria-selected'),'true');
+    event('keydown',{key:'ArrowUp'});assert.equal(panel.children[0].attrs.get('aria-selected'),'true');
+    assert.equal(event('keydown',{key:'Tab',shiftKey:true}).defaultPrevented,false);
   }
 });
