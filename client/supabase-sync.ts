@@ -477,6 +477,18 @@ async function setSharedCommentReaction(questionId: string, commentId: string, r
   if (error) throw error;
 }
 
+async function loadStandardReactions() {
+  const {data,error}=await requireClient().rpc("get_standard_reactions");
+  if(error)throw error;
+  return data;
+}
+
+async function saveStandardReactions(rows: unknown[], revision: number) {
+  const {data,error}=await requireClient().rpc("save_standard_reactions",{p_rows:rows,p_revision:revision});
+  if(error)throw error;
+  return data;
+}
+
 async function loadCustomReactions() {
   const session = await currentSession();
   if (!session?.user?.id) throw new Error("カスタムリアクションの利用にはDiscordログインが必要です。");
@@ -1005,6 +1017,8 @@ function buildApi() {
     setSharedQuestionReaction,
     setSharedCommentReaction,
     loadCustomReactions,
+    loadStandardReactions,
+    saveStandardReactions,
     createCustomReaction,
     publicReactionAssetUrl,
     publicCommentAssetUrl,

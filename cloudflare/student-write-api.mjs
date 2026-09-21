@@ -1,3 +1,4 @@
+import {saveStandardReactions,isAddedStandardReaction} from './standard-reactions-v329.mjs';
 import {commentNotificationStatement,accessNotificationStatement} from './notifications-v314.mjs';
 import {
   ApiError,
@@ -18,6 +19,7 @@ export const WRITE_RPCS = Object.freeze([
   "set_shared_question_reaction",
   "set_shared_comment_reaction",
   "create_custom_reaction",
+  "save_standard_reactions",
   "mark_collection_notifications_read",
   "request_collection_access",
 ]);
@@ -398,6 +400,7 @@ async function deleteSharedComment(db, actor, args) {
 async function validReactionKey(db, keyValue) {
   const key = requiredText(keyValue, "invalid_reaction", 64);
   if (BUILTIN_REACTIONS.has(key)) return key;
+  if (await isAddedStandardReaction(db,key)) return key;
   const custom = await first(db, "SELECT 1 FROM custom_reactions WHERE reaction_key = ? LIMIT 1", [key]);
   if (!custom) fail("invalid_reaction");
   return key;
@@ -808,6 +811,8 @@ export async function writeRpc(name, args = {}, ctx = {}) {
       return setQuestionReaction(db, actor, args);
     case "set_shared_comment_reaction":
       return setCommentReaction(db, actor, args);
+    case "save_standard_reactions":
+      return saveStandardReactions(args,{db,actor});
     case "create_custom_reaction":
       return createCustomReaction(db, actor, args);
     case "mark_collection_notifications_read":

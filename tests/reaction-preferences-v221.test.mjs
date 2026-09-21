@@ -22,7 +22,7 @@ const addedReactions = [
 ];
 
 test("V221 adds the requested curated reactions in the requested order", () => {
-  assert.match(html, /const APP_VERSION = 328;/);
+  assert.match(html, /const APP_VERSION = 329;/);
   let previousIndex = html.indexOf('id: "question"');
   assert.ok(previousIndex >= 0);
   for (const [label, icon] of addedReactions) {
@@ -79,7 +79,7 @@ test("existing recent reactions survive removal of favorites and remain scoped p
 
 test("all remaining picker panels render without a favorites panel", () => {
   const elements=Object.fromEntries(['reactionPickerOptionsV208','reactionPickerHistoryOptionsV221','reactionTilePickerOptionsV213','reactionCustomPickerOptionsV211','reactionPickerCustomCountV211'].map(id=>[id,{}]));
-  const context=vm.createContext({document:{getElementById:id=>elements[id]},reactionPickerTargetV208:{scope:'comment',targetId:'comment1'},
+  const context=vm.createContext({standardReactionCatalogV329:null,document:{getElementById:id=>elements[id]},reactionPickerTargetV208:{scope:'comment',targetId:'comment1'},
     reactionBucketV208:()=>({}), REACTION_TOP_KEYS_V211:['top'], REACTION_DEFINITION_MAP_V209:new Map([['top',{id:'top'}]]),
     REACTION_DEFINITIONS_V209:[{id:'rest'},{id:'top'}],MAHJONG_TILE_REACTION_DEFINITIONS_V213:[{id:'tile'}],
     state:{customReactions:[{id:'custom'}]},reactionPreferenceDefinitionsV221:()=>[{id:'recent'}],

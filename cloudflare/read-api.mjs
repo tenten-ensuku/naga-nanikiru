@@ -9,6 +9,7 @@ import {
 } from "./access.mjs";
 import {tagsFromComments, searchTextFromComments} from "../public/comment-tags-v270.mjs";
 import {normalizeQuestionNumbering,toSafeQuestionNumber,isInvalidQuestionTitle} from './question-numbering-v235.mjs';
+import {getStandardReactions} from './standard-reactions-v329.mjs';
 import {collectionAdminInfo} from './collection-admin-v328.mjs';
 
 // Metadata-only, scoped to this book. Answers and views do not update content.
@@ -41,6 +42,7 @@ export const READ_RPCS = Object.freeze([
   "get_collection_admin_info",
   "get_shared_reaction_summary",
   "list_custom_reactions",
+  "get_standard_reactions",
   "get_question_poll_stats",
 ]);
 
@@ -61,7 +63,7 @@ const AUTHENTICATED_READ_RPCS = new Set([
   'list_collection_members', 'list_collection_notifications',
   'get_my_capabilities', 'get_shared_reaction_summary',
   'get_collection_admin_info',
-  'list_custom_reactions', 'get_question_poll_stats',
+  'list_custom_reactions', 'get_standard_reactions', 'get_question_poll_stats',
 ]);
 const READ_TABLE_SET = new Set(READ_TABLES);
 const ZERO_UUID = "00000000-0000-0000-0000-000000000000";
@@ -1333,6 +1335,8 @@ export async function readRpc(name, args = {}, ctx = {}) {
       return collectionAdminInfo(args, {db, actor});
     case "get_shared_reaction_summary":
       return sharedReactionSummary(db, actor, args);
+    case "get_standard_reactions":
+      return getStandardReactions({db,actor});
     case "list_custom_reactions":
       return customReactions(db, actor);
     case "get_question_poll_stats":

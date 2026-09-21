@@ -6,6 +6,7 @@ export function testD1({builder=true,generation=false,discord=false}={}){
   sqlite.exec(fs.readFileSync(new URL('../../cloudflare/migrations/0001_minkiru.sql',import.meta.url),'utf8'));
   sqlite.exec(fs.readFileSync(new URL('../../cloudflare/migrations/0006_collection_managers_v290.sql',import.meta.url),'utf8'));
   sqlite.exec(fs.readFileSync(new URL('../../cloudflare/migrations/0007_notifications_v314.sql',import.meta.url),'utf8'));
+  sqlite.exec(fs.readFileSync(new URL('../../cloudflare/migrations/0008_standard_reactions_v329.sql',import.meta.url),'utf8'));
   if(builder)sqlite.exec(fs.readFileSync(new URL('../../cloudflare/migrations/0002_collection_builder_v235.sql',import.meta.url),'utf8'));
   if(generation)sqlite.exec(fs.readFileSync(new URL('../../cloudflare/migrations/0003_generation_v241.sql',import.meta.url),'utf8'));
   if(discord)sqlite.exec(fs.readFileSync(new URL('../../cloudflare/migrations/0004_discord_sync_v242.sql',import.meta.url),'utf8'));

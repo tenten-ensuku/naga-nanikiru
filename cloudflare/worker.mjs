@@ -41,7 +41,7 @@ function failure(error,request){
   const status=error instanceof ApiError?error.status:503;
   const messages={login_required:'Discordログインが必要です。',csrf_denied:'認証状態が変わりました。ページを再読み込みしてください。',origin_denied:'この画面からは操作できません。',rate_limited:'短時間に操作が集中しています。少し待ってからお試しください。',heavy_operations_paused:'この追加処理は確認中です。学習と回答保存はご利用いただけます。',signup_temporarily_closed:'現在は登録済みの生徒さんから順次再開しています。管理者にお問い合わせください。',media_capacity_unavailable:'画像容量の最新確認ができないため、新しい画像の保存を停止しています。学習は利用できます。',media_storage_limit:'画像保存の安全上限に達しました。学習は利用できます。',generation_daily_limit:'本日の追加処理の安全上限に達しました。翌朝9時以降にお試しください。学習は利用できます。',capture_daily_limit:'自動撮影の無料枠または短時間の撮影上限に達しました。自動再試行は行いません。手動画像を指定するか、時間をおいてお試しください。',capture_failed:'局面画像の自動撮影に失敗しました。手動画像を指定するか、時間をおいてお試しください。',naga_report_missing:'指定のNAGAレポートが見つかりません。',naga_report_unavailable:'NAGAレポートを取得できませんでした。URLと接続を確認してください。',collection_capacity_reached:'この巻は200問に達しています。次の巻を選択してください。'};
   Object.assign(messages,{
-    app_admin_required:'この情報はアプリ管理人だけが確認できます。',
+    app_admin_required:'この操作はアプリ管理人だけが利用できます。',standard_reactions_invalid:'文言は24文字以内、絵文字は16文字以内で指定してください。文言か絵文字のどちらかが必要です。',standard_reactions_conflict:'別の画面で更新されました。保存済みの内容を読み直してから編集してください。',standard_reactions_keep_history:'使用履歴を残すため、項目を削除せず非表示にしてください。',standard_reactions_unavailable:'定番リアクションを読み込めませんでした。',
     media_upload_pending:'画像の処理を確認中です。しばらく待っても続く場合は管理者に連絡してください。',
     question_image_retired:'この画像は使用を終了しました。ページを再読み込みして、最新の問題を開き直してください。',
     collection_confirmation_required:'削除する前に確認画面で対象を確認してください。',
@@ -71,7 +71,7 @@ export default {
     try{
       const url=new URL(request.url);
       if(url.pathname==='/guide/video/minkiru-promo.mp4')return new Response(request.method==='HEAD'?null:'This video has been withdrawn.',{status:410,headers:common});
-      if(url.pathname==='/health'&&request.method==='GET')return json({version:328,backend:'cloudflare',ready:ready(env),studentFlow:ready(env),signups:ready(env)&&env.SIGNUPS_ENABLED==='true',heavyOperations:generationEnabled(env),generation:generationEnabled(env),uploads:env.UPLOADS_ENABLED==='true',bulkImport:false,bot:env.DISCORD_SYNC_ENABLED==='true'&&!!env.DISCORD_SYNC_TOKEN});
+      if(url.pathname==='/health'&&request.method==='GET')return json({version:329,backend:'cloudflare',ready:ready(env),studentFlow:ready(env),signups:ready(env)&&env.SIGNUPS_ENABLED==='true',heavyOperations:generationEnabled(env),generation:generationEnabled(env),uploads:env.UPLOADS_ENABLED==='true',bulkImport:false,bot:env.DISCORD_SYNC_ENABLED==='true'&&!!env.DISCORD_SYNC_TOKEN});
       if(!ready(env))return json({error:'migration_not_ready',message:'移行確認中です。公開切替はまだ完了していません。'},503);
       if(url.origin!==env.APP_ORIGIN)throw new ApiError('origin_denied',403);
       if(url.pathname==='/naga-nanikiru'||url.pathname==='/naga-nanikiru/')return Response.redirect(url.origin+'/'+url.search,302);
