@@ -11,24 +11,75 @@ function source(name){
   assert.ok(match,name);return match[0];
 }
 const copy=value=>JSON.parse(JSON.stringify(value));
+function historySetup(){
+  const c=setup(3);
+  Object.assign(c,{importedQuestionsReadyV81:true,remoteHistorySyncScopeV135:'',remoteHistorySyncPromiseV81:null,
+    ANSWER_HISTORY_LIMIT_V135:5000,isSeriesParentCollectionV180:()=>false,normalizeScoreMarkV159:mark=>mark,
+    renderMenuCardsV16(){},console:{warn(){}}});
+  c.questionsV16.forEach(q=>q.serverQuestionId=q.id);
+  c.window.NagaSupabase={configured:true,loadMyAttempts:async()=>[],loadMyAttemptsForCollection:async()=>[]};
+  vm.runInContext(['answerHistorySignatureV81','remoteAttemptToLocalV81','hydrateRemoteAnswerHistoryV81'].map(source).join('\n'),c);
+  return c;
+}
+
+test('forced history refresh merges remote answers and preserves existing answers and session association',async()=>{
+  const c=historySetup();let reads=0;
+  c.remoteHistorySyncScopeV135='user-a::a';
+  c.userStateV16.answerHistory=[{questionKey:'q-2',attemptId:'local',scoreMark:'△',answeredAt:'2026-09-20T00:00:00Z',sessionId:'saved-run'},
+    {questionKey:'q-0',attemptId:'remote-0',scoreMark:'◎',answeredAt:'2026-09-19T00:00:00Z',sessionId:'old-run'}];
+  c.window.NagaSupabase.loadMyAttemptsForCollection=async()=>{reads++;return [0,1].map(i=>({question_id:'q-'+i,client_attempt_id:'remote-'+i,grade:'◎',answered_at:'2026-09-21T00:00:00Z',answer:{selected:'白'}}));};
+  assert.equal(await c.hydrateRemoteAnswerHistoryV81(),0);assert.equal(reads,0);
+  assert.equal(await c.hydrateRemoteAnswerHistoryV81({force:true,strict:true}),2);
+  assert.equal(reads,1);assert.equal(c.userStateV16.answerHistory.length,3);
+  assert.equal(c.userStateV16.answerHistory.find(h=>h.questionKey==='q-0').sessionId,'old-run');
+  assert.equal(c.userStateV16.answerHistory.find(h=>h.questionKey==='q-2').sessionId,'saved-run');
+  await c.hydrateRemoteAnswerHistoryV81({force:true,strict:true});assert.equal(c.userStateV16.answerHistory.length,3);
+});
+
+test('starting unanswered waits for an in-flight history read and does not reuse another account response',async()=>{
+  for(const changedAccount of [false,true]){
+    const c=historySetup();let finish,reads=0;
+    c.window.NagaSupabase.loadMyAttemptsForCollection=()=>{reads++;return new Promise(resolve=>finish=resolve);};
+    const background=c.hydrateRemoteAnswerHistoryV81();const start=c.startSessionV44('unanswered',c.questionsV16);
+    assert.equal(c.opened.length,0);assert.equal(reads,1);
+    if(changedAccount)c.supabaseSessionV46={user:{id:'new-user'}};
+    finish([{question_id:'q-0',client_attempt_id:'remote-0',grade:'◎',answered_at:'2026-09-21T00:00:00Z',answer:{}}]);
+    await Promise.all([background,start]);
+    assert.equal(c.opened.length,changedAccount?0:1);
+    assert.equal(c.userStateV16.answerHistory.length,changedAccount?0:1);
+    if(!changedAccount)assert.equal(c.currentQuestionIndexV16,1);
+  }
+});
+
+test('history read failure or unavailable history cannot start unanswered and can be retried',async()=>{
+  const c=historySetup();let alerts=0;c.window.alert=()=>alerts++;
+  c.window.NagaSupabase.loadMyAttemptsForCollection=async()=>{throw Error('offline');};
+  await c.startSessionV44('unanswered',c.questionsV16);assert.equal(c.opened.length,0);assert.equal(alerts,1);
+  assert.equal(c.remoteHistorySyncPromiseV81,null);assert.equal(c.unansweredStartPendingV320,null);
+  c.importedQuestionsReadyV81=false;
+  await c.startSessionV44('unanswered',c.questionsV16);assert.equal(c.opened.length,0);assert.equal(alerts,2);
+  c.importedQuestionsReadyV81=true;c.window.NagaSupabase.loadMyAttemptsForCollection=async()=>[];
+  await c.startSessionV44('unanswered',c.questionsV16);assert.equal(c.opened.length,1);
+});
 function setup(count=24){
   const context=vm.createContext({console,Date,crypto:webcrypto,window:{alert(){}},
     questionsV16:Array.from({length:count},(_,i)=>({id:'q-'+i,number:i+1})),
     userStateV16:{sessions:{},activeSessionId:null,answerHistory:[]},scope:'a',opened:[],shown:[],saved:null,
     requireLoginForPlayV187:()=>true,sharedQuestionPagingIsCurrentV177:()=>false,
-    isPlayableV16:q=>!q.disabled,questionKeyV16:q=>q.id,latestAnswerV44:()=>null,
+    isPlayableV16:q=>!q.disabled,questionKeyV16:q=>q.id,
     menuRangeV60:'all',state:{},menuFilterActiveV80:()=>false,captureNavigationV234(){},
+    unansweredStartPendingV320:null,menuViewV16:'today',supabaseSessionV46:{user:{id:'user-a'}},sharedCollectionV46:{share_slug:'a'},sharedQuestionPagingV177:{generation:1},
     escapeHtml:value=>String(value).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('"','&quot;'),
-    document:{getElementById:()=>({setAttribute(){},removeAttribute(){}})}});
+    document:{getElementById:()=>({setAttribute(){},removeAttribute(){}}),querySelector:()=>({classList:{contains:()=>true}})}});
   vm.runInContext(ux,context);
   context.currentCollectionScopeKeyV167=()=>context.scope;
   context.questionIndexByKeyV44=key=>context.questionsV16.findIndex(q=>q.id===key);
-  context.learningCandidatesV189=()=>context.questionsV16.filter(q=>!q.disabled);
+  context.learningCandidatesV189=mode=>context.questionsV16.filter(q=>!q.disabled&&(mode!=='unanswered'||!context.latestAnswerV44(q)));
   context.openQuestionV16=(index,options)=>{context.currentQuestionIndexV16=index;context.opened.push({index,options});return true;};
   context.showMenuV16=view=>context.shown.push(view);
   context.saveUserStateV16=()=>{context.saved=copy(context.userStateV16);return true;};
   vm.runInContext(['sessionQuestionIndexV167','sessionBelongsToCurrentCollectionV167','activeSessionV44',
-    'resumableSessionV253','sessionResumeCursorV253','extendLegacySessionV253','pauseSessionV253','returnFromQuestionV256',
+    'resumableSessionV253','sessionResumeCursorV253','extendLegacySessionV253','pauseSessionV253','returnFromQuestionV256','latestAnswerV44','learningLatestAnswersV189','prepareUnansweredStartV320',
     'normalizedQueueKeysV44','startSessionV44','completeSessionV44','advanceQuestionV44','nextButtonLabelV44',
     'learningCardSessionV254','learningResumeLabelV254','sessionModeLabelV44','startLearningSessionV189',
     'renderLearningActionButtonV194','syncLearningActionCountsV189'].map(source).join('\n'),context);
@@ -101,7 +152,7 @@ test('unavailable questions are skipped, and the actual end finishes normally ra
   c.pauseSessionV253();assert.equal(session.cursor,2);c.startSessionV44('resume');assert.equal(c.opened.at(-1).index,2);
   session.cursor=11;session.results.push({questionKey:'q-11',scoreMark:'〇'});c.pauseSessionV253();
   assert.equal(session.status,'completed');assert.equal(c.userStateV16.activeSessionId,null);assert.equal(c.resumableSessionV253(),null);
-  assert.equal(c.shown.at(-1),'session');
+  assert.equal(c.shown.at(-1),'today');
 });
 
 test('storage failure does not claim that progress was saved or navigate away',()=>{
@@ -157,14 +208,70 @@ test('V254 clicking the previous card resumes its saved queue, not a newly filte
   }
 });
 
-test('V254 the resume note points past an answered question and never says a nonexistent question',()=>{
+test('finished saved runs no longer turn the study card into an unexpected results link',()=>{
   const c=setup(2);c.startSessionV44('unanswered',c.questionsV16);const session=c.activeSessionV44();
   session.results=[{questionKey:'q-0'}];
   assert.equal(c.learningResumeLabelV254(session),'前回の続き・2問目から');
   session.results.push({questionKey:'q-1'});
-  assert.equal(c.learningResumeLabelV254(session),'前回の学習結果を確認');
+  c.userStateV16.answerHistory=[{questionKey:'q-0'},{questionKey:'q-1'}];
+  assert.equal(c.learningResumeLabelV254(session),'');
+  assert.equal(c.learningCardSessionV254('unanswered'),null);
   c.startLearningSessionV189('unanswered');assert.equal(session.status,'completed');
   assert.equal(c.learningCardSessionV254('unanswered'),null);
+  assert.ok(c.shown.every(view=>view==='today'));
+});
+
+test('only explicit results activation opens results, including a keyboard activation of that button',async()=>{
+  for(const keyboard of [false,true]){
+    const c=setup(1);c.startSessionV44('unanswered',c.questionsV16);
+    c.document.getElementById=()=>({textContent:'結果を見る'});
+    await c.advanceQuestionV44(keyboard?undefined:{currentTarget:{textContent:'結果を見る'}});
+    assert.equal(c.shown.at(-1),'session');
+  }
+  const c=setup(2);c.startSessionV44('unanswered',c.questionsV16);c.questionsV16[1].disabled=true;
+  await c.advanceQuestionV44({currentTarget:{textContent:'次の問題へ'}});
+  assert.equal(c.shown.at(-1),'today','a missing next question must not silently turn Next into Results');
+});
+
+test('unanswered resume skips answers from other sessions and devices without treating comments as answers',()=>{
+  for(const mode of ['unanswered','range-unanswered']){
+    const c=setup(4);c.startSessionV44(mode,c.questionsV16);const session=c.activeSessionV44();
+    session.cursor=0;session.status='paused';c.userStateV16.activeSessionId=null;
+    const history=[{questionKey:'q-0',sessionId:'other',scoreMark:'×'},{questionKey:'q-1',attemptId:'remote-answer',scoreMark:'◎'}];
+    c.userStateV16.answerHistory=copy(history);c.questionsV16[2].comments=[{authorId:'user-a',content:'comment only'}];
+    c.startSessionV44('resume');assert.equal(c.currentQuestionIndexV16,2);assert.equal(c.activeSessionV44().id,session.id);
+    assert.deepEqual(copy(c.userStateV16.answerHistory),history);
+  }
+});
+
+test('unanswered Next also skips globally answered questions, while all and weak keep repeat practice',async()=>{
+  for(const mode of ['unanswered','range-unanswered','all','weak']){
+    const c=setup(4);c.startSessionV44(mode,c.questionsV16);
+    c.userStateV16.answerHistory=[{questionKey:'q-1',scoreMark:'×'},{questionKey:'q-2',scoreMark:'◎'}];
+    await c.advanceQuestionV44({currentTarget:{textContent:'次の問題へ'}});
+    assert.equal(c.currentQuestionIndexV16,['all','weak'].includes(mode)?1:3,mode);
+  }
+});
+
+test('unanswered start waits for history, coalesces taps and filters the queued candidates after sync',async()=>{
+  const c=setup(3);c.window.NagaSupabase={configured:true};let finish,reads=0;
+  c.hydrateRemoteAnswerHistoryV81=options=>{assert.equal(options.force,true);assert.equal(options.strict,true);reads++;return new Promise(resolve=>finish=resolve);};
+  const first=c.startSessionV44('unanswered',c.questionsV16),second=c.startSessionV44('unanswered',c.questionsV16);
+  assert.equal(reads,1);assert.equal(first,second);assert.equal(c.opened.length,0);
+  c.userStateV16.answerHistory=[{questionKey:'q-0',scoreMark:'〇'}];finish();await first;
+  assert.equal(c.currentQuestionIndexV16,1);assert.deepEqual([...c.activeSessionV44().questionKeys],['q-1','q-2']);
+});
+
+test('history failure or navigation/account change cannot open an unverified unanswered question',async()=>{
+  for(const change of ['failure','book','account','view']){
+    const c=setup(3);c.window.NagaSupabase={configured:true};let finish;const alerts=[];
+    c.window.alert=text=>alerts.push(text);
+    c.hydrateRemoteAnswerHistoryV81=()=>change==='failure'?Promise.reject(Error('offline')):new Promise(resolve=>finish=resolve);
+    const task=c.startSessionV44('unanswered',c.questionsV16);
+    if(change==='book')c.scope='b';if(change==='account')c.supabaseSessionV46={user:{id:'user-b'}};if(change==='view')c.menuViewV16='collections';
+    finish?.();await task;assert.equal(c.opened.length,0);assert.equal(c.userStateV16.activeSessionId,null);
+    assert.equal(alerts.length,change==='failure'?1:0);
+  }
 });
 
 test('V254 zero current candidates do not disable the card holding a saved run or its results',()=>{

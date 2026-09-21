@@ -10,7 +10,7 @@ test("renders the v87 scene and half-game generator controls", async () => {
     readFile(indexUrl, "utf8"),
     readFile(generatorUrl, "utf8")
   ]);
-  assert.match(html, /const APP_VERSION = 319/);
+  assert.match(html, /const APP_VERSION = 320/);
   assert.match(html, /function captureGeneratorFormDraftV157\(\)/);
   assert.match(html, /destination: document\.getElementById\("generatorDestinationSelect"\)\?\.value \|\| generatorDestinationV130 \|\| ""/);
   assert.match(html, /function restoreGeneratorFormDraftV157\(draft\)/);
@@ -78,7 +78,7 @@ test("renders the v87 scene and half-game generator controls", async () => {
   assert.match(html, /normalizeQuestionTitlesV79\(\);/);
   assert.match(html, /function menuFilterActiveV80\(\)/);
   assert.match(html, /function menuFilteredQuestionsV80\(\)/);
-  assert.match(html, /function hydrateRemoteAnswerHistoryV81\(\)/);
+  assert.match(html, /function hydrateRemoteAnswerHistoryV81\(\{ force = false, strict = false \} = \{\}\)/);
   assert.match(html, /loadMyAttemptsForCollection\(collectionSlug, ANSWER_HISTORY_LIMIT_V135\)/);
   assert.match(html, /const orderedCandidates = menuOrderV92 === "reverse"/);
   assert.match(html, /menuOrderV92 === "random"/);
