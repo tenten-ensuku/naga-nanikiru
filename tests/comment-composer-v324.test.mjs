@@ -5,7 +5,7 @@ import {readFileSync} from 'node:fs';
 import * as tags from '../public/comment-tags-v270.mjs';
 const source=readFileSync(new URL('../public/comment-composer-v324.js',import.meta.url),'utf8');
 function setup(storage=new Map()){
-  const ctx=vm.createContext({MinkiruCommentTagsV270:tags,nagaCurrentUserIdV75:'alice',
+  const ctx=vm.createContext({Event,MinkiruCommentTagsV270:tags,nagaCurrentUserIdV75:'alice',
     localStorage:{getItem:key=>storage.get(key)??null,setItem:(key,value)=>storage.set(key,value)}});
   vm.runInContext(source,ctx);return{ctx,api:ctx.MinkiruCommentComposerV324,storage};
 }
@@ -35,6 +35,22 @@ test('first-time suggestions show five presets, then recent custom tags take pri
   assert.deepEqual(Array.from(api.candidates(api.recent(),'自')),['自分の復習']);
   assert.deepEqual(Array.from(api.candidates(api.recent(),'存在しない')),[]);
 });
+
+test('completed draft hashtags are reusable without posting, but partial names are not learned',()=>{
+  const {api,storage}=setup();
+  for (const text of ['＃','＃ピ','＃ピエール']) api.rememberDraft(text,text.length);
+  assert.deepEqual(Array.from(api.recent()),[]);
+  api.rememberDraft('＃ピエール　',6);
+  assert.deepEqual(Array.from(api.recent()),['ピエール']);
+  api.rememberDraft('＃ピエール　＃復習',9);
+  assert.deepEqual(Array.from(api.recent()),['ピエール']);
+  api.rememberDraft('＃ピエール　＃復習\n',10);
+  const reloaded=setup(storage).api;
+  assert.deepEqual(Array.from(reloaded.candidates(reloaded.recent(),'ピ')),['ピエール']);
+  assert.deepEqual(Array.from(reloaded.recent()),['復習','ピエール']);
+  api.rememberDraft('https://example.test/#未登録 ',26);
+  assert.equal(api.recent().includes('未登録'),false);
+});
 test('recent tags persist across editor reloads, stay account-scoped and tolerate unavailable storage',()=>{
   const {ctx,api,storage}=setup();api.remember('#自分');
   assert.deepEqual(Array.from(setup(storage).api.recent()),['自分']);
@@ -48,4 +64,48 @@ test('invalid stored tags cannot become markup or unbounded suggestions',()=>{
   const {api}=setup();
   assert.deepEqual(Array.from(api.normalizeRecent(['<script>','タグ with spaces',null,'＃ＮＡＮＡ','NANA'])),['NANA']);
   assert.equal(api.normalizeRecent(Array.from({length:100},(_,i)=>'タグ'+i)).length,64);
+});
+
+function bindEditor(api) {
+  class Node extends EventTarget {
+    children=[];dataset={};attrs=new Map();
+    setAttribute(key,value){this.attrs.set(key,value);}
+    removeAttribute(key){this.attrs.delete(key);}
+    contains(node){return node===this || this.children.includes(node);}
+    replaceChildren(){this.children=[];}
+    append(node){this.children.push(node);}
+    querySelector(){return null;}
+  }
+  const document=new EventTarget(),input=new Node(),field=new Node();let panel;
+  document.createElement=()=>new Node();document.activeElement=input;
+  Object.assign(input,{ownerDocument:document,isConnected:true,value:'',selectionStart:0,selectionEnd:0});
+  input.closest=()=>field;field.after=node=>{panel=node;};
+  api.bind(input);
+  const event=(type,props={})=>{const e=new Event(type,{cancelable:true});Object.assign(e,props);input.dispatchEvent(e);return e;};
+  const type=(value,start=value.length,end=start)=>{
+    Object.assign(input,{value,selectionStart:start,selectionEnd:end});event('input');
+  };
+  return {input,panel,event,type};
+}
+
+test('IME preedit shows candidates immediately, keeps IME keys untouched, and resumes after repeated composition',()=>{
+  for(const selected of [false,true]){
+    const {api}=setup();const {input,panel,event,type}=bindEditor(api);
+    type('');event('compositionstart');type('＃',selected?0:1,1);
+    assert.equal(panel.hidden,false,'candidates must open before compositionend');
+    assert.equal(panel.children.length,5);
+    for(const key of ['Enter','ArrowDown','ArrowUp','Escape']){
+      assert.equal(event('keydown',{key,isComposing:true,keyCode:229}).defaultPrevented,false);
+    }
+    assert.equal(input.value,'＃');
+    type('＃ピエール');assert.deepEqual(Array.from(api.recent()),[]);
+    event('compositionend');type('＃ピエール　');
+    type('＃');assert.equal(panel.children[0].textContent,'#ピエール');
+    event('compositionstart');type('＃',0,1);
+    assert.equal(panel.hidden,false);assert.equal(panel.children[0].textContent,'#ピエール');
+    event('compositionend');
+    type('https://example.test/#押');assert.equal(panel.hidden,true);
+    type('#');event('keydown',{key:'Escape'});assert.equal(panel.hidden,true);
+    type('＃');assert.equal(panel.hidden,false);
+  }
 });

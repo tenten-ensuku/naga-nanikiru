@@ -17,7 +17,7 @@
     } catch { /* Keep the in-memory history if browser storage is unavailable. */ }
     return histories.get(id) || [];
   }
-  // Only successful comment/question saves call this, never typing or picking a suggestion.
+  // Remember completed tags locally, including drafts, without posting a comment.
   function remember(text) {
     const id = account(), tags = tagApi();
     if (!id || !tags) return;
@@ -36,6 +36,11 @@
     if ([...query].length > 30) return null;
     const tail = text.slice(start).match(/^[\p{L}\p{M}\p{N}_]*/u)[0];
     return {from:start-match[1].length-match[2].length,to:start+tail.length,query};
+  }
+  function rememberDraft(text, start, end = start) {
+    const token = tokenAtCaret(text,start,end);
+    // Do not learn a partial tag while its name is still being typed.
+    remember(token ? text.slice(0,token.from)+text.slice(token.to) : text);
   }
   function candidates(history, query, tags = tagApi()) {
     const prefix = query.normalize('NFKC').toLocaleLowerCase('ja');
@@ -67,8 +72,9 @@
     const signature = () => `${input.selectionStart}:${input.selectionEnd}:${input.value}`;
     function close() { panel.hidden=true; input.setAttribute('aria-expanded','false'); input.removeAttribute('aria-activedescendant'); index=-1; token=null; rendered=''; }
     function refresh() {
-      if (!input.isConnected || input.disabled || input.readOnly || composing || !tagApi() || dismissed === signature() || (document.activeElement !== input && !panel.contains(document.activeElement))) {close();return;}
-      const next = tokenAtCaret(input.value,input.selectionStart,input.selectionEnd);
+      if (!input.isConnected || input.disabled || input.readOnly || !tagApi() || dismissed === signature() || (document.activeElement !== input && !panel.contains(document.activeElement))) {close();return;}
+      // Some IMEs select the preedit text. Use its end to show candidates before Enter.
+      const next = tokenAtCaret(input.value,composing ? input.selectionEnd : input.selectionStart,input.selectionEnd);
       if (!next) {close();return;}
       if (active && active !== ui) active.close(); active = ui;
       const history=recent(), nextRender=account()+':'+signature()+':'+history.join('\0');
@@ -83,10 +89,14 @@
       panel.hidden = !options.length; input.setAttribute('aria-expanded',String(!panel.hidden));
     }
     function choose(i) {
-      if (composing || input.disabled || input.readOnly || !token || !options[i]) return;
-      const current = tokenAtCaret(input.value,input.selectionStart,input.selectionEnd);
-      if (!current || current.from !== token.from || current.to !== token.to || current.query !== token.query) {close();return;}
-      const edit = completion(input.value,current,options[i],input.maxLength);
+      if (input.disabled || input.readOnly || !token || !options[i]) return;
+      const chosen = options[i], previousToken = token, wasComposing = composing;
+      // Blurring commits the IME's preedit before replacing the selected tag.
+      if (composing) input.blur();
+      if (composing) return;
+      const current = tokenAtCaret(input.value,wasComposing ? input.selectionEnd : input.selectionStart,input.selectionEnd);
+      if (!current || current.from !== previousToken.from || current.to !== previousToken.to || current.query !== previousToken.query) {close();return;}
+      const edit = completion(input.value,current,chosen,input.maxLength);
       if (!edit) return;
       input.focus({preventScroll:true});input.setRangeText(edit.replacement,edit.from,edit.to,'end');input.setSelectionRange(edit.caret,edit.caret);
       input.dispatchEvent(new root.Event('input',{bubbles:true}));close();
@@ -95,12 +105,17 @@
     panel.addEventListener('pointerdown',event=>{if(event.target.closest('button'))event.preventDefault();});
     panel.addEventListener('mousedown',event=>{if(event.target.closest('button'))event.preventDefault();});
     panel.addEventListener('click',event=>{const button=event.target.closest('[data-tag-index]');if(button)choose(Number(button.dataset.tagIndex));});
-    input.addEventListener('input',()=>{dismissed='';refresh();});
+    input.addEventListener('input',event=>{
+      dismissed='';
+      if (!composing && !event.isComposing) rememberDraft(input.value,input.selectionStart,input.selectionEnd);
+      refresh();
+    });
     for (const name of ['focus','select','keyup','pointerup']) input.addEventListener(name,refresh);
-    input.addEventListener('compositionstart',()=>{composing=true;close();});
-    input.addEventListener('compositionend',()=>{composing=false;refresh();});
+    input.addEventListener('compositionstart',()=>{composing=true;dismissed='';refresh();});
+    input.addEventListener('compositionend',()=>{composing=false;rememberDraft(input.value,input.selectionStart,input.selectionEnd);refresh();});
+    input.addEventListener('blur',()=>{if (!composing && !input.disabled && !input.readOnly) remember(input.value);});
     input.addEventListener('keydown',event=>{
-      if(composing || event.isComposing || panel.hidden)return;
+      if(composing || event.isComposing || event.keyCode===229 || panel.hidden)return;
       if(event.key==='Escape'){event.preventDefault();event.stopPropagation();dismissed=signature();close();}
       if(event.key==='ArrowDown'||event.key==='ArrowUp'){
         event.preventDefault(); index = index < 0 ? (event.key==='ArrowDown'?0:options.length-1) : (index+(event.key==='ArrowDown'?1:options.length-1)+options.length)%options.length;
@@ -127,5 +142,5 @@
     }
   }
   function refresh(input) { bindings.get(input)?.refresh(); }
-  root.MinkiruCommentComposerV324={bind,refresh,remember,recent,normalizeRecent,tokenAtCaret,candidates,completion,closeAttachment};
+  root.MinkiruCommentComposerV324={bind,refresh,remember,rememberDraft,recent,normalizeRecent,tokenAtCaret,candidates,completion,closeAttachment};
 })(typeof window==='undefined'?globalThis:window);
