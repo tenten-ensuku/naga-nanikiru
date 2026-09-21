@@ -237,7 +237,7 @@
       const picked = Boolean(book && book.slug === state.picked);
       const management = book && options.canManage?.(book) ? `<button type="button" class="library-manage-v288" data-library-manage="${escape(book.slug)}" aria-label="${escape(book.fullTitle)}の管理" aria-haspopup="dialog" title="問題集の管理">…</button>` : "";
       const controls = book ? `<div class="library-detail-tools-v300"><button type="button" data-library-hide="${escape(book.slug)}">本棚から隠す</button>${management}</div>` : "";
-      return controls + detailMarkup(book, state.context, picked, hasUnreadUpdate(book)) + (picked ? `
+      return controls + detailMarkup(book, state.context, picked, hasUnreadUpdate(book)) + (book ? options.adminInfoMarkup?.(book) || '' : '') + (picked ? `
         <div class="library-arrange" role="group" aria-label="選んだ本の並べ替え">
           <span>${reorderReady() ? "つかんで移動" : "巻の準備が終わると並べ替えできます"} <small>ドラッグ / Shift＋← →</small></span>
           <div><button type="button" data-library-move="-1" aria-label="選んだ本を左へ移動" ${!reorderReady() || position <= 0 ? "disabled" : ""}>${icon("left")}左へ</button>
@@ -248,6 +248,7 @@
     function updateDetail() {
       const panel = state.root?.querySelector("[data-library-detail]");
       if (panel) panel.innerHTML = detail();
+      options.bindAdminInfo?.(state.root);
     }
     function announce(message) {
       const node = state.root?.querySelector("[data-library-status]");
@@ -638,6 +639,7 @@
       state.observer?.disconnect();
       state.root = root;
       if (!root?.querySelector(".library-v214")) return;
+      options.bindAdminInfo?.(root);
       prepareArtwork();
       if (!state.coverPreload && host.Image) {
         state.coverPreload = new host.Image();
@@ -790,6 +792,7 @@
       queueMicrotask(hydrate);
     }
     function unmount() {
+      options.clearAdminInfo?.();
       state.hiddenDialogOpen = false;
       finishDrag(true, true);
       state.sessionRevision += 1;
@@ -806,6 +809,7 @@
       state.root = null;
     }
     function invalidate() {
+      options.clearAdminInfo?.();
       finishDrag(true, true);
       state.sessionRevision += 1;
       state.cache.clear();
@@ -816,7 +820,8 @@
       state.failures.clear();
       state.error = "";
     }
-    return { render, paint, mount, unmount, browseSeries, openBook, invalidate };
+    function refreshAdminInfo() { options.clearAdminInfo?.(); updateDetail(); }
+    return { render, paint, mount, unmount, browseSeries, openBook, invalidate, refreshAdminInfo };
   }
 
   function reducedMotion() {

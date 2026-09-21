@@ -259,10 +259,23 @@ async function loadAdapterOptions() {
     globalThis.getLibraryOptions = () => globalThis.__capturedOptions;
     globalThis.setTestSession = session => { supabaseSessionV46 = session; };
   `;
+  vm.runInNewContext(await readFile(new URL('../public/collection-admin-v328.js', import.meta.url), 'utf8'), sandbox);
+  sandbox.__window.MinkiruCollectionAdminV328 = sandbox.MinkiruCollectionAdminV328;
   vm.runInNewContext(harness, sandbox, { filename: String(INDEX_PATH) });
   sandbox.getCollectionLibraryV214();
   return { options: sandbox.getLibraryOptions(), sandbox };
 }
+
+test('administrator details are gated by the authenticated app role in the real shelf adapter', async () => {
+  const {options,sandbox}=await loadAdapterOptions();
+  const book={slug:'book',fullTitle:'本',can_manage:true,owner_id:'test-user'};
+  assert.equal(options.adminInfoMarkup(book),'');
+  sandbox.setTestSession({user:{id:'admin',app_metadata:{is_admin:true}}});
+  assert.match(options.adminInfoMarkup(book),/管理人専用/);
+  sandbox.setTestSession({user:{id:'owner',app_metadata:{is_admin:false}}});
+  assert.equal(options.adminInfoMarkup(book),'');
+  sandbox.setTestSession(null);assert.equal(options.adminInfoMarkup(book),'');
+});
 
 test("V214 adapter batches only the selected series metadata, never the full question payload", async () => {
   const { options, sandbox } = await loadAdapterOptions();
@@ -431,14 +444,14 @@ test("switching users invalidates old in-flight/cache data", async () => {
 
 test("adapter keeps legacy fallback, controller mount/unmount hooks, and navigation reset contract", async () => {
   const [index, library] = await Promise.all([readFile(INDEX_PATH, "utf8"), readFile(LIBRARY_PATH, "utf8")]);
-  assert.match(index, /library-v214\.js\?v=327/);
+  assert.match(index, /library-v214\.js\?v=328/);
   const renderStart = index.indexOf("function renderCollectionChooserV165");
   const renderEnd = index.indexOf("function renderCollectionSpacePanelV100", renderStart);
   const renderer = index.slice(renderStart, renderEnd);
   assert.match(renderer, /if \(!library\) return renderCollectionChooserLegacyV165\(\);/);
   assert.match(index, /getCollectionLibraryV214\(\)\?\.mount\(grid\)/);
   assert.match(index, /library\.paint\(grid, libraryMarkup\)/);
-  assert.match(library, /return \{ render, paint, mount, unmount, browseSeries, openBook, invalidate \}/);
+  assert.match(library, /return \{ render, paint, mount, unmount, browseSeries, openBook, invalidate, refreshAdminInfo \}/);
 
   const navigationStart = index.indexOf("function navigateToCollectionV106");
   const navigationEnd = index.indexOf("function captureCollectionCreateDraftV114", navigationStart);

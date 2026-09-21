@@ -357,6 +357,11 @@ async function loadCollectionManagers(shareSlug: string) {
   if (error) throw error;
   return data ?? [];
 }
+async function loadCollectionAdminInfo(shareSlug: string) {
+  const { data, error } = await requireClient().rpc("get_collection_admin_info", {p_share_slug:shareSlug});
+  if (error) throw error;
+  return data;
+}
 async function setCollectionManager(shareSlug: string, userId: string, enabled: boolean) {
   const { data, error } = await requireClient().rpc("set_collection_manager", {p_share_slug:shareSlug,p_user_id:userId,p_enabled:enabled});
   if (error) throw error;
@@ -985,6 +990,7 @@ function buildApi() {
     loadCollectionMembers,
     searchCollectionManagers,
     loadCollectionManagers,
+    loadCollectionAdminInfo,
     setCollectionManager,
     reviewCollectionAccess,
     revokeCollectionAccess,
