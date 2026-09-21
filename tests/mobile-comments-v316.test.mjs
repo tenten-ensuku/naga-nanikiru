@@ -22,12 +22,13 @@ function composer({editing=false,persist=async()=>{}}={}) {
   const statuses=[],busy=[],scrolls=[],frames=[];
   const notice={textContent:''};let dismiss;
   const window={persistLocalCommentV44:persist,persistCommentEditV75:persist,MinkiruMobileCommentsV316:{setBusy:value=>busy.push(value)}};
-  const context=vm.createContext({window,state,requestAnimationFrame:callback=>frames.push(callback),setTimeout:callback=>{dismiss=callback;return 1;},clearTimeout(){},document:{getElementById:id=>id==='commentInput'?input:id==='commentSendNoticeV319'?notice:{querySelectorAll:()=>controls},querySelector:()=>({scrollIntoView:options=>scrolls.push(options)})},
+  const context=vm.createContext({window,state,CSS:{escape:String},requestAnimationFrame:callback=>frames.push(callback),setTimeout:callback=>{dismiss=callback;return 1;},clearTimeout(){},document:{getElementById:id=>id==='commentInput'?input:id==='commentSendNoticeV319'?notice:{querySelectorAll:()=>controls},querySelector:selector=>({scrollIntoView:options=>scrolls.push({...options,selector})})},
     canEditCommentV75:()=>true,normalizeCommentAvatarUrlV196:()=>'',renderComments(){},renderCommentAttachmentPreviewV68(){},syncCommentComposerV75(){},
     clearCommentDraftV68(){state.commentAttachments=[];},setCommentFormStatusV68:(text,error)=>statuses.push({text,error})});
   const edits=html.slice(html.indexOf('    let commentSendNoticeTimerV319;'),html.indexOf('    async function deleteCommentV75('));
   const submit=html.slice(html.indexOf('    let commentSubmittingV316 ='),html.indexOf('    function reset()'));
-  vm.runInContext(edits+submit,context);
+  const restore=html.slice(html.indexOf('    let commentNewDraftV322 ='),html.indexOf('    function beginCommentEditV75('));
+  vm.runInContext(restore+edits+submit,context);
   return {input,controls,state,statuses,busy,original,attachment,notice,scrolls,frames,flushFrame:()=>frames.splice(0).forEach(callback=>callback()),dismiss:()=>dismiss?.(),submit:()=>context.submitComment({preventDefault(){}})};
 }
 test('double tap sends once, locks controls, and clears draft only after success',async()=>{
@@ -63,4 +64,34 @@ test('successful edit persists edited content before clearing its draft',async()
   await c.submit();assert.equal(sent.content,'変更した内容 7z');assert.equal(previous[0].id,'old');
   assert.equal(c.input.value,'');assert.equal(c.state.commentEditingId,null);assert.equal(c.state.commentAttachments.length,0);
   assert.equal(c.state.commentComposerOpen,false);assert.equal(c.notice.textContent,'更新しました');
+  c.flushFrame();assert.equal(c.scrolls[0].block,'nearest');assert.match(c.scrolls[0].selector,/existing-comment/);
+});
+
+test('a missing edit target never creates a new duplicate comment',async()=>{
+  let calls=0;
+  const c=composer({editing:true,persist:async()=>calls++});c.state.comments=[];
+  await c.submit();assert.equal(calls,0);assert.equal(c.state.comments.length,0);
+  assert.equal(c.state.commentEditingId,'existing-comment');assert.equal(c.input.value,'  変更した内容 7z  ');
+  assert.match(c.statuses.at(-1).text,/見つかりません/);assert.equal(c.statuses.at(-1).error,true);
+});
+
+test('cancelling an inline edit preserves the posted body and the separate new-comment draft',()=>{
+  const message={id:'mine',content:'**投稿済み** 7z',attachments:[{path:'original.png'}]};
+  const draftAttachment={file:{name:'new-draft.png'}};
+  const input={value:'送信前の新規コメント',focus(){},};
+  const state={comments:[message],commentEditingId:null,commentComposerOpen:false,commentAttachments:[draftAttachment]};
+  let editsAllowed=false,focused=false;
+  const context=vm.createContext({state,window:{},commentSubmittingV316:false,CSS:{escape:String},
+   document:{getElementById:()=>input,querySelector:()=>({focus(){focused=true;}})},
+   canEditCommentV75:()=>editsAllowed,renderComments(){},renderCommentAttachmentPreviewV68(){},syncCommentComposerV75(){},setCommentFormStatusV68(){},
+   clearCommentDraftV68(){state.commentAttachments=[];}});
+  vm.runInContext(html.slice(html.indexOf('    let commentNewDraftV322 ='),html.indexOf('    let commentSendNoticeTimerV319;')),context);
+  context.beginCommentEditV75('mine');assert.equal(state.commentEditingId,null);assert.equal(input.value,'送信前の新規コメント');
+  editsAllowed=true;context.beginCommentEditV75('mine');assert.equal(input.value,message.content);
+  assert.equal(state.commentEditingId,'mine');assert.equal(state.commentComposerOpen,true);
+  input.value='まだ保存していない編集';state.commentAttachments=[];
+  context.cancelCommentEditV75();
+  assert.equal(state.commentEditingId,null);assert.equal(state.commentComposerOpen,false);
+  assert.equal(message.content,'**投稿済み** 7z');assert.equal(message.attachments[0].path,'original.png');
+  assert.equal(input.value,'送信前の新規コメント');assert.equal(state.commentAttachments[0],draftAttachment);assert.equal(focused,true);
 });

@@ -5,6 +5,39 @@ import vm from 'node:vm';
 const read=file=>fs.readFileSync(new URL('../'+file,import.meta.url),'utf8');
 const html=read('public/index.html'),js=read('public/menu-sections-v239.js'),css=read('public/menu-sections-v239.css');
 
+const announcementSource=html.match(/const APP_ANNOUNCEMENTS_V66 = (\[[\s\S]*?\n\s*\]);/)[1];
+const announcements=vm.runInNewContext(announcementSource);
+const appVersion=Number(html.match(/const APP_VERSION = (\d+)/)[1]);
+
+test('release announcements include the current version and every release since V300 without duplicates',()=>{
+ const versions=announcements.map(item=>item.version);
+ assert.equal(Math.max(...versions),appVersion,'Update the announcements when releasing a new app version');
+ assert.equal(new Set(versions).size,versions.length,'Each version must have exactly one announcement');
+ for(let version=300;version<=appVersion;version++){
+  const item=announcements.find(item=>item.version===version);
+  assert.ok(item,`Missing announcement for V${version}`);
+  assert.ok(item.title.trim().length>=5 && item.body.trim().length>=20,`Describe the user-facing change for V${version}`);
+  assert.match(item.date,/^\d{4}-\d{2}-\d{2}$/);
+  assert.ok(Number.isFinite(Date.parse(item.publishedAt || item.date)));
+ }
+});
+
+test('opening announcements renders newest first, keeps V300, and acknowledges the latest version',()=>{
+ const list={innerHTML:''};let seen='300',shown=false;
+ const document={getElementById:id=>id==='announcementList'?list:{showModal(){shown=true;}}};
+ const ctx=vm.createContext({document,window:{localStorage:{setItem(key,value){assert.equal(key,'seen');seen=value;}}},
+  ANNOUNCEMENT_SEEN_STORAGE_KEY_V65:'seen',APP_ANNOUNCEMENTS_V66:announcements,
+  escapeHtml:value=>String(value).replaceAll('&','&amp;').replaceAll('<','&lt;'),formatAnnouncementDateV111:item=>item.date,renderNotificationBadgesV65(){}});
+ for(const name of ['renderAnnouncementListV65','openAnnouncementDialogV65']){
+  vm.runInContext(html.match(new RegExp(`      function ${name}\\([^]*?\\n      \\}`))[0],ctx);
+ }
+ ctx.openAnnouncementDialogV65();
+ const rendered=[...list.innerHTML.matchAll(/notice-item-question">V(\d+)/g)].map(match=>Number(match[1]));
+ assert.deepEqual(rendered,[...rendered].sort((a,b)=>b-a));
+ assert.equal(rendered[0],appVersion);assert.ok(rendered.includes(300));
+ assert.equal(seen,String(appVersion));assert.equal(shown,true);
+});
+
 test('announcement uses explicit visible copy and a self-contained matching line icon',()=>{
  const button=html.match(/<button[^>]*id="announcementButton"[^]*?<\/button>/)?.[0];
  assert.match(button,/aria-label="アナウンスを開く"/);

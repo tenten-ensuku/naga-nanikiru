@@ -1,0 +1,18 @@
+/* Editing replaces the posted body, using the same composer and safe text renderer. */
+.comment-inline-host-v322 { min-width:0; }
+.page .comment-form.is-inline-v322 { display:flex; flex-direction:column; align-items:stretch; gap:8px; margin:4px 0 0; padding:0; border:0; background:transparent; box-shadow:none; }
+.page .comment-form.is-inline-v322[hidden] { display:none; }
+.is-inline-v322 .comment-compose-body-v316 { display:flex; flex-direction:column; gap:8px; min-width:0; }
+.is-inline-v322 .comment-compose-editor { order:-1; }
+.is-inline-v322 .comment-compose-body-v316 > label { position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); }
+.page .comment-form.is-inline-v322 textarea { min-height:140px; height:clamp(140px,30dvh,320px); max-height:55dvh; font-size:16px; line-height:1.65; padding:10px; }
+.is-inline-v322 .comment-compose-actions-v316 { position:sticky; bottom:0; z-index:2; display:flex; flex-wrap:wrap; gap:8px; align-items:center; padding-block:4px; background:var(--ux-surface,#092331); }
+.is-inline-v322 .comment-selection-actions-v321 { grid-template-columns:repeat(2,minmax(0,1fr)); }
+.is-inline-v322 .comment-selection-colors-v321 { grid-template-columns:repeat(auto-fit,minmax(60px,1fr)); }
+.page .is-inline-v322 :is(button,select) { min-height:44px; font-size:16px; }
+.page .is-inline-v322 .comment-compose-actions-v316 button { flex:1 1 auto; width:auto; min-width:0; padding:8px 6px; white-space:nowrap; }
+.is-inline-v322 .comment-form-status { flex-basis:100%; margin:0; font-size:16px; }
+.is-inline-v322 .comment-form-status:empty { display:none; }
+.is-inline-v322 .comment-return-v317, .is-inline-v322 .comment-dropzone, .is-inline-v322 .comment-format-help { display:none; }
+.is-inline-v322 .comment-tools-v274 > summary { min-height:44px; box-sizing:border-box; padding:10px 6px; font-size:16px; }
+.is-inline-v322 .comment-pending-remove { min-width:44px; }
