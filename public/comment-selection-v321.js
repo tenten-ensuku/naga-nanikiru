@@ -75,7 +75,7 @@
     toolbar.className = 'comment-selection-v321'; toolbar.hidden = true;
     toolbar.setAttribute('role','group'); toolbar.setAttribute('aria-label','選択した文字の装飾');
     toolbar.innerHTML = '<div class="comment-selection-actions-v321"><button type="button" data-selection-format="bold" aria-label="選択した文字を太字にする・解除する"><strong>B</strong> 太字</button><button type="button" data-selection-format="spoiler" aria-label="選択した文字を伏せ字にする・解除する">伏せ字</button><button type="button" data-selection-colors aria-expanded="false">文字色</button><button type="button" data-selection-format="size" data-selection-value="large" aria-label="選択した文字を大きくする・解除する">大きく</button></div><div class="comment-selection-colors-v321" role="group" aria-label="選択した文字の色" hidden>'+Object.entries(colors).map(([value,label])=>`<button type="button" data-selection-format="color" data-selection-value="${value}" aria-label="選択した文字を${label}色にする・解除する"><span class="comment-color-${value}" aria-hidden="true">●</span>${label}</button>`).join('')+'</div><p class="comment-selection-status-v321" role="status" hidden></p>';
-    input.after(toolbar);
+    (input.closest('.comment-input-v324') || input).after(toolbar);
     const colorPanel = toolbar.querySelector('.comment-selection-colors-v321');
     const colorButton = toolbar.querySelector('[data-selection-colors]');
     const status = toolbar.querySelector('[role=status]');

@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=323">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=323">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=323">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=324">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=324">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=324">
   <title>みん切る｜みんなの何切る問題集</title>
   <link rel="preload" as="image" href="assets/loading-screen-v243.png" fetchpriority="high">
   <meta name="description" content="みん切るは、NAGA URLから問題をつくり、解いて、仲間と共有できる麻雀学習アプリです。">
   <meta name="theme-color" content="#f3f6f7">
-  <script src="theme-v259.js?v=323"></script>
+  <script src="theme-v259.js?v=324"></script>
   <meta property="og:type" content="website">
   <meta property="og:title" content="みん切る｜みんなの何切る問題集">
   <meta property="og:description" content="みん切るは、NAGA URLから問題をつくり、解いて、仲間と共有できる麻雀学習アプリです。">
@@ -2262,23 +2262,23 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="ux-v159.css?v=323">
-  <link rel="stylesheet" href="library-v214.css?v=323">
-  <link rel="stylesheet" href="navigation-v234.css?v=323">
-  <link rel="stylesheet" href="book-builder-v235.css?v=323">
-  <link rel="stylesheet" href="menu-polish-v238.css?v=323">
-  <link rel="stylesheet" href="menu-sections-v239.css?v=323">
-  <link rel="stylesheet" href="workspace-ui-v240.css?v=323">
-  <link rel="stylesheet" href="collection-deletion-v244.css?v=323">
-  <link rel="stylesheet" href="collection-managers-v290.css?v=323">
-  <link rel="stylesheet" href="menu-simplify-v245.css?v=323">
-  <link rel="stylesheet" href="content-dates-v246.css?v=323">
-  <link rel="stylesheet" href="question-header-v250.css?v=323">
-  <link rel="stylesheet" href="question-toolbar-v255.css?v=323">
-  <link rel="stylesheet" href="theme-v259.css?v=323">
-  <link rel="stylesheet" href="theme-quick-v295.css?v=323">
-  <link rel="stylesheet" href="brand-v302.css?v=323">
-  <script defer src="theme-quick-v295.js?v=323"></script>
+  <link rel="stylesheet" href="ux-v159.css?v=324">
+  <link rel="stylesheet" href="library-v214.css?v=324">
+  <link rel="stylesheet" href="navigation-v234.css?v=324">
+  <link rel="stylesheet" href="book-builder-v235.css?v=324">
+  <link rel="stylesheet" href="menu-polish-v238.css?v=324">
+  <link rel="stylesheet" href="menu-sections-v239.css?v=324">
+  <link rel="stylesheet" href="workspace-ui-v240.css?v=324">
+  <link rel="stylesheet" href="collection-deletion-v244.css?v=324">
+  <link rel="stylesheet" href="collection-managers-v290.css?v=324">
+  <link rel="stylesheet" href="menu-simplify-v245.css?v=324">
+  <link rel="stylesheet" href="content-dates-v246.css?v=324">
+  <link rel="stylesheet" href="question-header-v250.css?v=324">
+  <link rel="stylesheet" href="question-toolbar-v255.css?v=324">
+  <link rel="stylesheet" href="theme-v259.css?v=324">
+  <link rel="stylesheet" href="theme-quick-v295.css?v=324">
+  <link rel="stylesheet" href="brand-v302.css?v=324">
+  <script defer src="theme-quick-v295.js?v=324"></script>
 </head>
 <body class="auth-gate-open">
   <section class="startup-screen-v236" id="startupScreenV236" aria-label="みん切るを準備中">
@@ -2465,45 +2465,16 @@
       <form class="comment-form" id="commentForm" hidden>
         <div class="comment-compose-body-v316">
         <label for="commentInput">コメントを追加</label>
-        <details class="comment-tag-picker-v271 comment-tools-v274" id="commentTagPickerV271">
-          <summary>文字装飾・画像・タグ</summary>
-        <div class="comment-compose-toolbar" role="toolbar" aria-label="コメントの書式設定">
-          <button class="comment-format-button" type="button" data-comment-format="bold" title="選択範囲を太字にする"><strong>B</strong> 太字</button>
-          <button class="comment-format-button" type="button" data-comment-format="spoiler" title="選択範囲を伏せ字にする">|| 伏せ字</button>
-          <select class="comment-format-select" id="commentColorSelect" aria-label="文字色">
-            <option value="">色</option>
-            <option value="red">赤</option>
-            <option value="yellow">黄</option>
-            <option value="blue">青</option>
-            <option value="green">緑</option>
-            <option value="purple">紫</option>
-          </select>
-          <select class="comment-format-select" id="commentSizeSelect" aria-label="文字サイズ">
-            <option value="">サイズ</option>
-            <option value="large">デカ文字</option>
-          </select>
-          <button class="comment-image-button" id="commentImageButton" type="button">画像を追加</button>
-          <input class="comment-file-input" id="commentImageInput" type="file" accept="image/png,image/jpeg,image/webp,image/gif" multiple>
-        </div>
-          <div class="comment-tag-picker-body-v271">
-            <div class="comment-tags-v270" id="commentTagChoicesV270" role="group" aria-label="コメントにハッシュタグを追加"></div>
-            <div class="comment-custom-tag-v271">
-              <label for="commentCustomTagV271">オリジナルハッシュタグ</label>
-              <div class="comment-custom-tag-row-v271">
-                <input id="commentCustomTagV271" type="text" maxlength="64" placeholder="例：NANAリーグ検討" autocomplete="off" autocapitalize="off" aria-describedby="commentCustomTagNoteV271">
-                <button id="commentCustomTagAddV271" type="button">作成して追加</button>
-              </div>
-              <p class="comment-custom-tag-note-v271" id="commentCustomTagNoteV271">30文字まで。日本語・英数字・_ が使えます。</p>
-              <p class="comment-custom-tag-status-v271" id="commentCustomTagStatusV271" role="status" hidden></p>
-            </div>
-          </div>
-        </details>
         <div class="comment-compose-editor" id="commentComposeEditor">
-          <textarea id="commentInput" maxlength="2000" aria-describedby="commentWelcomeV299" placeholder="例：私はこの牌を選びました。理由が気になる／勉強になりました"></textarea>
-          <div class="comment-dropzone" id="commentDropzone">画像をここへドラッグ＆ドロップ、または貼り付け</div>
+          <div class="comment-input-v324">
+            <textarea id="commentInput" maxlength="2000" aria-describedby="commentComposerHelpV324" placeholder="コメントを入力"></textarea>
+            <button type="button" data-comment-attach-toggle aria-label="コメントに追加" aria-expanded="false" aria-controls="commentAttachMenuV324">＋</button>
+            <div id="commentAttachMenuV324" data-comment-attach-menu hidden><button class="comment-image-button" id="commentImageButton" type="button">画像を追加</button></div>
+            <input id="commentImageInput" type="file" accept="image/png,image/jpeg,image/webp,image/gif" multiple hidden>
+          </div>
+          <p class="comment-composer-help-v324" id="commentComposerHelpV324">文字を選択すると装飾できます。# でタグ候補。</p>
         </div>
         <div class="comment-attachment-preview" id="commentAttachmentPreview" hidden></div>
-        <p class="comment-format-help">牌表記は自動で画像になります。数牌：1m・4p・7s、字牌：1z～7z（東・南・西・北・白・發・中）。全角でも入力できます。漢字だけでは変換されません。</p>
         </div>
         <div class="comment-compose-actions-v316">
         <p class="comment-form-status" id="commentFormStatus" aria-live="polite"></p>
@@ -2657,43 +2628,45 @@
     </form>
   </dialog>
 
-  <link rel="stylesheet" href="comment-tags-v270.css?v=323">
+  <link rel="stylesheet" href="comment-tags-v270.css?v=324">
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=323"></script>
-  <script src="drill-ux-v44.js?v=323"></script>
-  <link rel="stylesheet" href="notifications-v314.css?v=323">
-  <script src="notifications-v314.js?v=323"></script>
-  <script src="navigation-v234.js?v=323"></script>
-  <script src="book-builder-v235.js?v=323"></script>
-  <script src="library-order-v215.js?v=323"></script>
-  <script src="content-dates-v246.js?v=323"></script>
-  <script src="question-header-v250.js?v=323"></script>
-  <script src="library-v214.js?v=323"></script>
-  <script src="naga-generator-v44.js?v=323"></script>
-  <link rel="stylesheet" href="naga-board-v248.css?v=323">
-  <link rel="stylesheet" href="refinements-v273.css?v=323">
-  <link rel="stylesheet" href="generator-tools-v274.css?v=323">
-  <link rel="stylesheet" href="book-pages-v281.css?v=323">
-  <link rel="stylesheet" href="touch-input-v307.css?v=323">
-  <script src="comment-tools-v274.js?v=323"></script>
-  <link rel="stylesheet" href="mobile-comments-v316.css?v=323">
-  <script src="mobile-comments-v316.js?v=323"></script>
-  <link rel="stylesheet" href="comment-selection-v321.css?v=323">
-  <script src="comment-selection-v321.js?v=323"></script>
-  <link rel="stylesheet" href="inline-comment-v322.css?v=323">
-  <script src="inline-comment-v322.js?v=323"></script>
-  <script src="naga-board-state-v248.js?v=323"></script>
-  <script src="naga-board-v248.js?v=323"></script>
-  <script src="hand-mask-v237.js?v=323"></script>
-  <script src="menu-sections-v239.js?v=323"></script>
-  <script src="workspace-ui-v240.js?v=323"></script>
-  <script src="generation-confirm-v241.js?v=323"></script>
-  <script src="collection-deletion-v244.js?v=323"></script>
-  <script src="collection-managers-v290.js?v=323"></script>
+  <script src="supabase-sync-v48.js?v=324"></script>
+  <script src="drill-ux-v44.js?v=324"></script>
+  <link rel="stylesheet" href="notifications-v314.css?v=324">
+  <script src="notifications-v314.js?v=324"></script>
+  <script src="navigation-v234.js?v=324"></script>
+  <script src="book-builder-v235.js?v=324"></script>
+  <script src="library-order-v215.js?v=324"></script>
+  <script src="content-dates-v246.js?v=324"></script>
+  <script src="question-header-v250.js?v=324"></script>
+  <script src="library-v214.js?v=324"></script>
+  <script src="naga-generator-v44.js?v=324"></script>
+  <link rel="stylesheet" href="naga-board-v248.css?v=324">
+  <link rel="stylesheet" href="refinements-v273.css?v=324">
+  <link rel="stylesheet" href="generator-tools-v274.css?v=324">
+  <link rel="stylesheet" href="book-pages-v281.css?v=324">
+  <link rel="stylesheet" href="touch-input-v307.css?v=324">
+  <script src="comment-tools-v274.js?v=324"></script>
+  <link rel="stylesheet" href="mobile-comments-v316.css?v=324">
+  <script src="mobile-comments-v316.js?v=324"></script>
+  <link rel="stylesheet" href="comment-selection-v321.css?v=324">
+  <script src="comment-selection-v321.js?v=324"></script>
+  <link rel="stylesheet" href="comment-composer-v324.css?v=324">
+  <script src="comment-composer-v324.js?v=324"></script>
+  <link rel="stylesheet" href="inline-comment-v322.css?v=324">
+  <script src="inline-comment-v322.js?v=324"></script>
+  <script src="naga-board-state-v248.js?v=324"></script>
+  <script src="naga-board-v248.js?v=324"></script>
+  <script src="hand-mask-v237.js?v=324"></script>
+  <script src="menu-sections-v239.js?v=324"></script>
+  <script src="workspace-ui-v240.js?v=324"></script>
+  <script src="generation-confirm-v241.js?v=324"></script>
+  <script src="collection-deletion-v244.js?v=324"></script>
+  <script src="collection-managers-v290.js?v=324"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 323;
+    const APP_VERSION = 324;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -3136,9 +3109,7 @@
     }
 
     function clearCommentDraftV68({ clearStatus = true } = {}) {
-      document.getElementById("commentTagPickerV271").open = false;
-      document.getElementById("commentCustomTagV271").value = "";
-      document.getElementById("commentCustomTagStatusV271").hidden = true;
+      window.MinkiruCommentComposerV324?.closeAttachment();
       state.commentAttachments = [];
       const input = document.getElementById("commentImageInput");
       if (input) input.value = "";
@@ -3191,15 +3162,7 @@
 
     function initCommentComposerV68() {
       window.MinkiruCommentSelectionV321.bind(document.getElementById("commentInput"));
-      document.querySelectorAll("[data-comment-format]").forEach(button => button.addEventListener("click", () => applyCommentFormatV68(button.dataset.commentFormat)));
-      document.getElementById("commentColorSelect")?.addEventListener("change", event => {
-        if (event.target.value) applyCommentFormatV68("color", event.target.value);
-        event.target.value = "";
-      });
-      document.getElementById("commentSizeSelect")?.addEventListener("change", event => {
-        if (event.target.value) applyCommentFormatV68("size", event.target.value);
-        event.target.value = "";
-      });
+      window.MinkiruCommentComposerV324.bind(document.getElementById("commentInput"));
       const imageInput = document.getElementById("commentImageInput");
       document.getElementById("commentImageButton")?.addEventListener("click", () => imageInput?.click());
       imageInput?.addEventListener("change", event => {
@@ -4087,50 +4050,8 @@
     }
 
     function syncCommentTagChoicesV270() {
-      const tags = window.MinkiruCommentTagsV270;
-      const input = document.getElementById("commentInput");
-      const selected = tags.extractTags(input.value);
-      const choices = tags.tagSuggestions([...(window.commentTagSuggestionsV271?.() || []), ...selected]);
-      document.getElementById("commentTagChoicesV270").innerHTML = choices.map(tag =>
-        `<button type="button" class="comment-tag-v270" data-comment-tag-add="${escapeHtml(tag)}" ${selected.includes(tag) ? "disabled" : ""}>#${escapeHtml(tag)}</button>`).join("");
+      window.MinkiruCommentComposerV324?.refresh(document.getElementById("commentInput"));
     }
-
-    function appendCommentTagV271(tag) {
-      const input = document.getElementById("commentInput");
-      const next = window.MinkiruCommentTagsV270.appendTag(input.value, tag, input.maxLength);
-      if (next === null) { setCommentFormStatusV68("文字数の上限です。本文を短くしてからタグを追加してください。", true); return false; }
-      input.value = next;
-      input.dispatchEvent(new Event("input", { bubbles: true }));
-      input.focus();
-      input.setSelectionRange(next.length, next.length);
-      return true;
-    }
-    function createCommentTagV271() {
-      const input = document.getElementById("commentCustomTagV271");
-      const status = document.getElementById("commentCustomTagStatusV271");
-      const tag = window.MinkiruCommentTagsV270.normalizeTag(input.value);
-      status.hidden = false;
-      if (!tag) {
-        status.textContent = "30文字以内の日本語・英数字・_ でタグ名を入力してください。";
-        input.focus();
-        return;
-      }
-      if (!appendCommentTagV271(tag)) { status.textContent = "本文が文字数の上限です。短くしてから追加してください。"; return; }
-      input.value = "";
-      status.textContent = "コメント本文に追加しました。投稿すると、この本の検索候補にも表示されます。";
-    }
-    document.getElementById("commentTagChoicesV270").addEventListener("click", event => {
-      const button = event.target.closest("[data-comment-tag-add]");
-      if (button) appendCommentTagV271(button.dataset.commentTagAdd);
-    });
-    document.getElementById("commentTagPickerV271").addEventListener("toggle", event => {
-      if (event.currentTarget.open) syncCommentTagChoicesV270();
-    });
-    document.getElementById("commentCustomTagAddV271").addEventListener("click", createCommentTagV271);
-    document.getElementById("commentCustomTagV271").addEventListener("keydown", event => {
-      if (event.key === "Enter" && !event.isComposing) { event.preventDefault(); createCommentTagV271(); }
-    });
-    document.getElementById("commentInput").addEventListener("input", syncCommentTagChoicesV270);
 
     function toggleCommentComposer() {
       if (state.commentEditingId) { cancelCommentEditV75(); return; }
@@ -4146,7 +4067,7 @@
       const submit = document.getElementById("commentSubmitButton");
       const cancel = document.getElementById("commentEditCancelButton");
       form.hidden = !state.commentComposerOpen;
-      if (!state.commentComposerOpen) document.getElementById("commentTagPickerV271").open = false;
+      if (!state.commentComposerOpen) window.MinkiruCommentComposerV324?.closeAttachment();
       syncCommentTagChoicesV270();
       button.setAttribute("aria-expanded", String(state.commentComposerOpen));
       button.textContent = state.commentComposerOpen ? (state.commentEditingId ? "編集を閉じる" : "コメント入力を閉じる") : "コメント追加";
@@ -4237,6 +4158,7 @@
       setCommentFormStatusV68("更新中…");
       try {
         await window.persistCommentEditV75?.(updated, previousAttachments);
+        window.MinkiruCommentComposerV324?.remember(content);
         state.commentEditingId = null;
         input.value = "";
         clearCommentDraftV68({ clearStatus: false });
@@ -4261,6 +4183,7 @@
       renderComments({ scrollToBottom: true });
       setCommentFormStatusV68("投稿中…");
       return Promise.resolve().then(() => window.persistLocalCommentV44?.(message)).then(() => {
+        window.MinkiruCommentComposerV324?.remember(content);
         input.value = "";
         clearCommentDraftV68({ clearStatus: false });
         completeCommentSubmissionV319();
@@ -4831,6 +4754,7 @@
       const QUESTION_NOTICE_STORAGE_KEY_V66 = storageKey("question-notices-v1");
         const ANNOUNCEMENT_SEEN_STORAGE_KEY_V65 = storageKey("announcement-seen-v1");
         const APP_ANNOUNCEMENTS_V66 = [
+          {"version":324,"date":"2026-09-21","title":"コメントをすぐに書き始められるようにしました","body":"常設の文字装飾・タグ一覧をなくし、本文の入力欄を中心にしました。文字を選択して装飾でき、画像は「＋」から追加できます。「#」を入力するとタグ候補が出て、投稿に使ったタグは最近の履歴順に並びます。問題生成時のコメント・解説も同じ操作です。","publishedAt":"2026-09-21T08:23:07.626500+00:00"},
           {"version":323,"date":"2026-09-21","title":"リアクションを選びやすくしました","body":"候補の文字が潰れないよう、文字付きのリアクションを2列に整えました。お気に入りタブと星ボタンを削除し、履歴・定番・牌・カスタムから選べます。上部の見出しとタブはスクロール中も表示します。","publishedAt":"2026-09-21T08:01:49.000292+00:00"},
           {"version":322,"date":"2026-09-21","title":"コメントをその場で編集できるようにしました","body":"投稿したコメントの「編集」を押すと、その本文が入力欄に切り替わります。同じ場所で保存・キャンセルでき、文字装飾・画像・タグも使えます。掲載が止まっていたV301以降のアナウンスも追加しました。","publishedAt":"2026-09-21T07:51:30.447963+00:00"},
           {"version":321,"date":"2026-09-21","title":"選択した文字を、その場で装飾できます","body":"コメント入力中に文字を選ぶと、太字・伏せ字・文字色・大きくの操作が表示されます。装飾する範囲を保ったまま、変更や解除ができます。"},
@@ -10592,8 +10516,7 @@
         document.querySelectorAll("[data-comment-composer-v274]").forEach(container => {
           const candidate = generatorCandidatesV44[Number(container.dataset.commentComposerV274)];
           if (candidate) window.MinkiruCommentToolsV274.bind(container, candidate.id, {
-            tags: window.MinkiruCommentTagsV270, suggestions: () => window.commentTagSuggestionsV271?.() || [],
-            applyFormat: applyCommentFormatV68, renderContent: formatCommentContent, readFile: readCommentFileV68,
+            renderContent: formatCommentContent, readFile: readCommentFileV68,
             saveText: text => generatorCommentDraftsV273.set(candidate.id, text)
           });
         });
@@ -10758,6 +10681,7 @@
               }
               return false;
             }
+            window.MinkiruCommentComposerV324?.remember(initialComment);
             question.isShared = true;
             if (remote.initialCommentId) markSharedCommentKnownV65(remote.initialCommentId);
             question.commentTagsV270 = window.MinkiruCommentTagsV270.tagsFromComments([initialComment]);

@@ -44,7 +44,6 @@
 .mobile-comment-dialog-v316 .comment-form-status { flex:1 0 100%; font-size:16px; min-height:0; margin:0; }
 .mobile-comment-dialog-v316 .comment-form-status:empty { display:none; }
 .mobile-comment-dialog-v316 .comment-submit { flex:1; font-size:16px; color:var(--ink); }
-.mobile-comment-dialog-v316 .comment-tools-v274 > summary { min-height:44px; box-sizing:border-box; padding:9px; font-size:16px; }
 .mobile-comment-dialog-v316 .comment-format-help { font-size:14px; }
 .mobile-comment-dialog-v316.is-expanded-v316 .mobile-comment-form-host-v316 { display:none; }
 .mobile-comment-dialog-v316.is-expanded-v316 .mobile-comment-preview-v316 { min-height:0; }

@@ -10,7 +10,7 @@ test("renders the v87 scene and half-game generator controls", async () => {
     readFile(indexUrl, "utf8"),
     readFile(generatorUrl, "utf8")
   ]);
-  assert.match(html, /const APP_VERSION = 323/);
+  assert.match(html, /const APP_VERSION = 324/);
   assert.match(html, /function captureGeneratorFormDraftV157\(\)/);
   assert.match(html, /destination: document\.getElementById\("generatorDestinationSelect"\)\?\.value \|\| generatorDestinationV130 \|\| ""/);
   assert.match(html, /function restoreGeneratorFormDraftV157\(draft\)/);
@@ -186,11 +186,9 @@ test("renders the v87 scene and half-game generator controls", async () => {
   assert.doesNotMatch(html, /id="surroundingsToggle"/);
   assert.doesNotMatch(html, /SCENE_IMAGES/);
   assert.doesNotMatch(html, /images: \{ off: candidate\._imageData, open: candidate\._imageData \}/);
-  assert.match(html, /data-comment-format="bold"/);
-  assert.match(html, /data-comment-format="spoiler"/);
-  assert.match(html, /id="commentColorSelect"/);
-  assert.match(html, /id="commentSizeSelect"/);
-  assert.match(html, /id="commentDropzone"/);
+  assert.match(html, /MinkiruCommentSelectionV321.bind/);
+  assert.match(html, /data-comment-attach-toggle/);
+  assert.match(html, /id="commentImageInput"/);
   assert.match(html, /function addCommentFilesV68/);
   assert.match(html, /id="nextQuestionButton"[^>]*>次の問題へ<\/button>/);
   assert.match(html, /id="nextQuestionBottomButton"[^>]*>次の問題へ<\/button>/);

@@ -19,9 +19,9 @@ function composer({editing=false,persist=async()=>{}}={}) {
   const input={value:'  変更した内容 7z  ',disabled:false,blur(){this.blurred=true;}};
   const controls=[input,{disabled:false},{disabled:true}];
   const state={comments:editing?[original]:[],commentAttachments:[attachment],commentEditingId:editing?original.id:null,commentComposerOpen:true,revealed:true,answers:{question:'unchanged'}};
-  const statuses=[],busy=[],scrolls=[],frames=[];
+  const statuses=[],busy=[],scrolls=[],frames=[],tagHistory=[];
   const notice={textContent:''};let dismiss;
-  const window={persistLocalCommentV44:persist,persistCommentEditV75:persist,MinkiruMobileCommentsV316:{setBusy:value=>busy.push(value)}};
+  const window={persistLocalCommentV44:persist,persistCommentEditV75:persist,MinkiruMobileCommentsV316:{setBusy:value=>busy.push(value)},MinkiruCommentComposerV324:{remember:text=>tagHistory.push(text)}};
   const context=vm.createContext({window,state,CSS:{escape:String},requestAnimationFrame:callback=>frames.push(callback),setTimeout:callback=>{dismiss=callback;return 1;},clearTimeout(){},document:{getElementById:id=>id==='commentInput'?input:id==='commentSendNoticeV319'?notice:{querySelectorAll:()=>controls},querySelector:selector=>({scrollIntoView:options=>scrolls.push({...options,selector})})},
     canEditCommentV75:()=>true,normalizeCommentAvatarUrlV196:()=>'',renderComments(){},renderCommentAttachmentPreviewV68(){},syncCommentComposerV75(){},
     clearCommentDraftV68(){state.commentAttachments=[];},setCommentFormStatusV68:(text,error)=>statuses.push({text,error})});
@@ -29,7 +29,7 @@ function composer({editing=false,persist=async()=>{}}={}) {
   const submit=html.slice(html.indexOf('    let commentSubmittingV316 ='),html.indexOf('    function reset()'));
   const restore=html.slice(html.indexOf('    let commentNewDraftV322 ='),html.indexOf('    function beginCommentEditV75('));
   vm.runInContext(restore+edits+submit,context);
-  return {input,controls,state,statuses,busy,original,attachment,notice,scrolls,frames,flushFrame:()=>frames.splice(0).forEach(callback=>callback()),dismiss:()=>dismiss?.(),submit:()=>context.submitComment({preventDefault(){}})};
+  return {input,controls,state,statuses,busy,original,attachment,notice,scrolls,frames,tagHistory,flushFrame:()=>frames.splice(0).forEach(callback=>callback()),dismiss:()=>dismiss?.(),submit:()=>context.submitComment({preventDefault(){}})};
 }
 test('double tap sends once, locks controls, and clears draft only after success',async()=>{
   let finish,calls=0;
@@ -50,7 +50,9 @@ test('new comment failure preserves text and attachments, removes pending row, a
   await c.submit();assert.equal(c.input.value,'  変更した内容 7z  ');assert.equal(c.state.commentAttachments[0],c.attachment);
   assert.equal(c.state.comments.length,0);assert.equal(c.statuses.at(-1).error,true);assert.equal(c.input.disabled,false);
   assert.equal(c.state.commentComposerOpen,true);assert.equal(c.notice.textContent,'');assert.equal(c.frames.length,0);
+  assert.deepEqual(c.tagHistory,[]);
   fail=false;await c.submit();assert.equal(calls,2);assert.equal(c.state.comments.length,1);assert.equal(c.input.value,'');
+  assert.deepEqual(c.tagHistory,['変更した内容 7z']);
 });
 test('failed edit retains the attempted draft while restoring the displayed original comment',async()=>{
   const c=composer({editing:true,persist:async()=>{throw Error('更新失敗');}});

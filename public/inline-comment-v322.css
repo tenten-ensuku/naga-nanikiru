@@ -14,5 +14,4 @@
 .is-inline-v322 .comment-form-status { flex-basis:100%; margin:0; font-size:16px; }
 .is-inline-v322 .comment-form-status:empty { display:none; }
 .is-inline-v322 .comment-return-v317, .is-inline-v322 .comment-dropzone, .is-inline-v322 .comment-format-help { display:none; }
-.is-inline-v322 .comment-tools-v274 > summary { min-height:44px; box-sizing:border-box; padding:10px 6px; font-size:16px; }
 .is-inline-v322 .comment-pending-remove { min-width:44px; }
