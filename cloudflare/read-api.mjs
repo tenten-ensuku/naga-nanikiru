@@ -4,6 +4,7 @@ import {
   canManageCollection,
   canManageCollectionContent,
   canEditCollection,
+  canContributeCollection,
   canViewStudent,
   requireActor,
 } from "./access.mjs";
@@ -11,6 +12,7 @@ import {tagsFromComments, searchTextFromComments} from "../public/comment-tags-v
 import {normalizeQuestionNumbering,toSafeQuestionNumber,isInvalidQuestionTitle} from './question-numbering-v235.mjs';
 import {getStandardReactions} from './standard-reactions-v329.mjs';
 import {collectionAdminInfo} from './collection-admin-v328.mjs';
+import {COMMUNITY_CONTRIBUTION_SQL} from './community-contributions-v332.mjs';
 
 // Metadata-only, scoped to this book. Answers and views do not update content.
 // julianday normalizes legacy offsets before comparing timestamps.
@@ -104,6 +106,7 @@ const COLLECTION_EDIT_EXPR = `(
   )
 )`;
 const COLLECTION_ADMINISTER_EXPR = `(c.owner_id = actor.user_id OR actor.is_admin = 1)`;
+const COLLECTION_CONTRIBUTE_EXPR = `(actor.user_id IS NOT NULL AND (${COLLECTION_EDIT_EXPR} OR ${COMMUNITY_CONTRIBUTION_SQL}))`;
 const COLLECTION_MANAGE_EXPR = `(${COLLECTION_ADMINISTER_EXPR} OR EXISTS (SELECT 1 FROM collection_managers cm WHERE cm.collection_id=c.id AND cm.user_id=actor.user_id AND cm.status='active'))`;
 const QUESTION_INDEX_COLUMNS = `
   q.id,
@@ -407,7 +410,7 @@ async function sharedCollection(db, actor, args) {
   if (!row) return null;
 
   const actorId = actor?.id ?? null;
-  const [member, request, canView, canEdit, canManage, canAdminister] = await Promise.all([
+  const [member, request, canView, canEdit, canManage, canAdminister, canContribute] = await Promise.all([
     actorId
       ? first(
         db,
@@ -433,6 +436,7 @@ async function sharedCollection(db, actor, args) {
     canEditCollection(db, actor, row.id),
     canManageCollectionContent(db, actor, row.id),
     canManageCollection(db, actor, row.id),
+    canContributeCollection(db, actor, row.id),
   ]);
 
   const isSeriesParent = row.series_parent_id === null && row.series_key !== null;
@@ -449,6 +453,7 @@ async function sharedCollection(db, actor, args) {
     published_at: row.published_at,
     can_view: Boolean(canView),
     can_edit: Boolean(canEdit),
+    can_contribute: Boolean(canContribute),
     can_manage: Boolean(canManage),
     can_administer: Boolean(canAdminister),
     is_owner: actorId !== null && actorId === row.owner_id,
@@ -515,6 +520,7 @@ async function collectionVolumes(db, actor, args) {
             root.share_slug AS series_parent_slug,
             CASE WHEN ${COLLECTION_ACCESS_EXPR} THEN 1 ELSE 0 END AS can_view,
             CASE WHEN ${COLLECTION_EDIT_EXPR} THEN 1 ELSE 0 END AS can_edit,
+            CASE WHEN ${COLLECTION_CONTRIBUTE_EXPR} THEN 1 ELSE 0 END AS can_contribute,
             CASE WHEN ${COLLECTION_MANAGE_EXPR} THEN 1 ELSE 0 END AS can_manage,
             CASE WHEN ${COLLECTION_ADMINISTER_EXPR} THEN 1 ELSE 0 END AS can_administer
        FROM collections c
@@ -541,6 +547,7 @@ async function collectionVolumes(db, actor, args) {
       content_updated_at: row.content_updated_at,
       can_view: boolDb(row.can_view),
       can_edit: boolDb(row.can_edit),
+      can_contribute: boolDb(row.can_contribute),
       can_manage: boolDb(row.can_manage),
       can_administer: boolDb(row.can_administer),
       series_parent_slug: row.series_parent_slug,
@@ -809,6 +816,7 @@ async function myCollections(db, actor) {
               LIMIT 1) AS member_status,
             CASE WHEN ${COLLECTION_ACCESS_EXPR} THEN 1 ELSE 0 END AS can_view,
             CASE WHEN ${COLLECTION_EDIT_EXPR} THEN 1 ELSE 0 END AS can_edit,
+            CASE WHEN ${COLLECTION_CONTRIBUTE_EXPR} THEN 1 ELSE 0 END AS can_contribute,
             CASE WHEN ${COLLECTION_MANAGE_EXPR} THEN 1 ELSE 0 END AS can_manage,
             CASE WHEN ${COLLECTION_ADMINISTER_EXPR} THEN 1 ELSE 0 END AS can_administer
        FROM collections c
@@ -840,6 +848,7 @@ async function myCollections(db, actor) {
       member_status: row.member_status,
       can_view: boolDb(row.can_view),
       can_edit: boolDb(row.can_edit),
+      can_contribute: boolDb(row.can_contribute),
       can_manage: boolDb(row.can_manage),
       can_administer: boolDb(row.can_administer),
       created_at: row.created_at,
@@ -866,6 +875,7 @@ async function collectionDirectory(db, actor) {
               WHERE child.series_parent_id = c.id AND child.archived_at IS NULL) AS volume_count,
             CASE WHEN ${COLLECTION_ACCESS_EXPR} THEN 1 ELSE 0 END AS can_view,
             CASE WHEN ${COLLECTION_EDIT_EXPR} THEN 1 ELSE 0 END AS can_edit,
+            CASE WHEN ${COLLECTION_CONTRIBUTE_EXPR} THEN 1 ELSE 0 END AS can_contribute,
             CASE WHEN ${COLLECTION_MANAGE_EXPR} THEN 1 ELSE 0 END AS can_manage,
             CASE WHEN ${COLLECTION_ADMINISTER_EXPR} THEN 1 ELSE 0 END AS can_administer
        FROM collections c
@@ -890,6 +900,7 @@ async function collectionDirectory(db, actor) {
       created_at: row.created_at,
       can_view: boolDb(row.can_view),
       can_edit: boolDb(row.can_edit),
+      can_contribute: boolDb(row.can_contribute),
       can_manage: boolDb(row.can_manage),
       can_administer: boolDb(row.can_administer),
       request_id: row.request_id,

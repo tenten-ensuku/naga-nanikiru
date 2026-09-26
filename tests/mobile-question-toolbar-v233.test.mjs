@@ -19,15 +19,15 @@ function functionBlock(source, name, nextName) {
 
 test("V233 aligns the mobile toolbar version, labels, and accessible names", async () => {
   const html = await readFile(indexPath, "utf8");
-  assert.match(html, /const APP_VERSION = 331;/);
-  assert.match(html, /ux-v159\.css\?v=331/);
+  assert.match(html, /const APP_VERSION = 332;/);
+  assert.match(html, /ux-v159\.css\?v=332/);
   assert.doesNotMatch(html, /<script[^>]+legacy-transfer-v232\.js/);
 
   const sourceBar = html.match(/<div class="source-bar">[\s\S]*?<\/div>\s*\n\s*<section class="scene-card"/)?.[0] || "";
   assert.ok(sourceBar, "question source bar should remain a single toolbar block");
   assert.match(sourceBar, /id="nagaSourceLink"[^>]*aria-label="局面NAGAURLに移動"/);
   assert.match(sourceBar, /class="question-toolbar-v255"/);
-  assert.match(sourceBar, /id="importQuestionButton"[^>]*aria-label="自分の問題集にインポート"/);
+  assert.match(sourceBar, /id="importQuestionButton"[^>]*aria-label="別の問題集にインポート"/);
   assert.match(sourceBar, /hidden><svg[\s\S]*?<span>インポート<\/span>/);
   assert.match(sourceBar, /id="menuButton"[^>]*aria-label="問題一覧へ戻る"/);
   assert.match(sourceBar, /<span class="question-toolbar-label-full sr-only">問題一覧へ戻る<\/span>/);

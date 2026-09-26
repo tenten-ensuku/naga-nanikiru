@@ -1,5 +1,5 @@
 import {questionNotificationStatement} from './notifications-v314.mjs';
-import {ApiError, requireActor, canEditCollection, canManageCollection, canManageCollectionContent, canAccessCollection} from './access.mjs';
+import {ApiError, requireActor, canEditCollection, canContributeCollection, canManageCollection, canManageCollectionContent, canAccessCollection} from './access.mjs';
 import {validatedManagerIds} from './collection-managers-v290.mjs';
 import {isGeneratedQuestionTitle,isInvalidQuestionTitle,toSafeQuestionNumber,nextQuestionNumberV235} from './question-numbering-v235.mjs';
 import {validateStoredHand} from './question-validation-v237.mjs';
@@ -17,12 +17,12 @@ function text(value,max,required=false){if(typeof value!=='string'||value.trim()
 function tone(value){if(!BOOK_TONES.includes(value))fail('invalid_book_tone');return value;}
 async function stableId(value){const bytes=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(value));const h=Array.from(new Uint8Array(bytes),n=>n.toString(16).padStart(2,'0')).join('');return `${h.slice(0,8)}-${h.slice(8,12)}-4${h.slice(13,16)}-a${h.slice(17,20)}-${h.slice(20,32)}`;}
 const slug=id=>id.replaceAll('-','');
-async function editable(db,actor,share){const c=await first(db,'SELECT * FROM collections WHERE share_slug=? AND archived_at IS NULL',share);if(!c||!await canEditCollection(db,actor,c.id))fail('collection_not_editable',403);return c;}
+async function editable(db,actor,share,permission=canEditCollection){const c=await first(db,'SELECT * FROM collections WHERE share_slug=? AND archived_at IS NULL',share);if(!c||!await permission(db,actor,c.id))fail('collection_not_editable',403);return c;}
 async function allowed(db){const control=await first(db,'SELECT armed,blocked,checked_at FROM private_ops_capacity_control WHERE singleton=1');if(control?.armed&&(control.blocked||!Number.isFinite(Date.parse(control.checked_at))||Date.now()-Date.parse(control.checked_at)>86400000))fail('heavy_operations_paused',503);}
 async function rootOf(db,c){return c.series_parent_id?await first(db,'SELECT * FROM collections WHERE id=? AND archived_at IS NULL',c.series_parent_id):c;}
-async function targetOf(db,actor,c){
+async function targetOf(db,actor,c,permission=canEditCollection){
   if(c.series_key&&!c.series_parent_id){const children=await rows(db,'SELECT * FROM collections WHERE series_parent_id=? AND archived_at IS NULL ORDER BY volume_number DESC',c.id);if(children.length)c=children[0];}
-  if(!await canEditCollection(db,actor,c.id))fail('collection_not_editable',403);return c;
+  if(!await permission(db,actor,c.id))fail('collection_not_editable',403);return c;
 }
 async function nextVolumeNumber(db,c,root){
   const current=Number(c.volume_number||1);
@@ -33,7 +33,7 @@ async function nextVolumeNumber(db,c,root){
   return Math.max(current,latest)+1;
 }
 export async function collectionCapacity(args,{db,actor}){
-  requireActor(actor);const selected=await editable(db,actor,String(args.p_share_slug||''));const c=await targetOf(db,actor,selected);const root=await rootOf(db,c);
+  requireActor(actor);const selected=await editable(db,actor,String(args.p_share_slug||''),canContributeCollection);const c=await targetOf(db,actor,selected,canContributeCollection);const root=await rootOf(db,c);
   const total=await count(db,c.id),next=await nextVolumeNumber(db,c,root);
   const existing=await first(db,'SELECT share_slug,title FROM collections WHERE series_parent_id=? AND volume_number=? AND archived_at IS NULL',root.id,next);
   return {share_slug:c.share_slug,collection_title:c.title,question_count:total,limit:200,remaining:Math.max(0,200-total),near_capacity:total>=195,capacity_reached:total>=200,
@@ -109,7 +109,7 @@ async function updateDetails(args,{db,actor}){
 // Content uploads and NAGA retrieval remain separately gated. This small RPC only
 // accepts already prepared structured questions, never embedded image bytes.
 async function addQuestion(args,{db,actor,origin},imported=null){
-  const c=await targetOf(db,actor,await editable(db,actor,String(args.p_share_slug||'')));
+  const c=await targetOf(db,actor,await editable(db,actor,String(args.p_share_slug||''),canContributeCollection),canContributeCollection);
   const commentInput=args.p_initial_comment??'';
   if(typeof commentInput!=='string'||Array.from(commentInput.trim()).length>4000)fail('comment_content_invalid');
   const initialComment=commentInput.trim();

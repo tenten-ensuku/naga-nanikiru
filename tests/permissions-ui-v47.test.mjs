@@ -10,7 +10,7 @@ async function source() {
 
 test("exposes v65 ownership-aware problem management controls", async () => {
   const html = await source();
-  assert.match(html, /const APP_VERSION = 331;/);
+  assert.match(html, /const APP_VERSION = 332;/);
   assert.match(html, /id="questionManageEditForm"/);
   assert.match(html, /id="questionManageProposeDeleteButton"[^>]*data-manage-action="propose-delete"/);
   assert.match(html, /id="questionManageDeleteButton"[^>]*data-manage-action="delete"/);
@@ -41,7 +41,7 @@ test("records account ownership metadata and makes generator book scope explicit
   assert.match(html, /createdByName: creatorName/);
   assert.match(html, /updatedByName: creatorName/);
   assert.match(html, /共有問題集へ追加/);
-  assert.match(html, /編集権限が必要/);
+  assert.match(html, /追加権限が必要/);
   assert.match(html, /保存先問題集/);
   assert.match(html, /transferCollectionOwnership/);
   const singleAdd = html.match(/async function addGeneratedQuestionV44\([\s\S]*?\n      function bindGeneratorV44/)?.[0] || "";

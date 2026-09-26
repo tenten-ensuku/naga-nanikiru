@@ -1,5 +1,6 @@
 // Derived from live Supabase private permission functions (2026-09-10).
 // Actor is server-authenticated. Never accept is_admin / user ID from a request body.
+import {COMMUNITY_CONTRIBUTION_SQL} from './community-contributions-v332.mjs';
 export class ApiError extends Error {
   constructor(code,status=400){super(code);this.code=code;this.status=status;}
 }
@@ -32,6 +33,11 @@ export async function canEditCollection(db,actor,id){
     OR EXISTS(SELECT 1 FROM collection_managers m WHERE m.collection_id=c.id AND m.user_id=? AND m.status='active')
     OR EXISTS(SELECT 1 FROM collection_members m WHERE m.collection_id=c.id AND m.user_id=? AND m.status='active' AND m.role='editor'))`)
     .bind(id,actor.id,admin(actor),actor.id,actor.id).first();
+}
+export async function canContributeCollection(db,actor,id){
+  if(!actor?.id)return false;
+  if(await canEditCollection(db,actor,id))return true;
+  return !!await db.prepare(`SELECT 1 AS ok FROM collections c WHERE c.id=? AND c.archived_at IS NULL AND ${COMMUNITY_CONTRIBUTION_SQL}`).bind(id).first();
 }
 export async function canEditQuestion(db,actor,id){
   if(!actor?.id)return false;

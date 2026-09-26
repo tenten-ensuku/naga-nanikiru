@@ -39,8 +39,8 @@ function generator(unavailable, mode = 'scene') {
   vm.runInContext(source('generatorDetectionMarkupV300')+'\n'+source('renderGeneratorViewV44'),context); return context.renderGeneratorViewV44();
 }
 test('V240 adds only a local presentation layer and preserves approved assets',()=>{
-  assert.match(html,/const APP_VERSION = 331;/);
-  assert.match(html,/workspace-ui-v240\.css\?v=331/); assert.match(html,/workspace-ui-v240\.js\?v=331/);
+  assert.match(html,/const APP_VERSION = 332;/);
+  assert.match(html,/workspace-ui-v240\.css\?v=332/); assert.match(html,/workspace-ui-v240\.js\?v=332/);
   assert.doesNotMatch(js,/fetch\(|XMLHttpRequest|localStorage|sessionStorage|innerHTML|NagaSupabase/);
   assert.doesNotMatch(css,/@import|@font-face|https?:|\.scene-frame|\.hand-mask|\.riichi|learning-header-progress-track/);
   assert.match(css,/var\(--menu-serif-v238\)/); assert.match(css,/var\(--menu-sans-v238\)/);
@@ -53,7 +53,7 @@ test('blocked NAGA form is folded and disabled; the existing import route remain
   assert.match(result,/<fieldset class="generator-locked-v240" disabled/);
   assert.match(result,/type="submit" disabled/);
   assert.match(result,/data-menu-jump="collections"/);
-  assert.match(result,/自分の問題集にインポート/);
+  assert.match(result,/別の問題集にインポート/);
   assert.ok(result.indexOf('id="generatorDestinationSelect"') < result.indexOf('class="generator-locked-v240"'), 'capacity selection stays available outside the locked form');
   assert.doesNotMatch(result,/QUESTION BUILDER|class="generator-destination-note"/);
 });

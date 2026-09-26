@@ -1,4 +1,4 @@
-import {ApiError,requireActor,canEditCollection,canAccessCollection} from './access.mjs';
+import {ApiError,requireActor,canContributeCollection,canAccessCollection} from './access.mjs';
 import {imageType} from '../worker/media.mjs';
 import {requireGenerationCapacity,reserveUsage,nowIso} from './generation-capacity-v241.mjs';
 import {canReadPrivateAsset} from './media-read.mjs';
@@ -19,11 +19,11 @@ export async function imageUpload(request,env,actor,{purpose='question'}={}){
   const slug=request.headers.get('x-collection-slug'),id=request.headers.get('x-collection-id');let collection=null;
   if(slug||id){collection=await env.DB.prepare('SELECT * FROM collections WHERE '+(slug?'share_slug':'id')+'=? AND archived_at IS NULL').bind(slug||id).first();if(!collection||(id&&collection.id!==id))throw new ApiError('collection_not_found',403);}
   if(bucket==='question-assets'){
-    if(!collection||!await canEditCollection(env.DB,actor,collection.id))throw new ApiError('collection_not_editable',403);
+    if(!collection||!await canContributeCollection(env.DB,actor,collection.id))throw new ApiError('collection_not_editable',403);
     if(collection.series_key&&!collection.series_parent_id){
       const child=await env.DB.prepare('SELECT * FROM collections WHERE series_parent_id=? AND archived_at IS NULL ORDER BY volume_number DESC LIMIT 1').bind(collection.id).first();
       if(child)collection=child;
-      if(!await canEditCollection(env.DB,actor,collection.id))throw new ApiError('collection_not_editable',403);
+      if(!await canContributeCollection(env.DB,actor,collection.id))throw new ApiError('collection_not_editable',403);
     }
     const count=await env.DB.prepare('SELECT COUNT(*) n FROM questions WHERE collection_id=? AND deleted_at IS NULL').bind(collection.id).first();
     if(count.n>=200&&purpose!=='comment')throw new ApiError('collection_capacity_reached',409);

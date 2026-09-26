@@ -41,7 +41,7 @@ test('V255 one native question selector and all actions share the same toolbar',
   assert.match(html,/select.disabled = entries.length === 0/);
   assert.match(html,/button.hidden = !Boolean\(sharedCollectionV46 && question\?\.serverQuestionId\)/);
   assert.match(html,/getElementById\("nagaSourceLink"\).href = SCENE.nagaUrl/);
-  assert.match(html,/if \(!supabaseSessionV46\) \{\s*window.alert\("自分の問題集へのインポートにはDiscordログインが必要です。"\)/);
+  assert.match(html,/if \(!supabaseSessionV46\) \{\s*window.alert\("問題のインポートにはDiscordログインが必要です。"\)/);
 });
 
 test('render updates the title safely without requests or additional controls',()=>{
@@ -68,6 +68,6 @@ test('responsive styles preserve touch targets, permission-hidden actions and re
   assert.match(css,/overflow-x: auto/);assert.match(css,/flex-wrap: nowrap/);
   assert.match(css,/@media \(max-width: 800px\)/);
   assert.doesNotMatch(css,/\.(hand|tile|scene|answer|riichi)[-\w]*\s*\{/);
-  assert.match(html,/question-header-v250\.js\?v=331/);
-  assert.match(html,/question-header-v250\.css\?v=331/);
+  assert.match(html,/question-header-v250\.js\?v=332/);
+  assert.match(html,/question-header-v250\.css\?v=332/);
 });
