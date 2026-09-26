@@ -46,7 +46,7 @@ test('candidate selection is enabled without a destination; save action asks for
   const h = harness(); h.context.generatorAddedKeysV130.add('a::local');
   const markup = h.run('renderGeneratorCandidatesV44()');
   assert.doesNotMatch(markup.match(/<input[^>]+data-generator-select="0"[^>]*>/)[0], /disabled/);
-  assert.match(markup, /保存先を選ぶ/); assert.doesNotMatch(markup, /編集権限が必要/);
+  assert.match(markup, /保存先を選ぶ/); assert.doesNotMatch(markup, /追加権限が必要/);
   h.context.generatorSelectedCandidatesV158.add(0);
   const toolbar = h.run('renderGeneratorBatchToolbarV158()');
   assert.match(toolbar, /保存先を選んで1問を追加/);
@@ -85,7 +85,7 @@ test('unauthorized destination allows drafting but denies both save paths', asyn
   h.context.generatorCommentDraftsV273.set('a', '保存先を選ぶ前の解説');
   const markup = h.run('renderGeneratorCandidatesV44()');
   assert.doesNotMatch(markup.match(/<input[^>]+data-generator-select="0"[^>]*>/)[0], /disabled/);
-  assert.match(markup, /編集権限が必要/);
+  assert.match(markup, /追加権限が必要/);
   assert.match(markup, /保存先を選ぶ前の解説/);
   assert.doesNotMatch(markup.match(/<textarea[^>]+data-generator-comment-v273="0"[^>]*>/)[0], /disabled/);
   await h.run('addSelectedGeneratorQuestionsV158()'); await h.run('addGeneratedQuestionV44(0)');
