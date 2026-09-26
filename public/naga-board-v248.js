@@ -24,10 +24,6 @@
     let out=`<g transform="rotate(${-90*r} 350 325)" data-board-player="${p.seat}"><rect x="${hx}" y="${py}" width="120" height="70" fill="#000" opacity=".4"/>`;
     out+=text(hx+10,py+18,10,p.rating>=1800?`R${p.rating}`:'')+text(hx+10,py+48,24,p.rank)+text(hx+10,py+65,12,p.name);
     if(r) {
-      const cx=hx+95,cy=py+25,prob=p.tenpaiProbability;
-      out+=`<circle cx="${cx}" cy="${cy}" r="25" fill="${prob===null?'#677d89':'#fff'}"><title>${prob===null?'テンパイ推定なし':`NAGAテンパイ推定 ${(prob*100).toFixed(1)}%`}</title></circle>`;
-      if(prob>0&&prob<1){const start=(r-1)*Math.PI/2,end=start+2*Math.PI*prob;out+=`<path d="M${cx},${cy} L${cx+25*Math.cos(start)},${cy+25*Math.sin(start)} A25,25 0 ${prob>.5?1:0},1 ${cx+25*Math.cos(end)},${cy+25*Math.sin(end)} Z" fill="${colors[r]}"/>`;}
-      if(prob===1)out+=`<circle cx="${cx}" cy="${cy}" r="25" fill="${colors[r]}"/>`;
       out+=p.hiddenSlots.map((visible,i)=>visible?back(hx+i*TW,hy):'').join('');
       if(p.hiddenDraw)out+=back(hx+p.hiddenSlots.length*TW+Math.floor(TW/2),hy);
     }
