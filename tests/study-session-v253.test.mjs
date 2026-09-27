@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
+import * as CommentSearch from '../public/comment-tags-v270.mjs';
 import {webcrypto} from 'node:crypto';
 
 const html=fs.readFileSync(new URL('../public/index.html',import.meta.url),'utf8');
@@ -69,6 +70,9 @@ function setup(count=24){
     isPlayableV16:q=>!q.disabled,questionKeyV16:q=>q.id,
     menuRangeV60:'all',state:{},menuFilterActiveV80:()=>false,captureNavigationV234(){},
     unansweredStartPendingV320:null,menuViewV16:'today',supabaseSessionV46:{user:{id:'user-a'}},sharedCollectionV46:{share_slug:'a'},sharedQuestionPagingV177:{generation:1},
+    learningOrderV189:'sequential',learningGenresV189:new Set(['discard','riichi','call']),
+    learningHistoryFiltersV189:new Set(['unanswered','×','△','〇','◎']),learningCommentTagV273:'',
+    LEARNING_GENRE_ORDER_V189:['discard','riichi','call'],LEARNING_HISTORY_ORDER_V189:['unanswered','×','△','〇','◎'],
     escapeHtml:value=>String(value).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('"','&quot;'),
     document:{getElementById:()=>({setAttribute(){},removeAttribute(){}}),querySelector:()=>({classList:{contains:()=>true}})}});
   vm.runInContext(ux,context);
@@ -81,10 +85,87 @@ function setup(count=24){
   vm.runInContext(['sessionQuestionIndexV167','sessionBelongsToCurrentCollectionV167','activeSessionV44',
     'resumableSessionV253','sessionResumeCursorV253','extendLegacySessionV253','pauseSessionV253','returnFromQuestionV256','latestAnswerV44','learningLatestAnswersV189','prepareUnansweredStartV320',
     'normalizedQueueKeysV44','startSessionV44','completeSessionV44','advanceQuestionV44','nextButtonLabelV44',
-    'learningCardSessionV254','learningResumeLabelV254','sessionModeLabelV44','startLearningSessionV189',
+    'learningCardSessionV254','learningFilterKeyV335','bookListFiltersActiveV281','learningResumeLabelV254','sessionModeLabelV44','startLearningSessionV189',
     'renderLearningActionButtonV194','syncLearningActionCountsV189'].map(source).join('\n'),context);
   return context;
 }
+
+function filteredSetup(){
+  const c=setup(6);
+  c.window.MinkiruCommentTagsV270=CommentSearch;
+  c.questionsV16.forEach((q,i)=>{q.commentSearchTextV284=i%2===0?'瀬利まりな':'別のコメント';});
+  c.learningScopeQuestionsV184=()=>c.questionsV16;
+  c.questionTypeV44=()=> '打牌判断';
+  c.normalizeScoreMarkV159=x=>x;
+  c.menuQuestionSortKeyV99=q=>q.number;
+  c.randomizeQuestionsByAnswerCountV93=items=>[...items].reverse();
+  c.menuCommentTagV270='';c.menuSearchV44='';c.menuStatusFiltersV92=[];c.menuTypeV44='all';c.menuFavoritesOnlyV137=false;
+  c.bookListShuffleV281=new Map();c.bookListShuffleScopeV281='';
+  c.navigationScopeV234=()=>c.scope;c.menuRangeMatchesV60=()=>true;c.isFavoriteV16=()=>false;
+  vm.runInContext(['questionCommentSearchTextV284','questionMatchesCommentSearchV284','matchesCommentTagV270',
+    'learningQuestionGenreKeyV189','learningQuestionMatchesGenreV189','learningQuestionHistoryKeyV189','learningQuestionMatchesHistoryV189',
+    'learningCandidatesV189','menuStatusFilteredQuestionsV92','bookListFilteredV281','menuFilteredQuestionsV80',
+    'menuFilterActiveV80','nextFilteredQuestionV87'].map(source).join('\n'),c);
+  return c;
+}
+
+test('search replaces an earlier unfiltered run and Next visits only the three matching questions',async()=>{
+  const c=filteredSetup();c.startLearningSessionV189('all');const previous=c.activeSessionV44();c.pauseSessionV253();
+  c.learningCommentTagV273=c.menuCommentTagV270='瀬利まりな';
+  assert.equal(c.learningCandidatesV189('all').length,3);
+  assert.equal(c.learningCardSessionV254('all'),null,'the card must start these three questions, not resume all six');
+  c.startLearningSessionV189('all');const filtered=c.activeSessionV44();
+  assert.notEqual(filtered.id,previous.id);assert.equal(previous.status,'replaced');
+  assert.deepEqual([...filtered.questionKeys],['q-0','q-2','q-4']);
+  await c.advanceQuestionV44();assert.equal(c.currentQuestionIndexV16,2);
+  await c.advanceQuestionV44();assert.equal(c.currentQuestionIndexV16,4);
+  assert.equal(c.nextButtonLabelV44(),'結果を見る');
+  await c.advanceQuestionV44({currentTarget:{textContent:'結果を見る'}});assert.equal(filtered.status,'completed');
+  assert.deepEqual(c.userStateV16.answerHistory,[]);
+});
+
+test('each changed condition invalidates automatic resume, including empty search results',()=>{
+  for(const change of [c=>c.learningCommentTagV273='一致しない語',c=>c.learningGenresV189=new Set(['call']),
+    c=>c.learningHistoryFiltersV189=new Set(['×']),c=>c.learningOrderV189='random']){
+    const c=filteredSetup();c.startLearningSessionV189('all');c.pauseSessionV253();
+    change(c);assert.equal(c.learningCardSessionV254('all'),null);
+    const count=c.learningCandidatesV189('all').length;
+    const card=c.renderLearningActionButtonV194({mode:'all',title:'全問',count,description:'選択した条件で学習',tone:'all',disabled:count?'':' disabled'});
+    assert.doesNotMatch(card,/前回の続き/);
+    if(!count){assert.match(card,/ disabled/);const opened=c.opened.length;c.startLearningSessionV189('all');assert.equal(c.opened.length,opened);}
+  }
+});
+
+test('the same saved conditions retain queue order and cursor after reloading stored sessions',()=>{
+  const c=filteredSetup();c.learningCommentTagV273='瀬利まりな';c.learningOrderV189='random';
+  c.startLearningSessionV189('all');const saved=c.activeSessionV44();saved.cursor=1;c.pauseSessionV253();
+  const next=filteredSetup();next.userStateV16=copy(c.saved);next.learningCommentTagV273='瀬利まりな';next.learningOrderV189='random';
+  next.learningGenresV189=new Set(['call','discard','riichi']);
+  next.startLearningSessionV189('all');
+  assert.equal(next.activeSessionV44().id,saved.id);assert.equal(next.currentQuestionIndexV16,2);
+  assert.deepEqual([...next.activeSessionV44().questionKeys],['q-4','q-2','q-0']);
+  next.pauseSessionV253();next.learningCommentTagV273='';assert.equal(next.learningCardSessionV254('all'),null);
+});
+
+test('legacy queues cannot override an active filter, while fixed unanswered and weak modes still resume',()=>{
+  const c=filteredSetup();c.startLearningSessionV189('all');const session=c.activeSessionV44();
+  delete session.learningFilterKeyV335;c.pauseSessionV253();
+  assert.equal(c.learningCardSessionV254('all').id,session.id);
+  c.learningCommentTagV273='瀬利まりな';assert.equal(c.learningCardSessionV254('all'),null);
+  for(const mode of ['unanswered','weak']){
+    const fixed=setup();fixed.startSessionV44(mode,fixed.questionsV16);const id=fixed.activeSessionV44().id;fixed.pauseSessionV253();
+    fixed.learningCommentTagV273='瀬利まりな';assert.equal(fixed.learningCardSessionV254(mode).id,id);
+  }
+});
+
+test('opening the filtered question list directly keeps Next inside its matches without a study session',async()=>{
+  const c=filteredSetup();c.menuViewV16='my';c.learningCommentTagV273=c.menuCommentTagV270='瀬利まりな';
+  c.currentQuestionIndexV16=0;
+  assert.deepEqual(Array.from(c.menuFilteredQuestionsV80(),q=>q.id),['q-0','q-2','q-4']);
+  await c.advanceQuestionV44();assert.equal(c.currentQuestionIndexV16,2);
+  await c.advanceQuestionV44();assert.equal(c.currentQuestionIndexV16,4);
+  assert.equal(c.nextButtonLabelV44(),'問題一覧へ');await c.advanceQuestionV44();assert.equal(c.shown.at(-1),'my');
+});
 
 test('every study entry uses all matching questions, including question 11 and explicit ranges',async()=>{
   for(const mode of ['all','unanswered','weak','range','range-unanswered','today','recommended','call','riichi']){
