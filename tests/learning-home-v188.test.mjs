@@ -15,10 +15,10 @@ test("V210 keeps the learning actions usable and stable on desktop and mobile", 
     readFile(packageUrl, "utf8")
   ]);
 
-  assert.match(html, /const APP_VERSION = 336;/);
-  assert.match(identity, /APP_VERSION = 336/);
+  assert.match(html, /const APP_VERSION = 337;/);
+  assert.match(identity, /APP_VERSION = 337/);
   for (const asset of ["ux-v159\\.css", "supabase-sync-v48\\.js", "drill-ux-v44\\.js"]) {
-    assert.match(html, new RegExp(`${asset}\\?v=336`));
+    assert.match(html, new RegExp(`${asset}\\?v=337`));
   }
   assert.match(html, /問題集を変更する/);
   assert.doesNotMatch(html, /class="active-collection-label"/);
@@ -82,7 +82,7 @@ test("V210 keeps the learning actions usable and stable on desktop and mobile", 
   assert.match(html, /learningHistoryFiltersV189/);
   assert.match(html, /mode === "all" && learningOrderV189 === "random"/);
   assert.match(html, /カスタム設定は「全問を解く」だけに適用し/);
-  assert.match(html, /action === "weak" \|\| action === "all"/);
+  assert.match(html, /startLearningSessionV189\(learningActionButton\.dataset\.learningAction \|\| "all"\)/);
 
   assert.match(css, /V189: checkbox-based custom filters/);
   assert.match(css, /\.learning-tabs/);

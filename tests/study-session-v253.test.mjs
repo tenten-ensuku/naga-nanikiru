@@ -67,9 +67,9 @@ function setup(count=24){
     questionsV16:Array.from({length:count},(_,i)=>({id:'q-'+i,number:i+1})),
     userStateV16:{sessions:{},activeSessionId:null,answerHistory:[]},scope:'a',opened:[],shown:[],saved:null,
     requireLoginForPlayV187:()=>true,sharedQuestionPagingIsCurrentV177:()=>false,
-    isPlayableV16:q=>!q.disabled,questionKeyV16:q=>q.id,
-    menuRangeV60:'all',state:{},menuFilterActiveV80:()=>false,captureNavigationV234(){},
-    unansweredStartPendingV320:null,menuViewV16:'today',supabaseSessionV46:{user:{id:'user-a'}},sharedCollectionV46:{share_slug:'a'},sharedQuestionPagingV177:{generation:1},
+    isPlayableV16:q=>!q.disabled,questionKeyV16:q=>q.id,normalizeScoreMarkV159:mark=>mark,
+    menuRangeV60:'all',menuOrderV92:'sequential',state:{},menuFilterActiveV80:()=>false,captureNavigationV234(){},
+    questionAdvancePendingV337:false,unansweredStartPendingV320:null,menuViewV16:'today',supabaseSessionV46:{user:{id:'user-a'}},sharedCollectionV46:{share_slug:'a'},sharedQuestionPagingV177:{generation:1},
     learningOrderV189:'sequential',learningGenresV189:new Set(['discard','riichi','call']),
     learningHistoryFiltersV189:new Set(['unanswered','×','△','〇','◎']),learningCommentTagV273:'',
     LEARNING_GENRE_ORDER_V189:['discard','riichi','call'],LEARNING_HISTORY_ORDER_V189:['unanswered','×','△','〇','◎'],
@@ -79,12 +79,13 @@ function setup(count=24){
   context.currentCollectionScopeKeyV167=()=>context.scope;
   context.questionIndexByKeyV44=key=>context.questionsV16.findIndex(q=>q.id===key);
   context.learningCandidatesV189=mode=>context.questionsV16.filter(q=>!q.disabled&&(mode!=='unanswered'||!context.latestAnswerV44(q)));
+  context.menuFilteredQuestionsV80=()=>context.questionsV16.filter(q=>!q.disabled);
   context.openQuestionV16=(index,options)=>{context.currentQuestionIndexV16=index;context.opened.push({index,options});return true;};
   context.showMenuV16=view=>context.shown.push(view);
   context.saveUserStateV16=()=>{context.saved=copy(context.userStateV16);return true;};
   vm.runInContext(['sessionQuestionIndexV167','sessionBelongsToCurrentCollectionV167','activeSessionV44',
     'resumableSessionV253','sessionResumeCursorV253','extendLegacySessionV253','pauseSessionV253','returnFromQuestionV256','latestAnswerV44','learningLatestAnswersV189','prepareUnansweredStartV320',
-    'normalizedQueueKeysV44','startSessionV44','completeSessionV44','advanceQuestionV44','nextButtonLabelV44',
+    'continuousStudyCandidatesV337','renewStudyQueueV337','normalizedQueueKeysV44','startSessionV44','completeSessionV44','advanceQuestionV44','nextButtonLabelV44',
     'learningCardSessionV254','learningFilterKeyV335','bookListFiltersActiveV281','learningResumeLabelV254','sessionModeLabelV44','startLearningSessionV189',
     'renderLearningActionButtonV194','syncLearningActionCountsV189'].map(source).join('\n'),context);
   return context;
@@ -104,7 +105,7 @@ function filteredSetup(){
   c.navigationScopeV234=()=>c.scope;c.menuRangeMatchesV60=()=>true;c.isFavoriteV16=()=>false;
   vm.runInContext(['questionCommentSearchTextV284','questionMatchesCommentSearchV284','matchesCommentTagV270',
     'learningQuestionGenreKeyV189','learningQuestionMatchesGenreV189','learningQuestionHistoryKeyV189','learningQuestionMatchesHistoryV189',
-    'learningCandidatesV189','menuStatusFilteredQuestionsV92','bookListFilteredV281','menuFilteredQuestionsV80',
+    'learningWeakQuestionsV189','learningCandidatesV189','menuStatusFilteredQuestionsV92','bookListFilteredV281','menuFilteredQuestionsV80',
     'menuFilterActiveV80','nextFilteredQuestionV87'].map(source).join('\n'),c);
   return c;
 }
@@ -119,8 +120,8 @@ test('search replaces an earlier unfiltered run and Next visits only the three m
   assert.deepEqual([...filtered.questionKeys],['q-0','q-2','q-4']);
   await c.advanceQuestionV44();assert.equal(c.currentQuestionIndexV16,2);
   await c.advanceQuestionV44();assert.equal(c.currentQuestionIndexV16,4);
-  assert.equal(c.nextButtonLabelV44(),'結果を見る');
-  await c.advanceQuestionV44({currentTarget:{textContent:'結果を見る'}});assert.equal(filtered.status,'completed');
+  assert.equal(c.nextButtonLabelV44(),'次の問題へ');
+  await c.advanceQuestionV44();assert.equal(c.currentQuestionIndexV16,0);assert.equal(filtered.status,'active');assert.deepEqual(c.shown,['today']);
   assert.deepEqual(c.userStateV16.answerHistory,[]);
 });
 
@@ -164,7 +165,7 @@ test('opening the filtered question list directly keeps Next inside its matches 
   assert.deepEqual(Array.from(c.menuFilteredQuestionsV80(),q=>q.id),['q-0','q-2','q-4']);
   await c.advanceQuestionV44();assert.equal(c.currentQuestionIndexV16,2);
   await c.advanceQuestionV44();assert.equal(c.currentQuestionIndexV16,4);
-  assert.equal(c.nextButtonLabelV44(),'問題一覧へ');await c.advanceQuestionV44();assert.equal(c.shown.at(-1),'my');
+  assert.equal(c.nextButtonLabelV44(),'次の問題へ');await c.advanceQuestionV44();assert.equal(c.currentQuestionIndexV16,0);assert.deepEqual(c.shown,[]);
 });
 
 test('every study entry uses all matching questions, including question 11 and explicit ranges',async()=>{
@@ -227,12 +228,13 @@ test('legacy ten-question sessions keep their order and answers while gaining th
   assert.equal(session.questionKeys.length,32);assert.equal(c.opened.at(-1).index,10);assert.equal(session.results.length,1);
 });
 
-test('unavailable questions are skipped, and the actual end finishes normally rather than looping',()=>{
+test('unavailable questions are skipped and pausing at the end saves the next pass',()=>{
   const c=setup(12);c.startSessionV44('all',c.questionsV16);const session=c.activeSessionV44();
   c.questionsV16[0].disabled=true;session.results=[{questionKey:'q-1',scoreMark:'〇'}];
   c.pauseSessionV253();assert.equal(session.cursor,2);c.startSessionV44('resume');assert.equal(c.opened.at(-1).index,2);
   session.cursor=11;session.results.push({questionKey:'q-11',scoreMark:'〇'});c.pauseSessionV253();
-  assert.equal(session.status,'completed');assert.equal(c.userStateV16.activeSessionId,null);assert.equal(c.resumableSessionV253(),null);
+  assert.equal(session.status,'paused');assert.equal(c.userStateV16.activeSessionId,null);assert.equal(session.cycleV337,1);
+  c.startSessionV44('resume');assert.equal(c.currentQuestionIndexV16,1);
   assert.equal(c.shown.at(-1),'today');
 });
 
@@ -280,7 +282,6 @@ test('V254 clicking the previous card resumes its saved queue, not a newly filte
   for(const [savedMode,cardMode] of [['all','all'],['weak','weak'],['unanswered','unanswered'],['range','all'],['range-unanswered','unanswered'],['favorites','all']]){
     const c=setup();c.startSessionV44(savedMode,[...c.questionsV16].reverse());
     const session=c.activeSessionV44();session.cursor=5;c.pauseSessionV253();
-    c.learningCandidatesV189=()=>[];
     c.startLearningSessionV189(cardMode);
     assert.equal(c.activeSessionV44().id,session.id,savedMode);
     assert.equal(c.opened.at(-1).index,18,savedMode);
@@ -297,21 +298,24 @@ test('finished saved runs no longer turn the study card into an unexpected resul
   c.userStateV16.answerHistory=[{questionKey:'q-0'},{questionKey:'q-1'}];
   assert.equal(c.learningResumeLabelV254(session),'');
   assert.equal(c.learningCardSessionV254('unanswered'),null);
-  c.startLearningSessionV189('unanswered');assert.equal(session.status,'completed');
+  c.startLearningSessionV189('unanswered');assert.equal(session.results.length,2);
   assert.equal(c.learningCardSessionV254('unanswered'),null);
   assert.ok(c.shown.every(view=>view==='today'));
 });
 
-test('only explicit results activation opens results, including a keyboard activation of that button',async()=>{
+test('exhausted unanswered and unavailable queues return to learning without any results screen',async()=>{
   for(const keyboard of [false,true]){
     const c=setup(1);c.startSessionV44('unanswered',c.questionsV16);
-    c.document.getElementById=()=>({textContent:'結果を見る'});
-    await c.advanceQuestionV44(keyboard?undefined:{currentTarget:{textContent:'結果を見る'}});
-    assert.equal(c.shown.at(-1),'session');
+    c.userStateV16.answerHistory=[{questionKey:'q-0',scoreMark:'◎'}];
+    assert.equal(c.nextButtonLabelV44(),'この本の学習へ');
+    await c.advanceQuestionV44(keyboard?undefined:{currentTarget:{textContent:'次の問題へ'}});
+    assert.equal(c.shown.at(-1),'today');assert.equal(c.userStateV16.lastSessionResult,undefined);
   }
-  const c=setup(2);c.startSessionV44('unanswered',c.questionsV16);c.questionsV16[1].disabled=true;
-  await c.advanceQuestionV44({currentTarget:{textContent:'次の問題へ'}});
-  assert.equal(c.shown.at(-1),'today','a missing next question must not silently turn Next into Results');
+  const c=setup(2);c.startSessionV44('all',c.questionsV16);c.questionsV16.forEach(q=>q.disabled=true);
+  await c.advanceQuestionV44();assert.equal(c.shown.at(-1),'today');
+  assert.doesNotMatch(source('nextButtonLabelV44'),/結果を見る/);
+  assert.doesNotMatch(html,/function renderSessionResultV44|data-result-action|title: "セッション結果"/);
+  assert.match(source('showMenuV16'),/view === "session" \? "today"/);
 });
 
 test('unanswered resume skips answers from other sessions and devices without treating comments as answers',()=>{
@@ -355,15 +359,16 @@ test('history failure or navigation/account change cannot open an unverified una
   }
 });
 
-test('V254 zero current candidates do not disable the card holding a saved run or its results',()=>{
+test('zero current candidates disable a stale saved queue without showing old results',()=>{
   const c=setup();c.startSessionV44('weak',c.questionsV16);c.pauseSessionV253();
+  c.learningCandidatesV189=()=>[];
   const card=c.renderLearningActionButtonV194({mode:'weak',title:'苦手',count:0,description:'説明',tone:'weak',disabled:' disabled aria-disabled="true"'});
-  assert.doesNotMatch(card,/ disabled|aria-disabled="true"/);
+  assert.match(card,/ disabled|aria-disabled="true"/);
   c.sharedQuestionKnownTotalV177=()=>null;c.learningLatestAnswersV189=()=>new Map();c.learningCandidatesV189=()=>[];
   const buttons=['weak','all'].map(mode=>({dataset:{learningAction:mode},attrs:{},querySelector:selector=>selector==='.learning-action-title'?{textContent:mode}:{innerHTML:''},setAttribute(name,value){this.attrs[name]=value;}}));
   c.document.querySelectorAll=()=>buttons;c.syncLearningActionCountsV189();
-  assert.equal(buttons[0].disabled,false);assert.equal(buttons[1].disabled,true);
-  assert.match(buttons[0].attrs['aria-label'],/前回の続き/);
+  assert.equal(buttons[0].disabled,true);assert.equal(buttons[1].disabled,true);
+  assert.doesNotMatch(buttons[0].attrs['aria-label'],/前回の続き/);
   assert.equal(buttons[1].attrs['aria-label'],'all 0問の学習を開始');
 });
 
@@ -373,4 +378,90 @@ test('V254 other cards still start their own mode and finished runs have no resu
   c.completeSessionV44(c.activeSessionV44());
   assert.equal(c.learningCardSessionV254('all'),null);
   assert.doesNotMatch(c.renderLearningActionButtonV194({mode:'all',title:'全問',count:24,description:'説明',tone:'all'}),/data-resume-v254/);
+});
+
+test('a saved queue with only one question left continues into the whole eligible pool',async()=>{
+  const c=setup(4);
+  c.userStateV16.sessions.old={id:'old',mode:'all',collectionSlug:'a',status:'paused',queueVersion:253,cursor:1,
+    questionKeys:['q-0','q-1'],results:[{questionKey:'q-0',scoreMark:'〇'}]};
+  c.userStateV16.answerHistory=[{questionKey:'q-0',attemptId:'keep',scoreMark:'〇'}];
+  c.userStateV16.lastSessionResult={mode:'all',results:[{questionKey:'historical'}]};
+  c.startLearningSessionV189('all');assert.equal(c.currentQuestionIndexV16,1);
+  const progress=c.activeSessionV44();progress.results.push({questionKey:'q-1',scoreMark:'〇'});
+  assert.equal(c.nextButtonLabelV44(),'次の問題へ');await c.advanceQuestionV44();
+  assert.deepEqual([...progress.questionKeys],['q-0','q-1','q-2','q-3']);
+  assert.equal(progress.cycleV337,1);assert.equal(c.currentQuestionIndexV16,0);
+  assert.equal(progress.results.length,2,'retain saved answers from the earlier pass');
+  await c.advanceQuestionV44();assert.equal(c.currentQuestionIndexV16,1,'old answers cannot skip a new pass');
+  assert.equal(c.userStateV16.answerHistory[0].attemptId,'keep');
+  assert.equal(c.userStateV16.lastSessionResult.results[0].questionKey,'historical');
+  assert.deepEqual(c.shown,[]);
+});
+
+test('filtered learning loops repeatedly without including unmatched questions or losing reload position',async()=>{
+  const c=filteredSetup();c.learningCommentTagV273='瀬利まりな';c.startLearningSessionV189('all');
+  const seen=[];
+  for(let i=0;i<8;i++){
+    seen.push(c.currentQuestionIndexV16);const progress=c.activeSessionV44();
+    progress.results=progress.results.filter(r=>r.questionKey!=='q-'+c.currentQuestionIndexV16);
+    progress.results.push({questionKey:'q-'+c.currentQuestionIndexV16,cycleV337:progress.cycleV337||0});
+    assert.equal(c.nextButtonLabelV44(),'次の問題へ');await c.advanceQuestionV44();
+  }
+  assert.deepEqual(seen,[0,2,4,0,2,4,0,2]);assert.deepEqual(c.shown,[]);
+  c.pauseSessionV253();const next=filteredSetup();next.userStateV16=copy(c.saved);next.learningCommentTagV273='瀬利まりな';
+  next.startLearningSessionV189('all');assert.equal(next.currentQuestionIndexV16,4);assert.equal(next.activeSessionV44().cycleV337,2);
+});
+
+test('weak practice repeats only remaining weak questions and then returns to learning',async()=>{
+  const c=filteredSetup();c.userStateV16.answerHistory=[{questionKey:'q-0',scoreMark:'×'},{questionKey:'q-1',scoreMark:'△'}];
+  c.startLearningSessionV189('weak');assert.equal(c.currentQuestionIndexV16,0);
+  c.userStateV16.answerHistory[0].scoreMark='◎';await c.advanceQuestionV44();assert.equal(c.currentQuestionIndexV16,1);
+  await c.advanceQuestionV44();assert.equal(c.currentQuestionIndexV16,1);assert.deepEqual([...c.activeSessionV44().questionKeys],['q-1']);
+  c.userStateV16.answerHistory[1].scoreMark='〇';await c.advanceQuestionV44();
+  assert.equal(c.shown.at(-1),'today');assert.equal(c.activeSessionV44(),null);assert.equal(c.userStateV16.lastSessionResult,undefined);
+});
+
+test('random filtered practice renews without repeating the previous final question immediately',async()=>{
+  const c=filteredSetup();c.learningCommentTagV273='瀬利まりな';c.learningOrderV189='random';
+  c.startLearningSessionV189('all');const progress=c.activeSessionV44();
+  progress.cursor=2;c.currentQuestionIndexV16=0;
+  c.randomizeQuestionsByAnswerCountV93=items=>items;
+  await c.advanceQuestionV44();
+  assert.equal(c.currentQuestionIndexV16,2);
+  assert.deepEqual([...progress.questionKeys],['q-2','q-0','q-4']);
+  assert.deepEqual(c.shown,[]);
+});
+
+test('opening a question directly loops through playable questions without a saved queue',async()=>{
+  const c=setup(4);c.questionsV16[0].disabled=true;c.currentQuestionIndexV16=3;
+  assert.equal(c.nextButtonLabelV44(),'次の問題へ');
+  await c.advanceQuestionV44();assert.equal(c.currentQuestionIndexV16,1);
+  assert.equal(c.activeSessionV44(),null);assert.deepEqual(c.shown,[]);
+});
+
+test('one matching question can be repeated, and disappearing matches never escape the filter',async()=>{
+  const c=filteredSetup();c.questionsV16.forEach((q,i)=>q.commentSearchTextV284=i===2?'一問だけ':'その他');
+  c.learningCommentTagV273='一問だけ';c.startLearningSessionV189('all');
+  await c.advanceQuestionV44();assert.equal(c.currentQuestionIndexV16,2);assert.equal(c.activeSessionV44().cycleV337,1);
+  c.questionsV16[2].commentSearchTextV284='変更後';await c.advanceQuestionV44();
+  assert.equal(c.shown.at(-1),'today');assert.equal(c.activeSessionV44(),null);
+});
+
+test('a failed pause at the wrap boundary keeps all prior progress intact',()=>{
+  const c=setup(1);c.startSessionV44('all',c.questionsV16);const progress=c.activeSessionV44();
+  progress.results=[{questionKey:'q-0',scoreMark:'◎'}];const before=copy(progress);
+  c.saveUserStateV16=()=>false;c.pauseSessionV253();
+  assert.deepEqual(copy(progress),before);assert.equal(c.activeSessionV44().id,before.id);assert.deepEqual(c.shown,[]);
+});
+
+test('Next coalesces rapid input and does not navigate after an account or book change during save',async()=>{
+  for(const change of ['none','account','book']){
+    const c=setup(3);c.startSessionV44('all',c.questionsV16);let finish;
+    c.state.sharedAttemptPromise=new Promise(resolve=>finish=resolve);
+    const first=c.advanceQuestionV44(),second=c.advanceQuestionV44();
+    if(change==='account')c.supabaseSessionV46={user:{id:'other'}};
+    if(change==='book')c.scope='other';
+    finish();await Promise.all([first,second]);
+    assert.equal(c.opened.length,change==='none'?2:1);assert.equal(c.questionAdvancePendingV337,false);
+  }
 });

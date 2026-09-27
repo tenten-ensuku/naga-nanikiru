@@ -6,7 +6,7 @@ const htmlUrl = new URL("../public/index.html", import.meta.url);
 
 test("V131 scopes personal archive and favorite state by user and collection", async () => {
   const html = await readFile(htmlUrl, "utf8");
-  assert.match(html, /const APP_VERSION = 336/);
+  assert.match(html, /const APP_VERSION = 337/);
   assert.match(html, /function personalCollectionScopeKeyV131\(/);
   assert.match(html, /supabaseSessionV46\?\.user\?\.id/);
   assert.match(html, /sharedCollectionV46\?\.share_slug/);
@@ -48,7 +48,7 @@ test("V245 retains numeric ranges and redirects the retired archive view", async
   assert.match(html, /const options = \[\{ key: "all", label: "すべて" \}\]/);
   assert.match(html, /function menuNumericRangeOptionsV137\(\)/);
   assert.match(html, /function renderMenuRangeControlsV137\(\)/);
-  assert.match(html, /const requestedView = \["favorites", "archive"\]\.includes\(view\) \? "my" : view/);
+  assert.match(html, /const requestedView = view === "session" \? "today" : \["favorites", "archive"\]\.includes\(view\) \? "my" : view/);
   assert.doesNotMatch(html, /menuViewV16 === "archive"/);
 });
 
