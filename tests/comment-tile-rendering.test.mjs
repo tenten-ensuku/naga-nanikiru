@@ -56,18 +56,78 @@ test("honor notation maps all seven tiles and supports full-width, sequences, an
   assert.equal(format("1z7z"), "[ji1][ji7]");
   assert.equal(format("1ｚ～7ｚ"), "[ji1]～[ji7]");
   assert.equal(format("１～７ｚ"), "[ji1]～[ji7]");
-  assert.equal(format("東は1z、中は7ｚ。発展の中では6z。"), "東は[ji1]、中は[ji7]。発展の中では[ji6]。");
+  assert.equal(format("東は1z、中は7ｚ。発展の中では6z。"), "[ji1]は[ji1]、[ji7]は[ji7]。発展の中では[ji6]。");
   assert.equal(format("123m456p789s567z"), "[man1][man2][man3][pin4][pin5][pin6][sou7][sou8][sou9][ji5][ji6][ji7]");
 });
 
 test("honor conversion leaves Japanese prose, invalid tile numbers, and ordinary words intact", async () => {
   const format = await formatter();
   for (const value of [
-    "発展の発、最中の中、〇〇の中では、東南西北白發中。",
+    "発展の発、最中の中、〇〇の中では。",
     "東京から南へ。西口、北海道、白紙、發展、集中。",
     "0z 8z 9z ０ｚ ８ｚ ９ｚ 18z ０７ｚ 1～8z 8～7z",
     "7zip ７ｚｉｐ"
   ]) assert.equal(format(value), value);
+});
+
+test("Japanese red-five names use the red images for half-width and full-width notation", async () => {
+  const format = await formatter();
+  for (const [suits, tile] of [[['m', 'ｍ'], 'aka1'], [['p', 'ｐ'], 'aka2'], [['s', 'ｓ'], 'aka3']]) {
+    for (const suit of suits) for (const five of ['5', '５']) {
+      assert.equal(format(`赤${five}${suit}`), `[${tile}]`);
+      assert.equal(format(`44赤${five}${suit}`), `[${{aka1:'man',aka2:'pin',aka3:'sou'}[tile]}4]`.repeat(2) + `[${tile}]`);
+      assert.equal(format(`ｒ${five}${suit}`), `[${tile}]`);
+    }
+    await readFile(new URL(`../public/tiles/${tile}-66-90-l.png`, import.meta.url));
+  }
+  assert.equal(format('赤5ｐ、赤5ｓ、赤5ｍを残す'), '[aka2]、[aka3]、[aka1]を残す');
+});
+
+test("honor names render alone, as a hand, and in explicit mahjong phrases", async () => {
+  const format = await formatter();
+  for (const [i, name] of [...'東南西北白發中'].entries()) assert.equal(format(name), `[ji${i + 1}]`);
+  assert.equal(format('東 南 西 北 白 發 中'), '[ji1] [ji2] [ji3] [ji4] [ji5] [ji6] [ji7]');
+  assert.equal(format('東南西北白發中。'), '[ji1][ji2][ji3][ji4][ji5][ji6][ji7]。');
+  assert.equal(format('東東白白中中'), '[ji1][ji1][ji5][ji5][ji7][ji7]');
+  assert.equal(format('「中」を切る。白単騎、發をポン。東が重なった。'), '「[ji7]」を切る。[ji5]単騎、[ji6]をポン。[ji1]が重なった。');
+  assert.equal(format('中を切る。中は安全牌。白と發を残す。'), '[ji7]を切る。[ji7]は安全牌。[ji5]と[ji6]を残す。');
+  assert.equal(format('打中。ドラは東。役牌の白を切る。'), '打[ji7]。ドラは[ji1]。役牌の[ji5]を切る。');
+  assert.equal(format('123m東東赤5ｐ'), '[man1][man2][man3][ji1][ji1][aka2]');
+});
+
+test("Japanese honor names do not replace ordinary words, locations, directions, or sentence fragments", async () => {
+  const format = await formatter();
+  for (const value of [
+    '集中、途中、対局中、検討中、最中、中国、中央、中身、中途半端。',
+    '東京、東口、南国、西口、北海道、北風、白紙、白鳥、面白い、白い、發展。',
+    '東場、南場、東家、南家、西家、北家。',
+    'この中から選ぶ。山の中に入る。部屋の中を探す。説明の中では。',
+    '東から日が昇る。南に行く。東南の方角。真っ白になる。',
+    '発、発展。#中 #東南西北 @白 ABC中 中ABC',
+    '集<strong>中</strong>。<strong>中</strong>心。最<span class="comment-color-red">中</span>。',
+    '<img src="tiles/ji7-66-90-l.png" alt="中">'
+  ]) assert.equal(format(value), value);
+});
+
+test("red fives and honor names retain formatting, links, escaped HTML, and stored source text", async () => {
+  const html = await readFile(htmlUrl, 'utf8');
+  const start = html.indexOf('    function escapeHtml(');
+  const end = html.indexOf('    function setCommentFormStatusV68(', start);
+  const format = new Function('commentTileImage', `${html.slice(start, end)}\nreturn formatCommentContent;`)(tile => `[${tile}]`);
+  const source = '**赤5ｐ** [color:green]發[/color] ||中|| 集**中** [size:large]白[/size] https://example.com/中/赤5ｓ <script>alert("中")</script>';
+  const rendered = format(source);
+  assert.match(rendered, /<strong>\[aka2\]<\/strong>/);
+  assert.match(rendered, /comment-color-green">\[ji6\]/);
+  assert.match(rendered, /comment-spoiler-content[^>]*>\[ji7\]/);
+  assert.match(rendered, /集<strong>中<\/strong>/);
+  assert.match(rendered, /comment-size-large">\[ji5\]/);
+  assert.match(rendered, /href="https:\/\/example.com\/中\/赤5ｓ"/);
+  assert.match(rendered, />https:\/\/example.com\/中\/赤5ｓ<\/a>/);
+  assert.doesNotMatch(rendered, /<script>/);
+  assert.match(source, /\*\*赤5ｐ\*\*/);
+  const proseWithSpoilers = format('集||中||、||中||心、最||中||。');
+  assert.doesNotMatch(proseWithSpoilers, /\[ji7\]/);
+  assert.match(proseWithSpoilers, /comment-spoiler-content[^>]*>中/);
 });
 
 test("honor notation works in styled and hidden comments without changing links or source text", async () => {
