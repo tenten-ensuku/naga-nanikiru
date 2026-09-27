@@ -5,21 +5,33 @@
   const hands=[[124,H-2*TH-TW/4],[124,H+25-TH-50/3],[124,H-TH-50/3],[110,H+25-TH-50/3]];
   const panelY=hands[0][1]-TH-TW/4,colors=['#9C27B0','#4CAF50','#FFEB3B','#2196F3'];
   const esc=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const redFives={aka1:'man5',aka2:'pin5',aka3:'sou5'};
+  const normalTile=t=>redFives[t]||t;
+  function doraTiles(indicators=[]) {
+    return indicators.map(normalTile).flatMap(t=>{
+      const number=/^(man|pin|sou)([1-9])$/.exec(t);
+      if(number)return [`${number[1]}${Number(number[2])%9+1}`];
+      const honor=/^ji([1-7])$/.exec(t);
+      return honor?[`ji${Number(honor[1])<=4?Number(honor[1])%4+1:(Number(honor[1])-4)%3+5}`]:[];
+    });
+  }
+  const isDora=(tile,indicators=[])=>Object.hasOwn(redFives,tile)||doraTiles(indicators).includes(normalTile(tile));
+  let sheenBoardId=0;
   const back=(x,y,w=TW,h=TH)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx=".7" fill="#e3b33b" stroke="#b5933b" stroke-width=".55"/>`;
   const face=(t,x,y,w=TW,h=TH)=>`<image href="tiles/${t}-66-90-l.png" x="${x}" y="${y}" width="${w}" height="${h}" preserveAspectRatio="none"/>`;
-  const sideways=(t,x,y)=>`<g transform="translate(${x} ${y+TW}) rotate(-90)">${face(t,0,0)}</g>`;
+  const sideways=(t,x,y,renderFace=face)=>`<g transform="translate(${x} ${y+TW}) rotate(-90)">${renderFace(t,0,0)}</g>`;
   const text=(x,y,size,value,extra='')=>`<text x="${x}" y="${y}" font-size="${size}" ${extra}>${esc(value)}</text>`;
-  function meldMarkup(m,x,y) {
-    if(m.type==='ankan') return m.consumed.map((t,i)=>i===0||i===3?back(x+i*TW,y):face(t,x+i*TW,y)).join('');
+  function meldMarkup(m,x,y,renderFace=face) {
+    if(m.type==='ankan') return m.consumed.map((t,i)=>i===0||i===3?back(x+i*TW,y):renderFace(t,x+i*TW,y)).join('');
     const index=m.type==='chi'?0:(m.type==='daiminkan'&&m.from===1?3:3-m.from);
     const tiles=m.consumed.slice();tiles.splice(index,0,m.pai);
     let cursor=x;
     return tiles.map((t,i)=>{
-      const result=i===index?sideways(t,cursor,y+TH-TW)+(m.added?sideways(m.added,cursor,y+TH-2*TW):''):face(t,cursor,y);
+      const result=i===index?sideways(t,cursor,y+TH-TW,renderFace)+(m.added?sideways(m.added,cursor,y+TH-2*TW,renderFace):''):renderFace(t,cursor,y);
       cursor+=i===index?TH:TW;return result;
     }).join('');
   }
-  function playerMarkup(p) {
+  function playerMarkup(p,renderFace=face) {
     const r=p.relative,[hx,hy]=hands[r],[rx,ry]=rivers[r],py=r===0?panelY-TH-TW/4-TW/3-20:hy-70-TW/3;
     let out=`<g transform="rotate(${-90*r} 350 325)" data-board-player="${p.seat}"><rect x="${hx}" y="${py}" width="120" height="70" fill="#000" opacity=".4"/>`;
     out+=text(hx+10,py+18,10,p.rating>=1800?`R${p.rating}`:'')+text(hx+10,py+48,24,p.rank)+text(hx+10,py+65,12,p.name);
@@ -38,20 +50,24 @@
       out+='</g>';x+=w;if(i===5||i===11){x=rx;y+=TH;}
     });
     let right=r%2?675:700;const bottom=r%2?675:650;
-    p.melds.forEach(m=>{const width=m.type==='ankan'?4*TW:TH+(m.type==='daiminkan'?3:2)*TW;right-=width;out+=`<g data-board-meld="${m.type}">${meldMarkup(m,right,bottom-TH)}</g>`;right-=Math.floor(TW/5);});
+    p.melds.forEach(m=>{const width=m.type==='ankan'?4*TW:TH+(m.type==='daiminkan'?3:2)*TW;right-=width;out+=`<g data-board-meld="${m.type}">${meldMarkup(m,right,bottom-TH,renderFace)}</g>`;right-=Math.floor(TW/5);});
     return out+'</g>';
   }
   function markup(scene,{showHand=true}={}) {
     if(!root.NagaBoardStateV248.validate(scene).valid) return '<div class="naga-board-error" role="alert">盤面データを確認できません。</div>';
     const width=475-3*TW*scene.players[0].melds.length+(scene.immediateCall?2*TW:0);
-    let out=`<svg class="naga-json-board-svg" viewBox="0 0 700 650" role="img" aria-label="${scene.round.wind}${scene.round.number}局・JSON再現盤面"><rect width="700" height="650" fill="transparent"/><rect x="80" y="${panelY}" width="${width}" height="${3*TH+TW/2}" fill="#000" opacity=".4"/>`;
-    out+=scene.players.map(playerMarkup).join('');
+    const gradientId=`dora-sheen-v333-${++sheenBoardId}`,dora=new Set(doraTiles(scene.doraIndicators));
+    const doraFace=(tile,x,y,w=TW,h=TH)=>Object.hasOwn(redFives,tile)||dora.has(normalTile(tile))
+      ?`<svg x="${x}" y="${y}" width="${w}" height="${h}" viewBox="0 0 66 90" preserveAspectRatio="none" overflow="hidden" data-dora-tile-v333="${esc(tile)}">${face(tile,0,0,66,90)}<rect class="dora-sheen-sweep-v333" x="-46.2" y="-31.5" width="158.4" height="153" fill="url(#${gradientId})" pointer-events="none"/></svg>`
+      :face(tile,x,y,w,h);
+    let out=`<svg class="naga-json-board-svg dora-sheen-surface-v333" viewBox="0 0 700 650" role="img" aria-label="${scene.round.wind}${scene.round.number}局・JSON再現盤面"><defs><linearGradient id="${gradientId}" x1="0" y1="0" x2="1" y2=".7"><stop offset="38%" stop-color="white" stop-opacity="0"/><stop offset="43%" stop-color="white" stop-opacity=".16"/><stop offset="48%" stop-color="white" stop-opacity=".9"/><stop offset="49%" stop-color="white" stop-opacity=".98"/><stop offset="54%" stop-color="white" stop-opacity=".36"/><stop offset="61%" stop-color="white" stop-opacity="0"/></linearGradient></defs><rect width="700" height="650" fill="transparent"/><rect x="80" y="${panelY}" width="${width}" height="${3*TH+TW/2}" fill="#000" opacity=".4"/>`;
+    out+=scene.players.map(p=>playerMarkup(p,p.relative===0?doraFace:face)).join('');
     out+=text(350,279,32,`${scene.round.wind}${['一','二','三','四'][scene.round.number-1]}局`,'text-anchor="middle"')+text(307,300,16,scene.round.remaining)+text(370,298,13,`× ${scene.round.kyotaku}`)+text(370,310,13,`× ${scene.round.honba}`);
     out+='<rect x="340" y="290" width="20" height="7" fill="white"/><circle cx="350" cy="293.5" r="1.25" fill="#d34e4e"/><rect x="340" y="302" width="20" height="7" fill="white"/>';
     out+=[346,350,354].map(x=>`<circle cx="${x}" cy="305.5" r=".75" fill="#193e64"/>`).join('');
     out+=Array.from({length:5},(_,i)=>scene.doraIndicators[i]?face(scene.doraIndicators[i],302.5+i*19,320,19,27):back(302.5+i*19,320,19,27)).join('');
     if(scene.immediateCall)out+=text(350,500,46,({chi:'チー',pon:'ポン',daiminkan:'カン',ankan:'カン'})[scene.players[0].melds.at(-1)?.type]||'', 'text-anchor="middle" stroke="#173041" stroke-width="1" paint-order="stroke"');
-    if(showHand)out+=handPositions(scene).map(p=>face(p.tile,p.x,p.y)).join('');
+    if(showHand)out+=handPositions(scene).map(p=>doraFace(p.tile,p.x,p.y)).join('');
     return out+'</svg>';
   }
   function handPositions(scene) {
@@ -160,5 +176,5 @@
     const tileImages=bestTiles.map(tile=>`<img src="tiles/${tile}-66-90-l.png" width="22" height="30" alt="${esc(tileName(tile))}">`).join('');
     return `<section class="naga-judgment-v312" aria-label="${title}"><div class="naga-judgment-heading-v312"><strong>${title}</strong><span>${esc(modelName)}</span></div><div class="naga-judgment-body-v312"><svg class="naga-judgment-graph-v312" viewBox="0 0 260 270" role="img" aria-label="${esc(modelName+' '+descriptions.join('、'))}">${graph}</svg><div class="naga-judgment-caption-v312">${bestTiles.length&&best.code<=3?`<span class="naga-consumed-tiles-v312">${tileImages}<span>使って</span></span>`:''}<strong>${esc(caption)}</strong></div></div><div class="naga-judgment-legend-v312"><span><i style="background:${color}"></i>${esc(modelName)}</span>${models.length>1?'<span><i style="background:#c8c8c8"></i>他モデル</span>':''}</div></section>`;
   }
-  root.NagaBoardV248=Object.freeze({markup,handPositions,recommendationsMarkup,tileRecommendationsMarkup,judgmentMarkup,judgmentOptions,callTiles,geometry:{width:W,height:H,tileWidth:TW,tileHeight:TH,handY:hands[0][1]}});
+  root.NagaBoardV248=Object.freeze({markup,handPositions,doraTiles,isDora,recommendationsMarkup,tileRecommendationsMarkup,judgmentMarkup,judgmentOptions,callTiles,geometry:{width:W,height:H,tileWidth:TW,tileHeight:TH,handY:hands[0][1]}});
 })(typeof globalThis!=='undefined'?globalThis:this);

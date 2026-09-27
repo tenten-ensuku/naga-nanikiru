@@ -14,6 +14,19 @@ async function setup(t){
   return {DB:db,APP_ORIGIN:origin,CUTOVER_READY:'true',DISCORD_CLIENT_ID:'123456789012345678',DISCORD_CLIENT_SECRET:'local-fixture-only'};
 }
 function req(path,args,headers={}){return new Request(origin+path,{method:args===undefined?'GET':'POST',headers:{Cookie:'__Host-minkiru_session='+token,Origin:origin,'Content-Type':'application/json','X-Minkiru-CSRF':csrf,...headers},...(args===undefined?{}:{body:JSON.stringify(args)})});}
+
+test('display preferences use cookie identity, CSRF and write limits without an admin requirement',async t=>{
+  const env=await setup(t),read='/api/rpc/get_display_preferences',write='/api/rpc/save_display_preferences';
+  assert.equal((await worker.fetch(req(read,{}, {Cookie:''}),env)).status,401);
+  assert.equal((await worker.fetch(req(write,{p_dora_sheen:false},{'X-Minkiru-CSRF':'wrong'}),env)).status,403);
+  assert.equal((await worker.fetch(req(write,{p_dora_sheen:'false'}),env)).status,400);
+  const saved=await worker.fetch(req(write,{p_dora_sheen:false,p_user_id:'other'}),env);
+  assert.deepEqual((await saved.json()).data,{dora_sheen:false});
+  assert.equal(env.DB.sqlite.prepare("SELECT count(*) n FROM display_preferences WHERE user_id='other'").get().n,0);
+  env.WRITE_LIMIT={limit:async()=>({success:false})};
+  assert.equal((await worker.fetch(req(write,{p_dora_sheen:true}),env)).status,429);
+  assert.deepEqual((await (await worker.fetch(req(read,{}),env)).json()).data,{dora_sheen:false});
+});
 test('student Worker exposes only cookie-authenticated allowlisted operations',async t=>{
   const env=await setup(t);assert.equal(STUDENT_FLOW_IMPLEMENTATION_COMPLETE,true);
   assert.equal((await worker.fetch(new Request(origin+'/api/rpc/list_my_collections',{method:'POST'}),env)).status,401);

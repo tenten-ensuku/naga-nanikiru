@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
 import {boardRenderer as renderer} from '../scripts/naga-board-runtime.mjs';
+import '../public/dora-sheen-v333.js';
 
 const models=[{name:'ニシキ'},{name:'ヒバカリ'},{name:'カガシ'}];
 const rects=html=>[...html.matchAll(/<rect ([^>]+)>/g)].map(match=>Object.fromEntries([...match[1].matchAll(/([\w-]+)="([^"]+)"/g)].map(a=>[a[1],a[2]])));
@@ -67,6 +68,7 @@ test('revealing a repeated tile highlights only the recommended draw and the act
   const html=fs.readFileSync(new URL('../public/index.html',import.meta.url),'utf8');
   const source=html.match(/      function tileButtonV16\([^]*?\n      \}/)[0];
   const context={SCENE:{models:[{name:'ニシキ',recommendation:'man5'}],draw:'man5',handBeforeDraw:['man5','man5'],probabilities:{man5:[60]}},state:{revealed:true,selectedIndex:1,judgeModel:0},window:{NagaBoardV248:renderer},displayHandSlotsV212:()=>null,sortHandV20:tiles=>tiles,displayConcealedHandV143:q=>q.handBeforeDraw,tileLabel:x=>x,tileImage:x=>`<img src="tiles/${x}-66-90-l.png">`};
+  context.window.MinkiruDoraSheenV333=globalThis.MinkiruDoraSheenV333;
   vm.runInNewContext(source,context);
   const first=context.tileButtonV16('man5',0),answer=context.tileButtonV16('man5',1),draw=context.tileButtonV16('man5',2,true);
   assert.doesNotMatch(first,/data-recommendation-frame/);assert.match(answer,/data-recommendation-frame="player"/);assert.doesNotMatch(answer,/data-recommendation-frame="naga"/);assert.match(draw,/data-recommendation-frame="naga"/);

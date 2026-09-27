@@ -1,0 +1,13 @@
+.dora-tile-face-v333{position:relative;display:block;width:100%;height:100%}
+.dora-tile-gloss-v333{position:absolute;inset:0;overflow:hidden;pointer-events:none;border-radius:inherit}
+.dora-tile-gloss-v333::after{content:"";position:absolute;inset:-35% -70%;background:linear-gradient(125deg,transparent 38%,rgba(255,255,255,.16) 43%,rgba(255,255,255,.9) 48%,rgba(255,255,255,.98) 49%,rgba(255,255,255,.36) 54%,transparent 61%)}
+.dora-tile-gloss-v333::after,.dora-sheen-sweep-v333{opacity:0;animation:dora-sheen-v333 2.8s linear infinite;animation-play-state:paused;pointer-events:none;transform-box:fill-box}
+.dora-sheen-visible-v333 .dora-tile-gloss-v333::after,.dora-sheen-visible-v333 .dora-sheen-sweep-v333{animation-play-state:running}
+html[data-dora-sheen-suspended="true"] .dora-tile-gloss-v333::after,html[data-dora-sheen-suspended="true"] .dora-sheen-sweep-v333{animation-play-state:paused}
+html:not([data-dora-sheen="on"]) .dora-tile-gloss-v333::after,html:not([data-dora-sheen="on"]) .dora-sheen-sweep-v333{display:none;animation:none}
+@keyframes dora-sheen-v333{0%,58%{transform:translate3d(-65%,-12%,0);opacity:0}64%{opacity:.62}80%{opacity:.82}92%,100%{transform:translate3d(65%,12%,0);opacity:0}}
+@media(prefers-reduced-motion:reduce){.dora-tile-gloss-v333::after,.dora-sheen-sweep-v333{animation:none;transform:none;opacity:.16}}
+.dora-settings-v333{margin-top:18px}
+.dora-toggle-v333{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:44px;font-weight:700;cursor:pointer}
+.dora-toggle-v333 input{width:40px;height:24px;accent-color:var(--accent,#147f97);flex:none}
+.dora-settings-v333 [role="status"]{font-size:12px;color:var(--muted);min-height:1.5em}

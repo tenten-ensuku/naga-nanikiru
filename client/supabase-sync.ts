@@ -405,6 +405,8 @@ async function notificationRequest(name: string, args: Record<string, unknown> =
   const {data,error}=await requireClient().rpc(name,args);if(error)throw error;return data;
 }
 const getNotificationPreferences=()=>notificationRequest('get_notification_preferences');
+const getDisplayPreferences=():Promise<{dora_sheen:boolean}>=>notificationRequest('get_display_preferences');
+const saveDisplayPreferences=(enabled:boolean):Promise<{dora_sheen:boolean}>=>notificationRequest('save_display_preferences',{p_dora_sheen:enabled});
 const saveNotificationPreferences=(preferences: Record<string,boolean>,subscriptions: string[])=>notificationRequest('save_notification_preferences',{p_preferences:preferences,p_subscriptions:subscriptions});
 const loadAccountNotifications=({unreadOnly=false,cursor=null}: {unreadOnly?:boolean,cursor?:unknown}={})=>notificationRequest('list_account_notifications',{p_unread_only:unreadOnly,p_cursor:cursor});
 const getNotificationTarget=(id:string)=>notificationRequest('get_notification_target',{p_id:id});
@@ -1009,6 +1011,7 @@ function buildApi() {
     setCollectionVisibility,
     transferCollectionOwnership,
     getNotificationPreferences,saveNotificationPreferences,loadAccountNotifications,getNotificationTarget,markAccountNotificationsRead,
+    getDisplayPreferences,saveDisplayPreferences,
     loadCollectionNotifications,
     markCollectionNotificationsRead,
     loadSharedComments,
