@@ -23,6 +23,7 @@ test('actual dora wraps each suit, winds and dragons independently and normalize
   assert.equal(renderer.isDora('man5',['pin4']),false);
   assert.equal(renderer.isDora('man5',[undefined,'bad']),false);
   assert.equal(renderer.isDora(null,[]),false);
+  for(const indicators of [null,{},'man4'])assert.equal(renderer.isDora('man5',indicators),false);
 });
 test('board sheen matches only own visible tiles, preserves backs and keeps SVG IDs unique across previews',()=>{
   for(const number of [1603,47,50,16,55,38,97]){

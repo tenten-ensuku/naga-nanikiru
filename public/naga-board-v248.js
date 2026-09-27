@@ -8,6 +8,7 @@
   const redFives={aka1:'man5',aka2:'pin5',aka3:'sou5'};
   const normalTile=t=>redFives[t]||t;
   function doraTiles(indicators=[]) {
+    if(!Array.isArray(indicators))return [];
     return indicators.map(normalTile).flatMap(t=>{
       const number=/^(man|pin|sou)([1-9])$/.exec(t);
       if(number)return [`${number[1]}${Number(number[2])%9+1}`];
