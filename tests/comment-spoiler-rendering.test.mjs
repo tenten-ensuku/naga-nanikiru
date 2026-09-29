@@ -15,6 +15,7 @@ async function commentHelpers() {
 test('double tildes render strikethrough without changing ordinary or unfinished text', async () => {
   const { formatCommentContent: render } = await commentHelpers();
   assert.equal(render('~~間違った解説~~ → 正しい解説'), '<s>間違った解説</s> → 正しい解説');
+  assert.equal(render('~~ 間違った解説 ~~'), '<s> 間違った解説 </s>');
   assert.equal(render('~~一~~、~~二行\nあります~~'), '<s>一</s>、<s>二行<br>あります</s>');
   assert.equal(render('~普通~ ~~未完了'), '~普通~ ~~未完了');
   assert.equal(render('~~~~ ~~ ~~'), '~~~~ ~~ ~~');

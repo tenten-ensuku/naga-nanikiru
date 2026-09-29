@@ -3064,7 +3064,7 @@
       const youtubeCards = options.youtubeCards || [];
       const renderYoutubeCards = options.renderYoutubeCards !== false;
       // Preserve tildes inside raw URLs; a pair surrounding a link is formatting.
-      let formatted = value.replace(/https?:\/\/[^\s<]+|~~(?=\S)([\s\S]*?\S)~~/g, (match, inner) => inner === undefined ? match : `<s>${inner}</s>`);
+      let formatted = value.replace(/https?:\/\/[^\s<]+|~~([\s\S]*?)~~/g, (match, inner) => inner === undefined || !inner.trim() ? match : `<s>${inner}</s>`);
       formatted = formatted.replace(/(https?:\/\/[^\s<]+)/g, rawUrl => {
         const normalizedUrl = trimCommentUrlV96(rawUrl);
         const decodedUrl = decodeCommentHtmlEntitiesV96(rawUrl);
