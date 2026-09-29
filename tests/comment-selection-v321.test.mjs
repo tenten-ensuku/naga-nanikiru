@@ -8,7 +8,7 @@ const {formatEdit,apply}=context.MinkiruCommentSelectionV321;
 
 test('formatting only changes the selected Japanese text, preserving surrounding text, emoji and tile notation',()=>{
   const text='東ではなく🙂白を切る 7ｚ',start=text.indexOf('白'),end=start+4;
-  for(const [kind,value,open,close] of [['bold','','**','**'],['spoiler','','||','||'],['color','red','[color:red]','[/color]'],['size','large','[size:large]','[/size]']]){
+  for(const [kind,value,open,close] of [['bold','','**','**'],['strike','','~~','~~'],['spoiler','','||','||'],['color','red','[color:red]','[/color]'],['size','large','[size:large]','[/size]']]){
     const edit=formatEdit(text,start,end,kind,value);
     assert.equal(edit.value,text.slice(0,start)+open+text.slice(start,end)+close+text.slice(end));
     assert.equal(edit.value.slice(edit.start,edit.end),text.slice(start,end));
@@ -26,6 +26,14 @@ test('changing an existing text color replaces it and repeated use removes it',(
   const changed=formatEdit(all,0,all.length,'color','green');
   assert.equal(changed.value,'**[color:green]文章[/color]**');
   assert.equal(changed.value.slice(changed.start,changed.end),'文章');
+});
+
+test('strikethrough can be added and removed around other styles, including the whole marked selection',()=>{
+  const text='**[color:red]間違った解説[/color]**';
+  const strike=formatEdit(text,0,text.length,'strike');
+  assert.equal(strike.value,'**[color:red]~~間違った解説~~[/color]**');
+  assert.equal(formatEdit(strike.value,0,strike.value.length,'strike').value,text);
+  assert.equal(formatEdit('~~間違った解説~~',0,'~~間違った解説~~'.length,'strike').value,'間違った解説');
 });
 
 test('multiline spoiler and nested bold preserve each other when toggled',()=>{

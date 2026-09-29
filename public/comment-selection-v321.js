@@ -6,7 +6,7 @@
 
   // Work on text offsets, never HTML: existing comment rendering stays authoritative.
   function formatEdit(text, start, end, kind, value = '', maxLength = -1) {
-    const wrappers = {bold:['**','**'], spoiler:['||','||'],
+    const wrappers = {bold:['**','**'], strike:['~~','~~'], spoiler:['||','||'],
       color:colors[value] ? [`[color:${value}]`,'[/color]'] : null,
       size:value === 'large' ? ['[size:large]','[/size]'] : null};
     const wrapper = wrappers[kind];
@@ -15,19 +15,19 @@
     if (selected) {
       const layers = [];
       const layerFor = open => {
-        const kind = open === '**' ? 'bold' : open === '||' ? 'spoiler' : open.toLowerCase().startsWith('[color:') ? 'color' : 'size';
+        const kind = open === '**' ? 'bold' : open === '~~' ? 'strike' : open === '||' ? 'spoiler' : open.toLowerCase().startsWith('[color:') ? 'color' : 'size';
         return {open,kind,close:kind === 'color' ? '[/color]' : kind === 'size' ? '[/size]' : open};
       };
       // Selecting the whole formatted text also lets the user change or remove its style.
       while (selected) {
-        const open = selected.match(/^(?:\*\*|\|\||\[color:(?:red|yellow|blue|green|purple)\]|\[size:large\])/i)?.[0];
+        const open = selected.match(/^(?:\*\*|~~|\|\||\[color:(?:red|yellow|blue|green|purple)\]|\[size:large\])/i)?.[0];
         if (!open) break;
         const layer = layerFor(open);
         if (selected.length < open.length+layer.close.length || !selected.toLowerCase().endsWith(layer.close)) break;
         layers.unshift(layer);selected=selected.slice(open.length,-layer.close.length);
       }
       while (from > 0) {
-        const open = text.slice(0,from).match(/(?:\*\*|\|\||\[color:(?:red|yellow|blue|green|purple)\]|\[size:large\])$/i)?.[0];
+        const open = text.slice(0,from).match(/(?:\*\*|~~|\|\||\[color:(?:red|yellow|blue|green|purple)\]|\[size:large\])$/i)?.[0];
         if (!open) break;
         const layer = layerFor(open);
         if (text.slice(to,to+layer.close.length).toLowerCase() !== layer.close) break;
@@ -74,7 +74,7 @@
     const toolbar = document.createElement('div');
     toolbar.className = 'comment-selection-v321'; toolbar.hidden = true;
     toolbar.setAttribute('role','group'); toolbar.setAttribute('aria-label','選択した文字の装飾');
-    toolbar.innerHTML = '<div class="comment-selection-actions-v321"><button type="button" data-selection-format="bold" aria-label="選択した文字を太字にする・解除する"><strong>B</strong> 太字</button><button type="button" data-selection-format="spoiler" aria-label="選択した文字を伏せ字にする・解除する">伏せ字</button><button type="button" data-selection-colors aria-expanded="false">文字色</button><button type="button" data-selection-format="size" data-selection-value="large" aria-label="選択した文字を大きくする・解除する">大きく</button></div><div class="comment-selection-colors-v321" role="group" aria-label="選択した文字の色" hidden>'+Object.entries(colors).map(([value,label])=>`<button type="button" data-selection-format="color" data-selection-value="${value}" aria-label="選択した文字を${label}色にする・解除する"><span class="comment-color-${value}" aria-hidden="true">●</span>${label}</button>`).join('')+'</div><p class="comment-selection-status-v321" role="status" hidden></p>';
+    toolbar.innerHTML = '<div class="comment-selection-actions-v321"><button type="button" data-selection-format="bold" aria-label="選択した文字を太字にする・解除する"><strong>B</strong> 太字</button><button type="button" data-selection-format="strike" aria-label="選択した文字に打ち消し線を付ける・解除する"><s>打ち消し線</s></button><button type="button" data-selection-format="spoiler" aria-label="選択した文字を伏せ字にする・解除する">伏せ字</button><button type="button" data-selection-colors aria-expanded="false">文字色</button><button type="button" data-selection-format="size" data-selection-value="large" aria-label="選択した文字を大きくする・解除する">大きく</button></div><div class="comment-selection-colors-v321" role="group" aria-label="選択した文字の色" hidden>'+Object.entries(colors).map(([value,label])=>`<button type="button" data-selection-format="color" data-selection-value="${value}" aria-label="選択した文字を${label}色にする・解除する"><span class="comment-color-${value}" aria-hidden="true">●</span>${label}</button>`).join('')+'</div><p class="comment-selection-status-v321" role="status" hidden></p>';
     (input.closest('.comment-input-v324') || input).after(toolbar);
     const colorPanel = toolbar.querySelector('.comment-selection-colors-v321');
     const colorButton = toolbar.querySelector('[data-selection-colors]');

@@ -12,6 +12,25 @@ async function commentHelpers() {
   return new Function("commentTileImage", `${html.slice(start, end)}\nreturn { normalizeCommentSpoilerMarkupV217, formatCommentContent };`)(() => "");
 }
 
+test('double tildes render strikethrough without changing ordinary or unfinished text', async () => {
+  const { formatCommentContent: render } = await commentHelpers();
+  assert.equal(render('~~間違った解説~~ → 正しい解説'), '<s>間違った解説</s> → 正しい解説');
+  assert.equal(render('~~一~~、~~二行\nあります~~'), '<s>一</s>、<s>二行<br>あります</s>');
+  assert.equal(render('~普通~ ~~未完了'), '~普通~ ~~未完了');
+  assert.equal(render('~~~~ ~~ ~~'), '~~~~ ~~ ~~');
+  assert.equal(render('~~**訂正**~~'), '<s><strong>訂正</strong></s>');
+  assert.equal(render('**~~訂正~~**'), '<strong><s>訂正</s></strong>');
+  assert.equal(render('~~<img src=x onerror=alert(1)>~~'), '<s>&lt;img src=x onerror=alert(1)&gt;</s>');
+  const link = render('~~https://example.com/review~~');
+  assert.match(link, /^<s><a href="https:\/\/example.com\/review"/);
+  assert.match(link, /<\/a><\/s>$/);
+  const rawLink = render('https://example.com/~~review~~');
+  assert.match(rawLink, /href="https:\/\/example.com\/~~review~~"/);
+  assert.doesNotMatch(rawLink, /<s>/);
+  const hidden = render('||~~訂正~~||');
+  assert.match(hidden, /aria-hidden="true"><s>訂正<\/s>/);
+});
+
 test("Discordのスポイラー本文を取得後も伏せ字として描画する", async () => {
   const { formatCommentContent } = await commentHelpers();
   const rendered = formatCommentContent("前||秘密<&||\n後||二つ目||");
