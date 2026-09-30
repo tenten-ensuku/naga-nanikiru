@@ -33,6 +33,7 @@ jobs:
       - run: node --test tests/notifications-ui-v314.test.mjs
       - run: npm run test:menu
       - run: node --test tests/theme-v259.test.mjs
+      - run: node --test tests/sound-v342.test.mjs
       - run: node --test tests/dora-sheen-v333.test.mjs
       - run: npm run test:builder
       - run: npm run test:startup
