@@ -30,4 +30,9 @@
 .answer-comparison:has(>.answer-choice:nth-child(2):last-child){grid-template-columns:repeat(2,minmax(0,1fr))}
 .candidate-call-tile-v310:has(+.naga-judgment-v312){display:flex;align-items:center;gap:8px;font-size:16px}
 
-.scene-frame.is-json-board-v248 .call-controls{top:var(--call-controls-top);bottom:auto}
+.scene-frame.is-json-board-v248 .call-controls{left:var(--call-controls-left);top:93.846154%;bottom:auto;width:max-content;max-width:var(--call-controls-width);height:5.142857cqw;gap:.6cqw;padding:0 .4cqw;background:transparent;box-shadow:none;border-radius:0}
+.scene-frame.is-json-board-v248 .call-target-label,.scene-frame.is-json-board-v248 .call-prompt{display:none}
+.scene-frame.is-json-board-v248 .call-target-tile{flex:0 0 auto;padding:0;border-width:.25cqw;border-radius:.4cqw}
+.scene-frame.is-json-board-v248 .call-target-tile img{width:3.142857cqw;height:4.285714cqw;border-radius:0}
+.scene-frame.is-json-board-v248 .call-choice-button{min-width:0;min-height:0;height:4.571429cqw;padding:0 .8cqw;width:9cqw;font-size:clamp(9px,2.1cqw,16px);line-height:1;flex:0 1 auto;border-radius:.5cqw}
+.scene-frame.is-json-board-v248 .call-choice-button.is-selected{transform:none;box-shadow:0 0 0 1px #fff7d6}
