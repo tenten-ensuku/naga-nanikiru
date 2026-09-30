@@ -54,14 +54,14 @@
     p.melds.forEach(m=>{const width=m.type==='ankan'?4*TW:TH+(m.type==='daiminkan'?3:2)*TW;right-=width;out+=`<g data-board-meld="${m.type}">${meldMarkup(m,right,bottom-TH,renderFace)}</g>`;right-=Math.floor(TW/5);});
     return out+'</g>';
   }
-  function markup(scene,{showHand=true}={}) {
+  function markup(scene,{showHand=true,height=650}={}) {
     if(!root.NagaBoardStateV248.validate(scene).valid) return '<div class="naga-board-error" role="alert">盤面データを確認できません。</div>';
     const width=475-3*TW*scene.players[0].melds.length+(scene.immediateCall?2*TW:0);
     const gradientId=`dora-sheen-v333-${++sheenBoardId}`,dora=new Set(doraTiles(scene.doraIndicators));
     const doraFace=(tile,x,y,w=TW,h=TH)=>Object.hasOwn(redFives,tile)||dora.has(normalTile(tile))
       ?`<svg x="${x}" y="${y}" width="${w}" height="${h}" viewBox="0 0 66 90" preserveAspectRatio="none" overflow="hidden" data-dora-tile-v333="${esc(tile)}">${face(tile,0,0,66,90)}<rect class="dora-sheen-sweep-v333" x="-46.2" y="-31.5" width="158.4" height="153" fill="url(#${gradientId})" pointer-events="none"/></svg>`
       :face(tile,x,y,w,h);
-    let out=`<svg class="naga-json-board-svg dora-sheen-surface-v333" viewBox="0 0 700 650" role="img" aria-label="${scene.round.wind}${scene.round.number}局・JSON再現盤面"><defs><linearGradient id="${gradientId}" x1="0" y1="0" x2="1" y2=".7"><stop offset="38%" stop-color="white" stop-opacity="0"/><stop offset="43%" stop-color="white" stop-opacity=".16"/><stop offset="48%" stop-color="white" stop-opacity=".9"/><stop offset="49%" stop-color="white" stop-opacity=".98"/><stop offset="54%" stop-color="white" stop-opacity=".36"/><stop offset="61%" stop-color="white" stop-opacity="0"/></linearGradient></defs><rect width="700" height="650" fill="transparent"/><rect x="80" y="${panelY}" width="${width}" height="${3*TH+TW/2}" fill="#000" opacity=".4"/>`;
+    let out=`<svg class="naga-json-board-svg dora-sheen-surface-v333" viewBox="0 0 700 ${height}" role="img" aria-label="${scene.round.wind}${scene.round.number}局・JSON再現盤面"><defs><linearGradient id="${gradientId}" x1="0" y1="0" x2="1" y2=".7"><stop offset="38%" stop-color="white" stop-opacity="0"/><stop offset="43%" stop-color="white" stop-opacity=".16"/><stop offset="48%" stop-color="white" stop-opacity=".9"/><stop offset="49%" stop-color="white" stop-opacity=".98"/><stop offset="54%" stop-color="white" stop-opacity=".36"/><stop offset="61%" stop-color="white" stop-opacity="0"/></linearGradient></defs><rect width="700" height="650" fill="transparent"/><rect x="80" y="${panelY}" width="${width}" height="${3*TH+TW/2}" fill="#000" opacity=".4"/>`;
     out+=scene.players.map(p=>playerMarkup(p,p.relative===0?doraFace:face)).join('');
     out+=text(350,279,32,`${scene.round.wind}${['一','二','三','四'][scene.round.number-1]}局`,'text-anchor="middle"')+text(307,300,16,scene.round.remaining)+text(370,298,13,`× ${scene.round.kyotaku}`)+text(370,310,13,`× ${scene.round.honba}`);
     out+='<rect x="340" y="290" width="20" height="7" fill="white"/><circle cx="350" cy="293.5" r="1.25" fill="#d34e4e"/><rect x="340" y="302" width="20" height="7" fill="white"/>';
