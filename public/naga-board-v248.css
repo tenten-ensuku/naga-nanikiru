@@ -10,7 +10,6 @@
 .scene-frame.is-json-board-v248 .json-hand-position-v248>.tile-wrap,.scene-frame.is-json-board-v248 .json-hand-position-v248 .tile-button{width:100%;height:100%}
 .scene-frame.is-json-board-v248 .hand-layer .tile-button img{width:100%;height:100%;border-radius:0}
 .scene-frame.is-json-board-v248 .riichi-layer{left:83%;top:85%}
-.scene-frame.is-json-board-v248 .call-controls{left:50%;top:70%;bottom:auto;transform:translateX(-50%)}
 .scene-frame.is-json-board-v248 .probability-stack{height:5cqw}
 .tile-button.has-naga-recommendations-v312 img{outline:none;border-radius:0}
 .naga-tile-recommendations-v312{position:absolute;left:0;top:-100%;width:100%;height:200%;overflow:visible;pointer-events:none}

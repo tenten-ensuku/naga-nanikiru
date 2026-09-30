@@ -10,7 +10,7 @@ test("renders the v87 scene and half-game generator controls", async () => {
     readFile(indexUrl, "utf8"),
     readFile(generatorUrl, "utf8")
   ]);
-  assert.match(html, /const APP_VERSION = 338/);
+  assert.match(html, /const APP_VERSION = 339/);
   assert.match(html, /function captureGeneratorFormDraftV157\(\)/);
   assert.match(html, /destination: document\.getElementById\("generatorDestinationSelect"\)\?\.value \|\| generatorDestinationV130 \|\| ""/);
   assert.match(html, /function restoreGeneratorFormDraftV157\(draft\)/);
@@ -134,10 +134,10 @@ test("renders the v87 scene and half-game generator controls", async () => {
   assert.match(html, /value="scene"/);
   assert.match(html, /class="call-target-tile"/);
   assert.match(html, /class="riichi-layer"/);
-  assert.match(html, /sceneFrameV16\.querySelector\("\.call-controls"\)\?\.remove\(\)/);
+  assert.match(html, /sceneFrameV16\.parentElement\.querySelector\("\.call-controls"\)\?\.remove\(\)/);
   assert.match(html, /sceneFrameV16\.querySelector\("\.riichi-layer"\)\?\.remove\(\)/);
   assert.match(html, /sceneFrameV16\.classList\.toggle\("is-call-decision", SCENE\.decisionType === "call"\)/);
-  assert.match(html, /sceneFrameV16\.insertAdjacentHTML\("beforeend", `<div class="call-controls"/);
+  assert.match(html, /sceneFrameV16\.insertAdjacentHTML\("afterend", `<div class="call-controls"/);
   assert.match(html, /sceneFrameV16\.insertAdjacentHTML\("beforeend", `<div class="riichi-layer"/);
   assert.doesNotMatch(html, /getElementById\("handLayer"\)\.insertAdjacentHTML\("beforeend", `<div class="call-controls"/);
   assert.match(html, /当時の選択/);
