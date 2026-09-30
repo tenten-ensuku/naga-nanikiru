@@ -31,10 +31,14 @@ test('Enter on a disclosure or formatting button does not advance the study ques
   const html=readFileSync(new URL('../public/index.html',import.meta.url),'utf8');
   const start=html.lastIndexOf('document.addEventListener("keydown", event => {');
   const end=html.indexOf('\n        });',start)+'\n        });'.length;
-  let listener,advanced=0,prevented=0;
+  let listener,advanced=0,prevented=0,confirmed=0,sounds=0;
+  const state={revealed:true};
   const document={activeElement:{tagName:'SUMMARY'},getElementById:()=>({hidden:false}),addEventListener:(_name,fn)=>{listener=fn;}};
-  vm.runInNewContext(html.slice(start,end),{document,state:{revealed:true},advanceQuestionV44:()=>advanced++,confirmAnswerV41:()=>assert.fail('unexpected confirmation')});
+  vm.runInNewContext(html.slice(start,end),{document,state,window:{MinkiruSoundV342:{playAction:()=>sounds++}},advanceQuestionV44:()=>advanced++,confirmAnswerV41:()=>{confirmed++;state.revealed=true;}});
   for(const tagName of ['SUMMARY','BUTTON','TEXTAREA']){document.activeElement.tagName=tagName;listener({key:'Enter',preventDefault:()=>prevented++});}
-  assert.equal(advanced,0);assert.equal(prevented,0);
+  assert.equal(advanced,0);assert.equal(prevented,0);assert.equal(sounds,0);
   document.activeElement.tagName='BODY';listener({key:'Enter',preventDefault:()=>prevented++});assert.equal(advanced,1);assert.equal(prevented,1);
+  assert.equal(sounds,1);
+  state.revealed=false;listener({key:'Enter',preventDefault:()=>prevented++});
+  assert.equal(confirmed,1);assert.equal(sounds,2);assert.equal(advanced,1,'confirmation must not immediately advance and cancel its result sound');
 });
