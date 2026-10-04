@@ -3,6 +3,7 @@
 // The ASSETS binding omits Content-Length. These immutable asset sizes are checked
 // against every published guide MP4 in the regression test when media changes.
 const videoLengths = {
+  '/guide/video/minkiru-theme-v344.mp4': 24019419,
   '/guide/video/minkiru-promo-portrait-v295.mp4': 10991682,
   '/guide/video/minkiru-promo-landscape-v295.mp4': 11713226,
   '/guide/video/minkiru-promo-portrait-v298.mp4': 11271592,

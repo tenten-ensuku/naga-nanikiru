@@ -1,0 +1,10 @@
+/* A quiet extra shared by My Page and the guide. */
+.theme-song-v344{margin:20px 0 0;padding:0;border-top:1px solid var(--line,#b7c7cc);font-size:14px;line-height:1.7;color:var(--muted,#465e6b)}
+.theme-song-v344>summary{width:fit-content;max-width:100%;padding:12px 0;min-height:44px;box-sizing:border-box;font:inherit;cursor:pointer;overflow-wrap:anywhere}
+.theme-song-v344>summary:focus-visible,.theme-song-v344 a:focus-visible{outline:2px solid currentColor;outline-offset:3px}
+.theme-song-v344 p{margin:0 0 12px;font:inherit;color:inherit}
+.theme-song-v344 a{display:inline-block;max-width:100%;padding:10px 0;color:inherit;text-underline-offset:3px}
+.theme-song-v344 video{display:block;width:100%;height:auto;max-width:800px;aspect-ratio:16/9;margin:14px 0;background:#091528;border-radius:6px}
+.theme-song-v344 .theme-song-title-v344{font-size:13px}
+.theme-song-guide-v344{padding-block:0 24px}
+@media print{.theme-song-v344{display:none}}
