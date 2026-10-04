@@ -21,8 +21,8 @@ test("V243 uses the exact user-supplied loading artwork with the approved brand 
   assert.match(loader, /src="assets\/loading-screen-v243\.png" width="1402" height="1122"/);
   assert.match(loader, /alt="みん切る — みんなの何切る問題集" loading="eager" fetchpriority="high"/);
   assert.doesNotMatch(loader, /min-kiru-header\.png|startup-line-v236/);
-  assert.match(normalizedHtml, /rel="icon"[^>]*icons\/favicon-32\.png\?v=344/);
-  assert.match(normalizedHtml, /rel="apple-touch-icon"[^>]*icons\/apple-touch-icon-180\.png\?v=344/);
+  assert.match(normalizedHtml, /rel="icon"[^>]*icons\/favicon-32\.png\?v=345/);
+  assert.match(normalizedHtml, /rel="apple-touch-icon"[^>]*icons\/apple-touch-icon-180\.png\?v=345/);
 });
 
 test("V243 white loading shell contains artwork on small screens and keeps retry accessible", () => {
@@ -46,6 +46,7 @@ function createControllerHarness({ gateHidden = true, loginDisabled = true } = {
   let nextTimerId = 1;
 
   const status = { textContent: "" };
+  const diagnostic = { textContent: "", hidden: true };
   const retry = { hidden: true };
   const screen = { hidden: false };
   const card = {
@@ -68,6 +69,7 @@ function createControllerHarness({ gateHidden = true, loginDisabled = true } = {
   const page = { inert: true, ariaHidden: "true" };
   const nodes = {
     startupStatusV236: status,
+    startupDetailV345: diagnostic,
     startupRetryV236: retry,
     startupScreenV236: screen,
     authGate: gate,
@@ -112,6 +114,7 @@ function createControllerHarness({ gateHidden = true, loginDisabled = true } = {
   };
 
   const window = {
+    location: { href: "https://minkiru.example/?collection=private", origin: "https://minkiru.example" },
     addEventListener(type, listener, options) {
       addListener(windowListeners, type, listener, options);
     },
@@ -129,12 +132,13 @@ function createControllerHarness({ gateHidden = true, loginDisabled = true } = {
     }
   };
 
-  vm.runInNewContext(startupController, { window, document }, { filename: "public/index.html#startup-v236" });
+  vm.runInNewContext(startupController, { window, document, URL }, { filename: "public/index.html#startup-v236" });
 
   return {
     api: window.MinkiruStartupV236,
     classNames,
     document,
+    diagnostic,
     focusLog,
     gate,
     loginButton,
@@ -180,7 +184,7 @@ test("V236 keeps the critical presentation shell ahead of app CSS and app conten
   assert.match(normalizedHtml, /html\.app-pending-v236 \.page, html\.app-pending-v236 \.page \*,[\s\S]*?html\.app-pending-v236 \.auth-gate, html\.app-pending-v236 \.auth-gate \*,[\s\S]*?visibility:hidden !important; pointer-events:none !important;/);
   assert.match(normalizedHtml, /\.startup-screen-v236 \{ position:fixed; inset:0; z-index:2000;/);
   assert.match(normalizedHtml, /<section class="auth-gate" id="authGate"[^>]* hidden>/);
-  assert.match(normalizedHtml, /initImportedQuestionsV16\(\)\.then\(\(\) => window\.MinkiruStartupV236\.ready\(\)\)\.catch\(\(\) => window\.MinkiruStartupV236\.fail\(\)\);/);
+  assert.match(normalizedHtml, /initImportedQuestionsV16\(\)\.then\(\(\) => window\.MinkiruStartupV236\.ready\(\)\)\.catch\(error => window\.MinkiruStartupV236\.fail\(error\)\);/);
   assert.match(normalizedHtml, /if \(window\.MinkiruStartupV236\?\.pending\) return;/);
   assert.match(normalizedHtml, /if \(!window\.MinkiruStartupV236\?\.pending && !authenticated && focusTarget/);
 });
@@ -218,9 +222,8 @@ test("controller completes only after two animation frames and never changes aut
   assert.equal(harness.focusLog[0].options.preventScroll, true);
 });
 
-test("runtime, script, and stylesheet failures keep a retry screen and reject late completion", () => {
+test("script and stylesheet failures keep a retry screen and reject late completion", () => {
   const errorEvents = [
-    { error: { message: "runtime" } },
     { target: { tagName: "SCRIPT" } },
     { target: { tagName: "LINK", rel: "stylesheet" } }
   ];
@@ -250,7 +253,7 @@ test("a fatal error between the two frames cancels the pending presentation comm
   harness.flushAnimationFrame();
   assert.equal(harness.animationFrames.length, 1);
 
-  harness.emitWindow("error", { error: { message: "late runtime" } });
+  harness.api.fail(new TypeError("initializer rejected"));
   harness.flushAnimationFrame();
 
   assert.equal(harness.api.pending, true);
@@ -281,4 +284,70 @@ test("the slow message is non-releasing and a later successful completion still 
 test("the presentation controller has no auth or data-loading bypass surface", () => {
   assert.doesNotMatch(startupController, /NagaSupabase|currentSession|authchange|signInWithDiscord|fetch\s*\(/);
   assert.match(startupController, /Never grants access or fetches user data/);
+});
+
+test("V345 recovers from independent runtime errors only after initialization fulfills", () => {
+  const harness = createControllerHarness({ gateHidden: false, loginDisabled: false });
+  harness.emitWindow("error", { error: { name: "TypeError", message: "independent listener" } });
+  assert.equal(harness.api.pending, true);
+  assert.equal(harness.screen.hidden, false);
+  assert.equal(harness.retry.hidden, false);
+  harness.api.ready();
+  harness.flushAnimationFrame();
+  harness.emitWindow("error", { error: { message: "another listener" } });
+  harness.flushAnimationFrame();
+  assert.equal(harness.api.pending, false);
+  assert.equal(harness.screen.hidden, true);
+  assert.equal(harness.page.inert, true);
+  assert.equal(harness.page.ariaHidden, "true");
+  assert.equal(harness.gate.hidden, false);
+  assert.equal(harness.focusLog[0].target, "login");
+});
+
+test("V345 rejected initialization still blocks after an independent runtime error", () => {
+  const harness = createControllerHarness();
+  harness.emitWindow("error", { error: { name: "TypeError" } });
+  harness.api.fail(new ReferenceError("failed init"));
+  harness.api.ready();
+  finish(harness);
+  assert.equal(harness.api.pending, true);
+  assert.equal(harness.screen.hidden, false);
+  assert.equal(harness.page.inert, true);
+  assert.match(harness.diagnostic.textContent, /V345 \/ init \/ ReferenceError/);
+});
+
+test("V345 diagnostics preserve the first failure and omit messages, query strings, and third-party sources", () => {
+  const harness = createControllerHarness();
+  harness.emitWindow("error", { error: { name: "SyntaxError", message: "private contents" }, filename: "https://minkiru.example/sound-v342.js?token=secret#private", lineno: 12, colno: 3 });
+  harness.emitDocument("DOMContentLoaded");
+  assert.equal(harness.diagnostic.hidden, false);
+  assert.equal(harness.diagnostic.textContent, "確認コード：V345 / runtime / SyntaxError / sound-v342.js:12:3");
+  harness.emitWindow("error", { error: { name: "TypeError" } });
+  assert.match(harness.diagnostic.textContent, /SyntaxError/);
+  const external = createControllerHarness();
+  external.emitWindow("error", { error: { name: "TypeError" }, filename: "https://private.example/private-data.js?secret", lineno: 4 });
+  assert.equal(external.diagnostic.textContent, "確認コード：V345 / runtime / TypeError / external:4:0");
+  assert.doesNotMatch(startupController, /localStorage|sendBeacon|XMLHttpRequest/);
+});
+
+test("V345 initializer stack locations support Safari and Chromium without displaying stack messages", () => {
+  for (const stack of [
+    "TypeError: secret\ninit@https://minkiru.example/?collection=private:123:45",
+    "TypeError: secret\n    at init (https://minkiru.example/index.html?collection=private:123:45)"
+  ]) {
+    const harness = createControllerHarness();
+    harness.api.fail({ name: "TypeError", stack });
+    assert.equal(harness.diagnostic.textContent, "確認コード：V345 / init / TypeError / index.html:123:45");
+  }
+});
+
+test("V345 resource diagnostics ignore image failures and retain missing script paths", () => {
+  const harness = createControllerHarness();
+  harness.emitWindow("error", { target: { tagName: "IMG", src: "https://minkiru.example/image.png" } });
+  assert.equal(harness.diagnostic.hidden, true);
+  harness.emitWindow("error", { target: { tagName: "SCRIPT", src: "https://minkiru.example/navigation-v234.js?v=345" } });
+  assert.equal(harness.diagnostic.textContent, "確認コード：V345 / script / Error / navigation-v234.js:0:0");
+  harness.api.ready();
+  finish(harness);
+  assert.equal(harness.screen.hidden, false);
 });

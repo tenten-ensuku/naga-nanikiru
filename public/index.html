@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=344">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=344">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=344">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=345">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=345">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=345">
   <title>みん切る｜みんなの何切る問題集</title>
   <link rel="preload" as="image" href="assets/loading-screen-v243.png" fetchpriority="high">
   <meta name="description" content="みん切るは、NAGA URLから問題をつくり、解いて、仲間と共有できる麻雀学習アプリです。">
   <meta name="theme-color" content="#f3f6f7">
-  <script src="theme-v259.js?v=344"></script>
+  <script src="theme-v259.js?v=345"></script>
   <meta property="og:type" content="website">
   <meta property="og:title" content="みん切る｜みんなの何切る問題集">
   <meta property="og:description" content="みん切るは、NAGA URLから問題をつくり、解いて、仲間と共有できる麻雀学習アプリです。">
@@ -38,6 +38,7 @@
     .startup-inner-v236 { width:min(100%,1040px); min-width:0; }
     .startup-logo-v236 { display:block; width:100%; height:auto; max-height:calc(100vh - 152px); max-height:calc(100svh - 152px); object-fit:contain; margin:0 auto 8px; clip-path:inset(0 0 22% 0); }
     .startup-screen-v236 p { margin:0; }
+    .startup-screen-v236 .startup-detail-v345 { margin:8px auto 0; max-width:38em; font-size:12px; overflow-wrap:anywhere; }
     .startup-screen-v236 a { display:inline-flex; align-items:center; justify-content:center; min-height:44px; margin-top:12px; padding:6px 18px; border:1px solid #aa8743; border-radius:8px; color:#102b43; background:#fffaf0; font-weight:700; text-decoration:none; }
     .startup-screen-v236 a:focus-visible { outline:3px solid #2b7184; outline-offset:3px; }
     .startup-screen-v236 a[hidden] { display:none; }
@@ -45,27 +46,59 @@
   <script>
     // V236 startup presentation only. Never grants access or fetches user data.
     window.MinkiruStartupV236 = (() => {
-      let pending = true, fatal = false, slow = false;
+      let pending = true, fatal = false, blocking = false, slow = false, detail = "";
+      // Display fixed categories and an app file/line only: never error messages,
+      // request URLs, account data, or credentials. Nothing is sent to a server.
+      const describeFailure = (error, kind, source = "", line = 0, column = 0) => {
+        const name = ["TypeError", "ReferenceError", "SyntaxError", "RangeError", "SecurityError", "QuotaExceededError", "NetworkError", "AbortError"].includes(error?.name) ? error.name : "Error";
+        let file = "unknown";
+        try {
+          if (!source && error?.stack) {
+            const frame = String(error.stack).match(/https?:\/\/[^\s)]+?:\d+:\d+/);
+            const parts = frame?.[0].match(/^(.*):(\d+):(\d+)$/);
+            if (parts) { source = parts[1]; line = Number(parts[2]); column = Number(parts[3]); }
+          }
+          const url = new URL(source, window.location.href);
+          if (source && url.origin === window.location.origin) {
+            const leaf = url.pathname.split("/").pop() || "index.html";
+            file = /^[a-zA-Z0-9_.-]+\.(?:js|mjs|html)$/.test(leaf) ? leaf : "app";
+          } else if (source) file = "external";
+        } catch { /* Source metadata may be unavailable. */ }
+        const position = value => Number.isSafeInteger(Number(value)) && Number(value) > 0 ? Number(value) : 0;
+        return `確認コード：V345 / ${kind} / ${name} / ${file}:${position(line)}:${position(column)}`;
+      };
       const showStatus = () => {
         const status = document.getElementById("startupStatusV236");
         const retry = document.getElementById("startupRetryV236");
+        const diagnostic = document.getElementById("startupDetailV345");
         if (status) status.textContent = fatal ? "画面を読み込めませんでした。再読み込みをお試しください。" : slow ? "接続に時間がかかっています。もう少しお待ちください。" : "準備しています…";
         if (retry) retry.hidden = !(fatal || slow);
+        if (diagnostic) { diagnostic.textContent = detail; diagnostic.hidden = !fatal; }
       };
       const timer = window.setTimeout(() => { if (pending) { slow = true; showStatus(); } }, 12000);
-      const fail = () => { if (pending) { fatal = true; window.clearTimeout(timer); showStatus(); } };
+      const fail = (error, kind = "init", source = "", line = 0, column = 0) => {
+        if (!pending) return;
+        const stopsStartup = kind !== "runtime";
+        if (!fatal || stopsStartup && !blocking) detail = describeFailure(error, kind, source, line, column);
+        blocking = blocking || stopsStartup;
+        fatal = true; window.clearTimeout(timer); showStatus();
+      };
       window.addEventListener("error", event => {
         const target = event.target;
-        if (pending && (event.error || target?.tagName === "SCRIPT" || target?.tagName === "LINK" && target.rel === "stylesheet")) fail();
+        if (target?.tagName === "SCRIPT") fail(null, "script", target.src);
+        else if (target?.tagName === "LINK" && target.rel === "stylesheet") fail(null, "style", target.href);
+        else if (event.error || event.message) fail(event.error, "runtime", event.filename, event.lineno, event.colno);
       }, true);
       document.addEventListener("DOMContentLoaded", showStatus, {once:true});
       return {
         get pending() { return pending; },
         fail,
         ready() {
-          if (!pending || fatal) return;
+          // A fulfilled initializer can recover from an independent runtime error.
+          // Failed app resources and rejected initialization must still block.
+          if (!pending || blocking) return;
           window.requestAnimationFrame(() => window.requestAnimationFrame(() => {
-            if (!pending || fatal) return;
+            if (!pending || blocking) return;
             pending = false; window.clearTimeout(timer);
             document.documentElement.classList.remove("app-pending-v236");
             const screen = document.getElementById("startupScreenV236"); if (screen) screen.hidden = true;
@@ -2268,28 +2301,28 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="theme-song-v344.css?v=344">
-  <link rel="stylesheet" href="ux-v159.css?v=344">
-  <link rel="stylesheet" href="library-v214.css?v=344">
-  <link rel="stylesheet" href="navigation-v234.css?v=344">
-  <link rel="stylesheet" href="book-builder-v235.css?v=344">
-  <link rel="stylesheet" href="menu-polish-v238.css?v=344">
-  <link rel="stylesheet" href="menu-sections-v239.css?v=344">
-  <link rel="stylesheet" href="workspace-ui-v240.css?v=344">
-  <link rel="stylesheet" href="collection-deletion-v244.css?v=344">
-  <link rel="stylesheet" href="collection-managers-v290.css?v=344">
-  <link rel="stylesheet" href="menu-simplify-v245.css?v=344">
-  <link rel="stylesheet" href="content-dates-v246.css?v=344">
-  <link rel="stylesheet" href="question-header-v250.css?v=344">
-  <link rel="stylesheet" href="question-toolbar-v255.css?v=344">
-  <link rel="stylesheet" href="theme-v259.css?v=344">
-  <link rel="stylesheet" href="theme-quick-v295.css?v=344">
-  <link rel="stylesheet" href="brand-v302.css?v=344">
-  <script defer src="theme-quick-v295.js?v=344"></script>
+  <link rel="stylesheet" href="theme-song-v344.css?v=345">
+  <link rel="stylesheet" href="ux-v159.css?v=345">
+  <link rel="stylesheet" href="library-v214.css?v=345">
+  <link rel="stylesheet" href="navigation-v234.css?v=345">
+  <link rel="stylesheet" href="book-builder-v235.css?v=345">
+  <link rel="stylesheet" href="menu-polish-v238.css?v=345">
+  <link rel="stylesheet" href="menu-sections-v239.css?v=345">
+  <link rel="stylesheet" href="workspace-ui-v240.css?v=345">
+  <link rel="stylesheet" href="collection-deletion-v244.css?v=345">
+  <link rel="stylesheet" href="collection-managers-v290.css?v=345">
+  <link rel="stylesheet" href="menu-simplify-v245.css?v=345">
+  <link rel="stylesheet" href="content-dates-v246.css?v=345">
+  <link rel="stylesheet" href="question-header-v250.css?v=345">
+  <link rel="stylesheet" href="question-toolbar-v255.css?v=345">
+  <link rel="stylesheet" href="theme-v259.css?v=345">
+  <link rel="stylesheet" href="theme-quick-v295.css?v=345">
+  <link rel="stylesheet" href="brand-v302.css?v=345">
+  <script defer src="theme-quick-v295.js?v=345"></script>
 </head>
 <body class="auth-gate-open">
   <section class="startup-screen-v236" id="startupScreenV236" aria-label="みん切るを準備中">
-    <div class="startup-inner-v236"><img class="startup-logo-v236" src="assets/loading-screen-v243.png" width="1402" height="1122" alt="みん切る — みんなの何切る問題集" loading="eager" fetchpriority="high"><p id="startupStatusV236" role="status">準備しています…</p><a id="startupRetryV236" href="" hidden>再読み込み</a><noscript><style>#startupStatusV236{display:none}</style><p>みん切るを開くにはJavaScriptを有効にしてください。</p></noscript></div>
+    <div class="startup-inner-v236"><img class="startup-logo-v236" src="assets/loading-screen-v243.png" width="1402" height="1122" alt="みん切る — みんなの何切る問題集" loading="eager" fetchpriority="high"><p id="startupStatusV236" role="status">準備しています…</p><p class="startup-detail-v345" id="startupDetailV345" hidden></p><a id="startupRetryV236" href="" hidden>再読み込み</a><noscript><style>#startupStatusV236{display:none}</style><p>みん切るを開くにはJavaScriptを有効にしてください。</p></noscript></div>
   </section>
   <main class="page" inert aria-hidden="true">
     <section class="menu-panel" id="menuPanel" aria-labelledby="menuTitle">
@@ -2636,52 +2669,52 @@
     </form>
   </dialog>
 
-  <link rel="stylesheet" href="comment-tags-v270.css?v=344">
+  <link rel="stylesheet" href="comment-tags-v270.css?v=345">
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=344"></script>
-  <script src="drill-ux-v44.js?v=344"></script>
-  <link rel="stylesheet" href="notifications-v314.css?v=344">
-  <script src="notifications-v314.js?v=344"></script>
-  <script src="navigation-v234.js?v=344"></script>
-  <script src="book-builder-v235.js?v=344"></script>
-  <script src="library-order-v215.js?v=344"></script>
-  <script src="content-dates-v246.js?v=344"></script>
-  <script src="question-header-v250.js?v=344"></script>
-  <script src="library-v214.js?v=344"></script>
-  <script src="collection-admin-v328.js?v=344"></script>
-  <script src="standard-reactions-v329.js?v=344"></script>
-  <link rel="stylesheet" href="collection-admin-v328.css?v=344">
-  <script src="naga-generator-v44.js?v=344"></script>
-  <link rel="stylesheet" href="naga-board-v248.css?v=344">
-  <link rel="stylesheet" href="dora-sheen-v333.css?v=344">
-  <link rel="stylesheet" href="refinements-v273.css?v=344">
-  <link rel="stylesheet" href="generator-tools-v274.css?v=344">
-  <link rel="stylesheet" href="book-pages-v281.css?v=344">
-  <link rel="stylesheet" href="touch-input-v307.css?v=344">
-  <script src="comment-tools-v274.js?v=344"></script>
-  <link rel="stylesheet" href="mobile-comments-v316.css?v=344">
-  <link rel="stylesheet" href="standard-reactions-v329.css?v=344">
-  <script src="mobile-comments-v316.js?v=344"></script>
-  <link rel="stylesheet" href="comment-selection-v321.css?v=344">
-  <script src="comment-selection-v321.js?v=344"></script>
-  <link rel="stylesheet" href="comment-composer-v324.css?v=344">
-  <script src="comment-composer-v324.js?v=344"></script>
-  <link rel="stylesheet" href="inline-comment-v322.css?v=344">
-  <script src="inline-comment-v322.js?v=344"></script>
-  <script src="naga-board-state-v248.js?v=344"></script>
-  <script src="naga-board-v248.js?v=344"></script>
-  <script src="dora-sheen-v333.js?v=344"></script>
-  <script src="sound-v342.js?v=344"></script>
-  <script src="hand-mask-v237.js?v=344"></script>
-  <script src="menu-sections-v239.js?v=344"></script>
-  <script src="workspace-ui-v240.js?v=344"></script>
-  <script src="generation-confirm-v241.js?v=344"></script>
-  <script src="collection-deletion-v244.js?v=344"></script>
-  <script src="collection-managers-v290.js?v=344"></script>
+  <script src="supabase-sync-v48.js?v=345"></script>
+  <script src="drill-ux-v44.js?v=345"></script>
+  <link rel="stylesheet" href="notifications-v314.css?v=345">
+  <script src="notifications-v314.js?v=345"></script>
+  <script src="navigation-v234.js?v=345"></script>
+  <script src="book-builder-v235.js?v=345"></script>
+  <script src="library-order-v215.js?v=345"></script>
+  <script src="content-dates-v246.js?v=345"></script>
+  <script src="question-header-v250.js?v=345"></script>
+  <script src="library-v214.js?v=345"></script>
+  <script src="collection-admin-v328.js?v=345"></script>
+  <script src="standard-reactions-v329.js?v=345"></script>
+  <link rel="stylesheet" href="collection-admin-v328.css?v=345">
+  <script src="naga-generator-v44.js?v=345"></script>
+  <link rel="stylesheet" href="naga-board-v248.css?v=345">
+  <link rel="stylesheet" href="dora-sheen-v333.css?v=345">
+  <link rel="stylesheet" href="refinements-v273.css?v=345">
+  <link rel="stylesheet" href="generator-tools-v274.css?v=345">
+  <link rel="stylesheet" href="book-pages-v281.css?v=345">
+  <link rel="stylesheet" href="touch-input-v307.css?v=345">
+  <script src="comment-tools-v274.js?v=345"></script>
+  <link rel="stylesheet" href="mobile-comments-v316.css?v=345">
+  <link rel="stylesheet" href="standard-reactions-v329.css?v=345">
+  <script src="mobile-comments-v316.js?v=345"></script>
+  <link rel="stylesheet" href="comment-selection-v321.css?v=345">
+  <script src="comment-selection-v321.js?v=345"></script>
+  <link rel="stylesheet" href="comment-composer-v324.css?v=345">
+  <script src="comment-composer-v324.js?v=345"></script>
+  <link rel="stylesheet" href="inline-comment-v322.css?v=345">
+  <script src="inline-comment-v322.js?v=345"></script>
+  <script src="naga-board-state-v248.js?v=345"></script>
+  <script src="naga-board-v248.js?v=345"></script>
+  <script src="dora-sheen-v333.js?v=345"></script>
+  <script src="sound-v342.js?v=345"></script>
+  <script src="hand-mask-v237.js?v=345"></script>
+  <script src="menu-sections-v239.js?v=345"></script>
+  <script src="workspace-ui-v240.js?v=345"></script>
+  <script src="generation-confirm-v241.js?v=345"></script>
+  <script src="collection-deletion-v244.js?v=345"></script>
+  <script src="collection-managers-v290.js?v=345"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 344;
+    const APP_VERSION = 345;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -4809,6 +4842,7 @@
       const QUESTION_NOTICE_STORAGE_KEY_V66 = storageKey("question-notices-v1");
         const ANNOUNCEMENT_SEEN_STORAGE_KEY_V65 = storageKey("announcement-seen-v1");
         const APP_ANNOUNCEMENTS_V66 = [
+          {"version":345,"date":"2026-10-05","publishedAt":"2026-10-04T18:59:42.624Z","title":"起動画面のエラー処理を見直しました","body":"画面の準備が正常に完了した場合は、一時的な実行エラーから復帰できるようにしました。読み込めない場合は、原因を確認するための確認コードが表示されます。"},
           {"version":344,"date":"2026-10-04","publishedAt":"2026-10-04T08:03:26.683Z","title":"説明書とマイページに小さなおまけを追加しました","body":"説明書の末尾とマイページに、テーマソングの文字PVを置きました。「おまけ」を開くと見られます。気が向いたときにどうぞ。"},
           {"version":343,"date":"2026-10-01","publishedAt":"2026-09-30T22:41:56.545Z","title":"副露判断の回答集計を修正しました","body":"「スルー」の回答が「鳴く」に集計される不具合を修正しました。保存済みの回答も、再読み込みすると正しく集計されます。"},
           {"version":342,"date":"2026-10-01","publishedAt":"2026-09-30T21:42:24.616Z","title":"操作音と正解音を追加しました","body":"ボタン・牌・判断の選択時に短い操作音が鳴ります。〇・◎の正解時にはそれぞれ専用の音が鳴ります。マイページの「表示・学習」で音をON/OFFにできます。"},
@@ -11896,7 +11930,7 @@
       selectTile = selectTileV16;
       toggleRiichi = toggleRiichiV16;
       reset = resetV16;
-      initImportedQuestionsV16().then(() => window.MinkiruStartupV236.ready()).catch(() => window.MinkiruStartupV236.fail());
+      initImportedQuestionsV16().then(() => window.MinkiruStartupV236.ready()).catch(error => window.MinkiruStartupV236.fail(error));
     })();
   </script>
 </body>
