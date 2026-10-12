@@ -84,3 +84,22 @@ test('answer rendering uses the common graph and preserves both current and hist
   assert.match(elements.answerComparison.innerHTML,/あなたの選択[^]*鳴く/);assert.match(elements.answerComparison.innerHTML,/当時の選択[^]*スルー/);
   assert.match(elements.riichiPanels.innerHTML,/data-judgment-code="1"/);assert.doesNotMatch(source,/recordAnswer|fetch\(|state\.judgeModel\s*=/);
 });
+
+test('answer cards display independent current, historical and model riichi decisions, with missing data kept unknown',()=>{
+  const html=fs.readFileSync(new URL('../public/index.html',import.meta.url),'utf8');
+  const elements=Object.fromEntries(['answerStrip','commentsPanel','nextQuestionButton','nextQuestionBottomButton','answerTitle','answerDetail','answerComparison','riichiPanels'].map(id=>[id,{}]));
+  const scene={decisionType:'discard',hasRiichiJudgment:true,actualDiscard:'man5',actualReach:true,reach:[9000,1000,5000],models:['ニシキ','ヒバカリ','カガシ'].map(name=>({name,recommendation:'man5'}))};
+  const context={document:{getElementById:id=>elements[id]},state:{revealed:true,judgeModel:0,selected:'man5',riichi:false},SCENE:scene,window:{NagaBoardV248:renderer},renderAnswerConfirmationV41(){},renderChoiceScoreV16(){},priorityIndicesV16:()=>[0,1,2],tileImage:x=>`<img alt="${x}">`,tileLabel:x=>x,nextButtonLabelV44:()=> '次の問題へ',renderComments(){},refreshQuestionPollStatsV110(){}};
+  vm.createContext(context);
+  for(const name of ['riichiLabel','hasReachV16','recommendedRiichiV16','riichiChoiceLabelV348','riichiChoiceMarkupV348','renderAnswerV16','choiceScoreV16','scoreForQuestionV16']){
+    const source=html.match(new RegExp(`    (?:  )?function ${name}\\([^]*?\\n    (?:  )?\\}`))[0];vm.runInContext(source,context);
+  }
+  const labels=()=>[...elements.answerComparison.innerHTML.matchAll(/class="answer-choice-decision-v348">([^<]*)</g)].map(m=>m[1]);
+  context.renderAnswerV16();assert.deepEqual(labels(),['ダマ','リーチ','リーチ','ダマ','リーチ']);assert.match(elements.answerDetail.innerHTML,/当時の選択：<strong>man5・リーチ/);
+  assert.equal(context.choiceScoreV16().modelMatch,'◎ ヒバカリと一致！！');
+  assert.equal(context.scoreForQuestionV16(scene,{selected:'man5',riichi:false}).modelMatch,'◎ ヒバカリと一致！！');
+  scene.reach=[9000,9000,9000];assert.equal(context.choiceScoreV16().modelMatch,'');
+  context.state.riichi=true;scene.actualReach=false;scene.reach=[0,null,undefined];context.renderAnswerV16();assert.deepEqual(labels(),['リーチ','ダマ','ダマ','判断情報なし','判断情報なし']);
+  delete scene.actualReach;context.renderAnswerV16();assert.equal(labels()[1],'判断情報なし');
+  scene.hasRiichiJudgment=false;scene.reach=[0,0,0];context.renderAnswerV16();assert.deepEqual(labels(),[]);
+});

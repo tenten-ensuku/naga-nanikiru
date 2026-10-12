@@ -828,6 +828,21 @@ test("a matching kan decision cannot hide a riichi disagreement at the same scen
   assert.deepEqual(Array.from(found[0].decisionMismatchModels),['M0']);assert.equal(found[0].tv,1);
 });
 
+test('matching discards extract only riichi disagreements in both directions at every detection level',async()=>{
+  const api=await loadApi(),row=Array(34).fill(0);row[4]=10000;
+  for(const detectionLevel of ['all','many','normal','few']){
+    for(const [actualReach,rate,expected] of [[false,9000,1],[true,1000,1],[false,1000,0],[true,9000,0],[true,0,1],[false,5000,1],[true,5000,0],[true,null,0]]){
+      const report={reportId:'riichi-only-match',naga_types:{0:'M0'},pred:[[
+        startKyoku(),discardPrediction(0,'5m',['5m'],[row],{reach:[rate]}),
+        ...(actualReach?[msg('reach',{actor:0})]:[]),msg('dahai',{actor:0,pai:'5m'})
+      ]]};
+      const found=api.extractBadMoves(report,0,{detectionLevel,modelNames:['M0']});
+      assert.equal(found.length,expected,`${detectionLevel}: actual=${actualReach}, rate=${rate}`);
+      if(expected){assert.equal(found[0].actualReach,actualReach);assert.equal(found[0].actualDiscard,found[0].models[0].recommendation);assert.deepEqual(Array.from(found[0].decisionMismatchModels),['M0']);}
+    }
+  }
+});
+
 // Synthetic reports exercise the NAGA huro kind comparison, not a user's game.
 function callPatternReport(rows, kind = 2) {
   return {reportId:'call-pattern-regression',naga_types:{0:'M0',1:'M1'},pred:[[

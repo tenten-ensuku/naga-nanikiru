@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=347">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=347">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=347">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=348">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=348">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=348">
   <title>みん切る｜みんなの何切る問題集</title>
   <link rel="preload" as="image" href="assets/loading-screen-v243.png" fetchpriority="high">
   <meta name="description" content="みん切るは、NAGA URLから問題をつくり、解いて、仲間と共有できる麻雀学習アプリです。">
   <meta name="theme-color" content="#f3f6f7">
-  <script src="theme-v259.js?v=347"></script>
+  <script src="theme-v259.js?v=348"></script>
   <meta property="og:type" content="website">
   <meta property="og:title" content="みん切る｜みんなの何切る問題集">
   <meta property="og:description" content="みん切るは、NAGA URLから問題をつくり、解いて、仲間と共有できる麻雀学習アプリです。">
@@ -65,7 +65,7 @@
           } else if (source) file = "external";
         } catch { /* Source metadata may be unavailable. */ }
         const position = value => Number.isSafeInteger(Number(value)) && Number(value) > 0 ? Number(value) : 0;
-        return `確認コード：V347 / ${kind} / ${name} / ${file}:${position(line)}:${position(column)}`;
+        return `確認コード：V348 / ${kind} / ${name} / ${file}:${position(line)}:${position(column)}`;
       };
       const showStatus = () => {
         const status = document.getElementById("startupStatusV236");
@@ -552,6 +552,7 @@
     .answer-choice-tile { display: block; min-height: 0; margin: 2px auto 0; }
     .answer-choice-tile img { width: clamp(23px, 2.8vw, 36px); height: auto; margin: 0 auto; border-radius: 2px; }
     .answer-choice-title { display: none; }
+    .answer-choice-decision-v348 { display: block; margin-top: 3px; color: var(--ink); font-size: clamp(12px, 1.3vw, 15px); font-weight: 700; line-height: 1.4; }
     .call-answer-value { display: block; margin-top: 6px; color: #fff7d6; font-size: clamp(16px, 2.1vw, 25px); line-height: 1.1; }
     .answer-choice-reach { margin-top: 4px; padding-top: 3px; border-top: 1px solid rgba(241,196,87,.2); }
     .answer-choice-reach-label { display: block; color: #fff1bd; font-size: 7px; font-weight: 800; line-height: 1; }
@@ -2301,24 +2302,24 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="theme-song-v344.css?v=347">
-  <link rel="stylesheet" href="ux-v159.css?v=347">
-  <link rel="stylesheet" href="library-v214.css?v=347">
-  <link rel="stylesheet" href="navigation-v234.css?v=347">
-  <link rel="stylesheet" href="book-builder-v235.css?v=347">
-  <link rel="stylesheet" href="menu-polish-v238.css?v=347">
-  <link rel="stylesheet" href="menu-sections-v239.css?v=347">
-  <link rel="stylesheet" href="workspace-ui-v240.css?v=347">
-  <link rel="stylesheet" href="collection-deletion-v244.css?v=347">
-  <link rel="stylesheet" href="collection-managers-v290.css?v=347">
-  <link rel="stylesheet" href="menu-simplify-v245.css?v=347">
-  <link rel="stylesheet" href="content-dates-v246.css?v=347">
-  <link rel="stylesheet" href="question-header-v250.css?v=347">
-  <link rel="stylesheet" href="question-toolbar-v255.css?v=347">
-  <link rel="stylesheet" href="theme-v259.css?v=347">
-  <link rel="stylesheet" href="theme-quick-v295.css?v=347">
-  <link rel="stylesheet" href="brand-v302.css?v=347">
-  <script defer src="theme-quick-v295.js?v=347"></script>
+  <link rel="stylesheet" href="theme-song-v344.css?v=348">
+  <link rel="stylesheet" href="ux-v159.css?v=348">
+  <link rel="stylesheet" href="library-v214.css?v=348">
+  <link rel="stylesheet" href="navigation-v234.css?v=348">
+  <link rel="stylesheet" href="book-builder-v235.css?v=348">
+  <link rel="stylesheet" href="menu-polish-v238.css?v=348">
+  <link rel="stylesheet" href="menu-sections-v239.css?v=348">
+  <link rel="stylesheet" href="workspace-ui-v240.css?v=348">
+  <link rel="stylesheet" href="collection-deletion-v244.css?v=348">
+  <link rel="stylesheet" href="collection-managers-v290.css?v=348">
+  <link rel="stylesheet" href="menu-simplify-v245.css?v=348">
+  <link rel="stylesheet" href="content-dates-v246.css?v=348">
+  <link rel="stylesheet" href="question-header-v250.css?v=348">
+  <link rel="stylesheet" href="question-toolbar-v255.css?v=348">
+  <link rel="stylesheet" href="theme-v259.css?v=348">
+  <link rel="stylesheet" href="theme-quick-v295.css?v=348">
+  <link rel="stylesheet" href="brand-v302.css?v=348">
+  <script defer src="theme-quick-v295.js?v=348"></script>
 </head>
 <body class="auth-gate-open">
   <section class="startup-screen-v236" id="startupScreenV236" aria-label="みん切るを準備中">
@@ -2669,54 +2670,54 @@
     </form>
   </dialog>
 
-  <link rel="stylesheet" href="comment-tags-v270.css?v=347">
+  <link rel="stylesheet" href="comment-tags-v270.css?v=348">
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=347"></script>
-  <script src="drill-ux-v44.js?v=347"></script>
-  <link rel="stylesheet" href="notifications-v314.css?v=347">
-  <script src="notifications-v314.js?v=347"></script>
-  <script src="navigation-v234.js?v=347"></script>
-  <script src="book-builder-v235.js?v=347"></script>
-  <script src="library-order-v215.js?v=347"></script>
-  <script src="content-dates-v246.js?v=347"></script>
-  <script src="question-header-v250.js?v=347"></script>
-  <script src="library-v214.js?v=347"></script>
-  <script src="collection-admin-v328.js?v=347"></script>
-  <script src="standard-reactions-v329.js?v=347"></script>
-  <link rel="stylesheet" href="collection-admin-v328.css?v=347">
-  <script src="naga-generator-v44.js?v=347"></script>
-  <link rel="stylesheet" href="naga-board-v248.css?v=347">
-  <link rel="stylesheet" href="dora-sheen-v333.css?v=347">
-  <link rel="stylesheet" href="refinements-v273.css?v=347">
-  <link rel="stylesheet" href="generator-tools-v274.css?v=347">
-  <link rel="stylesheet" href="book-pages-v281.css?v=347">
-  <link rel="stylesheet" href="touch-input-v307.css?v=347">
-  <script src="comment-tools-v274.js?v=347"></script>
-  <link rel="stylesheet" href="mobile-comments-v316.css?v=347">
-  <link rel="stylesheet" href="standard-reactions-v329.css?v=347">
-  <script src="mobile-comments-v316.js?v=347"></script>
-  <link rel="stylesheet" href="comment-selection-v321.css?v=347">
-  <script src="comment-selection-v321.js?v=347"></script>
-  <link rel="stylesheet" href="comment-composer-v324.css?v=347">
-  <script src="comment-composer-v324.js?v=347"></script>
-  <link rel="stylesheet" href="inline-comment-v322.css?v=347">
-  <script src="inline-comment-v322.js?v=347"></script>
-  <script src="naga-board-state-v248.js?v=347"></script>
-  <script src="naga-board-v248.js?v=347"></script>
-  <script src="call-choices-v346.js?v=347"></script>
-  <link rel="stylesheet" href="call-choices-v346.css?v=347">
-  <script src="dora-sheen-v333.js?v=347"></script>
-  <script src="sound-v342.js?v=347"></script>
-  <script src="hand-mask-v237.js?v=347"></script>
-  <script src="menu-sections-v239.js?v=347"></script>
-  <script src="workspace-ui-v240.js?v=347"></script>
-  <script src="generation-confirm-v241.js?v=347"></script>
-  <script src="collection-deletion-v244.js?v=347"></script>
-  <script src="collection-managers-v290.js?v=347"></script>
+  <script src="supabase-sync-v48.js?v=348"></script>
+  <script src="drill-ux-v44.js?v=348"></script>
+  <link rel="stylesheet" href="notifications-v314.css?v=348">
+  <script src="notifications-v314.js?v=348"></script>
+  <script src="navigation-v234.js?v=348"></script>
+  <script src="book-builder-v235.js?v=348"></script>
+  <script src="library-order-v215.js?v=348"></script>
+  <script src="content-dates-v246.js?v=348"></script>
+  <script src="question-header-v250.js?v=348"></script>
+  <script src="library-v214.js?v=348"></script>
+  <script src="collection-admin-v328.js?v=348"></script>
+  <script src="standard-reactions-v329.js?v=348"></script>
+  <link rel="stylesheet" href="collection-admin-v328.css?v=348">
+  <script src="naga-generator-v44.js?v=348"></script>
+  <link rel="stylesheet" href="naga-board-v248.css?v=348">
+  <link rel="stylesheet" href="dora-sheen-v333.css?v=348">
+  <link rel="stylesheet" href="refinements-v273.css?v=348">
+  <link rel="stylesheet" href="generator-tools-v274.css?v=348">
+  <link rel="stylesheet" href="book-pages-v281.css?v=348">
+  <link rel="stylesheet" href="touch-input-v307.css?v=348">
+  <script src="comment-tools-v274.js?v=348"></script>
+  <link rel="stylesheet" href="mobile-comments-v316.css?v=348">
+  <link rel="stylesheet" href="standard-reactions-v329.css?v=348">
+  <script src="mobile-comments-v316.js?v=348"></script>
+  <link rel="stylesheet" href="comment-selection-v321.css?v=348">
+  <script src="comment-selection-v321.js?v=348"></script>
+  <link rel="stylesheet" href="comment-composer-v324.css?v=348">
+  <script src="comment-composer-v324.js?v=348"></script>
+  <link rel="stylesheet" href="inline-comment-v322.css?v=348">
+  <script src="inline-comment-v322.js?v=348"></script>
+  <script src="naga-board-state-v248.js?v=348"></script>
+  <script src="naga-board-v248.js?v=348"></script>
+  <script src="call-choices-v346.js?v=348"></script>
+  <link rel="stylesheet" href="call-choices-v346.css?v=348">
+  <script src="dora-sheen-v333.js?v=348"></script>
+  <script src="sound-v342.js?v=348"></script>
+  <script src="hand-mask-v237.js?v=348"></script>
+  <script src="menu-sections-v239.js?v=348"></script>
+  <script src="workspace-ui-v240.js?v=348"></script>
+  <script src="generation-confirm-v241.js?v=348"></script>
+  <script src="collection-deletion-v244.js?v=348"></script>
+  <script src="collection-managers-v290.js?v=348"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 347;
+    const APP_VERSION = 348;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -4847,6 +4848,7 @@
       const QUESTION_NOTICE_STORAGE_KEY_V66 = storageKey("question-notices-v1");
         const ANNOUNCEMENT_SEEN_STORAGE_KEY_V65 = storageKey("announcement-seen-v1");
         const APP_ANNOUNCEMENTS_V66 = [
+          {"version":348,"date":"2026-10-12","publishedAt":"2026-10-12T11:14:14.148Z","title":"回答比較にリーチ・ダマを表示しました","body":"リーチ判断を含む問題で、あなたの選択・当時の選択・各モデルの推奨にリーチ／ダマを表示します。打牌が一致していてもリーチ判断が違う局面を抽出する動作も確認しました。"},
           {"version":347,"date":"2026-10-12","publishedAt":"2026-10-12T09:43:23.655Z","title":"コメント画像を読みやすい大きさにしました","body":"コメントの添付画像を、本文の横幅に合わせて自動表示します。縦横比を保ち、画像全体が見えるようになりました。タップでの拡大表示も使えます。"},
           {"version":346,"date":"2026-10-12","publishedAt":"2026-10-12T08:33:34.746Z","title":"鳴き方の違いを抽出し、選んで解けるようにしました","body":"鳴く判断が同じでも、チーで使う牌の組み合わせやチー・ポンの選択が異なる局面を抽出します。打牌検出の「全・多・並・少」すべてに対応しています。新しく作る問題では、複数の鳴き方を牌の組み合わせから選択できます。"},
           {"version":345,"date":"2026-10-05","publishedAt":"2026-10-04T18:59:42.624Z","title":"起動画面のエラー処理を見直しました","body":"画面の準備が正常に完了した場合は、一時的な実行エラーから復帰できるようにしました。読み込めない場合は、原因を確認するための確認コードが表示されます。"},
@@ -7790,10 +7792,10 @@
           if (modelNames.length) return { mark: "△", label: "他モデルの第一推奨と一致", modelMatch };
           return { mark: "×", label: "全モデルと不一致", modelMatch };
         }
-        const modelNames = models.filter(model => model.recommendation === entry.selected).map(model => model.name);
+        const hasReach = question.decisionType === "discard" && (question.hasRiichiJudgment === true || Array.isArray(question.reach) && question.reach.some(value => Number(value) > 0));
+        const modelNames = models.filter((model, index) => model.recommendation === entry.selected && (!hasReach || question.reach?.[index] != null && Number.isFinite(Number(question.reach[index])) && Boolean(entry.riichi) === (Number(question.reach[index]) >= 5000))).map(model => model.name);
         const modelMatch = modelNames.length ? `◎ ${modelNames.join("・")}と一致！！` : "";
         if (!entry.selected) return null;
-        const hasReach = question.decisionType === "discard" && (question.hasRiichiJudgment === true || Array.isArray(question.reach) && question.reach.some(value => Number(value) > 0));
         const judgeRecommendation = models[judgeIndex]?.recommendation;
         const judgeRiichi = hasReach && (question.reach?.[judgeIndex] || 0) >= 5000;
         if (entry.selected === judgeRecommendation && (!hasReach || Boolean(entry.riichi) === judgeRiichi)) return { mark: "◎", label: "第一推奨と一致", modelMatch };
@@ -7838,6 +7840,14 @@
 
       function recommendedRiichiV16(index) {
         return hasReachV16() && (SCENE.reach[index] || 0) >= 5000;
+      }
+
+      function riichiChoiceLabelV348(value) {
+        return typeof value === "boolean" ? riichiLabel(value) : "判断情報なし";
+      }
+
+      function riichiChoiceMarkupV348(value) {
+        return hasReachV16() ? `<span class="answer-choice-decision-v348">${riichiChoiceLabelV348(value)}</span>` : "";
       }
 
       function tileButtonV16(tile, index, isDraw = false) {
@@ -8047,7 +8057,7 @@
           return { className: "score-bad", mark: "×", label: "全モデルと不一致", modelMatch };
         }
         const judge = SCENE.models[state.judgeModel];
-        const modelNames = SCENE.models.filter(model => model.recommendation === state.selected).map(model => model.name);
+        const modelNames = SCENE.models.filter((model, index) => model.recommendation === state.selected && (!hasReachV16() || SCENE.reach?.[index] != null && Number.isFinite(Number(SCENE.reach[index])) && state.riichi === recommendedRiichiV16(index))).map(model => model.name);
         const modelMatch = modelNames.length ? `◎ ${modelNames.join("・")}と一致！！` : "";
         const first = judge?.recommendation === state.selected && (!hasReachV16() || state.riichi === recommendedRiichiV16(state.judgeModel));
         if (first) return { className: "score-first", mark: "◎", label: "第一推奨と一致", modelMatch };
@@ -8260,14 +8270,16 @@
         }
         const isCorrect = state.selected === correctTile && (!hasReachV16() || state.riichi === correctRiichi);
         document.getElementById("answerTitle").textContent = isCorrect ? `正解：${tileLabel(state.selected)}${hasReachV16() ? `・${riichiLabel(state.riichi)}` : ""}` : `推奨：${tileLabel(correctTile)}${hasReachV16() ? `・${riichiLabel(correctRiichi)}` : ""}`;
-        const historicalDetail = SCENE.actualDiscard ? ` ／ 当時の選択：<strong>${tileLabel(SCENE.actualDiscard)}</strong>` : "";
+        const historicalDetail = SCENE.actualDiscard ? ` ／ 当時の選択：<strong>${tileLabel(SCENE.actualDiscard)}${hasReachV16() ? `・${riichiChoiceLabelV348(SCENE.actualReach)}` : ""}</strong>` : "";
         document.getElementById("answerDetail").innerHTML = `あなたの選択：<strong>${tileLabel(state.selected)}${hasReachV16() ? `・${riichiLabel(state.riichi)}` : ""}</strong>${historicalDetail}`;
         const topModelIndices = priorityIndicesV16(3);
-        const playerCard = `<div class="answer-choice player-choice"><span class="answer-choice-label">あなたの選択</span><span class="answer-choice-tile">${tileImage(state.selected)}</span><span class="answer-choice-title">${tileLabel(state.selected)}${hasReachV16() ? `・${riichiLabel(state.riichi)}` : ""}</span></div>`;
-        const historicalCard = SCENE.actualDiscard ? `<div class="answer-choice historical-choice"><span class="answer-choice-label">当時の選択</span><span class="answer-choice-tile">${tileImage(SCENE.actualDiscard)}</span><span class="answer-choice-title">${tileLabel(SCENE.actualDiscard)}</span></div>` : "";
+        const playerCard = `<div class="answer-choice player-choice"><span class="answer-choice-label">あなたの選択</span><span class="answer-choice-tile">${tileImage(state.selected)}</span><span class="answer-choice-title">${tileLabel(state.selected)}${hasReachV16() ? `・${riichiLabel(state.riichi)}` : ""}</span>${riichiChoiceMarkupV348(state.riichi)}</div>`;
+        const historicalCard = SCENE.actualDiscard ? `<div class="answer-choice historical-choice"><span class="answer-choice-label">当時の選択</span><span class="answer-choice-tile">${tileImage(SCENE.actualDiscard)}</span><span class="answer-choice-title">${tileLabel(SCENE.actualDiscard)}</span>${riichiChoiceMarkupV348(SCENE.actualReach)}</div>` : "";
         const modelCards = topModelIndices.map(index => {
           const model = SCENE.models[index];
-          return `<div class="answer-choice model-choice"><span class="answer-choice-label">${model.name}</span><span class="answer-choice-tile">${tileImage(model.recommendation)}</span><span class="answer-choice-title">${tileLabel(model.recommendation)}</span></div>`;
+          const value = SCENE.reach?.[index];
+          const decision = value != null && Number.isFinite(Number(value)) ? Number(value) >= 5000 : null;
+          return `<div class="answer-choice model-choice"><span class="answer-choice-label">${model.name}</span><span class="answer-choice-tile">${tileImage(model.recommendation)}</span><span class="answer-choice-title">${tileLabel(model.recommendation)}</span>${riichiChoiceMarkupV348(decision)}</div>`;
         }).join("");
         document.getElementById("answerComparison").innerHTML = `${playerCard}${historicalCard}${modelCards}`;
         const riichiPanels = document.getElementById("riichiPanels");
