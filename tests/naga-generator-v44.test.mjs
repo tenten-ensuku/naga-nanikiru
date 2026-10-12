@@ -827,3 +827,46 @@ test("a matching kan decision cannot hide a riichi disagreement at the same scen
   assert.equal(found.length,1);assert.equal(found[0].decisionType,'discard');assert.equal(found[0].hasRiichiJudgment,true);
   assert.deepEqual(Array.from(found[0].decisionMismatchModels),['M0']);assert.equal(found[0].tv,1);
 });
+
+// Synthetic reports exercise the NAGA huro kind comparison, not a user's game.
+function callPatternReport(rows, kind = 2) {
+  return {reportId:'call-pattern-regression',naga_types:{0:'M0',1:'M1'},pred:[[
+    startKyoku(),
+    {...msg('dahai',{actor:3,pai:'3m'}),huro:{0:rows}},
+    kind === 0 ? msg('tsumo',{actor:0,pai:'P'}) : msg(kind === 4 ? 'pon' : 'chi',{
+      actor:0,target:3,kind,pai:'3m',consumed:kind === 1 ? ['4m','5m'] : kind === 2 ? ['2m','4m'] : kind === 3 ? ['1m','2m'] : ['3m','3m']
+    })
+  ]]};
+}
+
+test('different chi shapes are extracted at every level even though both decisions are to call',async()=>{
+  const api=await loadApi(),report=callPatternReport([{0:0,1:9900,2:100},{0:0,1:100,2:9900}]);
+  for(const detectionLevel of ['all','many','normal','few']){
+    const found=api.extractBadMoves(report,0,{detectionLevel,modelNames:['M0'],decisionType:'discard',modelMode:'all',maxCandidates:1});
+    assert.equal(found.length,1);
+    const candidate=found[0];
+    assert.equal(candidate.actualCallAction,'call');assert.equal(candidate.callRecommendedActions[0],'call');
+    assert.equal(candidate.actualCallCode,2);assert.deepEqual(Array.from(candidate.callRecommendedCodes),[1,2]);
+    assert.deepEqual(Array.from(candidate.decisionMismatchModels),['M0']);
+    assert.deepEqual(Array.from(candidate.callPatternMismatchModels),['M0']);
+    assert.equal(api.extractBadMoves(report,0,{detectionLevel,modelNames:['M1']}).length,0);
+  }
+});
+
+test('raw call recommendations follow NAGA tie order and do not sum separate chi choices',async()=>{
+  const api=await loadApi();
+  for(const [rows,kind,expected] of [
+    [[{0:0,1:5000,2:5000}],1,1],
+    [[{0:0,1:5000,2:5000}],2,0],
+    [[{0:4000,1:3000,2:3000}],0,0],
+    [[{0:4000,1:3000,2:3000}],1,1],
+    [[{0:0,1:9900,4:100}],4,1],
+    [[{0:0,1:100,4:9900}],1,1],
+    [[{0:0,1:0,2:0}],2,0],
+    [[{0:0,1:9900,2:100},null],2,1]
+  ]){
+    const report=callPatternReport(rows,kind);
+    assert.equal(api.extractBadMoves(report,0,{detectionLevel:'few',modelNames:['M0']}).length,expected,JSON.stringify({rows,kind}));
+    assert.equal(api.extractBadMoves(report,0,{detectionLevel:'all',modelNames:['M1']}).length,0);
+  }
+});

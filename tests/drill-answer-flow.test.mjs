@@ -35,7 +35,7 @@ test("requires explicit confirmation before revealing or recording an answer", a
 
 test("records answer timing and exposes the synchronized drill version", async () => {
   const html = await source();
-  assert.match(html, /const APP_VERSION = 345;/);
+  assert.match(html, /const APP_VERSION = 346;/);
   assert.match(html, /const MODEL_PRIORITY = \["ニシキ", "ヒバカリ", "カガシ", "ガンマ", "オメガ"\];/);
   assert.match(html, /const HAND_BAR_MODEL_NAMES = \["ニシキ", "ヒバカリ", "カガシ"\];/);
   assert.match(html, /NagaBoardV248\.judgmentMarkup\(SCENE, \{selectedModel: state\.judgeModel\}\)/);
@@ -57,7 +57,7 @@ test("records answer timing and exposes the synchronized drill version", async (
 
 test("uses pass-through wording and the shared NAGA graph for call results", async () => {
   const html = await source();
-  assert.match(html, /function callActionLabelV112\(action\)[\s\S]*?return "スルー";/);
+  assert.match(html, /function callActionLabelV112\(action, question\)[\s\S]*?return "スルー";/);
   assert.match(html, /function callRecommendationProbabilityV112\(index\)/);
   assert.match(html, /NagaBoardV248\.judgmentMarkup\(SCENE/);
   assert.doesNotMatch(html, /副露推奨度50％以下はスルー推奨/);

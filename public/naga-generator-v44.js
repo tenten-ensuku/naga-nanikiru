@@ -705,6 +705,17 @@
     });
   }
 
+  function bestCallCodes(options, count) {
+    return Array.from({ length: count }, function (_unused, modelIndex) {
+      // NAGA compares individual huro kinds, including each chi shape. Equal
+      // probabilities select the later numeric kind, as in its graph renderer.
+      var best = options.reduce(function (best, option) {
+        return !best || Number(option.values[modelIndex] || 0) >= Number(best.values[modelIndex] || 0) ? option : best;
+      }, null);
+      return best ? best.code : null;
+    });
+  }
+
   function callActionProbabilityMap(options, count) {
     var map = { pass: [], call: [], kan: [] };
     options.forEach(function (option) {
@@ -1042,6 +1053,10 @@
     candidate.actualCallAction = actual.called ? callActionForCode(actual.code) : "pass";
     candidate.actualDecision = actual.code;
     candidate.callOptions = rawCallOptions(rows, kanRows, count);
+    candidate.callRecommendedCodes = bestCallCodes(candidate.callOptions, count);
+    if (!kanRows.length && candidate.callOptions.filter(function (option) { return option.code > 0 && option.code <= 5; }).length > 1) {
+      candidate.callChoiceMode = "pattern-v346";
+    }
     candidate.callActionOptions = actionOptions;
     candidate.callActionProbabilities = actionProbabilities;
     candidate.callProbabilities = {
@@ -1256,7 +1271,12 @@
   function decisionMismatchIndices(candidate, indices) {
     return indices.filter(function (i) {
       if (candidate.decisionType === "call") {
-        return candidate.callPredictionAvailable[i] && candidate.callRecommendedActions[i] !== candidate.actualCallAction;
+        if (!candidate.callPredictionAvailable[i]) return false;
+        // Keep kan's existing binary decision rule. Huro uses NAGA's exact
+        // kind comparison so two different chi shapes cannot count as a match.
+        return candidate.predictionType === "call"
+          ? candidate.callRecommendedCodes[i] !== candidate.actualCallCode
+          : candidate.callRecommendedActions[i] !== candidate.actualCallAction;
       }
       var value = candidate.reach[i];
       return candidate.hasRiichiJudgment && !candidate.reached && value != null && Number.isFinite(Number(value))
@@ -1319,7 +1339,7 @@
         var bad = badModelIndices.length > 0
           && (settings.modelMode === "any" || badModelIndices.length === consideredModelIndices.length);
         // Decision disagreements are independent of all extraction filters.
-        // Use the same first-choice rule as question grading (riichi >= 50%).
+        // Huro uses individual kinds; riichi keeps its >= 50% decision rule.
         var forced = mismatchIndices.length > 0;
         if (!forced && (!bad || !candidateMatchesDecision(candidate, settings.decisionType) || (!settings.detectionLevel && filteredCount >= settings.maxCandidates))) continue;
         if (candidate.decisionType === "discard"
@@ -1328,6 +1348,9 @@
         }
         if (!forced) filteredCount += 1;
         candidate.decisionMismatchModels = mismatchIndices.map(function (i) { return candidate.models[i].name; });
+        candidate.callPatternMismatchModels = candidate.predictionType === "call" && candidate.actualCallCode > 0
+          ? mismatchIndices.filter(function (i) { return candidate.callRecommendedCodes[i] > 0; }).map(function (i) { return candidate.models[i].name; })
+          : [];
         candidate.isBadMove = true;
         candidate.detectionLevel = settings.detectionLevel;
         candidate.badMoveThresholdPercent = settings.thresholdPercent;

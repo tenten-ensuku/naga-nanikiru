@@ -1,0 +1,7 @@
+.call-pattern-tiles-v346{display:inline-flex;gap:1px;align-items:center;vertical-align:middle;min-width:0}
+.call-pattern-tiles-v346 img{width:25px;height:auto;min-width:0}
+.scene-frame.is-json-board-v248 .call-controls.has-patterns-v346{gap:.5cqw;padding:0 .25cqw}
+.scene-frame.is-json-board-v248 .call-pattern-choice-v346{display:inline-flex;align-items:center;justify-content:center;gap:.35cqw;width:auto;min-width:0;flex:0 1 auto;padding:0 .5cqw;font-size:clamp(8px,1.8cqw,13px);white-space:nowrap}
+.scene-frame.is-json-board-v248 .call-pattern-choice-v346.call-no{flex:0 0 auto;min-width:6cqw}
+.scene-frame.is-json-board-v248 .call-pattern-choice-v346 img{width:2.6cqw;height:3.55cqw;object-fit:contain}
+.answer-choice .call-answer-value:has(.call-pattern-tiles-v346){display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:6px}

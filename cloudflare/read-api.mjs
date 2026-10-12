@@ -1102,6 +1102,7 @@ function pollChoice(answer) {
     return `${selected}|${riichi ? "reach" : "no-reach"}`;
   }
   const callDecision = String(answer.callDecision ?? "").trim().toLowerCase();
+  if (/^call:[1-5]$/.test(callDecision)) return callDecision;
   if (["kan", "call:kan"].includes(callDecision)) return "call:kan";
   if (["call", "true", "call:yes"].includes(callDecision)) return "call:yes";
   if (["pass", "false", "call:no"].includes(callDecision)) return "call:no";
