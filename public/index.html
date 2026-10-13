@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=348">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=348">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=348">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=349">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=349">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=349">
   <title>みん切る｜みんなの何切る問題集</title>
   <link rel="preload" as="image" href="assets/loading-screen-v243.png" fetchpriority="high">
   <meta name="description" content="みん切るは、NAGA URLから問題をつくり、解いて、仲間と共有できる麻雀学習アプリです。">
   <meta name="theme-color" content="#f3f6f7">
-  <script src="theme-v259.js?v=348"></script>
+  <script src="theme-v259.js?v=349"></script>
   <meta property="og:type" content="website">
   <meta property="og:title" content="みん切る｜みんなの何切る問題集">
   <meta property="og:description" content="みん切るは、NAGA URLから問題をつくり、解いて、仲間と共有できる麻雀学習アプリです。">
@@ -65,7 +65,7 @@
           } else if (source) file = "external";
         } catch { /* Source metadata may be unavailable. */ }
         const position = value => Number.isSafeInteger(Number(value)) && Number(value) > 0 ? Number(value) : 0;
-        return `確認コード：V348 / ${kind} / ${name} / ${file}:${position(line)}:${position(column)}`;
+        return `確認コード：V349 / ${kind} / ${name} / ${file}:${position(line)}:${position(column)}`;
       };
       const showStatus = () => {
         const status = document.getElementById("startupStatusV236");
@@ -122,6 +122,8 @@
       --nishiki: #9b78ff;
       --hihikari: #f1c457;
       --kagashi: #4aa8ff;
+      --ananta: #37b5ae;
+      --ouroboros: #d884bc;
       --shadow: 0 22px 70px rgba(0,0,0,.35);
     }
 
@@ -510,6 +512,8 @@
     .model-nishiki { background: var(--nishiki); }
     .model-hihikari { background: var(--hihikari); }
     .model-kagashi { background: var(--kagashi); }
+    .model-ananta { background: var(--ananta); }
+    .model-ouroboros { background: var(--ouroboros); }
 
     .answer-strip { order: 4; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 12px; padding: 12px 14px; margin-top: 10px; background: linear-gradient(145deg, rgba(12, 42, 58, .98), rgba(6, 25, 39, .98)); border: 1px solid var(--line); border-radius: 12px; }
     .answer-strip[hidden] { display: none; }
@@ -2302,24 +2306,24 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="theme-song-v344.css?v=348">
-  <link rel="stylesheet" href="ux-v159.css?v=348">
-  <link rel="stylesheet" href="library-v214.css?v=348">
-  <link rel="stylesheet" href="navigation-v234.css?v=348">
-  <link rel="stylesheet" href="book-builder-v235.css?v=348">
-  <link rel="stylesheet" href="menu-polish-v238.css?v=348">
-  <link rel="stylesheet" href="menu-sections-v239.css?v=348">
-  <link rel="stylesheet" href="workspace-ui-v240.css?v=348">
-  <link rel="stylesheet" href="collection-deletion-v244.css?v=348">
-  <link rel="stylesheet" href="collection-managers-v290.css?v=348">
-  <link rel="stylesheet" href="menu-simplify-v245.css?v=348">
-  <link rel="stylesheet" href="content-dates-v246.css?v=348">
-  <link rel="stylesheet" href="question-header-v250.css?v=348">
-  <link rel="stylesheet" href="question-toolbar-v255.css?v=348">
-  <link rel="stylesheet" href="theme-v259.css?v=348">
-  <link rel="stylesheet" href="theme-quick-v295.css?v=348">
-  <link rel="stylesheet" href="brand-v302.css?v=348">
-  <script defer src="theme-quick-v295.js?v=348"></script>
+  <link rel="stylesheet" href="theme-song-v344.css?v=349">
+  <link rel="stylesheet" href="ux-v159.css?v=349">
+  <link rel="stylesheet" href="library-v214.css?v=349">
+  <link rel="stylesheet" href="navigation-v234.css?v=349">
+  <link rel="stylesheet" href="book-builder-v235.css?v=349">
+  <link rel="stylesheet" href="menu-polish-v238.css?v=349">
+  <link rel="stylesheet" href="menu-sections-v239.css?v=349">
+  <link rel="stylesheet" href="workspace-ui-v240.css?v=349">
+  <link rel="stylesheet" href="collection-deletion-v244.css?v=349">
+  <link rel="stylesheet" href="collection-managers-v290.css?v=349">
+  <link rel="stylesheet" href="menu-simplify-v245.css?v=349">
+  <link rel="stylesheet" href="content-dates-v246.css?v=349">
+  <link rel="stylesheet" href="question-header-v250.css?v=349">
+  <link rel="stylesheet" href="question-toolbar-v255.css?v=349">
+  <link rel="stylesheet" href="theme-v259.css?v=349">
+  <link rel="stylesheet" href="theme-quick-v295.css?v=349">
+  <link rel="stylesheet" href="brand-v302.css?v=349">
+  <script defer src="theme-quick-v295.js?v=349"></script>
 </head>
 <body class="auth-gate-open">
   <section class="startup-screen-v236" id="startupScreenV236" aria-label="みん切るを準備中">
@@ -2670,54 +2674,54 @@
     </form>
   </dialog>
 
-  <link rel="stylesheet" href="comment-tags-v270.css?v=348">
+  <link rel="stylesheet" href="comment-tags-v270.css?v=349">
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=348"></script>
-  <script src="drill-ux-v44.js?v=348"></script>
-  <link rel="stylesheet" href="notifications-v314.css?v=348">
-  <script src="notifications-v314.js?v=348"></script>
-  <script src="navigation-v234.js?v=348"></script>
-  <script src="book-builder-v235.js?v=348"></script>
-  <script src="library-order-v215.js?v=348"></script>
-  <script src="content-dates-v246.js?v=348"></script>
-  <script src="question-header-v250.js?v=348"></script>
-  <script src="library-v214.js?v=348"></script>
-  <script src="collection-admin-v328.js?v=348"></script>
-  <script src="standard-reactions-v329.js?v=348"></script>
-  <link rel="stylesheet" href="collection-admin-v328.css?v=348">
-  <script src="naga-generator-v44.js?v=348"></script>
-  <link rel="stylesheet" href="naga-board-v248.css?v=348">
-  <link rel="stylesheet" href="dora-sheen-v333.css?v=348">
-  <link rel="stylesheet" href="refinements-v273.css?v=348">
-  <link rel="stylesheet" href="generator-tools-v274.css?v=348">
-  <link rel="stylesheet" href="book-pages-v281.css?v=348">
-  <link rel="stylesheet" href="touch-input-v307.css?v=348">
-  <script src="comment-tools-v274.js?v=348"></script>
-  <link rel="stylesheet" href="mobile-comments-v316.css?v=348">
-  <link rel="stylesheet" href="standard-reactions-v329.css?v=348">
-  <script src="mobile-comments-v316.js?v=348"></script>
-  <link rel="stylesheet" href="comment-selection-v321.css?v=348">
-  <script src="comment-selection-v321.js?v=348"></script>
-  <link rel="stylesheet" href="comment-composer-v324.css?v=348">
-  <script src="comment-composer-v324.js?v=348"></script>
-  <link rel="stylesheet" href="inline-comment-v322.css?v=348">
-  <script src="inline-comment-v322.js?v=348"></script>
-  <script src="naga-board-state-v248.js?v=348"></script>
-  <script src="naga-board-v248.js?v=348"></script>
-  <script src="call-choices-v346.js?v=348"></script>
-  <link rel="stylesheet" href="call-choices-v346.css?v=348">
-  <script src="dora-sheen-v333.js?v=348"></script>
-  <script src="sound-v342.js?v=348"></script>
-  <script src="hand-mask-v237.js?v=348"></script>
-  <script src="menu-sections-v239.js?v=348"></script>
-  <script src="workspace-ui-v240.js?v=348"></script>
-  <script src="generation-confirm-v241.js?v=348"></script>
-  <script src="collection-deletion-v244.js?v=348"></script>
-  <script src="collection-managers-v290.js?v=348"></script>
+  <script src="supabase-sync-v48.js?v=349"></script>
+  <script src="drill-ux-v44.js?v=349"></script>
+  <link rel="stylesheet" href="notifications-v314.css?v=349">
+  <script src="notifications-v314.js?v=349"></script>
+  <script src="navigation-v234.js?v=349"></script>
+  <script src="book-builder-v235.js?v=349"></script>
+  <script src="library-order-v215.js?v=349"></script>
+  <script src="content-dates-v246.js?v=349"></script>
+  <script src="question-header-v250.js?v=349"></script>
+  <script src="library-v214.js?v=349"></script>
+  <script src="collection-admin-v328.js?v=349"></script>
+  <script src="standard-reactions-v329.js?v=349"></script>
+  <link rel="stylesheet" href="collection-admin-v328.css?v=349">
+  <script src="naga-generator-v44.js?v=349"></script>
+  <link rel="stylesheet" href="naga-board-v248.css?v=349">
+  <link rel="stylesheet" href="dora-sheen-v333.css?v=349">
+  <link rel="stylesheet" href="refinements-v273.css?v=349">
+  <link rel="stylesheet" href="generator-tools-v274.css?v=349">
+  <link rel="stylesheet" href="book-pages-v281.css?v=349">
+  <link rel="stylesheet" href="touch-input-v307.css?v=349">
+  <script src="comment-tools-v274.js?v=349"></script>
+  <link rel="stylesheet" href="mobile-comments-v316.css?v=349">
+  <link rel="stylesheet" href="standard-reactions-v329.css?v=349">
+  <script src="mobile-comments-v316.js?v=349"></script>
+  <link rel="stylesheet" href="comment-selection-v321.css?v=349">
+  <script src="comment-selection-v321.js?v=349"></script>
+  <link rel="stylesheet" href="comment-composer-v324.css?v=349">
+  <script src="comment-composer-v324.js?v=349"></script>
+  <link rel="stylesheet" href="inline-comment-v322.css?v=349">
+  <script src="inline-comment-v322.js?v=349"></script>
+  <script src="naga-board-state-v248.js?v=349"></script>
+  <script src="naga-board-v248.js?v=349"></script>
+  <script src="call-choices-v346.js?v=349"></script>
+  <link rel="stylesheet" href="call-choices-v346.css?v=349">
+  <script src="dora-sheen-v333.js?v=349"></script>
+  <script src="sound-v342.js?v=349"></script>
+  <script src="hand-mask-v237.js?v=349"></script>
+  <script src="menu-sections-v239.js?v=349"></script>
+  <script src="workspace-ui-v240.js?v=349"></script>
+  <script src="generation-confirm-v241.js?v=349"></script>
+  <script src="collection-deletion-v244.js?v=349"></script>
+  <script src="collection-managers-v290.js?v=349"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 348;
+    const APP_VERSION = 349;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -2750,8 +2754,7 @@
     const TILE_NAMES = { ji1: "東", ji2: "南", ji3: "西", ji4: "北", ji5: "白", ji6: "發", ji7: "中", aka1: "赤5萬", aka2: "赤5筒", aka3: "赤5索" };
     const SUIT_NAMES = { man: "萬", pin: "筒", sou: "索" };
     const MODEL_COLORS = ["model-omega", "model-gamma", "model-nishiki", "model-hihikari", "model-kagashi"];
-    const MODEL_PRIORITY = ["ニシキ", "ヒバカリ", "カガシ", "ガンマ", "オメガ"];
-    const HAND_BAR_MODEL_NAMES = ["ニシキ", "ヒバカリ", "カガシ"];
+    const MODEL_PRIORITY = ["ニシキ", "ヒバカリ", "カガシ", "アナンタ", "ウロボロス", "ガンマ", "オメガ"];
     const NAGA_URL = "https://naga.dmv.nico/htmls/report_viewer.html?report_id=3649c457ea7a1b61abccdca5ffbc43764587421511f08b6f8ac49d80308a1114v2_2&tw=0&ts=1&tv=69";
     const THREAD_URL = "https://discord.com/channels/1166706544856006656/1532011607209541833";
     const THREAD_MESSAGES = [
@@ -2883,11 +2886,9 @@
       return `<img class="comment-inline-tile" src="tiles/${tile}-66-90-l.png" alt="${tileLabel(tile)}" loading="lazy">`;
     }
 
-    function priorityModelIndices(limit = MODEL_PRIORITY.length) {
-      return MODEL_PRIORITY
-        .map(modelName => SCENE.models.findIndex(model => model.name === modelName))
-        .filter(index => index >= 0)
-        .slice(0, limit);
+    function priorityModelIndices(limit = SCENE.models.length) {
+      return SCENE.models.map((_, index) => index)
+        .sort((a, b) => modelPriorityRank(a) - modelPriorityRank(b)).slice(0, limit);
     }
 
     function modelPriorityRank(index) {
@@ -2896,7 +2897,7 @@
     }
 
     function recommendedModelIndices(tile) {
-      return priorityModelIndices(3).filter(index => SCENE.models[index].recommendation === tile);
+      return priorityModelIndices().filter(index => SCENE.models[index].recommendation === tile);
     }
 
     function analysisModelIndices() {
@@ -2904,9 +2905,7 @@
     }
 
     function handBarModelIndices() {
-      return HAND_BAR_MODEL_NAMES
-        .map(modelName => SCENE.models.findIndex(model => model.name === modelName))
-        .filter(index => index >= 0);
+      return priorityModelIndices();
     }
 
     function recommendedRiichi(modelIndex) {
@@ -4099,7 +4098,7 @@
       const isCorrect = state.selected === correctTile && state.riichi === correctRiichi;
       document.getElementById("answerTitle").textContent = isCorrect ? `正解：${tileLabel(state.selected)}・${riichiLabel(state.riichi)}` : `推奨：${tileLabel(correctTile)}・${riichiLabel(correctRiichi)}`;
       document.getElementById("answerDetail").innerHTML = `あなたの選択：<strong>${tileLabel(state.selected)}・${riichiLabel(state.riichi)}</strong> ／ 当時の選択：<strong>${tileLabel(SCENE.actualDiscard)}</strong>`;
-      const topModelIndices = priorityModelIndices(3);
+      const topModelIndices = priorityModelIndices();
       const hasReachJudgment = SCENE.reach.some(value => value > 0);
       const playerCard = `<div class="answer-choice player-choice"><span class="answer-choice-label">あなたの選択</span><span class="answer-choice-tile">${tileImage(state.selected)}</span><span class="answer-choice-title">${tileLabel(state.selected)}・${riichiLabel(state.riichi)}</span></div>`;
       const historicalCard = `<div class="answer-choice historical-choice"><span class="answer-choice-label">当時の選択</span><span class="answer-choice-tile">${tileImage(SCENE.actualDiscard)}</span><span class="answer-choice-title">${tileLabel(SCENE.actualDiscard)}</span></div>`;
@@ -4533,7 +4532,7 @@
       let remoteHistorySyncPromiseV81 = null;
       let sharedSessionStartPendingV177 = false;
       let importedQuestionsReadyV81 = false;
-      const modelColorByNameV16 = { オメガ: "model-omega", ガンマ: "model-gamma", ニシキ: "model-nishiki", ヒバカリ: "model-hihikari", カガシ: "model-kagashi" };
+      const modelColorByNameV16 = { オメガ: "model-omega", ガンマ: "model-gamma", ニシキ: "model-nishiki", ヒバカリ: "model-hihikari", カガシ: "model-kagashi", アナンタ: "model-ananta", ウロボロス: "model-ouroboros" };
       const USER_STATE_KEY_V16 = storageKey("user-state-v1");
       const LEGACY_USER_STATE_KEY_V16 = "naga-nanikiru-user-state-v1";
       function userStateStorageKeyV232() {
@@ -4848,6 +4847,7 @@
       const QUESTION_NOTICE_STORAGE_KEY_V66 = storageKey("question-notices-v1");
         const ANNOUNCEMENT_SEEN_STORAGE_KEY_V65 = storageKey("announcement-seen-v1");
         const APP_ANNOUNCEMENTS_V66 = [
+          {"version":349,"date":"2026-10-13","publishedAt":"2026-10-13T14:10:48.592Z","title":"アナンタ・ウロボロスに対応しました","body":"NAGAの新タイプ「アナンタ」「ウロボロス」を、問題生成・正誤判定・推奨比較で使えます。解析に含まれる全タイプの推奨を表示します。"},
           {"version":348,"date":"2026-10-12","publishedAt":"2026-10-12T11:14:14.148Z","title":"回答比較にリーチ・ダマを表示しました","body":"リーチ判断を含む問題で、あなたの選択・当時の選択・各モデルの推奨にリーチ／ダマを表示します。打牌が一致していてもリーチ判断が違う局面を抽出する動作も確認しました。"},
           {"version":347,"date":"2026-10-12","publishedAt":"2026-10-12T09:43:23.655Z","title":"コメント画像を読みやすい大きさにしました","body":"コメントの添付画像を、本文の横幅に合わせて自動表示します。縦横比を保ち、画像全体が見えるようになりました。タップでの拡大表示も使えます。"},
           {"version":346,"date":"2026-10-12","publishedAt":"2026-10-12T08:33:34.746Z","title":"鳴き方の違いを抽出し、選んで解けるようにしました","body":"鳴く判断が同じでも、チーで使う牌の組み合わせやチー・ポンの選択が異なる局面を抽出します。打牌検出の「全・多・並・少」すべてに対応しています。新しく作る問題では、複数の鳴き方を牌の組み合わせから選択できます。"},
@@ -7780,7 +7780,7 @@
           return window.MinkiruCallChoicesV346.score(question, normalizeCallActionV112(entry.callDecision), judge);
         }
         const models = Array.isArray(question.models) ? question.models : [];
-        const judgeIndex = Math.max(0, models.findIndex(model => model.name === "ニシキ"));
+        const judgeIndex = Math.max(0, models.findIndex(model => model.name === (entry.judgeModel || "ニシキ")));
         if (question.decisionType === "call") {
           const selectedAction = normalizeCallActionV112(entry.callDecision);
           if (!selectedAction) return null;
@@ -7793,11 +7793,11 @@
           return { mark: "×", label: "全モデルと不一致", modelMatch };
         }
         const hasReach = question.decisionType === "discard" && (question.hasRiichiJudgment === true || Array.isArray(question.reach) && question.reach.some(value => Number(value) > 0));
-        const modelNames = models.filter((model, index) => model.recommendation === entry.selected && (!hasReach || question.reach?.[index] != null && Number.isFinite(Number(question.reach[index])) && Boolean(entry.riichi) === (Number(question.reach[index]) >= 5000))).map(model => model.name);
+        const modelNames = models.filter((model, index) => model.recommendation === entry.selected && (!hasReach || questionRiichiRecommendationV349(question, index) === Boolean(entry.riichi))).map(model => model.name);
         const modelMatch = modelNames.length ? `◎ ${modelNames.join("・")}と一致！！` : "";
         if (!entry.selected) return null;
         const judgeRecommendation = models[judgeIndex]?.recommendation;
-        const judgeRiichi = hasReach && (question.reach?.[judgeIndex] || 0) >= 5000;
+        const judgeRiichi = hasReach && questionRiichiRecommendationV349(question, judgeIndex) === true;
         if (entry.selected === judgeRecommendation && (!hasReach || Boolean(entry.riichi) === judgeRiichi)) return { mark: "◎", label: "第一推奨と一致", modelMatch };
         const probabilities = models.map((model, index) => question.probabilities?.[entry.selected]?.[index] ?? 0);
         const badCount = probabilities.filter(value => value <= 5).length;
@@ -7825,12 +7825,12 @@
         return modelColorByNameV16[SCENE.models[index]?.name] || MODEL_COLORS[index] || "model-nishiki";
       }
 
-      function priorityIndicesV16(limit = 3) {
-        return MODEL_PRIORITY.map(name => SCENE.models.findIndex(model => model.name === name)).filter(index => index >= 0).slice(0, limit);
+      function priorityIndicesV16(limit = SCENE.models.length) {
+        return priorityModelIndices(limit);
       }
 
       function handBarIndicesV16() {
-        return priorityIndicesV16(3);
+        return priorityIndicesV16();
       }
 
       function hasReachV16() {
@@ -7839,7 +7839,14 @@
       }
 
       function recommendedRiichiV16(index) {
-        return hasReachV16() && (SCENE.reach[index] || 0) >= 5000;
+        return hasReachV16() && questionRiichiRecommendationV349(SCENE, index) === true;
+      }
+
+      function questionRiichiRecommendationV349(question, index) {
+        const model = question.models?.[index];
+        if (typeof model?.riichi === "boolean") return model.riichi;
+        const value = question.reach?.[index];
+        return value != null && Number.isFinite(Number(value)) ? Number(value) >= 5000 : null;
       }
 
       function riichiChoiceLabelV348(value) {
@@ -8057,7 +8064,7 @@
           return { className: "score-bad", mark: "×", label: "全モデルと不一致", modelMatch };
         }
         const judge = SCENE.models[state.judgeModel];
-        const modelNames = SCENE.models.filter((model, index) => model.recommendation === state.selected && (!hasReachV16() || SCENE.reach?.[index] != null && Number.isFinite(Number(SCENE.reach[index])) && state.riichi === recommendedRiichiV16(index))).map(model => model.name);
+        const modelNames = SCENE.models.filter((model, index) => model.recommendation === state.selected && (!hasReachV16() || state.riichi === questionRiichiRecommendationV349(SCENE, index))).map(model => model.name);
         const modelMatch = modelNames.length ? `◎ ${modelNames.join("・")}と一致！！` : "";
         const first = judge?.recommendation === state.selected && (!hasReachV16() || state.riichi === recommendedRiichiV16(state.judgeModel));
         if (first) return { className: "score-first", mark: "◎", label: "第一推奨と一致", modelMatch };
@@ -8272,13 +8279,12 @@
         document.getElementById("answerTitle").textContent = isCorrect ? `正解：${tileLabel(state.selected)}${hasReachV16() ? `・${riichiLabel(state.riichi)}` : ""}` : `推奨：${tileLabel(correctTile)}${hasReachV16() ? `・${riichiLabel(correctRiichi)}` : ""}`;
         const historicalDetail = SCENE.actualDiscard ? ` ／ 当時の選択：<strong>${tileLabel(SCENE.actualDiscard)}${hasReachV16() ? `・${riichiChoiceLabelV348(SCENE.actualReach)}` : ""}</strong>` : "";
         document.getElementById("answerDetail").innerHTML = `あなたの選択：<strong>${tileLabel(state.selected)}${hasReachV16() ? `・${riichiLabel(state.riichi)}` : ""}</strong>${historicalDetail}`;
-        const topModelIndices = priorityIndicesV16(3);
+        const topModelIndices = priorityIndicesV16();
         const playerCard = `<div class="answer-choice player-choice"><span class="answer-choice-label">あなたの選択</span><span class="answer-choice-tile">${tileImage(state.selected)}</span><span class="answer-choice-title">${tileLabel(state.selected)}${hasReachV16() ? `・${riichiLabel(state.riichi)}` : ""}</span>${riichiChoiceMarkupV348(state.riichi)}</div>`;
         const historicalCard = SCENE.actualDiscard ? `<div class="answer-choice historical-choice"><span class="answer-choice-label">当時の選択</span><span class="answer-choice-tile">${tileImage(SCENE.actualDiscard)}</span><span class="answer-choice-title">${tileLabel(SCENE.actualDiscard)}</span>${riichiChoiceMarkupV348(SCENE.actualReach)}</div>` : "";
         const modelCards = topModelIndices.map(index => {
           const model = SCENE.models[index];
-          const value = SCENE.reach?.[index];
-          const decision = value != null && Number.isFinite(Number(value)) ? Number(value) >= 5000 : null;
+          const decision = questionRiichiRecommendationV349(SCENE, index);
           return `<div class="answer-choice model-choice"><span class="answer-choice-label">${model.name}</span><span class="answer-choice-tile">${tileImage(model.recommendation)}</span><span class="answer-choice-title">${tileLabel(model.recommendation)}</span>${riichiChoiceMarkupV348(decision)}</div>`;
         }).join("");
         document.getElementById("answerComparison").innerHTML = `${playerCard}${historicalCard}${modelCards}`;

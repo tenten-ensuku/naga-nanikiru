@@ -91,7 +91,7 @@ test('answer cards display independent current, historical and model riichi deci
   const scene={decisionType:'discard',hasRiichiJudgment:true,actualDiscard:'man5',actualReach:true,reach:[9000,1000,5000],models:['ニシキ','ヒバカリ','カガシ'].map(name=>({name,recommendation:'man5'}))};
   const context={document:{getElementById:id=>elements[id]},state:{revealed:true,judgeModel:0,selected:'man5',riichi:false},SCENE:scene,window:{NagaBoardV248:renderer},renderAnswerConfirmationV41(){},renderChoiceScoreV16(){},priorityIndicesV16:()=>[0,1,2],tileImage:x=>`<img alt="${x}">`,tileLabel:x=>x,nextButtonLabelV44:()=> '次の問題へ',renderComments(){},refreshQuestionPollStatsV110(){}};
   vm.createContext(context);
-  for(const name of ['riichiLabel','hasReachV16','recommendedRiichiV16','riichiChoiceLabelV348','riichiChoiceMarkupV348','renderAnswerV16','choiceScoreV16','scoreForQuestionV16']){
+  for(const name of ['riichiLabel','hasReachV16','questionRiichiRecommendationV349','recommendedRiichiV16','riichiChoiceLabelV348','riichiChoiceMarkupV348','renderAnswerV16','choiceScoreV16','scoreForQuestionV16']){
     const source=html.match(new RegExp(`    (?:  )?function ${name}\\([^]*?\\n    (?:  )?\\}`))[0];vm.runInContext(source,context);
   }
   const labels=()=>[...elements.answerComparison.innerHTML.matchAll(/class="answer-choice-decision-v348">([^<]*)</g)].map(m=>m[1]);

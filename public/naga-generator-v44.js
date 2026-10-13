@@ -843,6 +843,46 @@
     );
   }
 
+  // NAGA viewer 1.2.2: dahai_detail contains [dama, riichi] over 37 tiles.
+  // Keep basis points for extraction; the viewer merges red fives into 34 tiles.
+  function discardDetailV349(action, index) {
+    var detail = action && action.dahai_detail && action.dahai_detail[index];
+    return Array.isArray(detail) && detail.length === 2 && detail.every(function (row) {
+      return Array.isArray(row) && row.length === 37 && row.every(function (value) {
+        return typeof value === "number" && Number.isFinite(value) && value >= 0;
+      });
+    }) ? detail : null;
+  }
+
+  function discardRowsV349(action) {
+    var legacy = Array.isArray(action && action.dahai_pred) ? action.dahai_pred : [];
+    var details = Array.isArray(action && action.dahai_detail) ? action.dahai_detail : [];
+    return Array.from({ length: Math.max(legacy.length, details.length) }, function (_, index) {
+      var detail = discardDetailV349(action, index);
+      if (!detail) return legacy[index];
+      var row = detail[0].map(function (value, tile) { return value + detail[1][tile]; });
+      row[4] += row[34]; row[13] += row[35]; row[22] += row[36];
+      return row.slice(0, 34);
+    });
+  }
+
+  function ownTurnRecommendationV349(action, message, index) {
+    var detail = discardDetailV349(action, index), tile = parseTile(message.pred_dahai && message.pred_dahai[index]);
+    if (!detail || !tile) return null;
+    var column = tile.red ? 34 + Math.floor(tile.index / 9) : tile.index;
+    var dama = detail[0][column], reach = detail[1][column];
+    var best = { action: reach > dama ? "reach" : "dahai", value: Math.max(dama, reach) };
+    var alternatives = [["hora", action.hora && action.hora[message.actor] && action.hora[message.actor][index]], ["kyushu", action.kyushu && action.kyushu[index]]];
+    ["ankan", "kakan"].forEach(function (kind) {
+      var choices = action[kind + "_pai"] && action[kind + "_pai"][index];
+      Object.values(choices || {}).forEach(function (value) { alternatives.push([kind, value]); });
+    });
+    alternatives.forEach(function (choice) {
+      if (choice[1] != null && Number(choice[1]) > best.value) best = {action: choice[0], value: Number(choice[1])};
+    });
+    return best.action;
+  }
+
   function probabilityMatrix(rows, predictions, observedTiles, count) {
     var probabilities = {};
     for (var tileNumber = 0; tileNumber < 34; tileNumber += 1) {
@@ -949,7 +989,7 @@
       return null;
     }
 
-    var predictionRows = action.dahai_pred;
+    var predictionRows = discardRowsV349(action);
     var predictions = message.pred_dahai;
     if (!Array.isArray(predictionRows) || !Array.isArray(predictions)) return null;
 
@@ -988,6 +1028,13 @@
       : Array.isArray(message.reach)
         ? message.reach.slice()
         : [];
+    models.forEach(function (model, index) {
+      var detail = discardDetailV349(action, index);
+      if (!detail) return;
+      if (candidate.reach[index] == null) candidate.reach[index] = detail[1].reduce(function (sum, value) { return sum + value; }, 0);
+      model.decisionAction = ownTurnRecommendationV349(action, message, index);
+      model.riichi = model.decisionAction === "reach";
+    });
     candidate.actualReach = hasActualReachAfterPrediction(entries, candidateTv, seat);
     candidate.hasRiichiJudgment = candidate.reach.some(function (value) { return Number(value) > 0; })
       || candidate.actualReach;
@@ -1041,6 +1088,10 @@
     var actionOptions = callActionOptions(rows, kanRows, count);
     var actionProbabilities = callActionProbabilityMap(actionOptions, count);
     var actionRecommendations = bestCallActions(actionOptions, count);
+    if (kanRows.length) actionRecommendations = actionRecommendations.map(function (legacy, index) {
+      var decision = ownTurnRecommendationV349(action, message, index);
+      return decision ? (decision === "ankan" || decision === "kakan" ? "kan" : "pass") : legacy;
+    });
     var hasCallAction = actionOptions.some(function (option) { return option.action === "call"; });
     var candidate = commonCandidate(spec.reportId, spec.tw, spec.ts, spec.tv, "call", report, snapshot);
     candidate.callTile = kanRows.length
@@ -1147,7 +1198,7 @@
     var sourceAction = action;
     var sourceMessage = message;
     var sourceTv = normalized.tv;
-    var hasPrediction = Array.isArray(sourceAction && sourceAction.dahai_pred)
+    var hasPrediction = discardRowsV349(sourceAction).length > 0
       && Array.isArray(sourceMessage.pred_dahai);
 
     if (!hasPrediction && message.type === "dahai") {
@@ -1155,7 +1206,7 @@
       var previousMessage = getMessage(previousAction);
       if (previousMessage
         && validSeat(previousMessage.actor) === normalized.tw
-        && Array.isArray(previousAction && previousAction.dahai_pred)
+        && discardRowsV349(previousAction).length > 0
         && Array.isArray(previousMessage.pred_dahai)) {
         sourceAction = previousAction;
         sourceMessage = previousMessage;
@@ -1251,12 +1302,14 @@
 
   function matchesNagaDetection(report, candidate, modelIndex, level) {
     if (candidate.decisionType !== "discard" || candidate.reached) return false;
+    var decision = candidate.models[modelIndex] && candidate.models[modelIndex].decisionAction;
+    if (decision && decision !== "dahai" && decision !== "reach") return false;
     var entry = report.pred[candidate.ts][candidate.tv];
     var message = getMessage(entry);
     var actualIndex = tileIndex(message && message.real_dahai);
     var recommendedIndex = tileIndex(message && Array.isArray(message.pred_dahai) ? message.pred_dahai[modelIndex] : null);
     if (actualIndex == null || recommendedIndex == null || actualIndex === recommendedIndex) return false;
-    var row = entry && Array.isArray(entry.dahai_pred) ? entry.dahai_pred[modelIndex] : null;
+    var row = discardRowsV349(entry)[modelIndex];
     if (!Array.isArray(row) || row[actualIndex] == null || row[recommendedIndex] == null) return false;
     var actual = Number(row[actualIndex]);
     var recommended = Number(row[recommendedIndex]);
@@ -1279,8 +1332,11 @@
           : candidate.callRecommendedActions[i] !== candidate.actualCallAction;
       }
       var value = candidate.reach[i];
+      var model = candidate.models[i];
+      if (model && model.decisionAction && model.decisionAction !== "dahai" && model.decisionAction !== "reach") return false;
+      var recommendedReach = model && typeof model.riichi === "boolean" ? model.riichi : Number(value) >= 5000;
       return candidate.hasRiichiJudgment && !candidate.reached && value != null && Number.isFinite(Number(value))
-        && Boolean(candidate.actualReach) !== (Number(value) >= 5000);
+        && Boolean(candidate.actualReach) !== recommendedReach;
     });
   }
 

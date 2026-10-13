@@ -39,8 +39,8 @@ function generator(unavailable, mode = 'scene') {
   vm.runInContext(source('generatorDetectionMarkupV300')+'\n'+source('renderGeneratorViewV44'),context); return context.renderGeneratorViewV44();
 }
 test('V240 adds only a local presentation layer and preserves approved assets',()=>{
-  assert.match(html,/const APP_VERSION = 348;/);
-  assert.match(html,/workspace-ui-v240\.css\?v=348/); assert.match(html,/workspace-ui-v240\.js\?v=348/);
+  assert.match(html,/const APP_VERSION = 349;/);
+  assert.match(html,/workspace-ui-v240\.css\?v=349/); assert.match(html,/workspace-ui-v240\.js\?v=349/);
   assert.doesNotMatch(js,/fetch\(|XMLHttpRequest|localStorage|sessionStorage|innerHTML|NagaSupabase/);
   assert.doesNotMatch(css,/@import|@font-face|https?:|\.scene-frame|\.hand-mask|\.riichi|learning-header-progress-track/);
   assert.match(css,/var\(--menu-serif-v238\)/); assert.match(css,/var\(--menu-sans-v238\)/);
