@@ -147,7 +147,16 @@
     const options=judgmentOptions(question),available=question.callPredictionAvailable?.[selectedModel]!==false;
     const finiteOptions=options.filter(option=>option.values[selectedModel]!=null);
     if(!available||!finiteOptions.length)return '<p class="naga-judgment-missing-v312">このモデルの推奨データはありません。</p>';
-    const best=finiteOptions.reduce((best,option)=>option.values[selectedModel]>=best.values[selectedModel]?option:best);
+    let best=finiteOptions.reduce((best,option)=>option.values[selectedModel]>=best.values[selectedModel]?option:best);
+    const model=models[selectedColumn];
+    if(!isCall&&typeof model.riichi==='boolean')best=finiteOptions.find(option=>option.code===(model.riichi?10:0))||best;
+    if(isCall) {
+      const action=question.callRecommendedActions?.[selectedModel],code=question.callRecommendedCodes?.[selectedModel];
+      const recommended=action==='pass'?finiteOptions.find(option=>option.code===0)
+        :action==='kan'?finiteOptions.filter(option=>[5,6,7,9].includes(option.code)).sort((a,b)=>b.values[selectedModel]-a.values[selectedModel])[0]
+        :finiteOptions.find(option=>option.code===code);
+      if(recommended)best=recommended;
+    }
     let choices=options.filter(option=>option.code>0);
     // NAGA huroGraphBuild displays the selected model's top two call patterns.
     if(isCall&&choices.length>2)choices=choices.slice().sort((a,b)=>(b.values[selectedModel]??-1)-(a.values[selectedModel]??-1)||b.code-a.code).slice(0,2);
@@ -175,7 +184,7 @@
     const caption=bestLabel+((isCall?best.values[selectedModel]:Number(question.reach[selectedModel])/100)>=90?'！':'寄りかな');
     const modelName=models[selectedColumn].name,title=isCall?'副露推奨':'立直推奨';
     const tileImages=bestTiles.map(tile=>`<img src="tiles/${tile}-66-90-l.png" width="22" height="30" alt="${esc(tileName(tile))}">`).join('');
-    return `<section class="naga-judgment-v312" aria-label="${title}"><div class="naga-judgment-heading-v312"><strong>${title}</strong><span>${esc(modelName)}</span></div><div class="naga-judgment-body-v312"><svg class="naga-judgment-graph-v312" viewBox="0 0 260 270" role="img" aria-label="${esc(modelName+' '+descriptions.join('、'))}">${graph}</svg><div class="naga-judgment-caption-v312">${bestTiles.length&&best.code<=3?`<span class="naga-consumed-tiles-v312">${tileImages}<span>使って</span></span>`:''}<strong>${esc(caption)}</strong></div></div><div class="naga-judgment-legend-v312"><span><i style="background:${color}"></i>${esc(modelName)}</span>${models.length>1?'<span><i style="background:#c8c8c8"></i>他モデル</span>':''}</div></section>`;
+    return `<section class="naga-judgment-v312" aria-label="${title}"><div class="naga-judgment-heading-v312"><strong>${title}</strong><span>${esc(modelName)}</span></div><div class="naga-judgment-body-v312"><svg class="naga-judgment-graph-v312" viewBox="0 0 260 270" role="img" aria-label="${esc(modelName+' '+descriptions.join('、'))}">${graph}</svg><div class="naga-judgment-caption-v312">${bestTiles.length&&best.code<=3?`<span class="naga-consumed-tiles-v312">${tileImages}<span>使って</span></span>`:''}<strong>${esc(caption)}</strong><span class="naga-judgment-values-v350">${descriptions.map(value=>`<span>${esc(value)}</span>`).join('')}</span></div></div><div class="naga-judgment-legend-v312"><span><i style="background:${color}"></i>${esc(modelName)}</span>${models.length>1?'<span><i style="background:#c8c8c8"></i>他モデル</span>':''}</div></section>`;
   }
   root.NagaBoardV248=Object.freeze({markup,handPositions,doraTiles,isDora,recommendationsMarkup,tileRecommendationsMarkup,judgmentMarkup,judgmentOptions,callTiles,geometry:{width:W,height:H,tileWidth:TW,tileHeight:TH,handY:hands[0][1]}});
 })(typeof globalThis!=='undefined'?globalThis:this);

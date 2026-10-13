@@ -20,6 +20,7 @@
 .naga-judgment-body-v312{display:flex;align-items:center;gap:16px;min-width:0}
 .naga-judgment-graph-v312{display:block;flex:0 0 156px;width:156px;height:162px;max-width:52%;font-family:"Noto Sans JP","Yu Gothic",Meiryo,sans-serif}
 .naga-judgment-caption-v312{display:grid;gap:8px;min-width:0;font-size:18px;line-height:1.5}
+.naga-judgment-values-v350{display:grid;gap:3px;font-size:13px;font-weight:600;overflow-wrap:anywhere}
 .naga-consumed-tiles-v312{display:flex;align-items:center;flex-wrap:wrap;gap:2px;font-size:16px}
 .naga-consumed-tiles-v312 img{width:22px;height:30px;border-radius:0}
 .naga-consumed-tiles-v312>span{margin-left:4px}

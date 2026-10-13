@@ -87,3 +87,28 @@ test('answer cards include all five models and selected new model controls scori
   const legacy=ui({models:names.slice(0,3).map(name=>({name}))});assert.deepEqual(Array.from(legacy.c.priorityIndicesV16()),[0,1,2]);
   const reordered=ui({models:[{name:'ウロボロス'},{name:'ニシキ'},{name:'アナンタ'},{name:'将来モデル'}]});assert.deepEqual(Array.from(reordered.c.priorityIndicesV16()),[1,2,0,3]);
 });
+
+test('five-type riichi graphs keep tiny and zero rates explicit and follow the detailed decision',()=>{
+  const q={models:names.map(name=>({name})),hasRiichiJudgment:true,reach:[5588,4144,937,12,0]};
+  for(const i of [3,4]){
+    const html=boardRenderer.judgmentMarkup(q,{selectedModel:i});
+    assert.equal((html.match(/data-judgment-model=/g)||[]).length,5);
+    assert.match(html,new RegExp(`naga-judgment-values-v350[^]*?立直：${i===3?'0\\.1':'0\\.0'}%`));
+  }
+  const detailed=boardRenderer.judgmentMarkup(candidate(report()),{selectedModel:3});
+  assert.match(detailed,/立直寄りかな/);assert.match(detailed,/立直：25\.0%/);
+  q.models[3].riichi=false;q.reach[3]=6000;
+  assert.match(boardRenderer.judgmentMarkup(q,{selectedModel:3}),/ダマ寄りかな/);
+});
+
+test('five-type call graphs show exact new-type pattern rates and preserve the recommended kan action',()=>{
+  const q={decisionType:'call',models:names.map(name=>({name})),callTile:'pin5',callOptions:[{code:0,values:[10,20,30,53.83,86.77]},{code:1,values:[90,80,70,46.16,13.22]}]};
+  for(const i of [3,4]){
+    const html=boardRenderer.judgmentMarkup(q,{selectedModel:i});
+    assert.equal((html.match(/data-judgment-model=/g)||[]).length,5);
+    assert.match(html,new RegExp(i===3?'46\\.2%':'13\\.2%'));
+    assert.match(html,/スルー寄りかな/);
+  }
+  const kan={...q,callOptions:[{code:0,values:[100,100,100,60,100]},{code:6,values:[0,0,0,40,0]}],callRecommendedActions:['pass','pass','pass','kan','pass']};
+  assert.match(boardRenderer.judgmentMarkup(kan,{selectedModel:3}),/暗槓寄りかな/);
+});
