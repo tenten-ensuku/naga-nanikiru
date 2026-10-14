@@ -6,6 +6,7 @@ import {validateStoredHand} from './question-validation-v237.mjs';
 import {questionMediaKeys} from './media-write-v241.mjs';
 import {retiredImageCondition} from './retired-image-write-v265.mjs';
 import {validateCommentAttachments} from './student-write-api.mjs';
+import {ensureStudyModelSchema} from './study-model-v351.mjs';
 
 export const BOOK_TONES=Object.freeze(['walnut','navy','forest','burgundy','ivory','plum','teal','ochre']);
 export const BUILDER_RPCS=Object.freeze(['create_collection','create_collection_volume','set_collection_book_tone','update_collection_details','create_shared_question','import_shared_question']);
@@ -69,6 +70,7 @@ async function create(args,{db,actor}){
 async function createVolume(args,{db,actor}){
   let c=await editable(db,actor,String(args.p_share_slug||''));let root=await rootOf(db,c);
   if(!await canManageCollection(db,actor,root.id))fail('collection_not_manageable',403);
+  await ensureStudyModelSchema(db);
   c=await targetOf(db,actor,c);
   const next=Number(args.p_volume_number??await nextVolumeNumber(db,c,root));
   if(!Number.isInteger(next)||next<2||next>10000)fail('invalid_volume_number');
@@ -85,6 +87,7 @@ async function createVolume(args,{db,actor}){
       SELECT ?,owner_id,workspace_id,title,description,visibility,?,allow_comments,allow_contributions,published_at,?,book_tone FROM collections WHERE id=?
       ON CONFLICT(id) DO NOTHING`).bind(rootId,slug(rootId),`series-${rootId}`,root.id));
     statements.push(db.prepare(`UPDATE collections SET series_parent_id=?,series_key=?,volume_number=1,volume_start=1,volume_end=200,title=?,updated_at=? WHERE id=? AND series_parent_id IS NULL`).bind(rootId,`series-${rootId}`,`${base} 第1巻`,new Date().toISOString(),root.id));
+    statements.push(db.prepare(`INSERT INTO collection_study_models(collection_id,default_model) SELECT ?,default_model FROM collection_study_models WHERE collection_id=? ON CONFLICT(collection_id) DO NOTHING`).bind(rootId,root.id));
     statements.push(db.prepare(`INSERT INTO collection_members(collection_id,user_id,role,status,granted_by,granted_at,revoked_at) SELECT ?,user_id,role,status,granted_by,granted_at,revoked_at FROM collection_members WHERE collection_id=? ON CONFLICT(collection_id,user_id) DO NOTHING`).bind(rootId,root.id));
     statements.push(db.prepare(`INSERT INTO collection_managers(collection_id,user_id,status,granted_by,granted_at,revoked_at) SELECT ?,user_id,status,granted_by,granted_at,revoked_at FROM collection_managers WHERE collection_id=? ON CONFLICT(collection_id,user_id) DO NOTHING`).bind(rootId,root.id));
   }
