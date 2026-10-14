@@ -25,6 +25,25 @@ test('recorded dates stay in Japan time without a timezone suffix, reject invali
   assert.equal(dates.isRecent(null,now),false);
   assert.equal(dates.bookUpdated({last_activity_at:'2026-09-14T00:00:00Z'}),null);
 });
+test('relative day labels compare Japan calendar dates across midnight, year and leap-day boundaries',()=>{
+  const now=Date.parse('2026-10-14T00:01:00+09:00');
+  assert.equal(dates.relativeDays(dates.timestamp('2026-10-14T00:00:00+09:00'),now),'本日');
+  assert.equal(dates.relativeDays(dates.timestamp('2026-10-13T23:59:00+09:00'),now),'1日前');
+  assert.equal(dates.relativeDays(dates.timestamp('2026-10-12'),now),'2日前');
+  assert.equal(dates.relativeDays(dates.timestamp('2025-12-31'),Date.parse('2026-01-01T00:01:00+09:00')),'1日前');
+  assert.equal(dates.relativeDays(dates.timestamp('2024-02-28'),Date.parse('2024-03-01T00:01:00+09:00')),'2日前');
+  assert.equal(dates.relativeDays(dates.timestamp('2026-10-15'),now),null);
+  assert.equal(dates.relativeDays(null,now),null);
+  assert.equal(dates.relativeDays(dates.timestamp('2026-10-14'),NaN),null);
+});
+test('bookshelf markers display today and one through five days ago without an update prefix',()=>{
+  const now=Date.parse('2026-10-14T12:00:00+09:00'),ctx=datesContext();
+  ctx.Date=class extends Date {static now(){return now;}};vm.runInContext(read('public/library-v214.js'),ctx);
+  const collections=Array.from({length:6},(_,i)=>({title:'日数検証'+i,share_slug:'day-'+i,can_view:true,content_updated_at:new Date(now-i*86400000-60000).toISOString()}));
+  const markup=ctx.window.MinkiruLibraryV214.create().render({collections,userId:'owner'});
+  assert.deepEqual([...markup.matchAll(/class="library-update-marker-v246"[^>]*>([^<]*)</g)].map(m=>m[1]),['本日','1日前','2日前','3日前','4日前','5日前']);
+  assert.doesNotMatch(markup,/class="library-update-marker-v246"[^>]*>更新/);
+});
 
 function fixture(t){
   const db=testD1();t.after(()=>db.close());
@@ -92,7 +111,7 @@ test('bookshelf displays recent content badges, exact dates and unknown values w
   const recent=render('new');
   assert.equal((recent.match(/class="library-update-marker-v246"/g)||[]).length,1);
   assert.doesNotMatch(recent,/class="library-current-marker"/,'one marker above the current spine, without overlapping labels');
-  assert.match(recent,/最終更新日/);assert.match(recent,/7日以内に更新/);
+  assert.match(recent,/最終更新日/);assert.match(recent,/class="library-recent-label-v246">(?:本日|1日前)</);
   assert.ok(recent.indexOf('data-library-book="new"')<recent.indexOf('data-library-book="old"'));
   assert.match(render('old'),/2020\/01\/01 09:00<\/time>/);
   assert.doesNotMatch(render('old'),/JST/);
@@ -101,7 +120,7 @@ test('bookshelf displays recent content badges, exact dates and unknown values w
 });
 
 test('app wiring renders dates in lists and questions without polls or guessed timestamps',()=>{
-  assert.match(html,/content-dates-v246\.js\?v=351/);assert.match(html,/content-dates-v246\.css\?v=351/);
+  assert.match(html,/content-dates-v246\.js\?v=352/);assert.match(html,/content-dates-v246\.css\?v=352/);
   assert.match(html,/id="questionCreatedDateV246"/);
   assert.match(html,/class="question-created-v246">\$\{questionCreatedMarkupV246\(question, \{ label: false \}\)\}/);
   const normalize=html.match(/      function normalizeSharedQuestionV66\([^]*?\n      \}/)[0];
@@ -127,7 +146,7 @@ test('V257 opening acknowledges only that book revision, persists across reload 
   const badges=markup=>(markup.match(/class="library-update-marker-v246"/g)||[]).length;
   assert.equal(badges(render()),2);assert.equal(stored.size,0,'render/selection does not acknowledge');
   assert.equal(await library.openBook('a'),true);assert.equal(badges(render()),1);
-  assert.doesNotMatch(render().match(/<section class="library-detail"[^]*?<\/section>/)[0],/7日以内に更新/);
+  assert.doesNotMatch(render().match(/<section class="library-detail"[^]*?<\/section>/)[0],/library-recent-label-v246/);
   library=ctx.window.MinkiruLibraryV214.create(options);assert.equal(badges(render()),1);
   assert.equal(badges(render('other-user')),2);assert.equal(badges(render()),1);
   collections[0].content_updated_at=new Date(now-1000).toISOString();assert.equal(badges(render()),2);

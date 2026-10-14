@@ -30,5 +30,12 @@
     const age = Number(now) - (date?.milliseconds ?? NaN);
     return Number.isFinite(age) && age >= 0 && age < 7 * DAY;
   }
-  host.MinkiruContentDatesV246 = Object.freeze({timestamp, first, questionCreated, bookUpdated, isRecent});
+  function relativeDays(date, now = Date.now()) {
+    const recorded = date?.milliseconds;
+    if (!Number.isFinite(recorded) || !Number.isFinite(Number(now))) return null;
+    // Compare Japan calendar dates, so yesterday is one day ago even at 00:01.
+    const days = Math.floor((Number(now) + 9 * 3600000) / DAY) - Math.floor((recorded + 9 * 3600000) / DAY);
+    return days < 0 ? null : days === 0 ? "本日" : `${days}日前`;
+  }
+  host.MinkiruContentDatesV246 = Object.freeze({timestamp, first, questionCreated, bookUpdated, isRecent, relativeDays});
 })(typeof window === "undefined" ? globalThis : window);

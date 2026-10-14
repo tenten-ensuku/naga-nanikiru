@@ -126,11 +126,12 @@
     const tag = placeholder ? "div" : "button";
     const action = placeholder ? "巻を準備しています" : book.canView ? "確認して選ぶ" : "閲覧権限を確認する";
     const recent = unread;
+    const updatedAgo = recent ? host.MinkiruContentDatesV246?.relativeDays(book.contentUpdated) : null;
     const attributes = placeholder ? `role="status" data-library-placeholder="${escape(book.slug)}"` : `type="button" data-library-book="${escape(book.slug)}" aria-pressed="${picked}"`;
-    return `<${tag} class="library-book library-tone-${book.tone}${placeholder ? " is-placeholder" : ""}${selected ? " is-selected" : ""}${picked ? " is-picked" : ""}${book.isCurrent ? " is-current" : ""}${titleLength > 15 ? " has-long-title" : ""}${titleLength > 30 ? " has-very-long-title" : ""}" ${attributes} aria-label="${escape(book.fullTitle)}：${action}${recent ? '、7日以内に更新' : ''}" aria-describedby="libraryBookHintV214" ${book.isCurrent ? 'aria-current="true"' : ""}>
+    return `<${tag} class="library-book library-tone-${book.tone}${placeholder ? " is-placeholder" : ""}${selected ? " is-selected" : ""}${picked ? " is-picked" : ""}${book.isCurrent ? " is-current" : ""}${titleLength > 15 ? " has-long-title" : ""}${titleLength > 30 ? " has-very-long-title" : ""}" ${attributes} aria-label="${escape(book.fullTitle)}：${action}${updatedAgo ? `、最終更新は${escape(updatedAgo)}` : ''}" aria-describedby="libraryBookHintV214" ${book.isCurrent ? 'aria-current="true"' : ""}>
       <span class="library-book-surface" aria-hidden="true"><img class="library-spine-art" src="${ASSET_ROOT}spine.webp" alt="" width="160" height="960" decoding="async" draggable="false"><span class="library-leather-tint"></span><span class="library-book-title">${escape(book.spineTitle)}</span>${book.volume ? `<span class="library-book-volume is-number">${book.volume}</span>` : ""}<span class="library-book-seal">${icon("book")}</span></span>
       ${book.isCurrent && !recent ? '<span class="library-current-marker">学習中</span>' : ""}
-      ${recent ? '<span class="library-update-marker-v246" aria-hidden="true">更新</span>' : ""}
+      ${updatedAgo ? `<span class="library-update-marker-v246" aria-hidden="true">${escape(updatedAgo)}</span>` : ""}
       <span class="library-book-tooltip" aria-hidden="true">${escape(book.fullTitle)}<small>${action}</small></span>
     </${tag}>`;
   }
@@ -154,7 +155,8 @@
     const description = book.description || (book.series ? "巻ごとに、一歩ずつ学習を進めましょう。" : "一問ずつ考えて、判断の引き出しを増やしましょう。");
     const updated = book.contentUpdated;
     const recent = unread;
-    const dateMarkup = `<div class="library-updated-v246"><span>最終更新日</span>${updated ? `<time datetime="${escape(updated.iso)}">${escape(updated.full)}</time>` : '<span>不明</span>'}${recent ? '<span class="library-recent-label-v246">7日以内に更新</span>' : ''}<small>問題の追加・編集、問題集情報の変更が対象です。</small></div>`;
+    const updatedAgo = recent ? host.MinkiruContentDatesV246?.relativeDays(updated) : null;
+    const dateMarkup = `<div class="library-updated-v246"><span>最終更新日</span>${updated ? `<time datetime="${escape(updated.iso)}">${escape(updated.full)}</time>` : '<span>不明</span>'}${updatedAgo ? `<span class="library-recent-label-v246">${escape(updatedAgo)}</span>` : ''}<small>問題の追加・編集、問題集情報の変更が対象です。</small></div>`;
     return `<div class="library-detail-copy"><span class="library-detail-eyebrow">${picked ? "この本で学びますか？" : book.isCurrent ? "学習中の一冊" : "本をタップして選択"}</span><h4 id="libraryDetailTitleV214">${escape(title)}</h4><p>${escape(description)}</p>${hasRange ? `<span class="library-detail-range">問題 ${book.volume_start}–${book.volume_end}</span>` : ""}${dateMarkup}</div>
       <dl class="library-detail-metrics"><div><dt>${icon("book")}${quantityLabel}</dt><dd>${quantityValue}<small>${quantityValue === "—" ? "" : unit}</small></dd></div><div><dt>${icon("check")}回答済み</dt><dd>${formatted(answered)}<small>${answered === null ? "" : "問"}</small></dd></div><div><dt title="直近の回答が〇以上の問題の割合"><span class="library-progress-ring" aria-hidden="true"></span>やりこみ度</dt><dd>${formatted(mastery)}<small>${mastery === null ? "" : "%"}</small></dd></div></dl>
       <div class="library-detail-action"><button type="button" class="library-start" data-library-open="${escape(book.slug)}">${action}${icon("right")}</button><small>${!book.canView ? escape(book.accessLabel) : picked ? "本をもう1回タップしても開けます" : "回答記録はそのまま引き継ぎます"}</small></div>`;
@@ -345,7 +347,7 @@
         ${notice ? `<div class="library-notice" role="alert"><span>${escape(notice)}</span>${state.failures.size ? '<button type="button" data-library-retry>もう一度読み込む</button>' : ""}</div>` : ""}
         <div class="library-stage">${preparing ? '<div class="library-preparing-v236" role="status"><span class="library-loading-mark-v236" aria-hidden="true"></span><span>本棚を準備しています…</span></div>' : ""}<img class="library-study-art" src="${ASSET_ROOT}study.webp" alt="" width="1672" height="941" decoding="async" fetchpriority="high"><div class="library-rail" data-library-rail role="group" aria-label="すべての問題集の本棚"${preparing ? ' inert aria-hidden="true"' : ""}>${state.entries.map(book => bookMarkup(book, book.slug === state.selected, { picked: book.slug === state.picked, unread: hasUnreadUpdate(book) })).join("") || `<p class="library-empty" role="status">${context.loading ? "問題集を本棚に並べています…" : state.allEntries.length ? "本棚の本はすべて非表示です。「非表示の本」から戻せます。" : "まだ問題集がありません。新しい問題集を作るか、共有された問題集を開いてください。"}</p>`}</div></div>
         <div class="library-shelf-foot"><span>本をそのままドラッグして並べ替え</span><span>並び順・非表示はこのブラウザーに保存</span></div>
-        <p class="library-update-legend-v246">「更新」は7日以内の未確認の更新です。本を開くと消えます。確認状態はこのブラウザーに保存します。</p>
+        <p class="library-update-legend-v246">7日以内の未確認の変更を「本日」「1日前」などで表示します。本を開くと消えます。確認状態はこのブラウザーに保存します。</p>
         <section class="library-detail" data-library-detail aria-labelledby="libraryDetailTitleV214"${preparing ? ' inert aria-hidden="true"' : ""}>${detail()}</section>
         <p class="library-order-status" data-library-status role="status" aria-live="polite">${escape(state.hiddenNotice)}</p>${hiddenBooksMarkup()}
       </section>`;
