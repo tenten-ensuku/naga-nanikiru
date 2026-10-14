@@ -1180,3 +1180,13 @@ test('manual move remains selected in memory after a failed order save and a rer
   assert.deepEqual(v215Ids(shelf.root),['kunitaso','basic','pierre']);
   assert.match(controller.render(ctx),/value="manual" selected/);
 });
+
+
+test('sort save failure stays visible after the real render callback replaces the shelf',async()=>{
+  const api=await libraryApi(),ctx=context('u',v215Books());let shelf,controller;
+  controller=api.create({saveSortMode:()=>{throw Error('quota');},onRender:()=>{shelf=mountShelfV215(controller,ctx);}});
+  shelf=mountShelfV215(controller,ctx);
+  changeShelfSort(shelf,'updated');
+  assert.match(shelf.status.textContent,/保存できません/);
+  assert.match(controller.render(ctx),/value="updated" selected/);
+});

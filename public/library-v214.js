@@ -696,7 +696,7 @@
         applyOrder(orderedEntries(state.allEntries).map(book => book.slug));
         state.focusSort = true;
         requestRender();
-        if (saved) announce("表示順を変更し、このブラウザーに保存しました。");
+        announce(saved ? "表示順を変更し、このブラウザーに保存しました。" : "表示順を変更しましたが、ブラウザーに保存できませんでした。");
       }, { signal });
       root.addEventListener("click", event => {
         const hide = event.target.closest("[data-library-hide]");
@@ -747,9 +747,9 @@
           state.savedOrder = [];
           const sortSaved = saveSortMode("standard");
           applyOrder(defaultOrder(state.entries));
+          requestRender();
           try { options.saveOrder?.(state.userId, []); if (sortSaved) announce("標準の並び順に戻しました。"); }
           catch { announce("標準順に戻しましたが、ブラウザーに保存できませんでした。"); }
-          requestRender();
           return;
         }
         const move = event.target.closest("[data-library-move]");
