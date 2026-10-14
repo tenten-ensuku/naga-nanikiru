@@ -270,6 +270,20 @@
     return result;
   }
 
+  /** Newest content first; activity and viewing dates never affect this order. */
+  function updatedOrder(entries) {
+    var defaults = defaultOrder(entries);
+    var rank = new Map(defaults.map(function (slug, index) { return [slug, index]; }));
+    function contentTime(record) {
+      var value = read(read(record.entry, 'contentUpdated'), 'milliseconds');
+      return finiteNumber(value) && value > 0 ? value : -Infinity;
+    }
+    return collectEntries(entries).sort(function (left, right) {
+      var a = contentTime(left), b = contentTime(right);
+      return a !== b ? (a > b ? -1 : 1) : rank.get(left.slug) - rank.get(right.slug);
+    }).map(function (record) { return record.slug; });
+  }
+
   /** Apply saved UI order, dropping IDs that are not currently accessible. */
   function applySavedOrder(defaultEntries, savedIds) {
     var defaults = defaultOrder(defaultEntries);
@@ -323,6 +337,7 @@
 
   host.MinkiruLibraryOrderV215 = Object.freeze({
     defaultOrder: defaultOrder,
+    updatedOrder: updatedOrder,
     applySavedOrder: applySavedOrder,
     moveBook: moveBook,
     normaliseOrder: normaliseOrder

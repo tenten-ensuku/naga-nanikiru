@@ -444,7 +444,7 @@ test("switching users invalidates old in-flight/cache data", async () => {
 
 test("adapter keeps legacy fallback, controller mount/unmount hooks, and navigation reset contract", async () => {
   const [index, library] = await Promise.all([readFile(INDEX_PATH, "utf8"), readFile(LIBRARY_PATH, "utf8")]);
-  assert.match(index, /library-v214\.js\?v=352/);
+  assert.match(index, /library-v214\.js\?v=353/);
   const renderStart = index.indexOf("function renderCollectionChooserV165");
   const renderEnd = index.indexOf("function renderCollectionSpacePanelV100", renderStart);
   const renderer = index.slice(renderStart, renderEnd);
@@ -1121,4 +1121,62 @@ test("V236 empty catalogue settles and reduced motion remains supported",async()
   const css=await readFile(new URL('../public/library-v214.css',import.meta.url),'utf8');
   assert.match(css,/prefers-reduced-motion:reduce/);
   assert.match(css,/\.is-preparing-v236 \.library-rail-actions \{ visibility: hidden !important; pointer-events: none/);
+});
+
+
+async function sortTestApi() {
+  const dates=await readFile(new URL('../public/content-dates-v246.js',import.meta.url),'utf8'),host={};
+  vm.runInNewContext(dates,{window:host});
+  return loadLibraryApi({MinkiruContentDatesV246:host.MinkiruContentDatesV246});
+}
+function changeShelfSort(shelf, mode) {
+  const select=new FakeNode({dataset:{librarySort:''}});select.value=mode;
+  shelf.root.dispatch('change',{target:select});
+}
+test('sort selector persists per account, preserves manual order, ignores learner activity and restores after reload',async()=>{
+  const api=await sortTestApi(), modes=new Map(), savedOrders=new Map([['a',['pierre','basic','kunitaso']]]);
+  const books=v215Books().map((b,i)=>({...b,content_updated_at:'2026-10-'+(10+i)+'T00:00:00Z',last_activity_at:'2099-01-01'}));
+  const before=JSON.stringify(books);
+  const opts={loadOrder:id=>savedOrders.get(id)||[],saveOrder:(id,v)=>savedOrders.set(id,Array.from(v)),loadSortMode:id=>modes.get(id),saveSortMode:(id,v)=>modes.set(id,v)};
+  let controller=api.create(opts),ctx=context('a',books),shelf=mountShelfV215(controller,ctx);
+  assert.deepEqual(v215Ids(shelf.root),['pierre','basic','kunitaso']);
+  changeShelfSort(shelf,'updated');
+  assert.deepEqual(v215Ids(shelf.root),['pierre','kunitaso','basic']);
+  assert.equal(modes.get('a'),'updated');
+  const first=shelf.root.querySelector('[data-library-book]');
+  shelf.root.dispatch('keydown',{target:first,key:'ArrowRight',shiftKey:true});
+  assert.deepEqual(v215Ids(shelf.root),['pierre','kunitaso','basic']);
+  assert.deepEqual(savedOrders.get('a'),['pierre','basic','kunitaso']);
+  controller.unmount();controller=api.create(opts);shelf=mountShelfV215(controller,ctx);
+  assert.deepEqual(v215Ids(shelf.root),['pierre','kunitaso','basic']);
+  changeShelfSort(shelf,'standard');
+  assert.deepEqual(v215Ids(shelf.root),['basic','kunitaso','pierre']);
+  changeShelfSort(shelf,'manual');
+  assert.deepEqual(v215Ids(shelf.root),['pierre','basic','kunitaso']);
+  shelf=mountShelfV215(controller,context('b',books));
+  assert.deepEqual(v215Ids(shelf.root),['basic','kunitaso','pierre']);
+  assert.equal(modes.has('b'),false);
+  assert.equal(JSON.stringify(books),before);
+});
+
+test('invalid sort preferences default safely and failed persistence keeps usable order with warning',async()=>{
+  const api=await sortTestApi(),books=v215Books().map((b,i)=>({...b,content_updated_at:'2026-10-'+(10+i)+'T00:00:00Z'}));
+  const controller=api.create({loadSortMode:()=>'<invalid>',saveSortMode:()=>{throw Error('quota');}}),ctx=context('u',books);
+  const shelf=mountShelfV215(controller,ctx);
+  assert.deepEqual(v215Ids(shelf.root),['basic','kunitaso','pierre']);
+  changeShelfSort(shelf,'updated');
+  assert.deepEqual(v215Ids(shelf.root),['pierre','kunitaso','basic']);
+  assert.match(shelf.status.textContent,/保存できません/);
+  assert.match(controller.render(ctx),/value="updated" selected/);
+});
+
+
+test('manual move remains selected in memory after a failed order save and a rerender',async()=>{
+  const api=await libraryApi(),controller=api.create({saveOrder:()=>{throw Error('quota');}}),ctx=context('u',v215Books());
+  let shelf=mountShelfV215(controller,ctx);
+  shelf.root.dispatch('keydown',{target:shelf.buttons[0],key:'ArrowRight',shiftKey:true});
+  assert.match(shelf.status.textContent,/保存できません/);
+  shelf=mountShelfV215(controller,ctx);
+  assert.deepEqual(v215Ids(shelf.root),['kunitaso','basic','pierre']);
+  assert.match(controller.render(ctx),/value="manual" selected/);
 });

@@ -169,7 +169,7 @@
     const state = {
       context: {}, userId: null, sessionRevision: 0, currentSlug: "", selected: "", picked: "", userSelected: false,
       cache: new Map(), summaries: new Map(), inflight: new Map(), failures: new Map(),
-      staleSeries: new Set(), staleSummaries: new Set(), savedOrder: [], seenUpdates: new Map(),
+      staleSeries: new Set(), staleSummaries: new Set(), savedOrder: [], sortMode: "standard", focusSort: false, seenUpdates: new Map(),
       hiddenBooks: new Set(), allEntries: [], hiddenDialogOpen: false, hiddenNotice: "", focusHidden: false,
       root: null, paintedUserId: null, abort: null, observer: null, entries: [], opening: false,
       scrollLeft: 0, focusAfterRender: "", error: "", drag: null, needsRender: false,
@@ -218,7 +218,7 @@
     }
     const rootsNow = () => catalogueRoots(state.context.collections);
     const currentSlugNow = () => String(state.context.current?.share_slug || "");
-    const reorderReady = () => state.entries.every(book => !book.series || !book.canView);
+    const reorderReady = () => state.sortMode !== "updated" && state.entries.every(book => !book.series || !book.canView);
     const permittedRoot = slug => {
       const row = rootsNow().find(item => String(item.share_slug) === slug);
       return row && normaliseBook(row, currentSlugNow()).canView ? row : null;
@@ -229,7 +229,9 @@
         && cached.volumes.some(row => String(row.share_slug) === slug && normaliseBook(row, currentSlugNow()).canView));
     };
     function orderedEntries(entries) {
-      const ids = order?.applySavedOrder(entries, state.savedOrder) || cleanOrder([...state.savedOrder, ...defaultOrder(entries)]);
+      const ids = state.sortMode === "updated" ? order?.updatedOrder(entries) || defaultOrder(entries)
+        : state.sortMode === "standard" ? defaultOrder(entries)
+        : order?.applySavedOrder(entries, state.savedOrder) || cleanOrder([...state.savedOrder, ...defaultOrder(entries)]);
       const byId = new Map(entries.map(book => [book.slug, book]));
       return ids.map(id => byId.get(id)).filter(Boolean);
     }
@@ -241,7 +243,7 @@
       const controls = book ? `<div class="library-detail-tools-v300"><button type="button" data-library-hide="${escape(book.slug)}">本棚から隠す</button>${management}</div>` : "";
       return controls + detailMarkup(book, state.context, picked, hasUnreadUpdate(book)) + (book ? options.adminInfoMarkup?.(book) || '' : '') + (picked ? `
         <div class="library-arrange" role="group" aria-label="選んだ本の並べ替え">
-          <span>${reorderReady() ? "つかんで移動" : "巻の準備が終わると並べ替えできます"} <small>ドラッグ / Shift＋← →</small></span>
+          <span>${reorderReady() ? "つかんで移動" : state.sortMode === "updated" ? "自分で並べた順を選ぶと移動できます" : "巻の準備が終わると並べ替えできます"} <small>ドラッグ / Shift＋← →</small></span>
           <div><button type="button" data-library-move="-1" aria-label="選んだ本を左へ移動" ${!reorderReady() || position <= 0 ? "disabled" : ""}>${icon("left")}左へ</button>
           <span data-library-position>${position + 1} / ${state.entries.length}冊</span>
           <button type="button" data-library-move="1" aria-label="選んだ本を右へ移動" ${!reorderReady() || position >= state.entries.length - 1 ? "disabled" : ""}>右へ${icon("right")}</button></div>
@@ -289,6 +291,10 @@
         state.error = "";
         try { state.savedOrder = cleanOrder(options.loadOrder?.(userId)); }
         catch { state.savedOrder = []; }
+        let savedSort;
+        try { savedSort = options.loadSortMode?.(userId); } catch {}
+        state.sortMode = ["standard", "updated", "manual"].includes(savedSort) ? savedSort : state.savedOrder.length ? "manual" : "standard";
+        state.focusSort = false;
         try { state.hiddenBooks = new Set(cleanOrder(options.loadHiddenBooks?.(userId))); }
         catch { state.hiddenBooks = new Set(); }
         state.hiddenDialogOpen = false; state.hiddenNotice = "";
@@ -343,10 +349,10 @@
         || roots.some(row => isSeries(row) && permittedRoot(String(row.share_slug)) && !state.cache.has(String(row.share_slug)) && !state.failures.has("series:" + row.share_slug));
       return `<section class="collection-chooser library-v214 has-volumes${reorderReady() ? " is-reorder-ready" : ""}${preparing ? " is-preparing-v236" : ""}${state.artFailed ? " is-art-fallback-v236" : ""}" aria-busy="${preparing}" aria-labelledby="collectionChooserHeading">
         <header class="collection-chooser-header library-header"><div><h3 id="collectionChooserHeading">学習する問題集を選択</h3><p id="libraryBookHintV214">1タップで確認、もう一度で開く。</p></div><button class="collection-chooser-create library-create" type="button" data-open-book-create aria-haspopup="dialog" aria-controls="bookCreateDetailsV235">${icon("plus")}新しい問題集</button></header>
-        <div class="library-shelf-heading"><div class="library-breadcrumb"><h4>あなたの本棚</h4><span class="library-shelf-total">${preparing ? "準備中" : `${state.entries.length}冊`}</span></div><div class="library-shelf-tools-v300"><button type="button" class="library-reset" data-library-reset${preparing ? " disabled" : ""}>標準順に戻す</button><button type="button" class="library-hidden-button-v300" data-library-hidden-open aria-haspopup="dialog"${preparing ? " disabled" : ""}>非表示の本（${state.allEntries.length-state.entries.length}）</button></div><div class="library-rail-actions" data-library-rail-actions><button type="button" data-library-scroll="-1" aria-label="前の本を表示">${icon("left")}</button><button type="button" data-library-scroll="1" aria-label="次の本を表示">${icon("right")}</button></div></div>
+        <div class="library-shelf-heading"><div class="library-breadcrumb"><h4>あなたの本棚</h4><span class="library-shelf-total">${preparing ? "準備中" : `${state.entries.length}冊`}</span></div><div class="library-shelf-tools-v300"><label class="library-sort-v353">表示順<select data-library-sort aria-label="本棚の表示順">${[["standard", "標準順"], ["updated", "更新が新しい順"], ["manual", "自分で並べた順"]].map(([value, label]) => `<option value="${value}"${state.sortMode === value ? " selected" : ""}>${label}</option>`).join("")}</select></label><button type="button" class="library-reset" data-library-reset${preparing ? " disabled" : ""}>標準順に戻す</button><button type="button" class="library-hidden-button-v300" data-library-hidden-open aria-haspopup="dialog"${preparing ? " disabled" : ""}>非表示の本（${state.allEntries.length-state.entries.length}）</button></div><div class="library-rail-actions" data-library-rail-actions><button type="button" data-library-scroll="-1" aria-label="前の本を表示">${icon("left")}</button><button type="button" data-library-scroll="1" aria-label="次の本を表示">${icon("right")}</button></div></div>
         ${notice ? `<div class="library-notice" role="alert"><span>${escape(notice)}</span>${state.failures.size ? '<button type="button" data-library-retry>もう一度読み込む</button>' : ""}</div>` : ""}
         <div class="library-stage">${preparing ? '<div class="library-preparing-v236" role="status"><span class="library-loading-mark-v236" aria-hidden="true"></span><span>本棚を準備しています…</span></div>' : ""}<img class="library-study-art" src="${ASSET_ROOT}study.webp" alt="" width="1672" height="941" decoding="async" fetchpriority="high"><div class="library-rail" data-library-rail role="group" aria-label="すべての問題集の本棚"${preparing ? ' inert aria-hidden="true"' : ""}>${state.entries.map(book => bookMarkup(book, book.slug === state.selected, { picked: book.slug === state.picked, unread: hasUnreadUpdate(book) })).join("") || `<p class="library-empty" role="status">${context.loading ? "問題集を本棚に並べています…" : state.allEntries.length ? "本棚の本はすべて非表示です。「非表示の本」から戻せます。" : "まだ問題集がありません。新しい問題集を作るか、共有された問題集を開いてください。"}</p>`}</div></div>
-        <div class="library-shelf-foot"><span>本をそのままドラッグして並べ替え</span><span>並び順・非表示はこのブラウザーに保存</span></div>
+        <div class="library-shelf-foot"><span>${state.sortMode === "updated" ? "内容の更新が新しい本から表示" : "本をそのままドラッグして並べ替え"}</span><span>並び順・非表示はこのブラウザーに保存</span></div>
         <p class="library-update-legend-v246">7日以内の未確認の変更を「本日」「1日前」などで表示します。本を開くと消えます。確認状態はこのブラウザーに保存します。</p>
         <section class="library-detail" data-library-detail aria-labelledby="libraryDetailTitleV214"${preparing ? ' inert aria-hidden="true"' : ""}>${detail()}</section>
         <p class="library-order-status" data-library-status role="status" aria-live="polite">${escape(state.hiddenNotice)}</p>${hiddenBooksMarkup()}
@@ -378,7 +384,7 @@
         button.setAttribute("aria-pressed", String(isPicked));
       });
       updateDetail();
-      if (picked) announce(book.fullTitle + "を選びました。もう一度押すと開きます。ドラッグ、または左右ボタンで並べ替えできます。");
+      if (picked) announce(book.fullTitle + "を選びました。もう一度押すと開きます。" + (state.sortMode === "updated" ? "自分で並べた順を選ぶと移動できます。" : "ドラッグ、または左右ボタンで並べ替えできます。"));
       if (picked) queueMicrotask(hydrate);
     }
     async function browseSeries(slug, { force = false, focus = false } = {}) {
@@ -487,12 +493,21 @@
       updateDetail();
       updateRailControls();
     }
+    function saveSortMode(mode) {
+      state.sortMode = mode;
+      const select = state.root?.querySelector("[data-library-sort]");
+      if (select) select.value = mode;
+      try { options.saveSortMode?.(state.userId, mode); return true; }
+      catch { announce("表示順を変更しましたが、ブラウザーに保存できませんでした。"); return false; }
+    }
     function saveOrder(ids) {
       // Keep temporarily unavailable IDs in the preference, but never render them.
       const visibleIds = cleanOrder(ids);
       state.savedOrder = cleanOrder([...visibleIds, ...state.savedOrder.filter(id => !visibleIds.includes(id))]);
+      const sortSaved = saveSortMode("manual");
       try {
         options.saveOrder?.(state.userId, state.savedOrder.slice());
+        if (!sortSaved) return false;
         announce("本の並び順をこのブラウザーに保存しました。");
         return true;
       } catch {
@@ -670,6 +685,19 @@
       root.addEventListener("lostpointercapture", event => { if (event.target === state.drag?.captureTarget && event.pointerId === state.drag?.pointerId) finishDrag(true); }, { signal });
       host.addEventListener?.("blur", () => finishDrag(true), { signal });
       host.document?.addEventListener?.("visibilitychange", () => { if (host.document.hidden) finishDrag(true); }, { signal });
+      root.addEventListener("change", event => {
+        const select = event.target.closest("[data-library-sort]");
+        if (!select || !["standard", "updated", "manual"].includes(select.value)) return;
+        if (state.drag) finishDrag(true, true);
+        const saved = saveSortMode(select.value);
+        state.scrollLeft = 0;
+        const rail = root.querySelector("[data-library-rail]");
+        if (rail) rail.scrollLeft = 0;
+        applyOrder(orderedEntries(state.allEntries).map(book => book.slug));
+        state.focusSort = true;
+        requestRender();
+        if (saved) announce("表示順を変更し、このブラウザーに保存しました。");
+      }, { signal });
       root.addEventListener("click", event => {
         const hide = event.target.closest("[data-library-hide]");
         if (hide) {
@@ -717,9 +745,11 @@
         if (reset) {
           event.stopPropagation();
           state.savedOrder = [];
+          const sortSaved = saveSortMode("standard");
           applyOrder(defaultOrder(state.entries));
-          try { options.saveOrder?.(state.userId, []); announce("標準の並び順に戻しました。"); }
+          try { options.saveOrder?.(state.userId, []); if (sortSaved) announce("標準の並び順に戻しました。"); }
           catch { announce("標準順に戻しましたが、ブラウザーに保存できませんでした。"); }
+          requestRender();
           return;
         }
         const move = event.target.closest("[data-library-move]");
@@ -786,6 +816,7 @@
       }, {signal});
       if (state.hiddenDialogOpen) hiddenDialog?.showModal();
       if (state.focusHidden) { state.focusHidden = false; root.querySelector("[data-library-hidden-open]")?.focus({preventScroll:true}); }
+      if (state.focusSort) { state.focusSort = false; root.querySelector("[data-library-sort]")?.focus({preventScroll:true}); }
       if (state.focusAfterRender) {
         const target = [...root.querySelectorAll("[data-library-book]")].find(item => item.dataset.libraryBook === state.focusAfterRender);
         state.focusAfterRender = "";

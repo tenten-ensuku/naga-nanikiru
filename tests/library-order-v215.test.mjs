@@ -26,6 +26,7 @@ test('exports the frozen V215 API', () => {
     'defaultOrder',
     'moveBook',
     'normaliseOrder',
+    'updatedOrder',
   ]);
   assert.equal(Object.isFrozen(order), true);
 });
@@ -192,4 +193,27 @@ test('moveBook is pure, supports before and after, and sanitizes duplicates', ()
   assert.deepEqual(Array.from(order.moveBook(ids, 'missing', 'a')), ['a', 'b', 'c']);
   assert.deepEqual(Array.from(order.moveBook(ids, 'a', 'a')), ['a', 'b', 'c']);
   assert.deepEqual(Array.from(order.moveBook(ids, {}, 'a')), ['a', 'b', 'c']);
+});
+
+
+test('updated order uses content timestamps, puts unknown last and leaves source/manual order intact', () => {
+  const entries = [
+    {slug:'basic', title:'基本序列', contentUpdated:{milliseconds:100}, last_activity_at:'2099-01-01'},
+    {slug:'new', title:'新しい本', contentUpdated:{milliseconds:300}},
+    {slug:'unknown', title:'不明', updated_at:'2099-01-01'},
+    {slug:'middle', title:'中間', contentUpdated:{milliseconds:200}},
+    {slug:'invalid', contentUpdated:{milliseconds:NaN}},
+  ];
+  const before=JSON.stringify(entries), manual=['middle','basic','new'];
+  const expected=['new','middle','basic',...Array.from(order.defaultOrder(entries)).filter(id=>['unknown','invalid'].includes(id))];
+  assert.deepEqual(Array.from(order.updatedOrder(entries)),expected);
+  assert.equal(JSON.stringify(entries),before);
+  assert.deepEqual(manual,['middle','basic','new']);
+  assert.deepEqual(Array.from(order.updatedOrder(entries.slice().reverse())),expected);
+});
+
+test('updated order sorts individual volumes and resolves same-time books in standard order', () => {
+  const entries=[1,2,3].map(n=>({slug:'p'+n,title:'ピエール',volume:n,seriesParentSlug:'p',contentUpdated:{milliseconds:n===2?300:200}}));
+  assert.deepEqual(Array.from(order.updatedOrder(entries)),['p2','p1','p3']);
+  assert.deepEqual(Array.from(order.defaultOrder(entries)),['p1','p2','p3']);
 });

@@ -761,3 +761,9 @@ html[data-theme="light"] .shelf-management-v288 .book-colors-v235 label:has(:che
  .library-shelf-tools-v300 button { font-size: 16px; }
  .library-hidden-dialog-v300 { padding: 16px; }
 }
+
+/* Keep ordering controls readable on narrow shelves. */
+.library-sort-v353 { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; font: 16px/1.4 var(--library-serif); }
+.library-sort-v353 select { min-height: 40px; max-width: 100%; padding: 7px 8px; border: 1px solid #947548; border-radius: 6px; background: #211d17; color: #f2e6d2; font: inherit; cursor: pointer; }
+.library-sort-v353 select:focus-visible { outline: 3px solid #299e96; outline-offset: 2px; }
+@media(max-width:600px) { .library-shelf-tools-v300 { justify-content: flex-start; width: 100%; margin-left: 0; } }
