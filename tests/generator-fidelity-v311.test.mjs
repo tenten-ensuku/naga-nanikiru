@@ -32,14 +32,16 @@ test('duplicate tiles get one player frame; tsumogiri and NAGA draw preference u
   }
 });
 
-test('red five is distinct, zero bars do not shift model slots, and selected zero matches the original suppression',()=>{
+test('red five is distinct, zero bars do not shift model slots, and selected zero keeps other model bars visible',()=>{
   const attrs=attributes(boardRenderer.recommendationsMarkup(scene,{models,probabilities:{man5:[0,0,80],aka1:[10,0,60]},selectedModel:2,actualDiscard:'aka1'}));
   assert.equal(attrs.find(a=>a['data-recommendation-frame']==='player')['data-hand-index'],'3');
   assert.equal(attrs.find(a=>a['data-recommendation-frame']==='naga')['data-hand-index'],'3');
   const selected=attrs.find(a=>a['data-recommendation-bar']==='2'&&a['data-hand-index']==='0');
   close(selected.x,124+4.65+2*(19/3.7+.5));
-  const suppressed=attributes(boardRenderer.recommendationsMarkup(scene,{models,probabilities:{man5:[0,100,100]},selectedModel:0}));
-  assert.equal(suppressed.filter(a=>a['data-recommendation-bar']!==undefined).length,0);
+  const reference=attributes(boardRenderer.recommendationsMarkup(scene,{models,probabilities:{man5:[0,100,100]},selectedModel:0})).filter(a=>a['data-recommendation-bar']!==undefined);
+  assert.equal(reference.length,6);
+  assert.deepEqual([...new Set(reference.map(a=>a['data-recommendation-bar']))],['1','2']);
+  assert.ok(reference.every(a=>a.fill==='#5a5c4e'));
 });
 
 test('real post-call scenes preserve empty consumed slots and source data while adding frames',()=>{
@@ -70,4 +72,31 @@ test('preview model defaults to extraction choice, switches per candidate and le
   assert.match(overlay.innerHTML,/表示モデル：ヒバカリ/);assert.equal(article.draft,draft);assert.equal(draft.value,'入力中');assert.equal(checkbox.checked,true);
   const frames=attributes(overlay.innerHTML).filter(a=>a['data-recommendation-frame']==='player');assert.equal(frames[0]['data-hand-index'],'4');
   h.changeGeneratorPreviewModelV311({dataset:{generatorPreviewModelV311:'0'},value:'unknown',closest:()=>article});assert.equal(h.generatorCandidateModelIndexV311(candidate),1);
+});
+
+
+test('real four-model report keeps Nishiki and Hibakari 4m bars when Ouroboros assigns zero',()=>{
+  // User report 9468427f...v2_2, tw=2, ts=2, tv=31. Rates verified from source JSON.
+  const realModels=[{name:'ニシキ',recommendation:'man4'},{name:'ヒバカリ',recommendation:'man4'},{name:'アナンタ',recommendation:'man9'},{name:'ウロボロス',recommendation:'man9'}];
+  const opts={models:realModels,probabilities:{man4:[82.36,58.5,.07,0],man9:[17.62,41.49,99.92,99.99]},selectedModel:3};
+  const markup=boardRenderer.tileRecommendationsMarkup('man4',opts),bars=attributes(markup).filter(a=>a['data-recommendation-bar']!==undefined);
+  assert.deepEqual(bars.map(a=>a['data-recommendation-bar']),['0','1','2']);
+  close(bars[0].height,40*.8236);close(bars[1].height,40*.585);
+  assert.ok(bars.every(a=>a.fill==='#5a5c4e'));
+  const board=boardRenderer.recommendationsMarkup({hand:{tiles:['man4','man9'],draw:null}},opts);
+  assert.equal(attributes(board).filter(a=>a['data-recommendation-bar']!==undefined&&a['data-hand-index']==='0').length,3);
+  assert.equal(attributes(board).find(a=>a['data-recommendation-frame']==='naga')['data-hand-index'],'1');
+});
+
+test('five-model reference bars retain slots and tolerate unavailable selected probabilities',()=>{
+  const five=[0,1,2,3,4].map(index=>({name:'モデル'+index,index,recommendation:'man4'}));
+  for(const absent of [0,null,undefined,'',NaN]){
+    const values=[75,25,0,absent,5],before=values.slice();
+    const bars=attributes(boardRenderer.tileRecommendationsMarkup('man4',{models:five,probabilities:{man4:values},selectedModel:3}));
+    assert.deepEqual(bars.map(a=>a['data-recommendation-bar']),['0','1','4']);
+    assert.ok(bars.every(a=>a.fill==='#5a5c4e'));
+    const thin=18/5.7;close(Number(bars[2].x)-Number(bars[0].x),4*(thin+.5)+.7*thin);
+    assert.deepEqual(values,before);
+  }
+  assert.equal(attributes(boardRenderer.tileRecommendationsMarkup('man4',{models:five,probabilities:{man4:[0,0,null,NaN,undefined]},selectedModel:3})).length,0);
 });

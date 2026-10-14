@@ -85,7 +85,7 @@
     const thin=Math.min((20-(count-1)*gap)/(count+ratio-1),10/ratio),thick=thin*ratio;
     const inset=(TW-(count-1)*gap-(count+ratio-1)*thin)/2;
     const values=probabilities[position.tile]||[],finite=value=>value!=null&&value!==''&&Number.isFinite(Number(value));
-    if(!finite(values[selectedModel])||Number(values[selectedModel])<=0)return '';
+    // Other models remain visible even when the selected model assigns zero.
     let out='',x=position.x+inset;
     models.forEach((model,column)=>{
       const selected=column===selectedColumn,width=selected?thick:thin,raw=values[model.index??column];
