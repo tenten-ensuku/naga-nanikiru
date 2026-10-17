@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=355">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=355">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=355">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=356">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=356">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=356">
   <title>みん切る｜みんなの何切る問題集</title>
   <link rel="preload" as="image" href="assets/loading-screen-v243.png" fetchpriority="high">
   <meta name="description" content="みん切るは、NAGA URLから問題をつくり、解いて、仲間と共有できる麻雀学習アプリです。">
   <meta name="theme-color" content="#f3f6f7">
-  <script src="theme-v259.js?v=355"></script>
+  <script src="theme-v259.js?v=356"></script>
   <meta property="og:type" content="website">
   <meta property="og:title" content="みん切る｜みんなの何切る問題集">
   <meta property="og:description" content="みん切るは、NAGA URLから問題をつくり、解いて、仲間と共有できる麻雀学習アプリです。">
@@ -65,7 +65,7 @@
           } else if (source) file = "external";
         } catch { /* Source metadata may be unavailable. */ }
         const position = value => Number.isSafeInteger(Number(value)) && Number(value) > 0 ? Number(value) : 0;
-        return `確認コード：V355 / ${kind} / ${name} / ${file}:${position(line)}:${position(column)}`;
+        return `確認コード：V356 / ${kind} / ${name} / ${file}:${position(line)}:${position(column)}`;
       };
       const showStatus = () => {
         const status = document.getElementById("startupStatusV236");
@@ -2316,24 +2316,24 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="theme-song-v344.css?v=355">
-  <link rel="stylesheet" href="ux-v159.css?v=355">
-  <link rel="stylesheet" href="library-v214.css?v=355">
-  <link rel="stylesheet" href="navigation-v234.css?v=355">
-  <link rel="stylesheet" href="book-builder-v235.css?v=355">
-  <link rel="stylesheet" href="menu-polish-v238.css?v=355">
-  <link rel="stylesheet" href="menu-sections-v239.css?v=355">
-  <link rel="stylesheet" href="workspace-ui-v240.css?v=355">
-  <link rel="stylesheet" href="collection-deletion-v244.css?v=355">
-  <link rel="stylesheet" href="collection-managers-v290.css?v=355">
-  <link rel="stylesheet" href="menu-simplify-v245.css?v=355">
-  <link rel="stylesheet" href="content-dates-v246.css?v=355">
-  <link rel="stylesheet" href="question-header-v250.css?v=355">
-  <link rel="stylesheet" href="question-toolbar-v255.css?v=355">
-  <link rel="stylesheet" href="theme-v259.css?v=355">
-  <link rel="stylesheet" href="theme-quick-v295.css?v=355">
-  <link rel="stylesheet" href="brand-v302.css?v=355">
-  <script defer src="theme-quick-v295.js?v=355"></script>
+  <link rel="stylesheet" href="theme-song-v344.css?v=356">
+  <link rel="stylesheet" href="ux-v159.css?v=356">
+  <link rel="stylesheet" href="library-v214.css?v=356">
+  <link rel="stylesheet" href="navigation-v234.css?v=356">
+  <link rel="stylesheet" href="book-builder-v235.css?v=356">
+  <link rel="stylesheet" href="menu-polish-v238.css?v=356">
+  <link rel="stylesheet" href="menu-sections-v239.css?v=356">
+  <link rel="stylesheet" href="workspace-ui-v240.css?v=356">
+  <link rel="stylesheet" href="collection-deletion-v244.css?v=356">
+  <link rel="stylesheet" href="collection-managers-v290.css?v=356">
+  <link rel="stylesheet" href="menu-simplify-v245.css?v=356">
+  <link rel="stylesheet" href="content-dates-v246.css?v=356">
+  <link rel="stylesheet" href="question-header-v250.css?v=356">
+  <link rel="stylesheet" href="question-toolbar-v255.css?v=356">
+  <link rel="stylesheet" href="theme-v259.css?v=356">
+  <link rel="stylesheet" href="theme-quick-v295.css?v=356">
+  <link rel="stylesheet" href="brand-v302.css?v=356">
+  <script defer src="theme-quick-v295.js?v=356"></script>
 </head>
 <body class="auth-gate-open">
   <section class="startup-screen-v236" id="startupScreenV236" aria-label="みん切るを準備中">
@@ -2394,7 +2394,7 @@
             <div id="commentKeywordSearchV284"></div>
             <p class="comment-search-hint-v284">候補は1つ選択。もう一度押すと解除できます。</p>
             <div class="comment-tags-v270" id="commentTagFiltersV270" role="group" aria-label="コメント検索の候補"></div>
-            <p id="commentTagResultV270" role="status"></p>
+            <p id="commentTagResultV270" role="status"></p><div id="reactionSearchV356"></div>
             <button type="button" class="book-list-reset-v281" data-book-filter-reset-v281>条件をリセット</button>
           </div>
         </details>
@@ -2684,55 +2684,56 @@
     </form>
   </dialog>
 
-  <link rel="stylesheet" href="comment-tags-v270.css?v=355">
+  <link rel="stylesheet" href="comment-tags-v270.css?v=356">
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=355"></script>
-  <script src="drill-ux-v44.js?v=355"></script>
-  <link rel="stylesheet" href="notifications-v314.css?v=355">
-  <script src="notifications-v314.js?v=355"></script>
-  <script src="navigation-v234.js?v=355"></script>
-  <script src="book-builder-v235.js?v=355"></script>
-  <script src="library-order-v215.js?v=355"></script>
-  <script src="content-dates-v246.js?v=355"></script>
-  <script src="question-header-v250.js?v=355"></script>
-  <script src="library-v214.js?v=355"></script>
-  <script src="collection-admin-v328.js?v=355"></script>
-  <script src="standard-reactions-v329.js?v=355"></script>
-  <link rel="stylesheet" href="collection-admin-v328.css?v=355">
-  <script src="naga-generator-v44.js?v=355"></script>
-  <link rel="stylesheet" href="naga-board-v248.css?v=355">
-  <link rel="stylesheet" href="dora-sheen-v333.css?v=355">
-  <link rel="stylesheet" href="refinements-v273.css?v=355">
-  <link rel="stylesheet" href="generator-tools-v274.css?v=355">
-  <link rel="stylesheet" href="book-pages-v281.css?v=355">
-  <link rel="stylesheet" href="touch-input-v307.css?v=355">
-  <script src="comment-tools-v274.js?v=355"></script>
-  <link rel="stylesheet" href="mobile-comments-v316.css?v=355">
-  <link rel="stylesheet" href="standard-reactions-v329.css?v=355">
-  <script src="mobile-comments-v316.js?v=355"></script>
-  <link rel="stylesheet" href="comment-selection-v321.css?v=355">
-  <script src="comment-selection-v321.js?v=355"></script>
-  <link rel="stylesheet" href="comment-composer-v324.css?v=355">
-  <script src="comment-composer-v324.js?v=355"></script>
-  <link rel="stylesheet" href="inline-comment-v322.css?v=355">
-  <script src="inline-comment-v322.js?v=355"></script>
-  <script src="naga-board-state-v248.js?v=355"></script>
-  <script src="naga-board-v248.js?v=355"></script>
-  <script src="call-choices-v346.js?v=355"></script>
-  <script src="study-model-v351.js?v=355"></script>
-  <link rel="stylesheet" href="call-choices-v346.css?v=355">
-  <script src="dora-sheen-v333.js?v=355"></script>
-  <script src="sound-v342.js?v=355"></script>
-  <script src="hand-mask-v237.js?v=355"></script>
-  <script src="menu-sections-v239.js?v=355"></script>
-  <script src="workspace-ui-v240.js?v=355"></script>
-  <script src="generation-confirm-v241.js?v=355"></script>
-  <script src="collection-deletion-v244.js?v=355"></script>
-  <script src="collection-managers-v290.js?v=355"></script>
+  <script src="supabase-sync-v48.js?v=356"></script>
+  <script src="drill-ux-v44.js?v=356"></script>
+  <link rel="stylesheet" href="notifications-v314.css?v=356">
+  <script src="notifications-v314.js?v=356"></script>
+  <script src="navigation-v234.js?v=356"></script>
+  <script src="book-builder-v235.js?v=356"></script>
+  <script src="library-order-v215.js?v=356"></script>
+  <script src="content-dates-v246.js?v=356"></script>
+  <script src="question-header-v250.js?v=356"></script>
+  <script src="library-v214.js?v=356"></script>
+  <script src="collection-admin-v328.js?v=356"></script>
+  <script src="standard-reactions-v329.js?v=356"></script>
+  <link rel="stylesheet" href="collection-admin-v328.css?v=356">
+  <script src="naga-generator-v44.js?v=356"></script>
+  <link rel="stylesheet" href="naga-board-v248.css?v=356">
+  <link rel="stylesheet" href="dora-sheen-v333.css?v=356">
+  <link rel="stylesheet" href="refinements-v273.css?v=356">
+  <link rel="stylesheet" href="generator-tools-v274.css?v=356">
+  <link rel="stylesheet" href="book-pages-v281.css?v=356">
+  <link rel="stylesheet" href="touch-input-v307.css?v=356">
+  <script src="comment-tools-v274.js?v=356"></script>
+  <link rel="stylesheet" href="mobile-comments-v316.css?v=356">
+  <link rel="stylesheet" href="standard-reactions-v329.css?v=356">
+  <script src="mobile-comments-v316.js?v=356"></script>
+  <link rel="stylesheet" href="comment-selection-v321.css?v=356">
+  <script src="comment-selection-v321.js?v=356"></script>
+  <link rel="stylesheet" href="comment-composer-v324.css?v=356">
+  <script src="comment-composer-v324.js?v=356"></script>
+  <link rel="stylesheet" href="inline-comment-v322.css?v=356">
+  <script src="inline-comment-v322.js?v=356"></script>
+  <script src="naga-board-state-v248.js?v=356"></script>
+  <script src="naga-board-v248.js?v=356"></script>
+  <script src="call-choices-v346.js?v=356"></script>
+  <script src="reaction-search-v356.js?v=356"></script>
+  <script src="study-model-v351.js?v=356"></script>
+  <link rel="stylesheet" href="call-choices-v346.css?v=356">
+  <script src="dora-sheen-v333.js?v=356"></script>
+  <script src="sound-v342.js?v=356"></script>
+  <script src="hand-mask-v237.js?v=356"></script>
+  <script src="menu-sections-v239.js?v=356"></script>
+  <script src="workspace-ui-v240.js?v=356"></script>
+  <script src="generation-confirm-v241.js?v=356"></script>
+  <script src="collection-deletion-v244.js?v=356"></script>
+  <script src="collection-managers-v290.js?v=356"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 355;
+    const APP_VERSION = 356;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -3820,6 +3821,7 @@
         const rows = await window.NagaSupabase.loadSharedReactionSummary(shareSlug, questionId);
         if (requestId !== reactionSummaryRequestV208 || !reactionContextIsCurrentV208(shareSlug, questionId)) return false;
         state.reactionSummary = normalizeReactionSummaryV208(rows);
+        window.syncQuestionReactionKeysV356?.(questionId,state.reactionSummary);
         renderComments();
         return true;
       } catch (error) {
@@ -4609,7 +4611,7 @@
       function navigationFiltersV234() {
         return { search: menuSearchV44, commentTag: menuCommentTagV270, statuses: [...menuStatusFiltersV92], type: menuTypeV44, range: menuRangeV60,
           favorites: menuFavoritesOnlyV137, limit: menuRenderLimitV119, order: menuOrderV92,
-          learning: { order: learningOrderV189, genres: [...learningGenresV189], history: [...learningHistoryFiltersV189], tag: learningCommentTagV273 } };
+          learning: { order: learningOrderV189, genres: [...learningGenresV189], history: [...learningHistoryFiltersV189], tag: learningCommentTagV273, ...(window.MinkiruReactionSearchV356?.selected ? {reaction: window.MinkiruReactionSearchV356.selected} : {}) } };
       }
       function restoreNavigationFiltersV234(filters) {
         if (!filters) return;
@@ -4622,6 +4624,7 @@
         menuRenderLimitV119 = Math.max(MENU_RENDER_BATCH_V119, Math.min(10000, Number(filters.limit) || MENU_RENDER_BATCH_V119));
         menuOrderV92 = filters.order === "random" ? "random" : "sequential";
         const learning = filters.learning;
+        window.MinkiruReactionSearchV356?.choose(learning?.reaction || "");
         if (learning) {
           learningOrderV189 = learning.order === "random" ? "random" : "sequential";
           const genres = Array.isArray(learning.genres) ? learning.genres.filter(value => LEARNING_GENRE_ORDER_V189.includes(value)) : [];
@@ -4886,6 +4889,7 @@
       const QUESTION_NOTICE_STORAGE_KEY_V66 = storageKey("question-notices-v1");
         const ANNOUNCEMENT_SEEN_STORAGE_KEY_V65 = storageKey("announcement-seen-v1");
         const APP_ANNOUNCEMENTS_V66 = [
+          {"version":356,"date":"2026-10-18","publishedAt":"2026-10-17T19:58:49.666Z","title":"問題生成の全選択とリアクション検索を追加しました","body":"問題生成の候補を全選択・全解除できます。問題一覧と学習の条件設定では、問題やコメントについたリアクションで絞り込めます。"},
           {"version":355,"date":"2026-10-17","publishedAt":"2026-10-17T14:38:00.788Z","title":"保存済み問題の新モデル評価を補完しました","body":"ピエール問題集第11巻の問題2044で、保存時に欠けていたアナンタ・ウロボロスの評価を元のNAGAデータから補完しました。"},
           {"version":354,"date":"2026-10-14","publishedAt":"2026-10-14T14:17:43.829Z","title":"他モデルの打牌推奨バーが消える不具合を修正しました","body":"選択中の正誤基準モデルが0％の牌でも、他モデルの推奨バーを表示します。ニシキ・ヒバカリなどとの判断の違いを確認できます。"},
           {"version":353,"date":"2026-10-14","publishedAt":"2026-10-14T12:04:35.013Z","title":"本棚の表示順を選べるようになりました","body":"本棚を「標準順」「更新が新しい順」「自分で並べた順」で切り替えられます。選んだ表示順は、このブラウザーに保存します。"},
@@ -5301,6 +5305,7 @@
           number,
           title,
           createdAt: window.MinkiruContentDatesV246.first(payload.generatedAt, row?.generated_at, payload.createdAt, row?.created_at, row?.createdAt)?.iso || null,
+          ...(Array.isArray(row?.reaction_keys) || Array.isArray(sourcePayload.reactionKeysV356) ? {reactionKeysV356: row?.reaction_keys || sourcePayload.reactionKeysV356} : {}),
           commentTagsV270: Array.isArray(row?.comment_tags) ? row.comment_tags : payload.commentTagsV270,
           commentSearchTextV284: typeof row?.comment_search_text === "string" ? row.comment_search_text : payload.commentSearchTextV284,
           decisionType: payload.decisionType || row?.decision_type || "discard",
@@ -9224,6 +9229,22 @@
         });
       }
 
+      function reactionSearchLabelV356() {
+        const selected=window.MinkiruReactionSearchV356?.selected;
+        return reactionDefinitionByKeyV211(selected)?.label || "選択したリアクション";
+      }
+      function renderReactionSearchV356(id) {
+        const search=window.MinkiruReactionSearchV356;
+        const used=new Set(questionsV16.flatMap(question=>search.keys(question.reactionKeysV356)));
+        if(search.selected)used.add(search.selected);
+        const choices=[...used].map(key=>({key,definition:reactionDefinitionByKeyV211(key)}));
+        return `<div class="reaction-search-v356"><label for="${id}">リアクションで検索</label><select id="${id}" data-reaction-search-v356><option value="">すべてのリアクション</option>${choices.map(({key,definition})=>`<option value="${escapeHtml(key)}"${search.selected===key?' selected':''}>${escapeHtml((definition?.icon && definition?.iconType!=='image'?definition.icon+' ':'')+(definition?.label||'選択したリアクション'))}</option>`).join('')}</select><p>問題・コメントについたリアクションで絞り込みます。</p></div>`;
+      }
+      window.syncQuestionReactionKeysV356 = (questionId, summary) => {
+        const keys=window.MinkiruReactionSearchV356.fromSummary(summary,reactionDefinitionByKeyV211);
+        for(const question of questionsV16)if(String(question.serverQuestionId||question.id)===String(questionId))question.reactionKeysV356=keys;
+        for(const page of sharedQuestionPagingV177.pages.values())for(const question of page.questions||[])if(String(question.serverQuestionId||question.id)===String(questionId))question.reactionKeysV356=keys;
+      };
       function questionCommentTagsV270(question) {
         const tags = window.MinkiruCommentTagsV270;
         return [...new Set([...(question.commentTagsV270 || []), ...tags.tagsFromComments(question.comments || [])])];
@@ -9235,7 +9256,8 @@
         return text;
       }
       function questionMatchesCommentSearchV284(question, query) {
-        return !query || window.MinkiruCommentTagsV270.matchesCommentSearch(questionCommentSearchTextV284(question), query);
+        return (!query || window.MinkiruCommentTagsV270.matchesCommentSearch(questionCommentSearchTextV284(question), query))
+          && (window.MinkiruReactionSearchV356?.matches(question) ?? true);
       }
       window.commentTagSuggestionsV271 = () => window.MinkiruCommentTagsV270.tagSuggestions(questionsV16.flatMap(questionCommentTagsV270));
       function syncQuestionCommentTagsV270(question) {
@@ -9287,6 +9309,7 @@
           document.getElementById("commentKeywordSearchV284").innerHTML = renderCommentSearchFormV284("bookCommentKeywordV284");
           filterGroups.dataset.scope = scope;
         }
+        document.getElementById("reactionSearchV356").innerHTML = renderReactionSearchV356("bookReactionV356");
         syncCommentSearchUiV284();
         syncLearningSettingsUiV189();
         activeTag.hidden = !bookListFiltersActiveV281();
@@ -9305,7 +9328,7 @@
       let bookListShuffleScopeV281 = "";
       function bookListFiltersActiveV281() {
         return learningOrderV189 !== "sequential" || learningGenresV189.size !== LEARNING_GENRE_ORDER_V189.length
-          || learningHistoryFiltersV189.size !== LEARNING_HISTORY_ORDER_V189.length || Boolean(learningCommentTagV273);
+          || learningHistoryFiltersV189.size !== LEARNING_HISTORY_ORDER_V189.length || Boolean(learningCommentTagV273) || Boolean(window.MinkiruReactionSearchV356?.selected);
       }
 
       function bookListFilterSummaryV281() {
@@ -9314,6 +9337,7 @@
         if (learningGenresV189.size !== LEARNING_GENRE_ORDER_V189.length) parts.push(LEARNING_GENRE_ORDER_V189.filter(key => learningGenresV189.has(key)).map(key => LEARNING_GENRE_LABELS_V189[key]).join("・"));
         if (learningHistoryFiltersV189.size !== LEARNING_HISTORY_ORDER_V189.length) parts.push(LEARNING_HISTORY_ORDER_V189.filter(key => learningHistoryFiltersV189.has(key)).map(key => LEARNING_HISTORY_LABELS_V189[key]).join("・"));
         if (learningCommentTagV273) parts.push("コメント：「" + learningCommentTagV273 + "」");
+        if (window.MinkiruReactionSearchV356?.selected) parts.push("リアクション：" + reactionSearchLabelV356());
         return parts.join(" / ");
       }
 
@@ -9342,6 +9366,7 @@
         const setting = focused?.dataset?.learningSetting;
         const value = focused?.dataset?.learningValue;
         const tag = focused?.dataset?.commentTagFilter;
+        const reaction = focused?.dataset?.reactionSearchV356 !== undefined;
         menuRangeV60 = "all";
         menuTypeV44 = "all";
         menuStatusFiltersV92 = [];
@@ -9351,6 +9376,7 @@
         commitNavigationV234("replace");
         if (setting && value) document.querySelector(`[data-learning-setting="${setting}"][data-learning-value="${value}"]`)?.focus({ preventScroll: true });
         else if (tag !== undefined) Array.from(document.querySelectorAll("[data-comment-tag-filter]")).find(button => button.dataset.commentTagFilter === tag)?.focus({ preventScroll: true });
+        else if (reaction) document.getElementById("bookReactionV356")?.focus({preventScroll:true});
       }
 
       function resetBookListConditionsV281() {
@@ -9358,6 +9384,7 @@
         learningGenresV189 = new Set(LEARNING_GENRE_ORDER_V189);
         learningHistoryFiltersV189 = new Set(LEARNING_HISTORY_ORDER_V189);
         learningCommentTagV273 = "";
+        window.MinkiruReactionSearchV356?.choose("");
         refreshBookListConditionsV281();
       }
 
@@ -9851,8 +9878,10 @@
         const needsDestination = destination.kind === "unselected";
         const addLabel = needsDestination && selectedCount > 0 ? `保存先を選んで${selectedCount}問を追加` : `選択した${selectedCount}問を追加`;
         const addButton = `<button class="generator-button" type="button" data-generator-add-selected${selectedCount === 0 || (!needsDestination && !canAdd) ? " disabled" : ""}>${addLabel}</button>`;
+        const selectableCount = generatorCandidatesV44.filter(candidate => { const item=generatorCandidateStateV249(candidate); return item.boardReady && !item.duplicate; }).length;
+        const selectionButtons = `<button class="generator-button secondary" type="button" data-generator-select-all${selectedCount===selectableCount?' disabled':''}>全選択</button><button class="generator-button secondary" type="button" data-generator-clear-all${selectedCount===0?' disabled':''}>全解除</button>`;
         const note = needsDestination ? '<p class="generator-destination-note">候補は先に選べます。追加するときに保存先を指定してください。</p>' : "";
-        return `<div class="generator-results-toolbar${bottom ? " generator-results-footer-v274" : ""}"><span><strong>${generatorCandidatesV44.length}件</strong>の候補</span><div class="generator-results-actions">${addButton}</div></div>${note}`;
+        return `<div class="generator-results-toolbar${bottom ? " generator-results-footer-v274" : ""}"><span><strong>${generatorCandidatesV44.length}件</strong>の候補</span><div class="generator-results-actions">${selectionButtons}${addButton}</div></div>${note}`;
       }
 
       function renderGeneratorCandidatesV44() {
@@ -9996,7 +10025,7 @@
           : mode === "weak"
           ? learningWeakQuestionsV189(answerMap)
           : playable.filter(question => learningQuestionMatchesGenreV189(question) && learningQuestionMatchesHistoryV189(question, answerMap));
-        const filtered = mode === "all" && learningCommentTagV273
+        const filtered = mode === "all" && (learningCommentTagV273 || window.MinkiruReactionSearchV356?.selected)
           ? source.filter(question => questionMatchesCommentSearchV284(question, learningCommentTagV273)) : source;
         if (!ordered) return filtered;
         const sequential = [...filtered].sort((left, right) => menuQuestionSortKeyV99(left) - menuQuestionSortKeyV99(right) || questionIndexByKeyV44(questionKeyV16(left)) - questionIndexByKeyV44(questionKeyV16(right)));
@@ -10012,7 +10041,7 @@
 
       function renderLearningTagFilterV273() {
         const choices = window.commentTagSuggestionsV271();
-        return `<section class="learning-setting-group">${renderCommentSearchFormV284("learningCommentKeywordV284")}<p class="comment-search-hint-v284">候補は1つ選択。もう一度押すと解除できます。</p><div class="comment-tags-v270" role="group" aria-label="全問のコメント検索候補">${choices.map(tag => `<button type="button" class="comment-tag-v270" data-learning-tag-v273="${escapeHtml(tag)}" aria-pressed="${tag === learningCommentTagV273}">#${escapeHtml(tag)}</button>`).join("")}</div><p data-learning-tag-result-v273>${escapeHtml(commentSearchNoteV284())}</p></section>`;
+        return `<section class="learning-setting-group">${renderCommentSearchFormV284("learningCommentKeywordV284")}<p class="comment-search-hint-v284">候補は1つ選択。もう一度押すと解除できます。</p><div class="comment-tags-v270" role="group" aria-label="全問のコメント検索候補">${choices.map(tag => `<button type="button" class="comment-tag-v270" data-learning-tag-v273="${escapeHtml(tag)}" aria-pressed="${tag === learningCommentTagV273}">#${escapeHtml(tag)}</button>`).join("")}</div><p data-learning-tag-result-v273>${escapeHtml(commentSearchNoteV284())}</p>${renderReactionSearchV356("learningReactionV356")}</section>`;
       }
 
       function learningSettingsSummaryV189() {
@@ -10021,7 +10050,7 @@
         const history = LEARNING_HISTORY_ORDER_V189.filter(key => learningHistoryFiltersV189.has(key)).map(key => LEARNING_HISTORY_LABELS_V189[key]);
         const genreLabel = genres.length === LEARNING_GENRE_ORDER_V189.length ? "全ジャンル" : genres.join("・") || "未選択";
         const historyLabel = history.length === LEARNING_HISTORY_ORDER_V189.length ? "全履歴" : history.join("・") || "未選択";
-        return `全問のみ・${order}・${genreLabel}・${historyLabel}${learningCommentTagV273 ? "・コメント：「" + learningCommentTagV273 + "」" : ""}`;
+        return `全問のみ・${order}・${genreLabel}・${historyLabel}${learningCommentTagV273 ? "・コメント：「" + learningCommentTagV273 + "」" : ""}${window.MinkiruReactionSearchV356?.selected ? "・リアクション：" + reactionSearchLabelV356() : ""}`;
       }
 
       function syncLearningSettingsUiV189() {
@@ -10136,7 +10165,7 @@
       }
 
       function learningFilterKeyV335() {
-        return JSON.stringify([learningOrderV189, [...learningGenresV189].sort(), [...learningHistoryFiltersV189].sort(), learningCommentTagV273]);
+        return JSON.stringify([learningOrderV189, [...learningGenresV189].sort(), [...learningHistoryFiltersV189].sort(), learningCommentTagV273, ...(window.MinkiruReactionSearchV356?.selected ? [window.MinkiruReactionSearchV356.selected] : [])]);
       }
 
       function learningResumeLabelV254(session) {
@@ -10761,6 +10790,13 @@
         }
       }
 
+      function syncGeneratorBatchToolbarV356() {
+        const template=document.createElement("template");template.innerHTML=renderGeneratorBatchToolbarV158();
+        for(const selector of ["[data-generator-add-selected]","[data-generator-select-all]","[data-generator-clear-all]"]){
+          const next=template.content.querySelector(selector);
+          document.querySelectorAll(selector).forEach(button=>{button.textContent=next.textContent;button.disabled=next.disabled;});
+        }
+      }
       function bindGeneratorCandidateInputsV44() {
         doraSheenV333.observe();
         document.querySelectorAll("[data-generator-recommendations-v310]").forEach(button => button.addEventListener("click", () => toggleGeneratorRecommendationsV310(button)));
@@ -10780,14 +10816,13 @@
           const index = Number(event.currentTarget.dataset.generatorSelect);
           if (event.currentTarget.checked) generatorSelectedCandidatesV158.add(index);
           else generatorSelectedCandidatesV158.delete(index);
-          // Update both actions without replacing the focused checkbox or comment drafts.
-          const template = document.createElement("template");
-          template.innerHTML = renderGeneratorBatchToolbarV158();
-          const next = template.content.querySelector("[data-generator-add-selected]");
-          document.querySelectorAll("[data-generator-add-selected]").forEach(button => {
-            button.textContent = next.textContent;
-            button.disabled = next.disabled;
-          });
+          syncGeneratorBatchToolbarV356();
+        }));
+        document.querySelectorAll("[data-generator-select-all], [data-generator-clear-all]").forEach(button => button.addEventListener("click", () => {
+          generatorSelectedCandidatesV158.clear();
+          if(button.hasAttribute("data-generator-select-all"))generatorCandidatesV44.forEach((candidate,index)=>{const item=generatorCandidateStateV249(candidate);if(item.boardReady&&!item.duplicate)generatorSelectedCandidatesV158.add(index);});
+          document.querySelectorAll("[data-generator-select]").forEach(input=>{input.checked=generatorSelectedCandidatesV158.has(Number(input.dataset.generatorSelect));});
+          syncGeneratorBatchToolbarV356();
         }));
         document.querySelectorAll("[data-generator-add]").forEach(button => button.addEventListener("click", () => window.MinkiruCommentToolsV274.saveOnce(() => addGeneratedQuestionV44(Number(button.dataset.generatorAdd)))));
         document.querySelectorAll("[data-generator-add-selected]").forEach(button => button.addEventListener("click", () => window.MinkiruCommentToolsV274.saveOnce(() => addSelectedGeneratorQuestionsV158())));
@@ -11840,6 +11875,7 @@
           if (canLoadReactions && reactionsResult.status === "fulfilled") {
             state.reactionEnabled = true;
             state.reactionSummary = normalizeReactionSummaryV208(reactionsResult.value);
+            window.syncQuestionReactionKeysV356?.(questionId,state.reactionSummary);
           } else if (canLoadReactions) {
             console.warn("リアクション集計を読み込めませんでした", reactionsResult.reason);
           }
@@ -11914,6 +11950,12 @@
         document.getElementById("menuPanel").addEventListener("click", handleMenuGridClickV16);
         document.getElementById("menuPanel").addEventListener("change", handleLearningSettingsChangeV189);
         document.getElementById("menuPanel").addEventListener("change", async event => {
+          if (event.target.matches("[data-reaction-search-v356]")) {
+            window.MinkiruReactionSearchV356.choose(event.target.value);
+            syncLearningSettingsUiV189(); syncLearningActionCountsV189(); refreshBookListConditionsV281();
+            if (menuViewV16 === "today") commitNavigationV234("replace");
+            return;
+          }
           if (!event.target.matches("[data-study-model-v351]")) return;
           const select = event.target; select.disabled = true;
           try { await rememberStudyModelV351(select.value || null,document.getElementById("studyModelStatusV351")); }

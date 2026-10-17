@@ -87,3 +87,8 @@ html[data-theme=light] .comment-body .comment-spoiler { background: #dce8e4 !imp
 .candidate-bar-legend-v310 i { box-sizing: border-box; border-radius: 0; background: transparent; }
 .candidate-player-key-v311 { border: 2px solid #ff0000; }
 .candidate-naga-key-v311 { border: 3px solid #7c3be6; }
+
+.reaction-search-v356 { display:grid; gap:8px; margin-top:16px; font-size:16px; }
+.reaction-search-v356 select { max-width:100%; min-height:44px; padding:8px; border:1px solid var(--line); border-radius:6px; background:var(--panel); color:var(--ink); font:inherit; }
+.reaction-search-v356 p { margin:0; font-size:13px; line-height:1.6; }
+.generator-results-actions { flex-wrap:wrap; }

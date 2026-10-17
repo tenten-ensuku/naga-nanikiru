@@ -121,6 +121,8 @@ test('destination event re-renders without clearing selections and checkbox keep
   assert.match(handler, /renderGeneratorCandidatesV44\(\)/);
   const selection=html.slice(html.indexOf('document.querySelectorAll("[data-generator-select]").forEach'),html.indexOf('document.querySelectorAll("[data-generator-add]").forEach'));
   assert.doesNotMatch(selection,/results\.innerHTML|renderGeneratorCandidatesV44|bindGeneratorCandidateInputsV44/);
-  assert.match(selection,/button\.textContent = next\.textContent/);
-  assert.match(selection,/button\.disabled = next\.disabled/);
+  assert.match(selection,/syncGeneratorBatchToolbarV356\(\)/);
+  const updater=html.match(/function syncGeneratorBatchToolbarV356\([^]*?\n      \}/)[0];
+  assert.match(updater,/button\.textContent=next\.textContent/);
+  assert.match(updater,/button\.disabled=next\.disabled/);
 });

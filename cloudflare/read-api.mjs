@@ -108,6 +108,16 @@ const COLLECTION_EDIT_EXPR = `(
 const COLLECTION_ADMINISTER_EXPR = `(c.owner_id = actor.user_id OR actor.is_admin = 1)`;
 const COLLECTION_CONTRIBUTE_EXPR = `(actor.user_id IS NOT NULL AND (${COLLECTION_EDIT_EXPR} OR ${COMMUNITY_CONTRIBUTION_SQL}))`;
 const COLLECTION_MANAGE_EXPR = `(${COLLECTION_ADMINISTER_EXPR} OR EXISTS (SELECT 1 FROM collection_managers cm WHERE cm.collection_id=c.id AND cm.user_id=actor.user_id AND cm.status='active'))`;
+const REACTION_KEYS_SQL_V356 = `(SELECT json_group_array(reaction_key) FROM (
+  SELECT qr.reaction_key FROM question_reactions qr WHERE qr.question_id=q.id
+  UNION
+  SELECT cr.reaction_key FROM comment_reactions cr WHERE cr.question_id=q.id AND (
+    EXISTS (SELECT 1 FROM comments rc WHERE rc.id=cr.comment_id AND rc.question_id=q.id AND rc.collection_id=q.collection_id AND rc.deleted_at IS NULL)
+    OR EXISTS (SELECT 1 FROM json_each(CASE WHEN json_type(q.payload,'$.comments')='array' THEN json_extract(q.payload,'$.comments') ELSE '[]' END) pc
+      WHERE CAST(COALESCE(json_extract(CASE WHEN pc.type='object' THEN pc.value ELSE '{}' END,'$.id'),json_extract(CASE WHEN pc.type='object' THEN pc.value ELSE '{}' END,'$.messageId')) AS TEXT)=cr.comment_id
+        AND NOT EXISTS (SELECT 1 FROM comments deleted_comment WHERE deleted_comment.id=cr.comment_id AND deleted_comment.deleted_at IS NOT NULL))
+  )
+))`;
 const QUESTION_INDEX_COLUMNS = `
   q.id,
   q.created_by,
@@ -155,6 +165,7 @@ const QUESTION_INDEX_COLUMNS = `
     q.created_at) AS generated_at,
   q.created_at,
   q.updated_at,
+  ${REACTION_KEYS_SQL_V356} AS reaction_keys,
   (SELECT json_group_array(tag_comment.body) FROM comments tag_comment INDEXED BY comments_question_time
     WHERE tag_comment.question_id = q.id AND tag_comment.collection_id = q.collection_id
       AND tag_comment.deleted_at IS NULL) AS comment_tag_bodies,
@@ -347,6 +358,7 @@ function mapIndexRow(row, includeTotal) {
     // Only visible text is included, without authors, images or attachments.
     comment_tags: tagsFromComments(comments),
     comment_search_text: searchTextFromComments(comments),
+    reaction_keys: asJsonArray(row.reaction_keys).filter(key => typeof key === "string" && /^[A-Za-z0-9_-]{1,100}$/.test(key)),
   };
   if (includeTotal) mapped.total_count = rowCount(row.total_count);
   return mapped;
@@ -481,7 +493,7 @@ async function sharedQuestionDetail(db, actor, args) {
   const rootId = requested.series_parent_id || requested.id;
   const row = await first(
     db,
-    `SELECT q.*, c.id AS selected_collection_id
+    `SELECT q.*, ${REACTION_KEYS_SQL_V356} AS reaction_keys, c.id AS selected_collection_id
        FROM questions q
        JOIN collections c ON c.id = q.collection_id
       WHERE q.id = ?
@@ -495,6 +507,7 @@ async function sharedQuestionDetail(db, actor, args) {
   const result = { ...row };
   delete result.selected_collection_id;
   result.payload = asJsonObject(result.payload);
+  result.reaction_keys = asJsonArray(result.reaction_keys).filter(key => typeof key === "string" && /^[A-Za-z0-9_-]{1,100}$/.test(key));
   if(!toSafeQuestionNumber(result.payload.number)||isInvalidQuestionTitle(result.title)||(typeof result.payload.title==='string'&&isInvalidQuestionTitle(result.payload.title))){
     const collection=await first(db,'SELECT id,volume_start FROM collections WHERE id=?',[result.collection_id]);
     const repaired=(await numberingForCollectionV235(db,collection)).get(result.id);
