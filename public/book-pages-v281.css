@@ -565,3 +565,27 @@ html:root .page.menu-active #menuPanel[data-view="my"] .menu-card-title { min-wi
   html:root .page.menu-active #menuPanel[data-view="my"] .menu-card-heading { gap: 8px; }
   html:root .page.menu-active #menuPanel[data-view="my"] .menu-card-title { font-size: 24px; }
 }
+
+/* V357: keep the delete action beside the star, above the row-wide open target. */
+html:root .page.menu-active #menuPanel[data-view="my"] .menu-card-actions-v357 {
+  display: flex; gap: 4px; grid-column: 3; grid-row: 1; justify-content: center;
+  position: relative; z-index: 2;
+}
+html:root .page.menu-active #menuPanel[data-view="my"] .menu-card:has(.menu-card-delete-v357) {
+  grid-template-columns: minmax(0, 1fr) 180px 92px;
+}
+html:root .page.menu-active #menuPanel[data-view="my"] .menu-card-delete-v357 {
+  color: #c64e55; font-size: 14px; white-space: nowrap;
+}
+.question-deletion-notice-v357 { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 16px; margin: 12px 0; padding: 12px; border: 1px solid var(--book-page-line); }
+.question-deletion-notice-v357[hidden] { display: none; }
+.question-deletion-notice-v357 button { min-height: 44px; padding: 8px 14px; }
+@media (max-width: 1100px) {
+  html:root .page.menu-active #menuPanel[data-view="my"] .menu-card:has(.menu-card-delete-v357) { grid-template-columns: minmax(0, 1fr) 108px 92px; gap: 6px; }
+}
+@media (max-width: 800px) {
+  html:root .page.menu-active #menuPanel[data-view="my"] .menu-card:has(.menu-card-delete-v357) { grid-template-columns: minmax(0, 1fr) 78px 92px; }
+}
+@media (max-width: 360px) {
+  html:root .page.menu-active #menuPanel[data-view="my"] .menu-card:has(.menu-card-delete-v357) { grid-template-columns: minmax(0, 1fr) 66px 92px; gap: 4px; }
+}

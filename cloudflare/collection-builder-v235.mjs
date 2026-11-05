@@ -29,17 +29,27 @@ async function nextVolumeNumber(db,c,root){
   const current=Number(c.volume_number||1);
   const following=await first(db,'SELECT volume_number FROM collections WHERE series_parent_id=? AND volume_number>? AND archived_at IS NULL ORDER BY volume_number LIMIT 1',root.id,current);
   if(following)return Number(following.volume_number);
-  // Deleted volumes keep their numbers, IDs and retained data. Never reuse them.
-  const latest=Number((await first(db,'SELECT MAX(volume_number) n FROM collections WHERE series_parent_id=?',root.id))?.n||1);
+  const latest=Number((await first(db,'SELECT MAX(volume_number) n FROM collections WHERE series_parent_id=? AND archived_at IS NULL',root.id))?.n||1);
   return Math.max(current,latest)+1;
+}
+async function recreatableVolumes(db,root){
+  return rows(db,`SELECT a.id collection_id,a.volume_number FROM collections a
+    WHERE a.series_parent_id=? AND a.archived_at IS NOT NULL AND a.volume_number>=2
+      AND NOT EXISTS(SELECT 1 FROM collections live WHERE live.series_parent_id=a.series_parent_id AND live.volume_number=a.volume_number AND live.archived_at IS NULL)
+      AND a.id=(SELECT id FROM collections h WHERE h.series_parent_id=a.series_parent_id AND h.volume_number=a.volume_number AND h.archived_at IS NOT NULL ORDER BY h.archived_at DESC,h.id DESC LIMIT 1)
+    ORDER BY a.volume_number`,root.id);
 }
 export async function collectionCapacity(args,{db,actor}){
   requireActor(actor);const selected=await editable(db,actor,String(args.p_share_slug||''),canContributeCollection);const c=await targetOf(db,actor,selected,canContributeCollection);const root=await rootOf(db,c);
+  if(!root)fail('collection_not_editable',403);
   const total=await count(db,c.id),next=await nextVolumeNumber(db,c,root);
   const existing=await first(db,'SELECT share_slug,title FROM collections WHERE series_parent_id=? AND volume_number=? AND archived_at IS NULL',root.id,next);
+  const canCreate=await canManageCollection(db,actor,root.id);
+  const recreatable=canCreate?(await recreatableVolumes(db,root)).map(v=>({...v,title:`${root.title.replace(/\s*第\d+巻$/,'')} 第${v.volume_number}巻`})) : [];
   return {share_slug:c.share_slug,collection_title:c.title,question_count:total,limit:200,remaining:Math.max(0,200-total),near_capacity:total>=195,capacity_reached:total>=200,
     parent_share_slug:root.share_slug,volume_number:Number(c.volume_number||1),next_volume:next,next_title:existing?.title||`${root.title.replace(/\s*第\d+巻$/,'')} 第${next}巻`,next_share_slug:existing?.share_slug||null,
-    can_create_volume:await canManageCollection(db,actor,root.id),book_tone:c.book_tone||root.book_tone};
+    next_replaces_collection_id:recreatable.find(v=>Number(v.volume_number)===next)?.collection_id||null,recreatable_volumes:recreatable,
+    can_create_volume:canCreate,book_tone:c.book_tone||root.book_tone};
 }
 async function create(args,{db,actor}){
   const title=text(args.p_title,80,true),description=text(args.p_description??'',500),visibility=args.p_visibility??'private',bookTone=tone(args.p_book_tone??'walnut');
@@ -69,18 +79,26 @@ async function create(args,{db,actor}){
 }
 async function createVolume(args,{db,actor}){
   let c=await editable(db,actor,String(args.p_share_slug||''));let root=await rootOf(db,c);
+  if(!root)fail('collection_not_editable',403);
   if(!await canManageCollection(db,actor,root.id))fail('collection_not_manageable',403);
   await ensureStudyModelSchema(db);
   c=await targetOf(db,actor,c);
   const next=Number(args.p_volume_number??await nextVolumeNumber(db,c,root));
   if(!Number.isInteger(next)||next<2||next>10000)fail('invalid_volume_number');
-  // Retries and two open tabs must return the same volume, not produce duplicates.
-  if(root.series_key){const prior=await first(db,'SELECT * FROM collections WHERE series_parent_id=? AND volume_number=?',root.id,next);if(prior){if(prior.archived_at)fail('collection_already_deleted',409);return prior;}}
-  const latest=Number((await first(db,'SELECT MAX(volume_number) n FROM collections WHERE series_parent_id=?',root.id))?.n||1);
-  if(next!==latest+1||await count(db,c.id)<195)fail('volume_not_ready',409);
   const standalone=!root.series_key&&!root.series_parent_id;
   const rootId=standalone?await stableId(`series:${root.id}`):root.id;
-  const newId=await stableId(`volume:${rootId}:${next}`),base=root.title.replace(/\s*第\d+巻$/,'');
+  const replaces=typeof args.p_replaces_collection_id==='string'?args.p_replaces_collection_id:null;
+  const newId=await stableId(replaces?`volume:${rootId}:${next}:replacement:${replaces}`:`volume:${rootId}:${next}`),base=root.title.replace(/\s*第\d+巻$/,'');
+  // A replacement is a NEW empty book. Never unarchive retained questions/history.
+  const prior=await first(db,'SELECT * FROM collections WHERE series_parent_id=? AND volume_number=? AND archived_at IS NULL',root.id,next);
+  if(prior){if(replaces&&prior.id!==newId)fail('volume_recreation_changed',409);return prior;}
+  const archived=(await recreatableVolumes(db,root)).find(v=>Number(v.volume_number)===next);
+  if(archived){if(replaces!==archived.collection_id)fail('volume_recreation_confirmation_required',409);}
+  else{
+    if(replaces)fail('volume_recreation_changed',409);
+    const latest=Number((await first(db,'SELECT MAX(volume_number) n FROM collections WHERE series_parent_id=? AND archived_at IS NULL',root.id))?.n||1);
+    if(next!==latest+1||await count(db,c.id)<195)fail('volume_not_ready',409);
+  }
   const statements=[];
   if(standalone){
     statements.push(db.prepare(`INSERT INTO collections(id,owner_id,workspace_id,title,description,visibility,share_slug,allow_comments,allow_contributions,published_at,series_key,book_tone)
@@ -92,12 +110,15 @@ async function createVolume(args,{db,actor}){
     statements.push(db.prepare(`INSERT INTO collection_managers(collection_id,user_id,status,granted_by,granted_at,revoked_at) SELECT ?,user_id,status,granted_by,granted_at,revoked_at FROM collection_managers WHERE collection_id=? ON CONFLICT(collection_id,user_id) DO NOTHING`).bind(rootId,root.id));
   }
   statements.push(db.prepare(`INSERT INTO collections(id,owner_id,workspace_id,title,description,visibility,share_slug,allow_comments,allow_contributions,published_at,series_key,series_parent_id,volume_number,volume_start,volume_end,book_tone)
-    SELECT ?,owner_id,workspace_id,?,description,visibility,?,allow_comments,allow_contributions,published_at,series_key,id,?,?,?,book_tone FROM collections WHERE id=?
-    ON CONFLICT(series_parent_id,volume_number) WHERE series_parent_id IS NOT NULL AND volume_number IS NOT NULL DO NOTHING`).bind(newId,`${base} 第${next}巻`,slug(newId),next,(next-1)*200+1,next*200,rootId));
+    SELECT ?,owner_id,workspace_id,?,description,visibility,?,allow_comments,allow_contributions,published_at,series_key,id,?,?,?,book_tone FROM collections WHERE id=? AND archived_at IS NULL
+      AND (? IS NULL OR ?=(SELECT id FROM collections h WHERE h.series_parent_id=? AND h.volume_number=? AND h.archived_at IS NOT NULL ORDER BY h.archived_at DESC,h.id DESC LIMIT 1))
+    ON CONFLICT DO NOTHING`).bind(newId,`${base} 第${next}巻`,slug(newId),next,(next-1)*200+1,next*200,rootId,replaces,replaces,rootId,next));
   statements.push(db.prepare(`INSERT INTO collection_members(collection_id,user_id,role,status,granted_by,granted_at,revoked_at) SELECT ?,user_id,role,status,granted_by,granted_at,revoked_at FROM collection_members WHERE collection_id=? ON CONFLICT(collection_id,user_id) DO NOTHING`).bind(newId,rootId));
   statements.push(db.prepare(`INSERT INTO collection_managers(collection_id,user_id,status,granted_by,granted_at,revoked_at) SELECT ?,user_id,status,granted_by,granted_at,revoked_at FROM collection_managers WHERE collection_id=? ON CONFLICT(collection_id,user_id) DO NOTHING`).bind(newId,rootId));
   await db.batch(statements);
-  return first(db,'SELECT * FROM collections WHERE series_parent_id=? AND volume_number=?',rootId,next);
+  const created=await first(db,'SELECT * FROM collections WHERE series_parent_id=? AND volume_number=? AND archived_at IS NULL',rootId,next);
+  if(!created||(replaces&&created.id!==newId))fail('volume_recreation_changed',409);
+  return created;
 }
 async function setTone(args,{db,actor}){
   const c=await editable(db,actor,String(args.p_share_slug||''));if(!await canManageCollectionContent(db,actor,c.id))fail('collection_not_manageable',403);

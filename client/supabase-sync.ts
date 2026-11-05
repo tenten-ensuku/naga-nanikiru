@@ -717,9 +717,18 @@ async function createSharedQuestion(input: {
 }
 
 async function createCollectionVolume(shareSlug: string, volumeNumber: number | null = null) {
+  return createCollectionVolumeRequest(shareSlug, volumeNumber);
+}
+
+async function recreateCollectionVolume(shareSlug: string, volumeNumber: number, replacesCollectionId: string) {
+  return createCollectionVolumeRequest(shareSlug, volumeNumber, replacesCollectionId);
+}
+
+async function createCollectionVolumeRequest(shareSlug: string, volumeNumber: number | null, replacesCollectionId: string | null = null) {
   const { data, error } = await requireClient().rpc("create_collection_volume", {
     p_share_slug: shareSlug,
     p_volume_number: volumeNumber,
+    ...(replacesCollectionId ? {p_replaces_collection_id: replacesCollectionId} : {}),
   });
   if (error) throw error;
   return data as unknown;
@@ -1036,6 +1045,7 @@ function buildApi() {
     getMyCapabilities,
     createSharedQuestion,
     createCollectionVolume,
+    recreateCollectionVolume,
     updateSharedQuestion,
     trashSharedQuestion,
     restoreSharedQuestion,

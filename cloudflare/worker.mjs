@@ -59,6 +59,8 @@ function failure(error,request){
     invalid_collection_input:'問題集名は1〜120文字、説明は3000文字以内で入力してください。',
     collection_deletion_mixed_owners:'このシリーズには別の所有者の巻が含まれるため、まとめて削除できません。',
     collection_already_deleted:'この問題集はすでに削除されています。本棚へ戻って確認してください。',
+    volume_recreation_confirmation_required:'削除した巻を作り直すには、「つくる」で保存先を選び直し、「巻を作り直す」から確認してください。',
+    volume_recreation_changed:'この巻の状態が変わりました。保存先を選び直して、もう一度確認してください。',
     collection_deletion_too_large:'削除対象が多いため、一冊ずつ確認するか、管理者へご相談ください。'
   });
   const message=messages[code]||(status>=500?'接続を確認できませんでした。入力内容は消さずに、少し待ってから再度お試しください。':'操作を受け付けられませんでした。内容とアクセス権を確認してください。');
@@ -73,7 +75,7 @@ export default {
     try{
       const url=new URL(request.url);
       if(url.pathname==='/guide/video/minkiru-promo.mp4')return new Response(request.method==='HEAD'?null:'This video has been withdrawn.',{status:410,headers:common});
-      if(url.pathname==='/health'&&request.method==='GET')return json({version:356,backend:'cloudflare',ready:ready(env),studentFlow:ready(env),signups:ready(env)&&env.SIGNUPS_ENABLED==='true',heavyOperations:generationEnabled(env),generation:generationEnabled(env),uploads:env.UPLOADS_ENABLED==='true',bulkImport:false,bot:env.DISCORD_SYNC_ENABLED==='true'&&!!env.DISCORD_SYNC_TOKEN});
+      if(url.pathname==='/health'&&request.method==='GET')return json({version:357,backend:'cloudflare',ready:ready(env),studentFlow:ready(env),signups:ready(env)&&env.SIGNUPS_ENABLED==='true',heavyOperations:generationEnabled(env),generation:generationEnabled(env),uploads:env.UPLOADS_ENABLED==='true',bulkImport:false,bot:env.DISCORD_SYNC_ENABLED==='true'&&!!env.DISCORD_SYNC_TOKEN});
       if(!ready(env))return json({error:'migration_not_ready',message:'移行確認中です。公開切替はまだ完了していません。'},503);
       if(url.origin!==env.APP_ORIGIN)throw new ApiError('origin_denied',403);
       if(url.pathname==='/naga-nanikiru'||url.pathname==='/naga-nanikiru/')return Response.redirect(url.origin+'/'+url.search,302);

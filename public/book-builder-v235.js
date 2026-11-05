@@ -18,7 +18,9 @@
   function capacityMarkup(c){
     if(!c||!Number.isSafeInteger(c.question_count))return '<p>収録数を確認できません。接続を確認して保存先を選び直してください。</p>';
     const total=c.question_count;
-    return `<div class="book-capacity-heading-v235"><strong>${escape(c.collection_title)}</strong><span><b>${total}</b> / 200問</span></div><progress max="200" value="${Math.min(total,200)}" aria-label="収録数"></progress><p>${total>=200?'この巻は満杯です。':`あと${200-total}問追加できます。`}</p>${total>=195?`<div class="book-next-v235"><p>一冊の問題集に収録できるのは200問までです。<br>「${escape(c.next_title)}」${c.next_share_slug?'を使いますか？':'を作成しますか？'}</p>${c.can_create_volume||c.next_share_slug?`<button type="button" data-next-volume-v235>${c.next_share_slug?'次の巻を保存先にする':'次の巻を作成して使う'}</button>`:'<small>次巻の作成は問題集の所有者に依頼してください。</small>'}<small>現在の問題・回答履歴はそのまま残ります。</small></div>`:''}`;
+    const recreatable=c.can_create_volume&&Array.isArray(c.recreatable_volumes)?c.recreatable_volumes:[];
+    const recreate=recreatable.length?`<div class="book-next-v235"><p>削除した巻を空の問題集として作り直せます。以前の問題は戻りません。</p>${recreatable.map(v=>`<button type="button" data-recreate-volume-v357="${escape(v.volume_number)}" data-replaces-collection-id="${escape(v.collection_id)}">第${escape(v.volume_number)}巻を作り直す</button>`).join('')}</div>`:'';
+    return `<div class="book-capacity-heading-v235"><strong>${escape(c.collection_title)}</strong><span><b>${total}</b> / 200問</span></div><progress max="200" value="${Math.min(total,200)}" aria-label="収録数"></progress><p>${total>=200?'この巻は満杯です。':`あと${200-total}問追加できます。`}</p>${total>=195&&!c.next_replaces_collection_id?`<div class="book-next-v235"><p>一冊の問題集に収録できるのは200問までです。<br>「${escape(c.next_title)}」${c.next_share_slug?'を使いますか？':'を作成しますか？'}</p>${c.can_create_volume||c.next_share_slug?`<button type="button" data-next-volume-v235>${c.next_share_slug?'次の巻を保存先にする':'次の巻を作成して使う'}</button>`:'<small>次巻の作成は問題集の所有者に依頼してください。</small>'}<small>現在の問題・回答履歴はそのまま残ります。</small></div>`:''}${recreate}`;
   }
   host.MinkiruBookBuilderV235={tones,palette,appearance,bindPreview,capacityMarkup};
 })(globalThis);
