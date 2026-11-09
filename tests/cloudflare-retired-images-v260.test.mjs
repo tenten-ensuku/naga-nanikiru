@@ -7,6 +7,7 @@ import {testD1} from './helpers/cloudflare-d1.mjs';
 import {builderRpc} from '../cloudflare/collection-builder-v235.mjs';
 
 const migration=fs.readFileSync(new URL('../cloudflare/migrations/0005_retired_question_images_v260.sql',import.meta.url),'utf8');
+const guardFix=fs.readFileSync(new URL('../cloudflare/migrations/0012_retired_guard_recursion_v360.sql',import.meta.url),'utf8');
 const oldKey='naga-question-assets/book/report/question.webp';
 const privateKey='question-assets/owner/book/question.png';
 const publicUrl='https://fixture.test/v1/public/'+oldKey;
@@ -20,6 +21,7 @@ function setupD1(t){
       VALUES('job','owner','book','naga_scene','https://fixture.test/naga','report');`);
   db.sqlite.prepare('INSERT INTO private_media_budget(singleton,inventory_checked_at) VALUES(1,?)').run(new Date().toISOString());
   db.sqlite.exec(migration);
+  db.sqlite.exec(guardFix);
   return db;
 }
 function setup(t){return setupD1(t).sqlite;}
@@ -30,15 +32,15 @@ function candidate(db,id,tv,payload={}){return db.prepare("INSERT INTO generatio
 function media(db,key){const bucket=key.slice(0,key.indexOf('/')),path=key.slice(key.indexOf('/')+1);db.prepare("INSERT INTO media_assets(object_key,bucket,path,owner_id,collection_id,size_bytes,sha256,content_type,state) VALUES(?,?,?,'owner','book',100,?,'image/webp','ready')").run(key,bucket,path,'a'.repeat(64));}
 
 function guardSelectForReadOnly(){
-  const start=migration.indexOf('WITH RECURSIVE');
+  const start=guardFix.indexOf('WITH RECURSIVE');
   // RAISE is legal only inside a trigger. These read-only checks stay under
   // the input budget; actual oversized writes exercise the original RAISE.
-  return migration.slice(start,migration.indexOf('\n  );',start)).replace('NEW.payload','?')
+  return guardFix.slice(start,guardFix.indexOf('\n  );',start)).replace('NEW.payload','?')
     .replace("RAISE(ABORT,'question_image_reference_too_complex')",'NULL');
 }
 
 function runPythonSqlite(t,python){
-  const files=['0001_minkiru.sql','0002_collection_builder_v235.sql','0003_generation_v241.sql','0004_discord_sync_v242.sql','0005_retired_question_images_v260.sql']
+  const files=['0001_minkiru.sql','0002_collection_builder_v235.sql','0003_generation_v241.sql','0004_discord_sync_v242.sql','0005_retired_question_images_v260.sql','0012_retired_guard_recursion_v360.sql']
     .map(name=>fileURLToPath(new URL('../cloudflare/migrations/'+name,import.meta.url)));
   const interpreters=[process.env.MINKIRU_SQLITE_LIMIT_PYTHON,'python3','python'].filter(Boolean);
   for(const interpreter of [...new Set(interpreters)]){

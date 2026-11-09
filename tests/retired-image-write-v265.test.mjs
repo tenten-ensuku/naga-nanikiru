@@ -18,6 +18,7 @@ const actor={id:'owner'},origin='https://fixture.test';
 function setup(t){
  const db=testD1({generation:true,discord:true});t.after(()=>db.close());
  db.sqlite.exec(fs.readFileSync(new URL('../cloudflare/migrations/0005_retired_question_images_v260.sql',import.meta.url),'utf8'));
+ db.sqlite.exec(fs.readFileSync(new URL('../cloudflare/migrations/0012_retired_guard_recursion_v360.sql',import.meta.url),'utf8'));
  db.sqlite.exec("INSERT INTO profiles(id) VALUES('owner'); INSERT INTO collections(id,owner_id,title,share_slug,visibility,published_at) VALUES('book','owner','Fixture','book','public','2026-01-01');");
  db.sqlite.prepare('INSERT INTO private_media_budget(singleton,inventory_checked_at) VALUES(1,?)').run(new Date().toISOString());
  return {db,actor,origin};
@@ -26,7 +27,7 @@ const retire=db=>db.sqlite.prepare('INSERT INTO private_retired_question_images(
 const question=(id,image)=>({p_share_slug:'book',p_payload:{id,image},p_source_kind:'manual'});
 function raceOn(db,pattern){
  const prepare=db.prepare.bind(db);let fired=false;
- db.prepare=sql=>{const stmt=prepare(sql);if(pattern.test(sql)){const first=stmt.first.bind(stmt);stmt.first=async(...args)=>{if(!fired){fired=true;retire(db);}return first(...args);};}return stmt;};
+ db.prepare=sql=>{const stmt=prepare(sql);if(pattern.test(sql)){for(const method of ['first','syncAll']){const original=stmt[method].bind(stmt);stmt[method]=(...args)=>{if(!fired){fired=true;retire(db);}return original(...args);};}}return stmt;};
  return ()=>assert.equal(fired,true);
 }
 
