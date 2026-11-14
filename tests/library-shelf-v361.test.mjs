@@ -118,6 +118,30 @@ test("V362 the user's own private books, including a private series, get their o
   assert.ok(html.indexOf('data-library-tier="private"') < html.indexOf('data-library-tier="shared"'));
 });
 
+test("V363 a separately created volume 0 joins its series only on an exact creator and title match", async () => {
+  const api = await loadApi();
+  const volumes = [1, 2].map(n => ({ share_slug: `akushu-${n}`, title: n === 1 ? "アナンタ　悪手まとめ 第1巻" : `アナンタ　悪手まとめ2 第${n}巻`, volume_number: n, question_count: 200, can_view: true, series_parent_slug: "akushu" }));
+  const root = { share_slug: "akushu", title: "アナンタ　悪手まとめ2", series_title: "アナンタ　悪手まとめ2", is_series_parent: true, series_key: "s", volume_count: 2, can_view: true, owner_id: "shelby", visibility: "private" };
+  const zero = { share_slug: "akushu-0", title: "アナンタ　悪手まとめ 第0巻", can_view: true, question_count: 195, owner_id: "shelby", visibility: "private" };
+  const stranger = { share_slug: "copy-0", title: "アナンタ　悪手まとめ 第0巻", can_view: true, owner_id: "someone", visibility: "public" };
+  const other = { share_slug: "other-0", title: "別の本 第0巻", can_view: true, owner_id: "shelby" };
+  const controller = api.create({ canOpen: () => true, loadSeries: async () => ({ volumes, progress: [] }) });
+  const ctx = { userId: "me", currentMetrics: null, loading: false, error: "", current: null, collections: [root, zero, stranger, other] };
+  controller.render(ctx);
+  await controller.browseSeries("akushu");
+  const html = controller.render(ctx);
+  assert.equal((html.match(/data-library-unit="akushu"/g) || []).length, 1);
+  assert.match(html, /全3巻/);
+  assert.doesNotMatch(html, /data-library-unit="akushu-0"/);
+  assert.match(html, /data-library-unit="copy-0"/, "another creator's copy stays separate");
+  assert.match(html, /data-library-unit="other-0"/, "a different title stays separate");
+  const view = mount(controller, html);
+  view.root.dispatch("click", { target: view.buttons.find(b => b.dataset.libraryUnit === "akushu"), detail: 1 });
+  const picker = view.detail.innerHTML.match(/data-library-volume="([^"]+)"/g).map(s => s.slice(21, -1));
+  assert.deepEqual(picker, ["akushu-0", "akushu-1", "akushu-2"]);
+  assert.match(view.detail.innerHTML, /aria-label="第0巻/);
+});
+
 test("V361 picking a volume in the detail retargets the series spine and opens that volume", async () => {
   const { controller, html, opened } = await shelf();
   const view = mount(controller, html);

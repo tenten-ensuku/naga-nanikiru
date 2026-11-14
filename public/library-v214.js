@@ -120,6 +120,35 @@
     });
   }
 
+  // V363: some series began with a separately created "第0巻". When a standalone book has the
+  // same creator and the same base title as a series' volumes, shelve it with that series.
+  // Display only: the book keeps its own data, numbering and link.
+  const VOLUME_TITLE = /^(.+?)[\s　]*第(\d+)巻[\s　]*$/;
+  const baseKey = title => String(title || "").replace(/[\s　]+/g, "");
+  function looseVolumes(roots, rows, cache) {
+    const series = roots.filter(isSeries).map(root => {
+      const slug = String(root.share_slug);
+      const volumes = cache.get(slug)?.volumes || [];
+      const children = rows.filter(row => String(row.series_parent_slug || "") === slug);
+      const bases = new Set([...volumes, ...children].map(row => VOLUME_TITLE.exec(String(row.title || ""))?.[1]).filter(Boolean).map(baseKey));
+      const numbers = new Set(volumes.map(row => count(row.volume_number)).filter(value => value !== null));
+      return { root, slug, bases, numbers, ready: volumes.length > 0 };
+    });
+    const result = new Map();
+    for (const row of roots) {
+      if (isSeries(row) || row.series_parent_id || !row.owner_id) continue;
+      const match = VOLUME_TITLE.exec(String(row.title || ""));
+      if (!match) continue;
+      const number = Number(match[2]);
+      const candidates = series.filter(item => item.ready && item.root.owner_id === row.owner_id
+        && item.bases.has(baseKey(match[1])) && !item.numbers.has(number));
+      if (candidates.length !== 1) continue;
+      const { root, slug } = candidates[0];
+      result.set(String(row.share_slug), { series_parent_slug: slug, series_title: root.series_title || root.display_title || root.title, volume_number: number });
+    }
+    return result;
+  }
+
   // V361: one spine per series. Volumes stay separate entries for progress,
   // ordering and opening; only the shelf groups them under their parent.
   const unitKey = book => book.seriesParentSlug || book.slug;
@@ -174,7 +203,8 @@
 
   function volumePickerMarkup(book, volumes) {
     if (volumes.length < 2) return "";
-    return `<div class="library-volumes-v361" role="group" aria-label="巻を選ぶ">${volumes.map(volume => {
+    const ordered = [...volumes].sort((a, b) => (a.volume ?? Infinity) - (b.volume ?? Infinity));
+    return `<div class="library-volumes-v361" role="group" aria-label="巻を選ぶ">${ordered.map(volume => {
       const progress = progressOf([volume]);
       const state = progress === null ? "" : progress >= 100 ? "完了" : progress > 0 ? `${progress}%` : "未着手";
       const number = volume.volume ?? "–";
@@ -399,6 +429,7 @@
         state.userSelected = false;
       }
       if (state.root?.isConnected) state.scrollLeft = state.root.querySelector("[data-library-rail]")?.scrollLeft || 0;
+      const loose = looseVolumes(roots, context.collections || [], state.cache);
       const entries = [];
       for (const row of roots) {
         const slug = String(row.share_slug);
@@ -417,7 +448,7 @@
           }
         } else {
           const summary = parent.canView ? state.summaries.get(slug) : null;
-          entries.push(normaliseBook({ ...row, ...(summary ? { question_count: summary.question_count, last_activity_at: summary.last_activity_at } : {}) }, currentSlug, summary));
+          entries.push(normaliseBook({ ...row, ...(summary ? { question_count: summary.question_count, last_activity_at: summary.last_activity_at } : {}), ...(loose.get(slug) || {}) }, currentSlug, summary));
         }
       }
       state.allEntries = orderedEntries(entries);
