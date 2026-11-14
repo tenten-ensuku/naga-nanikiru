@@ -307,10 +307,11 @@
         && cached.volumes.some(row => String(row.share_slug) === slug && normaliseBook(row, currentSlugNow()).canView));
     };
     // Shelf tiers use the owner already present in the catalogue; nothing is fetched for them.
-    // Only the user's own private books get the private shelf; others' restricted books stay shared.
+    // V364: "private" means someone else's private book. Administrators can open every book,
+    // so these are kept apart to avoid commenting on a book its author has not shared.
     const tierOf = book => {
-      const own = Boolean(book?.owner_id && state.userId && String(book.owner_id) === state.userId);
-      return own ? book.visibility === "private" ? "private" : "mine" : "shared";
+      if (book?.owner_id && state.userId && String(book.owner_id) === state.userId) return "mine";
+      return book?.visibility === "private" ? "private" : "shared";
     };
     const unitFor = slug => {
       const book = state.entries.find(item => item.slug === slug);
@@ -348,7 +349,8 @@
       const management = book && options.canManage?.(book) ? `<button type="button" class="library-manage-v288" data-library-manage="${escape(book.slug)}" aria-label="${escape(book.fullTitle)}の管理" aria-haspopup="dialog" title="問題集の管理">…</button>` : "";
       const controls = book ? `<div class="library-detail-tools-v300"><button type="button" data-library-hide="${escape(book.slug)}">本棚から隠す</button>${management}</div>` : "";
       const volumes = unit && book.seriesParentSlug ? unit.books : [];
-      return controls + detailMarkup(book, state.context, picked, hasUnreadUpdate(book), volumes) + (book ? options.adminInfoMarkup?.(book) || '' : '') + (picked ? `
+      const privateNote = book && tierOf(book) === "private" ? '<p class="library-private-note-v364" role="note">作成者が非公開にしている本です</p>' : "";
+      return controls + privateNote + detailMarkup(book, state.context, picked, hasUnreadUpdate(book), volumes) + (book ? options.adminInfoMarkup?.(book) || '' : '') + (picked ? `
         <div class="library-arrange" role="group" aria-label="選んだ本の並べ替え">
           <span>${reorderReady() ? "つかんで移動" : state.sortMode === "updated" ? "自分で並べた順を選ぶと移動できます" : "巻の準備が終わると並べ替えできます"} <small>ドラッグ / Shift＋← →</small></span>
           <div><button type="button" data-library-move="-1" aria-label="選んだ本を左へ移動" ${!reorderReady() || position <= 0 ? "disabled" : ""}>${icon("left")}左へ</button>
@@ -467,7 +469,7 @@
         const updatedFrom = unit.books.filter(hasUnreadUpdate).sort((a, b) => b.contentUpdated.milliseconds - a.contentUpdated.milliseconds)[0] || null;
         return bookMarkup(book, unit.books.some(item => item.slug === state.selected), { picked: book.slug === state.picked, unread: Boolean(updatedFrom), unit: unit.books, updatedFrom });
       };
-      const tiers = [["mine", "自分の本"], ["private", "プライベート"], ["shared", "みんなの本"]]
+      const tiers = [["mine", "自分の本"], ["shared", "みんなの本"], ["private", "プライベート（他の人の非公開）"]]
         .map(([id, label]) => ({ id, label, units: units.filter(unit => tierOf(unit.books[0]) === id) }))
         .filter(tier => tier.units.length);
       const labelled = tiers.length > 1;

@@ -380,3 +380,22 @@ html[data-theme="light"] .page.menu-active #menuPanel .library-v214 .library-vol
 html[data-theme="light"] .page.menu-active #menuPanel .library-v214 .library-volumes-v361 button small { color: var(--theme-muted-v259); }
 html[data-theme="light"] .page.menu-active #menuPanel .library-v214 .library-volumes-v361 button.is-active { border-color: #c99a3d; background: #f6ead0; box-shadow: 0 0 0 1px #c99a3d; }
 html[data-theme="light"] .page.menu-active #menuPanel .library-v214 .library-sheet-close-v361 { border-color: #bca36e; color: #704f19; }
+
+/* V364: someone else's private book, visible only through elevated access. */
+.page.menu-active #menuPanel .library-v214 .library-detail .library-private-note-v364 {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: 8px 12px;
+  border: 1px solid #b5653f;
+  border-radius: 8px;
+  background: rgba(181, 101, 63, .18);
+  color: #f3c9a8;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.5;
+}
+html[data-theme="light"] .page.menu-active #menuPanel .library-v214 .library-detail .library-private-note-v364 {
+  border-color: #d9a184;
+  background: #fdeee4;
+  color: #8a3d14;
+}
