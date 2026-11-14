@@ -96,6 +96,28 @@ test("V361 shelves split into the user's own books and everyone else's", async (
   assert.ok(html.indexOf('data-library-tier="shared"') < html.indexOf('data-library-book="kuni"'));
 });
 
+test("V362 the user's own private books, including a private series, get their own shelf", async () => {
+  const api = await loadApi();
+  const controller = api.create({ canOpen: () => true, loadSeries: async () => ({ volumes: pierreVolumes, progress }) });
+  const ctx = { userId: "me", currentMetrics: null, loading: false, error: "", current: null, collections: [
+    { ...pierre, owner_id: "me", visibility: "private" },
+    { ...mine, visibility: "public" },
+    { share_slug: "memo", title: "自分用メモ", can_view: true, owner_id: "me", visibility: "private" },
+    { share_slug: "friend", title: "友人の非公開本", can_view: true, owner_id: "other", visibility: "private" }
+  ] };
+  controller.render(ctx);
+  await controller.browseSeries("pierre");
+  const html = controller.render(ctx);
+  const tier = id => html.slice(html.indexOf(`data-library-tier="${id}"`), html.indexOf("library-plank-v361", html.indexOf(`data-library-tier="${id}"`)));
+  assert.match(html, /library-tier-title-v361">プライベート<small>2冊/);
+  assert.match(tier("private"), /data-library-unit="pierre"/);
+  assert.match(tier("private"), /data-library-book="memo"/);
+  assert.match(tier("mine"), /data-library-book="mine"/);
+  assert.match(tier("shared"), /data-library-book="friend"/);
+  assert.ok(html.indexOf('data-library-tier="mine"') < html.indexOf('data-library-tier="private"'));
+  assert.ok(html.indexOf('data-library-tier="private"') < html.indexOf('data-library-tier="shared"'));
+});
+
 test("V361 picking a volume in the detail retargets the series spine and opens that volume", async () => {
   const { controller, html, opened } = await shelf();
   const view = mount(controller, html);

@@ -277,7 +277,11 @@
         && cached.volumes.some(row => String(row.share_slug) === slug && normaliseBook(row, currentSlugNow()).canView));
     };
     // Shelf tiers use the owner already present in the catalogue; nothing is fetched for them.
-    const tierOf = book => book?.owner_id && state.userId && String(book.owner_id) === state.userId ? "mine" : "shared";
+    // Only the user's own private books get the private shelf; others' restricted books stay shared.
+    const tierOf = book => {
+      const own = Boolean(book?.owner_id && state.userId && String(book.owner_id) === state.userId);
+      return own ? book.visibility === "private" ? "private" : "mine" : "shared";
+    };
     const unitFor = slug => {
       const book = state.entries.find(item => item.slug === slug);
       return book ? unitsOf(state.entries).find(unit => unit.id === unitKey(book)) || null : null;
@@ -407,6 +411,8 @@
             entries.push(normaliseBook({ ...volume, question_count: progress?.question_count ?? volume.question_count, series_title: row.series_title || row.display_title || row.title,
               // A volume without its own text shows what the author wrote for the series.
               description: String(volume.description || "").trim() || row.description,
+              // Volume metadata carries no visibility; the series setting decides its shelf.
+              visibility: volume.visibility ?? row.visibility, owner_id: volume.owner_id ?? row.owner_id,
               series_parent_slug: slug, series_key: row.series_key }, currentSlug, progress));
           }
         } else {
@@ -430,7 +436,7 @@
         const updatedFrom = unit.books.filter(hasUnreadUpdate).sort((a, b) => b.contentUpdated.milliseconds - a.contentUpdated.milliseconds)[0] || null;
         return bookMarkup(book, unit.books.some(item => item.slug === state.selected), { picked: book.slug === state.picked, unread: Boolean(updatedFrom), unit: unit.books, updatedFrom });
       };
-      const tiers = [["mine", "自分の本"], ["shared", "みんなの本"]]
+      const tiers = [["mine", "自分の本"], ["private", "プライベート"], ["shared", "みんなの本"]]
         .map(([id, label]) => ({ id, label, units: units.filter(unit => tierOf(unit.books[0]) === id) }))
         .filter(tier => tier.units.length);
       const labelled = tiers.length > 1;
