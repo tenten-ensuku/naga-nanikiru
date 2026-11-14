@@ -469,12 +469,19 @@
         const updatedFrom = unit.books.filter(hasUnreadUpdate).sort((a, b) => b.contentUpdated.milliseconds - a.contentUpdated.milliseconds)[0] || null;
         return bookMarkup(book, unit.books.some(item => item.slug === state.selected), { picked: book.slug === state.picked, unread: Boolean(updatedFrom), unit: unit.books, updatedFrom });
       };
-      const tiers = [["mine", "自分の本"], ["shared", "みんなの本"], ["private", "プライベート（他の人の非公開）"]]
-        .map(([id, label]) => ({ id, label, units: units.filter(unit => tierOf(unit.books[0]) === id) }))
-        .filter(tier => tier.units.length);
-      const labelled = tiers.length > 1;
+      // V365: the user's books and other people's private books share one shelf, split by a bookend.
+      const unitsIn = zone => units.filter(unit => tierOf(unit.books[0]) === zone);
+      const zone = (id, list, label = "") => list.length ? `<div class="library-zone-v365" data-library-zone="${id}"${label ? ` role="group" aria-label="${label}"` : ""}>${list.map(spine).join("")}</div>` : "";
+      const own = unitsIn("mine"), hidden = unitsIn("private"), shared = unitsIn("shared");
+      const tiers = [
+        { id: "mine", label: own.length ? "自分の本" : "他の人の非公開", count: `${own.length || hidden.length}冊${own.length && hidden.length ? `・他の人の非公開 ${hidden.length}冊` : ""}`,
+          size: own.length + hidden.length,
+          books: zone("mine", own) + (own.length && hidden.length ? '<span class="library-bookend-v365" aria-hidden="true"><span>非公開</span></span>' : "") + zone("private", hidden, "他の人の非公開の本") },
+        { id: "shared", label: "みんなの本", count: `${shared.length}冊`, size: shared.length, books: zone("shared", shared) }
+      ].filter(tier => tier.size);
+      const labelled = tiers.length > 1 || hidden.length > 0;
       const empty = `<p class="library-empty" role="status">${context.loading ? "問題集を本棚に並べています…" : state.allEntries.length ? "本棚の本はすべて非表示です。「…」の「非表示の本」から戻せます。" : "まだ問題集がありません。"}</p>`;
-      const shelves = tiers.length ? tiers.map(tier => `<div class="library-tier-v361" data-library-tier="${tier.id}">${labelled ? `<h5 class="library-tier-title-v361">${tier.label}<small>${tier.units.length}冊</small></h5>` : ""}<div class="library-rail" data-library-rail role="group" aria-label="${labelled ? tier.label : "すべての問題集"}の本棚"${inert}>${tier.units.map(spine).join("")}</div><div class="library-plank-v361" aria-hidden="true"></div></div>`).join("")
+      const shelves = tiers.length ? tiers.map(tier => `<div class="library-tier-v361" data-library-tier="${tier.id}">${labelled ? `<h5 class="library-tier-title-v361">${tier.label}<small>${tier.count}</small></h5>` : ""}<div class="library-rail" data-library-rail role="group" aria-label="${labelled ? tier.label : "すべての問題集"}の本棚"${inert}>${tier.books}</div><div class="library-plank-v361" aria-hidden="true"></div></div>`).join("")
         : `<div class="library-tier-v361"><div class="library-rail" data-library-rail role="group" aria-label="すべての問題集の本棚"${inert}>${empty}</div><div class="library-plank-v361" aria-hidden="true"></div></div>`;
       const resumeBook = !preparing && state.entries.find(book => book.isCurrent && book.canView && !book.series);
       let resume = "";
@@ -678,7 +685,9 @@
     function dragOrderAtPointer() {
       const drag = state.drag;
       if (!drag?.started || !order) return;
-      const others = [...drag.rail.querySelectorAll("[data-library-book]")].filter(button => button !== drag.source);
+      // Reorder only within the source's side of the bookend.
+      const scope = drag.source.parentElement?.closest?.("[data-library-zone]") || drag.rail;
+      const others = [...scope.querySelectorAll("[data-library-book]")].filter(button => button !== drag.source);
       const next = others.find(button => { const rect = button.getBoundingClientRect(); return drag.x < rect.left + rect.width / 2; });
       const target = next || others.at(-1);
       if (!target) return;

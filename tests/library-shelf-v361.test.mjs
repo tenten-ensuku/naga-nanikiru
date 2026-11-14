@@ -96,7 +96,7 @@ test("V361 shelves split into the user's own books and everyone else's", async (
   assert.ok(html.indexOf('data-library-tier="shared"') < html.indexOf('data-library-book="kuni"'));
 });
 
-test("V364 other people's private books get their own shelf and a notice; the user's own books stay together", async () => {
+test("V365 the user's books and other people's private books share one shelf, split by a bookend", async () => {
   const api = await loadApi();
   const controller = api.create({ canOpen: () => true, loadSeries: async () => ({ volumes: pierreVolumes, progress }) });
   const ctx = { userId: "me", currentMetrics: null, loading: false, error: "", current: null, collections: [
@@ -109,20 +109,29 @@ test("V364 other people's private books get their own shelf and a notice; the us
   controller.render(ctx);
   await controller.browseSeries("pierre");
   const html = controller.render(ctx);
-  const tier = id => html.slice(html.indexOf(`data-library-tier="${id}"`), html.indexOf("library-plank-v361", html.indexOf(`data-library-tier="${id}"`)));
-  assert.match(html, /library-tier-title-v361">プライベート（他の人の非公開）<small>2冊/);
-  assert.match(tier("private"), /data-library-unit="pierre"/, "a private series inherits its parent's visibility");
-  assert.match(tier("private"), /data-library-book="secret"/);
-  assert.match(tier("mine"), /data-library-book="mine"/);
-  assert.match(tier("mine"), /data-library-book="memo"/, "the user's own private book stays with their books");
-  assert.match(tier("shared"), /data-library-book="friend"/);
-  assert.ok(html.indexOf('data-library-tier="mine"') < html.indexOf('data-library-tier="shared"'));
-  assert.ok(html.indexOf('data-library-tier="shared"') < html.indexOf('data-library-tier="private"'));
+  const between = (from, to) => html.slice(html.indexOf(from), html.indexOf(to, html.indexOf(from)));
+  assert.doesNotMatch(html, /data-library-tier="private"/);
+  assert.match(html, /library-tier-title-v361">自分の本<small>2冊・他の人の非公開 2冊/);
+  const own = between('data-library-zone="mine"', "library-bookend-v365");
+  const hidden = between('data-library-zone="private"', "library-plank-v361");
+  assert.match(own, /data-library-book="mine"/);
+  assert.match(own, /data-library-book="memo"/, "the user's own private book stays with their books");
+  assert.match(hidden, /data-library-unit="pierre"/, "a private series inherits its parent's visibility");
+  assert.match(hidden, /data-library-book="secret"/);
+  assert.ok(html.indexOf('data-library-zone="mine"') < html.indexOf("library-bookend-v365"));
+  assert.ok(html.indexOf("library-bookend-v365") < html.indexOf('data-library-zone="private"'));
+  assert.ok(html.indexOf('data-library-zone="private"') < html.indexOf('data-library-tier="shared"'));
+  assert.match(between('data-library-tier="shared"', "library-plank-v361"), /data-library-book="friend"/);
   const view = mount(controller, html);
   view.root.dispatch("click", { target: view.buttons.find(b => b.dataset.libraryBook === "secret"), detail: 1 });
   assert.match(view.detail.innerHTML, /library-private-note-v364[^>]*>作成者が非公開にしている本です/);
   view.root.dispatch("click", { target: view.buttons.find(b => b.dataset.libraryBook === "memo"), detail: 1 });
   assert.doesNotMatch(view.detail.innerHTML, /library-private-note-v364/);
+});
+
+test("V365 no bookend when there is nothing to separate", async () => {
+  const { html } = await shelf();
+  assert.doesNotMatch(html, /library-bookend-v365/);
 });
 
 test("V363 a separately created volume 0 joins its series only on an exact creator and title match", async () => {

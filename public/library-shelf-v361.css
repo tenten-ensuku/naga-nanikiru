@@ -399,3 +399,44 @@ html[data-theme="light"] .page.menu-active #menuPanel .library-v214 .library-det
   background: #fdeee4;
   color: #8a3d14;
 }
+
+/* V365: one shelf for the user's books and other people's private books, split by a bookend. */
+.library-zone-v365 { display: contents; }
+.library-bookend-v365 {
+  position: relative;
+  flex: 0 0 26px;
+  align-self: flex-end;
+  width: 26px;
+  height: 74%;
+  margin: 0 8px 0 10px;
+  border-radius: 3px 3px 0 0;
+  background: linear-gradient(90deg, #3a3f44, #8c949b 35%, #c9d0d6 50%, #7b838a 70%, #34393e);
+  box-shadow: 3px 0 6px rgba(0, 0, 0, .55), inset 0 1px 0 rgba(255, 255, 255, .35);
+  pointer-events: none;
+}
+/* The foot that slides under the neighbouring books keeps the stand upright. */
+.library-bookend-v365::after {
+  content: "";
+  position: absolute;
+  right: -30px;
+  bottom: 0;
+  left: 0;
+  height: 4px;
+  border-radius: 0 2px 0 0;
+  background: linear-gradient(180deg, #b7bec4, #5d646a);
+}
+.page.menu-active .library-v214 .library-bookend-v365 > span {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #1f2326;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: .12em;
+  writing-mode: vertical-rl;
+  white-space: nowrap;
+}
+@media (max-width: 800px) {
+  .library-bookend-v365 { flex-basis: 22px; width: 22px; margin: 0 6px 0 8px; }
+}
