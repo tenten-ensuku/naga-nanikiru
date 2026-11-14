@@ -120,23 +120,69 @@
     });
   }
 
-  function bookMarkup(book, selected, { picked = false, unread = false } = {}) {
+  // V361: one spine per series. Volumes stay separate entries for progress,
+  // ordering and opening; only the shelf groups them under their parent.
+  const unitKey = book => book.seriesParentSlug || book.slug;
+  function unitsOf(entries) {
+    const units = new Map();
+    for (const book of entries) {
+      const key = unitKey(book);
+      if (!units.has(key)) units.set(key, { id: key, books: [] });
+      units.get(key).books.push(book);
+    }
+    return [...units.values()];
+  }
+  function progressOf(books) {
+    let total = 0;
+    let answered = 0;
+    for (const book of books) {
+      if (book.questionCount === null || book.answeredCount === null) return null;
+      total += book.questionCount;
+      answered += book.answeredCount;
+    }
+    return total ? Math.min(100, Math.round(answered / total * 100)) : null;
+  }
+  function spineMetrics(title) {
+    const chars = Array.from(title).length;
+    const lines = chars > 12 ? 2 : 1;
+    return { chars: Math.max(4, Math.ceil(chars / lines)), lines };
+  }
+
+  function bookMarkup(book, selected, { picked = false, unread = false, unit = [book], updatedFrom = null } = {}) {
     const titleLength = Array.from(book.spineTitle).length;
+    const grouped = unit.length > 1;
+    const progress = book.series && book.canView ? null : progressOf(unit);
+    const spine = spineMetrics(book.spineTitle);
+    const unitId = unitKey(book);
     const placeholder = book.series && book.canView;
     const tag = placeholder ? "div" : "button";
     const action = placeholder ? "巻を準備しています" : book.canView ? "確認して選ぶ" : "閲覧権限を確認する";
     const recent = unread;
-    const updatedAgo = recent ? host.MinkiruContentDatesV246?.relativeDays(book.contentUpdated) : null;
-    const attributes = placeholder ? `role="status" data-library-placeholder="${escape(book.slug)}"` : `type="button" data-library-book="${escape(book.slug)}" aria-pressed="${picked}"`;
-    return `<${tag} class="library-book library-tone-${book.tone}${placeholder ? " is-placeholder" : ""}${selected ? " is-selected" : ""}${picked ? " is-picked" : ""}${book.isCurrent ? " is-current" : ""}${titleLength > 15 ? " has-long-title" : ""}${titleLength > 30 ? " has-very-long-title" : ""}" ${attributes} aria-label="${escape(book.fullTitle)}：${action}${updatedAgo ? `、最終更新は${escape(updatedAgo)}` : ''}" aria-describedby="libraryBookHintV214" ${book.isCurrent ? 'aria-current="true"' : ""}>
-      <span class="library-book-surface" aria-hidden="true"><img class="library-spine-art" src="${ASSET_ROOT}spine.webp" alt="" width="160" height="960" decoding="async" draggable="false"><span class="library-leather-tint"></span><span class="library-book-title">${escape(book.spineTitle)}</span>${book.volume ? `<span class="library-book-volume is-number">${book.volume}</span>` : ""}<span class="library-book-seal">${icon("book")}</span></span>
+    const updatedAgo = recent ? host.MinkiruContentDatesV246?.relativeDays((updatedFrom || book).contentUpdated) : null;
+    const attributes = placeholder ? `role="status" data-library-placeholder="${escape(book.slug)}"` : `type="button" data-library-book="${escape(book.slug)}" data-library-unit="${escape(unitId)}" aria-pressed="${picked}"`;
+    const label = grouped ? `${book.spineTitle}（全${unit.length}巻）` : book.fullTitle;
+    const volumeMark = grouped ? `<span class="library-book-volume is-set-v361">全${unit.length}巻</span>`
+      : book.volume ? `<span class="library-book-volume is-number">${book.volume}</span>` : "";
+    const bar = progress === null ? "" : `<span class="library-book-progress-v361" style="--library-progress:${progress}%"></span>`;
+    return `<${tag} class="library-book library-tone-${book.tone}${placeholder ? " is-placeholder" : ""}${grouped ? " is-series-v361" : ""}${spine.lines > 1 ? " is-two-line-v361" : ""}${selected ? " is-selected" : ""}${picked ? " is-picked" : ""}${book.isCurrent ? " is-current" : ""}${titleLength > 15 ? " has-long-title" : ""}${titleLength > 30 ? " has-very-long-title" : ""}" ${attributes} style="--spine-chars:${spine.chars};--spine-lines:${spine.lines}" aria-label="${escape(label)}：${action}${updatedAgo ? `、最終更新は${escape(updatedAgo)}` : ''}" aria-describedby="libraryBookHintV214" ${book.isCurrent ? 'aria-current="true"' : ""}>
+      <span class="library-book-surface" aria-hidden="true"><img class="library-spine-art" src="${ASSET_ROOT}spine.webp" alt="" width="160" height="960" decoding="async" draggable="false"><span class="library-leather-tint"></span><span class="library-book-title">${escape(book.spineTitle)}</span>${volumeMark}<span class="library-book-seal">${icon("book")}</span>${bar}</span>
       ${book.isCurrent && !recent ? '<span class="library-current-marker">学習中</span>' : ""}
       ${updatedAgo ? `<span class="library-update-marker-v246" aria-hidden="true">${escape(updatedAgo)}</span>` : ""}
       <span class="library-book-tooltip" aria-hidden="true">${escape(book.fullTitle)}<small>${action}</small></span>
     </${tag}>`;
   }
 
-  function detailMarkup(book, context, picked = false, unread = false) {
+  function volumePickerMarkup(book, volumes) {
+    if (volumes.length < 2) return "";
+    return `<div class="library-volumes-v361" role="group" aria-label="巻を選ぶ">${volumes.map(volume => {
+      const progress = progressOf([volume]);
+      const state = progress === null ? "" : progress >= 100 ? "完了" : progress > 0 ? `${progress}%` : "未着手";
+      const number = volume.volume ?? "–";
+      return `<button type="button" data-library-volume="${escape(volume.slug)}" class="${volume.slug === book.slug ? "is-active" : ""}" aria-pressed="${volume.slug === book.slug}" aria-label="第${escape(number)}巻${state ? `（${state}）` : ""}" style="--library-progress:${progress ?? 0}%"><b>${escape(number)}</b><small>${state || "&nbsp;"}</small></button>`;
+    }).join("")}</div>`;
+  }
+
+  function detailMarkup(book, context, picked = false, unread = false, volumes = []) {
     if (!book) return `<div class="library-detail-empty" id="libraryDetailTitleV214">本棚から問題集を選んでください。</div>`;
     let total = book.questionCount;
     let answered = book.answeredCount;
@@ -152,14 +198,15 @@
     const quantityValue = total === null && book.series ? (book.volumeCount === null ? "—" : `全${book.volumeCount}`) : formatted(total);
     const unit = total === null && book.series ? "巻" : "問";
     const action = book.series && book.canView ? "巻を読み込む" : book.canView ? "この本で学ぶ" : "閲覧権限を確認する";
-    const description = book.description || (book.series ? "巻ごとに、一歩ずつ学習を進めましょう。" : "一問ずつ考えて、判断の引き出しを増やしましょう。");
+    // V361: show only what the author wrote. No generated filler copy.
+    const description = book.description;
     const updated = book.contentUpdated;
     const recent = unread;
     const updatedAgo = recent ? host.MinkiruContentDatesV246?.relativeDays(updated) : null;
-    const dateMarkup = `<div class="library-updated-v246"><span>最終更新日</span>${updated ? `<time datetime="${escape(updated.iso)}">${escape(updated.full)}</time>` : '<span>不明</span>'}${updatedAgo ? `<span class="library-recent-label-v246">${escape(updatedAgo)}</span>` : ''}<small>問題の追加・編集、問題集情報の変更が対象です。</small></div>`;
-    return `<div class="library-detail-copy"><span class="library-detail-eyebrow">${picked ? "この本で学びますか？" : book.isCurrent ? "学習中の一冊" : "本をタップして選択"}</span><h4 id="libraryDetailTitleV214">${escape(title)}</h4><p>${escape(description)}</p>${hasRange ? `<span class="library-detail-range">問題 ${book.volume_start}–${book.volume_end}</span>` : ""}${dateMarkup}</div>
+    const dateMarkup = `<div class="library-updated-v246"><span>最終更新日</span>${updated ? `<time datetime="${escape(updated.iso)}">${escape(updated.full)}</time>` : '<span>不明</span>'}${updatedAgo ? `<span class="library-recent-label-v246">${escape(updatedAgo)}</span>` : ''}</div>`;
+    return `<button type="button" class="library-sheet-close-v361" data-library-sheet-close aria-label="詳細を閉じる">閉じる</button><div class="library-detail-copy"><span class="library-detail-eyebrow">${picked ? "この本で学びますか？" : book.isCurrent ? "学習中の本" : "選択中の本"}</span><h4 id="libraryDetailTitleV214">${escape(title)}</h4>${description ? `<p>${escape(description)}</p>` : ""}${volumePickerMarkup(book, volumes)}${hasRange ? `<span class="library-detail-range">問題 ${book.volume_start}–${book.volume_end}</span>` : ""}${dateMarkup}</div>
       <dl class="library-detail-metrics"><div><dt>${icon("book")}${quantityLabel}</dt><dd>${quantityValue}<small>${quantityValue === "—" ? "" : unit}</small></dd></div><div><dt>${icon("check")}回答済み</dt><dd>${formatted(answered)}<small>${answered === null ? "" : "問"}</small></dd></div><div><dt title="直近の回答が〇以上の問題の割合"><span class="library-progress-ring" aria-hidden="true"></span>やりこみ度</dt><dd>${formatted(mastery)}<small>${mastery === null ? "" : "%"}</small></dd></div></dl>
-      <div class="library-detail-action"><button type="button" class="library-start" data-library-open="${escape(book.slug)}">${action}${icon("right")}</button><small>${!book.canView ? escape(book.accessLabel) : picked ? "本をもう1回タップしても開けます" : "回答記録はそのまま引き継ぎます"}</small></div>`;
+      <div class="library-detail-action"><button type="button" class="library-start" data-library-open="${escape(book.slug)}">${action}${icon("right")}</button>${!book.canView ? `<small>${escape(book.accessLabel)}</small>` : ""}</div>`;
   }
 
   function create(options = {}) {
@@ -171,6 +218,7 @@
       cache: new Map(), summaries: new Map(), inflight: new Map(), failures: new Map(),
       staleSeries: new Set(), staleSummaries: new Set(), savedOrder: [], sortMode: "standard", focusSort: false, seenUpdates: new Map(),
       hiddenBooks: new Set(), allEntries: [], hiddenDialogOpen: false, hiddenNotice: "", focusHidden: false,
+      seriesChoice: new Map(), menuOpen: false,
       root: null, paintedUserId: null, abort: null, observer: null, entries: [], opening: false,
       scrollLeft: 0, focusAfterRender: "", error: "", drag: null, needsRender: false,
       artReady: !host.Image, artFailed: false, artTask: null,
@@ -228,6 +276,28 @@
       return [...state.cache].some(([parentSlug, cached]) => permittedRoot(parentSlug)
         && cached.volumes.some(row => String(row.share_slug) === slug && normaliseBook(row, currentSlugNow()).canView));
     };
+    // Shelf tiers use the owner already present in the catalogue; nothing is fetched for them.
+    const tierOf = book => book?.owner_id && state.userId && String(book.owner_id) === state.userId ? "mine" : "shared";
+    const unitFor = slug => {
+      const book = state.entries.find(item => item.slug === slug);
+      return book ? unitsOf(state.entries).find(unit => unit.id === unitKey(book)) || null : null;
+    };
+    const tierUnits = tier => unitsOf(state.entries).filter(unit => tierOf(unit.books[0]) === tier);
+    function representative(unit) {
+      if (unit.books.length === 1) return unit.books[0];
+      const bySlug = slug => unit.books.find(book => book.slug === slug);
+      return bySlug(state.selected) || bySlug(state.seriesChoice.get(unit.id)) || unit.books.find(book => book.isCurrent)
+        || unit.books.find(book => book.questionCount !== null && book.answeredCount !== null && book.answeredCount < book.questionCount)
+        || unit.books[0];
+    }
+    // Moves a whole series together, so its volumes never scatter across the shelf.
+    function moveUnits(ids, slug, targetSlug, after) {
+      const byId = new Map(state.allEntries.map(book => [book.slug, book]));
+      const keyOf = id => byId.has(id) ? unitKey(byId.get(id)) : id;
+      const units = [...new Set(ids.map(keyOf))];
+      const moved = order.moveBook(units, keyOf(slug), keyOf(targetSlug), { after });
+      return moved.flatMap(key => ids.filter(id => keyOf(id) === key));
+    }
     function orderedEntries(entries) {
       const ids = state.sortMode === "updated" ? order?.updatedOrder(entries) || defaultOrder(entries)
         : state.sortMode === "standard" ? defaultOrder(entries)
@@ -237,16 +307,19 @@
     }
     function detail() {
       const book = state.entries.find(item => item.slug === state.selected);
-      const position = state.entries.findIndex(item => item.slug === state.selected);
+      const unit = book ? unitFor(book.slug) : null;
+      const units = book ? tierUnits(tierOf(book)) : [];
+      const position = unit ? units.findIndex(item => item.id === unit.id) : -1;
       const picked = Boolean(book && book.slug === state.picked);
       const management = book && options.canManage?.(book) ? `<button type="button" class="library-manage-v288" data-library-manage="${escape(book.slug)}" aria-label="${escape(book.fullTitle)}の管理" aria-haspopup="dialog" title="問題集の管理">…</button>` : "";
       const controls = book ? `<div class="library-detail-tools-v300"><button type="button" data-library-hide="${escape(book.slug)}">本棚から隠す</button>${management}</div>` : "";
-      return controls + detailMarkup(book, state.context, picked, hasUnreadUpdate(book)) + (book ? options.adminInfoMarkup?.(book) || '' : '') + (picked ? `
+      const volumes = unit && book.seriesParentSlug ? unit.books : [];
+      return controls + detailMarkup(book, state.context, picked, hasUnreadUpdate(book), volumes) + (book ? options.adminInfoMarkup?.(book) || '' : '') + (picked ? `
         <div class="library-arrange" role="group" aria-label="選んだ本の並べ替え">
           <span>${reorderReady() ? "つかんで移動" : state.sortMode === "updated" ? "自分で並べた順を選ぶと移動できます" : "巻の準備が終わると並べ替えできます"} <small>ドラッグ / Shift＋← →</small></span>
           <div><button type="button" data-library-move="-1" aria-label="選んだ本を左へ移動" ${!reorderReady() || position <= 0 ? "disabled" : ""}>${icon("left")}左へ</button>
-          <span data-library-position>${position + 1} / ${state.entries.length}冊</span>
-          <button type="button" data-library-move="1" aria-label="選んだ本を右へ移動" ${!reorderReady() || position >= state.entries.length - 1 ? "disabled" : ""}>右へ${icon("right")}</button></div>
+          <span data-library-position>${position + 1} / ${units.length}冊</span>
+          <button type="button" data-library-move="1" aria-label="選んだ本を右へ移動" ${!reorderReady() || position >= units.length - 1 ? "disabled" : ""}>右へ${icon("right")}</button></div>
         </div>` : "");
     }
     function updateDetail() {
@@ -298,6 +371,7 @@
         try { state.hiddenBooks = new Set(cleanOrder(options.loadHiddenBooks?.(userId))); }
         catch { state.hiddenBooks = new Set(); }
         state.hiddenDialogOpen = false; state.hiddenNotice = "";
+        state.seriesChoice = new Map(); state.menuOpen = false;
         state.seenUpdates = loadSeenUpdates(userId);
       }
       const roots = rootsNow();
@@ -331,6 +405,8 @@
           for (const volume of cached.volumes) {
             const progress = state.summaries.get(String(volume.share_slug)) || cached.progress.find(item => Number(item.volume_number) === Number(volume.volume_number));
             entries.push(normaliseBook({ ...volume, question_count: progress?.question_count ?? volume.question_count, series_title: row.series_title || row.display_title || row.title,
+              // A volume without its own text shows what the author wrote for the series.
+              description: String(volume.description || "").trim() || row.description,
               series_parent_slug: slug, series_key: row.series_key }, currentSlug, progress));
           }
         } else {
@@ -347,14 +423,39 @@
       const notice = state.error || String(context.error || "") || (state.failures.size ? "一部の件数・進捗を読み込めませんでした。表示できる本はそのまま選べます。" : "");
       const preparing = (!roots.length && context.loading) || !state.artReady
         || roots.some(row => isSeries(row) && permittedRoot(String(row.share_slug)) && !state.cache.has(String(row.share_slug)) && !state.failures.has("series:" + row.share_slug));
-      return `<section class="collection-chooser library-v214 has-volumes${reorderReady() ? " is-reorder-ready" : ""}${preparing ? " is-preparing-v236" : ""}${state.artFailed ? " is-art-fallback-v236" : ""}" aria-busy="${preparing}" aria-labelledby="collectionChooserHeading">
-        <header class="collection-chooser-header library-header"><div><h3 id="collectionChooserHeading">学習する問題集を選択</h3><p id="libraryBookHintV214">1タップで確認、もう一度で開く。</p></div><button class="collection-chooser-create library-create" type="button" data-open-book-create aria-haspopup="dialog" aria-controls="bookCreateDetailsV235">${icon("plus")}新しい問題集</button></header>
-        <div class="library-shelf-heading"><div class="library-breadcrumb"><h4>あなたの本棚</h4><span class="library-shelf-total">${preparing ? "準備中" : `${state.entries.length}冊`}</span></div><div class="library-shelf-tools-v300"><label class="library-sort-v353">表示順<select data-library-sort aria-label="本棚の表示順">${[["standard", "標準順"], ["updated", "更新が新しい順"], ["manual", "自分で並べた順"]].map(([value, label]) => `<option value="${value}"${state.sortMode === value ? " selected" : ""}>${label}</option>`).join("")}</select></label><button type="button" class="library-reset" data-library-reset${preparing ? " disabled" : ""}>標準順に戻す</button><button type="button" class="library-hidden-button-v300" data-library-hidden-open aria-haspopup="dialog"${preparing ? " disabled" : ""}>非表示の本（${state.allEntries.length-state.entries.length}）</button></div><div class="library-rail-actions" data-library-rail-actions><button type="button" data-library-scroll="-1" aria-label="前の本を表示">${icon("left")}</button><button type="button" data-library-scroll="1" aria-label="次の本を表示">${icon("right")}</button></div></div>
+      const units = unitsOf(state.entries);
+      const inert = preparing ? ' inert aria-hidden="true"' : "";
+      const spine = unit => {
+        const book = representative(unit);
+        const updatedFrom = unit.books.filter(hasUnreadUpdate).sort((a, b) => b.contentUpdated.milliseconds - a.contentUpdated.milliseconds)[0] || null;
+        return bookMarkup(book, unit.books.some(item => item.slug === state.selected), { picked: book.slug === state.picked, unread: Boolean(updatedFrom), unit: unit.books, updatedFrom });
+      };
+      const tiers = [["mine", "自分の本"], ["shared", "みんなの本"]]
+        .map(([id, label]) => ({ id, label, units: units.filter(unit => tierOf(unit.books[0]) === id) }))
+        .filter(tier => tier.units.length);
+      const labelled = tiers.length > 1;
+      const empty = `<p class="library-empty" role="status">${context.loading ? "問題集を本棚に並べています…" : state.allEntries.length ? "本棚の本はすべて非表示です。「…」の「非表示の本」から戻せます。" : "まだ問題集がありません。"}</p>`;
+      const shelves = tiers.length ? tiers.map(tier => `<div class="library-tier-v361" data-library-tier="${tier.id}">${labelled ? `<h5 class="library-tier-title-v361">${tier.label}<small>${tier.units.length}冊</small></h5>` : ""}<div class="library-rail" data-library-rail role="group" aria-label="${labelled ? tier.label : "すべての問題集"}の本棚"${inert}>${tier.units.map(spine).join("")}</div><div class="library-plank-v361" aria-hidden="true"></div></div>`).join("")
+        : `<div class="library-tier-v361"><div class="library-rail" data-library-rail role="group" aria-label="すべての問題集の本棚"${inert}>${empty}</div><div class="library-plank-v361" aria-hidden="true"></div></div>`;
+      const resumeBook = !preparing && state.entries.find(book => book.isCurrent && book.canView && !book.series);
+      let resume = "";
+      if (resumeBook) {
+        const metrics = context.currentMetrics || {};
+        const total = count(metrics.questionCount) ?? resumeBook.questionCount;
+        const answered = count(metrics.answeredCount) ?? resumeBook.answeredCount;
+        const ratio = total && answered !== null ? Math.min(100, Math.round(answered / total * 100)) : null;
+        const title = resumeBook.volume && !new RegExp(`第${resumeBook.volume}巻`).test(resumeBook.fullTitle) ? `${resumeBook.fullTitle} 第${resumeBook.volume}巻` : resumeBook.fullTitle;
+        resume = `<section class="library-resume-v361" aria-label="続きから"><span class="library-resume-spine-v361 library-tone-${resumeBook.tone}" aria-hidden="true"></span><div class="library-resume-copy-v361"><span>続きから</span><strong>${escape(title)}</strong>${ratio === null ? "" : `<span class="library-resume-meter-v361"><span style="--library-progress:${ratio}%"></span></span><small>${formatted(answered)} / ${formatted(total)}問</small>`}</div><button type="button" class="library-resume-button-v361" data-library-open="${escape(resumeBook.slug)}">続きを解く${icon("right")}</button></section>`;
+      }
+      const sortOptions = [["standard", "標準順"], ["updated", "更新が新しい順"], ["manual", "自分で並べた順"]];
+      return `<section class="collection-chooser library-v214 has-volumes${reorderReady() ? " is-reorder-ready" : ""}${preparing ? " is-preparing-v236" : ""}${state.artFailed ? " is-art-fallback-v236" : ""}${state.picked ? " has-picked-v361" : ""}" aria-busy="${preparing}" aria-labelledby="collectionChooserHeading">
+        <header class="collection-chooser-header library-header"><div><h3 id="collectionChooserHeading">本棚</h3><p id="libraryBookHintV214" class="library-hint-v361">本を選ぶと詳しい内容が出ます。</p></div><button class="collection-chooser-create library-create" type="button" data-open-book-create aria-haspopup="dialog" aria-controls="bookCreateDetailsV235">${icon("plus")}新しい問題集</button></header>
+        ${resume}
+        <div class="library-shelf-heading"><div class="library-breadcrumb"><h4>あなたの本棚</h4><span class="library-shelf-total">${preparing ? "準備中" : `${units.length}冊`}</span></div><details class="library-menu-v361" data-library-menu${state.menuOpen ? " open" : ""}><summary aria-label="並び順と非表示の本">…</summary><div class="library-shelf-tools-v300"><label class="library-sort-v353">並び順<select data-library-sort aria-label="本棚の並び順">${sortOptions.map(([value, label]) => `<option value="${value}"${state.sortMode === value ? " selected" : ""}>${label}</option>`).join("")}</select></label><button type="button" class="library-reset" data-library-reset${preparing ? " disabled" : ""}>標準順に戻す</button><button type="button" class="library-hidden-button-v300" data-library-hidden-open aria-haspopup="dialog"${preparing ? " disabled" : ""}>非表示の本（${state.allEntries.length-state.entries.length}）</button></div></details></div>
         ${notice ? `<div class="library-notice" role="alert"><span>${escape(notice)}</span>${state.failures.size ? '<button type="button" data-library-retry>もう一度読み込む</button>' : ""}</div>` : ""}
-        <div class="library-stage">${preparing ? '<div class="library-preparing-v236" role="status"><span class="library-loading-mark-v236" aria-hidden="true"></span><span>本棚を準備しています…</span></div>' : ""}<img class="library-study-art" src="${ASSET_ROOT}study.webp" alt="" width="1672" height="941" decoding="async" fetchpriority="high"><div class="library-rail" data-library-rail role="group" aria-label="すべての問題集の本棚"${preparing ? ' inert aria-hidden="true"' : ""}>${state.entries.map(book => bookMarkup(book, book.slug === state.selected, { picked: book.slug === state.picked, unread: hasUnreadUpdate(book) })).join("") || `<p class="library-empty" role="status">${context.loading ? "問題集を本棚に並べています…" : state.allEntries.length ? "本棚の本はすべて非表示です。「非表示の本」から戻せます。" : "まだ問題集がありません。新しい問題集を作るか、共有された問題集を開いてください。"}</p>`}</div></div>
-        <div class="library-shelf-foot"><span>${state.sortMode === "updated" ? "内容の更新が新しい本から表示" : "本をそのままドラッグして並べ替え"}</span><span>並び順・非表示はこのブラウザーに保存</span></div>
-        <p class="library-update-legend-v246">7日以内の未確認の変更を「本日」「1日前」などで表示します。本を開くと消えます。確認状態はこのブラウザーに保存します。</p>
-        <section class="library-detail" data-library-detail aria-labelledby="libraryDetailTitleV214"${preparing ? ' inert aria-hidden="true"' : ""}>${detail()}</section>
+        <div class="library-stage library-stage-v361">${preparing ? '<div class="library-preparing-v236" role="status"><span class="library-loading-mark-v236" aria-hidden="true"></span><span>本棚を準備しています…</span></div>' : ""}${shelves}</div>
+        <div class="library-sheet-backdrop-v361" data-library-sheet-close aria-hidden="true"></div>
+        <section class="library-detail" data-library-detail aria-labelledby="libraryDetailTitleV214"${inert}>${detail()}</section>
         <p class="library-order-status" data-library-status role="status" aria-live="polite">${escape(state.hiddenNotice)}</p>${hiddenBooksMarkup()}
       </section>`;
     }
@@ -376,15 +477,20 @@
       const book = state.entries.find(row => row.slug === slug);
       if (!book || (book.series && book.canView)) return;
       state.selected = slug;
+      if (book.seriesParentSlug) state.seriesChoice.set(book.seriesParentSlug, slug);
       if (picked) { state.picked = slug; state.userSelected = true; }
+      const unitId = unitKey(book);
       state.root?.querySelectorAll("[data-library-book]").forEach(button => {
+        // A series spine always stands for its chosen volume.
+        if (button.dataset.libraryUnit === unitId && button.dataset.libraryBook !== slug) button.dataset.libraryBook = slug;
         const isPicked = button.dataset.libraryBook === state.picked;
         button.classList.toggle("is-selected", button.dataset.libraryBook === slug);
         button.classList.toggle("is-picked", isPicked);
         button.setAttribute("aria-pressed", String(isPicked));
       });
+      state.root?.querySelector(".library-v214")?.classList.toggle("has-picked-v361", Boolean(state.picked));
       updateDetail();
-      if (picked) announce(book.fullTitle + "を選びました。もう一度押すと開きます。" + (state.sortMode === "updated" ? "自分で並べた順を選ぶと移動できます。" : "ドラッグ、または左右ボタンで並べ替えできます。"));
+      if (picked) announce(book.fullTitle + "を選びました。");
       if (picked) queueMicrotask(hydrate);
     }
     async function browseSeries(slug, { force = false, focus = false } = {}) {
@@ -485,10 +591,11 @@
     function applyOrder(ids) {
       const byId = new Map(state.entries.map(book => [book.slug, book]));
       state.entries = cleanOrder(ids).map(id => byId.get(id)).filter(Boolean);
-      const rail = state.root?.querySelector("[data-library-rail]");
-      if (rail) {
-        const buttons = new Map([...rail.querySelectorAll("[data-library-book], [data-library-placeholder]")].map(button => [button.dataset.libraryBook || button.dataset.libraryPlaceholder, button]));
-        for (const book of state.entries) { const button = buttons.get(book.slug); if (button) rail.append(button); }
+      if (state.root) {
+        // Each spine stays on its own tier; only its position within that tier changes.
+        const buttons = new Map([...state.root.querySelectorAll("[data-library-book], [data-library-placeholder]")]
+          .map(button => [button.dataset.libraryUnit || button.dataset.libraryBook || button.dataset.libraryPlaceholder, button]));
+        for (const unit of unitsOf(state.entries)) { const button = buttons.get(unit.id); button?.parentElement?.append(button); }
       }
       updateDetail();
       updateRailControls();
@@ -517,14 +624,16 @@
     }
     function moveSelected(direction) {
       if (!reorderReady()) return;
-      const ids = state.entries.map(book => book.slug);
-      const index = ids.indexOf(state.selected);
-      const target = ids[index + direction];
-      if (!target || !order) return;
+      const book = state.entries.find(item => item.slug === state.selected);
+      if (!book || !order) return;
+      const units = tierUnits(tierOf(book));
+      const index = units.findIndex(unit => unit.id === unitKey(book));
+      const target = units[index + direction]?.books[0]?.slug;
+      if (!target) return;
       setSelection(state.selected);
-      const changed = order.moveBook(ids, state.selected, target, { after: direction > 0 });
+      const changed = moveUnits(state.entries.map(item => item.slug), state.selected, target, direction > 0);
       applyOrder(changed);
-      if (saveOrder(changed)) announce(state.entries[index + direction].fullTitle + "を" + (index + direction + 1) + "番目に移動しました。");
+      if (saveOrder(changed)) announce((book.seriesParentSlug ? book.spineTitle : book.fullTitle) + "を" + (index + direction + 1) + "番目に移動しました。");
       [...(state.root?.querySelectorAll("[data-library-book]") || [])].find(button => button.dataset.libraryBook === state.selected)?.scrollIntoView({ block: "nearest", inline: "nearest", behavior: "instant" });
     }
     function dragOrderAtPointer() {
@@ -534,7 +643,7 @@
       const next = others.find(button => { const rect = button.getBoundingClientRect(); return drag.x < rect.left + rect.width / 2; });
       const target = next || others.at(-1);
       if (!target) return;
-      const ids = order.moveBook(state.entries.map(book => book.slug), drag.slug, target.dataset.libraryBook, { after: !next });
+      const ids = moveUnits(state.entries.map(book => book.slug), drag.slug, target.dataset.libraryBook, !next);
       if (ids.join("\n") !== state.entries.map(book => book.slug).join("\n")) applyOrder(ids);
     }
     function dragFrame() {
@@ -671,7 +780,7 @@
         const source = event.target.closest("[data-library-book]");
         if (!source || !reorderReady() || state.opening || (event.button !== undefined && event.button !== 0)) return;
         state.drag = { source, slug: source.dataset.libraryBook, pointerId: event.pointerId, startX: event.clientX, startY: event.clientY,
-          x: event.clientX, y: event.clientY, rail: root.querySelector("[data-library-rail]"), before: state.entries.map(book => book.slug), started: false, captureTarget: source };
+          x: event.clientX, y: event.clientY, rail: source.closest("[data-library-rail]") || root.querySelector("[data-library-rail]"), before: state.entries.map(book => book.slug), started: false, captureTarget: source };
         try { source.setPointerCapture?.(event.pointerId); }
         catch { state.drag = null; announce("左右ボタンで本を移動できます。"); }
       }, { signal });
@@ -685,6 +794,10 @@
       root.addEventListener("lostpointercapture", event => { if (event.target === state.drag?.captureTarget && event.pointerId === state.drag?.pointerId) finishDrag(true); }, { signal });
       host.addEventListener?.("blur", () => finishDrag(true), { signal });
       host.document?.addEventListener?.("visibilitychange", () => { if (host.document.hidden) finishDrag(true); }, { signal });
+      // <details> does not bubble "toggle"; capture keeps the menu open across async re-renders.
+      root.addEventListener("toggle", event => {
+        if (event.target?.matches?.("[data-library-menu]")) state.menuOpen = event.target.open === true;
+      }, { signal, capture: true });
       root.addEventListener("change", event => {
         const select = event.target.closest("[data-library-sort]");
         if (!select || !["standard", "updated", "manual"].includes(select.value)) return;
@@ -699,12 +812,26 @@
         announce(saved ? "表示順を変更し、このブラウザーに保存しました。" : "表示順を変更しましたが、ブラウザーに保存できませんでした。");
       }, { signal });
       root.addEventListener("click", event => {
+        const volumeButton = event.target.closest("[data-library-volume]");
+        if (volumeButton) {
+          event.stopPropagation();
+          setSelection(volumeButton.dataset.libraryVolume);
+          return;
+        }
+        if (event.target.closest("[data-library-sheet-close]")) {
+          event.stopPropagation();
+          state.picked = "";
+          setSelection(state.selected, false);
+          return;
+        }
         const hide = event.target.closest("[data-library-hide]");
         if (hide) {
           event.stopPropagation();
           const book = state.entries.find(item => item.slug === hide.dataset.libraryHide);
-          if (!book || !saveHiddenBooks([...state.hiddenBooks, book.slug])) return;
-          state.hiddenNotice = `${book.fullTitle}を本棚から隠しました。「非表示の本」から戻せます。`;
+          // Hiding a series spine hides every volume, otherwise the spine would simply reappear.
+          const slugs = book ? (unitFor(book.slug)?.books || [book]).map(item => item.slug) : [];
+          if (!book || !saveHiddenBooks([...state.hiddenBooks, ...slugs])) return;
+          state.hiddenNotice = `${book.seriesParentSlug ? book.spineTitle : book.fullTitle}を本棚から隠しました。「…」の「非表示の本」から戻せます。`;
           state.picked = ""; state.focusHidden = true; requestRender(); return;
         }
         if (event.target.closest("[data-library-hidden-open]")) {
