@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { readFile } from "node:fs/promises";
 import vm from "node:vm";
+import { cssSection } from "./helpers/app-css.mjs";
 
 async function loadApi() {
   const host = { setTimeout, clearTimeout, matchMedia: () => ({ matches: false }) };
@@ -201,7 +202,7 @@ test("V361 shelf header drops the double-tap instruction and storage notes", asy
 });
 
 test("V361 shelf CSS keeps readable sizes", async () => {
-  const css = await readFile(new URL("../public/library-shelf-v361.css", import.meta.url), "utf8");
+  const css = cssSection("library-shelf-v361");
   const sizes = [...css.matchAll(/font-size:\s*(\d+(?:\.\d+)?)px/g)].map(m => Number(m[1]));
   assert.ok(sizes.length > 0);
   assert.ok(sizes.every(size => size >= 13), `small sizes: ${sizes.filter(s => s < 13)}`);

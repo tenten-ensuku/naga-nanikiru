@@ -1,9 +1,10 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
+import { cssSectionUrl } from "./helpers/app-css.mjs";
 
 const htmlUrl = new URL("../public/index.html", import.meta.url);
-const cssUrl = new URL("../public/ux-v159.css", import.meta.url);
+const cssUrl = cssSectionUrl("ux-v159");
 const identityUrl = new URL("../app/lib/appIdentity.ts", import.meta.url);
 const packageUrl = new URL("../package.json", import.meta.url);
 
@@ -15,10 +16,10 @@ test("V226 keeps settings inside a compact all-question card at every responsive
     readFile(packageUrl, "utf8")
   ]);
 
-  assert.match(html, /const APP_VERSION = 370;/);
-  assert.match(identity, /APP_VERSION = 370/);
-  for (const asset of ["ux-v159\\.css", "library-v214\\.css", "drill-ux-v44\\.js"]) {
-    assert.match(html, new RegExp(`${asset}\\?v=370`));
+  assert.match(html, /const APP_VERSION = 371;/);
+  assert.match(identity, /APP_VERSION = 371/);
+  for (const asset of ["app\\.css", "library-v214\\.js", "drill-ux-v44\\.js"]) {
+    assert.match(html, new RegExp(`${asset}\\?v=371`));
   }
 
   const allActionMarkup = html.match(/<div class="learning-all-action">[\s\S]*?<details class="learning-custom-settings"[\s\S]*?<\/details><\/div>/)?.[0] || "";

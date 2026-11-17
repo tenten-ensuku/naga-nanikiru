@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
 import vm from "node:vm";
+import { cssSection } from "./helpers/app-css.mjs";
 
 const rootUrl = new URL("../", import.meta.url);
 
@@ -39,7 +40,7 @@ test("V245 ignores retired archive exclusions while keeping explicit mastery inp
 });
 
 test("V245 totals and genre keep all questions without archive-based mastery", async () => {
-  const [html, css] = await Promise.all([read("public/index.html"), read("public/ux-v159.css")]);
+  const [html, css] = await Promise.all([read("public/index.html"), cssSection("ux-v159")]);
   assert.match(html, /function isLearningScopeQuestionV184\(/);
   assert.match(html, /const rangeLearningQuestions = menuLearningSummaryQuestionsV184\(\)/);
   assert.match(html, /isAnsweredForLearningV184/);

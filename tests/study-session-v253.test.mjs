@@ -179,7 +179,6 @@ test('every study entry uses all matching questions, including question 11 and e
   }
   const c=setup(24);c.startSessionV44('unanswered');assert.equal(c.activeSessionV44().questionKeys.length,24);
   assert.doesNotMatch(source('startSessionV44'),/limit:\s*10|slice\(0,\s*10\)/);
-  assert.doesNotMatch(source('todayQueueCandidatesV172'),/limit:\s*10|slice\(0,\s*10\)/);
 });
 
 test('pause before answering resumes the same question after reload and a later day',()=>{

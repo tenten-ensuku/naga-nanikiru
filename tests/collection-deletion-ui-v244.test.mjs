@@ -2,9 +2,10 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
+import { cssSection } from "./helpers/app-css.mjs";
 const source=fs.readFileSync(new URL('../public/collection-deletion-v244.js',import.meta.url),'utf8');
 const html=fs.readFileSync(new URL('../public/index.html',import.meta.url),'utf8');
-const css=fs.readFileSync(new URL('../public/collection-deletion-v244.css',import.meta.url),'utf8');
+const css=cssSection("collection-deletion-v244");
 const deferred=()=>{let resolve,reject;const promise=new Promise((a,b)=>{resolve=a;reject=b;});return {promise,resolve,reject};};
 class Element {
   constructor(){this.listeners={};this.dataset={};this.attributes={};this.isConnected=false;this.disabled=false;this.children={};}

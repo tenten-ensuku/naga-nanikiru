@@ -2,8 +2,9 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
+import { cssSection, cssSectionOrder } from "./helpers/app-css.mjs";
 const html = fs.readFileSync(new URL('../public/index.html', import.meta.url), 'utf8');
-const css = fs.readFileSync(new URL('../public/menu-sections-v239.css', import.meta.url), 'utf8');
+const css = cssSection("menu-sections-v239");
 const js = fs.readFileSync(new URL('../public/menu-sections-v239.js', import.meta.url), 'utf8');
 function source(name) {
   const match = html.match(new RegExp(`^      (?:async )?function ${name}\\([^\\n]*\\) \\{[\\s\\S]*?^      \\}`, 'm'));
@@ -24,9 +25,10 @@ function fixture() {
   return {api: context.window.MinkiruMenuV239, context, events, replacements, menu, summary, buttons};
 }
 test('V239 is an additive menu-only layer, with no external font or backend work', () => {
-  assert.match(html, /const APP_VERSION = 370;/);
-  assert.match(html, /menu-polish-v238\.css\?v=370[\s\S]*menu-sections-v239\.css\?v=370/);
-  assert.match(html, /menu-sections-v239\.js\?v=370/);
+  assert.match(html, /const APP_VERSION = 371;/);
+  assert.match(html, /<link rel="stylesheet" href="app\.css\?v=371">/);
+  { const order = cssSectionOrder(); assert.ok(order.indexOf("menu-polish-v238") >= 0 && order.indexOf("menu-polish-v238") < order.indexOf("menu-sections-v239")); }
+  assert.match(html, /menu-sections-v239\.js\?v=371/);
   assert.doesNotMatch(css, /@import|@font-face|https?:|\.scene-frame|\.hand-mask|\.riichi|learning-header-progress-track/);
   assert.doesNotMatch(js, /fetch\(|localStorage|sessionStorage|NagaSupabase|XMLHttpRequest/);
 });

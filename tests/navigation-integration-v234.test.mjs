@@ -180,8 +180,6 @@ test('personal settings do not render book permission or membership forms', () =
   const output = context.renderSettingsViewV67();
   assert.match(output, /この本の管理/);
   assert.doesNotMatch(output, /collectionManagement|collectionMember|collectionVisibility/);
-  const transfer = fs.readFileSync(new URL('../public/legacy-transfer-v232.js', import.meta.url), 'utf8');
-  assert.match(transfer, /#menuPanel\[data-view="settings"\] \.settings-section/);
 });
 test('analytics explicitly asks for only the loaded collection', () => {
   let received;

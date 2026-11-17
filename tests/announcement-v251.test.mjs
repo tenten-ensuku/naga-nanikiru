@@ -2,8 +2,9 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
+import { cssSection } from "./helpers/app-css.mjs";
 const read=file=>fs.readFileSync(new URL('../'+file,import.meta.url),'utf8');
-const html=read('public/index.html'),js=read('public/menu-sections-v239.js'),css=read('public/menu-sections-v239.css');
+const html=read('public/index.html'),js=read('public/menu-sections-v239.js'),css=cssSection("menu-sections-v239");
 
 const announcementSource=html.match(/const APP_ANNOUNCEMENTS_V66 = (\[[\s\S]*?\n\s*\]);/)[1];
 const announcements=vm.runInNewContext(announcementSource);

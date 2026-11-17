@@ -3,18 +3,19 @@ import fs from "node:fs";
 import path from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
+import { cssSection } from "./helpers/app-css.mjs";
 
 const testDir = path.dirname(fileURLToPath(import.meta.url));
 const repoDir = path.resolve(testDir, "..");
 const read = (relativePath) => fs.readFileSync(path.join(repoDir, relativePath), "utf8");
 
 const html = read("public/index.html");
-const css = read("public/ux-v159.css");
+const css = cssSection("ux-v159");
 const syncClient = read("client/supabase-sync.ts");
 const migration = read("supabase/migrations/20260830160223_custom_reactions_v211.sql");
 
 test("V211 places the curated eight reactions first and removes duplicate labels", () => {
-  assert.match(html, /const APP_VERSION = 370;/);
+  assert.match(html, /const APP_VERSION = 371;/);
   assert.match(html, /const REACTION_TOP_KEYS_V211 = Object\.freeze\(\["like", "agree", "hard", "good-question", "important", "hmm", "policy", "mistake"\]\)/);
   assert.match(html, /id: "silent", storageKey: "silent", label: "ダマ"/);
   assert.match(html, /id: "exclamation", storageKey: "exclaim", label: "", icon: "❗"/);

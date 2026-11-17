@@ -1,9 +1,10 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
+import { cssSectionUrl } from "./helpers/app-css.mjs";
 
 const indexUrl = new URL("../public/index.html", import.meta.url);
-const cssUrl = new URL("../public/ux-v159.css", import.meta.url);
+const cssUrl = cssSectionUrl("ux-v159");
 const identityUrl = new URL("../app/lib/appIdentity.ts", import.meta.url);
 const kanMigrationUrl = new URL("../supabase/migrations/20260830084615_repair_kan_melds_v201.sql", import.meta.url);
 
@@ -14,9 +15,9 @@ test("V180 exposes the recent-history shell and synchronized release assets", as
     readFile(identityUrl, "utf8"),
   ]);
 
-  assert.match(html, /const APP_VERSION = 370;/);
-  assert.match(identity, /APP_VERSION = 370/);
-  assert.match(html, /ux-v159\.css\?v=370/);
+  assert.match(html, /const APP_VERSION = 371;/);
+  assert.match(identity, /APP_VERSION = 371/);
+  assert.match(html, /<link rel="stylesheet" href="app\.css\?v=371">/);
   assert.match(html, /\.comment-form textarea \{ display: block; width: 100%; min-width: 0;/);
   assert.match(html, /data-menu-view="today"/);
   assert.match(html, /data-menu-view="today"[^>]*>[\s\S]*?<span>学ぶ<\/span>/);

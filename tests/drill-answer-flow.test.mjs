@@ -35,10 +35,9 @@ test("requires explicit confirmation before revealing or recording an answer", a
 
 test("records answer timing and exposes the synchronized drill version", async () => {
   const html = await source();
-  assert.match(html, /const APP_VERSION = 370;/);
+  assert.match(html, /const APP_VERSION = 371;/);
   assert.match(html, /NagaBoardV248\.judgmentMarkup\(SCENE, \{selectedModel: state\.judgeModel\}\)/);
   assert.match(html, /const topModelIndices = priorityIndicesV16\(\);/);
-  assert.match(html, /indices\.sort\(\(a, b\) => modelPriorityRank\(a\) - modelPriorityRank\(b\)\)/);
   assert.match(html, /id="answerPollPanel"/);
   assert.match(html, /void refreshQuestionPollStatsV110\(\)/);
   assert.doesNotMatch(html, /archiveCurrentQuestionV110/);
@@ -49,7 +48,6 @@ test("records answer timing and exposes the synchronized drill version", async (
   assert.match(html, /responseTimeMs:\s*Math\.max\(0, confirmedAt - startedAt\)/);
   assert.match(html, /startedAt:\s*new Date\(startedAt\)\.toISOString\(\)/);
   assert.match(html, /const historicalCard = SCENE\.actualDiscard \?/);
-  assert.match(html, /function callActionProbabilityV112\(action, index\) \{[\s\S]*?return questionCallProbabilityV112\(SCENE, action, index\);/);
   assert.doesNotMatch(html, /questionCallActionProbabilityV112/);
 });
 

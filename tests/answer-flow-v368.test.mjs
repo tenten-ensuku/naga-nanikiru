@@ -2,10 +2,11 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import vm from "node:vm";
+import { cssSection, cssSectionOrder } from "./helpers/app-css.mjs";
 
 const html = fs.readFileSync("public/index.html", "utf8");
 const script = fs.readFileSync("public/answer-flow-v368.js", "utf8");
-const css = fs.readFileSync("public/answer-flow-v368.css", "utf8");
+const css = cssSection("answer-flow-v368");
 
 class FakeElement {
   constructor(id = "", tag = "DIV") { this.id = id; this.tagName = tag; this.hidden = false; this.textContent = ""; this.className = ""; this.listeners = {}; this.clicks = 0; this.offsetParent = {}; }
@@ -70,7 +71,9 @@ test("V368 phone-only floating style and keyboard hint for pointer screens", () 
   assert.match(css, /\.next-float-v368 \{ display: none; \}/);
   assert.match(css, /@media \(max-width: 800px\) \{\s*\.next-float-v368:not\(\[hidden\]\) \{[\s\S]*?position: fixed;[\s\S]*?min-height: 50px;[\s\S]*?font-size: 17px;/);
   assert.match(css, /@media \(min-width: 801px\) and \(hover: hover\) and \(pointer: fine\)/);
-  assert.match(html, /<link rel="stylesheet" href="answer-flow-v368\.css\?v=\d+">\s*<script src="answer-flow-v368\.js\?v=\d+"><\/script>/);
+  assert.match(html, /<link rel="stylesheet" href="app\.css\?v=\d+">/);
+  assert.match(html, /<script src="answer-flow-v368\.js\?v=\d+"><\/script>/);
+  assert.ok(cssSectionOrder().includes("answer-flow-v368"));
   assert.match(html, /<p class="key-hint-v368" id="keyHintV368" hidden><kbd>←<\/kbd><kbd>→<\/kbd> 牌を選ぶ　<kbd>Enter<\/kbd> 確定　回答後は <kbd>→<\/kbd> 次の問題へ<\/p>/);
 });
 

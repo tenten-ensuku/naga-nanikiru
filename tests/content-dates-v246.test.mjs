@@ -5,6 +5,7 @@ import vm from 'node:vm';
 import {testD1} from './helpers/cloudflare-d1.mjs';
 import {readRpc} from '../cloudflare/read-api.mjs';
 import {builderRpc} from '../cloudflare/collection-builder-v235.mjs';
+import { cssSection, cssSectionOrder } from "./helpers/app-css.mjs";
 const read = file => fs.readFileSync(new URL('../'+file,import.meta.url),'utf8');
 const dateSource=read('public/content-dates-v246.js'),html=read('public/index.html');
 function datesContext(){const ctx=vm.createContext({window:{},Date,Intl,queueMicrotask});vm.runInContext(dateSource,ctx);return ctx;}
@@ -120,7 +121,7 @@ test('bookshelf displays recent content badges, exact dates and unknown values w
 });
 
 test('app wiring renders dates in lists and questions without polls or guessed timestamps',()=>{
-  assert.match(html,/content-dates-v246\.js\?v=370/);assert.match(html,/content-dates-v246\.css\?v=370/);
+  assert.match(html,/content-dates-v246\.js\?v=371/);assert.match(html,/app\.css\?v=371/);assert.ok(cssSectionOrder().includes("content-dates-v246"));
   assert.match(html,/id="questionCreatedDateV246"/);
   assert.match(html,/class="question-created-v246">\$\{questionCreatedMarkupV246\(question, \{ label: false \}\)\}/);
   const normalize=html.match(/      function normalizeSharedQuestionV66\([^]*?\n      \}/)[0];
@@ -168,7 +169,7 @@ test('V257 failed or forbidden opens and account changes do not clear an update 
 });
 
 test('V257 update marker sits above the spine without moving its title, and storage is account-scoped',()=>{
-  const css=read('public/content-dates-v246.css');
+  const css=cssSection("content-dates-v246");
   assert.match(css,/bottom:calc\(100% \+ 7px\)/);
   assert.doesNotMatch(css,/\.library-book:has\(.library-update-marker/);
   assert.match(html,/library-seen-updates-v257:\$\{userId\}/);

@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { readFile } from "node:fs/promises";
 import vm from "node:vm";
+import { cssSection } from "./helpers/app-css.mjs";
 
 const LIBRARY_PATH = new URL("../public/library-v214.js", import.meta.url);
 const INDEX_PATH = new URL("../public/index.html", import.meta.url);
@@ -444,7 +445,7 @@ test("switching users invalidates old in-flight/cache data", async () => {
 
 test("adapter keeps legacy fallback, controller mount/unmount hooks, and navigation reset contract", async () => {
   const [index, library] = await Promise.all([readFile(INDEX_PATH, "utf8"), readFile(LIBRARY_PATH, "utf8")]);
-  assert.match(index, /library-v214\.js\?v=370/);
+  assert.match(index, /library-v214\.js\?v=371/);
   const renderStart = index.indexOf("function renderCollectionChooserV165");
   const renderEnd = index.indexOf("function renderCollectionSpacePanelV100", renderStart);
   const renderer = index.slice(renderStart, renderEnd);
@@ -1118,7 +1119,7 @@ test("V236 empty catalogue settles and reduced motion remains supported",async()
   const api=await libraryApi(),controller=api.create();
   assert.match(controller.render({...context('u',[]),loading:true}),/is-preparing-v236/);
   assert.doesNotMatch(controller.render(context('u',[])),/is-preparing-v236/);
-  const css=await readFile(new URL('../public/library-v214.css',import.meta.url),'utf8');
+  const css=cssSection("library-v214");
   assert.match(css,/prefers-reduced-motion:reduce/);
   assert.match(css,/\.is-preparing-v236 \.library-rail-actions \{ visibility: hidden !important; pointer-events: none/);
 });

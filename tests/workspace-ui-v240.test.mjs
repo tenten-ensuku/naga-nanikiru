@@ -2,8 +2,9 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
+import { cssSection } from "./helpers/app-css.mjs";
 const html = fs.readFileSync(new URL('../public/index.html', import.meta.url), 'utf8');
-const css = fs.readFileSync(new URL('../public/workspace-ui-v240.css', import.meta.url), 'utf8');
+const css = cssSection("workspace-ui-v240");
 const js = fs.readFileSync(new URL('../public/workspace-ui-v240.js', import.meta.url), 'utf8');
 function source(name) {
   const match = html.match(new RegExp(`^      (?:async )?function ${name}\\([^\\n]*\\) \\{[\\s\\S]*?^      \\}`, 'm'));
@@ -39,8 +40,8 @@ function generator(unavailable, mode = 'scene') {
   vm.runInContext(source('generatorDetectionMarkupV300')+'\n'+source('renderGeneratorViewV44'),context); return context.renderGeneratorViewV44();
 }
 test('V240 adds only a local presentation layer and preserves approved assets',()=>{
-  assert.match(html,/const APP_VERSION = 370;/);
-  assert.match(html,/workspace-ui-v240\.css\?v=370/); assert.match(html,/workspace-ui-v240\.js\?v=370/);
+  assert.match(html,/const APP_VERSION = 371;/);
+  assert.match(html,/app\.css\?v=371/); assert.match(html,/workspace-ui-v240\.js\?v=371/);
   assert.doesNotMatch(js,/fetch\(|XMLHttpRequest|localStorage|sessionStorage|innerHTML|NagaSupabase/);
   assert.doesNotMatch(css,/@import|@font-face|https?:|\.scene-frame|\.hand-mask|\.riichi|learning-header-progress-track/);
   assert.match(css,/var\(--menu-serif-v238\)/); assert.match(css,/var\(--menu-sans-v238\)/);

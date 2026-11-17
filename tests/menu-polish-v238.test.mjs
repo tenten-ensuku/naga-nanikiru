@@ -2,10 +2,11 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
+import { cssSection, cssSectionOrder } from "./helpers/app-css.mjs";
 
 const html = fs.readFileSync(new URL('../public/index.html', import.meta.url), 'utf8');
-const css = fs.readFileSync(new URL('../public/menu-polish-v238.css', import.meta.url), 'utf8');
-const libraryCss = fs.readFileSync(new URL('../public/library-v214.css', import.meta.url), 'utf8');
+const css = cssSection("menu-polish-v238");
+const libraryCss = cssSection("library-v214");
 const libraryJs = fs.readFileSync(new URL('../public/library-v214.js', import.meta.url), 'utf8');
 function source(name) {
   const match = html.match(new RegExp(`^      (?:async )?function ${name}\\([^\\n]*\\) \\{[\\s\\S]*?^      \\}`, 'm'));
@@ -23,8 +24,9 @@ function fixture() {
 }
 
 test('V238 base menu styles follow builder CSS and keep question CSS and data out of the menu change', () => {
-  assert.match(html, /const APP_VERSION = 370;/);
-  assert.match(html, /book-builder-v235\.css\?v=370[\s\S]*menu-polish-v238\.css\?v=370/);
+  assert.match(html, /const APP_VERSION = 371;/);
+  assert.match(html, /<link rel="stylesheet" href="app\.css\?v=371">/);
+  { const order = cssSectionOrder(); assert.ok(order.indexOf("book-builder-v235") >= 0 && order.indexOf("book-builder-v235") < order.indexOf("menu-polish-v238")); }
   assert.doesNotMatch(css, /@import|@font-face|https?:|\.scene-frame|\.hand-mask|\.riichi|--ux-gold\s*:/);
   assert.doesNotMatch(css, /\.learning-header-progress-track/);
 });
@@ -34,7 +36,9 @@ test('only the home heading is visually hidden, preserving its accessible name a
   assert.match(html, /id="menuPanel" aria-labelledby="menuTitle"/);
   assert.match(css, /#menuPanel\[data-view="today"\] #menuTitle \{[^}]*clip-path: inset\(50%\);/);
   assert.doesNotMatch(css.match(/#menuTitle \{[^}]+\}/)?.[0] || '', /display:\s*none|visibility:\s*hidden/);
-  assert.match(css, /#menuPanel\[data-view="today"\] \.menu-heading \{[^}]*display: block;[^}]*padding: 0;/);
+  assert.match(css, /#menuPanel\[data-view="today"\] \.menu-heading \{[^}]*display: block;/);
+  // V371: the padding here was always overridden by menu-sections-v239.css.
+  assert.match(cssSection("menu-sections-v239"), /#menuPanel\[data-view="today"\] \.menu-heading \{ margin: 0; padding: 12px 0 10px; \}/);
   assert.match(html, /document.getElementById\("menuTitle"\).textContent = copy.title/);
   assert.match(html, /class="learning-header-progress-track"[^>]*><span style="width:\$\{progressPercent\}%"/);
   assert.match(html, /data-menu-view="today"[^>]*>[\s\S]*?<span>学ぶ<\/span>/);

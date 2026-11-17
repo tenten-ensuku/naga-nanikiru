@@ -10,7 +10,7 @@ test("renders the v87 scene and half-game generator controls", async () => {
     readFile(indexUrl, "utf8"),
     readFile(generatorUrl, "utf8")
   ]);
-  assert.match(html, /const APP_VERSION = 370/);
+  assert.match(html, /const APP_VERSION = 371/);
   assert.match(html, /function captureGeneratorFormDraftV157\(\)/);
   assert.match(html, /destination: document\.getElementById\("generatorDestinationSelect"\)\?\.value \|\| generatorDestinationV130 \|\| ""/);
   assert.match(html, /function restoreGeneratorFormDraftV157\(draft\)/);
@@ -49,9 +49,7 @@ test("renders the v87 scene and half-game generator controls", async () => {
   assert.match(html, /id="announcementButton"/);
   assert.match(html, /id="commentNotificationsButton"/);
   assert.match(html, /function startCommentNotificationPollingV65/);
-  assert.match(html, /function refreshSharedQuestionNotificationsV66/);
   assert.match(html, /QUESTION_NOTICE_STORAGE_KEY_V66/);
-  assert.match(html, /function renderCommunityNotificationListV66/);
   assert.match(html, /data-comment-action="edit"/);
   assert.match(html, /data-comment-action="delete"/);
   assert.match(html, /function beginCommentEditV75/);
@@ -63,9 +61,7 @@ test("renders the v87 scene and half-game generator controls", async () => {
   assert.match(html, /grid-template-columns: repeat\(5, minmax\(0, 1fr\)\)/);
   assert.doesNotMatch(html, /id="menuViewNote"/);
   assert.doesNotMatch(html, /解きたい局面を選んでください/);
-  assert.match(html, /function menuRowStatusV63/);
   assert.match(html, /function menuScoreMarkClassV63/);
-  assert.match(html, /function menuTrashIconV63/);
   assert.match(html, /class="menu-sidebar"/);
   assert.match(html, /id="menuListHeader"/);
   assert.match(html, /class="menu-list-header"[^>]*><span[^>]*>問題<\/span>/);

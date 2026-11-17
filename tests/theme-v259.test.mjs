@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
+import { cssSectionOrder } from "./helpers/app-css.mjs";
 
 const js = fs.readFileSync(new URL('../public/theme-v259.js', import.meta.url), 'utf8');
 const html = fs.readFileSync(new URL('../public/index.html', import.meta.url), 'utf8');
@@ -93,7 +94,7 @@ test('My Page retains PC layout settings without duplicating the header theme co
     assert.match(result, /id="desktopLayoutSelect"/);
     assert.match(result, new RegExp(`<option value="${desktopLayout === 'single' ? 'single' : 'split'}" selected>`));
   }
-  assert.ok(html.indexOf('<script src="theme-v259.js?v=370"></script>') < html.indexOf('<style'));
+  assert.ok(html.indexOf('<script src="theme-v259.js?v=371"></script>') < html.indexOf('<style'));
   assert.match(html, /id="themeQuickV295"/);
-  assert.ok(html.indexOf('theme-v259.css?v=370') > html.indexOf('question-toolbar-v255.css'));
+  { const order = cssSectionOrder(); assert.ok(order.indexOf("theme-v259") > order.indexOf("question-toolbar-v255") && order.indexOf("question-toolbar-v255") >= 0); }
 });

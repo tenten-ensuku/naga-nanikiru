@@ -2,8 +2,9 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
+import { cssSection } from "./helpers/app-css.mjs";
 const read=file=>fs.readFileSync(new URL('../'+file,import.meta.url),'utf8');
-const html=read('public/index.html'),js=read('public/question-header-v250.js'),css=read('public/question-toolbar-v255.css');
+const html=read('public/index.html'),js=read('public/question-header-v250.js'),css=cssSection("question-toolbar-v255");
 
 function fixture(){
   class Element {
@@ -63,11 +64,11 @@ test('V255 retains accessible return destinations while showing only the compact
 test('responsive styles preserve touch targets, permission-hidden actions and readable picker options',()=>{
   assert.match(css,/min-height: 44px/);
   assert.match(css,/\[hidden\] \{ display: none; \}/);
-  assert.match(read('public/question-header-v250.css'),/#questionSelect \{[^]*?font-size: 16px;/);
+  assert.match(cssSection("question-header-v250"),/#questionSelect \{[^]*?font-size: 16px;/);
   assert.match(css,/focus-within/);assert.match(css,/focus-visible/);
   assert.match(css,/overflow-x: auto/);assert.match(css,/flex-wrap: nowrap/);
   assert.match(css,/@media \(max-width: 800px\)/);
   assert.doesNotMatch(css,/\.(hand|tile|scene|answer|riichi)[-\w]*\s*\{/);
-  assert.match(html,/question-header-v250\.js\?v=370/);
-  assert.match(html,/question-header-v250\.css\?v=370/);
+  assert.match(html,/question-header-v250\.js\?v=371/);
+  assert.match(html,/app\.css\?v=371/);
 });

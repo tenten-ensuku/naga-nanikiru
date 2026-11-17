@@ -1,9 +1,10 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
+import { cssSectionUrl } from "./helpers/app-css.mjs";
 
 const indexUrl = new URL("../public/index.html", import.meta.url);
-const cssUrl = new URL("../public/ux-v159.css", import.meta.url);
+const cssUrl = cssSectionUrl("ux-v159");
 const identityUrl = new URL("../app/lib/appIdentity.ts", import.meta.url);
 const packageUrl = new URL("../package.json", import.meta.url);
 
@@ -15,10 +16,10 @@ test("V210 keeps the learning actions usable and stable on desktop and mobile", 
     readFile(packageUrl, "utf8")
   ]);
 
-  assert.match(html, /const APP_VERSION = 370;/);
-  assert.match(identity, /APP_VERSION = 370/);
-  for (const asset of ["ux-v159\\.css", "supabase-sync-v48\\.js", "drill-ux-v44\\.js"]) {
-    assert.match(html, new RegExp(`${asset}\\?v=370`));
+  assert.match(html, /const APP_VERSION = 371;/);
+  assert.match(identity, /APP_VERSION = 371/);
+  for (const asset of ["app\\.css", "supabase-sync-v48\\.js", "drill-ux-v44\\.js"]) {
+    assert.match(html, new RegExp(`${asset}\\?v=371`));
   }
   assert.match(html, /問題集を変更する/);
   assert.doesNotMatch(html, /class="active-collection-label"/);
@@ -101,7 +102,8 @@ test("V210 keeps the learning actions usable and stable on desktop and mobile", 
   assert.match(css, /\.menu-brand-logo-wrap/);
   assert.match(css, /grid-template-columns: minmax\(0, 1fr\) 18px/);
   assert.match(css, /active-collection-button > \.active-collection-arrow \{[\s\S]*?position: static;[\s\S]*?grid-column: 2;[\s\S]*?grid-row: 1 \/ -1;/);
-  assert.match(css, /grid-template-areas: "tile copy" "actions actions"/);
+  // V371: the V205 "tile copy" areas were always overridden; the effective PC layout stacks identity over actions.
+  assert.match(css, /grid-template-areas: "identity" "actions";/);
   assert.match(css, /\.menu-brand-actions #discordAuthButton \{[\s\S]*?width: auto;/);
   assert.match(css, /grid-template-columns: repeat\(3, minmax\(0, 1fr\)\)/);
   assert.match(css, /\.learning-all-action > \.learning-custom-settings/);

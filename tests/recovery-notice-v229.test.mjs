@@ -1,9 +1,10 @@
 import assert from "node:assert/strict";
 import { access, readFile } from "node:fs/promises";
 import test from "node:test";
+import { cssSectionUrl } from "./helpers/app-css.mjs";
 
 const htmlUrl = new URL("../public/index.html", import.meta.url);
-const cssUrl = new URL("../public/ux-v159.css", import.meta.url);
+const cssUrl = cssSectionUrl("ux-v159");
 const clientUrl = new URL("../client/supabase-sync.ts", import.meta.url);
 const assetUrl = new URL("../public/assets/recovery-notice-v229.png", import.meta.url);
 
@@ -15,7 +16,7 @@ test("V230 restores normal login and retains the reversible static outage notice
     access(assetUrl),
   ]);
 
-  assert.match(html, /const APP_VERSION = 370;/);
+  assert.match(html, /const APP_VERSION = 371;/);
   assert.match(html, /window\.NAGA_MAINTENANCE_MODE = false;/);
   assert.match(html, /id="recoveryNotice"[^>]* hidden>/);
   assert.match(html, /class="recovery-notice" id="recoveryNotice"/);

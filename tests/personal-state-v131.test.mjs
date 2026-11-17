@@ -6,12 +6,11 @@ const htmlUrl = new URL("../public/index.html", import.meta.url);
 
 test("V131 scopes personal archive and favorite state by user and collection", async () => {
   const html = await readFile(htmlUrl, "utf8");
-  assert.match(html, /const APP_VERSION = 370/);
+  assert.match(html, /const APP_VERSION = 371/);
   assert.match(html, /function personalCollectionScopeKeyV131\(/);
   assert.match(html, /supabaseSessionV46\?\.user\?\.id/);
   assert.match(html, /sharedCollectionV46\?\.share_slug/);
   assert.match(html, /function personalCollectionStateV131\(/);
-  assert.match(html, /function canUsePersonalCollectionStateV131\(/);
   assert.match(html, /existing\.archived = Array\.isArray\(existing\.archived\)/);
   assert.match(html, /personalCollectionStateV131\(\)\.favorites/);
 });

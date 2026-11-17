@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import { testD1 } from "./helpers/cloudflare-d1.mjs";
 import { readRpc } from "../cloudflare/read-api.mjs";
+import { cssSection } from "./helpers/app-css.mjs";
 
 test("V369 the library summary counts the latest △/× answers as weak", async t => {
   const db = testD1({ generation: true });
@@ -27,7 +28,7 @@ test("V369 the library summary counts the latest △/× answers as weak", async 
 test("V369 the shelf review opens the book, then starts the existing 苦手 session", () => {
   const html = fs.readFileSync("public/index.html", "utf8");
   assert.match(html, /onReview: slug => \{\s*if \(slug === String\(sharedCollectionV46\?\.share_slug \|\| ""\)\) startLearningSessionV189\("weak"\);\s*\}/);
-  const css = fs.readFileSync("public/library-shelf-v361.css", "utf8");
+  const css = cssSection("library-shelf-v361");
   assert.match(css, /\.library-review-v369 \{[^}]*min-height: 44px;[^}]*font-size: 15px;/);
   assert.match(css, /:root\[data-theme="light"\] \.library-review-v369 \{/);
 });

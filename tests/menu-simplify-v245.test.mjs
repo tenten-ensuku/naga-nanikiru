@@ -4,6 +4,7 @@ import vm from 'node:vm';
 import fs from 'node:fs';
 import {testD1} from './helpers/cloudflare-d1.mjs';
 import {readRpc} from '../cloudflare/read-api.mjs';
+import { cssSection } from "./helpers/app-css.mjs";
 const html=fs.readFileSync(new URL('../public/index.html',import.meta.url),'utf8');
 const ux=fs.readFileSync(new URL('../public/drill-ux-v44.js',import.meta.url),'utf8');
 const navigation=fs.readFileSync(new URL('../public/navigation-v234.js',import.meta.url),'utf8');
@@ -53,7 +54,7 @@ test('legacy archive URLs and remembered routes become the normal question list'
 });
 
 test('list layout has exactly three columns and keeps a 44px favorite target',()=>{
- const css=fs.readFileSync(new URL('../public/menu-simplify-v245.css',import.meta.url),'utf8');
+ const css=cssSection("menu-simplify-v245");
  assert.match(css,/grid-template-columns: minmax\(0, 1fr\) minmax\(120px, 190px\) 64px/);
  assert.match(css,/grid-template-columns: minmax\(0, 1fr\) max-content 44px/);
  assert.match(css,/min-height: 44px/);

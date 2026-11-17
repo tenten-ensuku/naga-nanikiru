@@ -1,9 +1,10 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
+import { cssSectionUrl } from "./helpers/app-css.mjs";
 
 const indexPath = new URL("../public/index.html", import.meta.url);
-const cssPath = new URL("../public/ux-v159.css", import.meta.url);
+const cssPath = cssSectionUrl("ux-v159");
 
 function normalizeNewlines(value) {
   return String(value).replace(/\r\n?/g, "\n");
@@ -19,8 +20,8 @@ function functionBlock(source, name, nextName) {
 
 test("V233 aligns the mobile toolbar version, labels, and accessible names", async () => {
   const html = await readFile(indexPath, "utf8");
-  assert.match(html, /const APP_VERSION = 370;/);
-  assert.match(html, /ux-v159\.css\?v=370/);
+  assert.match(html, /const APP_VERSION = 371;/);
+  assert.match(html, /<link rel="stylesheet" href="app\.css\?v=371">/);
   assert.doesNotMatch(html, /<script[^>]+legacy-transfer-v232\.js/);
 
   const sourceBar = html.match(/<div class="source-bar">[\s\S]*?<\/div>\s*\n\s*<section class="scene-card"/)?.[0] || "";

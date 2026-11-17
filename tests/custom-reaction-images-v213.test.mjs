@@ -3,18 +3,19 @@ import fs from "node:fs";
 import path from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
+import { cssSection } from "./helpers/app-css.mjs";
 
 const testDir = path.dirname(fileURLToPath(import.meta.url));
 const repoDir = path.resolve(testDir, "..");
 const read = (relativePath) => fs.readFileSync(path.join(repoDir, relativePath), "utf8");
 
 const html = read("public/index.html");
-const css = read("public/ux-v159.css");
+const css = cssSection("ux-v159");
 const syncClient = read("client/supabase-sync.ts");
 const migration = read("supabase/migrations/20260830172600_custom_reaction_images_and_tiles_v213.sql");
 
 test("V213 adds the 37 approved tile reactions between standard and custom", () => {
-  assert.match(html, /const APP_VERSION = 370;/);
+  assert.match(html, /const APP_VERSION = 371;/);
   assert.match(html, /data-reaction-tab="standard"[\s\S]*data-reaction-tab="tiles"[\s\S]*data-reaction-tab="custom"/);
   assert.match(html, /id="reactionPickerTilePanelV213"/);
   assert.match(html, /id="reactionTilePickerOptionsV213"/);
