@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=367">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=367">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=367">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=368">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=368">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=368">
   <title>みん切る｜みんなの何切る問題集</title>
   <link rel="preload" as="image" href="assets/loading-screen-v243.png" fetchpriority="high">
   <meta name="description" content="みん切るは、NAGA URLから問題をつくり、解いて、仲間と共有できる麻雀学習アプリです。">
   <meta name="theme-color" content="#f3f6f7">
-  <script src="theme-v259.js?v=367"></script>
+  <script src="theme-v259.js?v=368"></script>
   <meta property="og:type" content="website">
   <meta property="og:title" content="みん切る｜みんなの何切る問題集">
   <meta property="og:description" content="みん切るは、NAGA URLから問題をつくり、解いて、仲間と共有できる麻雀学習アプリです。">
@@ -65,7 +65,7 @@
           } else if (source) file = "external";
         } catch { /* Source metadata may be unavailable. */ }
         const position = value => Number.isSafeInteger(Number(value)) && Number(value) > 0 ? Number(value) : 0;
-        return `確認コード：V367 / ${kind} / ${name} / ${file}:${position(line)}:${position(column)}`;
+        return `確認コード：V368 / ${kind} / ${name} / ${file}:${position(line)}:${position(column)}`;
       };
       const showStatus = () => {
         const status = document.getElementById("startupStatusV236");
@@ -2319,24 +2319,24 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="theme-song-v344.css?v=367">
-  <link rel="stylesheet" href="ux-v159.css?v=367">
-  <link rel="stylesheet" href="library-v214.css?v=367">
-  <link rel="stylesheet" href="navigation-v234.css?v=367">
-  <link rel="stylesheet" href="book-builder-v235.css?v=367">
-  <link rel="stylesheet" href="menu-polish-v238.css?v=367">
-  <link rel="stylesheet" href="menu-sections-v239.css?v=367">
-  <link rel="stylesheet" href="workspace-ui-v240.css?v=367">
-  <link rel="stylesheet" href="collection-deletion-v244.css?v=367">
-  <link rel="stylesheet" href="collection-managers-v290.css?v=367">
-  <link rel="stylesheet" href="menu-simplify-v245.css?v=367">
-  <link rel="stylesheet" href="content-dates-v246.css?v=367">
-  <link rel="stylesheet" href="question-header-v250.css?v=367">
-  <link rel="stylesheet" href="question-toolbar-v255.css?v=367">
-  <link rel="stylesheet" href="theme-v259.css?v=367">
-  <link rel="stylesheet" href="theme-quick-v295.css?v=367">
-  <link rel="stylesheet" href="brand-v302.css?v=367">
-  <script defer src="theme-quick-v295.js?v=367"></script>
+  <link rel="stylesheet" href="theme-song-v344.css?v=368">
+  <link rel="stylesheet" href="ux-v159.css?v=368">
+  <link rel="stylesheet" href="library-v214.css?v=368">
+  <link rel="stylesheet" href="navigation-v234.css?v=368">
+  <link rel="stylesheet" href="book-builder-v235.css?v=368">
+  <link rel="stylesheet" href="menu-polish-v238.css?v=368">
+  <link rel="stylesheet" href="menu-sections-v239.css?v=368">
+  <link rel="stylesheet" href="workspace-ui-v240.css?v=368">
+  <link rel="stylesheet" href="collection-deletion-v244.css?v=368">
+  <link rel="stylesheet" href="collection-managers-v290.css?v=368">
+  <link rel="stylesheet" href="menu-simplify-v245.css?v=368">
+  <link rel="stylesheet" href="content-dates-v246.css?v=368">
+  <link rel="stylesheet" href="question-header-v250.css?v=368">
+  <link rel="stylesheet" href="question-toolbar-v255.css?v=368">
+  <link rel="stylesheet" href="theme-v259.css?v=368">
+  <link rel="stylesheet" href="theme-quick-v295.css?v=368">
+  <link rel="stylesheet" href="brand-v302.css?v=368">
+  <script defer src="theme-quick-v295.js?v=368"></script>
 </head>
 <body class="auth-gate-open">
   <section class="startup-screen-v236" id="startupScreenV236" aria-label="みん切るを準備中">
@@ -2481,6 +2481,7 @@
         <div class="answer-confirmation-choice" id="answerConfirmationChoice"></div>
         <button class="answer-confirm-button" id="confirmAnswerButton" type="button">この回答で確定</button>
       </div>
+      <p class="key-hint-v368" id="keyHintV368" hidden><kbd>←</kbd><kbd>→</kbd> 牌を選ぶ　<kbd>Enter</kbd> 確定　回答後は <kbd>→</kbd> 次の問題へ</p>
     </section>
 
     <section class="answer-strip" id="answerStrip" aria-live="polite" hidden>
@@ -2689,57 +2690,59 @@
     </form>
   </dialog>
 
-  <link rel="stylesheet" href="comment-tags-v270.css?v=367">
+  <link rel="stylesheet" href="comment-tags-v270.css?v=368">
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=367"></script>
-  <script src="drill-ux-v44.js?v=367"></script>
-  <link rel="stylesheet" href="notifications-v314.css?v=367">
-  <script src="notifications-v314.js?v=367"></script>
-  <script src="navigation-v234.js?v=367"></script>
-  <script src="book-builder-v235.js?v=367"></script>
-  <script src="library-order-v215.js?v=367"></script>
-  <script src="content-dates-v246.js?v=367"></script>
-  <script src="question-header-v250.js?v=367"></script>
-  <script src="library-v214.js?v=367"></script>
-  <script src="collection-admin-v328.js?v=367"></script>
-  <script src="standard-reactions-v329.js?v=367"></script>
-  <link rel="stylesheet" href="collection-admin-v328.css?v=367">
-  <script src="naga-generator-v44.js?v=367"></script>
-  <link rel="stylesheet" href="naga-board-v248.css?v=367">
-  <link rel="stylesheet" href="dora-sheen-v333.css?v=367">
-  <link rel="stylesheet" href="refinements-v273.css?v=367">
-  <link rel="stylesheet" href="generator-tools-v274.css?v=367">
-  <link rel="stylesheet" href="book-pages-v281.css?v=367">
-  <link rel="stylesheet" href="touch-input-v307.css?v=367">
-  <script src="comment-tools-v274.js?v=367"></script>
-  <link rel="stylesheet" href="mobile-comments-v316.css?v=367">
-  <link rel="stylesheet" href="standard-reactions-v329.css?v=367">
-  <script src="mobile-comments-v316.js?v=367"></script>
-  <link rel="stylesheet" href="comment-selection-v321.css?v=367">
-  <script src="comment-selection-v321.js?v=367"></script>
-  <link rel="stylesheet" href="comment-composer-v324.css?v=367">
-  <script src="comment-composer-v324.js?v=367"></script>
-  <link rel="stylesheet" href="inline-comment-v322.css?v=367">
-  <script src="inline-comment-v322.js?v=367"></script>
-  <script src="naga-board-state-v248.js?v=367"></script>
-  <script src="naga-board-v248.js?v=367"></script>
-  <script src="call-choices-v346.js?v=367"></script>
-  <script src="reaction-search-v356.js?v=367"></script>
-  <script src="study-model-v351.js?v=367"></script>
-  <link rel="stylesheet" href="call-choices-v346.css?v=367">
-  <link rel="stylesheet" href="library-shelf-v361.css?v=367">
-  <script src="dora-sheen-v333.js?v=367"></script>
-  <script src="sound-v342.js?v=367"></script>
-  <script src="hand-mask-v237.js?v=367"></script>
-  <script src="menu-sections-v239.js?v=367"></script>
-  <script src="workspace-ui-v240.js?v=367"></script>
-  <script src="generation-confirm-v241.js?v=367"></script>
-  <script src="collection-deletion-v244.js?v=367"></script>
-  <script src="collection-managers-v290.js?v=367"></script>
+  <script src="supabase-sync-v48.js?v=368"></script>
+  <script src="drill-ux-v44.js?v=368"></script>
+  <link rel="stylesheet" href="notifications-v314.css?v=368">
+  <script src="notifications-v314.js?v=368"></script>
+  <script src="navigation-v234.js?v=368"></script>
+  <script src="book-builder-v235.js?v=368"></script>
+  <script src="library-order-v215.js?v=368"></script>
+  <script src="content-dates-v246.js?v=368"></script>
+  <script src="question-header-v250.js?v=368"></script>
+  <script src="library-v214.js?v=368"></script>
+  <script src="collection-admin-v328.js?v=368"></script>
+  <script src="standard-reactions-v329.js?v=368"></script>
+  <link rel="stylesheet" href="collection-admin-v328.css?v=368">
+  <script src="naga-generator-v44.js?v=368"></script>
+  <link rel="stylesheet" href="naga-board-v248.css?v=368">
+  <link rel="stylesheet" href="dora-sheen-v333.css?v=368">
+  <link rel="stylesheet" href="refinements-v273.css?v=368">
+  <link rel="stylesheet" href="generator-tools-v274.css?v=368">
+  <link rel="stylesheet" href="book-pages-v281.css?v=368">
+  <link rel="stylesheet" href="touch-input-v307.css?v=368">
+  <script src="comment-tools-v274.js?v=368"></script>
+  <link rel="stylesheet" href="mobile-comments-v316.css?v=368">
+  <link rel="stylesheet" href="standard-reactions-v329.css?v=368">
+  <script src="mobile-comments-v316.js?v=368"></script>
+  <link rel="stylesheet" href="comment-selection-v321.css?v=368">
+  <script src="comment-selection-v321.js?v=368"></script>
+  <link rel="stylesheet" href="comment-composer-v324.css?v=368">
+  <script src="comment-composer-v324.js?v=368"></script>
+  <link rel="stylesheet" href="inline-comment-v322.css?v=368">
+  <script src="inline-comment-v322.js?v=368"></script>
+  <script src="naga-board-state-v248.js?v=368"></script>
+  <script src="naga-board-v248.js?v=368"></script>
+  <script src="call-choices-v346.js?v=368"></script>
+  <script src="reaction-search-v356.js?v=368"></script>
+  <script src="study-model-v351.js?v=368"></script>
+  <link rel="stylesheet" href="call-choices-v346.css?v=368">
+  <link rel="stylesheet" href="library-shelf-v361.css?v=368">
+  <link rel="stylesheet" href="answer-flow-v368.css?v=368">
+  <script src="answer-flow-v368.js?v=368"></script>
+  <script src="dora-sheen-v333.js?v=368"></script>
+  <script src="sound-v342.js?v=368"></script>
+  <script src="hand-mask-v237.js?v=368"></script>
+  <script src="menu-sections-v239.js?v=368"></script>
+  <script src="workspace-ui-v240.js?v=368"></script>
+  <script src="generation-confirm-v241.js?v=368"></script>
+  <script src="collection-deletion-v244.js?v=368"></script>
+  <script src="collection-managers-v290.js?v=368"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 367;
+    const APP_VERSION = 368;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -4908,6 +4911,7 @@
       const QUESTION_NOTICE_STORAGE_KEY_V66 = storageKey("question-notices-v1");
         const ANNOUNCEMENT_SEEN_STORAGE_KEY_V65 = storageKey("announcement-seen-v1");
         const APP_ANNOUNCEMENTS_V66 = [
+          {"version":368,"date":"2026-11-17","publishedAt":"2026-11-17T07:00:00.000Z","title":"次の問題へ進みやすくしました","body":"スマホでは、回答後に「次の問題へ」が画面から外れると、画面の下にボタンが浮かびます。PCでは ← → キーで牌を選び、Enter で確定、回答後は → で次の問題へ進めます。"},
           {"version":367,"date":"2026-11-17","publishedAt":"2026-11-17T06:00:00.000Z","title":"非公開の本ではコメント欄に注意が出ます","body":"ほかの人が非公開にしている本を開いたとき、コメント欄とコメント入力の上に「作成者が非公開にしている本です」と表示します。招待されたメンバーには表示しません。"},
           {"version":366,"date":"2026-11-17","publishedAt":"2026-11-17T05:00:00.000Z","title":"小さかった文字を大きくしました","body":"問題画面・回答後・コメント・つくる・マイページなどで、小さすぎた文字を12px以上にしました。補足やボタンの文字も読みやすくなっています。"},
           {"version":365,"date":"2026-11-14","publishedAt":"2026-11-14T11:00:00.000Z","title":"他の人の非公開の本をブックエンドで区切りました","body":"ほかの人が非公開にしている本は、「自分の本」と同じ段のブックエンドの右側に並びます。選ぶと「作成者が非公開にしている本です」と表示します。"},
@@ -12176,7 +12180,23 @@
         commitNavigationV234("replace");
         applyDesktopLayoutV70();
         document.addEventListener("keydown", event => {
-          if (["INPUT", "TEXTAREA", "SELECT", "BUTTON", "SUMMARY"].includes(document.activeElement?.tagName)) return;
+          // V368: a focused hand tile still takes the answer keys (clicking a tile focuses it).
+          const onTileV368 = document.activeElement?.matches?.("[data-tile-index]") === true;
+          if (!onTileV368 && ["INPUT", "TEXTAREA", "SELECT", "BUTTON", "SUMMARY"].includes(document.activeElement?.tagName)) return;
+          if (event.altKey || event.ctrlKey || event.metaKey || event.isComposing) return;
+          if (document.querySelector(".page.menu-active")) return;
+          if ((event.key === "ArrowLeft" || event.key === "ArrowRight") && !state.revealed && SCENE.decisionType !== "call") {
+            const tilesV368 = [...document.querySelectorAll("[data-tile-index]")].filter(button => button.offsetParent !== null);
+            if (!tilesV368.length) return;
+            const indexes = tilesV368.map(button => Number(button.dataset.tileIndex));
+            const current = state.selected ? indexes.indexOf(Number(state.selectedIndex)) : -1;
+            const step = event.key === "ArrowRight" ? 1 : -1;
+            const nextPosition = current < 0 ? (step > 0 ? 0 : indexes.length - 1) : (current + step + indexes.length) % indexes.length;
+            event.preventDefault();
+            selectTileV16(indexes[nextPosition]);
+            document.querySelector(`[data-tile-index="${indexes[nextPosition]}"]`)?.focus({ preventScroll: true });
+            return;
+          }
           if (event.key === "Enter" && !state.revealed && !document.getElementById("answerConfirmation").hidden) {
             event.preventDefault();
             window.MinkiruSoundV342?.playAction();

@@ -1,0 +1,35 @@
+/* V368: floating "次の問題へ" for phones. The button inside the answer panel stays the source. */
+.next-float-v368 { display: none; }
+@media (max-width: 800px) {
+  .next-float-v368:not([hidden]) {
+    position: fixed;
+    left: 50%;
+    bottom: calc(14px + env(safe-area-inset-bottom));
+    z-index: 60;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-width: 200px;
+    min-height: 50px;
+    padding: 0 28px;
+    border: 0;
+    border-radius: 999px;
+    background: #17656a;
+    color: #fff;
+    font-size: 17px;
+    font-weight: 800;
+    box-shadow: 0 8px 22px rgba(10, 40, 44, .35);
+    transform: translateX(-50%);
+    cursor: pointer;
+  }
+  .next-float-v368:not([hidden])::after { content: "→"; }
+  .next-float-v368:focus-visible { outline: 3px solid #f2c14e; outline-offset: 3px; }
+}
+
+/* V368: keyboard hint for mouse-and-keyboard screens, shown before answering a discard question. */
+.key-hint-v368 { display: none; }
+@media (min-width: 801px) and (hover: hover) and (pointer: fine) {
+  .key-hint-v368:not([hidden]) { display: block; margin: 8px 0 0; color: var(--muted, #5d6b6e); font-size: 13px; text-align: center; }
+  .key-hint-v368 kbd { display: inline-block; min-width: 22px; margin: 0 2px; padding: 1px 6px; border: 1px solid currentColor; border-bottom-width: 2px; border-radius: 5px; font: inherit; font-weight: 800; line-height: 1.4; }
+}

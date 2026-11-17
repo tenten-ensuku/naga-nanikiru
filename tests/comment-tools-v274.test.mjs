@@ -33,7 +33,7 @@ test('Enter on a disclosure or formatting button does not advance the study ques
   const end=html.indexOf('\n        });',start)+'\n        });'.length;
   let listener,advanced=0,prevented=0,confirmed=0,sounds=0;
   const state={revealed:true};
-  const document={activeElement:{tagName:'SUMMARY'},getElementById:()=>({hidden:false}),addEventListener:(_name,fn)=>{listener=fn;}};
+  const document={activeElement:{tagName:'SUMMARY'},getElementById:()=>({hidden:false}),querySelector:()=>null,addEventListener:(_name,fn)=>{listener=fn;}};
   vm.runInNewContext(html.slice(start,end),{document,state,window:{MinkiruSoundV342:{playAction:()=>sounds++}},advanceQuestionV44:()=>advanced++,confirmAnswerV41:()=>{confirmed++;state.revealed=true;}});
   for(const tagName of ['SUMMARY','BUTTON','TEXTAREA']){document.activeElement.tagName=tagName;listener({key:'Enter',preventDefault:()=>prevented++});}
   assert.equal(advanced,0);assert.equal(prevented,0);assert.equal(sounds,0);
