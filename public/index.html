@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=369">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=369">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=369">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=370">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=370">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=370">
   <title>みん切る｜みんなの何切る問題集</title>
   <link rel="preload" as="image" href="assets/loading-screen-v243.png" fetchpriority="high">
   <meta name="description" content="みん切るは、NAGA URLから問題をつくり、解いて、仲間と共有できる麻雀学習アプリです。">
   <meta name="theme-color" content="#f3f6f7">
-  <script src="theme-v259.js?v=369"></script>
+  <script src="theme-v259.js?v=370"></script>
   <meta property="og:type" content="website">
   <meta property="og:title" content="みん切る｜みんなの何切る問題集">
   <meta property="og:description" content="みん切るは、NAGA URLから問題をつくり、解いて、仲間と共有できる麻雀学習アプリです。">
@@ -65,7 +65,7 @@
           } else if (source) file = "external";
         } catch { /* Source metadata may be unavailable. */ }
         const position = value => Number.isSafeInteger(Number(value)) && Number(value) > 0 ? Number(value) : 0;
-        return `確認コード：V369 / ${kind} / ${name} / ${file}:${position(line)}:${position(column)}`;
+        return `確認コード：V370 / ${kind} / ${name} / ${file}:${position(line)}:${position(column)}`;
       };
       const showStatus = () => {
         const status = document.getElementById("startupStatusV236");
@@ -2319,24 +2319,24 @@
       .page.menu-active .menu-card { grid-template-columns: minmax(0, 1fr) 72px 58px 32px 32px; column-gap: 3px; }
     }
   </style>
-  <link rel="stylesheet" href="theme-song-v344.css?v=369">
-  <link rel="stylesheet" href="ux-v159.css?v=369">
-  <link rel="stylesheet" href="library-v214.css?v=369">
-  <link rel="stylesheet" href="navigation-v234.css?v=369">
-  <link rel="stylesheet" href="book-builder-v235.css?v=369">
-  <link rel="stylesheet" href="menu-polish-v238.css?v=369">
-  <link rel="stylesheet" href="menu-sections-v239.css?v=369">
-  <link rel="stylesheet" href="workspace-ui-v240.css?v=369">
-  <link rel="stylesheet" href="collection-deletion-v244.css?v=369">
-  <link rel="stylesheet" href="collection-managers-v290.css?v=369">
-  <link rel="stylesheet" href="menu-simplify-v245.css?v=369">
-  <link rel="stylesheet" href="content-dates-v246.css?v=369">
-  <link rel="stylesheet" href="question-header-v250.css?v=369">
-  <link rel="stylesheet" href="question-toolbar-v255.css?v=369">
-  <link rel="stylesheet" href="theme-v259.css?v=369">
-  <link rel="stylesheet" href="theme-quick-v295.css?v=369">
-  <link rel="stylesheet" href="brand-v302.css?v=369">
-  <script defer src="theme-quick-v295.js?v=369"></script>
+  <link rel="stylesheet" href="theme-song-v344.css?v=370">
+  <link rel="stylesheet" href="ux-v159.css?v=370">
+  <link rel="stylesheet" href="library-v214.css?v=370">
+  <link rel="stylesheet" href="navigation-v234.css?v=370">
+  <link rel="stylesheet" href="book-builder-v235.css?v=370">
+  <link rel="stylesheet" href="menu-polish-v238.css?v=370">
+  <link rel="stylesheet" href="menu-sections-v239.css?v=370">
+  <link rel="stylesheet" href="workspace-ui-v240.css?v=370">
+  <link rel="stylesheet" href="collection-deletion-v244.css?v=370">
+  <link rel="stylesheet" href="collection-managers-v290.css?v=370">
+  <link rel="stylesheet" href="menu-simplify-v245.css?v=370">
+  <link rel="stylesheet" href="content-dates-v246.css?v=370">
+  <link rel="stylesheet" href="question-header-v250.css?v=370">
+  <link rel="stylesheet" href="question-toolbar-v255.css?v=370">
+  <link rel="stylesheet" href="theme-v259.css?v=370">
+  <link rel="stylesheet" href="theme-quick-v295.css?v=370">
+  <link rel="stylesheet" href="brand-v302.css?v=370">
+  <script defer src="theme-quick-v295.js?v=370"></script>
 </head>
 <body class="auth-gate-open">
   <section class="startup-screen-v236" id="startupScreenV236" aria-label="みん切るを準備中">
@@ -2544,8 +2544,8 @@
         <button class="comment-edit-cancel" id="commentEditCancelButton" type="button" hidden>編集をキャンセル</button>
         </div>
       </form>
-      <p class="comment-sync-note">追加したコメントはこのアプリ内に保存されます。共有問題集ではDiscordログイン後に他の利用者にも表示されます。投稿者本人のコメントには「編集」が表示されます。Discordのスレッドには投稿されません。</p>
-      <p class="comment-welcome-v299" id="commentWelcomeV299">疑問も、違う考えも、一言の感想も歓迎。<br>作成者にとって、誰からのコメントもうれしいものです。</p>
+      <p class="comment-sync-note">コメントはみん切るの中だけに保存され、Discordには投稿されません。</p>
+      <p class="comment-welcome-v299" id="commentWelcomeV299">疑問・別の考え・ひとこと感想、なんでもどうぞ。</p>
       <div class="comments-footer">
         <button class="comment-add-button" id="commentAddButton" type="button" aria-expanded="false">コメント追加</button>
         <a id="threadLink" hidden target="_blank" rel="noreferrer">Discordで開く</a>
@@ -2608,7 +2608,7 @@
     <div class="auth-gate-card" role="dialog" aria-modal="true" aria-labelledby="authGateTitle" aria-describedby="authGateDescription" tabindex="-1">
       <img class="auth-gate-logo" src="assets/min-kiru-header.png" alt="みん切る（みんなの何切る問題集）">
       <h2 id="authGateTitle">ログインして学習を始める</h2>
-      <p id="authGateDescription">このアプリはログイン後に利用できます。Discordでログインすると、回答履歴・お気に入り・習熟度を携帯とパソコンで引き継げます。</p>
+      <p id="authGateDescription">Discordでログインして使います。回答履歴やお気に入りは、スマホとPCで共有されます。</p>
       <p class="auth-gate-return-note">今開いている問題集やURLは、ログイン後もそのまま再開できます。</p>
       <button class="primary auth-gate-login-button" id="authGateLoginButton" type="button" disabled>Discordでログイン</button>
       <p class="auth-gate-status" id="authGateStatus" aria-live="polite">ログイン状態を確認しています…</p>
@@ -2655,7 +2655,7 @@
   <dialog class="learning-celebration-dialog" id="learningCelebrationDialog" aria-labelledby="learningCelebrationTitle">
     <div class="learning-celebration-inner">
       <span class="learning-celebration-symbol" id="learningCelebrationSymbol" aria-hidden="true">◎</span>
-      <p class="learning-celebration-kicker">LEARNING MILESTONE</p>
+      <p class="learning-celebration-kicker">達成</p>
       <h3 id="learningCelebrationTitle">1周達成おめでとう！</h3>
       <p id="learningCelebrationMessage"></p>
       <button class="learning-celebration-close" id="learningCelebrationClose" type="button">学習を続ける</button>
@@ -2690,59 +2690,59 @@
     </form>
   </dialog>
 
-  <link rel="stylesheet" href="comment-tags-v270.css?v=369">
+  <link rel="stylesheet" href="comment-tags-v270.css?v=370">
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=369"></script>
-  <script src="drill-ux-v44.js?v=369"></script>
-  <link rel="stylesheet" href="notifications-v314.css?v=369">
-  <script src="notifications-v314.js?v=369"></script>
-  <script src="navigation-v234.js?v=369"></script>
-  <script src="book-builder-v235.js?v=369"></script>
-  <script src="library-order-v215.js?v=369"></script>
-  <script src="content-dates-v246.js?v=369"></script>
-  <script src="question-header-v250.js?v=369"></script>
-  <script src="library-v214.js?v=369"></script>
-  <script src="collection-admin-v328.js?v=369"></script>
-  <script src="standard-reactions-v329.js?v=369"></script>
-  <link rel="stylesheet" href="collection-admin-v328.css?v=369">
-  <script src="naga-generator-v44.js?v=369"></script>
-  <link rel="stylesheet" href="naga-board-v248.css?v=369">
-  <link rel="stylesheet" href="dora-sheen-v333.css?v=369">
-  <link rel="stylesheet" href="refinements-v273.css?v=369">
-  <link rel="stylesheet" href="generator-tools-v274.css?v=369">
-  <link rel="stylesheet" href="book-pages-v281.css?v=369">
-  <link rel="stylesheet" href="touch-input-v307.css?v=369">
-  <script src="comment-tools-v274.js?v=369"></script>
-  <link rel="stylesheet" href="mobile-comments-v316.css?v=369">
-  <link rel="stylesheet" href="standard-reactions-v329.css?v=369">
-  <script src="mobile-comments-v316.js?v=369"></script>
-  <link rel="stylesheet" href="comment-selection-v321.css?v=369">
-  <script src="comment-selection-v321.js?v=369"></script>
-  <link rel="stylesheet" href="comment-composer-v324.css?v=369">
-  <script src="comment-composer-v324.js?v=369"></script>
-  <link rel="stylesheet" href="inline-comment-v322.css?v=369">
-  <script src="inline-comment-v322.js?v=369"></script>
-  <script src="naga-board-state-v248.js?v=369"></script>
-  <script src="naga-board-v248.js?v=369"></script>
-  <script src="call-choices-v346.js?v=369"></script>
-  <script src="reaction-search-v356.js?v=369"></script>
-  <script src="study-model-v351.js?v=369"></script>
-  <link rel="stylesheet" href="call-choices-v346.css?v=369">
-  <link rel="stylesheet" href="library-shelf-v361.css?v=369">
-  <link rel="stylesheet" href="answer-flow-v368.css?v=369">
-  <script src="answer-flow-v368.js?v=369"></script>
-  <script src="dora-sheen-v333.js?v=369"></script>
-  <script src="sound-v342.js?v=369"></script>
-  <script src="hand-mask-v237.js?v=369"></script>
-  <script src="menu-sections-v239.js?v=369"></script>
-  <script src="workspace-ui-v240.js?v=369"></script>
-  <script src="generation-confirm-v241.js?v=369"></script>
-  <script src="collection-deletion-v244.js?v=369"></script>
-  <script src="collection-managers-v290.js?v=369"></script>
+  <script src="supabase-sync-v48.js?v=370"></script>
+  <script src="drill-ux-v44.js?v=370"></script>
+  <link rel="stylesheet" href="notifications-v314.css?v=370">
+  <script src="notifications-v314.js?v=370"></script>
+  <script src="navigation-v234.js?v=370"></script>
+  <script src="book-builder-v235.js?v=370"></script>
+  <script src="library-order-v215.js?v=370"></script>
+  <script src="content-dates-v246.js?v=370"></script>
+  <script src="question-header-v250.js?v=370"></script>
+  <script src="library-v214.js?v=370"></script>
+  <script src="collection-admin-v328.js?v=370"></script>
+  <script src="standard-reactions-v329.js?v=370"></script>
+  <link rel="stylesheet" href="collection-admin-v328.css?v=370">
+  <script src="naga-generator-v44.js?v=370"></script>
+  <link rel="stylesheet" href="naga-board-v248.css?v=370">
+  <link rel="stylesheet" href="dora-sheen-v333.css?v=370">
+  <link rel="stylesheet" href="refinements-v273.css?v=370">
+  <link rel="stylesheet" href="generator-tools-v274.css?v=370">
+  <link rel="stylesheet" href="book-pages-v281.css?v=370">
+  <link rel="stylesheet" href="touch-input-v307.css?v=370">
+  <script src="comment-tools-v274.js?v=370"></script>
+  <link rel="stylesheet" href="mobile-comments-v316.css?v=370">
+  <link rel="stylesheet" href="standard-reactions-v329.css?v=370">
+  <script src="mobile-comments-v316.js?v=370"></script>
+  <link rel="stylesheet" href="comment-selection-v321.css?v=370">
+  <script src="comment-selection-v321.js?v=370"></script>
+  <link rel="stylesheet" href="comment-composer-v324.css?v=370">
+  <script src="comment-composer-v324.js?v=370"></script>
+  <link rel="stylesheet" href="inline-comment-v322.css?v=370">
+  <script src="inline-comment-v322.js?v=370"></script>
+  <script src="naga-board-state-v248.js?v=370"></script>
+  <script src="naga-board-v248.js?v=370"></script>
+  <script src="call-choices-v346.js?v=370"></script>
+  <script src="reaction-search-v356.js?v=370"></script>
+  <script src="study-model-v351.js?v=370"></script>
+  <link rel="stylesheet" href="call-choices-v346.css?v=370">
+  <link rel="stylesheet" href="library-shelf-v361.css?v=370">
+  <link rel="stylesheet" href="answer-flow-v368.css?v=370">
+  <script src="answer-flow-v368.js?v=370"></script>
+  <script src="dora-sheen-v333.js?v=370"></script>
+  <script src="sound-v342.js?v=370"></script>
+  <script src="hand-mask-v237.js?v=370"></script>
+  <script src="menu-sections-v239.js?v=370"></script>
+  <script src="workspace-ui-v240.js?v=370"></script>
+  <script src="generation-confirm-v241.js?v=370"></script>
+  <script src="collection-deletion-v244.js?v=370"></script>
+  <script src="collection-managers-v290.js?v=370"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 369;
+    const APP_VERSION = 370;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -4548,7 +4548,7 @@
       }
       function renderStudyModelV351() {
         if (isBasicSequenceCollectionV163()) return "";
-        return `<div class="study-model-v351"><label for="studyModelSelectV351">この本の正誤基準<select id="studyModelSelectV351" data-study-model-v351>${studyModelOptionsV351(studySettingV351().preferred_model, true)}</select></label><p>あなたの選択をこの本で記憶します。次の問題も同じ基準で採点します。</p><span id="studyModelStatusV351" role="status"></span></div>`;
+        return `<div class="study-model-v351"><label for="studyModelSelectV351">この本の正誤基準<select id="studyModelSelectV351" data-study-model-v351>${studyModelOptionsV351(studySettingV351().preferred_model, true)}</select></label><p>この本の次の問題も、この基準で採点します。</p><span id="studyModelStatusV351" role="status"></span></div>`;
       }
       function syncStudyModelNoticeV351() {
         const select = document.getElementById("modelSelect");
@@ -4911,6 +4911,7 @@
       const QUESTION_NOTICE_STORAGE_KEY_V66 = storageKey("question-notices-v1");
         const ANNOUNCEMENT_SEEN_STORAGE_KEY_V65 = storageKey("announcement-seen-v1");
         const APP_ANNOUNCEMENTS_V66 = [
+          {"version":370,"date":"2026-11-17","publishedAt":"2026-11-17T09:00:00.000Z","title":"画面の説明文を短くしました","body":"ログイン画面・コメント欄・マイページ・達成表示などの説明文を、事実だけの短い文に書き直しました。"},
           {"version":369,"date":"2026-11-17","publishedAt":"2026-11-17T08:00:00.000Z","title":"本棚から苦手の復習を始められます","body":"本棚で本を選ぶと、直近の回答が△か×の問題がある本には「苦手 ○問を復習」ボタンが出ます。押すとその本を開いて、苦手の問題だけをすぐに解き直せます。"},
           {"version":368,"date":"2026-11-17","publishedAt":"2026-11-17T07:00:00.000Z","title":"次の問題へ進みやすくしました","body":"スマホでは、回答後に「次の問題へ」が画面から外れると、画面の下にボタンが浮かびます。PCでは ← → キーで牌を選び、Enter で確定、回答後は → で次の問題へ進めます。"},
           {"version":367,"date":"2026-11-17","publishedAt":"2026-11-17T06:00:00.000Z","title":"非公開の本ではコメント欄に注意が出ます","body":"ほかの人が非公開にしている本を開いたとき、コメント欄とコメント入力の上に「作成者が非公開にしている本です」と表示します。招待されたメンバーには表示しません。"},
@@ -7226,7 +7227,7 @@
         const group = (key, title, description, symbol, content) => `<details class="settings-group-v240" data-settings-group-v240="${key}"><summary>${icon(symbol)}<span><strong>${title}</strong><small>${description}</small></span>${icon("chevron-right")}</summary><div class="settings-group-body-v240">${content}</div></details>`;
         const account = `<p>コメントや問題作成で使う表示名を、1〜5文字で設定できます。</p><form class="settings-form" id="displayNameForm"><label for="displayNameInput">表示名<input id="displayNameInput" type="text" maxlength="5" minlength="1" value="${escapeHtml(configuredName)}" placeholder="${escapeHtml(fallbackName)}" autocomplete="nickname" required></label><p class="settings-form-note">${escapeHtml(syncNote)}</p><div class="settings-form-actions"><button class="primary" type="submit">表示名を保存</button><span class="settings-form-status" id="displayNameStatus" aria-live="polite"></span></div></form><div class="account-signout-v240"><button id="accountAuthButtonV240" type="button">${supabaseSessionV46?.user?.id ? "ログアウト" : "Discordでログイン"}</button><p class="settings-form-status" id="accountActionStatusV240" aria-live="polite"></p></div>`;
         const display = `${window.MinkiruSoundV342?.settingsMarkup() || ""}<div class="settings-form" id="layoutPreferenceForm"><label for="desktopLayoutSelect">PCの問題画面<select id="desktopLayoutSelect"><option value="split"${desktopLayout === "split" ? " selected" : ""}>問題とコメントを左右に表示</option><option value="single"${desktopLayout === "single" ? " selected" : ""}>縦1列に表示</option></select></label><p class="settings-form-note">スマホは常に縦配置です。このブラウザに保存され、次に問題を開くと反映されます。</p></div>${window.MinkiruDoraSheenV333?.settingsMarkup() || ""}`;
-        return `<section class="settings-section settings-workspace-v240"><p class="settings-intro-v240">使い方に合わせて、必要な設定を開いてください。</p><div class="guide-entry-v266"><h3>使い方ガイド</h3><p>問題の作り方から、チームで使う共有問題集まで。画面付きの説明書と紹介動画で確認できます。</p><a class="guide-link-v266" href="./guide/" target="_blank" rel="noopener" aria-label="使い方ガイドを別タブで開く">使い方ガイドを開く ↗</a></div>${group("account", "アカウント", "表示名・ログアウト", "user-circle", account)}${group("notifications", "通知", "通知のON/OFF・通知する問題集", "bell", accountNotificationsV314.settingsMarkup())}${group("display", "表示・学習", "操作音・ドラ光沢・PCの問題画面のレイアウト", "cog-6-tooth", display)}${group("reactions", "リアクション", supabaseSessionV46?.user?.app_metadata?.is_admin === true ? "定番の並び順・文言の編集／カスタムの追加" : "絵文字や画像を使ったリアクションの追加", "face-smile", customReactionSettingsMarkupV211())}<p class="settings-form-note">問題集の共有・権限は、その本の「この本の管理」から変更できます。</p><details class="theme-song-v344"><summary>おまけ：なぜかできたテーマソング</summary><p>問題集のアプリなのに、テーマソングまでできました。気が向いたらどうぞ。</p><a href="./guide/#theme-song" target="_blank" rel="noopener">文字PVをこっそり見る（約3分・音あり）↗</a></details></section>`;
+        return `<section class="settings-section settings-workspace-v240"><p class="settings-intro-v240">アカウントや通知などの設定です。</p><div class="guide-entry-v266"><h3>使い方ガイド</h3><p>問題の作り方や共有のしかたを、画像と動画で説明しています。</p><a class="guide-link-v266" href="./guide/" target="_blank" rel="noopener" aria-label="使い方ガイドを別タブで開く">使い方ガイドを開く ↗</a></div>${group("account", "アカウント", "表示名・ログアウト", "user-circle", account)}${group("notifications", "通知", "通知のON/OFF・通知する問題集", "bell", accountNotificationsV314.settingsMarkup())}${group("display", "表示・学習", "操作音・ドラ光沢・PCの問題画面のレイアウト", "cog-6-tooth", display)}${group("reactions", "リアクション", supabaseSessionV46?.user?.app_metadata?.is_admin === true ? "定番の並び順・文言の編集／カスタムの追加" : "絵文字や画像を使ったリアクションの追加", "face-smile", customReactionSettingsMarkupV211())}<p class="settings-form-note">問題集の共有・権限は、その本の「この本の管理」から変更できます。</p><details class="theme-song-v344"><summary>おまけ：なぜかできたテーマソング</summary><p>問題集のアプリなのに、テーマソングまでできました。気が向いたらどうぞ。</p><a href="./guide/#theme-song" target="_blank" rel="noopener">文字PVをこっそり見る（約3分・音あり）↗</a></details></section>`;
       }
 
       function bindSettingsViewV67() {
@@ -7672,10 +7673,10 @@
         const both = lap && mastery;
         if (title) title.textContent = both ? "1周達成 ＆ 完全習得！" : mastery ? "完全習得おめでとう！" : "1周達成おめでとう！";
         if (message) message.textContent = both
-          ? "未回答をなくし、すべての問題を習熟しました。見事な学びの積み重ねです。"
+          ? "全問に回答し、最新の回答がすべて〇以上になりました。"
           : mastery
           ? "すべての問題で、最新の回答が〇以上になりました。習熟度100％です。"
-          : "未回答の問題がなくなりました。この問題集を一周した証です。";
+          : "この本の問題をすべて解きました。";
         if (symbol) symbol.textContent = mastery ? "✦" : "◎";
         dialog.classList.toggle("is-mastery", mastery);
         if (dialog.open) dialog.close();
@@ -7707,12 +7708,12 @@
         const message = sharedIndexLoading
           ? "問題集を準備しています…"
           : metrics.masteryComplete
-          ? "習熟度100％達成。完全習得おめでとうございます！"
+          ? "習熟度100％です。"
           : metrics.total > 0 && metrics.unanswered === 0
           ? "一周達成！苦手な問題を復習できます。"
           : metrics.total === 0
           ? "この問題集に出題できる問題がありません。"
-          : "未回答と苦手な問題を続けて学習。いつでも中断できます。";
+          : "未回答と苦手の問題から出題します。";
         button.disabled = sharedIndexLoading || noCandidates;
         button.classList.toggle("is-complete", !sharedIndexLoading && noCandidates && achievement);
         button.classList.toggle("is-unavailable", sharedIndexLoading || noCandidates && !achievement);
