@@ -233,7 +233,7 @@
     if (doc.getElementById("legacyTransferStylesV232")) return;
     const style = doc.createElement("style");
     style.id = "legacyTransferStylesV232";
-    style.textContent = "[data-legacy-transfer-v232]{margin-top:14px!important;background:rgba(30,104,111,.18)!important;border-color:rgba(143,217,208,.3)!important}[data-legacy-transfer-v232] h3{margin-bottom:2px}[data-legacy-transfer-v232] .legacy-transfer-actions-v232{display:flex;flex-wrap:wrap;gap:8px;align-items:center}[data-legacy-transfer-v232] button,[data-legacy-transfer-v232] input{font:inherit}[data-legacy-transfer-v232] input[type=file]{max-width:100%;color:#c6d9df;font-size:11px}[data-legacy-transfer-v232] .legacy-transfer-status-v232{min-height:18px;color:#bde7e0;font-size:11px;font-weight:800}[data-legacy-transfer-v232] .legacy-transfer-status-v232.is-error{color:#ff9ba8}";
+    style.textContent = "[data-legacy-transfer-v232]{margin-top:14px!important;background:rgba(30,104,111,.18)!important;border-color:rgba(143,217,208,.3)!important}[data-legacy-transfer-v232] h3{margin-bottom:2px}[data-legacy-transfer-v232] .legacy-transfer-actions-v232{display:flex;flex-wrap:wrap;gap:8px;align-items:center}[data-legacy-transfer-v232] button,[data-legacy-transfer-v232] input{font:inherit}[data-legacy-transfer-v232] input[type=file]{max-width:100%;color:#c6d9df;font-size:13px}[data-legacy-transfer-v232] .legacy-transfer-status-v232{min-height:18px;color:#bde7e0;font-size:13px;font-weight:800}[data-legacy-transfer-v232] .legacy-transfer-status-v232.is-error{color:#ff9ba8}";
     (doc.head || doc.documentElement).appendChild(style);
   }
 

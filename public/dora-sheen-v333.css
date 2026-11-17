@@ -10,4 +10,4 @@ html:not([data-dora-sheen="on"]) .dora-tile-gloss-v333::after,html:not([data-dor
 .dora-settings-v333{margin-top:18px}
 .dora-toggle-v333{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:44px;font-weight:700;cursor:pointer}
 .dora-toggle-v333 input{width:40px;height:24px;accent-color:var(--accent,#147f97);flex:none}
-.dora-settings-v333 [role="status"]{font-size:12px;color:var(--muted);min-height:1.5em}
+.dora-settings-v333 [role="status"]{font-size:13px;color:var(--muted);min-height:1.5em}

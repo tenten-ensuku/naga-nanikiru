@@ -8,7 +8,7 @@
 .book-tabs-v234 button { min-width: 0; min-height: 44px; padding: 7px 5px; font-size: 14px; font-weight: 800; color: #b8dce7; background: transparent; border: 1px solid transparent; border-radius: 7px; }
 .book-tabs-v234 button.is-active { color: #fff4d1; background: #4b3e22; border-color: #b89646; }
 .book-actions-v234 { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 6px; margin-top: 5px; }
-.book-actions-v234 button { min-height: 36px; padding: 4px 8px; font-size: 12px; color: #bcdde2; border: 1px solid #36545e; background: transparent; border-radius: 6px; }
+.book-actions-v234 button { min-height: 36px; padding: 4px 8px; font-size: 13px; color: #bcdde2; border: 1px solid #36545e; background: transparent; border-radius: 6px; }
 .book-context-v234 button:focus-visible, .question-breadcrumb-button-v234:focus-visible { outline: 2px solid #ffdb7d; outline-offset: 2px; }
 .question-breadcrumb-button-v234 { display: inline; padding: 0 3px; border: 0; background: transparent; color: inherit; font: inherit; text-decoration: underline; text-underline-offset: 3px; }
 .navigation-scope-note-v234 { margin: 0 0 12px; color: #b4d0da; font-size: 13px; line-height: 1.6; }
@@ -29,11 +29,11 @@
   .page.menu-active .book-context-v234 { position: sticky; top: 0; z-index: 24; margin: -4px 0 10px; padding: 6px 8px; border-radius: 8px; }
   .book-context-title-v234 { gap: 5px; }
   .book-context-title-v234 strong { font-size: 15px; }
-  .book-context-title-v234 button { font-size: 12px; padding: 5px; }
+  .book-context-title-v234 button { font-size: 13px; padding: 5px; }
   .book-tabs-v234 { margin-top: 0; padding-top: 4px; gap: 2px; }
   .book-tabs-v234 button { font-size: 13px; }
   .book-actions-v234 { margin-top: 3px; }
-  .book-actions-v234 button { min-height: 32px; font-size: 11px; }
+  .book-actions-v234 button { min-height: 32px; font-size: 13px; }
   .page.menu-active .menu-sidebar .menu-nav { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .page.menu-active .menu-sidebar .menu-nav-button { min-width: 0; }
   .page.menu-active .menu-panel[data-view="my"] .menu-heading,

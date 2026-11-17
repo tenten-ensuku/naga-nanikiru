@@ -174,14 +174,14 @@ button:disabled {
 }
 
 .page.menu-active .menu-notice-label {
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 700;
   white-space: nowrap;
 }
 
 .page.menu-active .menu-brand-version {
   color: #85a8b7;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 700;
 }
 
@@ -194,7 +194,7 @@ button:disabled {
   border: 2px solid var(--ux-sidebar);
   background: var(--ux-coral);
   color: #fff;
-  font-size: 10px;
+  font-size: 11px;
   line-height: 14px;
 }
 
@@ -267,7 +267,7 @@ button:disabled {
 .page.menu-active .menu-sidebar-progress-title,
 .page.menu-active .menu-progress-metric-label {
   color: #d8edf3;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 800;
 }
 
@@ -295,7 +295,7 @@ button:disabled {
   display: block;
   margin: 6px 0 8px;
   color: var(--ux-muted);
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .page.menu-active .menu-sidebar-progress-track {
@@ -339,7 +339,7 @@ button:disabled {
   border-radius: 7px;
   background: #123e52;
   color: #e9f8fc;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 700;
 }
 
@@ -398,7 +398,7 @@ button:disabled {
 
 .page.menu-active .menu-summary-stat small {
   color: var(--ux-muted);
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 700;
 }
 
@@ -411,7 +411,7 @@ button:disabled {
 .page.menu-active .menu-summary-stat em {
   margin-left: 3px;
   color: #d6e9ef;
-  font-size: 12px;
+  font-size: 13px;
   font-style: normal;
 }
 
@@ -463,7 +463,7 @@ button:disabled {
 .page.menu-active .menu-filter-note {
   margin: 1px 0 0;
   color: #7fa2b1;
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .page.menu-active .menu-range-selector {
@@ -514,7 +514,7 @@ button:disabled {
 
 .page.menu-active .menu-range-count {
   color: var(--ux-muted);
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
   white-space: nowrap;
 }
@@ -696,7 +696,7 @@ button:disabled {
   min-height: 38px;
   padding: 0 16px;
   color: #7fa2b1;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 800;
   letter-spacing: 0.06em;
 }
@@ -740,7 +740,7 @@ button:disabled {
 
 .page.menu-active .menu-card-meta {
   color: #9cc5d2;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 700;
 }
 
@@ -784,7 +784,7 @@ button:disabled {
   border-radius: 6px;
   background: transparent;
   color: #8faab5;
-  font-size: 10px;
+  font-size: 12px;
   box-shadow: none;
   opacity: 0.72;
 }
@@ -884,7 +884,7 @@ button:disabled {
   gap: 8px;
   margin-bottom: 16px;
   color: #80a6b5;
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .page.menu-active .today-breadcrumb strong {
@@ -907,7 +907,7 @@ button:disabled {
 .page.menu-active .generator-kicker {
   margin: 0 0 6px;
   color: var(--ux-gold);
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 900;
   letter-spacing: 0.18em;
 }
@@ -1037,7 +1037,7 @@ button:disabled {
 .learning-celebration-kicker {
   margin: 2px 0 0;
   color: var(--ux-gold);
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 900;
   letter-spacing: .2em;
 }
@@ -1142,7 +1142,7 @@ button:disabled {
 
 .page.menu-active .today-metric-card > span {
   color: #d8eaf0;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 800;
 }
 
@@ -1154,12 +1154,12 @@ button:disabled {
 
 .page.menu-active .today-metric-card strong small {
   margin-left: 3px;
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .page.menu-active .today-metric-card > small {
   color: #7f9da9;
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .page.menu-active .today-metric-card.is-new strong { color: var(--ux-sky); }
@@ -1216,7 +1216,7 @@ button:disabled {
 
 .page.menu-active .today-recent-row small {
   color: #88adbb;
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .page.menu-active .today-recent-mark {
@@ -1270,7 +1270,7 @@ button:disabled {
   align-items: center;
   gap: 8px;
   color: #6f909e;
-  font-size: 11px;
+  font-size: 13px;
 }
 
 .page.menu-active .generator-progress-step::after {
@@ -1341,7 +1341,7 @@ button:disabled {
 .page.menu-active .generator-destination label,
 .page.menu-active .generator-form label {
   color: #cde1e8;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 800;
 }
 
@@ -1349,7 +1349,7 @@ button:disabled {
 .page.menu-active .generator-destination-note {
   margin: 0;
   color: #7fa1ae;
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .page.menu-active .generator-destination select,
@@ -1383,7 +1383,7 @@ button:disabled {
 .page.menu-active .generator-mode-field legend {
   margin-bottom: 7px;
   color: #cde1e8;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 800;
 }
 
@@ -1438,7 +1438,7 @@ button:disabled {
 .page.menu-active .generator-model-filter legend {
   padding: 0 5px;
   color: #fff4cb;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 900;
 }
 
@@ -1451,7 +1451,7 @@ button:disabled {
 
 .page.menu-active .generator-model-rule-label {
   color: #86a8b5;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 800;
 }
 
@@ -1462,7 +1462,7 @@ button:disabled {
   align-items: center;
   gap: 5px;
   color: #dffbfb;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 800;
 }
 
@@ -1501,7 +1501,7 @@ button:disabled {
 .page.menu-active .generator-model-empty {
   margin: 0;
   color: #86a8b5;
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1.5;
 }
 
@@ -1587,7 +1587,7 @@ button:disabled {
 }
 
 .page.menu-active .candidate-select span {
-  font-size: 9px;
+  font-size: 12px;
 }
 
 .page.menu-active .candidate-title {
@@ -1601,7 +1601,7 @@ button:disabled {
   display: block;
   margin-top: 3px;
   color: #86a8b5;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 600;
 }
 
@@ -1629,7 +1629,7 @@ button:disabled {
 
 .page.menu-active .candidate-choice-label {
   color: #8dafbc;
-  font-size: 9px;
+  font-size: 10px;
   font-weight: 800;
 }
 
@@ -1639,7 +1639,7 @@ button:disabled {
 
 .page.menu-active .candidate-choice small {
   color: #b9d0d8;
-  font-size: 9px;
+  font-size: 10px;
 }
 
 .page.menu-active .candidate-body {
@@ -1667,7 +1667,7 @@ button:disabled {
 
 .page.menu-active .candidate-analysis-heading {
   color: #fff4cb;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 900;
 }
 
@@ -1700,13 +1700,13 @@ button:disabled {
   place-items: center;
   padding: 6px;
   color: #63818d;
-  font-size: 9px;
+  font-size: 12px;
   text-align: center;
 }
 
 .page.menu-active .candidate-capture-state {
   color: #83a5b2;
-  font-size: 9px;
+  font-size: 12px;
 }
 
 .page.menu-active .candidate-capture-state.is-error {
@@ -1722,7 +1722,7 @@ button:disabled {
 .page.menu-active .candidate-actions .generator-button {
   min-height: 36px;
   padding: 0 10px;
-  font-size: 10px;
+  font-size: 12px;
 }
 
 /* Focused question */
@@ -1750,7 +1750,7 @@ button:disabled {
 .page:not(.menu-active) .eyebrow {
   margin: 0 0 3px;
   color: #8db4c2;
-  font-size: 11px;
+  font-size: 13px;
   letter-spacing: 0.08em;
 }
 
@@ -1763,7 +1763,7 @@ button:disabled {
 
 .page:not(.menu-active) .version {
   color: #7f9fac;
-  font-size: 12px;
+  font-size: 13px;
   letter-spacing: 0.08em;
 }
 
@@ -1801,7 +1801,7 @@ button:disabled {
   background: #174a61;
   color: #fff;
   box-shadow: none;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 800;
 }
 
@@ -1816,7 +1816,7 @@ button:disabled {
   align-items: center;
   gap: 6px;
   color: #9ebbc6;
-  font-size: 11px;
+  font-size: 13px;
 }
 
 .page:not(.menu-active) .question-control select,
@@ -1990,7 +1990,7 @@ button:disabled {
     padding: 4px 2px;
     border: 0;
     border-radius: 8px;
-    font-size: 9px;
+    font-size: 12px;
     text-align: center;
   }
 
@@ -2011,7 +2011,7 @@ button:disabled {
     min-width: 17px;
     height: 17px;
     padding: 0 4px;
-    font-size: 8px;
+    font-size: 10px;
   }
 
   .page.menu-active #studentHistoryNav:not([hidden]) {
@@ -2031,7 +2031,7 @@ button:disabled {
 
   .page.menu-active .account-status {
     flex: 1;
-    font-size: 9px;
+    font-size: 12px;
   }
 
   .page.menu-active .account-strip button {
@@ -2136,7 +2136,7 @@ button:disabled {
   .page.menu-active .menu-range-all-button {
     margin-left: 6px;
     padding: 0 8px;
-    font-size: 11px;
+    font-size: 13px;
   }
 
   .page.menu-active .menu-range-count {
@@ -2153,7 +2153,7 @@ button:disabled {
   .page.menu-active .menu-filter-advanced-toggle,
   .page.menu-active .menu-archive-view-button {
     padding: 0 10px;
-    font-size: 11px;
+    font-size: 13px;
   }
 
   .page.menu-active .menu-attribute-row {
@@ -2204,7 +2204,7 @@ button:disabled {
   .page.menu-active .menu-row-status {
     min-width: 56px;
     height: 34px;
-    font-size: 11px;
+    font-size: 13px;
   }
 
   .page.menu-active .menu-card-row-manage {
@@ -2218,7 +2218,7 @@ button:disabled {
   .page.menu-active .menu-card-latest-mark {
     width: 20px;
     height: 20px;
-    font-size: 10px;
+    font-size: 12px;
   }
 
   .page.menu-active .menu-card-icon-action {
@@ -2230,7 +2230,7 @@ button:disabled {
   .page.menu-active .generator-progress-step {
     grid-template-columns: 24px 1fr;
     gap: 3px;
-    font-size: 8px;
+    font-size: 12px;
   }
 
   .page.menu-active .generator-progress-step > span {
@@ -2385,7 +2385,7 @@ button:disabled {
   max-width: 680px;
   margin: 0;
   color: rgba(225, 232, 233, .7);
-  font-size: 11px;
+  font-size: 13px;
   line-height: 1.55;
 }
 
@@ -2395,7 +2395,7 @@ button:disabled {
   border: 1px solid rgba(225, 188, 116, .35);
   border-radius: 999px;
   color: #e6c986;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 850;
 }
 
@@ -2450,7 +2450,7 @@ button:disabled {
 
 .page.menu-active .collection-volume-count {
   color: #bbd4dc;
-  font-size: 10px;
+  font-size: 12px;
   white-space: nowrap;
 }
 
@@ -2459,7 +2459,7 @@ button:disabled {
   overflow: hidden;
   margin-top: 4px;
   color: #9dbac3;
-  font-size: 9px;
+  font-size: 12px;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -2477,7 +2477,7 @@ button:disabled {
 .page.menu-active .collection-volume-status {
   margin: 0;
   color: #b8cdd3;
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .page.menu-active .collection-volume-picker.is-error {
@@ -2558,7 +2558,7 @@ button:disabled {
   }
 
   .page.menu-active .menu-card-meta {
-    font-size: 9px;
+    font-size: 12px;
   }
 
   .page.menu-active .candidate-choice-row {
@@ -2666,7 +2666,7 @@ button:disabled {
 .page.menu-active .active-collection-label {
   grid-column: 1 / -1;
   color: #d7b77f;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 800;
   letter-spacing: .08em;
 }
@@ -2686,7 +2686,7 @@ button:disabled {
 .page.menu-active .active-collection-status {
   align-self: start;
   color: #e0c99e;
-  font-size: 9px;
+  font-size: 12px;
   font-weight: 750;
   white-space: nowrap;
 }
@@ -2767,12 +2767,12 @@ button:disabled {
   max-width: 690px;
   margin: 0;
   color: var(--ux-muted);
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .page.menu-active .collection-chooser-kicker {
   color: var(--ux-brown-gold-light) !important;
-  font-size: 10px !important;
+  font-size: 12px !important;
   font-weight: 850;
   letter-spacing: .16em;
 }
@@ -2784,7 +2784,7 @@ button:disabled {
   border-radius: 9px;
   background: rgba(18, 62, 82, .72);
   color: #e9fbf8;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 800;
   white-space: nowrap;
 }
@@ -2804,7 +2804,7 @@ button:disabled {
   border-radius: 10px;
   background: rgba(94, 35, 40, .45);
   color: #ffe3e5;
-  font-size: 11px;
+  font-size: 13px;
 }
 
 .page.menu-active .collection-chooser-error strong {
@@ -2845,7 +2845,7 @@ button:disabled {
 
 .page.menu-active .collection-choice-card-kicker {
   color: var(--ux-brown-gold-light);
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 850;
   letter-spacing: .06em;
 }
@@ -2864,7 +2864,7 @@ button:disabled {
   min-height: 36px;
   overflow: hidden;
   color: var(--ux-muted);
-  font-size: 11px;
+  font-size: 13px;
   line-height: 1.55;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
@@ -2876,7 +2876,7 @@ button:disabled {
   justify-content: space-between;
   margin-top: auto;
   color: #c5dce4;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 750;
 }
 
@@ -2941,7 +2941,7 @@ button:disabled {
 
   .page.menu-active .mobile-collection-context small {
     color: #d2b17a;
-    font-size: 8px;
+    font-size: 12px;
     font-weight: 800;
     letter-spacing: .08em;
   }
@@ -2956,7 +2956,7 @@ button:disabled {
 
   .page.menu-active .mobile-collection-context-status {
     color: #dbc391;
-    font-size: 9px;
+    font-size: 12px;
     font-weight: 750;
     white-space: nowrap;
   }
@@ -3057,7 +3057,7 @@ button:disabled {
 .page.menu-active .collection-chooser-header p:not(.collection-chooser-kicker) {
   max-width: 58em;
   color: rgba(220, 232, 235, .7);
-  font-size: 11px;
+  font-size: 13px;
   line-height: 1.55;
 }
 
@@ -3272,7 +3272,7 @@ button:disabled {
 .page.menu-active .menu-filter-heading {
   align-self: center;
   color: #dceef3;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 850;
   letter-spacing: .02em;
   white-space: nowrap;
@@ -3328,7 +3328,7 @@ button:disabled {
   justify-self: end;
   min-height: 40px;
   color: #b9d0d4;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 800;
   white-space: nowrap;
 }
@@ -3350,7 +3350,7 @@ button:disabled {
   min-height: 40px;
   padding: 0 14px;
   border-radius: var(--ux-radius-sm);
-  font-size: 12px;
+  font-size: 13px;
   white-space: nowrap;
 }
 
@@ -3408,7 +3408,7 @@ button:disabled {
   grid-column: 1;
   align-self: center;
   color: #dceef3;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 850;
   white-space: nowrap;
 }
@@ -3555,7 +3555,7 @@ button:disabled {
   display: block;
   margin: 0 0 0 30px;
   color: #91b5bf;
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1.25;
   white-space: nowrap;
 }
@@ -3604,7 +3604,7 @@ button:disabled {
   justify-self: end;
   min-height: 40px;
   color: #c4d9dd;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 850;
   white-space: nowrap;
 }
@@ -3626,7 +3626,7 @@ button:disabled {
   border-radius: var(--ux-radius-sm);
   background: transparent;
   color: #c8e2e3;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 750;
   white-space: nowrap;
 }
@@ -3668,7 +3668,7 @@ button:disabled {
   min-height: 40px;
   padding: 0 15px;
   border-radius: var(--ux-radius-sm);
-  font-size: 12px;
+  font-size: 13px;
   white-space: nowrap;
 }
 
@@ -3712,7 +3712,7 @@ button:disabled {
 .page.menu-active .menu-status-filter-group legend small {
   margin-left: 30px;
   color: #91b5bf;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 600;
   line-height: 1.25;
 }
@@ -4060,7 +4060,7 @@ button:disabled {
   margin: 0;
   overflow: hidden;
   color: #b9d0d4;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 500;
   line-height: 1.2;
   text-overflow: ellipsis;
@@ -4078,7 +4078,7 @@ button:disabled {
 
   .page.menu-active .menu-card-meta {
     display: inline;
-    font-size: 11px;
+    font-size: 13px;
   }
 }
 
@@ -4088,7 +4088,7 @@ button:disabled {
   }
 
   .page.menu-active .menu-card-meta {
-    font-size: 10px;
+    font-size: 12px;
   }
 }
 
@@ -4212,7 +4212,7 @@ body.auth-gate-open {
 .auth-gate-kicker {
   margin: 0 0 12px;
   color: var(--ux-brown-gold-light, #e1bc74);
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 800;
   letter-spacing: .22em;
 }
@@ -4237,7 +4237,7 @@ body.auth-gate-open {
 .auth-gate-return-note {
   margin: 0 0 24px;
   color: #d3e4e7 !important;
-  font-size: 12px !important;
+  font-size: 13px !important;
 }
 
 .auth-gate-login-button {
@@ -4267,7 +4267,7 @@ body.auth-gate-open {
   min-height: 1.6em;
   margin: 14px 0 0;
   color: #a9c2cc;
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .auth-gate[data-state="unavailable"] .auth-gate-status,
@@ -4314,7 +4314,7 @@ body.auth-gate-open {
   align-items: center;
   gap: 8px;
   color: #83a9b7;
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .page.menu-active .learning-breadcrumb strong {
@@ -4394,7 +4394,7 @@ body.auth-gate-open {
   border-radius: 999px;
   background: rgba(255, 255, 255, .1);
   color: #dbeef3;
-  font-size: 11px;
+  font-size: 13px;
   line-height: 1;
 }
 
@@ -4432,7 +4432,7 @@ body.auth-gate-open {
   align-items: center;
   gap: 8px;
   color: #e5f1f2;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 800;
 }
 
@@ -4450,7 +4450,7 @@ body.auth-gate-open {
   border: 1px solid rgba(242, 195, 79, .7);
   border-radius: 50%;
   color: var(--ux-gold);
-  font-size: 11px;
+  font-size: 13px;
 }
 
 .page.menu-active .learning-path-note > span[aria-hidden] {
@@ -4471,7 +4471,7 @@ body.auth-gate-open {
 }
 
 .page.menu-active .learning-progress > span:first-child {
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 800;
 }
 
@@ -4489,7 +4489,7 @@ body.auth-gate-open {
 
 .page.menu-active .learning-progress > small {
   color: #8eacb8;
-  font-size: 11px;
+  font-size: 13px;
 }
 
 .page.menu-active .learning-progress-track {
@@ -4526,7 +4526,7 @@ body.auth-gate-open {
 
 .page.menu-active .learning-resume > div > span {
   color: var(--ux-mint);
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 900;
   letter-spacing: .08em;
 }
@@ -4541,7 +4541,7 @@ body.auth-gate-open {
 
 .page.menu-active .learning-resume small {
   color: #9bbac3;
-  font-size: 11px;
+  font-size: 13px;
 }
 
 .page.menu-active .learning-resume button {
@@ -4610,7 +4610,7 @@ body.auth-gate-open {
 
 .page.menu-active .learning-action-step {
   color: var(--ux-gold);
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 900;
   letter-spacing: .18em;
 }
@@ -4634,19 +4634,19 @@ body.auth-gate-open {
 .page.menu-active .learning-action-count small {
   margin-left: 3px;
   color: #b7ced3;
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .page.menu-active .learning-action-card > small {
   color: #a8c2ca;
-  font-size: 11px;
+  font-size: 13px;
 }
 
 .page.menu-active .learning-action-link {
   align-self: end;
   margin-top: auto;
   color: var(--ux-gold);
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 900;
 }
 
@@ -4692,7 +4692,7 @@ body.auth-gate-open {
 .page.menu-active [data-learning-settings-summary] {
   margin-left: auto;
   color: #8eacb8;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 700;
 }
 
@@ -4708,7 +4708,7 @@ body.auth-gate-open {
   display: grid;
   gap: 5px;
   color: #aec7ce;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 800;
 }
 
@@ -4720,14 +4720,14 @@ body.auth-gate-open {
   border-radius: var(--ux-radius-sm);
   background: #0a2736;
   color: #efffff;
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .page.menu-active .learning-custom-settings-body p {
   grid-column: 1 / -1;
   margin: 0;
   color: #7899a6;
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .page.menu-active .learning-recent-section {
@@ -4835,13 +4835,13 @@ body.auth-gate-open {
 
 @media (max-width: 480px) {
   .page.menu-active .learning-breadcrumb {
-    font-size: 11px;
+    font-size: 13px;
   }
 
   .page.menu-active .learning-tabs > button {
     min-height: 42px;
     padding: 7px 10px;
-    font-size: 12px;
+    font-size: 13px;
   }
 
   .page.menu-active .learning-hero-copy h3 {
@@ -4920,13 +4920,13 @@ body.auth-gate-open {
   width: auto;
   padding: 0 4px;
   color: #d7ecef;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 900;
 }
 
 .page.menu-active .learning-setting-group legend small {
   color: #7fabb7;
-  font-size: 9px;
+  font-size: 12px;
   font-weight: 700;
 }
 
@@ -4951,7 +4951,7 @@ body.auth-gate-open {
   background: rgba(5, 25, 37, .72);
   color: #bad1d7;
   cursor: pointer;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 800;
   transition: border-color .16s ease, background .16s ease, color .16s ease;
 }
@@ -4985,7 +4985,7 @@ body.auth-gate-open {
   place-items: center;
   height: 100%;
   color: #09232d;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 900;
   line-height: 1;
 }
@@ -5068,7 +5068,7 @@ body.auth-gate-open {
 
 .page.menu-active .learning-header-progress-copy > span {
   color: #8eacb8;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 800;
 }
 
@@ -5081,7 +5081,7 @@ body.auth-gate-open {
 .page.menu-active .learning-header-progress-copy strong small {
   margin-left: 3px;
   color: #9bbac3;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 700;
 }
 
@@ -5104,7 +5104,7 @@ body.auth-gate-open {
 
 .page.menu-active .learning-header-progress > small {
   color: #8eacb8;
-  font-size: 10px;
+  font-size: 12px;
   white-space: nowrap;
 }
 
@@ -5154,7 +5154,7 @@ body.auth-gate-open {
   min-width: 0;
   overflow: hidden;
   color: #a8c2ca;
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1.3;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -5164,7 +5164,7 @@ body.auth-gate-open {
   grid-area: link;
   align-self: center;
   margin: 0;
-  font-size: 10px;
+  font-size: 12px;
   white-space: nowrap;
 }
 
@@ -5183,7 +5183,7 @@ body.auth-gate-open {
   min-height: 34px;
   padding: 5px 8px;
   gap: 6px;
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .page.menu-active .learning-all-action [data-learning-settings-summary] {
@@ -5248,7 +5248,7 @@ body.auth-gate-open {
     min-height: 40px;
     padding: 6px 5px;
     gap: 4px;
-    font-size: 11px;
+    font-size: 13px;
   }
 
   .page.menu-active .learning-tab-icon {
@@ -5261,7 +5261,7 @@ body.auth-gate-open {
   }
 
   .page.menu-active .learning-header-progress > small {
-    font-size: 9px;
+    font-size: 12px;
   }
 }
 
@@ -5290,7 +5290,7 @@ body.auth-gate-open {
   flex: 0 0 auto;
   margin-left: 0;
   color: var(--ux-brown-gold-light);
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 800;
   white-space: nowrap;
 }
@@ -5312,7 +5312,7 @@ body.auth-gate-open {
   color: #edf8f5;
   background: rgba(13, 58, 75, .86);
   border-color: rgba(155, 232, 216, .4);
-  font-size: 11px;
+  font-size: 13px;
 }
 
 .page.menu-active .menu-notice-icon {
@@ -5323,7 +5323,7 @@ body.auth-gate-open {
 }
 
 .page.menu-active .menu-notice-label {
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 800;
 }
 
@@ -5491,7 +5491,7 @@ body.auth-gate-open {
 .page.menu-active .learning-action-count small {
   margin-left: 2px;
   color: #bdd2d5;
-  font-size: 11px;
+  font-size: 13px;
   letter-spacing: 0;
 }
 
@@ -5501,7 +5501,7 @@ body.auth-gate-open {
   min-width: 0;
   overflow: hidden;
   color: #b3ccd0;
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1.25;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -5519,7 +5519,7 @@ body.auth-gate-open {
   border: 1px solid rgba(242, 195, 79, .68);
   border-radius: 999px;
   color: #fff3c7;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 900;
   line-height: 1;
   white-space: nowrap;
@@ -5672,11 +5672,11 @@ body.auth-gate-open {
 
   .page.menu-active .learning-action-card .learning-action-title { font-size: 15px; }
   .page.menu-active .learning-action-card .learning-action-count { font-size: 22px; }
-  .page.menu-active .learning-action-card .learning-action-description { font-size: 9px; }
+  .page.menu-active .learning-action-card .learning-action-description { font-size: 12px; }
   .page.menu-active .learning-action-card .learning-action-link {
     min-height: 34px;
     padding: 0 9px;
-    font-size: 11px;
+    font-size: 13px;
   }
 
   .page.menu-active .learning-recent-row {
@@ -5783,14 +5783,14 @@ body.auth-gate-open {
 
 .page.menu-active .learning-action-card .learning-action-count small {
   margin-left: 3px;
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .page.menu-active .learning-action-card .learning-action-description {
   align-self: end;
   max-width: 100%;
   padding-top: 8px;
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .page.menu-active .learning-action-card .learning-action-link {
@@ -5858,7 +5858,7 @@ body.auth-gate-open {
   border-radius: 999px;
   background: rgba(5, 35, 43, .78);
   color: #d4fff8;
-  font-size: 10px;
+  font-size: 12px;
   white-space: nowrap;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, .06);
 }
@@ -5918,8 +5918,8 @@ body.auth-gate-open {
 
   .page.menu-active .learning-action-card .learning-action-title { font-size: 16px; }
   .page.menu-active .learning-action-card .learning-action-count { font-size: 23px; }
-  .page.menu-active .learning-action-card .learning-action-count small { font-size: 10px; }
-  .page.menu-active .learning-action-card .learning-action-description { padding-top: 0; font-size: 9px; }
+  .page.menu-active .learning-action-card .learning-action-count small { font-size: 12px; }
+  .page.menu-active .learning-action-card .learning-action-description { padding-top: 0; font-size: 12px; }
 
   .page.menu-active .learning-action-card .learning-action-link {
     width: auto;
@@ -5928,7 +5928,7 @@ body.auth-gate-open {
     padding: 0 10px;
     border-radius: 999px;
     gap: 6px;
-    font-size: 11px;
+    font-size: 13px;
   }
 
   .page.menu-active .learning-action-card .learning-action-link > span:first-child {
@@ -5939,7 +5939,7 @@ body.auth-gate-open {
     margin: 0;
     overflow: visible;
     clip: auto;
-    font-size: 11px;
+    font-size: 13px;
     white-space: nowrap;
   }
 
@@ -6026,7 +6026,7 @@ body.auth-gate-open {
   overflow: hidden;
   color: #8eafb7;
   font-family: Inter, "Noto Sans JP", sans-serif;
-  font-size: 8px;
+  font-size: 12px;
   font-weight: 750;
   line-height: 1.15;
   text-overflow: ellipsis;
@@ -6036,7 +6036,7 @@ body.auth-gate-open {
 .page.menu-active .menu-brand-version {
   flex: 0 0 auto;
   margin-left: 0;
-  font-size: 9px;
+  font-size: 12px;
 }
 
 .page.menu-active .menu-brand-actions {
@@ -6060,7 +6060,7 @@ body.auth-gate-open {
   background: rgba(91, 55, 29, .9);
   border: 1px solid rgba(242, 195, 79, .68);
   border-radius: 7px;
-  font-size: 9px;
+  font-size: 12px;
   font-weight: 850;
   line-height: 1.1;
   white-space: nowrap;
@@ -6120,7 +6120,7 @@ body.auth-gate-open {
     padding: 0 10px;
     border-radius: 999px;
     gap: 0;
-    font-size: 11px;
+    font-size: 13px;
   }
 
   .page.menu-active .learning-action-card .learning-action-link > span:first-child {
@@ -6131,7 +6131,7 @@ body.auth-gate-open {
     margin: 0;
     overflow: visible;
     clip: auto;
-    font-size: 11px;
+    font-size: 13px;
     white-space: nowrap;
   }
 
@@ -6277,7 +6277,7 @@ body.auth-gate-open {
   color: #10253b;
   background: rgba(255, 255, 255, .9);
   border-radius: 0 0 0 5px;
-  font-size: 8px;
+  font-size: 12px;
   font-weight: 900;
   line-height: 1;
   white-space: nowrap;
@@ -6399,7 +6399,7 @@ body.auth-gate-open {
   border-radius: 999px;
   color: #eafefe;
   background: rgba(12, 62, 82, .74);
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 850;
 }
 
@@ -6452,7 +6452,7 @@ body.auth-gate-open {
   border: 1px solid rgba(255, 255, 255, .17);
   border-right: 0;
   border-radius: 999px 0 0 999px;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 800;
   line-height: 1.2;
   text-align: left;
@@ -6536,7 +6536,7 @@ body.auth-gate-open {
   background: #21536b;
   border: 1px solid #a9e9e2;
   border-radius: 50%;
-  font-size: 8px;
+  font-size: 12px;
   font-weight: 900;
   line-height: 1;
 }
@@ -6553,7 +6553,7 @@ body.auth-gate-open {
 .reaction-chip-count-v208 {
   min-width: 12px;
   color: #dffbfb;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 900;
   text-align: center;
 }
@@ -6614,7 +6614,7 @@ body.auth-gate-open {
 
 .reaction-popover-heading-v208 strong {
   color: #fff7d6;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 900;
 }
 
@@ -6657,7 +6657,7 @@ body.auth-gate-open {
   background: rgba(0, 0, 0, .2);
   border: 1px solid rgba(255, 255, 255, .15);
   border-radius: 8px;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 800;
   line-height: 1.25;
   text-align: left;
@@ -6719,20 +6719,20 @@ body.auth-gate-open {
   width: 28px;
   height: 28px;
   margin-left: 0;
-  font-size: 11px;
+  font-size: 13px;
 }
 
 .reaction-details-person-name-v208 {
   min-width: 0;
   overflow-wrap: anywhere;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 800;
 }
 
 .reaction-details-empty-v208 {
   margin: 0;
   color: var(--muted);
-  font-size: 10px;
+  font-size: 12px;
 }
 
 @media (min-width: 801px) and (max-width: 1100px) {
@@ -6748,7 +6748,7 @@ body.auth-gate-open {
 
   .reaction-picker-option-v208 {
     min-height: 48px;
-    font-size: 11px;
+    font-size: 13px;
   }
 
   .reaction-chip-toggle-v208 {
@@ -6831,7 +6831,7 @@ body.auth-gate-open {
   background: transparent;
   border: 1px solid transparent;
   border-radius: 7px;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 850;
 }
 
@@ -6863,7 +6863,7 @@ body.auth-gate-open {
   color: #eafefe;
   background: rgba(0, 0, 0, .24);
   border-radius: 999px;
-  font-size: 9px;
+  font-size: 12px;
 }
 
 .reaction-picker-tab-v211.is-active span,
@@ -6888,7 +6888,7 @@ body.auth-gate-open {
 .reaction-picker-empty-v211 {
   margin: 9px 2px 0;
   color: #a9cbd0;
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1.45;
 }
 
@@ -6906,7 +6906,7 @@ body.auth-gate-open {
   background: linear-gradient(135deg, #fff0ab, #f1c457);
   border: 1px solid #ffe08a;
   border-radius: 8px;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 900;
 }
 
@@ -6928,12 +6928,12 @@ body.auth-gate-open {
   .reaction-picker-tab-v211,
   .reaction-picker-tab-v213 {
     min-height: 34px;
-    font-size: 11px;
+    font-size: 13px;
   }
 
   .reaction-picker-settings-button-v211 {
     min-height: 38px;
-    font-size: 11px;
+    font-size: 13px;
   }
 }
 
@@ -7000,13 +7000,13 @@ body.auth-gate-open {
 }
 
 .custom-reaction-row-copy-v211 strong {
-  font-size: 11px;
+  font-size: 13px;
 }
 
 .custom-reaction-row-copy-v211 small,
 .custom-reaction-empty-v211 {
   color: #a9cbd0;
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1.45;
 }
 
@@ -7026,7 +7026,7 @@ body.auth-gate-open {
 .reaction-picker-option-v213.is-tile .reaction-picker-label-v208 {
   max-width: 100%;
   overflow: hidden;
-  font-size: 9px;
+  font-size: 10px;
   line-height: 1.15;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -7067,7 +7067,7 @@ body.auth-gate-open {
   background: rgba(4, 27, 42, .8);
   border: 1px solid rgba(155, 232, 216, .25);
   border-radius: 7px;
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .custom-reaction-row-v213 {
@@ -7102,7 +7102,7 @@ body.auth-gate-open {
   }
 
   .reaction-picker-option-v213.is-tile .reaction-picker-label-v208 {
-    font-size: 10px;
+    font-size: 11px;
   }
 }
 
@@ -7373,7 +7373,7 @@ body.auth-gate-open {
 .page.menu-active .learning-action-card .learning-action-description {
   align-self: start;
   padding-top: 0;
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1.35;
 }
 
@@ -7470,7 +7470,7 @@ body.auth-gate-open {
   border-radius: 8px;
   background: rgba(5, 35, 43, .82);
   color: #d4fff8;
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1;
   white-space: nowrap;
 }
@@ -7514,7 +7514,7 @@ body.auth-gate-open {
   }
 
   .page.menu-active .learning-action-card .learning-action-description {
-    font-size: 9px;
+    font-size: 12px;
     line-height: 1.3;
   }
 
@@ -7652,7 +7652,7 @@ body.auth-gate-open {
     min-height: 30px;
     padding: 0 7px;
     margin: 0;
-    font-size: 11px;
+    font-size: 13px;
     line-height: 1.2;
     white-space: nowrap;
   }

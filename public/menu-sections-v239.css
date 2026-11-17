@@ -182,7 +182,7 @@
 }
 .page.menu-active #menuPanel #announcementButton .menu-notice-label {
   display: inline;
-  font-size: 11px;
+  font-size: 13px;
   white-space: nowrap;
 }
 .page.menu-active #menuPanel #announcementButton .menu-notice-icon {
@@ -241,10 +241,10 @@
   line-height: 1.2;
   font-weight: 500;
 }
-.page.menu-active #menuPanel[data-view="today"] .learning-action-count small { color: #c9c9bd; font-size: 11px; }
+.page.menu-active #menuPanel[data-view="today"] .learning-action-count small { color: #c9c9bd; font-size: 13px; }
 .page.menu-active #menuPanel[data-view="today"] .learning-action-card .learning-action-description {
   color: var(--menu-muted-v239);
-  font-size: 12px;
+  font-size: 13px;
   line-height: 1.5;
   padding: 0;
 }
@@ -309,7 +309,7 @@
   min-height: 36px;
   padding: 6px;
   gap: 4px;
-  font-size: 12px;
+  font-size: 13px;
   color: #d2bc95;
   border-color: #61706a;
   border-radius: 4px;
@@ -344,7 +344,7 @@
   background: transparent;
   color: #afd4d0;
   box-shadow: none;
-  font-size: 12px;
+  font-size: 13px;
 }
 .page.menu-active #menuPanel[data-view="today"] .learning-recent-row { min-height: 48px; padding-block: 2px; }
 .page.menu-active #menuPanel[data-view="today"] .learning-recent-action {
@@ -372,11 +372,11 @@
   .page.menu-active #menuPanel .book-band-icon-v239 { display: none; }
   .page.menu-active #menuPanel .book-context-title-v234 strong { font-size: 14px; }
   .page.menu-active #menuPanel .book-title-actions-v239 { gap: 0; }
-  .page.menu-active #menuPanel .book-title-actions-v239 > button { padding-inline: 3px; font-size: 12px; }
+  .page.menu-active #menuPanel .book-title-actions-v239 > button { padding-inline: 3px; font-size: 13px; }
   .page.menu-active #menuPanel[data-view="today"] .learning-action-card { grid-template-columns: 34px minmax(0, 1fr) 26px; padding-inline: 10px; gap: 2px 8px; }
   .page.menu-active #menuPanel[data-view="today"] .learning-category-icon-v239 .menu-icon-v239 { width: 32px; height: 32px; }
   .page.menu-active #menuPanel[data-view="today"] .learning-action-card .learning-action-title { font-size: 17px; }
   .page.menu-active #menuPanel[data-view="today"] .learning-action-card .learning-action-count { font-size: 22px; }
   .page.menu-active #menuPanel[data-view="today"] .learning-all-action > .learning-action-card { grid-template-columns: 34px max-content minmax(0, 1fr) 26px; gap: 2px 8px; padding-inline: 10px; }
-  .page.menu-active #menuPanel[data-view="today"] .learning-all-action > .learning-custom-settings > summary { right: 42px; font-size: 11px; }
+  .page.menu-active #menuPanel[data-view="today"] .learning-all-action > .learning-custom-settings > summary { right: 42px; font-size: 13px; }
 }

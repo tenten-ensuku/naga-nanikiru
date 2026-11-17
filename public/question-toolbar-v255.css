@@ -3,7 +3,7 @@
 .page:not(.menu-active) > .header .version { padding-block: 0; }
 .page:not(.menu-active) > .header > div:first-child { display: flex; align-items: center; gap: 16px; min-width: 0; flex: 1; }
 .page:not(.menu-active) #questionBreadcrumb { min-width: 0; margin: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.page:not(.menu-active) #questionCreatedDateV246 { flex: none; margin: 0; font-size: 11px; white-space: nowrap; }
+.page:not(.menu-active) #questionCreatedDateV246 { flex: none; margin: 0; font-size: 13px; white-space: nowrap; }
 .page:not(.menu-active) > .source-bar {
   display: block;
   min-width: 0;
@@ -83,11 +83,11 @@
 @media (max-width: 800px) {
   .page.menu-active .generator-destination { grid-template-columns: minmax(0, 1fr); }
   .page:not(.menu-active) > .header > div:first-child { gap: 8px; }
-  .page:not(.menu-active) #questionBreadcrumb { font-size: 10px; }
-  .page:not(.menu-active) #questionCreatedDateV246 { font-size: 10px; }
+  .page:not(.menu-active) #questionBreadcrumb { font-size: 12px; }
+  .page:not(.menu-active) #questionCreatedDateV246 { font-size: 12px; }
 }
 @media (max-width: 390px) {
   .generator-destination-choice-v255 { gap: 6px; }
-  .book-create-open-v255 { padding-inline: 8px; font-size: 12px; }
+  .book-create-open-v255 { padding-inline: 8px; font-size: 13px; }
   .book-create-heading-v255 h3 { font-size: 21px; }
 }

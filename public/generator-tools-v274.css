@@ -1,5 +1,5 @@
 .generator-comment-preview-v274 { padding: 10px; border: 1px dashed var(--line,#436574); border-radius: 8px; overflow-wrap: anywhere; color: var(--ink,#e5f2f4); font-size: 14px; }
-.generator-comment-preview-v274 > small { display: block; color: var(--muted,#b2c9d1); font-size: 11px; margin-bottom: 6px; }
+.generator-comment-preview-v274 > small { display: block; color: var(--muted,#b2c9d1); font-size: 13px; margin-bottom: 6px; }
 .generator-attachments-v274 { display: flex; flex-wrap: wrap; gap: 8px; }
 .generator-attachments-v274:empty { display: none; }
 .generator-attachments-v274 figure { position: relative; margin: 0; }

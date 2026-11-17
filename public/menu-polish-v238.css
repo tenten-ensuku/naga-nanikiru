@@ -123,7 +123,7 @@
   line-height: 1.5;
 }
 .page.menu-active #menuPanel .active-collection-status {
-  font-size: 12px;
+  font-size: 13px;
 }
 
 /* Clearly shaped controls, without changing their routes or click handlers. */
@@ -209,11 +209,11 @@
   margin-top: 8px;
   overflow: visible;
   grid-template-columns: minmax(0, 1fr);
-  font-size: 12px;
+  font-size: 13px;
   line-height: 1.6;
 }
 .page.menu-active #menuPanel[data-view="today"] .learning-custom-settings-body :is(legend, .learning-check) {
-  font-size: 12px;
+  font-size: 13px;
 }
 .page.menu-active #menuPanel[data-view="today"] .learning-check {
   min-height: 44px;
@@ -243,7 +243,7 @@
   .page.menu-active #menuPanel .book-tabs-v234 { gap: 4px; padding: 6px; }
   .page.menu-active #menuPanel .book-tabs-v234 button { font-size: 14px; letter-spacing: 0; }
   .page.menu-active #menuPanel .book-actions-v234 { padding: 0 6px 6px; gap: 6px; }
-  .page.menu-active #menuPanel .book-actions-v234 button { padding-inline: 10px; font-size: 12px; }
+  .page.menu-active #menuPanel .book-actions-v234 button { padding-inline: 10px; font-size: 13px; }
   .page.menu-active #menuPanel .menu-nav-button { font-size: 13px; letter-spacing: 0; }
   .page.menu-active #menuPanel[data-view="today"] .learning-action-grid { gap: 8px; }
   .page.menu-active #menuPanel[data-view="today"] .learning-action-card {
@@ -253,7 +253,7 @@
   }
   .page.menu-active #menuPanel[data-view="today"] .learning-action-title { font-size: 18px; }
   .page.menu-active #menuPanel[data-view="today"] .learning-action-count { font-size: 25px; }
-  .page.menu-active #menuPanel[data-view="today"] .learning-action-description { font-size: 12px; }
+  .page.menu-active #menuPanel[data-view="today"] .learning-action-description { font-size: 13px; }
   .page.menu-active #menuPanel[data-view="today"] .learning-action-card .learning-action-link {
     min-width: 70px;
     min-height: 44px;
@@ -281,7 +281,7 @@
   }
   .page.menu-active #menuPanel[data-view="today"] .today-section-heading { flex-wrap: wrap; gap: 8px; }
   .page.menu-active #menuPanel[data-view="today"] .today-section-heading h3 { font-size: 21px; }
-  .page.menu-active #menuPanel[data-view="today"] .today-section-heading > button { padding: 6px 8px; font-size: 12px; }
+  .page.menu-active #menuPanel[data-view="today"] .today-section-heading > button { padding: 6px 8px; font-size: 13px; }
 }
 
 @media (max-width: 360px) {
