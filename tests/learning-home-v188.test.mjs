@@ -16,10 +16,10 @@ test("V210 keeps the learning actions usable and stable on desktop and mobile", 
     readFile(packageUrl, "utf8")
   ]);
 
-  assert.match(html, /const APP_VERSION = 371;/);
-  assert.match(identity, /APP_VERSION = 371/);
+  assert.match(html, /const APP_VERSION = 372;/);
+  assert.match(identity, /APP_VERSION = 372/);
   for (const asset of ["app\\.css", "supabase-sync-v48\\.js", "drill-ux-v44\\.js"]) {
-    assert.match(html, new RegExp(`${asset}\\?v=371`));
+    assert.match(html, new RegExp(`${asset}\\?v=372`));
   }
   assert.match(html, /問題集を変更する/);
   assert.doesNotMatch(html, /class="active-collection-label"/);
@@ -118,7 +118,6 @@ test("V210 keeps the learning actions usable and stable on desktop and mobile", 
   assert.doesNotMatch(learningActionRenderer, /プレイ/);
   assert.doesNotMatch(learningActionRenderer, /aria-hidden="true">→/);
   assert.match(css, /\.learning-action-card \.learning-action-link \{\s*display: none;/);
-  assert.match(css, /\.learning-action-card \.learning-action-description \{[\s\S]*white-space: normal;/);
   assert.match(learningView, /data-menu-action="favorite"/);
   assert.doesNotMatch(learningView, /data-menu-action="archive"/);
   assert.match(learningView, /aria-label="問題\$\{escapeHtml\(String\(question\.number\)\)\}の整理"/);

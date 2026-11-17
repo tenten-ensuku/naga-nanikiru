@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
-import { cssSection } from "./helpers/app-css.mjs";
+import { cssSection, appCss } from "./helpers/app-css.mjs";
 
 // V366: readable text floor. Body text stays at 12px or more; only chart and
 // badge labels inside tight graphics may go smaller, and never below 9px.
@@ -44,6 +44,6 @@ test("V366 progress caption column fits 「最新〇以上 100%」 at 12px", () 
 
 test("V366 vote counts and match labels no longer shrink below 12px", () => {
   const html = fs.readFileSync("public/index.html", "utf8");
-  assert.match(html, /\.answer-poll-count \{ color: #fff1bd; font-size: 12px;/);
-  assert.match(html, /\.hand-score-match \{ color: #dffbfb; font-size: max\(12px, \.72em\);/);
+  assert.match(appCss(), /\.answer-poll-count \{ color: #fff1bd; font-size: 12px;/);
+  assert.match(appCss(), /\.hand-score-match \{ color: #dffbfb; font-size: max\(12px, \.72em\);/);
 });

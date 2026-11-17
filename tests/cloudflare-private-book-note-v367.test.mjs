@@ -4,6 +4,7 @@ import fs from "node:fs";
 import vm from "node:vm";
 import { testD1 } from "./helpers/cloudflare-d1.mjs";
 import { readRpc } from "../cloudflare/read-api.mjs";
+import { appCss } from "./helpers/app-css.mjs";
 
 const html = fs.readFileSync("public/index.html", "utf8");
 
@@ -43,7 +44,7 @@ test("V367 the comment panel and composer carry the note, and the welcome text h
   assert.match(render, /window\.MinkiruPrivateBookV367\?\.active\(\) === true/);
   assert.match(render, /note\.hidden = !privateBookV367/);
   assert.match(render, /welcomeV367\.hidden = privateBookV367/);
-  assert.match(html, /\.private-book-note-v367:not\(\[hidden\]\) \{ display: flex;/);
+  assert.match(appCss(), /\.private-book-note-v367:not\(\[hidden\]\) \{ display: flex;/);
 });
 
 test("V367 get_shared_collection reports the series visibility for a volume", async t => {

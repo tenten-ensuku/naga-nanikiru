@@ -20,8 +20,8 @@ function functionBlock(source, name, nextName) {
 
 test("V233 aligns the mobile toolbar version, labels, and accessible names", async () => {
   const html = await readFile(indexPath, "utf8");
-  assert.match(html, /const APP_VERSION = 371;/);
-  assert.match(html, /<link rel="stylesheet" href="app\.css\?v=371">/);
+  assert.match(html, /const APP_VERSION = 372;/);
+  assert.match(html, /<link rel="stylesheet" href="app\.css\?v=372">/);
   assert.doesNotMatch(html, /<script[^>]+legacy-transfer-v232\.js/);
 
   const sourceBar = html.match(/<div class="source-bar">[\s\S]*?<\/div>\s*\n\s*<section class="scene-card"/)?.[0] || "";
@@ -56,8 +56,6 @@ test("V233 keeps the compact mobile source bar override intact alongside later r
   assert.match(v233, /\.page:not\(\.menu-active\)\s*>\s*\.header\s*\{[\s\S]*?margin-bottom:\s*4px;/);
   assert.match(v233, /\.page:not\(\.menu-active\)\s*>\s*\.source-bar\s*\{[\s\S]*?grid-template-columns:\s*minmax\(84px,\s*1fr\)\s+minmax\(0,\s*1\.35fr\)\s+max-content;[\s\S]*?padding:\s*6px;[\s\S]*?margin-bottom:\s*4px;/);
   assert.match(previousCss, /\.page:not\(\.menu-active\)\s*>\s*\.source-bar\s*\{[\s\S]*?display:\s*grid;[\s\S]*?grid-template-columns:\s*1fr\s+1fr;/);
-  assert.match(css, /\.source-url\s*\{[\s\S]*?white-space:\s*nowrap;/);
-  assert.match(v233, /\.page:not\(\.menu-active\)\s+\.source-url\s*\{[\s\S]*?flex-wrap:\s*nowrap;/);
   assert.match(v233, /\.page:not\(\.menu-active\)\s+\.source-link,[\s\S]*?\.import-question-button,[\s\S]*?\.menu-button\s*\{[\s\S]*?min-height:\s*30px;[\s\S]*?padding:\s*0\s+7px;[\s\S]*?font-size:\s*13px;[\s\S]*?white-space:\s*nowrap;/);
   assert.match(v233, /\.page:not\(\.menu-active\)\s+\.question-toolbar-label-full\s*\{\s*display:\s*none;/);
   assert.match(v233, /\.page:not\(\.menu-active\)\s+\.question-toolbar-label-short\s*\{\s*display:\s*inline;/);

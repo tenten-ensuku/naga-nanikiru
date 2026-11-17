@@ -1,16 +1,17 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
+import { appCss } from "./helpers/app-css.mjs";
 
 const indexUrl = new URL("../public/index.html", import.meta.url);
 const generatorUrl = new URL("../public/naga-generator-v44.js", import.meta.url);
 
 test("renders the v87 scene and half-game generator controls", async () => {
   const [html, generator] = await Promise.all([
-    readFile(indexUrl, "utf8"),
+    readFile(indexUrl, "utf8").then(text => text + appCss()),
     readFile(generatorUrl, "utf8")
   ]);
-  assert.match(html, /const APP_VERSION = 371/);
+  assert.match(html, /const APP_VERSION = 372/);
   assert.match(html, /function captureGeneratorFormDraftV157\(\)/);
   assert.match(html, /destination: document\.getElementById\("generatorDestinationSelect"\)\?\.value \|\| generatorDestinationV130 \|\| ""/);
   assert.match(html, /function restoreGeneratorFormDraftV157\(draft\)/);
@@ -58,15 +59,15 @@ test("renders the v87 scene and half-game generator controls", async () => {
   assert.match(html, /data-menu-question-notification/);
   assert.match(html, /data-menu-range-notification/);
   assert.doesNotMatch(html, /data-menu-view="session"/);
-  assert.match(html, /grid-template-columns: repeat\(5, minmax\(0, 1fr\)\)/);
+  assert.match(appCss(), /grid-template-columns: repeat\(5, minmax\(0, 1fr\)\)/);
   assert.doesNotMatch(html, /id="menuViewNote"/);
   assert.doesNotMatch(html, /解きたい局面を選んでください/);
   assert.match(html, /function menuScoreMarkClassV63/);
   assert.match(html, /class="menu-sidebar"/);
   assert.match(html, /id="menuListHeader"/);
   assert.match(html, /class="menu-list-header"[^>]*><span[^>]*>問題<\/span>/);
-  assert.match(html, /\.menu-list-header \{[\s\S]*?grid-template-columns: 1fr;[\s\S]*?gap: 0;/);
-  assert.match(html, /\.menu-grid \{[\s\S]*?grid-template-columns: 1fr;[\s\S]*?gap: 0;/);
+  assert.match(appCss(), /\.menu-list-header \{[\s\S]*?grid-template-columns: 1fr;[\s\S]*?gap: 0;/);
+  assert.match(appCss(), /\.menu-grid \{[\s\S]*?grid-template-columns: 1fr;[\s\S]*?gap: 0;/);
   assert.match(html, /function normalizeQuestionTitleV79\(title, number\)/);
   assert.match(html, /title: nextNumber \? `問題\$\{nextNumber\}` : "生成候補"/);
   assert.match(html, /number: nextNumber/);
@@ -194,7 +195,7 @@ test("renders the v87 scene and half-game generator controls", async () => {
 });
 
 test("renders NAGA-like inset probability bars with a dynamic judge highlight", async () => {
-  const html = await readFile(indexUrl, "utf8");
+  const html = appCss() + await readFile(indexUrl, "utf8");
   assert.match(html, /--nishiki: #9b78ff/);
   assert.match(html, /--hihikari: #f1c457/);
   assert.match(html, /--kagashi: #4aa8ff/);

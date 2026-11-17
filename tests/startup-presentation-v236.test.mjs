@@ -21,8 +21,8 @@ test("V243 uses the exact user-supplied loading artwork with the approved brand 
   assert.match(loader, /src="assets\/loading-screen-v243\.png" width="1402" height="1122"/);
   assert.match(loader, /alt="みん切る — みんなの何切る問題集" loading="eager" fetchpriority="high"/);
   assert.doesNotMatch(loader, /min-kiru-header\.png|startup-line-v236/);
-  assert.match(normalizedHtml, /rel="icon"[^>]*icons\/favicon-32\.png\?v=371/);
-  assert.match(normalizedHtml, /rel="apple-touch-icon"[^>]*icons\/apple-touch-icon-180\.png\?v=371/);
+  assert.match(normalizedHtml, /rel="icon"[^>]*icons\/favicon-32\.png\?v=372/);
+  assert.match(normalizedHtml, /rel="apple-touch-icon"[^>]*icons\/apple-touch-icon-180\.png\?v=372/);
 });
 
 test("V243 white loading shell contains artwork on small screens and keeps retry accessible", () => {
@@ -172,7 +172,7 @@ function finish(harness) {
 
 test("V236 keeps the critical presentation shell ahead of app CSS and app content", () => {
   const criticalStyle = normalizedHtml.indexOf('<style id="startupCriticalV236">');
-  const rootStyle = normalizedHtml.indexOf("<style>\n    :root");
+  const rootStyle = normalizedHtml.indexOf('<link rel="stylesheet" href="app.css');
   const body = normalizedHtml.indexOf('<body class="auth-gate-open">');
   const loader = normalizedHtml.indexOf('<section class="startup-screen-v236" id="startupScreenV236"');
   const main = normalizedHtml.indexOf('<main class="page" inert aria-hidden="true">');
@@ -313,7 +313,7 @@ test("V345 rejected initialization still blocks after an independent runtime err
   assert.equal(harness.api.pending, true);
   assert.equal(harness.screen.hidden, false);
   assert.equal(harness.page.inert, true);
-  assert.match(harness.diagnostic.textContent, /V371 \/ init \/ ReferenceError/);
+  assert.match(harness.diagnostic.textContent, /V372 \/ init \/ ReferenceError/);
 });
 
 test("V345 diagnostics preserve the first failure and omit messages, query strings, and third-party sources", () => {
@@ -321,12 +321,12 @@ test("V345 diagnostics preserve the first failure and omit messages, query strin
   harness.emitWindow("error", { error: { name: "SyntaxError", message: "private contents" }, filename: "https://minkiru.example/sound-v342.js?token=secret#private", lineno: 12, colno: 3 });
   harness.emitDocument("DOMContentLoaded");
   assert.equal(harness.diagnostic.hidden, false);
-  assert.equal(harness.diagnostic.textContent, "確認コード：V371 / runtime / SyntaxError / sound-v342.js:12:3");
+  assert.equal(harness.diagnostic.textContent, "確認コード：V372 / runtime / SyntaxError / sound-v342.js:12:3");
   harness.emitWindow("error", { error: { name: "TypeError" } });
   assert.match(harness.diagnostic.textContent, /SyntaxError/);
   const external = createControllerHarness();
   external.emitWindow("error", { error: { name: "TypeError" }, filename: "https://private.example/private-data.js?secret", lineno: 4 });
-  assert.equal(external.diagnostic.textContent, "確認コード：V371 / runtime / TypeError / external:4:0");
+  assert.equal(external.diagnostic.textContent, "確認コード：V372 / runtime / TypeError / external:4:0");
   assert.doesNotMatch(startupController, /localStorage|sendBeacon|XMLHttpRequest/);
 });
 
@@ -337,7 +337,7 @@ test("V345 initializer stack locations support Safari and Chromium without displ
   ]) {
     const harness = createControllerHarness();
     harness.api.fail({ name: "TypeError", stack });
-    assert.equal(harness.diagnostic.textContent, "確認コード：V371 / init / TypeError / index.html:123:45");
+    assert.equal(harness.diagnostic.textContent, "確認コード：V372 / init / TypeError / index.html:123:45");
   }
 });
 
@@ -345,8 +345,8 @@ test("V345 resource diagnostics ignore image failures and retain missing script 
   const harness = createControllerHarness();
   harness.emitWindow("error", { target: { tagName: "IMG", src: "https://minkiru.example/image.png" } });
   assert.equal(harness.diagnostic.hidden, true);
-  harness.emitWindow("error", { target: { tagName: "SCRIPT", src: "https://minkiru.example/navigation-v234.js?v=371" } });
-  assert.equal(harness.diagnostic.textContent, "確認コード：V371 / script / Error / navigation-v234.js:0:0");
+  harness.emitWindow("error", { target: { tagName: "SCRIPT", src: "https://minkiru.example/navigation-v234.js?v=372" } });
+  assert.equal(harness.diagnostic.textContent, "確認コード：V372 / script / Error / navigation-v234.js:0:0");
   harness.api.ready();
   finish(harness);
   assert.equal(harness.screen.hidden, false);

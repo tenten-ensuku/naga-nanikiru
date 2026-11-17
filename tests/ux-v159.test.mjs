@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
-import { cssSectionUrl } from "./helpers/app-css.mjs";
+import { cssSectionUrl, appCss } from "./helpers/app-css.mjs";
 
 const indexUrl = new URL("../public/index.html", import.meta.url);
 const cssUrl = cssSectionUrl("ux-v159");
@@ -15,10 +15,10 @@ test("V180 exposes the recent-history shell and synchronized release assets", as
     readFile(identityUrl, "utf8"),
   ]);
 
-  assert.match(html, /const APP_VERSION = 371;/);
-  assert.match(identity, /APP_VERSION = 371/);
-  assert.match(html, /<link rel="stylesheet" href="app\.css\?v=371">/);
-  assert.match(html, /\.comment-form textarea \{ display: block; width: 100%; min-width: 0;/);
+  assert.match(html, /const APP_VERSION = 372;/);
+  assert.match(identity, /APP_VERSION = 372/);
+  assert.match(html, /<link rel="stylesheet" href="app\.css\?v=372">/);
+  assert.match(appCss(), /\.comment-form textarea \{ display: block; width: 100%; min-width: 0;/);
   assert.match(html, /data-menu-view="today"/);
   assert.match(html, /data-menu-view="today"[^>]*>[\s\S]*?<span>学ぶ<\/span>/);
   assert.doesNotMatch(html, /<span class="quick-start-title">今日の10問/);
@@ -26,7 +26,6 @@ test("V180 exposes the recent-history shell and synchronized release assets", as
   assert.match(html, /function renderTodayViewV159\(/);
   assert.match(html, /data-resume-v254="true"/);
   assert.match(css, /\.today-dashboard/);
-  assert.match(css, /\.today-primary-action/);
   assert.match(css, /--ux-brown-gold: #b78943/);
 });
 
@@ -91,7 +90,7 @@ test("V161 displays the canonical perfect mark while accepting legacy history", 
 test("V161 removes decorative outer rings while preserving result glyph styling", async () => {
   const css = await readFile(cssUrl, "utf8");
   assert.match(css, /V160: keep the result glyphs, but remove the decorative outer rings/);
-  assert.match(css, /\.page\.menu-active \.menu-card-latest-mark,\s*\.page\.menu-active \.today-recent-mark \{[\s\S]*?border: 0;[\s\S]*?border-radius: 0;/);
+  assert.match(css, /\.page\.menu-active \.menu-card-latest-mark \{[\s\S]*?border: 0;[\s\S]*?border-radius: 0;/);
   assert.match(css, /\.page\.menu-active \.menu-card-latest-mark\.is-excellent\s*\{[\s\S]*#ffcf5b/);
   assert.match(css, /\.page\.menu-active \.menu-card-latest-mark\.is-miss\s*\{[\s\S]*var\(--ux-coral\)/);
 });

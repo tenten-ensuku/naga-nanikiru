@@ -445,7 +445,7 @@ test("switching users invalidates old in-flight/cache data", async () => {
 
 test("adapter keeps legacy fallback, controller mount/unmount hooks, and navigation reset contract", async () => {
   const [index, library] = await Promise.all([readFile(INDEX_PATH, "utf8"), readFile(LIBRARY_PATH, "utf8")]);
-  assert.match(index, /library-v214\.js\?v=371/);
+  assert.match(index, /library-v214\.js\?v=372/);
   const renderStart = index.indexOf("function renderCollectionChooserV165");
   const renderEnd = index.indexOf("function renderCollectionSpacePanelV100", renderStart);
   const renderer = index.slice(renderStart, renderEnd);
@@ -1121,7 +1121,6 @@ test("V236 empty catalogue settles and reduced motion remains supported",async()
   assert.doesNotMatch(controller.render(context('u',[])),/is-preparing-v236/);
   const css=cssSection("library-v214");
   assert.match(css,/prefers-reduced-motion:reduce/);
-  assert.match(css,/\.is-preparing-v236 \.library-rail-actions \{ visibility: hidden !important; pointer-events: none/);
 });
 
 

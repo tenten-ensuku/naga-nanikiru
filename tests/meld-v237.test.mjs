@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 import vm from 'node:vm';
 import test from 'node:test';
+import { appCss } from "./helpers/app-css.mjs";
 const context = {URL,URLSearchParams}; context.globalThis = context;
 for(const file of ['naga-generator-v44.js','hand-mask-v237.js']) vm.runInNewContext(await fs.readFile(new URL('../public/'+file,import.meta.url),'utf8'),context);
 const api = context.NagaGeneratorV44;
@@ -54,7 +55,7 @@ test('the Worker rejects invalid newly generated hands before any insert',async(
 });
 
 test('riichi and riichi-selected labels have intrinsic single-line width',async()=>{
-  const html=await fs.readFile(new URL('../public/index.html',import.meta.url),'utf8');
+  const html=appCss();
   const css=html.match(/^\s*\.riichi-button\s*\{([^}]+)\}/m)[1];
   assert.match(css,/white-space:\s*nowrap/);assert.match(css,/width:\s*max-content/);assert.match(css,/flex:\s*0 0 auto/);
 });
@@ -75,7 +76,7 @@ test('detects the source panel through to the bottom, independently of opponent 
 
 test('input and answer keep detected geometry, normal post-call detection stays in place, generation stops invalid candidates',async()=>{
   const html=await fs.readFile(new URL('../public/index.html',import.meta.url),'utf8');
-  assert.match(html,/const APP_VERSION = 371/);
+  assert.match(html,/const APP_VERSION = 372/);
   assert.match(html,/questionKeyV16\(activeHandQuestionV18\) === questionKeyV16\(question\) && activeHandMaskV18/);
   assert.match(html,/if \(isImmediateCallDiscardV132\(SCENE\) && globalThis\.NagaHandMaskV237\)/);
   assert.match(html,/hasSelfMeldsV17 \? detectHandMaskV17/);

@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
-import { cssSection, cssSectionOrder } from "./helpers/app-css.mjs";
+import { cssSection, cssSectionOrder, appCss } from "./helpers/app-css.mjs";
 
 const html = fs.readFileSync(new URL('../public/index.html', import.meta.url), 'utf8');
 const css = cssSection("menu-polish-v238");
@@ -24,8 +24,8 @@ function fixture() {
 }
 
 test('V238 base menu styles follow builder CSS and keep question CSS and data out of the menu change', () => {
-  assert.match(html, /const APP_VERSION = 371;/);
-  assert.match(html, /<link rel="stylesheet" href="app\.css\?v=371">/);
+  assert.match(html, /const APP_VERSION = 372;/);
+  assert.match(html, /<link rel="stylesheet" href="app\.css\?v=372">/);
   { const order = cssSectionOrder(); assert.ok(order.indexOf("book-builder-v235") >= 0 && order.indexOf("book-builder-v235") < order.indexOf("menu-polish-v238")); }
   assert.doesNotMatch(css, /@import|@font-face|https?:|\.scene-frame|\.hand-mask|\.riichi|--ux-gold\s*:/);
   assert.doesNotMatch(css, /\.learning-header-progress-track/);
@@ -79,8 +79,8 @@ test('book switches and successful color saves refresh the band immediately', ()
 });
 
 test('gold navigation selection stays separate from categories and keyboard focus', () => {
-  assert.match(css, /--menu-selected-v238: #f4cb63;/);
-  assert.match(css, /--menu-selected-ink-v238: #15212b;/);
+  assert.match(appCss(), /--menu-selected-v238: #f4cb63;/);
+  assert.match(appCss(), /--menu-selected-ink-v238: #15212b;/);
   assert.match(css, /:is\(\.book-tabs-v234 button, \.menu-nav-button\)\.is-active \{[^}]*background: var\(--menu-selected-v238\);[^}]*inset 0 -3px 0 var\(--menu-selected-ink-v238\)/);
   assert.match(css, /:focus-visible \{\s*outline: 2px solid #f6fbff;\s*outline-offset: 3px;/);
   assert.match(css, /\[data-book-tone="ivory"\].*\[data-book-tone="ochre"\]/);
