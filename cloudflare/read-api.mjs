@@ -411,7 +411,8 @@ async function sharedCollection(db, actor, args) {
             c.allow_comments, c.allow_contributions, c.published_at,
             c.series_key, c.series_parent_id, c.share_slug, c.volume_number,
             c.volume_start, c.volume_end, c.book_tone, owner_profile.display_name AS owner_name,
-            parent.share_slug AS parent_share_slug, parent.title AS parent_title
+            parent.share_slug AS parent_share_slug, parent.title AS parent_title,
+            parent.visibility AS parent_visibility
        FROM collections c
        LEFT JOIN profiles owner_profile ON owner_profile.id = c.owner_id
        LEFT JOIN collections parent ON parent.id = c.series_parent_id
@@ -460,6 +461,8 @@ async function sharedCollection(db, actor, args) {
     description: row.description,
     book_tone: row.book_tone,
     visibility: row.visibility,
+    // V367: a volume follows its series' visibility for the private-book warning.
+    parent_visibility: row.parent_visibility ?? null,
     allow_comments: boolDb(row.allow_comments),
     allow_contributions: boolDb(row.allow_contributions),
     published_at: row.published_at,
