@@ -269,6 +269,7 @@ test("library, attempts, poll stats, and direct table reads parse JSON and boole
       question_count: 1,
       answered_count: 1,
       mastered_count: 1,
+      weak_count: 0,
       last_activity_at: "2026-09-10T00:02:00.000Z",
       content_updated_at: "2026-09-10T00:00:01.000Z",
     });

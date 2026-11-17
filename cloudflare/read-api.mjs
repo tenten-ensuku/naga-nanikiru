@@ -674,10 +674,13 @@ async function collectionLibrarySummary(db, actor, args) {
   );
   let answeredCount = 0;
   let masteredCount = 0;
+  let weakCount = 0;
   let lastActivityAt = null;
   for (const row of rows) {
     if (row.latest_answered_at !== null) answeredCount += 1;
     if (["〇", "◎", "💮"].includes(row.latest_grade)) masteredCount += 1;
+    // V369: same rule as the 苦手 card (latest answer △ or ×).
+    if (["△", "×"].includes(row.latest_grade)) weakCount += 1;
     const candidate = row.latest_answered_at && row.latest_answered_at > row.updated_at
       ? row.latest_answered_at
       : row.updated_at;
@@ -687,6 +690,7 @@ async function collectionLibrarySummary(db, actor, args) {
     question_count: rows.length,
     answered_count: answeredCount,
     mastered_count: masteredCount,
+    weak_count: weakCount,
     last_activity_at: lastActivityAt,
     content_updated_at: collection.content_updated_at,
   }];

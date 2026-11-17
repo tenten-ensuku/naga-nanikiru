@@ -206,3 +206,36 @@ test("V361 shelf CSS keeps readable sizes", async () => {
   assert.ok(sizes.length > 0);
   assert.ok(sizes.every(size => size >= 13), `small sizes: ${sizes.filter(s => s < 13)}`);
 });
+
+test("V369 the detail offers a direct 苦手 review when the book has △/× answers", async () => {
+  const api = await loadApi();
+  const opened = [], reviewed = [];
+  const weakProgress = progress.map(row => row.volume_number === 2 ? { ...row, weak_count: 7 } : row);
+  const controller = api.create({
+    canOpen: () => true,
+    loadSeries: async () => ({ volumes: pierreVolumes, progress: weakProgress }),
+    onOpen: slug => { opened.push(slug); return true; },
+    onReview: slug => reviewed.push(slug)
+  });
+  const ctx = { userId: "me", collections: [pierre, mine, kuni], current: null, currentMetrics: null, loading: false, error: "" };
+  controller.render(ctx);
+  await controller.browseSeries("pierre");
+  const view = mount(controller, controller.render(ctx));
+  view.root.dispatch("click", { target: view.buttons.find(b => b.dataset.libraryUnit === "pierre"), detail: 1 });
+  view.root.dispatch("click", { target: new Node({ libraryVolume: "pierre-2" }) });
+  assert.match(view.detail.innerHTML, /<button type="button" class="library-review-v369" data-library-review="pierre-2">苦手 7問を復習/);
+  view.root.dispatch("click", { target: new Node({ libraryVolume: "pierre-3" }) });
+  assert.doesNotMatch(view.detail.innerHTML, /library-review-v369/, "no button without △/× answers");
+  view.root.dispatch("click", { target: new Node({ libraryReview: "pierre-2" }), detail: 1 });
+  await new Promise(r => setImmediate(r));
+  await new Promise(r => setImmediate(r));
+  assert.deepEqual(opened, ["pierre-2"]);
+  assert.deepEqual(reviewed, ["pierre-2"], "review starts only after the book has opened");
+});
+
+test("V369 the series spine itself never offers a review (it spans volumes)", async () => {
+  const { controller, html } = await shelf();
+  const view = mount(controller, html);
+  view.root.dispatch("click", { target: view.buttons.find(b => b.dataset.libraryBook === "mine"), detail: 1 });
+  assert.doesNotMatch(view.detail.innerHTML, /library-review-v369/);
+});

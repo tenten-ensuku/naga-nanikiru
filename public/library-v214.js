@@ -90,6 +90,7 @@
     const total = count(row?.question_count ?? progress?.question_count);
     const answeredRaw = count(progress?.answered_count);
     const masteredRaw = count(progress?.mastered_count);
+    const weakRaw = count(progress?.weak_count);
     const answered = answeredRaw === null ? null : Math.min(total ?? answeredRaw, answeredRaw);
     // Keep unavailable counts distinct from zero; server totals use actual answers.
     const mastered = masteredRaw === null ? null : Math.min(total ?? masteredRaw, masteredRaw);
@@ -100,6 +101,7 @@
       seriesParentSlug: String(row?.series_parent_slug || ""),
       volumeCount: count(row?.volume_count), tone: bookTone(row),
       questionCount: total, answeredCount: answered,
+      weakCount: weakRaw === null ? null : Math.min(total ?? weakRaw, weakRaw),
       mastery: mastered === null || total === null ? null : total ? Math.round(mastered / total * 100) : 0,
       isCurrent: slug === currentSlug,
       contentUpdated: canView ? host.MinkiruContentDatesV246?.bookUpdated(row, progress) || null : null,
@@ -212,6 +214,12 @@
     }).join("")}</div>`;
   }
 
+  // V369: go straight from the shelf to the 苦手 review (latest answer △ or ×) of one book.
+  function reviewMarkup(book) {
+    const weak = book?.canView && !book.series ? count(book.weakCount) : null;
+    return weak ? `<button type="button" class="library-review-v369" data-library-review="${escape(book.slug)}">苦手 ${formatted(weak)}問を復習${icon("right")}</button>` : "";
+  }
+
   function detailMarkup(book, context, picked = false, unread = false, volumes = []) {
     if (!book) return `<div class="library-detail-empty" id="libraryDetailTitleV214">本棚から問題集を選んでください。</div>`;
     let total = book.questionCount;
@@ -236,7 +244,7 @@
     const dateMarkup = `<div class="library-updated-v246"><span>最終更新日</span>${updated ? `<time datetime="${escape(updated.iso)}">${escape(updated.full)}</time>` : '<span>不明</span>'}${updatedAgo ? `<span class="library-recent-label-v246">${escape(updatedAgo)}</span>` : ''}</div>`;
     return `<button type="button" class="library-sheet-close-v361" data-library-sheet-close aria-label="詳細を閉じる">閉じる</button><div class="library-detail-copy"><span class="library-detail-eyebrow">${picked ? "この本で学びますか？" : book.isCurrent ? "学習中の本" : "選択中の本"}</span><h4 id="libraryDetailTitleV214">${escape(title)}</h4>${description ? `<p>${escape(description)}</p>` : ""}${volumePickerMarkup(book, volumes)}${hasRange ? `<span class="library-detail-range">問題 ${book.volume_start}–${book.volume_end}</span>` : ""}${dateMarkup}</div>
       <dl class="library-detail-metrics"><div><dt>${icon("book")}${quantityLabel}</dt><dd>${quantityValue}<small>${quantityValue === "—" ? "" : unit}</small></dd></div><div><dt>${icon("check")}回答済み</dt><dd>${formatted(answered)}<small>${answered === null ? "" : "問"}</small></dd></div><div><dt title="直近の回答が〇以上の問題の割合"><span class="library-progress-ring" aria-hidden="true"></span>やりこみ度</dt><dd>${formatted(mastery)}<small>${mastery === null ? "" : "%"}</small></dd></div></dl>
-      <div class="library-detail-action"><button type="button" class="library-start" data-library-open="${escape(book.slug)}">${action}${icon("right")}</button>${!book.canView ? `<small>${escape(book.accessLabel)}</small>` : ""}</div>`;
+      <div class="library-detail-action"><button type="button" class="library-start" data-library-open="${escape(book.slug)}">${action}${icon("right")}</button>${reviewMarkup(book)}${!book.canView ? `<small>${escape(book.accessLabel)}</small>` : ""}</div>`;
   }
 
   function create(options = {}) {
@@ -941,6 +949,14 @@
           event.stopPropagation();
           const rail = root.querySelector("[data-library-rail]");
           rail?.scrollBy({ left: Number(scroll.dataset.libraryScroll) * rail.clientWidth * .72, behavior: reducedMotion() ? "instant" : "smooth" });
+          return;
+        }
+        const review = event.target.closest("[data-library-review]");
+        if (review) {
+          event.stopPropagation();
+          const slug = review.dataset.libraryReview;
+          const source = [...root.querySelectorAll("[data-library-book]")].find(item => item.dataset.libraryBook === slug) || review;
+          void openBook(slug, source).then(opened => { if (opened === true) options.onReview?.(slug); });
           return;
         }
         const button = event.target.closest("[data-library-book], [data-library-open]");
