@@ -16,10 +16,10 @@ test("V226 keeps settings inside a compact all-question card at every responsive
     readFile(packageUrl, "utf8")
   ]);
 
-  assert.match(html, /const APP_VERSION = 374;/);
-  assert.match(identity, /APP_VERSION = 374/);
+  assert.match(html, /const APP_VERSION = 375;/);
+  assert.match(identity, /APP_VERSION = 375/);
   for (const asset of ["app\\.css", "library-v214\\.js", "drill-ux-v44\\.js"]) {
-    assert.match(html, new RegExp(`${asset}\\?v=374`));
+    assert.match(html, new RegExp(`${asset}\\?v=375`));
   }
 
   const allActionMarkup = html.match(/<div class="learning-all-action">[\s\S]*?<details class="learning-custom-settings"[\s\S]*?<\/details><\/div>/)?.[0] || "";

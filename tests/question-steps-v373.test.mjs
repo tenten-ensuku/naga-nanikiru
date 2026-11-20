@@ -67,13 +67,14 @@ test("V373 buttons sit on both sides of the question picker and stay readable", 
   assert.match(css, /html\[data-theme="light"\] \.question-step-v373/);
 });
 
-test("V374 after answering, previous / next number buttons sit under 次の問題へ and show their destination", () => {
-  assert.match(html, /<button class="next-button" id="nextQuestionBottomButton" type="button" hidden>次の問題へ<\/button>\s*<div class="answer-steps-v374" role="group" aria-label="番号順に移動"><button class="answer-step-v374" type="button" data-question-step="-1">‹ 前の問題<\/button><button class="answer-step-v374" type="button" data-question-step="1">次の番号 ›<\/button><\/div>/);
+test("V374 after answering, short 前 / 次 buttons sit under 次の問題へ; the number is in their label", () => {
+  assert.match(html, /<button class="next-button" id="nextQuestionBottomButton" type="button" hidden>次の問題へ<\/button>\s*<div class="answer-steps-v374" role="group" aria-label="番号順に移動"><button class="answer-step-v374" type="button" data-question-step="-1">‹ 前<\/button><button class="answer-step-v374" type="button" data-question-step="1">次 ›<\/button><\/div>/);
   const h = harness();
-  h.buttons.forEach(button => { button.classList = { contains: name => name === "answer-step-v374" }; });
   h.syncQuestionStepsV373();
-  assert.equal(h.buttons[0].textContent, "‹ 問題3");
-  assert.equal(h.buttons[1].textContent, "問題9 ›");
+  // V375: the visible text stays short so long numbers never get cut; the number is in the label.
+  assert.equal(h.buttons[0].attrs["aria-label"], "前の問題（問題3）");
+  assert.equal(h.buttons[1].attrs["aria-label"], "次の問題（問題9）");
+  assert.doesNotMatch(html, /answer-step-v374"\)\) \{\s*button\.textContent/);
   const css = cssSection("answer-steps-v374");
   assert.match(css, /\.answer-steps-v374 \{ display: flex; gap: 8px; flex: 1 1 100%;/);
   assert.match(css, /\.answer-step-v374 \{[^}]*min-height: 44px;[^}]*font: 700 15px/);
