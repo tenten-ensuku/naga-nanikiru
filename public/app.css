@@ -38,6 +38,7 @@
    33. 鳴きの選択肢（call-choices-v346）
    34. 本棚（棚・シリーズ・詳細シート）（library-shelf-v361）
    35. 次の問題へ・キー操作の案内（answer-flow-v368）
+   36. 問題番号の前後移動（question-steps-v373）
 */
 /* ===== index-inline ｜ 土台：色・文字・画面全体・問題画面・コメントの基本 ===== */
 
@@ -11051,4 +11052,32 @@ html[data-theme="light"] .page.menu-active #menuPanel .library-v214 .library-det
 @media (min-width: 801px) and (hover: hover) and (pointer: fine) {
   .key-hint-v368:not([hidden]) { display: block; margin: 8px 0 0; color: var(--muted, #5d6b6e); font-size: 13px; text-align: center; }
   .key-hint-v368 kbd { display: inline-block; min-width: 22px; margin: 0 2px; padding: 1px 6px; border: 1px solid currentColor; border-bottom-width: 2px; border-radius: 5px; font: inherit; font-weight: 800; line-height: 1.4; }
+}
+
+/* ===== question-steps-v373 ｜ 問題番号の前後移動 ===== */
+/* V373: ‹ › beside the question number open the previous / next question in one tap. */
+.question-step-v373 {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 40px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid #86724f70;
+  border-radius: 6px;
+  color: #f7e7bd;
+  background: #101e25;
+  font: 700 26px/1 system-ui, sans-serif;
+  cursor: pointer;
+}
+.question-step-v373:hover:not(:disabled) { background: #17303e; }
+.question-step-v373:focus-visible { outline: 2px solid #f4cb63; outline-offset: 2px; }
+.question-step-v373:disabled { opacity: .35; cursor: default; }
+.page:not(.menu-active) #questionPageTitle:has(.question-step-v373) { gap: 6px; }
+.page:not(.menu-active) #questionPageTitle .question-title-picker-v250 { padding: 0 6px; }
+html[data-theme="light"] .question-step-v373 { color: #164f4d; background: #f4f8f6; border-color: #9fb9b2; }
+html[data-theme="light"] .question-step-v373:hover:not(:disabled) { background: #e0eee8; }
+@media (max-width: 800px) {
+  .question-step-v373 { width: 36px; height: 40px; font-size: 24px; }
 }

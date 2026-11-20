@@ -37,7 +37,7 @@ test('V255 one native question selector and all actions share the same toolbar',
   assert.deepEqual(ids.slice().sort((a,b)=>toolbar.indexOf(`id="${a}"`)-toolbar.indexOf(`id="${b}"`)),ids);
   assert.doesNotMatch(toolbar,/>正誤判定基準/);
   assert.match(html,/questionHeaderV250\.render\(question.number, questionTypeV44\(question\)\)/);
-  assert.match(html,/getElementById\("questionSelect"\).addEventListener\("change", event => openQuestionV16\(Number\(event.target.value\)\)\)/);
+  assert.match(html,/getElementById\("questionSelect"\).addEventListener\("change", event => openQuestionV16\(Number\(event.target.value\)\)\.then\(syncQuestionStepsV373\)\)/);
   assert.match(html,/filter\(\(\{ question \}\) => isPlayableV16\(question\)\)/);
   assert.match(html,/select.disabled = entries.length === 0/);
   assert.match(html,/button.hidden = !Boolean\(sharedCollectionV46 && question\?\.serverQuestionId\)/);
@@ -69,6 +69,6 @@ test('responsive styles preserve touch targets, permission-hidden actions and re
   assert.match(css,/overflow-x: auto/);assert.match(css,/flex-wrap: nowrap/);
   assert.match(css,/@media \(max-width: 800px\)/);
   assert.doesNotMatch(css,/\.(hand|tile|scene|answer|riichi)[-\w]*\s*\{/);
-  assert.match(html,/question-header-v250\.js\?v=372/);
-  assert.match(html,/app\.css\?v=372/);
+  assert.match(html,/question-header-v250\.js\?v=373/);
+  assert.match(html,/app\.css\?v=373/);
 });

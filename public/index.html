@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=372">
-  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=372">
-  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=372">
+  <link rel="icon" type="image/png" sizes="32x32" href="/naga-nanikiru/icons/favicon-32.png?v=373">
+  <link rel="apple-touch-icon" sizes="180x180" href="/naga-nanikiru/icons/apple-touch-icon-180.png?v=373">
+  <link rel="manifest" href="/naga-nanikiru/manifest.webmanifest?v=373">
   <title>みん切る｜みんなの何切る問題集</title>
   <link rel="preload" as="image" href="assets/loading-screen-v243.png" fetchpriority="high">
   <meta name="description" content="みん切るは、NAGA URLから問題をつくり、解いて、仲間と共有できる麻雀学習アプリです。">
   <meta name="theme-color" content="#f3f6f7">
-  <script src="theme-v259.js?v=372"></script>
+  <script src="theme-v259.js?v=373"></script>
   <meta property="og:type" content="website">
   <meta property="og:title" content="みん切る｜みんなの何切る問題集">
   <meta property="og:description" content="みん切るは、NAGA URLから問題をつくり、解いて、仲間と共有できる麻雀学習アプリです。">
@@ -65,7 +65,7 @@
           } else if (source) file = "external";
         } catch { /* Source metadata may be unavailable. */ }
         const position = value => Number.isSafeInteger(Number(value)) && Number(value) > 0 ? Number(value) : 0;
-        return `確認コード：V372 / ${kind} / ${name} / ${file}:${position(line)}:${position(column)}`;
+        return `確認コード：V373 / ${kind} / ${name} / ${file}:${position(line)}:${position(column)}`;
       };
       const showStatus = () => {
         const status = document.getElementById("startupStatusV236");
@@ -109,8 +109,8 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="app.css?v=372">
-  <script defer src="theme-quick-v295.js?v=372"></script>
+  <link rel="stylesheet" href="app.css?v=373">
+  <script defer src="theme-quick-v295.js?v=373"></script>
 </head>
 <body class="auth-gate-open">
   <section class="startup-screen-v236" id="startupScreenV236" aria-label="みん切るを準備中">
@@ -234,7 +234,7 @@
 
     <div class="source-bar">
       <div class="question-toolbar-v255" role="group" aria-label="問題の操作（狭い画面では横にスクロールできます）">
-      <h1 id="questionPageTitle" aria-label="何切る？"><span class="question-title-picker-v250" title="問題番号を選んで移動"><span id="questionTitleNumberV250" aria-hidden="true">問題</span><span class="question-title-chevron-v250" aria-hidden="true">▾</span><select id="questionSelect" aria-label="問題を選ぶ"></select></span><span id="questionTitleTypeV250">何切る？</span></h1>
+      <h1 id="questionPageTitle" aria-label="何切る？"><button class="question-step-v373" id="questionPrevV373" type="button" data-question-step="-1" aria-label="前の問題" title="前の問題">‹</button><span class="question-title-picker-v250" title="問題番号を選んで移動"><span id="questionTitleNumberV250" aria-hidden="true">問題</span><span class="question-title-chevron-v250" aria-hidden="true">▾</span><select id="questionSelect" aria-label="問題を選ぶ"></select></span><button class="question-step-v373" id="questionNextV373" type="button" data-question-step="1" aria-label="次の問題" title="次の問題">›</button><span id="questionTitleTypeV250">何切る？</span></h1>
       <label class="model-control" title="正誤判定に使うNAGAモデルを選びます"><span class="sr-only">正誤基準</span><select id="modelSelect" aria-label="正誤判定基準"></select></label>
       <a class="source-link" id="nagaSourceLink" href="#" target="_blank" rel="noopener noreferrer" aria-label="局面NAGAURLに移動" title="元のNAGA局面を別タブで開きます"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6m0-6L10 14M10 5H5v14h14v-5"/></svg><span>NAGA URL</span></a>
       <button class="import-question-button" id="importQuestionButton" type="button" aria-label="別の問題集にインポート" title="この問題を、自分が問題を追加できる問題集へコピーします" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H4v14h3m1-9h12v13H8zM11 13h6m-6 4h4"/></svg><span>インポート</span></button>
@@ -465,41 +465,41 @@
   </dialog>
 
   <script src="runtime-config.js"></script>
-  <script src="supabase-sync-v48.js?v=372"></script>
-  <script src="drill-ux-v44.js?v=372"></script>
-  <script src="notifications-v314.js?v=372"></script>
-  <script src="navigation-v234.js?v=372"></script>
-  <script src="book-builder-v235.js?v=372"></script>
-  <script src="library-order-v215.js?v=372"></script>
-  <script src="content-dates-v246.js?v=372"></script>
-  <script src="question-header-v250.js?v=372"></script>
-  <script src="library-v214.js?v=372"></script>
-  <script src="collection-admin-v328.js?v=372"></script>
-  <script src="standard-reactions-v329.js?v=372"></script>
-  <script src="naga-generator-v44.js?v=372"></script>
-  <script src="comment-tools-v274.js?v=372"></script>
-  <script src="mobile-comments-v316.js?v=372"></script>
-  <script src="comment-selection-v321.js?v=372"></script>
-  <script src="comment-composer-v324.js?v=372"></script>
-  <script src="inline-comment-v322.js?v=372"></script>
-  <script src="naga-board-state-v248.js?v=372"></script>
-  <script src="naga-board-v248.js?v=372"></script>
-  <script src="call-choices-v346.js?v=372"></script>
-  <script src="reaction-search-v356.js?v=372"></script>
-  <script src="study-model-v351.js?v=372"></script>
-  <script src="answer-flow-v368.js?v=372"></script>
-  <script src="dora-sheen-v333.js?v=372"></script>
-  <script src="sound-v342.js?v=372"></script>
-  <script src="hand-mask-v237.js?v=372"></script>
-  <script src="menu-sections-v239.js?v=372"></script>
-  <script src="workspace-ui-v240.js?v=372"></script>
-  <script src="generation-confirm-v241.js?v=372"></script>
-  <script src="collection-deletion-v244.js?v=372"></script>
-  <script src="collection-managers-v290.js?v=372"></script>
+  <script src="supabase-sync-v48.js?v=373"></script>
+  <script src="drill-ux-v44.js?v=373"></script>
+  <script src="notifications-v314.js?v=373"></script>
+  <script src="navigation-v234.js?v=373"></script>
+  <script src="book-builder-v235.js?v=373"></script>
+  <script src="library-order-v215.js?v=373"></script>
+  <script src="content-dates-v246.js?v=373"></script>
+  <script src="question-header-v250.js?v=373"></script>
+  <script src="library-v214.js?v=373"></script>
+  <script src="collection-admin-v328.js?v=373"></script>
+  <script src="standard-reactions-v329.js?v=373"></script>
+  <script src="naga-generator-v44.js?v=373"></script>
+  <script src="comment-tools-v274.js?v=373"></script>
+  <script src="mobile-comments-v316.js?v=373"></script>
+  <script src="comment-selection-v321.js?v=373"></script>
+  <script src="comment-composer-v324.js?v=373"></script>
+  <script src="inline-comment-v322.js?v=373"></script>
+  <script src="naga-board-state-v248.js?v=373"></script>
+  <script src="naga-board-v248.js?v=373"></script>
+  <script src="call-choices-v346.js?v=373"></script>
+  <script src="reaction-search-v356.js?v=373"></script>
+  <script src="study-model-v351.js?v=373"></script>
+  <script src="answer-flow-v368.js?v=373"></script>
+  <script src="dora-sheen-v333.js?v=373"></script>
+  <script src="sound-v342.js?v=373"></script>
+  <script src="hand-mask-v237.js?v=373"></script>
+  <script src="menu-sections-v239.js?v=373"></script>
+  <script src="workspace-ui-v240.js?v=373"></script>
+  <script src="generation-confirm-v241.js?v=373"></script>
+  <script src="collection-deletion-v244.js?v=373"></script>
+  <script src="collection-managers-v290.js?v=373"></script>
   <script>
     const APP_ID = "naga-nanikiru";
     const APP_BASE_PATH = "/naga-nanikiru/";
-    const APP_VERSION = 372;
+    const APP_VERSION = 373;
     const storageKey = (name) => `${APP_ID}:${name}`;
     const DEFAULT_COLLECTION_SLUG = "906571ede3684fa9b3d3e10e";
     const SCENE = {
@@ -2640,6 +2640,7 @@
       const QUESTION_NOTICE_STORAGE_KEY_V66 = storageKey("question-notices-v1");
         const ANNOUNCEMENT_SEEN_STORAGE_KEY_V65 = storageKey("announcement-seen-v1");
         const APP_ANNOUNCEMENTS_V66 = [
+          {"version":373,"date":"2026-11-20","publishedAt":"2026-11-20T05:00:00.000Z","title":"前後の問題へワンタップで移れます","body":"問題画面の問題番号の左右に「‹」「›」ボタンを付けました。押すと、ひとつ前・ひとつ後の番号の問題を開きます。"},
           {"version":372,"date":"2026-11-17","publishedAt":"2026-11-17T11:00:00.000Z","title":"スタイルの整理を進めました","body":"見た目と操作は変わりません。画面のスタイルをすべて1つのファイルに移し、もう表示されない部品のための指定を削除しました。"},
           {"version":371,"date":"2026-11-17","publishedAt":"2026-11-17T10:00:00.000Z","title":"アプリの中身を整理しました","body":"見た目と操作は変わりません。画面のスタイルを1つのファイルにまとめ、使われていない古いプログラムと設定を削除しました。"},
           {"version":370,"date":"2026-11-17","publishedAt":"2026-11-17T09:00:00.000Z","title":"画面の説明文を短くしました","body":"ログイン画面・コメント欄・マイページ・達成表示などの説明文を、事実だけの短い文に書き直しました。"},
@@ -6629,6 +6630,7 @@
           saveUserStateV16();
         }
         document.getElementById("questionSelect").value = String(index);
+        syncQuestionStepsV373();
         document.getElementById("menuPanel").hidden = true;
         document.querySelector(".page").classList.remove("menu-active");
         applyDesktopLayoutV70();
@@ -8759,6 +8761,39 @@
         select.innerHTML = entries.map(({ question, index }) => `<option value="${index}">${escapeHtml(question.title || `問題${question.number}`)}</option>`).join("");
         select.value = entries.some(({ index }) => index === currentQuestionIndexV16) ? String(currentQuestionIndexV16) : (entries[0] ? String(entries[0].index) : "");
         select.disabled = entries.length === 0;
+        syncQuestionStepsV373();
+      }
+
+      // V373: one-tap move to the neighbouring question number, in the same order as the picker.
+      function questionStepTargetV373(step) {
+        const select = document.getElementById("questionSelect");
+        const values = [...select.options].map(option => Number(option.value));
+        const at = values.indexOf(Number(select.value));
+        return at < 0 ? undefined : values[at + step];
+      }
+
+      function syncQuestionStepsV373() {
+        const select = document.getElementById("questionSelect");
+        const morePages = sharedQuestionPagingIsCurrentV177() && !sharedQuestionPagingV177.allLoaded;
+        for (const button of document.querySelectorAll("[data-question-step]")) {
+          const step = Number(button.dataset.questionStep);
+          const target = questionStepTargetV373(step);
+          const option = target === undefined ? null : [...select.options].find(item => Number(item.value) === target);
+          button.disabled = select.disabled || (target === undefined && !(step > 0 && morePages));
+          const label = `${step < 0 ? "前" : "次"}の問題${option ? `（${option.textContent}）` : ""}`;
+          button.setAttribute("aria-label", label);
+          button.title = label;
+        }
+      }
+
+      async function stepQuestionV373(step) {
+        if (step > 0 && questionStepTargetV373(step) === undefined && sharedQuestionPagingIsCurrentV177() && !sharedQuestionPagingV177.allLoaded) {
+          await ensureSharedQuestionIndexAllV177();
+        }
+        const target = questionStepTargetV373(step);
+        if (target === undefined) return;
+        await openQuestionV16(target);
+        syncQuestionStepsV373();
       }
 
       function answerHistorySignatureV81(entry) {
@@ -9571,7 +9606,8 @@
           pendingExistingQuestionIdV187 = requestedExistingQuestionId;
           await openRequestedQuestionAfterAuthV187();
         }
-        document.getElementById("questionSelect").addEventListener("change", event => openQuestionV16(Number(event.target.value)));
+        document.getElementById("questionSelect").addEventListener("change", event => openQuestionV16(Number(event.target.value)).then(syncQuestionStepsV373));
+        document.querySelectorAll("[data-question-step]").forEach(button => button.addEventListener("click", () => { void stepQuestionV373(Number(button.dataset.questionStep)); }));
         document.getElementById("commentTagFiltersV270").addEventListener("click", event => {
           const button = event.target.closest("[data-comment-tag-filter]");
           if (!button) return;
