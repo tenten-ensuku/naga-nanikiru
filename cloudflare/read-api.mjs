@@ -118,6 +118,20 @@ const REACTION_KEYS_SQL_V356 = `(SELECT json_group_array(reaction_key) FROM (
         AND NOT EXISTS (SELECT 1 FROM comments deleted_comment WHERE deleted_comment.id=cr.comment_id AND deleted_comment.deleted_at IS NOT NULL))
   )
 ))`;
+// V376: per-key reaction counts for the question list (question reactions plus reactions on
+// its visible comments, under the same visibility rule as REACTION_KEYS_SQL_V356).
+const REACTION_COUNTS_SQL_V376 = `(SELECT json_group_array(json_array(reaction_key, reaction_total)) FROM (
+  SELECT reaction_key, count(*) AS reaction_total FROM (
+    SELECT qr.reaction_key FROM question_reactions qr WHERE qr.question_id=q.id
+    UNION ALL
+    SELECT cr.reaction_key FROM comment_reactions cr WHERE cr.question_id=q.id AND (
+      EXISTS (SELECT 1 FROM comments rc WHERE rc.id=cr.comment_id AND rc.question_id=q.id AND rc.collection_id=q.collection_id AND rc.deleted_at IS NULL)
+      OR EXISTS (SELECT 1 FROM json_each(CASE WHEN json_type(q.payload,'$.comments')='array' THEN json_extract(q.payload,'$.comments') ELSE '[]' END) pc
+        WHERE CAST(COALESCE(json_extract(CASE WHEN pc.type='object' THEN pc.value ELSE '{}' END,'$.id'),json_extract(CASE WHEN pc.type='object' THEN pc.value ELSE '{}' END,'$.messageId')) AS TEXT)=cr.comment_id
+          AND NOT EXISTS (SELECT 1 FROM comments deleted_comment WHERE deleted_comment.id=cr.comment_id AND deleted_comment.deleted_at IS NOT NULL))
+    )
+  ) GROUP BY reaction_key ORDER BY reaction_total DESC, reaction_key
+))`;
 const QUESTION_INDEX_COLUMNS = `
   q.id,
   q.created_by,
@@ -166,6 +180,7 @@ const QUESTION_INDEX_COLUMNS = `
   q.created_at,
   q.updated_at,
   ${REACTION_KEYS_SQL_V356} AS reaction_keys,
+  ${REACTION_COUNTS_SQL_V376} AS reaction_counts,
   (SELECT json_group_array(tag_comment.body) FROM comments tag_comment INDEXED BY comments_question_time
     WHERE tag_comment.question_id = q.id AND tag_comment.collection_id = q.collection_id
       AND tag_comment.deleted_at IS NULL) AS comment_tag_bodies,
@@ -331,6 +346,13 @@ function placeholders(count) {
   return Array.from({ length: count }, () => "?").join(",");
 }
 
+function visibleEmbeddedCommentV376(comment) {
+  if (!comment || typeof comment !== "object" || comment.showInComments === false) return false;
+  return Boolean(String(comment.content ?? comment.body ?? "").trim()
+    || (Array.isArray(comment.attachments) && comment.attachments.length)
+    || (Array.isArray(comment.embeds) && comment.embeds.length));
+}
+
 function mapIndexRow(row, includeTotal) {
   const comments = [...asJsonArray(row.comment_tag_bodies), ...asJsonArray(row.embedded_tag_comments)];
   const mapped = {
@@ -359,6 +381,11 @@ function mapIndexRow(row, includeTotal) {
     comment_tags: tagsFromComments(comments),
     comment_search_text: searchTextFromComments(comments),
     reaction_keys: asJsonArray(row.reaction_keys).filter(key => typeof key === "string" && /^[A-Za-z0-9_-]{1,100}$/.test(key)),
+    // V376: counts for the list's 反応 column (same comments the question screen shows).
+    comment_count: asJsonArray(row.comment_tag_bodies).length + asJsonArray(row.embedded_tag_comments).filter(visibleEmbeddedCommentV376).length,
+    reaction_counts: asJsonArray(row.reaction_counts)
+      .filter(entry => Array.isArray(entry) && typeof entry[0] === "string" && /^[A-Za-z0-9_-]{1,100}$/.test(entry[0]) && Number.isSafeInteger(Number(entry[1])) && Number(entry[1]) > 0)
+      .map(([key, count]) => [key, Number(count)]),
   };
   if (includeTotal) mapped.total_count = rowCount(row.total_count);
   return mapped;

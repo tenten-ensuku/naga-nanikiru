@@ -40,6 +40,7 @@
    35. 次の問題へ・キー操作の案内（answer-flow-v368）
    36. 問題番号の前後移動（question-steps-v373）
    37. 回答後の前後移動（answer-steps-v374）
+   38. 問題一覧の反応列（list-social-v376）
 */
 /* ===== index-inline ｜ 土台：色・文字・画面全体・問題画面・コメントの基本 ===== */
 
@@ -11128,4 +11129,39 @@ html[data-theme="light"] .answer-step-v374:hover:not(:disabled) { background: #e
     cursor: pointer;
   }
   .prev-float-v374:focus-visible { outline: 3px solid #f2c14e; outline-offset: 3px; }
+}
+
+/* ===== list-social-v376 ｜ 問題一覧の反応列 ===== */
+/* V376: 問題 | 反応 | 最近の成績 | お気に入り. Only rows/header marked has-social-v376 get the extra column. */
+html:root .page.menu-active #menuPanel[data-view="my"] :is(.menu-list-header, .menu-card).has-social-v376 { grid-template-columns: minmax(0, 1fr) 128px 180px 92px; }
+html:root .page.menu-active #menuPanel[data-view="my"] .menu-card.has-social-v376 .menu-card-social-v376 { grid-column: 2; grid-row: 1; }
+html:root .page.menu-active #menuPanel[data-view="my"] .menu-card.has-social-v376 .menu-card-latest { grid-column: 3; grid-row: 1; }
+html:root .page.menu-active #menuPanel[data-view="my"] .menu-card.has-social-v376 :is(.menu-card-actions-v357, .menu-card-icon-action) { grid-column: 4; grid-row: 1; }
+.menu-card-social-v376 { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 3px; min-width: 0; color: #33505b; font: 700 14px/1.25 system-ui, sans-serif; }
+.social-comments-v376 { display: inline-flex; align-items: center; gap: 4px; }
+.social-comments-v376.is-zero { color: #9aa9ac; font-weight: 600; }
+.social-bubble-v376 { width: 16px; height: 16px; flex: none; }
+.social-reactions-v376 { display: inline-flex; align-items: center; gap: 1px; }
+.social-reactions-v376 b { margin-left: 5px; font-weight: 700; }
+.social-reaction-v376 { display: inline-grid; place-items: center; width: 18px; height: 18px; }
+.social-reaction-icon-v376 { max-width: 18px; max-height: 18px; font-size: 15px; line-height: 1; }
+img.social-reaction-icon-v376 { width: 16px; height: 16px; object-fit: contain; }
+svg.social-reaction-icon-v376 { width: 10px; height: 16px; }
+html[data-theme="dark"] .menu-card-social-v376 { color: #d9e7ea; }
+html[data-theme="dark"] .social-comments-v376.is-zero { color: #6f8790; }
+@media (min-width: 801px) and (max-width: 1100px) {
+  html:root .page.menu-active #menuPanel[data-view="my"] :is(.menu-list-header, .menu-card).has-social-v376 { grid-template-columns: minmax(0, 1fr) 108px 108px 60px; }
+}
+/* Phones: the title needs the width, so 反応 moves under it as one line and is left out when empty. */
+@media (max-width: 800px) {
+  html:root .page.menu-active #menuPanel[data-view="my"] :is(.menu-list-header, .menu-card).has-social-v376 { grid-template-columns: minmax(0, 1fr) 84px 44px; }
+  html:root .page.menu-active #menuPanel[data-view="my"] .menu-list-header.has-social-v376 [data-social-head-v376] { display: none; }
+  html:root .page.menu-active #menuPanel[data-view="my"] .menu-card.has-social-v376 .menu-card-social-v376 { grid-column: 1; grid-row: 2; flex-direction: row; align-items: center; gap: 12px; margin: -4px 0 2px; font-size: 13px; }
+  html:root .page.menu-active #menuPanel[data-view="my"] .menu-card.has-social-v376 .menu-card-social-v376.is-empty-v376 { display: none; }
+  html:root .page.menu-active #menuPanel[data-view="my"] .menu-card.has-social-v376 .menu-card-latest { grid-column: 2; grid-row: 1 / span 2; align-self: center; }
+  html:root .page.menu-active #menuPanel[data-view="my"] .menu-card.has-social-v376 :is(.menu-card-actions-v357, .menu-card-icon-action) { grid-column: 3; grid-row: 1 / span 2; align-self: center; }
+  .social-reaction-v376 { width: 16px; }
+}
+@media (max-width: 360px) {
+  html:root .page.menu-active #menuPanel[data-view="my"] :is(.menu-list-header, .menu-card).has-social-v376 { grid-template-columns: minmax(0, 1fr) 66px 44px; }
 }

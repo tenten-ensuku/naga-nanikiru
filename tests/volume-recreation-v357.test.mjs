@@ -123,7 +123,7 @@ test('row actions render favorite followed by delete only for permitted accounts
   const body=render.slice(render.indexOf('grid.innerHTML = visibleEntries.map(({ question, index }) => {')+'grid.innerHTML = visibleEntries.map(({ question, index }) => {'.length,render.lastIndexOf('}).join("");'));
   const context=vm.createContext({recentScoresV16:()=>[],isFavoriteV16:()=>false,escapeHtml:s=>String(s).replaceAll('<','&lt;').replaceAll('"','&quot;'),
     questionTypeV44:()=> '打牌判断',commentNotificationCountForQuestionV65:()=>0,notificationBadgeMarkupV65:()=>'',questionKeyV16:q=>q.id,
-    questionCreatedMarkupV246:()=>'',canDeleteQuestionV47:()=>true});
+    questionCreatedMarkupV246:()=>'',canDeleteQuestionV47:()=>true,menuViewV16:'my',questionSocialMarkupV376:()=>'<span class="menu-card-social-v376"></span>'});
   vm.runInContext('function row(question,index){'+body+'}',context);
   const q={number:1001,title:'<問題>',id:'q'},row=context.row(q,3);
   assert.ok(row.indexOf('data-menu-action="favorite"')<row.indexOf('data-menu-action="delete"'));assert.match(row,/&lt;問題>/);

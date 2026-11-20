@@ -59,5 +59,7 @@ test('list layout has exactly three columns and keeps a 44px favorite target',()
  assert.match(css,/grid-template-columns: minmax\(0, 1fr\) max-content 44px/);
  assert.match(css,/min-height: 44px/);
  const listHeader=html.match(/<div[^>]*id="menuListHeader"[^]*?<\/div>/)?.[0]||'';
- assert.equal((listHeader.match(/<span\b/g)||[]).length,3);
+ // V376: a fourth 反応 cell exists but stays hidden outside the question list.
+ assert.equal((listHeader.match(/<span\b(?![^>]*data-social-head-v376)/g)||[]).length,3);
+ assert.match(listHeader,/<span[^>]*data-social-head-v376 hidden>反応<\/span>/);
 });
