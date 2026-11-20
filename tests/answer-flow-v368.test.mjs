@@ -12,7 +12,7 @@ class FakeElement {
   constructor(id = "", tag = "DIV") { this.id = id; this.tagName = tag; this.hidden = false; this.textContent = ""; this.className = ""; this.listeners = {}; this.clicks = 0; this.offsetParent = {}; }
   addEventListener(type, fn) { (this.listeners[type] ||= []).push(fn); }
   click() { this.clicks++; (this.listeners.click || []).forEach(fn => fn()); }
-  append(child) { this.child = child; }
+  append(child) { (this.children ||= []).push(child); this.child ||= child; }
 }
 
 function harness() {
@@ -74,7 +74,7 @@ test("V368 phone-only floating style and keyboard hint for pointer screens", () 
   assert.match(html, /<link rel="stylesheet" href="app\.css\?v=\d+">/);
   assert.match(html, /<script src="answer-flow-v368\.js\?v=\d+"><\/script>/);
   assert.ok(cssSectionOrder().includes("answer-flow-v368"));
-  assert.match(html, /<p class="key-hint-v368" id="keyHintV368" hidden><kbd>←<\/kbd><kbd>→<\/kbd> 牌を選ぶ　<kbd>Enter<\/kbd> 確定　回答後は <kbd>→<\/kbd> 次の問題へ<\/p>/);
+  assert.match(html, /<p class="key-hint-v368" id="keyHintV368" hidden><kbd>←<\/kbd><kbd>→<\/kbd> 牌を選ぶ　<kbd>Enter<\/kbd> 確定　回答後は <kbd>←<\/kbd> 前の問題　<kbd>→<\/kbd> 次の問題へ<\/p>/);
 });
 
 test("V368 arrow keys move the tile choice before answering", () => {

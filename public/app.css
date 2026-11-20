@@ -39,6 +39,7 @@
    34. 本棚（棚・シリーズ・詳細シート）（library-shelf-v361）
    35. 次の問題へ・キー操作の案内（answer-flow-v368）
    36. 問題番号の前後移動（question-steps-v373）
+   37. 回答後の前後移動（answer-steps-v374）
 */
 /* ===== index-inline ｜ 土台：色・文字・画面全体・問題画面・コメントの基本 ===== */
 
@@ -11080,4 +11081,51 @@ html[data-theme="light"] .question-step-v373 { color: #164f4d; background: #f4f8
 html[data-theme="light"] .question-step-v373:hover:not(:disabled) { background: #e0eee8; }
 @media (max-width: 800px) {
   .question-step-v373 { width: 36px; height: 40px; font-size: 24px; }
+}
+
+/* ===== answer-steps-v374 ｜ 回答後の前後移動 ===== */
+/* V374: after answering, previous / next question numbers sit right under "次の問題へ". */
+.answer-steps-v374 { display: flex; gap: 8px; flex: 1 1 100%; width: 100%; }
+.answer-step-v374 {
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 44px;
+  padding: 0 12px;
+  overflow: hidden;
+  border: 1px solid #86724f;
+  border-radius: 8px;
+  color: #f7e7bd;
+  background: #101e25;
+  font: 700 15px/1.2 var(--menu-serif-v238, serif);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+.answer-step-v374:hover:not(:disabled) { background: #17303e; }
+.answer-step-v374:focus-visible { outline: 2px solid #f4cb63; outline-offset: 2px; }
+.answer-step-v374:disabled { opacity: .35; cursor: default; }
+html[data-theme="light"] .answer-step-v374 { color: #164f4d; background: #f4f8f6; border-color: #9fb9b2; }
+html[data-theme="light"] .answer-step-v374:hover:not(:disabled) { background: #e0eee8; }
+.prev-float-v374 { display: none; }
+@media (max-width: 800px) {
+  .prev-float-v374:not([hidden]) {
+    position: fixed;
+    left: 14px;
+    bottom: calc(14px + env(safe-area-inset-bottom));
+    z-index: 60;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    background: #2a4a52;
+    color: #fff;
+    font: 700 26px/1 system-ui, sans-serif;
+    box-shadow: 0 8px 22px rgba(10, 40, 44, .35);
+    cursor: pointer;
+  }
+  .prev-float-v374:focus-visible { outline: 3px solid #f2c14e; outline-offset: 3px; }
 }

@@ -66,3 +66,24 @@ test("V373 buttons sit on both sides of the question picker and stay readable", 
   assert.match(css, /\.question-step-v373 \{[^}]*width: 40px;[^}]*height: 44px;/);
   assert.match(css, /html\[data-theme="light"\] \.question-step-v373/);
 });
+
+test("V374 after answering, previous / next number buttons sit under 次の問題へ and show their destination", () => {
+  assert.match(html, /<button class="next-button" id="nextQuestionBottomButton" type="button" hidden>次の問題へ<\/button>\s*<div class="answer-steps-v374" role="group" aria-label="番号順に移動"><button class="answer-step-v374" type="button" data-question-step="-1">‹ 前の問題<\/button><button class="answer-step-v374" type="button" data-question-step="1">次の番号 ›<\/button><\/div>/);
+  const h = harness();
+  h.buttons.forEach(button => { button.classList = { contains: name => name === "answer-step-v374" }; });
+  h.syncQuestionStepsV373();
+  assert.equal(h.buttons[0].textContent, "‹ 問題3");
+  assert.equal(h.buttons[1].textContent, "問題9 ›");
+  const css = cssSection("answer-steps-v374");
+  assert.match(css, /\.answer-steps-v374 \{ display: flex; gap: 8px; flex: 1 1 100%;/);
+  assert.match(css, /\.answer-step-v374 \{[^}]*min-height: 44px;[^}]*font: 700 15px/);
+  assert.match(css, /@media \(max-width: 800px\) \{\s*\.prev-float-v374:not\(\[hidden\]\) \{[^}]*position: fixed;[^}]*left: 14px;/);
+});
+
+test("V374 ← after answering opens the previous number; the floating ‹ forwards to the header button", () => {
+  assert.match(html, /if \(event\.key === "ArrowLeft" && state\.revealed\) \{\s*event\.preventDefault\(\);\s*void stepQuestionV373\(-1\);/);
+  const flow = fs.readFileSync("public/answer-flow-v368.js", "utf8");
+  assert.match(flow, /prevFloating\.className = "prev-float-v374";/);
+  assert.match(flow, /prevFloating\.addEventListener\("click", \(\) => prevSource\?\.click\(\)\);/);
+  assert.match(flow, /prevFloating\.hidden = !show \|\| !prevSource \|\| prevSource\.disabled;/);
+});

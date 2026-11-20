@@ -13,6 +13,15 @@
     floating.hidden = true;
     floating.addEventListener("click", () => source.click());
     doc.body.append(floating);
+    // V374: a small "‹" beside it opens the previous question number.
+    const prevSource = doc.getElementById("questionPrevV373");
+    const prevFloating = doc.createElement("button");
+    prevFloating.type = "button";
+    prevFloating.className = "prev-float-v374";
+    prevFloating.hidden = true;
+    prevFloating.textContent = "‹";
+    prevFloating.addEventListener("click", () => prevSource?.click());
+    doc.body.append(prevFloating);
     let sourceInView = true;
     const composerOpen = () => doc.getElementById("commentForm")?.hidden === false;
     const typing = () => ["INPUT", "TEXTAREA", "SELECT"].includes(doc.activeElement?.tagName);
@@ -24,6 +33,9 @@
         && !typing();
       floating.hidden = !show;
       if (floating.textContent !== source.textContent) floating.textContent = source.textContent;
+      prevFloating.hidden = !show || !prevSource || prevSource.disabled;
+      const prevLabel = prevSource?.getAttribute?.("aria-label") || "前の問題";
+      if (prevFloating.getAttribute?.("aria-label") !== prevLabel) prevFloating.setAttribute?.("aria-label", prevLabel);
     };
     if (typeof host.IntersectionObserver === "function") {
       new host.IntersectionObserver(entries => {
@@ -37,6 +49,7 @@
     if (page) watch.observe(page, { attributes: true, attributeFilter: ["class"] });
     const form = doc.getElementById("commentForm");
     if (form) watch.observe(form, { attributes: true, attributeFilter: ["hidden"] });
+    if (prevSource) watch.observe(prevSource, { attributes: true, attributeFilter: ["disabled", "aria-label"] });
     // Keyboard hint: before answering, and not for call questions (those use their own buttons).
     const hint = doc.getElementById("keyHintV368");
     const strip = doc.getElementById("answerStrip");
@@ -53,7 +66,7 @@
     doc.addEventListener("focusin", sync);
     doc.addEventListener("focusout", () => host.setTimeout(sync, 0));
     sync();
-    return { sync, syncHint, element: floating };
+    return { sync, syncHint, element: floating, previous: prevFloating };
   }
   host.MinkiruAnswerFlowV368 = Object.freeze({ create });
   if (doc.readyState === "loading") doc.addEventListener("DOMContentLoaded", create, { once: true });
