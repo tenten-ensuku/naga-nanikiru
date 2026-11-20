@@ -41,6 +41,7 @@
    36. 問題番号の前後移動（question-steps-v373）
    37. 回答後の前後移動（answer-steps-v374）
    38. 問題一覧の反応列（list-social-v376）
+   39. 生徒の進捗の自分の行（student-self-v377）
 */
 /* ===== index-inline ｜ 土台：色・文字・画面全体・問題画面・コメントの基本 ===== */
 
@@ -11165,3 +11166,10 @@ html[data-theme="dark"] .social-comments-v376.is-zero { color: #6f8790; }
 @media (max-width: 360px) {
   html:root .page.menu-active #menuPanel[data-view="my"] :is(.menu-list-header, .menu-card).has-social-v376 { grid-template-columns: minmax(0, 1fr) 66px 44px; }
 }
+
+/* ===== student-self-v377 ｜ 生徒の進捗の自分の行 ===== */
+/* V377: the owner's own totals sit first in 生徒の進捗, marked with an あなた badge. */
+html .page.menu-active #menuPanel .student-row.is-self-v377,
+html[data-theme] .page.menu-active #menuPanel .student-row.is-self-v377 { border-color: #c9a24a; box-shadow: inset 4px 0 0 #c9a24a; }
+.student-self-badge-v377 { display: inline-block; margin-left: 8px; padding: 1px 8px; border-radius: 999px; background: #c9a24a; color: #1d1608; font-size: 12px; font-weight: 800; vertical-align: middle; }
+.student-dashboard-empty-v377 { margin: 4px 0 0; color: var(--muted); font-size: 14px; }
