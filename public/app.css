@@ -42,6 +42,8 @@
    37. 回答後の前後移動（answer-steps-v374）
    38. 問題一覧の反応列（list-social-v376）
    39. 生徒の進捗の自分の行（student-self-v377）
+   40. デザイン刷新（design-v379）
+   41. スマホの手牌トレイ（hand-tray-v379）
 */
 /* ===== index-inline ｜ 土台：色・文字・画面全体・問題画面・コメントの基本 ===== */
 
@@ -11173,3 +11175,492 @@ html .page.menu-active #menuPanel .student-row.is-self-v377,
 html[data-theme] .page.menu-active #menuPanel .student-row.is-self-v377 { border-color: #c9a24a; box-shadow: inset 4px 0 0 #c9a24a; }
 .student-self-badge-v377 { display: inline-block; margin-left: 8px; padding: 1px 8px; border-radius: 999px; background: #c9a24a; color: #1d1608; font-size: 12px; font-weight: 800; vertical-align: middle; }
 .student-dashboard-empty-v377 { margin: 4px 0 0; color: var(--muted); font-size: 14px; }
+
+/* ===== design-v379 ｜ デザイン刷新（色・文字・ボタン・カード） ===== */
+/* V379: one design language on top of the accumulated feature styles.
+   Concept「卓上の静けさ」: quiet paper/charcoal surfaces, one gold accent for the main action,
+   navy from the board for "selected", one sans-serif family, 12px controls / 16px cards.
+   Tile images, board drawing and result colours are left to their own sections. */
+html[data-theme] {
+  --mk-sans: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic UI", "Yu Gothic", Meiryo, system-ui, sans-serif;
+  --mk-num: "Inter", "Segoe UI", "Helvetica Neue", var(--mk-sans);
+  --mk-radius: 12px;
+  --mk-radius-card: 16px;
+  --mk-ease: cubic-bezier(.2, .7, .2, 1);
+}
+html[data-theme="light"] {
+  --mk-bg: #f4f3ef;
+  --mk-surface: #ffffff;
+  --mk-surface-2: #f1efe9;
+  --mk-surface-3: #e9e6de;
+  --mk-line: #e2ded4;
+  --mk-line-strong: #cbc5b7;
+  --mk-ink: #17212b;
+  --mk-muted: #67717a;
+  --mk-accent: #c4922f;
+  --mk-accent-strong: #a77a1f;
+  --mk-accent-ink: #1e1505;
+  --mk-accent-soft: #f7eedb;
+  --mk-select: #1f5687;
+  --mk-select-soft: #e7eff7;
+  --mk-shadow-1: 0 1px 2px #17212b0d, 0 1px 1px #17212b08;
+  --mk-shadow-2: 0 1px 2px #17212b0a, 0 10px 28px #17212b12;
+  --mk-shadow-3: 0 2px 6px #17212b14, 0 24px 48px #17212b1f;
+}
+html[data-theme="dark"] {
+  --mk-bg: #0f1418;
+  --mk-surface: #161d23;
+  --mk-surface-2: #1c252c;
+  --mk-surface-3: #243039;
+  --mk-line: #26313a;
+  --mk-line-strong: #37454f;
+  --mk-ink: #ecebe6;
+  --mk-muted: #9aa4ab;
+  --mk-accent: #d9ae55;
+  --mk-accent-strong: #e7c272;
+  --mk-accent-ink: #1b1305;
+  --mk-accent-soft: #2d2615;
+  --mk-select: #7db1e0;
+  --mk-select-soft: #172a3c;
+  --mk-shadow-1: 0 1px 2px #00000040;
+  --mk-shadow-2: 0 1px 2px #00000040, 0 10px 28px #00000040;
+  --mk-shadow-3: 0 2px 6px #00000055, 0 24px 48px #00000066;
+}
+
+/* --- Typography: one family everywhere except book covers (they keep their printed serif). --- */
+html[data-theme] body,
+html[data-theme] .page,
+html:root[data-theme] .page.menu-active #menuPanel {
+  --menu-serif-v238: var(--mk-sans);
+  --menu-sans-v238: var(--mk-sans);
+  --learning-card-font-v280: var(--mk-sans);
+  --book-page-serif: var(--mk-sans);
+  --readable-font: var(--mk-sans);
+  font-family: var(--mk-sans);
+  -webkit-font-smoothing: antialiased;
+}
+html[data-theme] body :is(button, select, input, textarea, summary, h1, h2, h3, h4, strong, label, p, span):not(.library-v214 *, .library-flight-v214 *, .library-v214, .menu-brand *) {
+  /* !important: dozens of older feature rules pin a Mincho face with id-level selectors. */
+  font-family: var(--mk-sans) !important;
+}
+html[data-theme] body,
+html[data-theme] .page.menu-active #menuPanel,
+html[data-theme] .page.menu-active #menuPanel .menu-content { background: var(--mk-bg); color: var(--mk-ink); }
+
+/* --- Press feedback for every control: a short, physical dip. --- */
+html[data-theme] body :is(button, a.source-link, summary) {
+  transition: transform .14s var(--mk-ease), background-color .18s var(--mk-ease), border-color .18s var(--mk-ease), box-shadow .18s var(--mk-ease), color .18s var(--mk-ease);
+}
+html[data-theme] body :is(button, a.source-link):active:not(:disabled) { transform: scale(.97); }
+html[data-theme] body :is(button, a, select, input, textarea, summary):focus-visible {
+  outline: 2px solid var(--mk-select);
+  outline-offset: 2px;
+}
+
+/* --- Navigation: a quiet sidebar on PC, a frosted tab bar on phones. --- */
+html[data-theme] .page.menu-active #menuPanel .menu-sidebar {
+  background: var(--mk-surface);
+  border-color: var(--mk-line);
+  box-shadow: none;
+}
+html[data-theme] .page.menu-active #menuPanel .menu-sidebar .menu-nav-button {
+  justify-content: flex-start;
+  color: var(--mk-muted);
+  background: transparent;
+  border: 0;
+  border-radius: var(--mk-radius);
+  box-shadow: none;
+  font-weight: 600;
+  letter-spacing: .02em;
+}
+html[data-theme] .page.menu-active #menuPanel .menu-sidebar .menu-nav-button:hover:not(:disabled) {
+  color: var(--mk-ink);
+  background: var(--mk-surface-2);
+}
+html[data-theme] .page.menu-active #menuPanel .menu-sidebar .menu-nav-button.is-active,
+html[data-theme] .page.menu-active #menuPanel .menu-sidebar .menu-nav-button.is-active:active:not(:disabled) {
+  color: var(--mk-ink);
+  background: var(--mk-accent-soft);
+  box-shadow: inset 3px 0 0 var(--mk-accent);
+}
+html[data-theme] .page.menu-active #menuPanel .menu-sidebar .menu-nav-button.is-active .menu-nav-icon { color: var(--mk-accent-strong); }
+html[data-theme] .page.menu-active #menuPanel :is(.menu-notice-button, .menu-auth-button) {
+  color: var(--mk-ink);
+  background: var(--mk-surface);
+  border: 1px solid var(--mk-line);
+  border-radius: 999px;
+  box-shadow: var(--mk-shadow-1);
+}
+html[data-theme] .page.menu-active #menuPanel :is(.menu-notice-button, .menu-auth-button):hover:not(:disabled) { background: var(--mk-surface-2); border-color: var(--mk-line-strong); color: var(--mk-ink); }
+html[data-theme] .page.menu-active #menuPanel .active-collection-button {
+  color: var(--mk-ink);
+  background: var(--mk-surface-2);
+  border: 1px solid var(--mk-line);
+  border-left: 4px solid var(--book-tint, var(--mk-accent));
+  border-radius: var(--mk-radius-card);
+  box-shadow: none;
+}
+@media (max-width: 800px) {
+  html[data-theme] .page.menu-active #menuPanel .menu-sidebar .menu-nav {
+    background: color-mix(in srgb, var(--mk-surface) 86%, transparent);
+    -webkit-backdrop-filter: saturate(1.4) blur(14px);
+    backdrop-filter: saturate(1.4) blur(14px);
+    border-top: 1px solid var(--mk-line);
+    box-shadow: 0 -6px 24px #17212b10;
+  }
+  html[data-theme] .page.menu-active #menuPanel .menu-sidebar .menu-nav-button {
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    background: transparent;
+  }
+  html[data-theme] .page.menu-active #menuPanel .menu-sidebar .menu-nav-button .menu-nav-icon {
+    display: grid;
+    place-items: center;
+    width: 52px;
+    height: 28px;
+    border-radius: 999px;
+    transition: background-color .2s var(--mk-ease);
+  }
+  html[data-theme] .page.menu-active #menuPanel .menu-sidebar .menu-nav-button.is-active,
+  html[data-theme] .page.menu-active #menuPanel .menu-sidebar .menu-nav-button.is-active:active:not(:disabled) {
+    color: var(--mk-ink);
+    background: transparent;
+    box-shadow: none;
+  }
+  html[data-theme] .page.menu-active #menuPanel .menu-sidebar .menu-nav-button.is-active .menu-nav-icon { background: var(--mk-accent-soft); }
+}
+
+/* --- Book header: a card with the book's colour on its spine, tabs as a segmented control. --- */
+html[data-theme] .page.menu-active #menuPanel .book-context-title-v234 {
+  color: var(--mk-ink);
+  background: var(--mk-surface);
+  border: 1px solid var(--mk-line);
+  border-left: 4px solid var(--book-tint, var(--mk-accent));
+  border-radius: var(--mk-radius-card);
+  box-shadow: var(--mk-shadow-1);
+}
+html[data-theme] .page.menu-active #menuPanel .book-context-title-v234 strong { font-weight: 700; letter-spacing: .01em; }
+html[data-theme] .page.menu-active #menuPanel .book-tabs-v234 {
+  gap: 4px;
+  margin-top: 12px;
+  padding: 4px;
+  background: var(--mk-surface-3);
+  border: 0;
+  border-radius: 14px;
+  box-shadow: none;
+}
+html[data-theme] .page.menu-active #menuPanel .book-tabs-v234 button {
+  min-height: 40px;
+  color: var(--mk-muted);
+  background: transparent;
+  border: 0;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 700;
+}
+html[data-theme] .page.menu-active #menuPanel .book-tabs-v234 button:hover:not(.is-active) { color: var(--mk-ink); background: color-mix(in srgb, var(--mk-surface) 50%, transparent); }
+html[data-theme] .page.menu-active #menuPanel .book-tabs-v234 button.is-active,
+html[data-theme] .page.menu-active #menuPanel .book-tabs-v234 button.is-active:active:not(:disabled) {
+  color: var(--mk-ink);
+  background: var(--mk-surface);
+  border: 0;
+  box-shadow: var(--mk-shadow-1);
+}
+
+/* --- Progress: a single calm card with thin bars. --- */
+html[data-theme] .page.menu-active #menuPanel .menu-summary.is-learning-progress {
+  padding: 14px 16px;
+  background: var(--mk-surface);
+  border: 1px solid var(--mk-line);
+  border-radius: var(--mk-radius-card);
+  box-shadow: none;
+}
+html[data-theme] .page.menu-active #menuPanel .learning-header-progress-track {
+  height: 6px;
+  background: var(--mk-surface-3);
+  border-radius: 999px;
+}
+html[data-theme] .page.menu-active #menuPanel .learning-header-progress-copy strong { font-family: var(--mk-num); font-weight: 700; }
+
+/* --- Shared surfaces: cards, panels and the study-model box. --- */
+html[data-theme] .page.menu-active #menuPanel :is(.study-model-v351, .menu-card, .menu-filters, .menu-empty, .menu-placeholder, .menu-list-header, .stat-card) {
+  background: var(--mk-surface);
+  border-color: var(--mk-line);
+  color: var(--mk-ink);
+}
+html[data-theme] .page.menu-active #menuPanel :is(.study-model-v351, .menu-placeholder, .stat-card) {
+  border-radius: var(--mk-radius-card);
+  box-shadow: none;
+}
+html[data-theme] .page.menu-active #menuPanel .menu-card:hover { background: var(--mk-surface-2); }
+html[data-theme] body select {
+  min-height: 44px;
+  color: var(--mk-ink);
+  background-color: var(--mk-surface);
+  border: 1px solid var(--mk-line-strong);
+  border-radius: var(--mk-radius);
+  font-weight: 600;
+}
+
+/* --- 学ぶ: three entry cards. One frame, a tinted icon chip, a big number, a round go button. --- */
+html[data-theme] .page.menu-active #menuPanel[data-view="today"] .learning-action-grid { gap: 12px; }
+html[data-theme] .page.menu-active #menuPanel[data-view="today"] .learning-action-grid > :is(.learning-action-card, .learning-all-action) {
+  --row-accent-v239: var(--mk-accent-strong);
+  --mk-chip: var(--mk-accent-soft);
+  background: var(--mk-surface);
+  border: 1px solid var(--mk-line);
+  border-radius: 18px;
+  box-shadow: var(--mk-shadow-1);
+  transition: transform .14s var(--mk-ease), box-shadow .2s var(--mk-ease), border-color .2s var(--mk-ease);
+}
+html[data-theme] .page.menu-active #menuPanel[data-view="today"] .learning-action-grid > .learning-action-card.is-weak {
+  --row-accent-v239: #8058b0;
+  --mk-chip: color-mix(in srgb, #8058b0 14%, var(--mk-surface));
+}
+html[data-theme] .page.menu-active #menuPanel[data-view="today"] .learning-action-grid > .learning-all-action {
+  --row-accent-v239: #1d7f86;
+  --mk-chip: color-mix(in srgb, #1d7f86 14%, var(--mk-surface));
+}
+html[data-theme="dark"] .page.menu-active #menuPanel[data-view="today"] .learning-action-grid > .learning-action-card.is-weak { --row-accent-v239: #b597e0; }
+html[data-theme="dark"] .page.menu-active #menuPanel[data-view="today"] .learning-action-grid > .learning-all-action { --row-accent-v239: #5cc3c6; }
+html[data-theme] .page.menu-active #menuPanel[data-view="today"] .learning-action-grid > :is(.learning-action-card, .learning-all-action)::after { display: none; }
+html[data-theme] .page.menu-active #menuPanel[data-view="today"] .learning-action-grid > :is(.learning-action-card:hover:not(:disabled), .learning-all-action:hover) {
+  border-color: color-mix(in srgb, var(--row-accent-v239) 45%, var(--mk-line));
+  box-shadow: var(--mk-shadow-2);
+}
+html[data-theme] .page.menu-active #menuPanel[data-view="today"] .learning-action-grid > .learning-action-card:active:not(:disabled) { transform: scale(.985); }
+html[data-theme] .page.menu-active #menuPanel[data-view="today"] .learning-all-action > .learning-action-card,
+html[data-theme] .page.menu-active #menuPanel[data-view="today"] .learning-all-action > .learning-action-card:hover:not(:disabled) { background: transparent; border: 0; box-shadow: none; }
+html[data-theme] .page.menu-active #menuPanel[data-view="today"] .learning-action-card :is(.learning-action-title, .learning-action-count, .learning-action-count small) { color: var(--mk-ink); }
+html[data-theme] .page.menu-active #menuPanel[data-view="today"] .learning-action-card .learning-action-title { font-weight: 700; letter-spacing: .02em; }
+html[data-theme] .page.menu-active #menuPanel[data-view="today"] .learning-action-card .learning-action-count { font-family: var(--mk-num); font-weight: 700; letter-spacing: -.02em; }
+html[data-theme] .page.menu-active #menuPanel[data-view="today"] .learning-action-card .learning-action-count small { font-family: var(--mk-sans); font-weight: 600; color: var(--mk-muted); letter-spacing: 0; }
+html[data-theme] .page.menu-active #menuPanel[data-view="today"] .learning-action-card .learning-category-icon-v239 {
+  color: var(--row-accent-v239);
+  background: var(--mk-chip);
+  border: 0;
+  border-radius: 14px;
+  box-shadow: none;
+}
+html[data-theme] .page.menu-active #menuPanel[data-view="today"] .learning-action-card .learning-action-link {
+  color: #fff;
+  background: var(--row-accent-v239);
+  border: 0;
+  border-radius: 999px;
+  box-shadow: none;
+}
+html[data-theme="dark"] .page.menu-active #menuPanel[data-view="today"] .learning-action-card .learning-action-link { color: var(--mk-bg); }
+html[data-theme] .page.menu-active #menuPanel[data-view="today"] .learning-action-grid .learning-action-card .learning-action-main { border-right: 0; }
+html[data-theme] .page.menu-active #menuPanel[data-view="today"] .learning-action-grid .learning-custom-settings > summary {
+  color: var(--mk-ink);
+  background: var(--mk-surface-2);
+  border: 0;
+  border-radius: 999px;
+  box-shadow: none;
+  font-weight: 700;
+}
+
+/* --- Question screen. --- */
+/* The toolbar is its own card; the old outer bar becomes a plain wrapper. */
+html[data-theme] .page:not(.menu-active) > .source-bar { padding: 0; background: transparent; border: 0; box-shadow: none; }
+html[data-theme] .page:not(.menu-active) .question-toolbar-v255 {
+  gap: 8px;
+  padding: 8px;
+  background: var(--mk-surface);
+  border: 1px solid var(--mk-line);
+  border-radius: var(--mk-radius-card);
+  box-shadow: var(--mk-shadow-1);
+}
+html[data-theme] .page:not(.menu-active) .question-toolbar-v255 :is(a.source-link, button.import-question-button, button.menu-button) {
+  min-height: 44px;
+  color: var(--mk-ink);
+  background: var(--mk-surface);
+  border: 1px solid var(--mk-line);
+  border-radius: var(--mk-radius);
+  box-shadow: none;
+  font-weight: 700;
+}
+html[data-theme] .page:not(.menu-active) .question-toolbar-v255 :is(a.source-link, button.import-question-button, button.menu-button):hover { background: var(--mk-surface-2); border-color: var(--mk-line-strong); }
+html[data-theme] .page:not(.menu-active) .question-toolbar-v255 .model-control select {
+  color: var(--mk-ink);
+  background-color: var(--mk-surface-2);
+  border: 1px solid transparent;
+  border-radius: var(--mk-radius);
+  box-shadow: none;
+  font-weight: 700;
+}
+html[data-theme] .page:not(.menu-active) .question-step-v373 {
+  color: var(--mk-ink);
+  background: var(--mk-surface-2);
+  border: 0;
+  border-radius: 10px;
+}
+html[data-theme] .page:not(.menu-active) .question-step-v373:hover:not(:disabled) { background: var(--mk-surface-3); }
+html[data-theme] .page:not(.menu-active) .question-step-v373:disabled { opacity: .35; }
+html[data-theme] .page:not(.menu-active) #questionTitleNumberV250 { font-weight: 800; letter-spacing: .01em; }
+html[data-theme] .page:not(.menu-active) #questionTitleTypeV250 {
+  padding: 3px 10px;
+  color: var(--mk-muted);
+  background: var(--mk-surface-2);
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+}
+html[data-theme] .page:not(.menu-active) :is(.scene-card, .answer-strip, .comments-panel) {
+  background: var(--mk-surface);
+  border: 1px solid var(--mk-line);
+  border-radius: var(--mk-radius-card);
+  box-shadow: var(--mk-shadow-1);
+}
+
+/* Answer panel: the next question is the one obvious action. */
+html[data-theme] .page:not(.menu-active) .answer-title { font-weight: 800; letter-spacing: .02em; }
+html[data-theme] .page:not(.menu-active) .answer-choice { border-radius: 14px; box-shadow: none; }
+html[data-theme] .page:not(.menu-active) .answer-actions { gap: 8px; }
+html[data-theme] .page:not(.menu-active) #nextQuestionBottomButton {
+  min-height: 52px;
+  color: var(--mk-accent-ink);
+  background: var(--mk-accent);
+  border: 0;
+  border-radius: 14px;
+  box-shadow: 0 1px 0 #ffffff59 inset, 0 6px 16px color-mix(in srgb, var(--mk-accent) 35%, transparent);
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: .04em;
+}
+html[data-theme] .page:not(.menu-active) .question-toolbar-v255 button.next-button {
+  min-height: 44px;
+  color: var(--mk-accent-ink);
+  background: var(--mk-accent);
+  border: 0;
+  border-radius: var(--mk-radius);
+  box-shadow: none;
+  font-weight: 800;
+}
+html[data-theme] .page:not(.menu-active) .next-button:hover:not(:disabled) { background: var(--mk-accent-strong); }
+html[data-theme] .page:not(.menu-active) :is(.answer-step-v374, .answer-organize-button, .comment-add-button, .reaction-add-button-v208) {
+  min-height: 44px;
+  color: var(--mk-ink);
+  background: var(--mk-surface);
+  border: 1px solid var(--mk-line);
+  border-radius: var(--mk-radius);
+  box-shadow: none;
+  font-weight: 700;
+}
+html[data-theme] .page:not(.menu-active) .reaction-entry-bar-v208 .reaction-add-button-v208 { min-height: 32px; border-radius: 999px; }
+html[data-theme] .page:not(.menu-active) :is(.answer-step-v374, .answer-organize-button, .comment-add-button, .reaction-add-button-v208):hover:not(:disabled) { background: var(--mk-surface-2); border-color: var(--mk-line-strong); }
+html[data-theme] .page:not(.menu-active) .answer-step-v374:disabled { opacity: .4; }
+html[data-theme] .page:not(.menu-active) .answer-poll-panel {
+  background: var(--mk-surface-2);
+  border: 0;
+  border-radius: var(--mk-radius);
+}
+html[data-theme] .next-float-v368 {
+  color: var(--mk-accent-ink);
+  background: var(--mk-accent);
+  box-shadow: var(--mk-shadow-3);
+}
+
+/* Phones: the toolbar folds into two tidy rows instead of scrolling sideways. */
+@media (max-width: 800px) {
+  html[data-theme] .page:not(.menu-active) .source-bar { overflow: visible; }
+  html[data-theme] .page:not(.menu-active) .question-toolbar-v255 {
+    flex-wrap: wrap;
+    width: 100%;
+    min-width: 0;
+    overflow: visible;
+  }
+  html[data-theme] .page:not(.menu-active) .question-toolbar-v255 > h1 { order: -2; flex: 1 1 calc(100% - 104px); min-width: 0; }
+  html[data-theme] .page:not(.menu-active) .question-toolbar-v255 > .menu-button { order: -1; flex: 0 0 auto; margin-left: auto; }
+  html[data-theme] .page:not(.menu-active) .question-toolbar-v255 > .model-control { flex: 1 1 0; min-width: 0; }
+  html[data-theme] .page:not(.menu-active) .question-toolbar-v255 > .model-control { display: flex; flex-wrap: wrap; row-gap: 4px; }
+  html[data-theme] .page:not(.menu-active) .question-toolbar-v255 > .model-control select { flex: 1 1 100%; width: 100%; min-width: 0; }
+  html[data-theme] .page:not(.menu-active) .question-toolbar-v255 > .model-control .study-model-fallback-v351 { flex: 1 1 100%; margin: 0; padding-left: 4px; font-size: 12px; }
+  html[data-theme] .page:not(.menu-active) .question-toolbar-v255 > :is(.source-link, .import-question-button) {
+    flex: 0 0 44px;
+    width: 44px;
+    padding: 0;
+    justify-content: center;
+  }
+  html[data-theme] .page:not(.menu-active) .question-toolbar-v255 > :is(.source-link, .import-question-button) > span {
+    position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+  }
+  /* After answering, the big 次の問題へ in the answer panel (and its floating copy) carries the
+     action, so the toolbar copy would only push the board down. */
+  html[data-theme] .page:not(.menu-active) .question-toolbar-v255 > button.next-button { display: none; }
+}
+
+/* ===== hand-tray-v379 ｜ スマホの手牌トレイ ===== */
+/* V379: on phones the board's own hand tiles are ~15px wide. This tray repeats the hand under
+   the board at a readable, tappable size (hand-tray-v379.js mirrors the real buttons). */
+.hand-tray-v379 { display: none; }
+@media (max-width: 640px) {
+  .page:not(.menu-active) .hand-tray-v379:not([hidden]) {
+    display: grid;
+    gap: 10px;
+    margin: 10px 2px 2px;
+    padding: 12px 6px 14px;
+    background: var(--mk-surface-2, #f1efe9);
+    border-radius: 14px;
+  }
+  .hand-tray-tiles-v379 {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 1px;
+  }
+  .hand-tray-tile-v379 {
+    position: relative;
+    flex: 0 1 26px;
+    min-width: 0;
+    aspect-ratio: 66 / 90;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    border-radius: 4px;
+    cursor: pointer;
+    touch-action: manipulation;
+    transition: transform .16s var(--mk-ease, ease);
+  }
+  .hand-tray-tile-v379 img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 4px;
+    box-shadow: 0 1px 0 #0000001f, 0 2px 4px #00000024;
+    pointer-events: none;
+    user-select: none;
+  }
+  .hand-tray-tile-v379.is-draw { margin-left: 8px; }
+  .hand-tray-tile-v379.is-selected { transform: translateY(-8px); }
+  .hand-tray-tile-v379.is-selected img { box-shadow: 0 0 0 2px var(--mk-select, #1f5687), 0 8px 14px #00000033; }
+  .hand-tray-tile-v379.is-recommended::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -8px;
+    width: 6px;
+    height: 6px;
+    margin-left: -3px;
+    background: var(--mk-accent, #c4922f);
+    border-radius: 50%;
+  }
+  .hand-tray-tile-v379:disabled { cursor: default; }
+  .hand-tray-calls-v379 { display: flex; gap: 8px; }
+  .hand-tray-call-v379 {
+    flex: 1 1 0;
+    min-height: 48px;
+    color: #fff;
+    background: var(--mk-select, #1f5687);
+    border: 0;
+    border-radius: 12px;
+    font: 800 16px/1 var(--mk-sans, sans-serif);
+    letter-spacing: .06em;
+    touch-action: manipulation;
+  }
+  .hand-tray-call-v379.is-pass { color: var(--mk-ink, #17212b); background: var(--mk-surface, #fff); box-shadow: inset 0 0 0 1px var(--mk-line-strong, #cbc5b7); }
+  .hand-tray-call-v379.is-selected { box-shadow: 0 0 0 3px var(--mk-accent, #c4922f); }
+  html[data-theme="dark"] .hand-tray-call-v379:not(.is-pass) { color: #0f1418; }
+}
