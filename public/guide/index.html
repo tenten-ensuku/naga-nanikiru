@@ -1,57 +1,440 @@
 <!doctype html>
-<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>みん切る | 使い方ガイド</title><meta name="description" content="気になる一打を問題集へ。みん切るの問題生成、学習、チーム共有を実画面でわかりやすく紹介します。">
-<script src="../theme-v259.js?v=332"></script><link rel="stylesheet" href="../theme-quick-v295.css?v=332"><script defer src="../theme-quick-v295.js?v=332"></script><script defer src="video-format-v295.js?v=332"></script>
-<link rel="stylesheet" href="guide-v298.css?v=332">
-<link rel="stylesheet" href="../theme-song-v344.css?v=344">
-<script defer src="theme-song-v344.js?v=344"></script>
-<script defer src="video-player-v299.js?v=332"></script>
-</head><body><a class="skip" href="#main">本文へ移動</a>
-<header><div class="header-inner"><a class="brand" href="#top" aria-label="みん切る 使い方ガイドの先頭"><img src="assets/min-kiru-header.png" alt="みん切る みんなの何切る問題集"></a><nav class="header-actions" aria-label="主なリンク"><a class="pdf-link" href="みん切る_使い方ガイド.pdf" download>PDFを保存</a><a class="button" href="https://minkiru.naga-study.workers.dev/" target="_blank" rel="noopener">アプリへ ↗</a><button id="themeQuickV295" type="button" aria-label="ライトモードに切り替える" title="ライトモードに切り替える"><svg data-theme-icon="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><svg data-theme-icon="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20.9 13.2A9 9 0 0 1 10.8 3.1a9 9 0 1 0 10.1 10.1Z"/></svg></button><span id="themeQuickStatusV295" role="status"></span></nav></div></header>
-<main id="main">
-<section class="cover" id="top"><div class="container"><div class="hero"><div><p class="eyebrow">みん切る 使い方ガイド</p><h1>気になった一打を、<br>みんなの学びに。</h1><p class="intro">NAGAで解析した局面を問題にして、何度でも復習。<br>仲間と問題集を共有して、考え方まで深めよう。</p><div class="hero-actions"><a class="button" href="#naga-url">問題のつくり方を見る</a><a class="button light" href="#learn">まず問題を解いてみる</a><a class="button light" href="#movie">音声付きの紹介動画を見る</a></div></div><svg class="hero-art" viewBox="310 75 780 800" width="780" height="800" role="img" aria-label="みん切るのロゴ。開いた本に麻雀卓を重ねた金色のシンボル"><defs><clipPath id="guideLogoClipV304"><rect x="310" y="75" width="780" height="800"/></clipPath></defs><image href="assets/loading-screen-v243.png" width="1402" height="1122" clip-path="url(#guideLogoClipV304)"/></svg></div>
-<div class="flow" aria-label="問題生成の3ステップ"><div class="flow-card"><span class="number">STEP 01</span><strong>URLを貼る</strong><p>NAGAの解析済み局面を用意。</p></div><div class="flow-card"><span class="number">STEP 02</span><strong>候補を確認</strong><p>盤面と対象プレイヤーを確認。</p></div><div class="flow-card"><span class="number">STEP 03</span><strong>問題集に追加</strong><p>保存先を選べば、学習の準備完了。</p></div></div>
-<div class="note"><p>NAGAの解析済みデータから、アプリが盤面を再現します。利用・作成にはDiscordログインが必要です。</p></div>
-<nav class="toc" aria-label="目次"><a href="#learn"><b>01</b>問題を解く</a><a href="#naga-url"><b>02</b>1問をつくる</a><a href="#batch"><b>03</b>まとめてつくる</a><a href="#team"><b>04</b>チームで共有する</a><a href="#review"><b>05</b>復習を続ける</a><a href="#faq"><b>06</b>よくある質問</a></nav></div></section>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>みん切る｜使い方ガイド</title>
+  <meta name="description" content="60秒でわかるみん切るの使い方ガイド。NAGA解析局面からの問題生成、スマホ手牌トレイでの学習、みんなの回答・コメント、チーム共有までわかりやすくまとめています。">
+  <meta name="theme-color" content="#f4f3ef">
+  <link rel="icon" type="image/png" sizes="32x32" href="../icons/favicon-32.png">
+  <script src="../theme-v259.js?v=380"></script>
+  <script defer src="../theme-quick-v295.js?v=380"></script>
+  <link rel="stylesheet" href="guide-v380.css?v=380">
+  <script defer src="video-player-v299.js?v=380"></script>
+  <script defer src="theme-song-v344.js?v=380"></script>
+</head>
+<body>
+  <a class="skip" href="#main">本文へ移動</a>
 
-<section class="section" id="movie" data-video-version="305"><div class="container"><p class="eyebrow">INTRO / 紹介動画・最新版</p><h2>動画でわかる、みん切るの使い方。</h2><p class="lead">本を開く、解く、つくる、チームで深める。約3分で、みん切るの使い方を紹介します。</p><div class="promo-layout"><div class="promo-player"><video class="promo-video" controls playsinline preload="none" poster="video/minkiru-promo-portrait-poster.jpg?v=332" data-portrait-src="video/minkiru-promo-portrait-v298.mp4?v=332&amp;audio=hanchan&amp;avatar=pierre" data-landscape-src="video/minkiru-promo-landscape-v298.mp4?v=332&amp;audio=hanchan&amp;avatar=pierre" data-portrait-poster="video/minkiru-promo-portrait-poster.jpg?v=332" data-landscape-poster="video/minkiru-promo-landscape-poster.jpg?v=332" aria-label="みん切るの紹介動画。約3分、日本語ナレーション・字幕・BGM付き"><source src="video/minkiru-promo-portrait-v298.mp4?v=332&amp;audio=hanchan&amp;avatar=pierre" type="video/mp4"><track kind="captions" src="video/minkiru-promo.vtt?v=332" srclang="ja" label="日本語">動画を再生できない場合は、下のリンクからMP4を保存してください。</video><button class="promo-play-button" type="button" aria-label="紹介動画を再生、3分04秒" hidden><span class="promo-play-icon" aria-hidden="true">▶</span><span>紹介動画を再生<small>3分04秒・音声付き</small></span></button><p class="promo-play-status" role="status" hidden></p></div><div class="promo-copy"><h3>解く。つくる。<br>気軽に話そう。</h3><ul><li>本を開いて、テーマを選び、問題に答える</li><li>NAGAの推奨と比べ、解説・コメント・リアクションで学ぶ</li><li>「みんなの回答」を開いて、選ばれた牌と得票率を見比べる</li><li>苦手の復習と、コメント本文からの検索</li><li>「v2.2」で局面URLをコピーして問題を生成</li><li>解説も一緒に入力して、選んだ問題を追加</li><li>チーム問題集を共有し、管理メンバーを選ぶ</li></ul><p class="small">PC向けの横長版とスマホ向けの縦長版を、画面に合わせて再生します。音声・字幕・オリジナルBGM付き。太陽・月のボタンによる表示切り替えも紹介します。</p><p class="comment-invitation"><strong>疑問も感想も、気軽にコメントを。</strong><br>作成者にとって、誰からのコメントもうれしいものです。「私はこう考えた」「ここが気になる」の一言から、みんなで意見交換しましょう。</p><a class="button light" data-promo-download href="video/minkiru-promo-portrait-v298.mp4?v=332&amp;audio=hanchan&amp;avatar=pierre" download="minkiru-intro-portrait-v298.mp4">紹介動画を保存（MP4）</a><p class="small">生成にはNAGA解析済みのURL、アプリの利用にはDiscordログインが必要です。</p></div></div></div></section>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="#top" aria-label="みん切る 使い方ガイドの先頭">
+        <img class="logo-light" src="assets/logo-header-light-v380.png" alt="みん切る みんなの何切る問題集">
+        <img class="logo-dark" src="assets/logo-header-dark-v380.png" alt="みん切る みんなの何切る問題集">
+        <span class="brand-tag">使い方ガイド</span>
+      </a>
+      <nav class="header-nav" aria-label="ガイド目次">
+        <a href="#movie">60秒動画</a>
+        <a href="#learn">解く</a>
+        <a href="#naga-url">つくる</a>
+        <a href="#team">チーム共有</a>
+        <a href="#review">復習</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <div class="header-actions">
+        <a class="btn btn-ghost" href="みん切る_使い方ガイド.pdf" download>PDF保存</a>
+        <a class="btn btn-primary" href="https://minkiru.naga-study.workers.dev/" target="_blank" rel="noopener">アプリへ ↗</a>
+        <button id="themeQuickV295" type="button" aria-label="ダークモードに切り替える" title="ダークモードに切り替える">
+          <svg data-theme-icon="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+          <svg data-theme-icon="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20.9 13.2A9 9 0 0 1 10.8 3.1a9 9 0 1 0 10.1 10.1Z"/></svg>
+        </button>
+        <span id="themeQuickStatusV295" role="status"></span>
+      </div>
+    </div>
+  </header>
 
-<section class="section" id="learn"><div class="container"><p class="eyebrow">01 / 解く</p><h2>本棚から、今日の一問へ。</h2><p class="lead">気になる問題集を開いて、自分ならどうするかを選びます。答え合わせでは、NAGAの推奨と自分の選択を見比べましょう。</p><div class="split"><div><ol class="steps"><li><h3>Discordでログイン</h3><p>アプリを開いてログインします。自分の回答履歴は、同じDiscordアカウントで引き継げます。</p></li><li><h3>本を選んで開く</h3><p><span class="ui">本棚</span>で本を1回タップすると内容を確認、もう1回で開きます。複数巻ある本は巻を選びます。</p></li><li><h3>解き方を選ぶ</h3><p><span class="ui">学ぶ</span>の<span class="ui">未回答</span>・<span class="ui">苦手</span>・<span class="ui">全問</span>から開始。問題一覧から直接選ぶこともできます。</p></li><li><h3>選んで、答え合わせ</h3><p>手牌や判断を選んで<span class="ui">この回答で確定</span>。推奨・自分の選択・コメントを確認し、<span class="ui">次の問題へ</span>進みます。</p></li></ol></div><figure class="shot"><img src="assets/05-question.png" alt="みん切るの問題画面。再現された盤面を見ながら手牌を選択する" loading="lazy"><figcaption>実際の問題画面。画像を押すと拡大できます。</figcaption></figure></div><div class="note"><p><strong>途中でやめても大丈夫。</strong> <span class="ui">戻る</span>で途中保存し、<span class="ui">前回の続き</span>から再開できます。途中の出題順・位置は端末ごとに保存されます。</p></div></div></section>
+  <main id="main">
+    <!-- Hero -->
+    <section class="hero-section" id="top">
+      <div class="container">
+        <div class="hero-grid">
+          <div>
+            <p class="eyebrow">みん切る 使い方ガイド</p>
+            <h1 class="hero-title">迷った一打を、<br><span class="accent">AIと仲間の学び</span>に。</h1>
+            <p class="hero-lead">NAGAで解析した局面をURLひとつで問題集に。5モデルの推奨バーや仲間の回答・コメントと見比べながら、何度でも復習できます。</p>
+            <div class="hero-pills" aria-label="主な特長">
+              <span class="hero-pill"><i style="background:var(--purple)"></i>NAGA 5モデル比較</span>
+              <span class="hero-pill"><i style="background:var(--accent)"></i>スマホの大きな手牌トレイ</span>
+              <span class="hero-pill"><i style="background:var(--navy)"></i>みんなの回答 &amp; コメント</span>
+              <span class="hero-pill"><i style="background:var(--emerald)"></i>URLを貼るだけで問題化</span>
+            </div>
+            <div class="hero-actions">
+              <a class="btn btn-primary btn-lg" href="#movie">▶ 60秒動画を見る</a>
+              <a class="btn btn-secondary btn-lg" href="#naga-url">問題のつくり方</a>
+              <a class="btn btn-secondary btn-lg" href="https://minkiru.naga-study.workers.dev/" target="_blank" rel="noopener">アプリを開く ↗</a>
+            </div>
+          </div>
+          <div class="hero-emblem">
+            <img class="emblem-light" src="assets/logo-full-v380.png" alt="みん切る — みんなの何切る問題集">
+            <img class="emblem-dark" src="assets/logo-full-dark-v380.png" alt="みん切る — みんなの何切る問題集">
+          </div>
+        </div>
 
-<section class="section" id="naga-url"><div class="container">
+        <nav class="quick-flow" aria-label="みん切るの3つのステップ">
+          <a class="qflow-card" href="#learn">
+            <span class="qflow-num">01</span>
+            <div>
+              <strong>解いて、AI・仲間と比べる</strong>
+              <p>直感で牌を選んで回答。NAGA 5モデルと「みんなの回答」で気づきを得る。</p>
+            </div>
+          </a>
+          <a class="qflow-card" href="#naga-url">
+            <span class="qflow-num">02</span>
+            <div>
+              <strong>URLを貼って問題をつくる</strong>
+              <p>NAGA右側の「v2.2」をコピーして貼るだけ。1問も半荘まとめ抽出もOK。</p>
+            </div>
+          </a>
+          <a class="qflow-card" href="#team">
+            <span class="qflow-num">03</span>
+            <div>
+              <strong>本棚で復習・チーム共有</strong>
+              <p>苦手問題の自動復習や、承認許可制でのチーム検討問題集づくりに対応。</p>
+            </div>
+          </a>
+        </nav>
+      </div>
+    </section>
 
-<p class="eyebrow">準備 / NAGAの局面URLをコピー</p><h2>局面URLのコピーは、ここ。</h2>
-<p class="lead">NAGAで出題したい局面を表示し、<strong>右側の「v2.2」</strong>をクリック。<br>その瞬間の局面URLが、クリップボードにコピーされます。</p>
-<div class="naga-guide-grid"><figure class="shot"><div class="naga-annotated"><img src="assets/08-naga-source.png" alt="NAGAの解析画面。盤面の右側にある操作パネルで、表示選択の行にv2.2がある" loading="lazy"><svg viewBox="0 0 901 677" aria-hidden="true"><defs><marker id="naga-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="#ffdf54"/></marker></defs><rect x="774" y="267" width="38" height="26" rx="4" fill="none" stroke="#ffdf54" stroke-width="4"/><path d="M847 365 L809 298" fill="none" stroke="#ffdf54" stroke-width="4" marker-end="url(#naga-arrow)"/><rect x="663" y="375" width="222" height="40" rx="5" fill="#08213b"/><text x="774" y="401" text-anchor="middle" fill="white" style="font:700 20px 'Yu Gothic',sans-serif">右側の v2.2 をクリック</text></svg></div><figcaption>画面右側の小さな「v2.2」が、局面URLをコピーする場所です。</figcaption></figure>
-<div><ol class="steps"><li><h3>出題したい局面を表示</h3><p>NAGAで解析済みのレポートを開き、問題にしたい局面まで進めます。</p></li><li><h3>右側の「v2.2」をクリック</h3><p>その瞬間の局面URLが、クリップボードに保存されます。</p></li><li><h3>みん切るへ貼り付け</h3><p><span class="ui">つくる</span>→<span class="ui">NAGA URL</span>欄に貼り付けます。PCなら Ctrl + V、スマホなら入力欄を長押しして貼り付け。</p></li></ol>
-<figure class="naga-zoom"><div class="naga-annotated"><img src="assets/08-naga-panel.png" alt="右側操作パネルの拡大。表示選択の行にあるv2.2をクリックする" loading="lazy"><svg viewBox="0 0 232 120" aria-hidden="true"><rect x="115" y="72" width="38" height="26" rx="3" fill="none" stroke="#ffdf54" stroke-width="2.5"/></svg></div><figcaption>右側の操作パネルを拡大。「ptEV」とAI選択欄の間です。</figcaption></figure></div></div>
-<div class="note"><p><strong>出題したい局面を表示 → v2.2をクリック → みん切るへ貼る。</strong><br>URLを貼ったら、下の手順で候補を生成・確認し、問題集に追加します。</p></div>
-</div></section>
+    <!-- 60s Intro Video -->
+    <section class="section section-alt" id="movie" data-video-version="380">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow">INTRO MOVIE / 60秒で紹介</p>
+          <h2>まずは1分。動画でわかる、みん切る。</h2>
+          <p class="lead">解く・AIと比べる・みんなの意見を見る・URLから作る・本棚で続けるまでを60秒にまとめました。</p>
+        </div>
+        <div class="video-stage">
+          <div class="promo-player">
+            <video class="promo-video" controls playsinline preload="metadata" poster="video/minkiru-promo-v380-poster.jpg?v=380" aria-label="みん切るの60秒紹介動画。日本語ナレーション・字幕・BGM付き">
+              <source src="video/minkiru-promo-v380.mp4?v=380" type="video/mp4">
+              <track kind="captions" src="video/minkiru-promo-v380.vtt?v=380" srclang="ja" label="日本語" default>
+              動画を再生できない場合は、下のボタンからMP4を保存してご覧ください。
+            </video>
+            <button class="promo-play-button" type="button" aria-label="60秒の紹介動画を再生" hidden>
+              <span class="promo-play-icon" aria-hidden="true">▶</span>
+              <span class="promo-play-label">紹介動画を再生<small>60秒・音声＆字幕付き</small></span>
+            </button>
+          </div>
+          <p class="promo-play-status" role="status" hidden></p>
+          <div class="video-footer">
+            <div class="chapter-bar" aria-label="動画チャプター">
+              <button class="chapter-btn" type="button" data-seek="0"><b>0:00</b>何切るフック</button>
+              <button class="chapter-btn" type="button" data-seek="13"><b>0:13</b>手牌トレイ &amp; AI比較</button>
+              <button class="chapter-btn" type="button" data-seek="25"><b>0:25</b>みんなの回答 &amp; 議論</button>
+              <button class="chapter-btn" type="button" data-seek="36"><b>0:36</b>URLから問題生成</button>
+              <button class="chapter-btn" type="button" data-seek="46"><b>0:46</b>本棚 &amp; チーム共有</button>
+            </div>
+            <a class="btn btn-secondary" data-promo-download href="video/minkiru-promo-v380.mp4?v=380" download="minkiru-intro-60s.mp4">動画を保存（MP4）</a>
+          </div>
+        </div>
+      </div>
+    </section>
 
-<section class="section" id="generate"><div class="container"><p class="eyebrow">02 / つくる</p><h2>まずは、気になる局面を1問に。</h2><p class="lead">用意するものは<strong>NAGAで解析済みの局面URL</strong>。画面の案内に沿って、3ステップで進められます。</p><div class="split reverse"><figure class="shot"><img src="assets/01-generator.png" alt="つくる画面。NAGA URL、対象プレイヤー、この局面から1問、1問を生成の項目" loading="lazy"><figcaption>「つくる」の入力画面。保存先は候補を見てから選んでもOK。</figcaption></figure><ol class="steps"><li><h3>URLを貼って生成する</h3><p>NAGAで出題したい局面を表示し、右側の<span class="ui">v2.2</span>をクリックしてURLをコピー。<span class="ui">つくる</span>の<span class="ui">NAGA URL</span>に貼り、<span class="ui">この局面から1問</span>を選択。対象プレイヤーを確認して<span class="ui">1問を生成</span>を押します。</p></li><li><h3>候補を確認する</h3><p>盤面・対象プレイヤー・プレイヤーの選択・AIの選択を確認します。出題したい場面かを、ここで確かめましょう。</p></li><li><h3>保存先を選んで追加</h3><p><span class="ui">保存先問題集</span>を選び、候補の<span class="ui">［本の名前］へ追加</span>を押します。最後に保存先・件数を確認し、<span class="ui">この保存先へ追加</span>で完了です。</p></li></ol></div><div class="note"><p><strong>新しい問題集も、その場で作れます。</strong> 保存先がなければ<span class="ui">＋新しい問題集</span>へ。名前・色・公開範囲を決めて<span class="ui">問題集を作成</span>すると、その本が保存先になります。</p></div><p class="small">NAGAで解析する前の生の牌譜URLでは生成できません。NAGAの解析済みレポート・局面URLをご用意ください。取得できない局面や未対応の局面は保存できません。</p></div></section>
+    <!-- 01: Learn -->
+    <section class="section" id="learn">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow">01 / 解く・比べる</p>
+          <h2>本棚から開いて、サクサク答え合わせ。</h2>
+          <p class="lead">PCでもスマホでも直感的に解けます。回答した瞬間に、NAGA 5モデルの推奨バーと仲間の選択が一目でわかります。</p>
+        </div>
 
-<section class="section" id="batch"><div class="container"><p class="eyebrow">03 / まとめてつくる</p><h2>半荘から、振り返りたい場面を集める。</h2><p class="lead">一局ずつ探す代わりに、候補をまとめて抽出。必要な問題を選んで、一度に問題集へ追加できます。</p><div class="split"><div><ol class="steps"><li><h3>まとめて抽出する</h3><p>NAGA URLを貼り、<span class="ui">半荘からまとめて抽出</span>を選択。対象プレイヤーを確認して<span class="ui">候補を抽出</span>を押します。</p></li><li><h3>入れたい候補を選ぶ</h3><p>候補の盤面を確認し、入れたい問題の<span class="ui">選択</span>にチェックします。<span class="ui">抽出条件を調整する</span>は、最初は初期設定のままで大丈夫です。</p></li><li><h3>選んだ問題を追加</h3><p>保存先を指定して<span class="ui">選択した○問を追加</span>。保存先・件数の確認画面で<span class="ui">この保存先へ追加</span>を押します。</p></li></ol><p class="small">初回の読み込み後、対象者の名前を選び、もう一度抽出する場合があります。</p></div><figure class="shot"><img src="assets/02-candidate.png" alt="生成した候補の盤面と選択内容、問題集へ追加するボタン" loading="lazy"><figcaption>実際に生成した候補の画面例。内容を確認してから追加します。</figcaption></figure></div><div class="two-cards"><article class="card"><span class="label">自分の復習用</span><h3>「今月の迷った一打」</h3><p>気になった局面だけをためて、苦手克服に活用。少しずつ追加して、自分専用の問題集に。</p></article><article class="card"><span class="label">問題集を育てるコツ</span><h3>1冊200問を目安に、次の巻へ。</h3><p>1冊の上限は200問。上限に近づくと次巻の案内が出ます。テーマや期間で分けると、探しやすくなります。</p></article></div></div></section>
+        <div class="steps-row">
+          <article class="step-card">
+            <span class="step-badge">STEP 01</span>
+            <h3>Discordでログイン</h3>
+            <p>アプリを開いてログインします。回答履歴・お気に入り・習熟度は同じアカウントでPC・スマホ間に同期されます。</p>
+          </article>
+          <article class="step-card">
+            <span class="step-badge">STEP 02</span>
+            <h3>本棚から学び方を選ぶ</h3>
+            <p><span class="ui">本棚</span>で気になる1冊を開き、<span class="ui">未回答</span>・<span class="ui">苦手</span>・<span class="ui">全問</span>からスタート。途中でやめても<span class="ui">前回の続き</span>から再開できます。</p>
+          </article>
+          <article class="step-card">
+            <span class="step-badge">STEP 03</span>
+            <h3>選んで確定、理由まで深める</h3>
+            <p>牌や鳴きを選んで<span class="ui">この回答で確定</span>。NAGA推奨バー、「みんなの回答」、解説・コメント・リアクションで理解を深めます。</p>
+          </article>
+        </div>
 
-<section class="section" id="team"><div class="container"><p class="eyebrow">04 / 仲間と共有する</p><h2>NANAリーグの、チーム検討にも。</h2><p class="lead">おすすめの使い方は、チームで育てる「検討問題集」。対局で迷った一打を持ち寄り、解いてからコメントで気軽に意見交換できます。</p><div class="scenario"><div><p class="eyebrow">おすすめの運用例</p><h3>「てんぱに問題集」<br>を1冊つくる。</h3></div><p>担当者が問題を追加し、メンバーは時間のあるときに回答。「なぜその牌を選ぶか」をコメントに残せば、集まる前から検討が始められます。</p></div><div class="sharing-flow"><article class="sharing-step"><b>OWNER / 01</b><h3>承認許可制で作る</h3><p>新しい問題集の公開範囲を<span class="ui">承認許可制</span>に設定。</p></article><article class="sharing-step"><b>OWNER / 02</b><h3>本のURLを渡す</h3><p>本を開き、ブラウザーのアドレス欄のURLをチームへ送ります。</p></article><article class="sharing-step"><b>MEMBER / 03</b><h3>閲覧を申請する</h3><p>メンバーがログインし、<span class="ui">閲覧申請を送る</span>を押します。</p></article><article class="sharing-step"><b>OWNER / 04</b><h3>権限を選んで承認</h3><p><span class="ui">この本の管理</span>→<span class="ui">閲覧申請</span>で権限を選び、<span class="ui">承認</span>します。</p></article></div><details style="margin:24px 0"><summary style="cursor:pointer;font-weight:700">新しい問題集の入力例を見る</summary><figure class="shot" style="max-width:560px;margin:18px auto"><img src="assets/03-book-create.png" alt="問題集名にてんぱに問題集と入力し、公開範囲を承認許可制にした新規問題集の入力画面" loading="lazy"><figcaption>名前・色・公開範囲を決め、必要なら管理メンバーを指定します。</figcaption></figure></details><h3 class="mini-title">見る人と、管理する人を選ぶ</h3><table class="permission"><thead><tr><th scope="col">権限</th><th scope="col">できること</th></tr></thead><tbody><tr><th scope="row">閲覧</th><td>問題を解く・コメントで検討する。</td></tr><tr><th scope="row">編集</th><td>閲覧に加え、問題の追加・インポート・編集・整理。</td></tr><tr><th scope="row">管理</th><td>問題の追加・編集・整理と、本の名前・説明・色の変更。作成者が管理メンバーを指定します。</td></tr></tbody></table><div class="note"><p><strong>承認許可制でも、本の名前は一覧に公開されます。</strong><br>本文は許可されたメンバーだけが閲覧できます。本の名前には、公開してよい名称を使いましょう。公開範囲やメンバーの変更は<span class="ui">この本の管理</span>から行います。</p></div><p class="small">コメントはみん切る内で共有され、Discordへ自動投稿されません。</p></div></section>
+        <div class="visual-grid three">
+          <figure class="shot">
+            <img src="assets/v380-solve-handtray.jpg" alt="JSON盤面とスマホの大きな手牌トレイ画面" loading="lazy">
+            <figcaption><strong>スマホでも押しやすい大きな手牌トレイ</strong>JSON盤面でくっきり再現。スマホでは盤面下に押しやすい手牌トレイを表示します。</figcaption>
+          </figure>
+          <figure class="shot">
+            <img src="assets/v380-naga-models.jpg" alt="NAGA 5モデルの推奨バー比較画面" loading="lazy">
+            <figcaption><strong>NAGA 5モデルの推奨度を一目で比較</strong>ニシキ・ヒバカリ・カガシ・オメガ・ガンマの推奨バーを切り替えて確認できます。</figcaption>
+          </figure>
+          <figure class="shot">
+            <img src="assets/v380-community.jpg" alt="みんなの回答の得票率と解説・コメント・リアクション画面" loading="lazy">
+            <figcaption><strong>みんなの回答 &amp; コメント・リアクション</strong>仲間が選んだ牌と得票率をチェック。疑問や感想も気軽に一言から投稿できます。</figcaption>
+          </figure>
+        </div>
 
-<section class="section" id="review"><div class="container"><p class="eyebrow">05 / 続ける</p><h2>解いて終わりにせず、力に変える。</h2><p class="lead">苦手な問題を解き直す。気になる一打を残す。仲間の考えを読む。自分に合う使い方で、問題集を育てていきましょう。</p><div class="review-grid"><article class="card"><span class="glyph" aria-hidden="true">↻</span><h3>苦手な問題を復習</h3><p><span class="ui">苦手</span>では、直近で×・△だった問題を中心に練習できます。</p></article><article class="card"><span class="glyph" aria-hidden="true">☆</span><h3>気になる一打を残す</h3><p><span class="ui">☆ お気に入り</span>で、後から見返したい問題を残しましょう。</p></article><article class="card"><span class="glyph" aria-hidden="true">“</span><h3>気軽に、一言から。</h3><p>疑問も、違う考えも、一言の感想も歓迎。作成者にとって、誰からのコメントもうれしいものです。<span class="ui">コメント追加</span>から、感じたことを気軽にどうぞ。</p></article></div><div class="two-cards"><article class="card"><span class="label">学び方を選ぶ</span><h3>出題の条件を変える</h3><p><span class="ui">全問</span>→<span class="ui">条件設定</span>で、順番・ランダム、判断種別、回答結果などを指定できます。</p></article><article class="card"><span class="label">自分の変化を見る</span><h3>この本の成績</h3><p>自分の回答数、悪手回避率、平均回答時間などを確認できます。次に復習する問題の目安に。</p></article></div><div class="split" style="margin-top:30px"><figure class="shot"><img src="assets/04-library.png" alt="本棚画面。問題集の表紙や背表紙から学ぶ本を選べる" loading="lazy"><figcaption>本棚から、学びたい問題集へ。</figcaption></figure><div><h3 class="mini-title">太陽・月で、表示を切り替える</h3><p>太陽はライト表示、月はダーク表示の目印です。ボタンを押すと、反対の表示に切り替わります。問題を解いている間は、ボタンは非表示になります。</p><p class="small">初めて開くとライト表示になります。選んだ表示は、このブラウザーに保存されます。</p><div class="note"><p><strong>おすすめの続け方</strong><br>迷った局面を追加 → 自分で解く → コメントを読む → 「苦手」でもう一度。</p></div></div></div></div></section>
+        <div class="callout">
+          <strong>ショートカットも快適：</strong>PCではキーボードの矢印キーで牌を選択、回答後はワンタップの <span class="ui">前</span> / <span class="ui">次の問題へ</span> でテンポ良く進められます。
+        </div>
+      </div>
+    </section>
 
-<section class="section" id="faq"><div class="container"><p class="eyebrow">06 / よくある質問</p><h2>迷ったら、ここを確認。</h2><p class="lead">最初の1問は、解析済みの局面URLから。候補を見て、保存先を選べば始められます。</p><div class="faq-list"><details class="faq"><summary>どのURLを使えばいい？</summary><p>NAGAで解析済みのレポート・局面URLを使います。解析前の生の牌譜URLでは生成できません。1問をつくるときは、出題したい局面をNAGAで表示し、右側の<span class="ui">v2.2</span>をクリック。その瞬間の局面URLがコピーされます。</p></details><details class="faq"><summary>生成できない・候補が違う</summary><p>URLが解析済みか、対象プレイヤーと出題したい局面が合っているか確認します。初回読み込み後に名前を選び直す場合もあります。未対応・取得失敗の局面は保存できません。</p></details><details class="faq"><summary>どこに保存されたかわからない</summary><p>追加の最後に表示される保存先と件数を確認しましょう。作成直後の本は保存先に設定されます。<span class="ui">本棚</span>からその本を開けば、追加した問題を確認できます。</p></details><details class="faq"><summary>自分だけの問題集にしたい</summary><p>公開範囲は<span class="ui">プライベート</span>が初期値です。チームなら<span class="ui">承認許可制</span>、アプリ利用者へ公開するなら<span class="ui">全体公開</span>を選びます。閲覧にはDiscordログインが必要です。</p></details><details class="faq"><summary>コメントはDiscordにも届く？</summary><p>コメントの投稿・閲覧は、みん切るの問題画面で行います。Discordへの自動転送はありません。検討してほしい問題は、本のURLとあわせてチームに案内しましょう。</p></details><details class="faq"><summary>端末を変えたら続きはどうなる？</summary><p>回答履歴は同じDiscordアカウントで同期します。一方、途中の出題順・位置とカラーモードは端末・ブラウザーごとの保存です。</p></details><details class="faq"><summary>解説も自動で作られる？</summary><p>生成するのは盤面を再現した問題です。AIによる文章解説の自動生成ではありません。考え方や補足は、コメントを使って積み重ねていきましょう。</p></details></div><div class="note" style="margin-top:32px"><p><strong>はじめの一歩</strong><br>Discordでログイン → NAGAの解析済みURLを貼る → 候補を確認 → 自分の問題集へ追加。</p></div><p class="small">画面と機能の説明は2026年9月時点です。画面画像は実際のみん切るを使用しています。</p></div></section>
-<div class="container theme-song-guide-v344">
-<details class="theme-song-v344" id="theme-song">
-<summary>おまけ：なぜかできたテーマソング</summary>
-<p>なぜかテーマソングまでできました。麻雀が強くなる効能は、たぶんありません。</p>
-<p class="theme-song-title-v344">「一打の向こうへ」／男性ボーカル・文字PV／3分05秒</p>
-<video controls playsinline preload="none" width="1280" height="720" poster="video/minkiru-theme-poster-v344.jpg" aria-label="みん切るのテーマソング「一打の向こうへ」。男性ボーカル・歌詞付き文字PV、3分05秒">
-<source src="video/minkiru-theme-v344.mp4" type="video/mp4">
-動画を再生できない場合は、下のリンクから開いてください。
-</video>
-<a href="video/minkiru-theme-v344.mp4" target="_blank" rel="noopener">動画を直接開く ↗</a>
-</details>
-</div>
-</main><section class="ending"><div class="container"><h2>まずは、あなたの一打を1問に。</h2><p>自分の復習から、仲間との検討まで。</p><a class="button" href="https://minkiru.naga-study.workers.dev/" target="_blank" rel="noopener">みん切るを開く ↗</a><p class="url"><a href="https://minkiru.naga-study.workers.dev/">minkiru.naga-study.workers.dev</a></p></div></section><footer><span>みん切る | 使い方ガイド / 2026.10 / V344</span><a href="みん切る_使い方ガイド.pdf" download>印刷・共有用のPDFを保存</a></footer>
-<dialog id="image-viewer" aria-label="画面画像を拡大表示"><button type="button">閉じる ×</button><img alt=""></dialog><script>
-const viewer=document.getElementById('image-viewer');const full=viewer.querySelector('img');let origin;
-document.querySelectorAll('.shot img').forEach(img=>{const button=document.createElement('button');button.type='button';button.setAttribute('aria-label',img.alt+'（拡大）');button.style.cssText='display:block;padding:0;border:0;background:none;width:100%;border-radius:8px;cursor:zoom-in';img.replaceWith(button);button.append(img);button.addEventListener('click',()=>{origin=button;full.src=img.src;full.alt=img.alt;viewer.showModal()})});
-viewer.querySelector('button').addEventListener('click',()=>viewer.close());viewer.addEventListener('click',event=>{if(event.target===viewer)viewer.close()});viewer.addEventListener('close',()=>origin?.focus());
-</script></body></html>
+    <!-- 02: Create -->
+    <section class="section section-alt" id="naga-url">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow">02 / つくる</p>
+          <h2>NAGAの「v2.2」をコピーして、貼るだけ。</h2>
+          <p class="lead">用意するのは<strong>NAGAで解析済みのURL</strong>だけ。気になる1局面をピンポイントで作ることも、半荘からまとめて抽出することもできます。</p>
+        </div>
+
+        <div class="naga-grid" id="generate">
+          <figure class="shot">
+            <div class="naga-annotated">
+              <img src="assets/08-naga-source.png" alt="NAGA解析画面。右側操作パネルのv2.2をクリックして局面URLをコピーする" loading="lazy">
+              <svg viewBox="0 0 901 677" aria-hidden="true">
+                <defs><marker id="naga-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="#ffdf54"/></marker></defs>
+                <rect x="774" y="267" width="38" height="26" rx="4" fill="none" stroke="#ffdf54" stroke-width="4"/>
+                <path d="M847 365 L809 298" fill="none" stroke="#ffdf54" stroke-width="4" marker-end="url(#naga-arrow)"/>
+                <rect x="655" y="375" width="234" height="42" rx="8" fill="#0e1419"/>
+                <text x="772" y="402" text-anchor="middle" fill="#ffffff" style="font:700 19px sans-serif">右側の v2.2 をクリック</text>
+              </svg>
+            </div>
+            <figcaption><strong>局面URLのコピー場所（NAGA解析画面）</strong>問題にしたい局面を表示し、右側パネルの小さな「v2.2」をクリックするとコピーされます。</figcaption>
+          </figure>
+
+          <div class="naga-side">
+            <figure class="shot">
+              <div class="naga-annotated">
+                <img src="assets/08-naga-panel.png" alt="NAGA操作パネル拡大。ptEVとAI選択欄の間にあるv2.2" loading="lazy">
+                <svg viewBox="0 0 232 120" aria-hidden="true"><rect x="115" y="72" width="38" height="26" rx="4" fill="none" stroke="#ffdf54" stroke-width="3"/></svg>
+              </div>
+              <figcaption><strong>右側パネルの拡大</strong>「ptEV」とモデル選択欄の間にある <span class="ui">v2.2</span> をクリック。</figcaption>
+            </figure>
+
+            <figure class="shot">
+              <img src="assets/v380-create-flow.jpg" alt="URL貼り付けから候補生成・問題集追加までの流れ" loading="lazy">
+              <figcaption><strong>みん切る「つくる」での3ステップ</strong>URLを貼り、候補の盤面を確認して保存先の問題集へ追加します。</figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <div class="compare-grid" id="batch">
+          <article class="compare-card is-accent">
+            <span class="compare-label">PINPOINT / 1問をつくる</span>
+            <h3>迷った1局面をすぐ問題化</h3>
+            <ol>
+              <li>NAGAで出題したい局面の <strong>v2.2</strong> をクリックしてコピー。</li>
+              <li><span class="ui">つくる</span> の <span class="ui">NAGA URL</span> に貼り、<span class="ui">この局面から1問</span> → <span class="ui">1問を生成</span>。</li>
+              <li>盤面と対象プレイヤーを確認し、解説やハッシュタグを添えて保存先へ追加。</li>
+            </ol>
+          </article>
+
+          <article class="compare-card is-navy">
+            <span class="compare-label">BATCH / 半荘からまとめて抽出</span>
+            <h3>1半荘の振り返りを一気に集める</h3>
+            <ol>
+              <li>解析済みレポートのURLを貼り、<span class="ui">半荘からまとめて抽出</span> → <span class="ui">候補を抽出</span>。</li>
+              <li>一覧で盤面を見比べ、残したい問題の <span class="ui">選択</span> にチェック。</li>
+              <li>保存先問題集を指定し、<span class="ui">選択した○問を追加</span> でまとめて登録。</li>
+            </ol>
+          </article>
+        </div>
+
+        <div class="callout">
+          <strong>ポイント：</strong>保存先がなければその場で <span class="ui">＋新しい問題集</span> を作成できます（1冊の上限は200問）。NAGAで解析する前の生の牌譜URLでは生成できないため、解析済みURLをご用意ください。
+        </div>
+      </div>
+    </section>
+
+    <!-- 03: Team & Review -->
+    <section class="section" id="team">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow">03 / 共有する・続ける</p>
+          <h2>チーム検討にも、自分の苦手克服にも。</h2>
+          <p class="lead">NANAリーグなどのチーム検討問題集（例：「てんぱに問題集」）を承認許可制で安全に共有。自分の弱点復習も自動でサポートします。</p>
+        </div>
+
+        <div class="sharing-flow" aria-label="チーム共有の4ステップ">
+          <article class="sharing-step">
+            <b>OWNER / 01</b>
+            <h3>承認許可制で作る</h3>
+            <p>新規問題集の公開範囲を <span class="ui">承認許可制</span> に設定して作成します。</p>
+          </article>
+          <article class="sharing-step">
+            <b>OWNER / 02</b>
+            <h3>本のURLを送る</h3>
+            <p>問題集を開き、ブラウザーのURLをチームメンバーへ共有します。</p>
+          </article>
+          <article class="sharing-step">
+            <b>MEMBER / 03</b>
+            <h3>閲覧を申請する</h3>
+            <p>メンバーがDiscordでログインし、<span class="ui">閲覧申請を送る</span> を押します。</p>
+          </article>
+          <article class="sharing-step">
+            <b>OWNER / 04</b>
+            <h3>権限を選んで承認</h3>
+            <p><span class="ui">この本の管理</span> → <span class="ui">閲覧申請</span> から権限を選んで承認します。</p>
+          </article>
+        </div>
+
+        <div class="split-2">
+          <div>
+            <table class="perm-table">
+              <thead>
+                <tr><th scope="col">権限</th><th scope="col">できること</th></tr>
+              </thead>
+              <tbody>
+                <tr><th scope="row">閲覧</th><td>問題を解く・みんなの回答を見る・コメントやリアクションで検討する。</td></tr>
+                <tr><th scope="row">編集</th><td>閲覧に加え、問題の追加・編集・整理を行う。</td></tr>
+                <tr><th scope="row">管理</th><td>問題の追加・編集・整理と、本の名前・説明・色の変更。作成者が管理メンバーを指定可能。</td></tr>
+              </tbody>
+            </table>
+            <div class="callout">
+              <strong>公開範囲の注意：</strong><span class="ui">承認許可制</span> でも本のタイトルは一覧に表示されます（中身は承認メンバーのみ閲覧可能）。公開して差し支えない名称をご利用ください。
+            </div>
+          </div>
+
+          <figure class="shot">
+            <img src="assets/v380-bookshelf.jpg" alt="みんなの本棚と苦手復習・チーム共有機能" loading="lazy">
+            <figcaption><strong>みんなの本棚と習熟度管理</strong>自分専用・チーム共有・全体公開の本を一画面で整理できます。</figcaption>
+          </figure>
+        </div>
+
+        <div class="feature-grid" id="review">
+          <article class="feature-card">
+            <div class="feature-icon" style="background:var(--purple-soft);color:var(--purple)" aria-hidden="true">↻</div>
+            <h3>苦手だけ自動復習</h3>
+            <p>直近で△・×だった問題を <span class="ui">苦手</span> に自動集計。本棚からそのまま復習を始められます。</p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-icon" aria-hidden="true">☆</div>
+            <h3>お気に入り &amp; 成績</h3>
+            <p>見返したい一打に <span class="ui">☆</span> を登録。<span class="ui">この本の成績</span> で悪手回避率や回答数も確認できます。</p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-icon" style="background:var(--navy-soft);color:var(--navy)" aria-hidden="true">🔍</div>
+            <h3>コメント検索 &amp; 反応列</h3>
+            <p>問題一覧の「反応」列で議論が活発な問題がすぐわかり、コメント本文やタグから検索できます。</p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-icon" style="background:var(--emerald-soft);color:var(--emerald)" aria-hidden="true">◐</div>
+            <h3>太陽・月でテーマ切替</h3>
+            <p>画面上部の太陽・月ボタンでライト／ダーク表示を即切替。選んだ表示はブラウザーに保存されます。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 04: FAQ -->
+    <section class="section section-alt" id="faq">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow">04 / よくある質問</p>
+          <h2>迷ったら、ここを確認。</h2>
+        </div>
+        <div class="faq-list">
+          <details class="faq">
+            <summary>どのURLを使えば問題を作れますか？</summary>
+            <p>NAGAで解析済みのレポート・局面URLを使用します（解析前の生の牌譜URLでは生成できません）。1問だけ作るときはNAGAで対象局面を表示し、右側の <span class="ui">v2.2</span> をクリックしてコピーしてください。</p>
+          </details>
+          <details class="faq">
+            <summary>生成できない・対象プレイヤーが違うときは？</summary>
+            <p>URLがNAGA解析済みか、対象プレイヤーと出題したい局面が合っているかご確認ください。初回読み込み後にプレイヤー名を選び直して再抽出する場合があります。取得できない局面や未対応の局面は保存できません。</p>
+          </details>
+          <details class="faq">
+            <summary>自分だけの非公開問題集にできますか？</summary>
+            <p>はい。新しい問題集の初期値は <span class="ui">プライベート</span> です。チーム共有なら <span class="ui">承認許可制</span>、アプリ利用者へ公開するなら <span class="ui">全体公開</span> を選べます。</p>
+          </details>
+          <details class="faq">
+            <summary>コメントはDiscordにも自動投稿されますか？</summary>
+            <p>いいえ、コメントはみん切る内のみで共有され、Discordへ自動転送されません。検討してほしい問題があるときは、本のURLとあわせてチームへ案内してください。</p>
+          </details>
+          <details class="faq">
+            <summary>PCとスマホで続きから学習できますか？</summary>
+            <p>回答履歴やお気に入りは同じDiscordアカウントで自動同期されます。途中の出題順・位置およびライト／ダーク表示は端末・ブラウザーごとの保存です。</p>
+          </details>
+          <details class="faq">
+            <summary>解説文章もAIが自動で作ってくれますか？</summary>
+            <p>自動生成されるのは盤面データとNAGAの推奨データです。文章解説は自動生成されないため、考え方や補足はコメント機能で自由に書き加えてください。</p>
+          </details>
+        </div>
+
+        <div class="theme-song-guide-v344">
+          <details class="theme-song-v344" id="theme-song">
+            <summary>おまけ：なぜかできたテーマソング「一打の向こうへ」</summary>
+            <p>なぜかテーマソングまでできました。麻雀が強くなる効能は、たぶんありません。</p>
+            <p class="theme-song-title-v344">「一打の向こうへ」／男性ボーカル・文字PV／3分05秒</p>
+            <video controls playsinline preload="none" width="1280" height="720" poster="video/minkiru-theme-poster-v344.jpg" aria-label="みん切るのテーマソング「一打の向こうへ」。男性ボーカル・歌詞付き文字PV、3分05秒">
+              <source src="video/minkiru-theme-v344.mp4" type="video/mp4">
+              動画を再生できない場合は、下のリンクから開いてください。
+            </video>
+            <a href="video/minkiru-theme-v344.mp4" target="_blank" rel="noopener">動画を直接開く ↗</a>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ending -->
+    <section class="ending">
+      <div class="container">
+        <h2>今日の迷いを、明日の自信に。</h2>
+        <p>自分の復習から、仲間とのチーム検討まで。まずは気になる1冊から。</p>
+        <a class="btn btn-primary btn-lg" href="https://minkiru.naga-study.workers.dev/" target="_blank" rel="noopener">みん切るを開く ↗</a>
+        <p class="url"><a href="https://minkiru.naga-study.workers.dev/">minkiru.naga-study.workers.dev</a></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <span>みん切る｜使い方ガイド / 2026.11 / V380</span>
+      <a href="みん切る_使い方ガイド.pdf" download>印刷・共有用のPDFを保存</a>
+    </div>
+  </footer>
+
+  <dialog id="image-viewer" aria-label="画面画像を拡大表示">
+    <button type="button">閉じる ×</button>
+    <img alt="">
+  </dialog>
+
+  <script>
+    (() => {
+      'use strict';
+      // Image zoom modal
+      const viewer = document.getElementById('image-viewer');
+      const full = viewer?.querySelector('img');
+      let origin = null;
+      document.querySelectorAll('.shot img').forEach((img) => {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.setAttribute('aria-label', (img.alt || '画像') + '（拡大表示）');
+        button.style.cssText = 'display:block;padding:0;border:0;background:none;width:100%;border-radius:12px;cursor:zoom-in';
+        img.replaceWith(button);
+        button.append(img);
+        button.addEventListener('click', () => {
+          origin = button;
+          full.src = img.src;
+          full.alt = img.alt;
+          viewer.showModal();
+        });
+      });
+      viewer?.querySelector('button')?.addEventListener('click', () => viewer.close());
+      viewer?.addEventListener('click', (e) => { if (e.target === viewer) viewer.close(); });
+      viewer?.addEventListener('close', () => origin?.focus());
+
+      // Chapter quick-seek buttons
+      const promoVideo = document.querySelector('.promo-video');
+      document.querySelectorAll('[data-seek]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          if (!promoVideo) return;
+          const sec = Number(btn.getAttribute('data-seek')) || 0;
+          promoVideo.currentTime = sec;
+          promoVideo.play().catch(() => {});
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

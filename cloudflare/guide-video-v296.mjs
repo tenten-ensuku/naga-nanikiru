@@ -7,7 +7,8 @@ const videoLengths = {
   '/guide/video/minkiru-promo-portrait-v295.mp4': 10991682,
   '/guide/video/minkiru-promo-landscape-v295.mp4': 11713226,
   '/guide/video/minkiru-promo-portrait-v298.mp4': 11271592,
-  '/guide/video/minkiru-promo-landscape-v298.mp4': 12079562
+  '/guide/video/minkiru-promo-landscape-v298.mp4': 12079562,
+  '/guide/video/minkiru-promo-v380.mp4': 9963881
 };
 
 function byteRange(value, size) {
