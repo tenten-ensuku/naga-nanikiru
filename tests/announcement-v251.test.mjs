@@ -9,14 +9,17 @@ const html=read('public/index.html'),js=read('public/menu-sections-v239.js'),css
 const announcementSource=html.match(/const APP_ANNOUNCEMENTS_V66 = (\[[\s\S]*?\n\s*\]);/)[1];
 const announcements=vm.runInNewContext(announcementSource);
 const appVersion=Number(html.match(/const APP_VERSION = (\d+)/)[1]);
+const unannounced=vm.runInNewContext(html.match(/const APP_UNANNOUNCED_RELEASES_V378 = Object\.freeze\((\[[^\]]*\])\)/)[1]);
+const latestAnnounced=Math.max(...announcements.map(item=>item.version));
 
-test('release announcements include the current version and every release since V300 without duplicates',()=>{
+test('every release since V300 is either announced or listed as owner-only, never both',()=>{
  const versions=announcements.map(item=>item.version);
- assert.equal(Math.max(...versions),appVersion,'Update the announcements when releasing a new app version');
+ assert.ok(latestAnnounced<=appVersion);
  assert.equal(new Set(versions).size,versions.length,'Each version must have exactly one announcement');
  for(let version=300;version<=appVersion;version++){
   const item=announcements.find(item=>item.version===version);
-  assert.ok(item,`Missing announcement for V${version}`);
+  if(unannounced.includes(version)){assert.equal(item,undefined,`V${version} is owner-only and must not be announced`);continue;}
+  assert.ok(item,`Missing announcement for V${version} (or add it to APP_UNANNOUNCED_RELEASES_V378 if only the owner is affected)`);
   assert.ok(item.title.trim().length>=5 && item.body.trim().length>=20,`Describe the user-facing change for V${version}`);
   assert.match(item.date,/^\d{4}-\d{2}-\d{2}$/);
   assert.ok(Number.isFinite(Date.parse(item.publishedAt || item.date)));
@@ -35,8 +38,8 @@ test('opening announcements renders newest first, keeps V300, and acknowledges t
  ctx.openAnnouncementDialogV65();
  const rendered=[...list.innerHTML.matchAll(/notice-item-question">V(\d+)/g)].map(match=>Number(match[1]));
  assert.deepEqual(rendered,[...rendered].sort((a,b)=>b-a));
- assert.equal(rendered[0],appVersion);assert.ok(rendered.includes(300));
- assert.equal(seen,String(appVersion));assert.equal(shown,true);
+ assert.equal(rendered[0],latestAnnounced);assert.ok(rendered.includes(300));
+ assert.equal(seen,String(latestAnnounced));assert.equal(shown,true);
 });
 
 test('announcement uses explicit visible copy and a self-contained matching line icon',()=>{
