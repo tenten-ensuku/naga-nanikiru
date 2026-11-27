@@ -11050,6 +11050,9 @@ html[data-theme="light"] .page.menu-active #menuPanel .library-v214 .library-det
   }
   .next-float-v368:not([hidden])::after { content: "→"; }
   .next-float-v368:focus-visible { outline: 3px solid #f2c14e; outline-offset: 3px; }
+  /* V380: leave room under the last content (コメント追加 / Discordで開く) so it can always be
+     scrolled above the floating ‹ and 次の問題へ (50px tall, 14px from the bottom). */
+  html body .page:not(.menu-active) { padding-bottom: calc(88px + env(safe-area-inset-bottom)); }
 }
 
 /* V368: keyboard hint for mouse-and-keyboard screens, shown before answering a discard question. */

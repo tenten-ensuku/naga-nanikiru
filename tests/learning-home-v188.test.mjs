@@ -16,10 +16,10 @@ test("V210 keeps the learning actions usable and stable on desktop and mobile", 
     readFile(packageUrl, "utf8")
   ]);
 
-  assert.match(html, /const APP_VERSION = 379;/);
-  assert.match(identity, /APP_VERSION = 379/);
+  assert.match(html, /const APP_VERSION = 380;/);
+  assert.match(identity, /APP_VERSION = 380/);
   for (const asset of ["app\\.css", "supabase-sync-v48\\.js", "drill-ux-v44\\.js"]) {
-    assert.match(html, new RegExp(`${asset}\\?v=379`));
+    assert.match(html, new RegExp(`${asset}\\?v=380`));
   }
   assert.match(html, /問題集を変更する/);
   assert.doesNotMatch(html, /class="active-collection-label"/);

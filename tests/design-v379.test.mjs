@@ -38,3 +38,8 @@ test("V379 the tray mirrors the real tile and call buttons and only forwards tap
   assert.match(css, /^\.hand-tray-v379 \{ display: none; \}/m);
   assert.match(css, /@media \(max-width: 640px\)/);
 });
+
+test("V380 on phones the last content can scroll above the floating 次の問題へ", () => {
+  const css = cssSection("answer-flow-v368");
+  assert.match(css, /@media \(max-width: 800px\) \{[\s\S]*html body \.page:not\(\.menu-active\) \{ padding-bottom: calc\(88px \+ env\(safe-area-inset-bottom\)\); \}/);
+});
